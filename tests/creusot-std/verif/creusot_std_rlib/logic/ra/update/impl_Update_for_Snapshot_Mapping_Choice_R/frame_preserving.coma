@@ -76,7 +76,7 @@ function frame_preserving_Snapshot_Mapping_Choice_R (self: Map.map t_Choice t_R)
 goal vc_frame_preserving_Snapshot_Mapping_Choice_R: premise_Snapshot_Mapping_Choice_R self from
   -> op_R from frame <> None
   -> (forall ch: t_Choice. [@stop_split] [@expl:update requires] premise_Snapshot_Mapping_Choice_R self from)
-  /\ (forall f: Map.map t_Choice bool. (forall ch: t_Choice. (op_R (update_Snapshot_Mapping_Choice_R self from ch) frame
+  /\ (forall f: Map.map t_Choice bool. (forall ch: t_Choice [f ch]. (op_R (update_Snapshot_Mapping_Choice_R self from ch) frame
           <> None)
         = f ch)
     -> ([@stop_split] [@expl:such_that requires] exists x: t_Choice. index_Mapping_Choice_bool f x)

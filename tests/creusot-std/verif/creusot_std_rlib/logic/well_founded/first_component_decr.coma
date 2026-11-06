@@ -102,7 +102,7 @@ goal vc_first_component_decr_T1: (forall i: int. 0 <= i
       else
         true
     )
-  /\ (forall f: Map.map int t_T1. (forall i: int. if 0 <= i then
+  /\ (forall f: Map.map int t_T1. (forall i: int [f i]. if 0 <= i then
           ([@stop_split] [@expl:extract_nth ensures] ([@stop_split] [@expl:extract_nth ensures #0] 0
               <= extract_nth_T1 s i)
             /\ ([@stop_split] [@expl:extract_nth ensures #1] 0 < i

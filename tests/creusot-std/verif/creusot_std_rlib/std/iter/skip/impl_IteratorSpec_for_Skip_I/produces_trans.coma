@@ -73,7 +73,7 @@ goal vc_produces_trans_Skip_I: produces_Skip_I a ab b
       = Seq.(++) (Seq.(++) s1 s2) s3)
   && (forall s: Seq.seq t_Item. Seq.(++) (Seq.empty: Seq.seq t_Item) s = s)
   && (if ab <> (Seq.empty: Seq.seq t_Item) then
-    forall f: Map.map (Seq.seq t_Item) bool. (forall s: Seq.seq t_Item. if Seq.length s = 0 then
+    forall f: Map.map (Seq.seq t_Item) bool. (forall s: Seq.seq t_Item [f s]. if Seq.length s = 0 then
             produces_I (iter_Skip_I b) (Seq.(++) s bc) (iter_Skip_I c) = f s
           else
             false = f s

@@ -97,7 +97,7 @@ goal vc_lt_log_tail_T: gt_log_Int (Seq.length self) 0 /\ gt_log_Int (Seq.length 
       else
         true
     )
-  /\ (forall f: Map.map int (). (forall i: int. if 0 <= i then
+  /\ (forall f: Map.map int (). (forall i: int [f i]. if 0 <= i then
           if i < Seq.length self then
             if i < Seq.length other then
               if forall j: int. 0 <= j /\ j < i -> Seq.get self j = Seq.get other j then

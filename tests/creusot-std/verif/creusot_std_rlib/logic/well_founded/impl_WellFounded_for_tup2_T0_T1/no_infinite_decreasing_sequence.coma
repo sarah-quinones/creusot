@@ -166,7 +166,8 @@ constant s : Map.map int tup2_T0_T1
 
 function no_infinite_decreasing_sequence_tup2_T0_T1 (s: Map.map int tup2_T0_T1) : int
 
-goal vc_no_infinite_decreasing_sequence_tup2_T0_T1: forall f: Map.map int bool. (forall r: int. if ge_log_Int r 0 then
+goal vc_no_infinite_decreasing_sequence_tup2_T0_T1:
+  forall f: Map.map int bool. (forall r: int [f r]. if ge_log_Int r 0 then
           (not well_founded_relation_tup2_T0_T1 (index_Mapping_Int_tup2_T0_T1 s r) (index_Mapping_Int_tup2_T0_T1 s (r
             + 1)))
           = f r
@@ -181,7 +182,7 @@ goal vc_no_infinite_decreasing_sequence_tup2_T0_T1: forall f: Map.map int bool. 
       | Some r -> let result = r in [@stop_split] [@expl:no_infinite_decreasing_sequence_tup2_T0_T1 ensures] ([@stop_split] [@expl:no_infinite_decreasing_sequence ensures #0] ge_log_Int result 0)
       /\ ([@stop_split] [@expl:no_infinite_decreasing_sequence ensures #1] not well_founded_relation_tup2_T0_T1 (index_Mapping_Int_tup2_T0_T1 s result) (index_Mapping_Int_tup2_T0_T1 s (result
       + 1)))
-      | None -> forall f'0: Map.map int tup2_T0_tup1_T1. (forall i: int. tuple_to_pair_tup2_T0_T1 (index_Mapping_Int_tup2_T0_T1 s i)
+      | None -> forall f'0: Map.map int tup2_T0_tup1_T1. (forall i: int [f'0 i]. tuple_to_pair_tup2_T0_T1 (index_Mapping_Int_tup2_T0_T1 s i)
             = f'0 i)
         -> ([@stop_split] [@expl:first_component_decr requires] forall i: int. 0 <= i
             -> well_founded_relation_tup2_T0_tup1_T1 (index_Mapping_Int_tup2_T0_tup1_T1 f'0 i) (index_Mapping_Int_tup2_T0_tup1_T1 f'0 (i

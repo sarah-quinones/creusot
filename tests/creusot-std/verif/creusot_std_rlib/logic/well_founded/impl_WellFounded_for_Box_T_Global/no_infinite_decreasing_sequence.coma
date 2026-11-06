@@ -42,7 +42,7 @@ constant s : Map.map int t_T
 function no_infinite_decreasing_sequence_Box_T_Global (s: Map.map int t_T) : int
 
 goal vc_no_infinite_decreasing_sequence_Box_T_Global:
-  forall f: Map.map int t_T. (forall i: int. index_Mapping_Int_Box_T_Global s i = f i)
+  forall f: Map.map int t_T. (forall i: int [f i]. index_Mapping_Int_Box_T_Global s i = f i)
     -> ([@stop_split] [@expl:no_infinite_decreasing_sequence ensures] ([@stop_split] [@expl:no_infinite_decreasing_sequence ensures #0] ge_log_Int (no_infinite_decreasing_sequence_T f) 0)
       /\ ([@stop_split] [@expl:no_infinite_decreasing_sequence ensures #1] not well_founded_relation_T (index_Mapping_Int_T f (no_infinite_decreasing_sequence_T f)) (index_Mapping_Int_T f (no_infinite_decreasing_sequence_T f
       + 1))))

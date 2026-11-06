@@ -4360,7 +4360,7 @@ module M_implementation__make
       | s12 = [ &uf'0 <- _28.f1'3 ] s13
       | s13 = any
         [ any_ (_dest: t_Option_Element) ->
-        (! -{exists f: Map.map t_Element bool. (forall e: t_Element. if in_domain_T uf'0.current e then
+        (! -{exists f: Map.map t_Element bool. (forall e: t_Element [f e]. if in_domain_T uf'0.current e then
                   (deep_model_Element e = deep_model_Element elt) = f e
                 else
                   false = f e

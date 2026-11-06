@@ -51,7 +51,7 @@ function cons_T'0 (s: Fset.fset t_T) (ss: Fset.fset (Seq.seq t_T)) : Fset.fset (
 
 goal vc_cons_T: (forall x: t_T, xs: Seq.seq t_T. tail_T (cons_T xs x) = xs)
   && (forall xs: Seq.seq t_T. 0 < Seq.length xs -> cons_T (tail_T xs) (Seq.get xs 0) = xs)
-  && (forall f: Map.map t_T (Fset.fset (Seq.seq t_T)). (forall x: t_T. exists f'0: Map.map (Seq.seq t_T) (Seq.seq t_T). (forall xs: Seq.seq t_T. cons_T xs x
+  && (forall f: Map.map t_T (Fset.fset (Seq.seq t_T)). (forall x: t_T [f x]. exists f'0: Map.map (Seq.seq t_T) (Seq.seq t_T). (forall xs: Seq.seq t_T [f'0 xs]. cons_T xs x
               = f'0 xs)
           /\ map_Seq_T ss f'0 = f x)
     -> ([@stop_split] [@expl:unions ensures] forall y: Seq.seq t_T [contains_Seq_T (unions_T s f) y]. contains_Seq_T (unions_T s f) y

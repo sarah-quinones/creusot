@@ -6,8 +6,8 @@ use crate::{
         projections::{borrow_generated_id, projections_term},
         signature::lower_contract,
         term::{
-            binop_to_binop, cast_int, lower_literal, lower_pat, lower_pure, tyconst_to_term_final,
-            unsupported_cast,
+            binop_to_binop, cast_int, lower_literal, lower_pat, lower_pure, lower_trigger,
+            tyconst_to_term_final, unsupported_cast,
         },
         ty::{constructor, translate_ty, ty_to_prelude},
     },
@@ -27,7 +27,7 @@ use std::{cell::Cell, collections::HashMap, iter::repeat_n, ops::Deref};
 use why3::{
     Exp, Ident, Name,
     declaration::Attribute,
-    exp::{Pattern as WPattern, UnOp as WUnOp},
+    exp::{Pattern as WPattern, Trigger, UnOp as WUnOp},
     ty::Type,
 };
 
@@ -124,19 +124,16 @@ impl<'tcx, N: Namer<'tcx>> VCGenCtx<'_, 'tcx, N> {
                 let argty = arg.ty;
                 match argty.kind() {
                     TyKind::Bool => match t.ty.kind() {
-                        TyKind::Int(_) | TyKind::Uint(_) => {
-                            self.build_wp(arg, &|arg| {
-                                let qname = self.names.in_pre(ty_to_prelude(self.ctx.tcx, t.ty), "of_bool");
-                                k(Exp::qvar(qname).app([arg]))
-                            })
-                        }
-                        _ if self.ctx.int_ty() == t.ty => {
-                            self.build_wp(arg, &|arg| {
-                                k(Exp::qvar(self.names.in_pre(PreMod::Bool, "to_int")).app([arg]))
-                            })
-                        }
+                        TyKind::Int(_) | TyKind::Uint(_) => self.build_wp(arg, &|arg| {
+                            let qname =
+                                self.names.in_pre(ty_to_prelude(self.ctx.tcx, t.ty), "of_bool");
+                            k(Exp::qvar(qname).app([arg]))
+                        }),
+                        _ if self.ctx.int_ty() == t.ty => self.build_wp(arg, &|arg| {
+                            k(Exp::qvar(self.names.in_pre(PreMod::Bool, "to_int")).app([arg]))
+                        }),
                         _ => unsupported_cast(self.ctx, t.span, argty, t.ty),
-                    }
+                    },
                     TyKind::Int(_) | TyKind::Uint(_) => {
                         if !t.ty.is_integral() {
                             unsupported_cast(self.ctx, t.span, argty, t.ty)
@@ -154,26 +151,25 @@ impl<'tcx, N: Namer<'tcx>> VCGenCtx<'_, 'tcx, N> {
                             PtrCastKind::Unknown => unsupported_cast(self.ctx, t.span, argty, t.ty),
                         }
                     }
-                    TyKind::Adt(..) if t.ty.is_integral() => {
-                        self.build_wp(arg, &|arg| {
-                            let discr = Exp::Var(self.names.item(
-                                Intrinsic::DiscriminantValueLogic.get(self.ctx),
-                                self.ctx.mk_args(&[GenericArg::from(argty)]),
-                            ))
-                            .app([arg]);
-                            let discr_ty = self.ctx.normalize_erasing_regions(
-                                self.names.typing_env(),
-                                ty::Unnormalized::new(argty.discriminant_ty(self.ctx.tcx)),
-                            );
-                            k(cast_int(self.names, discr_ty, t.ty, discr))
-                        })
-                    }
+                    TyKind::Adt(..) if t.ty.is_integral() => self.build_wp(arg, &|arg| {
+                        let discr = Exp::Var(self.names.item(
+                            Intrinsic::DiscriminantValueLogic.get(self.ctx),
+                            self.ctx.mk_args(&[GenericArg::from(argty)]),
+                        ))
+                        .app([arg]);
+                        let discr_ty = self.ctx.normalize_erasing_regions(
+                            self.names.typing_env(),
+                            ty::Unnormalized::new(argty.discriminant_ty(self.ctx.tcx)),
+                        );
+                        k(cast_int(self.names, discr_ty, t.ty, discr))
+                    }),
                     _ => unsupported_cast(self.ctx, t.span, argty, t.ty),
-            }},
+                }
+            }
             TermKind::Coerce { arg } => self.build_wp(arg, k),
             // Items are just global names so
             // VC(i, Q) = Q(i)
-            &TermKind::ConstItem{ id, subst } => k(Exp::Var(self.names.item(id, subst))),
+            &TermKind::ConstItem { id, subst } => k(Exp::Var(self.names.item(id, subst))),
             TermKind::Const(c) => self.build_wp(
                 &tyconst_to_term_final(
                     *c,
@@ -181,7 +177,8 @@ impl<'tcx, N: Namer<'tcx>> VCGenCtx<'_, 'tcx, N> {
                     self.names.source_id(),
                     self.ctx,
                     self.names.typing_env(),
-                    t.span),
+                    t.span,
+                ),
                 k,
             ),
             TermKind::Call { id, .. } if is_new_namespace(self.ctx.tcx, *id) => {
@@ -197,13 +194,15 @@ impl<'tcx, N: Namer<'tcx>> VCGenCtx<'_, 'tcx, N> {
             &TermKind::Call { id, subst, ref args } => self.build_wp_slice(args, &|args| {
                 let pre_sig = EarlyBinder::bind(self.ctx.tcx, self.ctx.sig(id).clone())
                     .instantiate(self.ctx.tcx, subst)
-                    .skip_normalization().normalize_contract(self.ctx, self.names.typing_env());
+                    .skip_normalization()
+                    .normalize_contract(self.ctx, self.names.typing_env());
 
                 let mut variant = Exp::mk_true();
 
                 if self.safety
-                        && let Some(self_call) = &self.self_call
-                        && self.ctx.should_check_variant_decreases(self_call.id, id) {
+                    && let Some(self_call) = &self.self_call
+                    && self.ctx.should_check_variant_decreases(self_call.id, id)
+                {
                     self.trivial.set(false);
                     let subst_id = erased_identity_for_item(self.ctx.tcx, id);
                     if subst != subst_id {
@@ -229,7 +228,8 @@ impl<'tcx, N: Namer<'tcx>> VCGenCtx<'_, 'tcx, N> {
                     } else {
                         self.ctx.crash_and_error(
                             self.ctx.def_span(self_call.id),
-                            "this function is recursive, but it does not use a variant and it not structurally recursive.",
+                            "this function is recursive, but it does not use a variant and it not \
+                             structurally recursive.",
                         )
                     }
                 }
@@ -260,18 +260,22 @@ impl<'tcx, N: Namer<'tcx>> VCGenCtx<'_, 'tcx, N> {
             // VC(assert { C }, Q) => VC(C, |c| c && Q(()))
             TermKind::Assert { cond } => {
                 self.trivial.set(false);
-                self.build_wp(cond,
-                    &|exp|
-                        if self.safety { exp.lazy_and(k(Exp::unit())) }
-                        else { exp.implies(k(Exp::unit())) }
-                )
-            },
+                self.build_wp(cond, &|exp| {
+                    if self.safety {
+                        exp.lazy_and(k(Exp::unit()))
+                    } else {
+                        exp.implies(k(Exp::unit()))
+                    }
+                })
+            }
             // VC(A && B, Q) = VC(A, |a| if a then VC(B, Q) else Q(false))
             // VC(A || B, Q) = VC(A, |a| if a then Q(true) else VC(B, Q))
             // VC(A OP B, Q) = VC(A, |a| VC(B, |b| Q(a OP B)))
             TermKind::Binary { op, lhs, rhs } => match op {
-                And => self.build_wp(lhs, &|lhs| Exp::if_(lhs, self.build_wp(rhs, k), k(Exp::mk_false()))),
-                Or => self.build_wp(lhs, &|lhs| Exp::if_(lhs, k(Exp::mk_true()), self.build_wp(rhs, k))),
+                And => self
+                    .build_wp(lhs, &|lhs| Exp::if_(lhs, self.build_wp(rhs, k), k(Exp::mk_false()))),
+                Or => self
+                    .build_wp(lhs, &|lhs| Exp::if_(lhs, k(Exp::mk_true()), self.build_wp(rhs, k))),
                 _ => {
                     if matches!(op, Add | Sub | Mul | Le | Ge | Lt | Gt) {
                         self.names.import_prelude_module(PreMod::Int);
@@ -284,32 +288,30 @@ impl<'tcx, N: Namer<'tcx>> VCGenCtx<'_, 'tcx, N> {
                 }
             },
             // VC(OP A, Q) = VC(A |a| Q(OP a))
-            TermKind::Unary { op:UnOp::Not, arg } => self.build_wp(arg, &|arg| {
-                k(Exp::UnaryOp(WUnOp::Not, arg.boxed()))
-            }),
-            TermKind::Unary { op:UnOp::Neg, arg } => {
+            TermKind::Unary { op: UnOp::Not, arg } => {
+                self.build_wp(arg, &|arg| k(Exp::UnaryOp(WUnOp::Not, arg.boxed())))
+            }
+            TermKind::Unary { op: UnOp::Neg, arg } => {
                 self.names.import_prelude_module(PreMod::Int);
-                self.build_wp(arg, &|arg| {
-                    k(Exp::UnaryOp(WUnOp::Neg, arg.boxed()))
-                })
+                self.build_wp(arg, &|arg| k(Exp::UnaryOp(WUnOp::Neg, arg.boxed())))
             }
             // VC(forall<x> P(x), Q) => (forall<x> VC(P, true)) /\ Q(forall<x>P(x))
             // VC(exists<x> P(x), Q) => (forall<x> VC(P, true)) /\ Q(exists<x>P(x))
             TermKind::Quant { binder, body, .. } => {
-                let safe =
-                    if self.safety {
-                        let body = self.build_wp(&body.term, &|_| Exp::mk_true());
-                        Exp::forall(binder.iter().map(|(s, ty)| (s.0, self.ty(*ty, t.span))), body)
-                    } else {
-                        Exp::mk_true()
-                    };
+                let safe = if self.safety {
+                    let body = self.build_wp(&body.term, &|_| Exp::mk_true());
+                    Exp::forall(binder.iter().map(|(s, ty)| (s.0, self.ty(*ty, t.span))), body)
+                } else {
+                    Exp::mk_true()
+                };
                 safe.log_and(k(self.lower_pure(t)))
             }
+
             // VC_safety(|x| A(x), Q) = (forall<x>, VC_safety(A(x), true)) /\ VC_nosafety(|x| A(x), Q)
             // VC_nosafety(|x| A(x), Q) = forall<f> (forall<x>, !VC_nosafety(A(x), r. r != f x)) -> Q(f)
             &TermKind::Closure { arg, arg_ty, ref body } => {
                 let safe = if self.safety {
-                    let safe_body = self.build_wp(&body, &|_| Exp::mk_true());
+                    let safe_body = self.build_wp(&body.term, &|_| Exp::mk_true());
                     Exp::forall([(arg.0, self.ty(arg_ty, t.span))], safe_body)
                 } else {
                     Exp::mk_true()
@@ -317,10 +319,18 @@ impl<'tcx, N: Namer<'tcx>> VCGenCtx<'_, 'tcx, N> {
 
                 let f = Ident::fresh_local("f");
                 let mut post_body = VCGenCtx { vcgen: self.vcgen, safety: false }
-                    .build_wp(&body, &|exp| exp.neq(Exp::var(f).app([Exp::var(arg.0)])));
+                    .build_wp(&body.term, &|exp| exp.neq(Exp::var(f).app([Exp::var(arg.0)])));
                 post_body.smart_not();
-                let post = Exp::forall([(arg.0, self.ty(arg_ty, t.span))], post_body); // TODO trigger
-                let post_all = Exp::forall([(f, self.ty(t.ty, t.span))], post.implies(k(Exp::var(f))));
+                let post = Exp::forall_trig(
+                    [(arg.0, self.ty(arg_ty, t.span))],
+                    body.triggers
+                        .iter()
+                        .map(|trig| lower_trigger(self.ctx, self.names, trig))
+                        .chain([Trigger(Box::new([Exp::var(f).app([Exp::var(arg.0)])]))]),
+                    post_body,
+                );
+                let post_all =
+                    Exp::forall([(f, self.ty(t.ty, t.span))], post.implies(k(Exp::var(f))));
                 safe.log_and(post_all)
             }
             // VC((T...), Q) = VC(T[0], |t0| ... VC(T[N], |tn| Q(t0..tn))))
@@ -359,9 +369,9 @@ impl<'tcx, N: Namer<'tcx>> VCGenCtx<'_, 'tcx, N> {
                 self.build_wp(term, &|term| k(term.field(Name::Global(name::final_()))))
             }
             // VC(A -> B, Q) = VC(A, |a| if a then VC(B, Q) else Q(T))
-            TermKind::Impl { lhs, rhs } => self.build_wp(lhs, &|lhs| {
-                Exp::if_(lhs, self.build_wp(rhs, k), k(Exp::mk_true()))
-            }),
+            TermKind::Impl { lhs, rhs } => {
+                self.build_wp(lhs, &|lhs| Exp::if_(lhs, self.build_wp(rhs, k), k(Exp::mk_true())))
+            }
             // VC(match A {P -> E}, Q) = VC(A, |a| match a {P -> VC(E, Q)})
             TermKind::Match { scrutinee, arms }
                 if scrutinee.ty.is_bool()
@@ -380,9 +390,8 @@ impl<'tcx, N: Namer<'tcx>> VCGenCtx<'_, 'tcx, N> {
             }
             // VC(match A {P -> E}, Q) = VC(A, |a| match a {P -> VC(E, Q)})
             TermKind::Match { scrutinee, arms } => self.build_wp(scrutinee, &|scrut| {
-                let arms = arms
-                    .iter()
-                    .map(|arm| (self.lower_pat(&arm.0), self.build_wp(&arm.1, k)));
+                let arms =
+                    arms.iter().map(|arm| (self.lower_pat(&arm.0), self.build_wp(&arm.1, k)));
                 scrut.match_(arms)
             }),
             // VC(let P = A in B, Q) = VC(A, |a| let P = a in VC(B, Q))

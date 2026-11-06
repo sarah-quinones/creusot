@@ -130,7 +130,7 @@ pub enum Exp {
     Ascribe(Box<Exp>, Type),
     // Predicates
     Impl(Box<Exp>, Box<Exp>),
-    Quant(Quant, Box<[(Ident, Type)]>, Box<[Trigger]>, Box<Exp>),
+    Quant(Quant, Box<[(Ident, Option<Type>)]>, Box<[Trigger]>, Box<Exp>),
 }
 
 #[derive(Debug, Clone)]

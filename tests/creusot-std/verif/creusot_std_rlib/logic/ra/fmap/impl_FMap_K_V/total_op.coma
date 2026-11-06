@@ -107,7 +107,7 @@ goal vc_total_op_K: (forall k: t_K. op_Option_V (lookup_K self k) (lookup_K othe
         | Some r -> true
         | _ -> true
         end)
-  /\ (forall f: Map.map tup2_V_V t_V. (forall _0: tup2_V_V. let {f0'0 = x; f1'0 = y} = _0 in match op_V x y with
+  /\ (forall f: Map.map tup2_V_V t_V. (forall _0: tup2_V_V [f _0]. let {f0'0 = x; f1'0 = y} = _0 in match op_V x y with
           | Some r -> r = f _0
           | _ -> any_V = f _0
           end)

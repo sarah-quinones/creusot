@@ -220,7 +220,7 @@ goal vc_incl_FMap_K_V: let r = forall k: t_K. incl_Option_V (lookup_K self k) (l
         else
           true
         ))
-    /\ (forall f: Map.map tup2_K_V t_Option_V. (forall _0: tup2_K_V. let {f0'1 = k; f1'1 = vo} = _0 in ([@stop_split] [@expl:incl ensures] incl_Option_V (lookup_K self k) (Some'0 vo)
+    /\ (forall f: Map.map tup2_K_V t_Option_V. (forall _0: tup2_K_V [f _0]. let {f0'1 = k; f1'1 = vo} = _0 in ([@stop_split] [@expl:incl ensures] incl_Option_V (lookup_K self k) (Some'0 vo)
             = (exists factor: t_Option_V. op_Option_V (lookup_K self k) factor = Some'1 (Some'0 vo)))
           /\ (if incl_Option_V (lookup_K self k) (Some'0 vo) then
             ([@stop_split] [@expl:factor ensures] op_Option_V (lookup_K self k) (factor_Option_V (Some'0 vo) (lookup_K self k))
