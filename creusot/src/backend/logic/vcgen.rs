@@ -194,7 +194,7 @@ impl<'tcx, N: Namer<'tcx>> VCGenCtx<'_, 'tcx, N> {
             // ))
             &TermKind::Call { id, subst, ref args } => self.build_wp_slice(args, &|args| {
                 let mut sig = self.ctx.sig(id).clone();
-                if self.names.reveal_modifier(Dependency::Item( id, subst)).is_conceal() {
+                if self.names.reveal_modifier(Dependency::Item(id, subst)).is_conceal() {
                     sig.contract.ensures.clear();
                     sig.contract.alias = None;
                     sig.contract.alias_id = None;

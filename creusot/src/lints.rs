@@ -24,7 +24,8 @@ pub(crate) enum Diagnostics {
     /// fmir), we cannot do this, so this structure will be used with the
     /// `TyCtxt::emit_node_span_lint` function.
     #[diag(
-        "calling external function `{$name}` with no contract will yield an impossible precondition"
+        "calling external function `{$name}` with no contract will yield an impossible \
+         precondition"
     )]
     ContractlessExternalFunction {
         /// Name of the function
@@ -36,7 +37,8 @@ pub(crate) enum Diagnostics {
     #[diag("support for trait objects (dyn) is limited and experimental")]
     DynExperimental,
     #[diag(
-        "`result` used as a parameter name. It is confusing because it is also the default name of the function's result"
+        "`result` used as a parameter name. It is confusing because it is also the default name \
+         of the function's result"
     )]
     ResultParam,
 }

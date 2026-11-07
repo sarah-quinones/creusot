@@ -66,13 +66,17 @@ impl<'a, 'tcx> OpacityVisitor<'a, 'tcx> {
             return;
         }
         if !self.is_visible(id) {
-            self.ctx.error(
-                span,
-                format!(
-                    "Cannot make `{:?}` transparent in `{:?}` as it would call a less-visible item.",
-                    self.ctx.def_path_str(id), self.ctx.def_path_str(self.item)
-                ),
-            ).emit();
+            self.ctx
+                .error(
+                    span,
+                    format!(
+                        "Cannot make `{:?}` transparent in `{:?}` as it would call a less-visible \
+                         item.",
+                        self.ctx.def_path_str(id),
+                        self.ctx.def_path_str(self.item)
+                    ),
+                )
+                .emit();
         }
     }
 

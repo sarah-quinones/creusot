@@ -137,13 +137,19 @@ fn is_ghost_ty(ty: &Type) -> bool {
 fn warn_unerased_ghost(span: proc_macro::Span) {
     Diagnostic::spanned(span, Level::Warning, "`#[erasure]` won't erase this `Ghost` argument")
         .note("only arguments whose type is unqualified `Ghost<_>` are erased")
-        .note("if this `Ghost` is not referring to `creusot_std::Ghost`, rename your `Ghost` to a different name to silence this warning")
+        .note(
+            "if this `Ghost` is not referring to `creusot_std::Ghost`, rename your `Ghost` to a \
+             different name to silence this warning",
+        )
         .emit();
 }
 
 fn warn_unerased_snapshot(span: proc_macro::Span) {
     Diagnostic::spanned(span, Level::Warning, "`#[erasure]` won't erase this `Snapshot` argument")
         .note("only arguments whose type is unqualified `Snapshot<_>` are erased")
-        .note("if this `Snapshot` is not referring to `creusot_std::Snapshot`, rename your `Snapshot` to a different name to silence this warning")
+        .note(
+            "if this `Snapshot` is not referring to `creusot_std::Snapshot`, rename your \
+             `Snapshot` to a different name to silence this warning",
+        )
         .emit();
 }

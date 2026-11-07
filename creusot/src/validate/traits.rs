@@ -96,9 +96,12 @@ pub(crate) fn validate_impls<'tcx>(ctx: &TranslationCtx<'tcx>) {
                         ctx.error(
                             ctx.def_span(impl_item),
                             format!(
-                                "Parameter `{name_param}` has the `#[creusot::open_inv]` attribute in the trait declaration, but not in the implementation."
+                                "Parameter `{name_param}` has the `#[creusot::open_inv]` \
+                                 attribute in the trait declaration, but not in the \
+                                 implementation."
                             ),
-                        ).emit();
+                        )
+                        .emit();
                     }
                 }
             }
@@ -107,10 +110,12 @@ pub(crate) fn validate_impls<'tcx>(ctx: &TranslationCtx<'tcx>) {
                 ctx.error(
                     ctx.def_span(impl_item),
                     format!(
-                        "Function `{}` should not have the `#[open_inv_result]` attribute, as specified by the trait declaration",
+                        "Function `{}` should not have the `#[open_inv_result]` attribute, as \
+                         specified by the trait declaration",
                         ctx.item_name(impl_item),
                     ),
-                ).emit();
+                )
+                .emit();
             }
 
             let item_type = ctx.item_type(impl_item);
@@ -132,7 +137,8 @@ pub(crate) fn validate_impls<'tcx>(ctx: &TranslationCtx<'tcx>) {
                     ctx.error(
                         ctx.def_span(impl_item),
                         format!(
-                            "Expected `{}` to be `#[check(ghost)]` as specified by the trait declaration",
+                            "Expected `{}` to be `#[check(ghost)]` as specified by the trait \
+                             declaration",
                             ctx.item_name(impl_item),
                         ),
                     )
@@ -143,7 +149,8 @@ pub(crate) fn validate_impls<'tcx>(ctx: &TranslationCtx<'tcx>) {
                     ctx.error(
                         ctx.def_span(impl_item),
                         format!(
-                            "Expected `{}` to be `#[check(terminates)]` as specified by the trait declaration",
+                            "Expected `{}` to be `#[check(terminates)]` as specified by the trait \
+                             declaration",
                             ctx.item_name(impl_item),
                         ),
                     )
@@ -152,7 +159,8 @@ pub(crate) fn validate_impls<'tcx>(ctx: &TranslationCtx<'tcx>) {
                     ctx.error(
                         ctx.def_span(impl_item),
                         format!(
-                            "Method `{}` should not be a `#[logic(law)]`, as specified by the trait declaration",
+                            "Method `{}` should not be a `#[logic(law)]`, as specified by the \
+                             trait declaration",
                             ctx.item_name(impl_item),
                         ),
                     )

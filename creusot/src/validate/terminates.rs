@@ -139,7 +139,8 @@ pub(crate) fn validate_terminates(ctx: &TranslationCtx) -> RecursiveCalls {
         }
         let fun_span = ctx.def_span(def_id);
         let msg = if pearlite {
-            "Recursive logic function without a `#[variant]` clause or a structurally decreasing argument"
+            "Recursive logic function without a `#[variant]` clause or a structurally decreasing \
+             argument"
         } else {
             "Recursive program function without a `#[variant]` clause"
         };
@@ -544,8 +545,13 @@ impl CallGraph {
                 && !is_pearlite(ctx.tcx, def_id)
                 && !terminates
             {
-                ctx.dcx().struct_span_warn(variant.span, "variant will be ignored")
-                    .with_span_note(ctx.def_span(def_id), "This function is not a logical function, and is not marked with `#[terminates]`.")
+                ctx.dcx()
+                    .struct_span_warn(variant.span, "variant will be ignored")
+                    .with_span_note(
+                        ctx.def_span(def_id),
+                        "This function is not a logical function, and is not marked with \
+                         `#[terminates]`.",
+                    )
                     .emit();
             }
             let node = build_call_graph.insert_node(GraphNode::function(def_id));
@@ -662,7 +668,8 @@ impl<'a, 'tcx> Visitor<'a, 'tcx> for FunctionDeps<'a, 'tcx> {
                     self.ctx
                         .error(
                             fun_span,
-                            "`#[check(terminates)]` function must not contain loops without variants.",
+                            "`#[check(terminates)]` function must not contain loops without \
+                             variants.",
                         )
                         .with_span_note(expr.span, "looping occurs here")
                         .with_span_suggestion(

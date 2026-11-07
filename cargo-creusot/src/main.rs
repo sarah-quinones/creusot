@@ -149,7 +149,8 @@ fn invoke_cargo(
     // creusot_rustc binary exists
     if !creusot_rustc_path.exists() {
         eprintln!(
-            "creusot-rustc not found (expected at {creusot_rustc_path:?}). You should reinstall Creusot."
+            "creusot-rustc not found (expected at {creusot_rustc_path:?}). You should reinstall \
+             Creusot."
         );
         exit(1);
     }
@@ -220,7 +221,8 @@ fn check_workspace_metadata(value: &serde_json::Value) {
                 if k != "default-members" {
                     start_warning();
                     eprintln!(
-                        ": in [workspace.metadata.creusot], unexpected field {k:?} (expected \"default-members\")"
+                        ": in [workspace.metadata.creusot], unexpected field {k:?} (expected \
+                         \"default-members\")"
                     )
                 }
             }
@@ -228,7 +230,8 @@ fn check_workspace_metadata(value: &serde_json::Value) {
         _ => {
             start_warning();
             eprintln!(
-                ": in [workspace.metadata.creusot], unexpected value (expected object with key \"default-members\")"
+                ": in [workspace.metadata.creusot], unexpected value (expected object with key \
+                 \"default-members\")"
             )
         }
     }

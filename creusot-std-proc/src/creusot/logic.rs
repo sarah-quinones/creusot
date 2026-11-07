@@ -251,8 +251,8 @@ impl Parse for LogicTag {
             _ => {
                 return Err(Error::new(
                     ident.span(),
-                    "unsupported modifier. The only supported modifiers are \
-                    `open`, `opaque`, `law`, `prophetic`, `sealed`, `inline` and `indirect`",
+                    "unsupported modifier. The only supported modifiers are `open`, `opaque`, \
+                     `law`, `prophetic`, `sealed`, `inline` and `indirect`",
                 ));
             }
         };

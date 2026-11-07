@@ -66,7 +66,10 @@ pub fn validate_recursive_types(ctx: &TranslationCtx) {
                     let middle = ctx.def_path_str(middle);
                     error.span_note(
                         span,
-                        format!("`{next_name}` is used in this field of `{current_name}`, when resolving a bound of `{middle}`"),
+                        format!(
+                            "`{next_name}` is used in this field of `{current_name}`, when \
+                             resolving a bound of `{middle}`"
+                        ),
                     );
                 }
                 AssocType(assoc_id) => {

@@ -387,24 +387,41 @@ struct ClosSubstState<'a, 'tcx> {
 impl<'a, 'tcx> TermVisitorMut<'tcx> for ClosSubstState<'a, 'tcx> {
     fn visit_mut_term(&mut self, term: &mut Term<'tcx>) {
         match &mut term.kind {
-            TermKind::Old { term:t } => {
+            TermKind::Old { term: t } => {
                 if self.old {
                     self.tcx.fatal_error(term.span, "Nested use of `old`").emit()
                 }
                 if self.subst.old_caps.is_none() {
-                    self.tcx.fatal_error(term.span, "The `old` modifier should only be used in #[ensures(..)] clauses of closures.").emit()
+                    self.tcx
+                        .fatal_error(
+                            term.span,
+                            "The `old` modifier should only be used in #[ensures(..)] clauses of \
+                             closures.",
+                        )
+                        .emit()
                 }
                 self.old = true;
                 self.visit_mut_term(t);
                 *term = std::mem::replace(t, /* Dummy */ Term::unit(self.tcx));
                 self.old = false;
             }
-            TermKind::Capture(fidx) if self.old => *term = self.subst.old_caps.as_ref().unwrap()[*fidx].clone(),
-            TermKind::Capture(fidx) if !self.old && let Some(v) = &self.subst.cur_caps[*fidx] => *term = v.clone(),
-            TermKind::Capture(_) => self.tcx.fatal_error(
+            TermKind::Capture(fidx) if self.old => {
+                *term = self.subst.old_caps.as_ref().unwrap()[*fidx].clone()
+            }
+            TermKind::Capture(fidx)
+                if !self.old
+                    && let Some(v) = &self.subst.cur_caps[*fidx] =>
+            {
+                *term = v.clone()
+            }
+            TermKind::Capture(_) => self
+                .tcx
+                .fatal_error(
                     term.span,
-                    "Use of a closure capture in an #[ensures(..)] clause, but it is consumed by the closure.",
-                ).emit(),
+                    "Use of a closure capture in an #[ensures(..)] clause, but it is consumed by \
+                     the closure.",
+                )
+                .emit(),
             _ => super_visit_mut_term(term, self),
         }
     }

@@ -89,7 +89,8 @@ pub fn config(args: ConfigArgs) -> Result<()> {
         if let Some(creusot_path) = creusot_path {
             if config_does_not_exist {
                 println!(
-                    "No {} needed to set path to creusot-std {CREUSOT_STD_VERSION}. Run `cargo creusot config --update`.",
+                    "No {} needed to set path to creusot-std {CREUSOT_STD_VERSION}. Run `cargo \
+                     creusot config --update`.",
                     cargo_config.display()
                 );
             } else if let Some(creusot_std) = crates_io.get("creusot-std")
@@ -100,7 +101,8 @@ pub fn config(args: ConfigArgs) -> Result<()> {
                     != creusot_path.join("creusot-std").as_os_str()
                 {
                     println!(
-                        "In {}: path for creusot-std {CREUSOT_STD_VERSION} may be out of date. Run `cargo creusot config --update.",
+                        "In {}: path for creusot-std {CREUSOT_STD_VERSION} may be out of date. \
+                         Run `cargo creusot config --update.",
                         cargo_config.display()
                     )
                 } else {
@@ -108,14 +110,17 @@ pub fn config(args: ConfigArgs) -> Result<()> {
                 }
             } else {
                 println!(
-                    "In {}: no path found for creusot-std {CREUSOT_STD_VERSION}.\nRun `cargo creusot config --update`.",
+                    "In {}: no path found for creusot-std {CREUSOT_STD_VERSION}.\nRun `cargo \
+                     creusot config --update`.",
                     cargo_config.display()
                 )
             };
         } else {
             if let Some(_) = crates_io.get("creusot-std") {
                 println!(
-                    "In {}: found patch for creusot-std, but you are using a released version of Creusot ({CREUSOT_STD_VERSION}).\nRun `cargo creusot config --update` to remove it.",
+                    "In {}: found patch for creusot-std, but you are using a released version of \
+                     Creusot ({CREUSOT_STD_VERSION}).\nRun `cargo creusot config --update` to \
+                     remove it.",
                     cargo_config.display()
                 );
             } else {

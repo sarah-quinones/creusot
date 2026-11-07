@@ -61,7 +61,8 @@ fn check_why3find_json_exists(root: &Path) -> Result<()> {
         Ok(())
     } else {
         Err(anyhow::anyhow!(
-            "{} not found. Perhaps you are in the wrong directory, or you need to run `cargo creusot init`.",
+            "{} not found. Perhaps you are in the wrong directory, or you need to run `cargo \
+             creusot init`.",
             why3find.display()
         ))
     }
@@ -118,7 +119,8 @@ pub fn why3find_prove(args: ProveArgs, root: &Path, targets: Vec<String>) -> Res
     // FIXME: Remove this warning after the 0.12 release
     if args.patterns.iter().any(|p| p == "prove") {
         eprintln!(
-            "Warning: found 'prove' pattern; it is no longer a 'cargo creusot' command. Just run 'cargo creusot'."
+            "Warning: found 'prove' pattern; it is no longer a 'cargo creusot' command. Just run \
+             'cargo creusot'."
         )
     }
     let files = if args.patterns.is_empty() {

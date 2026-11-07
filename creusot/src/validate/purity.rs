@@ -322,9 +322,18 @@ impl<'a, 'tcx> Visitor<'a, 'tcx> for PurityVisitor<'a, 'tcx> {
                         if fn_purity == Purity::Ghost && self.context.is_program() {
                             match self.ctx.intrinsic(func_did) {
                                 Intrinsic::GhostIntoInner => self
-                                    .error(expr.span, "trying to access the contents of a ghost variable in program context").emit(),
+                                    .error(
+                                        expr.span,
+                                        "trying to access the contents of a ghost variable in \
+                                         program context",
+                                    )
+                                    .emit(),
                                 Intrinsic::GhostDeref | Intrinsic::GhostDerefMut => self
-                                    .error(expr.span, "dereference of a ghost variable in program context").emit(),
+                                    .error(
+                                        expr.span,
+                                        "dereference of a ghost variable in program context",
+                                    )
+                                    .emit(),
                                 Intrinsic::GhostNew => self
                                     .error(
                                         expr.span,
@@ -352,8 +361,11 @@ impl<'a, 'tcx> Visitor<'a, 'tcx> for PurityVisitor<'a, 'tcx> {
                                     LocalPurity::Purity(Purity::Logic { prophetic: false }),
                                     Purity::Logic { prophetic: true },
                                 ) => {
-                                    self.ctx.dcx().span_err(self.thir[fun].span,
-                                        "Used prophetic expression in logic alias. You may want to use #[prophetic_alias] instead");
+                                    self.ctx.dcx().span_err(
+                                        self.thir[fun].span,
+                                        "Used prophetic expression in logic alias. You may want \
+                                         to use #[prophetic_alias] instead",
+                                    );
                                 }
                                 _ => unreachable!("Error when dealing with alias purity"),
                             };

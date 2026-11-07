@@ -32,7 +32,9 @@ pub(crate) fn document_spec(spec_name: &str, spec_body: LogicBody) -> TokenStrea
         _ => {
             let spec = if matches!(spec_body, LogicBody::Opaque) {
                 format!(
-                    "{styled_spec_name} <span class=\"tooltip\" style=\"color:Red; white-space:nowrap;\" data-title=\"this function is opaque\"><sup>&#9888;</sup></span>"
+                    "{styled_spec_name} <span class=\"tooltip\" style=\"color:Red; \
+                     white-space:nowrap;\" data-title=\"this function is \
+                     opaque\"><sup>&#9888;</sup></span>"
                 )
             } else {
                 styled_spec_name

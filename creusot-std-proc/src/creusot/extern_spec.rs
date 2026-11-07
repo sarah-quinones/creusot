@@ -600,7 +600,8 @@ fn flatten(
             if prefix.path.segments.len() != 0 {
                 return Err(Error::new(
                     impl_.brace_token.span.join(),
-                    "extern_spec no longer supports impl inside mod. Suggestion: move the impl out of the mod.",
+                    "extern_spec no longer supports impl inside mod. Suggestion: move the impl \
+                     out of the mod.",
                 ));
             }
             let mut ty = impl_.self_ty;

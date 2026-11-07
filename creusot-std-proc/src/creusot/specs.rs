@@ -256,8 +256,8 @@ fn ensures_inner(attr: TS1, tokens: TS1, has_logic_alias: Option<bool>) -> TS1 {
             if closure.inputs.len() != 1 {
                 return syn::Error::new(
                     closure.span(),
-                    "The syntax #[ensures(|res| ...)] requires \
-                    a closure with a single input and an implicit `bool` output.",
+                    "The syntax #[ensures(|res| ...)] requires a closure with a single input and \
+                     an implicit `bool` output.",
                 )
                 .into_compile_error()
                 .into();
@@ -496,10 +496,12 @@ fn logic_alias_inner(attr: TS1, tokens: TS1, is_prophetic: bool) -> TS1 {
                 return syn::Error::new(
                     span,
                     format!(
-                        "`{name}` should contain a path to a logic function with the same signature, or \
-                        a valid pearlite term"
-                    )
-                ).to_compile_error().into();
+                        "`{name}` should contain a path to a logic function with the same \
+                         signature, or a valid pearlite term"
+                    ),
+                )
+                .to_compile_error()
+                .into();
             }
         }
     };

@@ -89,14 +89,19 @@ pub(crate) fn extract_extern_specs_from_item<'tcx>(
     } else {
         extract_extern_item(ctx.tcx, thir, expr)
     };
-    let (id, inner_subst) =
-        TraitResolved::resolve_item(ctx.tcx, ctx.typing_env(def_id), id, subst).to_opt(id, subst).unwrap_or_else(|| {
+    let (id, inner_subst) = TraitResolved::resolve_item(ctx.tcx, ctx.typing_env(def_id), id, subst)
+        .to_opt(id, subst)
+        .unwrap_or_else(|| {
             let mut err = ctx.fatal_error(
                 ctx.def_span(def_id),
                 "could not derive original instance from external specification",
             );
 
-            err.span_warn(ctx.def_span(def_id), "the bounds on an external specification must be at least as strong as the original impl bounds");
+            err.span_warn(
+                ctx.def_span(def_id),
+                "the bounds on an external specification must be at least as strong as the \
+                 original impl bounds",
+            );
             err.emit()
         });
 
@@ -383,7 +388,8 @@ fn build_erased<'tcx>(
         tcx.crash_and_error(
             tcx.def_span(def_id1),
             format!(
-                "#[erasure] check failed: result types don't match\n {}(..) -> {:?}\n {}(..) -> {:?}",
+                "#[erasure] check failed: result types don't match\n {}(..) -> {:?}\n {}(..) -> \
+                 {:?}",
                 tcx.def_path_str(def_id1),
                 ty1,
                 tcx.def_path_str(def_id2),
@@ -405,7 +411,8 @@ fn build_erased<'tcx>(
         tcx.crash_and_error(
             tcx.def_span(def_id1),
             format!(
-                "#[erasure] check failed: argument types don't match\n {}({:?}) -> ...\n {}({:?}) -> ...",
+                "#[erasure] check failed: argument types don't match\n {}({:?}) -> ...\n {}({:?}) \
+                 -> ...",
                 tcx.def_path_str(def_id1),
                 sig1.inputs(),
                 tcx.def_path_str(def_id2),

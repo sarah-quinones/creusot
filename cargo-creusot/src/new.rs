@@ -214,7 +214,8 @@ fn patch_dep(cargo_toml_path: impl AsRef<Path>) -> Result<()> {
         {
             if let Some(_) = crates_io.remove("creusot-std") {
                 eprintln!(
-                    "Removed [patch.crates-io.creusot-std] in {} (you should update $HOME/.cargo/config.toml instead with `cargo creusot config --update`)",
+                    "Removed [patch.crates-io.creusot-std] in {} (you should update \
+                     $HOME/.cargo/config.toml instead with `cargo creusot config --update`)",
                     cargo_toml_path.display()
                 );
                 if crates_io.is_empty() {
@@ -227,7 +228,9 @@ fn patch_dep(cargo_toml_path: impl AsRef<Path>) -> Result<()> {
         }
     } else {
         eprintln!(
-            "No [package] found in Cargo.toml. Not updating dependencies. If this is a Cargo workspace, you may update the dependencies of a package in <DIR> individually with `cargo creusot new <DIR>`"
+            "No [package] found in Cargo.toml. Not updating dependencies. If this is a Cargo \
+             workspace, you may update the dependencies of a package in <DIR> individually with \
+             `cargo creusot new <DIR>`"
         );
     }
     let mut file = std::fs::File::create(cargo_toml_path)?;

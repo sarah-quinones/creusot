@@ -318,7 +318,8 @@ impl<'a, 'tcx> Resolver<'a, 'tcx> {
 
                 eprintln!("  {statement:?} {need_resolve1:?} -> {resolved2:?}");
                 eprintln!(
-                    "    live={live1:?} -> {live2:?} frozen={frozen1:?} -> {frozen2:?} uninit={uninit1:?} -> {uninit2:?}",
+                    "    live={live1:?} -> {live2:?} frozen={frozen1:?} -> {frozen2:?} \
+                     uninit={uninit1:?} -> {uninit2:?}",
                 );
 
                 loc = loc.successor_within_block();
@@ -338,7 +339,8 @@ impl<'a, 'tcx> Resolver<'a, 'tcx> {
 
             eprintln!("  {:?} {need_resolve1:?} -> {resolved2:?}", bbd.terminator().kind);
             eprintln!(
-                "    live={live1:?} -> {live2:?} frozen={frozen1:?} -> {frozen2:?} uninit={uninit1:?} -> {uninit2:?}",
+                "    live={live1:?} -> {live2:?} frozen={frozen1:?} -> {frozen2:?} \
+                 uninit={uninit1:?} -> {uninit2:?}",
             );
         }
         eprintln!();

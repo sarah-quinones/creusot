@@ -877,7 +877,12 @@ fn pattern_bind<'a>(pat: &'a Pat, locals: &'a mut Locals, span: Span) -> Result<
     encoder.visit_pat(pat);
 
     if encoder.has_literal_int {
-        Err(EncodeError::Unsupported(span, "Pattern matching literals on Int are unsupported by Pearlite. Consider using if-then-else instead.".to_string()))
+        Err(EncodeError::Unsupported(
+            span,
+            "Pattern matching literals on Int are unsupported by Pearlite. Consider using \
+             if-then-else instead."
+                .to_string(),
+        ))
     } else {
         Ok(())
     }
@@ -901,7 +906,8 @@ fn encode_arm_(arm: &TermArm, locals: &mut Locals) -> Result<TokenStream, Encode
 mod tests {
     use super::*;
 
-    const IMPORTS: &str = "# [allow (unused)] use :: creusot_std :: __stubs :: { IndexLogicStub as _ , ViewStub as _ }";
+    const IMPORTS: &str = "# [allow (unused)] use :: creusot_std :: __stubs :: { IndexLogicStub \
+                           as _ , ViewStub as _ }";
 
     #[track_caller]
     fn check_term(term: TokenStream, reference: &str) {
@@ -923,7 +929,8 @@ mod tests {
         let term: Term = syn::parse_str("^ ^ x").unwrap();
         check_term(
             encode_term(&term),
-            "* :: creusot_std :: logic :: ops :: Fin :: fin (* :: creusot_std :: logic :: ops :: Fin :: fin (* & x))",
+            "* :: creusot_std :: logic :: ops :: Fin :: fin (* :: creusot_std :: logic :: ops :: \
+             Fin :: fin (* & x))",
         );
     }
 
@@ -944,13 +951,16 @@ mod tests {
         let term: Term = syn::parse_str("forall<x: Int> x == x").unwrap();
         check_term(
             encode_term(&term),
-            ":: creusot_std :: __stubs :: forall (# [creusot :: no_translate] # [creusot :: logic_closure] | x : & Int , | :: creusot_std :: __stubs :: equal (* x , * x))",
+            ":: creusot_std :: __stubs :: forall (# [creusot :: no_translate] # [creusot :: \
+             logic_closure] | x : & Int , | :: creusot_std :: __stubs :: equal (* x , * x))",
         );
 
         let term: Term = syn::parse_str("forall<x: Int> forall<y: Int> true").unwrap();
         check_term(
             encode_term(&term),
-            ":: creusot_std :: __stubs :: forall (# [creusot :: no_translate] # [creusot :: logic_closure] | x : & Int , | :: creusot_std :: __stubs :: forall (# [creusot :: no_translate] # [creusot :: logic_closure] | y : & Int , | true))",
+            ":: creusot_std :: __stubs :: forall (# [creusot :: no_translate] # [creusot :: \
+             logic_closure] | x : & Int , | :: creusot_std :: __stubs :: forall (# [creusot :: \
+             no_translate] # [creusot :: logic_closure] | y : & Int , | true))",
         );
     }
 
@@ -959,13 +969,16 @@ mod tests {
         let term: Term = syn::parse_str("exists<x:Int> x == x").unwrap();
         check_term(
             encode_term(&term),
-            ":: creusot_std :: __stubs :: exists (# [creusot :: no_translate] # [creusot :: logic_closure] | x : & Int , | :: creusot_std :: __stubs :: equal (* x , * x))",
+            ":: creusot_std :: __stubs :: exists (# [creusot :: no_translate] # [creusot :: \
+             logic_closure] | x : & Int , | :: creusot_std :: __stubs :: equal (* x , * x))",
         );
 
         let term: Term = syn::parse_str("exists<x:Int> exists<y:Int> true").unwrap();
         check_term(
             encode_term(&term),
-            ":: creusot_std :: __stubs :: exists (# [creusot :: no_translate] # [creusot :: logic_closure] | x : & Int , | :: creusot_std :: __stubs :: exists (# [creusot :: no_translate] # [creusot :: logic_closure] | y : & Int , | true))",
+            ":: creusot_std :: __stubs :: exists (# [creusot :: no_translate] # [creusot :: \
+             logic_closure] | x : & Int , | :: creusot_std :: __stubs :: exists (# [creusot :: \
+             no_translate] # [creusot :: logic_closure] | y : & Int , | true))",
         );
     }
 

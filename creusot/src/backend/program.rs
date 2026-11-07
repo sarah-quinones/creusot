@@ -206,7 +206,8 @@ pub(crate) fn to_why_body<'tcx>(
         for (def_id, (fun_name, params, ret_ty)) in recursive_calls {
             assert!(
                 def_id == body_id.def_id,
-                "Only simple recursion is allowed at the moment, and this should be checked earlier"
+                "Only simple recursion is allowed at the moment, and this should be checked \
+                 earlier"
             );
             let params: Box<[_]> = params
                 .into_iter()
@@ -631,7 +632,8 @@ impl<'tcx> RValue<'tcx> {
                         let r_ty = r.ty(lower.ctx.tcx, lower.locals);
                         if !r_ty.is_integral() {
                             unreachable!(
-                                "right operand, non-integer type for binary operation {op:?} {ty:?}"
+                                "right operand, non-integer type for binary operation {op:?} \
+                                 {ty:?}"
                             )
                         };
 
@@ -1385,7 +1387,11 @@ impl<'tcx> Statement<'tcx> {
                     )
                     .types())
                     {
-                        lower.ctx.dcx().span_err(self.span, "Polymorphic recursion is not supported: recursive calls should have the same type parameters.");
+                        lower.ctx.dcx().span_err(
+                            self.span,
+                            "Polymorphic recursion is not supported: recursive calls should have \
+                             the same type parameters.",
+                        );
                     } else {
                         recursive_calls.insert(fun_id, (fun_qname.clone(), params, ty.clone()));
                     }

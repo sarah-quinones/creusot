@@ -633,7 +633,14 @@ impl<'a, 'ctx, 'tcx> Expander<'a, 'ctx, 'tcx> {
                         ty_params: Box::new([]),
                     })]
                 } else {
-                    ctx.crash_and_error(DUMMY_SP, format!("forbidden dyn type: {} (dyn support is currently minimal, please open an issue to improve this feature)", ty))
+                    ctx.crash_and_error(
+                        DUMMY_SP,
+                        format!(
+                            "forbidden dyn type: {} (dyn support is currently minimal, please \
+                             open an issue to improve this feature)",
+                            ty
+                        ),
+                    )
                 }
             }
             _ => unreachable!("unsupported type: {ty}"),
@@ -750,7 +757,13 @@ impl<'a, 'ctx, 'tcx> Expander<'a, 'ctx, 'tcx> {
                 item_type => {
                     let path = ctx.def_path_str(def_id);
                     let self_path = ctx.def_path_str(self.namer.source_id());
-                    ctx.crash_and_error(self.root_span, format!("expanding {path:?} failed because of unexpected kind {item_type:?} while translating {self_path:?}"))
+                    ctx.crash_and_error(
+                        self.root_span,
+                        format!(
+                            "expanding {path:?} failed because of unexpected kind {item_type:?} \
+                             while translating {self_path:?}"
+                        ),
+                    )
                 }
             },
             Dependency::TyInvAxiom(ty) => self.expand_ty_inv_axiom(ty),

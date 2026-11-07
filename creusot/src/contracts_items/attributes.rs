@@ -162,7 +162,11 @@ fn tokenstream_to_meta<'a>(
     let name = {
         let Some(LitKind::Str(name, _)) = ts.next().and_then(|item| item.lit().map(|lit| lit.kind))
         else {
-            tcx.crash_and_error(span, "Invalid creusot::why3_meta attribute, missing name.\nExpected #[creusot::why3_meta(\"name\", ...)]")
+            tcx.crash_and_error(
+                span,
+                "Invalid creusot::why3_meta attribute, missing name.\nExpected \
+                 #[creusot::why3_meta(\"name\", ...)]",
+            )
         };
         MetaIdent(name.as_str().into())
     };
@@ -177,7 +181,14 @@ fn tokenstream_to_meta<'a>(
         } else if let Some(LitKind::Str(string, _)) = token.lit().map(|lit| &lit.kind) {
             args.push(MetaArg::String(string.as_str().into()))
         } else {
-            tcx.crash_and_error(span, format!("Invalid creusot::why3_meta attribute argument: {token:?}\nExpected #[creusot::why3_meta(\"name\", arg1, ...)] where each arg is an identifier, self, or a string literal."));
+            tcx.crash_and_error(
+                span,
+                format!(
+                    "Invalid creusot::why3_meta attribute argument: {token:?}\nExpected \
+                     #[creusot::why3_meta(\"name\", arg1, ...)] where each arg is an identifier, \
+                     self, or a string literal."
+                ),
+            );
         };
     }
     let args = args.into();

@@ -1325,7 +1325,8 @@ pub(crate) mod parsing {
             } else {
                 return Err(Error::new_spanned(
                     expr,
-                    " Unsupported expression: macros other than `pearlite!`, `proof_assert!` or `seq!` are unsupported in Pearlite code.",
+                    " Unsupported expression: macros other than `pearlite!`, `proof_assert!` or \
+                     `seq!` are unsupported in Pearlite code.",
                 ));
             }
         }

@@ -116,7 +116,10 @@ pub(crate) fn unsupported_cast<'tcx>(
 ) -> ! {
     ctx.crash_and_error(
         span,
-        format!("unsupported cast from {src} to {tgt} (allowed: bool as integer, integer as integer, or pointer as pointer)"),
+        format!(
+            "unsupported cast from {src} to {tgt} (allowed: bool as integer, integer as integer, \
+             or pointer as pointer)"
+        ),
     )
 }
 

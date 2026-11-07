@@ -93,7 +93,8 @@ impl Parse for TrustedArg {
         } else {
             Err(Error::new(
                 ident.span(),
-                "Unexpected `#[trusted]` argument: expected `ghost`, `terminates`, `positive(PARAM)`, or nothing",
+                "Unexpected `#[trusted]` argument: expected `ghost`, `terminates`, \
+                 `positive(PARAM)`, or nothing",
             ))
         }
     }

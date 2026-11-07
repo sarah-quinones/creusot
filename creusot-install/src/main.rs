@@ -262,8 +262,8 @@ fn install_provers(paths: &setup::CreusotPaths, args: &Args) -> anyhow::Result<(
             download(bin, url, &paths.cache_dir(), &paths.bin(), args)?;
         } else {
             eprintln!(
-                "Skipping {}: no binary release for this platform. \
-                 Install it separately and re-run with `--external {}`.",
+                "Skipping {}: no binary release for this platform. Install it separately and \
+                 re-run with `--external {}`.",
                 bin.bin.display_name,
                 format!("{tool:?}").to_lowercase(),
             );

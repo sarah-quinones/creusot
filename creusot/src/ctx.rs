@@ -644,7 +644,10 @@ impl<'tcx> TranslationCtx<'tcx> {
                 if !self.non_creusot_crate(i.krate) {
                     self.crash_and_error(
                         self.def_span(def_id),
-                        format!("the extern_spec mechanism should not be used on items in crates verified by Creusot"),
+                        format!(
+                            "the extern_spec mechanism should not be used on items in crates \
+                             verified by Creusot"
+                        ),
                     );
                 }
 
