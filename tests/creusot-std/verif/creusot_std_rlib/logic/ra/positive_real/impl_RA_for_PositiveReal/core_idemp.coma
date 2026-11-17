@@ -12,10 +12,10 @@ function core_PositiveReal [@inline:trivial] (self: t_PositiveReal) : t_Option_P
 
 meta "rewrite_def" function core_PositiveReal
 
-predicate index_Mapping_PositiveReal_bool [@inline:trivial] (self: Map.map t_PositiveReal bool) (a: t_PositiveReal) =
-  Map.get self a
+function index_Mapping_PositiveReal_bool [@inline:trivial] (self: Map.map t_PositiveReal bool) (a: t_PositiveReal) : bool
+ = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_PositiveReal_bool
+meta "rewrite_def" function index_Mapping_PositiveReal_bool
 
 function such_that_PositiveReal (p: Map.map t_PositiveReal bool) : t_PositiveReal
 
@@ -30,9 +30,9 @@ function unwrap_Option_PositiveReal (self: t_Option_PositiveReal) : t_PositiveRe
     | None -> any_PositiveReal
     end
 
-predicate gt_log_Real [@inline:trivial] (self: Real.real) (other: Real.real) = Real.(<) other self
+function gt_log_Real [@inline:trivial] (self: Real.real) (other: Real.real) : bool = Real.(<) other self
 
-meta "rewrite_def" predicate gt_log_Real
+meta "rewrite_def" function gt_log_Real
 
 function to_real (self: t_PositiveReal) : Real.real
 

@@ -4,9 +4,9 @@ type t_Subset_PositiveInner
 
 type t_Positive = { f0: t_Subset_PositiveInner }
 
-predicate inv_Positive [@inline:trivial] (_1: t_Positive) = true
+function inv_Positive [@inline:trivial] (_1: t_Positive) : bool = true
 
-meta "rewrite_def" predicate inv_Positive
+meta "rewrite_def" function inv_Positive
 
 meta "compute_max_steps" 1000000
 

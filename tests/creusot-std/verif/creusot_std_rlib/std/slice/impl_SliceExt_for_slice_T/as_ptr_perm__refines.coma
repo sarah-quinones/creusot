@@ -9,88 +9,87 @@ use int.Int
 
 type t_T
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
 
-meta "rewrite_def" predicate invariant_ref_T
+meta "rewrite_def" function invariant_ref_T
 
-predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
 
-meta "rewrite_def" predicate inv_ref_T
+meta "rewrite_def" function inv_ref_T
 
-predicate invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) =
-  forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_T (Seq.get self i)
+function invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+    -> inv_ref_T (Seq.get self i)
 
-meta "rewrite_def" predicate invariant_Seq_T
+meta "rewrite_def" function invariant_Seq_T
 
-predicate inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Seq_T _1
+function inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Seq_T _1
 
-meta "rewrite_def" predicate inv_Seq_T
+meta "rewrite_def" function inv_Seq_T
 
-predicate invariant_slice_T (self: Slice64.slice t_T) = inv_Seq_T (Slice64.view self)
+function invariant_slice_T (self: Slice64.slice t_T) : bool = inv_Seq_T (Slice64.view self)
 
-predicate inv_slice_T [@inline:trivial] (_1: Slice64.slice t_T) = invariant_slice_T _1
+function inv_slice_T [@inline:trivial] (_1: Slice64.slice t_T) : bool = invariant_slice_T _1
 
-meta "rewrite_def" predicate inv_slice_T
+meta "rewrite_def" function inv_slice_T
 
-predicate invariant_ref_slice_T [@inline:trivial] (self: Slice64.slice t_T) = inv_slice_T self
+function invariant_ref_slice_T [@inline:trivial] (self: Slice64.slice t_T) : bool = inv_slice_T self
 
-meta "rewrite_def" predicate invariant_ref_slice_T
+meta "rewrite_def" function invariant_ref_slice_T
 
-predicate inv_ref_slice_T [@inline:trivial] (_1: Slice64.slice t_T) = invariant_ref_slice_T _1
+function inv_ref_slice_T [@inline:trivial] (_1: Slice64.slice t_T) : bool = invariant_ref_slice_T _1
 
-meta "rewrite_def" predicate inv_ref_slice_T
+meta "rewrite_def" function inv_ref_slice_T
 
 type t_Perm_ptr_slice_T
 
 type tup2_ptr_T_Ghost_ref_Perm_ptr_slice_T = { f0: Opaque.ptr; f1: t_Perm_ptr_slice_T }
 
-predicate is_null_ptr_slice_T (self: Opaque.ptr) = Ptr.addr_logic_u64 self = (0: UInt64.t)
+function is_null_ptr_slice_T (self: Opaque.ptr) : bool = Ptr.addr_logic_u64 self = (0: UInt64.t)
 
 function ward_ptr_slice_T (self: t_Perm_ptr_slice_T) : Opaque.ptr
 
-predicate metadata_matches_slice_T [@inline:trivial] (_value: Slice64.slice t_T) (_metadata: UInt64.t) =
+function metadata_matches_slice_T [@inline:trivial] (_value: Slice64.slice t_T) (_metadata: UInt64.t) : bool =
   Seq.length (Slice64.view _value) = UInt64.t'int _metadata
 
-meta "rewrite_def" predicate metadata_matches_slice_T
+meta "rewrite_def" function metadata_matches_slice_T
 
 function val_unsized_ptr_slice_T (self: t_Perm_ptr_slice_T) : Slice64.slice t_T
 
 function metadata_slice_T (_1: Opaque.ptr) : UInt64.t
 
-predicate invariant_Perm_ptr_slice_T (self: t_Perm_ptr_slice_T) =
-  not is_null_ptr_slice_T (ward_ptr_slice_T self)
+function invariant_Perm_ptr_slice_T (self: t_Perm_ptr_slice_T) : bool = not is_null_ptr_slice_T (ward_ptr_slice_T self)
   /\ metadata_matches_slice_T (val_unsized_ptr_slice_T self) (metadata_slice_T (ward_ptr_slice_T self))
   /\ inv_ref_slice_T (val_unsized_ptr_slice_T self)
 
-predicate inv_Perm_ptr_slice_T (_1: t_Perm_ptr_slice_T)
+function inv_Perm_ptr_slice_T (_1: t_Perm_ptr_slice_T) : bool
 
 axiom inv_axiom [@rewrite]: forall _1: t_Perm_ptr_slice_T [inv_Perm_ptr_slice_T _1]. inv_Perm_ptr_slice_T _1
     = invariant_Perm_ptr_slice_T _1
 
-predicate invariant_ref_Perm_ptr_slice_T [@inline:trivial] (self: t_Perm_ptr_slice_T) = inv_Perm_ptr_slice_T self
+function invariant_ref_Perm_ptr_slice_T [@inline:trivial] (self: t_Perm_ptr_slice_T) : bool = inv_Perm_ptr_slice_T self
 
-meta "rewrite_def" predicate invariant_ref_Perm_ptr_slice_T
+meta "rewrite_def" function invariant_ref_Perm_ptr_slice_T
 
-predicate inv_ref_Perm_ptr_slice_T [@inline:trivial] (_1: t_Perm_ptr_slice_T) = invariant_ref_Perm_ptr_slice_T _1
+function inv_ref_Perm_ptr_slice_T [@inline:trivial] (_1: t_Perm_ptr_slice_T) : bool = invariant_ref_Perm_ptr_slice_T _1
 
-meta "rewrite_def" predicate inv_ref_Perm_ptr_slice_T
+meta "rewrite_def" function inv_ref_Perm_ptr_slice_T
 
-predicate invariant_Ghost_ref_Perm_ptr_slice_T [@inline:trivial] (self: t_Perm_ptr_slice_T) =
+function invariant_Ghost_ref_Perm_ptr_slice_T [@inline:trivial] (self: t_Perm_ptr_slice_T) : bool =
   inv_ref_Perm_ptr_slice_T self
 
-meta "rewrite_def" predicate invariant_Ghost_ref_Perm_ptr_slice_T
+meta "rewrite_def" function invariant_Ghost_ref_Perm_ptr_slice_T
 
-predicate inv_Ghost_ref_Perm_ptr_slice_T [@inline:trivial] (_1: t_Perm_ptr_slice_T) =
+function inv_Ghost_ref_Perm_ptr_slice_T [@inline:trivial] (_1: t_Perm_ptr_slice_T) : bool =
   invariant_Ghost_ref_Perm_ptr_slice_T _1
 
-meta "rewrite_def" predicate inv_Ghost_ref_Perm_ptr_slice_T
+meta "rewrite_def" function inv_Ghost_ref_Perm_ptr_slice_T
 
-predicate inv_tup2_ptr_T_Ghost_ref_Perm_ptr_slice_T [@inline:trivial] (_1: tup2_ptr_T_Ghost_ref_Perm_ptr_slice_T) =
-  inv_Ghost_ref_Perm_ptr_slice_T _1.f1
+function inv_tup2_ptr_T_Ghost_ref_Perm_ptr_slice_T [@inline:trivial] (_1: tup2_ptr_T_Ghost_ref_Perm_ptr_slice_T) : bool
+ = inv_Ghost_ref_Perm_ptr_slice_T _1.f1
 
-meta "rewrite_def" predicate inv_tup2_ptr_T_Ghost_ref_Perm_ptr_slice_T
+meta "rewrite_def" function inv_tup2_ptr_T_Ghost_ref_Perm_ptr_slice_T
 
 meta "compute_max_steps" 1000000
 

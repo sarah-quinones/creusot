@@ -7,17 +7,17 @@ module M_common__trait_ExactSizeIterator__is_empty
   
   type t_Self
   
-  predicate inv_Self (_1: t_Self)
+  function inv_Self (_1: t_Self) : bool
   
-  predicate invariant_ref_Self [@inline:trivial] (self: t_Self) = inv_Self self
+  function invariant_ref_Self [@inline:trivial] (self: t_Self) : bool = inv_Self self
   
-  meta "rewrite_def" predicate invariant_ref_Self
+  meta "rewrite_def" function invariant_ref_Self
   
-  predicate inv_ref_Self [@inline:trivial] (_1: t_Self) = invariant_ref_Self _1
+  function inv_ref_Self [@inline:trivial] (_1: t_Self) : bool = invariant_ref_Self _1
   
-  meta "rewrite_def" predicate inv_ref_Self
+  meta "rewrite_def" function inv_ref_Self
   
-  predicate precondition_len (self: ()) (args: t_Self)
+  function precondition_len (self: ()) (args: t_Self) : bool
   
   axiom precondition_fndef: forall args: t_Self [precondition_len () args]. (let self = args in inv_ref_Self self)
       -> precondition_len () args
@@ -28,7 +28,7 @@ module M_common__trait_ExactSizeIterator__is_empty
   
   type t_Item
   
-  predicate produces_Self (self: t_Self) (visited: Seq.seq t_Item) (o: t_Self)
+  function produces_Self (self: t_Self) (visited: Seq.seq t_Item) (o: t_Self) : bool
   
   function produces_trans_Self (a: t_Self) (ab: Seq.seq t_Item) (b: t_Self) (bc: Seq.seq t_Item) (c: t_Self) : ()
   
@@ -40,9 +40,9 @@ module M_common__trait_ExactSizeIterator__is_empty
   
   axiom produces_refl_Self_spec: forall self: t_Self. produces_Self self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_Self (self: MutBorrow.t t_Self)
+  function completed_Self (self: MutBorrow.t t_Self) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_Self, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -53,16 +53,16 @@ module M_common__trait_ExactSizeIterator__is_empty
         | None -> true
         end)
   
-  predicate precondition_size_hint (self: ()) (args: t_Self)
+  function precondition_size_hint (self: ()) (args: t_Self) : bool
   
   axiom precondition_fndef'0:
     forall args: t_Self [precondition_size_hint () args]. (let self = args in inv_ref_Self self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_Self (self: t_Self) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -71,15 +71,16 @@ module M_common__trait_ExactSizeIterator__is_empty
     {[@stop_split] [@expl:size_hint ensures] postcondition_once_size_hint () self result}
       (! return {result}) ]
   
-  predicate postcondition_len (self: ()) (args: t_Self) (result: UInt64.t)
+  function postcondition_len (self: ()) (args: t_Self) (result: UInt64.t) : bool
   
   axiom postcondition_fndef'0:
     forall args: t_Self, result: UInt64.t [postcondition_len () args result]. postcondition_len () args result
       -> (let self = args in postcondition_size_hint () self { f0 = result; f1 = Some result })
   
-  predicate postcondition_once_len (self: ()) (args: t_Self) (result: UInt64.t) = postcondition_len self args result
+  function postcondition_once_len (self: ()) (args: t_Self) (result: UInt64.t) : bool =
+    postcondition_len self args result
   
-  meta "rewrite_def" predicate postcondition_once_len
+  meta "rewrite_def" function postcondition_once_len
   
   let len_Self (self: t_Self) (return (x: UInt64.t)) = {[@stop_split] [@expl:len requires] precondition_len () self}
     any
@@ -117,7 +118,7 @@ module M_common__trait_ExactSizeIterator__len
   
   type t_Item
   
-  predicate produces_Self (self: t_Self) (visited: Seq.seq t_Item) (o: t_Self)
+  function produces_Self (self: t_Self) (visited: Seq.seq t_Item) (o: t_Self) : bool
   
   function produces_trans_Self (a: t_Self) (ab: Seq.seq t_Item) (b: t_Self) (bc: Seq.seq t_Item) (c: t_Self) : ()
   
@@ -129,9 +130,9 @@ module M_common__trait_ExactSizeIterator__len
   
   axiom produces_refl_Self_spec: forall self: t_Self. produces_Self self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_Self (self: MutBorrow.t t_Self)
+  function completed_Self (self: MutBorrow.t t_Self) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_Self, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -142,25 +143,25 @@ module M_common__trait_ExactSizeIterator__len
         | None -> true
         end)
   
-  predicate inv_Self (_1: t_Self)
+  function inv_Self (_1: t_Self) : bool
   
-  predicate invariant_ref_Self [@inline:trivial] (self: t_Self) = inv_Self self
+  function invariant_ref_Self [@inline:trivial] (self: t_Self) : bool = inv_Self self
   
-  meta "rewrite_def" predicate invariant_ref_Self
+  meta "rewrite_def" function invariant_ref_Self
   
-  predicate inv_ref_Self [@inline:trivial] (_1: t_Self) = invariant_ref_Self _1
+  function inv_ref_Self [@inline:trivial] (_1: t_Self) : bool = invariant_ref_Self _1
   
-  meta "rewrite_def" predicate inv_ref_Self
+  meta "rewrite_def" function inv_ref_Self
   
-  predicate precondition_size_hint (self: ()) (args: t_Self)
+  function precondition_size_hint (self: ()) (args: t_Self) : bool
   
   axiom precondition_fndef: forall args: t_Self [precondition_size_hint () args]. (let self = args in inv_ref_Self self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_Self (self: t_Self) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -251,7 +252,7 @@ module M_impl_ExactSizeIterator_for_Map_I_F__is_empty (* <Map<I, F> as common::E
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -270,9 +271,9 @@ module M_impl_ExactSizeIterator_for_Map_I_F__is_empty (* <Map<I, F> as common::E
   
   type tup2_usize_Option_usize = { f0: UInt64.t; f1: t_Option_usize }
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_I, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -283,25 +284,25 @@ module M_impl_ExactSizeIterator_for_Map_I_F__is_empty (* <Map<I, F> as common::E
         | None -> true
         end)
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate invariant_ref_I [@inline:trivial] (self: t_I) = inv_I self
+  function invariant_ref_I [@inline:trivial] (self: t_I) : bool = inv_I self
   
-  meta "rewrite_def" predicate invariant_ref_I
+  meta "rewrite_def" function invariant_ref_I
   
-  predicate inv_ref_I [@inline:trivial] (_1: t_I) = invariant_ref_I _1
+  function inv_ref_I [@inline:trivial] (_1: t_I) : bool = invariant_ref_I _1
   
-  meta "rewrite_def" predicate inv_ref_I
+  meta "rewrite_def" function inv_ref_I
   
-  predicate precondition_size_hint (self: ()) (args: t_I)
+  function precondition_size_hint (self: ()) (args: t_I) : bool
   
   axiom precondition_fndef: forall args: t_I [precondition_size_hint () args]. (let self = args in inv_ref_I self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_I (self: t_I) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -315,21 +316,22 @@ module M_impl_ExactSizeIterator_for_Map_I_F__is_empty (* <Map<I, F> as common::E
   axiom size_hint_exact_I_spec: forall self: t_I, r: tup2_usize_Option_usize. postcondition_size_hint () self r
       -> r.f1 = Some (r.f0)
   
-  predicate precondition_is_empty (self: ()) (args: t_I)
+  function precondition_is_empty (self: ()) (args: t_I) : bool
   
   axiom precondition_fndef'0: forall args: t_I [precondition_is_empty () args]. (let self = args in inv_ref_I self)
       -> precondition_is_empty () args
   
-  predicate postcondition_is_empty (self: ()) (args: t_I) (result: bool)
+  function postcondition_is_empty (self: ()) (args: t_I) (result: bool) : bool
   
   axiom postcondition_fndef'0:
     forall args: t_I, result: bool [postcondition_is_empty () args result]. postcondition_is_empty () args result
       -> (let self = args in exists l: UInt64.t. postcondition_size_hint () self { f0 = l; f1 = Some l }
         /\ result = (l = (0: UInt64.t)))
   
-  predicate postcondition_once_is_empty (self: ()) (args: t_I) (result: bool) = postcondition_is_empty self args result
+  function postcondition_once_is_empty (self: ()) (args: t_I) (result: bool) : bool =
+    postcondition_is_empty self args result
   
-  meta "rewrite_def" predicate postcondition_once_is_empty
+  meta "rewrite_def" function postcondition_once_is_empty
   
   let is_empty_I (self: t_I) (return (x: bool)) =
   {[@stop_split] [@expl:is_empty requires] precondition_is_empty () self}
@@ -337,21 +339,21 @@ module M_impl_ExactSizeIterator_for_Map_I_F__is_empty (* <Map<I, F> as common::E
     [ return (result: bool) -> {[@stop_split] [@expl:is_empty ensures] postcondition_once_is_empty () self result}
       (! return {result}) ]
   
-  predicate inv_Item (_1: t_Item)
+  function inv_Item (_1: t_Item) : bool
   
-  predicate precondition_F (self: t_F) (args: t_Item)
+  function precondition_F (self: t_F) (args: t_Item) : bool
   
-  predicate next_precondition_I (iter'0: t_I) (func'0: t_F) =
+  function next_precondition_I (iter'0: t_I) (func'0: t_F) : bool =
     forall e: t_Item, i: t_I [produces_I iter'0 (Seq.singleton e) i]. inv_Item e
         /\ produces_I iter'0 (Seq.singleton e) i -> precondition_F func'0 e
   
   type t_B
   
-  predicate postcondition_once_F (self: t_F) (args: t_Item) (result: t_B)
+  function postcondition_once_F (self: t_F) (args: t_Item) (result: t_B) : bool
   
-  predicate resolve_F (_1: t_F)
+  function resolve_F (_1: t_F) : bool
   
-  predicate postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B)
+  function postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B) : bool
   
   function fn_mut_once_F (self: t_F) (args: t_Item) (res: t_B) : ()
   
@@ -359,7 +361,7 @@ module M_impl_ExactSizeIterator_for_Map_I_F__is_empty (* <Map<I, F> as common::E
     forall self: t_F, args: t_Item, res: t_B [postcondition_once_F self args res]. postcondition_once_F self args res
       = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
   
-  predicate hist_inv_F (self: t_F) (result_state: t_F)
+  function hist_inv_F (self: t_F) (result_state: t_F) : bool
   
   function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
   
@@ -377,65 +379,64 @@ module M_impl_ExactSizeIterator_for_Map_I_F__is_empty (* <Map<I, F> as common::E
     forall self: t_F, args: t_Item, res_state: t_F, res: t_B [postcondition_mut_F self args res_state res | hist_inv_F self res_state]. postcondition_mut_F self args res_state res
       -> hist_inv_F self res_state
   
-  predicate invariant_ref_Item [@inline:trivial] (self: t_Item) = inv_Item self
+  function invariant_ref_Item [@inline:trivial] (self: t_Item) : bool = inv_Item self
   
-  meta "rewrite_def" predicate invariant_ref_Item
+  meta "rewrite_def" function invariant_ref_Item
   
-  predicate inv_ref_Item [@inline:trivial] (_1: t_Item) = invariant_ref_Item _1
+  function inv_ref_Item [@inline:trivial] (_1: t_Item) : bool = invariant_ref_Item _1
   
-  meta "rewrite_def" predicate inv_ref_Item
+  meta "rewrite_def" function inv_ref_Item
   
-  predicate invariant_Seq_Item [@inline:trivial] (self: Seq.seq t_Item) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_Item (Seq.get self i)
+  function invariant_Seq_Item [@inline:trivial] (self: Seq.seq t_Item) : bool = forall i: int. 0 <= i
+        /\ i < Seq.length self -> inv_ref_Item (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_Item
+  meta "rewrite_def" function invariant_Seq_Item
   
-  predicate inv_Seq_Item [@inline:trivial] (_1: Seq.seq t_Item) = invariant_Seq_Item _1
+  function inv_Seq_Item [@inline:trivial] (_1: Seq.seq t_Item) : bool = invariant_Seq_Item _1
   
-  meta "rewrite_def" predicate inv_Seq_Item
+  meta "rewrite_def" function inv_Seq_Item
   
-  predicate inv_F (_1: t_F)
+  function inv_F (_1: t_F) : bool
   
-  predicate invariant_refmut_F [@inline:trivial] (self: MutBorrow.t t_F) = inv_F self.current /\ inv_F self.final
+  function invariant_refmut_F [@inline:trivial] (self: MutBorrow.t t_F) : bool = inv_F self.current /\ inv_F self.final
   
-  meta "rewrite_def" predicate invariant_refmut_F
+  meta "rewrite_def" function invariant_refmut_F
   
-  predicate inv_refmut_F [@inline:trivial] (_1: MutBorrow.t t_F) = invariant_refmut_F _1
+  function inv_refmut_F [@inline:trivial] (_1: MutBorrow.t t_F) : bool = invariant_refmut_F _1
   
-  meta "rewrite_def" predicate inv_refmut_F
+  meta "rewrite_def" function inv_refmut_F
   
-  predicate preservation_I (iter'0: t_I) (func'0: t_F) =
+  function preservation_I (iter'0: t_I) (func'0: t_F) : bool =
     forall s: Seq.seq t_Item, e1: t_Item, e2: t_Item, f: MutBorrow.t t_F, b: t_B, i: t_I [produces_I iter'0 (Seq.snoc (Seq.snoc s e1) e2) i, postcondition_mut_F f.current e1 f.final b]. hist_inv_F func'0 f.current
       -> inv_Seq_Item s /\ inv_Item e1 /\ inv_Item e2 /\ inv_refmut_F f
       -> produces_I iter'0 (Seq.snoc (Seq.snoc s e1) e2) i
       -> postcondition_mut_F f.current e1 f.final b -> precondition_F f.final e2
   
-  predicate reinitialize_I =
-    forall iter'0: MutBorrow.t t_I, func'0: t_F. completed_I iter'0
-      -> next_precondition_I iter'0.final func'0 /\ preservation_I iter'0.final func'0
+  constant reinitialize_I: bool = forall iter'0: MutBorrow.t t_I, func'0: t_F. completed_I iter'0
+    -> next_precondition_I iter'0.final func'0 /\ preservation_I iter'0.final func'0
   
-  predicate invariant_Map_I_F (self: t_Map_I_F) =
-    reinitialize_I /\ preservation_I self.iter self.func /\ next_precondition_I self.iter self.func
+  function invariant_Map_I_F (self: t_Map_I_F) : bool = reinitialize_I
+    /\ preservation_I self.iter self.func /\ next_precondition_I self.iter self.func
   
-  predicate inv_Map_I_F (_1: t_Map_I_F)
+  function inv_Map_I_F (_1: t_Map_I_F) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Map_I_F [inv_Map_I_F _1]. inv_Map_I_F _1
       = (invariant_Map_I_F _1 /\ inv_I _1.iter /\ inv_F _1.func)
   
-  predicate invariant_ref_Map_I_F [@inline:trivial] (self: t_Map_I_F) = inv_Map_I_F self
+  function invariant_ref_Map_I_F [@inline:trivial] (self: t_Map_I_F) : bool = inv_Map_I_F self
   
-  meta "rewrite_def" predicate invariant_ref_Map_I_F
+  meta "rewrite_def" function invariant_ref_Map_I_F
   
-  predicate inv_ref_Map_I_F [@inline:trivial] (_1: t_Map_I_F) = invariant_ref_Map_I_F _1
+  function inv_ref_Map_I_F [@inline:trivial] (_1: t_Map_I_F) : bool = invariant_ref_Map_I_F _1
   
-  meta "rewrite_def" predicate inv_ref_Map_I_F
+  meta "rewrite_def" function inv_ref_Map_I_F
   
-  predicate postcondition_size_hint'0 (self: ()) (args: t_Map_I_F) (result: tup2_usize_Option_usize) =
+  function postcondition_size_hint'0 (self: ()) (args: t_Map_I_F) (result: tup2_usize_Option_usize) : bool =
     let self'0 = args in postcondition_size_hint () self'0.iter result
   
-  meta "rewrite_def" predicate postcondition_size_hint'0
+  meta "rewrite_def" function postcondition_size_hint'0
   
-  predicate produces_Map_I_F [@inline:trivial] (self: t_Map_I_F) (visited: Seq.seq t_B) (succ: t_Map_I_F) =
+  function produces_Map_I_F [@inline:trivial] (self: t_Map_I_F) (visited: Seq.seq t_B) (succ: t_Map_I_F) : bool =
     hist_inv_F self.func succ.func
     /\ (exists fs: Seq.seq (MutBorrow.t t_F). Seq.length fs = Seq.length visited
       /\ (exists s: Seq.seq t_Item [produces_I self.iter s succ.iter]. Seq.length s = Seq.length visited
@@ -450,7 +451,7 @@ module M_impl_ExactSizeIterator_for_Map_I_F__is_empty (* <Map<I, F> as common::E
           -> hist_inv_F self.func (Seq.get fs i).current
           /\ postcondition_mut_F (Seq.get fs i).current (Seq.get s i) (Seq.get fs i).final (Seq.get visited i))))
   
-  meta "rewrite_def" predicate produces_Map_I_F
+  meta "rewrite_def" function produces_Map_I_F
   
   function produces_trans_Map_I_F (a: t_Map_I_F) (ab: Seq.seq t_B) (b: t_Map_I_F) (bc: Seq.seq t_B) (c: t_Map_I_F) : ()
    = ()
@@ -501,7 +502,7 @@ module M_impl_ExactSizeIterator_for_Map_I_F__is_empty__refines (* <Map<I, F> as 
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -512,23 +513,23 @@ module M_impl_ExactSizeIterator_for_Map_I_F__is_empty__refines (* <Map<I, F> as 
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate inv_Item (_1: t_Item)
+  function inv_Item (_1: t_Item) : bool
   
-  predicate precondition_F (self: t_F) (args: t_Item)
+  function precondition_F (self: t_F) (args: t_Item) : bool
   
-  predicate next_precondition_I (iter'0: t_I) (func'0: t_F) =
+  function next_precondition_I (iter'0: t_I) (func'0: t_F) : bool =
     forall e: t_Item, i: t_I [produces_I iter'0 (Seq.singleton e) i]. inv_Item e
         /\ produces_I iter'0 (Seq.singleton e) i -> precondition_F func'0 e
   
   type t_B
   
-  predicate postcondition_once_F (self: t_F) (args: t_Item) (result: t_B)
+  function postcondition_once_F (self: t_F) (args: t_Item) (result: t_B) : bool
   
-  predicate resolve_F (_1: t_F)
+  function resolve_F (_1: t_F) : bool
   
-  predicate postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B)
+  function postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B) : bool
   
   function fn_mut_once_F (self: t_F) (args: t_Item) (res: t_B) : ()
   
@@ -536,7 +537,7 @@ module M_impl_ExactSizeIterator_for_Map_I_F__is_empty__refines (* <Map<I, F> as 
     forall self: t_F, args: t_Item, res: t_B [postcondition_once_F self args res]. postcondition_once_F self args res
       = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
   
-  predicate hist_inv_F (self: t_F) (result_state: t_F)
+  function hist_inv_F (self: t_F) (result_state: t_F) : bool
   
   function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
   
@@ -554,66 +555,65 @@ module M_impl_ExactSizeIterator_for_Map_I_F__is_empty__refines (* <Map<I, F> as 
     forall self: t_F, args: t_Item, res_state: t_F, res: t_B [postcondition_mut_F self args res_state res | hist_inv_F self res_state]. postcondition_mut_F self args res_state res
       -> hist_inv_F self res_state
   
-  predicate invariant_ref_Item [@inline:trivial] (self: t_Item) = inv_Item self
+  function invariant_ref_Item [@inline:trivial] (self: t_Item) : bool = inv_Item self
   
-  meta "rewrite_def" predicate invariant_ref_Item
+  meta "rewrite_def" function invariant_ref_Item
   
-  predicate inv_ref_Item [@inline:trivial] (_1: t_Item) = invariant_ref_Item _1
+  function inv_ref_Item [@inline:trivial] (_1: t_Item) : bool = invariant_ref_Item _1
   
-  meta "rewrite_def" predicate inv_ref_Item
+  meta "rewrite_def" function inv_ref_Item
   
-  predicate invariant_Seq_Item [@inline:trivial] (self: Seq.seq t_Item) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_Item (Seq.get self i)
+  function invariant_Seq_Item [@inline:trivial] (self: Seq.seq t_Item) : bool = forall i: int. 0 <= i
+        /\ i < Seq.length self -> inv_ref_Item (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_Item
+  meta "rewrite_def" function invariant_Seq_Item
   
-  predicate inv_Seq_Item [@inline:trivial] (_1: Seq.seq t_Item) = invariant_Seq_Item _1
+  function inv_Seq_Item [@inline:trivial] (_1: Seq.seq t_Item) : bool = invariant_Seq_Item _1
   
-  meta "rewrite_def" predicate inv_Seq_Item
+  meta "rewrite_def" function inv_Seq_Item
   
-  predicate inv_F (_1: t_F)
+  function inv_F (_1: t_F) : bool
   
-  predicate invariant_refmut_F [@inline:trivial] (self: MutBorrow.t t_F) = inv_F self.current /\ inv_F self.final
+  function invariant_refmut_F [@inline:trivial] (self: MutBorrow.t t_F) : bool = inv_F self.current /\ inv_F self.final
   
-  meta "rewrite_def" predicate invariant_refmut_F
+  meta "rewrite_def" function invariant_refmut_F
   
-  predicate inv_refmut_F [@inline:trivial] (_1: MutBorrow.t t_F) = invariant_refmut_F _1
+  function inv_refmut_F [@inline:trivial] (_1: MutBorrow.t t_F) : bool = invariant_refmut_F _1
   
-  meta "rewrite_def" predicate inv_refmut_F
+  meta "rewrite_def" function inv_refmut_F
   
-  predicate preservation_I (iter'0: t_I) (func'0: t_F) =
+  function preservation_I (iter'0: t_I) (func'0: t_F) : bool =
     forall s: Seq.seq t_Item, e1: t_Item, e2: t_Item, f: MutBorrow.t t_F, b: t_B, i: t_I [produces_I iter'0 (Seq.snoc (Seq.snoc s e1) e2) i, postcondition_mut_F f.current e1 f.final b]. hist_inv_F func'0 f.current
       -> inv_Seq_Item s /\ inv_Item e1 /\ inv_Item e2 /\ inv_refmut_F f
       -> produces_I iter'0 (Seq.snoc (Seq.snoc s e1) e2) i
       -> postcondition_mut_F f.current e1 f.final b -> precondition_F f.final e2
   
-  predicate reinitialize_I =
-    forall iter'0: MutBorrow.t t_I, func'0: t_F. completed_I iter'0
-      -> next_precondition_I iter'0.final func'0 /\ preservation_I iter'0.final func'0
+  constant reinitialize_I: bool = forall iter'0: MutBorrow.t t_I, func'0: t_F. completed_I iter'0
+    -> next_precondition_I iter'0.final func'0 /\ preservation_I iter'0.final func'0
   
-  predicate invariant_Map_I_F (self: t_Map_I_F) =
-    reinitialize_I /\ preservation_I self.iter self.func /\ next_precondition_I self.iter self.func
+  function invariant_Map_I_F (self: t_Map_I_F) : bool = reinitialize_I
+    /\ preservation_I self.iter self.func /\ next_precondition_I self.iter self.func
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate inv_Map_I_F (_1: t_Map_I_F)
+  function inv_Map_I_F (_1: t_Map_I_F) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Map_I_F [inv_Map_I_F _1]. inv_Map_I_F _1
       = (invariant_Map_I_F _1 /\ inv_I _1.iter /\ inv_F _1.func)
   
-  predicate invariant_ref_Map_I_F [@inline:trivial] (self: t_Map_I_F) = inv_Map_I_F self
+  function invariant_ref_Map_I_F [@inline:trivial] (self: t_Map_I_F) : bool = inv_Map_I_F self
   
-  meta "rewrite_def" predicate invariant_ref_Map_I_F
+  meta "rewrite_def" function invariant_ref_Map_I_F
   
-  predicate inv_ref_Map_I_F [@inline:trivial] (_1: t_Map_I_F) = invariant_ref_Map_I_F _1
+  function inv_ref_Map_I_F [@inline:trivial] (_1: t_Map_I_F) : bool = invariant_ref_Map_I_F _1
   
-  meta "rewrite_def" predicate inv_ref_Map_I_F
+  meta "rewrite_def" function inv_ref_Map_I_F
   
   type t_Option_usize = None | Some UInt64.t
   
   type tup2_usize_Option_usize = { f0: UInt64.t; f1: t_Option_usize }
   
-  predicate postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_I, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -624,12 +624,12 @@ module M_impl_ExactSizeIterator_for_Map_I_F__is_empty__refines (* <Map<I, F> as 
         | None -> true
         end)
   
-  predicate postcondition_size_hint'0 (self: ()) (args: t_Map_I_F) (result: tup2_usize_Option_usize) =
+  function postcondition_size_hint'0 (self: ()) (args: t_Map_I_F) (result: tup2_usize_Option_usize) : bool =
     let self'0 = args in postcondition_size_hint () self'0.iter result
   
-  meta "rewrite_def" predicate postcondition_size_hint'0
+  meta "rewrite_def" function postcondition_size_hint'0
   
-  predicate produces_Map_I_F [@inline:trivial] (self: t_Map_I_F) (visited: Seq.seq t_B) (succ: t_Map_I_F) =
+  function produces_Map_I_F [@inline:trivial] (self: t_Map_I_F) (visited: Seq.seq t_B) (succ: t_Map_I_F) : bool =
     hist_inv_F self.func succ.func
     /\ (exists fs: Seq.seq (MutBorrow.t t_F). Seq.length fs = Seq.length visited
       /\ (exists s: Seq.seq t_Item [produces_I self.iter s succ.iter]. Seq.length s = Seq.length visited
@@ -644,7 +644,7 @@ module M_impl_ExactSizeIterator_for_Map_I_F__is_empty__refines (* <Map<I, F> as 
           -> hist_inv_F self.func (Seq.get fs i).current
           /\ postcondition_mut_F (Seq.get fs i).current (Seq.get s i) (Seq.get fs i).final (Seq.get visited i))))
   
-  meta "rewrite_def" predicate produces_Map_I_F
+  meta "rewrite_def" function produces_Map_I_F
   
   function produces_trans_Map_I_F (a: t_Map_I_F) (ab: Seq.seq t_B) (b: t_Map_I_F) (bc: Seq.seq t_B) (c: t_Map_I_F) : ()
    = ()
@@ -657,23 +657,23 @@ module M_impl_ExactSizeIterator_for_Map_I_F__is_empty__refines (* <Map<I, F> as 
   
   axiom produces_refl_Map_I_F_spec: forall self: t_Map_I_F. produces_Map_I_F self (Seq.empty: Seq.seq t_B) self
   
-  predicate invariant_ref_I [@inline:trivial] (self: t_I) = inv_I self
+  function invariant_ref_I [@inline:trivial] (self: t_I) : bool = inv_I self
   
-  meta "rewrite_def" predicate invariant_ref_I
+  meta "rewrite_def" function invariant_ref_I
   
-  predicate inv_ref_I [@inline:trivial] (_1: t_I) = invariant_ref_I _1
+  function inv_ref_I [@inline:trivial] (_1: t_I) : bool = invariant_ref_I _1
   
-  meta "rewrite_def" predicate inv_ref_I
+  meta "rewrite_def" function inv_ref_I
   
-  predicate precondition_size_hint (self: ()) (args: t_I)
+  function precondition_size_hint (self: ()) (args: t_I) : bool
   
   axiom precondition_fndef: forall args: t_I [precondition_size_hint () args]. (let self = args in inv_ref_I self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_I (self: t_I) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -719,7 +719,7 @@ module M_impl_ExactSizeIterator_for_Map_I_F__len (* <Map<I, F> as common::ExactS
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -730,9 +730,9 @@ module M_impl_ExactSizeIterator_for_Map_I_F__len (* <Map<I, F> as common::ExactS
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_I, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -743,25 +743,25 @@ module M_impl_ExactSizeIterator_for_Map_I_F__len (* <Map<I, F> as common::ExactS
         | None -> true
         end)
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate invariant_ref_I [@inline:trivial] (self: t_I) = inv_I self
+  function invariant_ref_I [@inline:trivial] (self: t_I) : bool = inv_I self
   
-  meta "rewrite_def" predicate invariant_ref_I
+  meta "rewrite_def" function invariant_ref_I
   
-  predicate inv_ref_I [@inline:trivial] (_1: t_I) = invariant_ref_I _1
+  function inv_ref_I [@inline:trivial] (_1: t_I) : bool = invariant_ref_I _1
   
-  meta "rewrite_def" predicate inv_ref_I
+  meta "rewrite_def" function inv_ref_I
   
-  predicate precondition_size_hint (self: ()) (args: t_I)
+  function precondition_size_hint (self: ()) (args: t_I) : bool
   
   axiom precondition_fndef: forall args: t_I [precondition_size_hint () args]. (let self = args in inv_ref_I self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_I (self: t_I) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -775,41 +775,41 @@ module M_impl_ExactSizeIterator_for_Map_I_F__len (* <Map<I, F> as common::ExactS
   axiom size_hint_exact_I_spec: forall self: t_I, r: tup2_usize_Option_usize. postcondition_size_hint () self r
       -> r.f1 = Some (r.f0)
   
-  predicate precondition_len (self: ()) (args: t_I)
+  function precondition_len (self: ()) (args: t_I) : bool
   
   axiom precondition_fndef'0: forall args: t_I [precondition_len () args]. (let self = args in inv_ref_I self)
       -> precondition_len () args
   
-  predicate postcondition_len (self: ()) (args: t_I) (result: UInt64.t)
+  function postcondition_len (self: ()) (args: t_I) (result: UInt64.t) : bool
   
   axiom postcondition_fndef'0:
     forall args: t_I, result: UInt64.t [postcondition_len () args result]. postcondition_len () args result
       -> (let self = args in postcondition_size_hint () self { f0 = result; f1 = Some result })
   
-  predicate postcondition_once_len (self: ()) (args: t_I) (result: UInt64.t) = postcondition_len self args result
+  function postcondition_once_len (self: ()) (args: t_I) (result: UInt64.t) : bool = postcondition_len self args result
   
-  meta "rewrite_def" predicate postcondition_once_len
+  meta "rewrite_def" function postcondition_once_len
   
   let len_I (self: t_I) (return (x: UInt64.t)) = {[@stop_split] [@expl:len requires] precondition_len () self}
     any
     [ return (result: UInt64.t) -> {[@stop_split] [@expl:len ensures] postcondition_once_len () self result}
       (! return {result}) ]
   
-  predicate inv_Item (_1: t_Item)
+  function inv_Item (_1: t_Item) : bool
   
-  predicate precondition_F (self: t_F) (args: t_Item)
+  function precondition_F (self: t_F) (args: t_Item) : bool
   
-  predicate next_precondition_I (iter'0: t_I) (func'0: t_F) =
+  function next_precondition_I (iter'0: t_I) (func'0: t_F) : bool =
     forall e: t_Item, i: t_I [produces_I iter'0 (Seq.singleton e) i]. inv_Item e
         /\ produces_I iter'0 (Seq.singleton e) i -> precondition_F func'0 e
   
   type t_B
   
-  predicate postcondition_once_F (self: t_F) (args: t_Item) (result: t_B)
+  function postcondition_once_F (self: t_F) (args: t_Item) (result: t_B) : bool
   
-  predicate resolve_F (_1: t_F)
+  function resolve_F (_1: t_F) : bool
   
-  predicate postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B)
+  function postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B) : bool
   
   function fn_mut_once_F (self: t_F) (args: t_Item) (res: t_B) : ()
   
@@ -817,7 +817,7 @@ module M_impl_ExactSizeIterator_for_Map_I_F__len (* <Map<I, F> as common::ExactS
     forall self: t_F, args: t_Item, res: t_B [postcondition_once_F self args res]. postcondition_once_F self args res
       = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
   
-  predicate hist_inv_F (self: t_F) (result_state: t_F)
+  function hist_inv_F (self: t_F) (result_state: t_F) : bool
   
   function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
   
@@ -835,65 +835,64 @@ module M_impl_ExactSizeIterator_for_Map_I_F__len (* <Map<I, F> as common::ExactS
     forall self: t_F, args: t_Item, res_state: t_F, res: t_B [postcondition_mut_F self args res_state res | hist_inv_F self res_state]. postcondition_mut_F self args res_state res
       -> hist_inv_F self res_state
   
-  predicate invariant_ref_Item [@inline:trivial] (self: t_Item) = inv_Item self
+  function invariant_ref_Item [@inline:trivial] (self: t_Item) : bool = inv_Item self
   
-  meta "rewrite_def" predicate invariant_ref_Item
+  meta "rewrite_def" function invariant_ref_Item
   
-  predicate inv_ref_Item [@inline:trivial] (_1: t_Item) = invariant_ref_Item _1
+  function inv_ref_Item [@inline:trivial] (_1: t_Item) : bool = invariant_ref_Item _1
   
-  meta "rewrite_def" predicate inv_ref_Item
+  meta "rewrite_def" function inv_ref_Item
   
-  predicate invariant_Seq_Item [@inline:trivial] (self: Seq.seq t_Item) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_Item (Seq.get self i)
+  function invariant_Seq_Item [@inline:trivial] (self: Seq.seq t_Item) : bool = forall i: int. 0 <= i
+        /\ i < Seq.length self -> inv_ref_Item (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_Item
+  meta "rewrite_def" function invariant_Seq_Item
   
-  predicate inv_Seq_Item [@inline:trivial] (_1: Seq.seq t_Item) = invariant_Seq_Item _1
+  function inv_Seq_Item [@inline:trivial] (_1: Seq.seq t_Item) : bool = invariant_Seq_Item _1
   
-  meta "rewrite_def" predicate inv_Seq_Item
+  meta "rewrite_def" function inv_Seq_Item
   
-  predicate inv_F (_1: t_F)
+  function inv_F (_1: t_F) : bool
   
-  predicate invariant_refmut_F [@inline:trivial] (self: MutBorrow.t t_F) = inv_F self.current /\ inv_F self.final
+  function invariant_refmut_F [@inline:trivial] (self: MutBorrow.t t_F) : bool = inv_F self.current /\ inv_F self.final
   
-  meta "rewrite_def" predicate invariant_refmut_F
+  meta "rewrite_def" function invariant_refmut_F
   
-  predicate inv_refmut_F [@inline:trivial] (_1: MutBorrow.t t_F) = invariant_refmut_F _1
+  function inv_refmut_F [@inline:trivial] (_1: MutBorrow.t t_F) : bool = invariant_refmut_F _1
   
-  meta "rewrite_def" predicate inv_refmut_F
+  meta "rewrite_def" function inv_refmut_F
   
-  predicate preservation_I (iter'0: t_I) (func'0: t_F) =
+  function preservation_I (iter'0: t_I) (func'0: t_F) : bool =
     forall s: Seq.seq t_Item, e1: t_Item, e2: t_Item, f: MutBorrow.t t_F, b: t_B, i: t_I [produces_I iter'0 (Seq.snoc (Seq.snoc s e1) e2) i, postcondition_mut_F f.current e1 f.final b]. hist_inv_F func'0 f.current
       -> inv_Seq_Item s /\ inv_Item e1 /\ inv_Item e2 /\ inv_refmut_F f
       -> produces_I iter'0 (Seq.snoc (Seq.snoc s e1) e2) i
       -> postcondition_mut_F f.current e1 f.final b -> precondition_F f.final e2
   
-  predicate reinitialize_I =
-    forall iter'0: MutBorrow.t t_I, func'0: t_F. completed_I iter'0
-      -> next_precondition_I iter'0.final func'0 /\ preservation_I iter'0.final func'0
+  constant reinitialize_I: bool = forall iter'0: MutBorrow.t t_I, func'0: t_F. completed_I iter'0
+    -> next_precondition_I iter'0.final func'0 /\ preservation_I iter'0.final func'0
   
-  predicate invariant_Map_I_F (self: t_Map_I_F) =
-    reinitialize_I /\ preservation_I self.iter self.func /\ next_precondition_I self.iter self.func
+  function invariant_Map_I_F (self: t_Map_I_F) : bool = reinitialize_I
+    /\ preservation_I self.iter self.func /\ next_precondition_I self.iter self.func
   
-  predicate inv_Map_I_F (_1: t_Map_I_F)
+  function inv_Map_I_F (_1: t_Map_I_F) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Map_I_F [inv_Map_I_F _1]. inv_Map_I_F _1
       = (invariant_Map_I_F _1 /\ inv_I _1.iter /\ inv_F _1.func)
   
-  predicate invariant_ref_Map_I_F [@inline:trivial] (self: t_Map_I_F) = inv_Map_I_F self
+  function invariant_ref_Map_I_F [@inline:trivial] (self: t_Map_I_F) : bool = inv_Map_I_F self
   
-  meta "rewrite_def" predicate invariant_ref_Map_I_F
+  meta "rewrite_def" function invariant_ref_Map_I_F
   
-  predicate inv_ref_Map_I_F [@inline:trivial] (_1: t_Map_I_F) = invariant_ref_Map_I_F _1
+  function inv_ref_Map_I_F [@inline:trivial] (_1: t_Map_I_F) : bool = invariant_ref_Map_I_F _1
   
-  meta "rewrite_def" predicate inv_ref_Map_I_F
+  meta "rewrite_def" function inv_ref_Map_I_F
   
-  predicate postcondition_size_hint'0 (self: ()) (args: t_Map_I_F) (result: tup2_usize_Option_usize) =
+  function postcondition_size_hint'0 (self: ()) (args: t_Map_I_F) (result: tup2_usize_Option_usize) : bool =
     let self'0 = args in postcondition_size_hint () self'0.iter result
   
-  meta "rewrite_def" predicate postcondition_size_hint'0
+  meta "rewrite_def" function postcondition_size_hint'0
   
-  predicate produces_Map_I_F [@inline:trivial] (self: t_Map_I_F) (visited: Seq.seq t_B) (succ: t_Map_I_F) =
+  function produces_Map_I_F [@inline:trivial] (self: t_Map_I_F) (visited: Seq.seq t_B) (succ: t_Map_I_F) : bool =
     hist_inv_F self.func succ.func
     /\ (exists fs: Seq.seq (MutBorrow.t t_F). Seq.length fs = Seq.length visited
       /\ (exists s: Seq.seq t_Item [produces_I self.iter s succ.iter]. Seq.length s = Seq.length visited
@@ -908,7 +907,7 @@ module M_impl_ExactSizeIterator_for_Map_I_F__len (* <Map<I, F> as common::ExactS
           -> hist_inv_F self.func (Seq.get fs i).current
           /\ postcondition_mut_F (Seq.get fs i).current (Seq.get s i) (Seq.get fs i).final (Seq.get visited i))))
   
-  meta "rewrite_def" predicate produces_Map_I_F
+  meta "rewrite_def" function produces_Map_I_F
   
   function produces_trans_Map_I_F (a: t_Map_I_F) (ab: Seq.seq t_B) (b: t_Map_I_F) (bc: Seq.seq t_B) (c: t_Map_I_F) : ()
    = ()
@@ -955,7 +954,7 @@ module M_impl_ExactSizeIterator_for_Map_I_F__len__refines (* <Map<I, F> as commo
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -966,23 +965,23 @@ module M_impl_ExactSizeIterator_for_Map_I_F__len__refines (* <Map<I, F> as commo
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate inv_Item (_1: t_Item)
+  function inv_Item (_1: t_Item) : bool
   
-  predicate precondition_F (self: t_F) (args: t_Item)
+  function precondition_F (self: t_F) (args: t_Item) : bool
   
-  predicate next_precondition_I (iter'0: t_I) (func'0: t_F) =
+  function next_precondition_I (iter'0: t_I) (func'0: t_F) : bool =
     forall e: t_Item, i: t_I [produces_I iter'0 (Seq.singleton e) i]. inv_Item e
         /\ produces_I iter'0 (Seq.singleton e) i -> precondition_F func'0 e
   
   type t_B
   
-  predicate postcondition_once_F (self: t_F) (args: t_Item) (result: t_B)
+  function postcondition_once_F (self: t_F) (args: t_Item) (result: t_B) : bool
   
-  predicate resolve_F (_1: t_F)
+  function resolve_F (_1: t_F) : bool
   
-  predicate postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B)
+  function postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B) : bool
   
   function fn_mut_once_F (self: t_F) (args: t_Item) (res: t_B) : ()
   
@@ -990,7 +989,7 @@ module M_impl_ExactSizeIterator_for_Map_I_F__len__refines (* <Map<I, F> as commo
     forall self: t_F, args: t_Item, res: t_B [postcondition_once_F self args res]. postcondition_once_F self args res
       = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
   
-  predicate hist_inv_F (self: t_F) (result_state: t_F)
+  function hist_inv_F (self: t_F) (result_state: t_F) : bool
   
   function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
   
@@ -1008,66 +1007,65 @@ module M_impl_ExactSizeIterator_for_Map_I_F__len__refines (* <Map<I, F> as commo
     forall self: t_F, args: t_Item, res_state: t_F, res: t_B [postcondition_mut_F self args res_state res | hist_inv_F self res_state]. postcondition_mut_F self args res_state res
       -> hist_inv_F self res_state
   
-  predicate invariant_ref_Item [@inline:trivial] (self: t_Item) = inv_Item self
+  function invariant_ref_Item [@inline:trivial] (self: t_Item) : bool = inv_Item self
   
-  meta "rewrite_def" predicate invariant_ref_Item
+  meta "rewrite_def" function invariant_ref_Item
   
-  predicate inv_ref_Item [@inline:trivial] (_1: t_Item) = invariant_ref_Item _1
+  function inv_ref_Item [@inline:trivial] (_1: t_Item) : bool = invariant_ref_Item _1
   
-  meta "rewrite_def" predicate inv_ref_Item
+  meta "rewrite_def" function inv_ref_Item
   
-  predicate invariant_Seq_Item [@inline:trivial] (self: Seq.seq t_Item) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_Item (Seq.get self i)
+  function invariant_Seq_Item [@inline:trivial] (self: Seq.seq t_Item) : bool = forall i: int. 0 <= i
+        /\ i < Seq.length self -> inv_ref_Item (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_Item
+  meta "rewrite_def" function invariant_Seq_Item
   
-  predicate inv_Seq_Item [@inline:trivial] (_1: Seq.seq t_Item) = invariant_Seq_Item _1
+  function inv_Seq_Item [@inline:trivial] (_1: Seq.seq t_Item) : bool = invariant_Seq_Item _1
   
-  meta "rewrite_def" predicate inv_Seq_Item
+  meta "rewrite_def" function inv_Seq_Item
   
-  predicate inv_F (_1: t_F)
+  function inv_F (_1: t_F) : bool
   
-  predicate invariant_refmut_F [@inline:trivial] (self: MutBorrow.t t_F) = inv_F self.current /\ inv_F self.final
+  function invariant_refmut_F [@inline:trivial] (self: MutBorrow.t t_F) : bool = inv_F self.current /\ inv_F self.final
   
-  meta "rewrite_def" predicate invariant_refmut_F
+  meta "rewrite_def" function invariant_refmut_F
   
-  predicate inv_refmut_F [@inline:trivial] (_1: MutBorrow.t t_F) = invariant_refmut_F _1
+  function inv_refmut_F [@inline:trivial] (_1: MutBorrow.t t_F) : bool = invariant_refmut_F _1
   
-  meta "rewrite_def" predicate inv_refmut_F
+  meta "rewrite_def" function inv_refmut_F
   
-  predicate preservation_I (iter'0: t_I) (func'0: t_F) =
+  function preservation_I (iter'0: t_I) (func'0: t_F) : bool =
     forall s: Seq.seq t_Item, e1: t_Item, e2: t_Item, f: MutBorrow.t t_F, b: t_B, i: t_I [produces_I iter'0 (Seq.snoc (Seq.snoc s e1) e2) i, postcondition_mut_F f.current e1 f.final b]. hist_inv_F func'0 f.current
       -> inv_Seq_Item s /\ inv_Item e1 /\ inv_Item e2 /\ inv_refmut_F f
       -> produces_I iter'0 (Seq.snoc (Seq.snoc s e1) e2) i
       -> postcondition_mut_F f.current e1 f.final b -> precondition_F f.final e2
   
-  predicate reinitialize_I =
-    forall iter'0: MutBorrow.t t_I, func'0: t_F. completed_I iter'0
-      -> next_precondition_I iter'0.final func'0 /\ preservation_I iter'0.final func'0
+  constant reinitialize_I: bool = forall iter'0: MutBorrow.t t_I, func'0: t_F. completed_I iter'0
+    -> next_precondition_I iter'0.final func'0 /\ preservation_I iter'0.final func'0
   
-  predicate invariant_Map_I_F (self: t_Map_I_F) =
-    reinitialize_I /\ preservation_I self.iter self.func /\ next_precondition_I self.iter self.func
+  function invariant_Map_I_F (self: t_Map_I_F) : bool = reinitialize_I
+    /\ preservation_I self.iter self.func /\ next_precondition_I self.iter self.func
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate inv_Map_I_F (_1: t_Map_I_F)
+  function inv_Map_I_F (_1: t_Map_I_F) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Map_I_F [inv_Map_I_F _1]. inv_Map_I_F _1
       = (invariant_Map_I_F _1 /\ inv_I _1.iter /\ inv_F _1.func)
   
-  predicate invariant_ref_Map_I_F [@inline:trivial] (self: t_Map_I_F) = inv_Map_I_F self
+  function invariant_ref_Map_I_F [@inline:trivial] (self: t_Map_I_F) : bool = inv_Map_I_F self
   
-  meta "rewrite_def" predicate invariant_ref_Map_I_F
+  meta "rewrite_def" function invariant_ref_Map_I_F
   
-  predicate inv_ref_Map_I_F [@inline:trivial] (_1: t_Map_I_F) = invariant_ref_Map_I_F _1
+  function inv_ref_Map_I_F [@inline:trivial] (_1: t_Map_I_F) : bool = invariant_ref_Map_I_F _1
   
-  meta "rewrite_def" predicate inv_ref_Map_I_F
+  meta "rewrite_def" function inv_ref_Map_I_F
   
   type t_Option_usize = None | Some UInt64.t
   
   type tup2_usize_Option_usize = { f0: UInt64.t; f1: t_Option_usize }
   
-  predicate postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_I, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -1078,12 +1076,12 @@ module M_impl_ExactSizeIterator_for_Map_I_F__len__refines (* <Map<I, F> as commo
         | None -> true
         end)
   
-  predicate postcondition_size_hint'0 (self: ()) (args: t_Map_I_F) (result: tup2_usize_Option_usize) =
+  function postcondition_size_hint'0 (self: ()) (args: t_Map_I_F) (result: tup2_usize_Option_usize) : bool =
     let self'0 = args in postcondition_size_hint () self'0.iter result
   
-  meta "rewrite_def" predicate postcondition_size_hint'0
+  meta "rewrite_def" function postcondition_size_hint'0
   
-  predicate produces_Map_I_F [@inline:trivial] (self: t_Map_I_F) (visited: Seq.seq t_B) (succ: t_Map_I_F) =
+  function produces_Map_I_F [@inline:trivial] (self: t_Map_I_F) (visited: Seq.seq t_B) (succ: t_Map_I_F) : bool =
     hist_inv_F self.func succ.func
     /\ (exists fs: Seq.seq (MutBorrow.t t_F). Seq.length fs = Seq.length visited
       /\ (exists s: Seq.seq t_Item [produces_I self.iter s succ.iter]. Seq.length s = Seq.length visited
@@ -1098,7 +1096,7 @@ module M_impl_ExactSizeIterator_for_Map_I_F__len__refines (* <Map<I, F> as commo
           -> hist_inv_F self.func (Seq.get fs i).current
           /\ postcondition_mut_F (Seq.get fs i).current (Seq.get s i) (Seq.get fs i).final (Seq.get visited i))))
   
-  meta "rewrite_def" predicate produces_Map_I_F
+  meta "rewrite_def" function produces_Map_I_F
   
   function produces_trans_Map_I_F (a: t_Map_I_F) (ab: Seq.seq t_B) (b: t_Map_I_F) (bc: Seq.seq t_B) (c: t_Map_I_F) : ()
    = ()
@@ -1111,23 +1109,23 @@ module M_impl_ExactSizeIterator_for_Map_I_F__len__refines (* <Map<I, F> as commo
   
   axiom produces_refl_Map_I_F_spec: forall self: t_Map_I_F. produces_Map_I_F self (Seq.empty: Seq.seq t_B) self
   
-  predicate invariant_ref_I [@inline:trivial] (self: t_I) = inv_I self
+  function invariant_ref_I [@inline:trivial] (self: t_I) : bool = inv_I self
   
-  meta "rewrite_def" predicate invariant_ref_I
+  meta "rewrite_def" function invariant_ref_I
   
-  predicate inv_ref_I [@inline:trivial] (_1: t_I) = invariant_ref_I _1
+  function inv_ref_I [@inline:trivial] (_1: t_I) : bool = invariant_ref_I _1
   
-  meta "rewrite_def" predicate inv_ref_I
+  meta "rewrite_def" function inv_ref_I
   
-  predicate precondition_size_hint (self: ()) (args: t_I)
+  function precondition_size_hint (self: ()) (args: t_I) : bool
   
   axiom precondition_fndef: forall args: t_I [precondition_size_hint () args]. (let self = args in inv_ref_I self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_I (self: t_I) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -1170,7 +1168,7 @@ module M_impl_ExactSizeIterator_for_Map_I_F__size_hint_exact (* <Map<I, F> as co
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -1181,9 +1179,9 @@ module M_impl_ExactSizeIterator_for_Map_I_F__size_hint_exact (* <Map<I, F> as co
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_I, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -1194,18 +1192,18 @@ module M_impl_ExactSizeIterator_for_Map_I_F__size_hint_exact (* <Map<I, F> as co
         | None -> true
         end)
   
-  predicate postcondition_size_hint'0 (self: ()) (args: t_Map_I_F) (result: tup2_usize_Option_usize) =
+  function postcondition_size_hint'0 (self: ()) (args: t_Map_I_F) (result: tup2_usize_Option_usize) : bool =
     let self'0 = args in postcondition_size_hint () self'0.iter result
   
-  meta "rewrite_def" predicate postcondition_size_hint'0
+  meta "rewrite_def" function postcondition_size_hint'0
   
   type t_B
   
-  predicate postcondition_once_F (self: t_F) (args: t_Item) (result: t_B)
+  function postcondition_once_F (self: t_F) (args: t_Item) (result: t_B) : bool
   
-  predicate resolve_F (_1: t_F)
+  function resolve_F (_1: t_F) : bool
   
-  predicate postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B)
+  function postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B) : bool
   
   function fn_mut_once_F (self: t_F) (args: t_Item) (res: t_B) : ()
   
@@ -1213,7 +1211,7 @@ module M_impl_ExactSizeIterator_for_Map_I_F__size_hint_exact (* <Map<I, F> as co
     forall self: t_F, args: t_Item, res: t_B [postcondition_once_F self args res]. postcondition_once_F self args res
       = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
   
-  predicate hist_inv_F (self: t_F) (result_state: t_F)
+  function hist_inv_F (self: t_F) (result_state: t_F) : bool
   
   function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
   
@@ -1231,7 +1229,7 @@ module M_impl_ExactSizeIterator_for_Map_I_F__size_hint_exact (* <Map<I, F> as co
     forall self: t_F, args: t_Item, res_state: t_F, res: t_B [postcondition_mut_F self args res_state res | hist_inv_F self res_state]. postcondition_mut_F self args res_state res
       -> hist_inv_F self res_state
   
-  predicate produces_Map_I_F [@inline:trivial] (self: t_Map_I_F) (visited: Seq.seq t_B) (succ: t_Map_I_F) =
+  function produces_Map_I_F [@inline:trivial] (self: t_Map_I_F) (visited: Seq.seq t_B) (succ: t_Map_I_F) : bool =
     hist_inv_F self.func succ.func
     /\ (exists fs: Seq.seq (MutBorrow.t t_F). Seq.length fs = Seq.length visited
       /\ (exists s: Seq.seq t_Item [produces_I self.iter s succ.iter]. Seq.length s = Seq.length visited
@@ -1246,7 +1244,7 @@ module M_impl_ExactSizeIterator_for_Map_I_F__size_hint_exact (* <Map<I, F> as co
           -> hist_inv_F self.func (Seq.get fs i).current
           /\ postcondition_mut_F (Seq.get fs i).current (Seq.get s i) (Seq.get fs i).final (Seq.get visited i))))
   
-  meta "rewrite_def" predicate produces_Map_I_F
+  meta "rewrite_def" function produces_Map_I_F
   
   function produces_trans_Map_I_F (a: t_Map_I_F) (ab: Seq.seq t_B) (b: t_Map_I_F) (bc: Seq.seq t_B) (c: t_Map_I_F) : ()
    = ()
@@ -1259,86 +1257,85 @@ module M_impl_ExactSizeIterator_for_Map_I_F__size_hint_exact (* <Map<I, F> as co
   
   axiom produces_refl_Map_I_F_spec: forall self: t_Map_I_F. produces_Map_I_F self (Seq.empty: Seq.seq t_B) self
   
-  predicate inv_Item (_1: t_Item)
+  function inv_Item (_1: t_Item) : bool
   
-  predicate precondition_F (self: t_F) (args: t_Item)
+  function precondition_F (self: t_F) (args: t_Item) : bool
   
-  predicate next_precondition_I (iter'0: t_I) (func'0: t_F) =
+  function next_precondition_I (iter'0: t_I) (func'0: t_F) : bool =
     forall e: t_Item, i: t_I [produces_I iter'0 (Seq.singleton e) i]. inv_Item e
         /\ produces_I iter'0 (Seq.singleton e) i -> precondition_F func'0 e
   
-  predicate invariant_ref_Item [@inline:trivial] (self: t_Item) = inv_Item self
+  function invariant_ref_Item [@inline:trivial] (self: t_Item) : bool = inv_Item self
   
-  meta "rewrite_def" predicate invariant_ref_Item
+  meta "rewrite_def" function invariant_ref_Item
   
-  predicate inv_ref_Item [@inline:trivial] (_1: t_Item) = invariant_ref_Item _1
+  function inv_ref_Item [@inline:trivial] (_1: t_Item) : bool = invariant_ref_Item _1
   
-  meta "rewrite_def" predicate inv_ref_Item
+  meta "rewrite_def" function inv_ref_Item
   
-  predicate invariant_Seq_Item [@inline:trivial] (self: Seq.seq t_Item) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_Item (Seq.get self i)
+  function invariant_Seq_Item [@inline:trivial] (self: Seq.seq t_Item) : bool = forall i: int. 0 <= i
+        /\ i < Seq.length self -> inv_ref_Item (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_Item
+  meta "rewrite_def" function invariant_Seq_Item
   
-  predicate inv_Seq_Item [@inline:trivial] (_1: Seq.seq t_Item) = invariant_Seq_Item _1
+  function inv_Seq_Item [@inline:trivial] (_1: Seq.seq t_Item) : bool = invariant_Seq_Item _1
   
-  meta "rewrite_def" predicate inv_Seq_Item
+  meta "rewrite_def" function inv_Seq_Item
   
-  predicate inv_F (_1: t_F)
+  function inv_F (_1: t_F) : bool
   
-  predicate invariant_refmut_F [@inline:trivial] (self: MutBorrow.t t_F) = inv_F self.current /\ inv_F self.final
+  function invariant_refmut_F [@inline:trivial] (self: MutBorrow.t t_F) : bool = inv_F self.current /\ inv_F self.final
   
-  meta "rewrite_def" predicate invariant_refmut_F
+  meta "rewrite_def" function invariant_refmut_F
   
-  predicate inv_refmut_F [@inline:trivial] (_1: MutBorrow.t t_F) = invariant_refmut_F _1
+  function inv_refmut_F [@inline:trivial] (_1: MutBorrow.t t_F) : bool = invariant_refmut_F _1
   
-  meta "rewrite_def" predicate inv_refmut_F
+  meta "rewrite_def" function inv_refmut_F
   
-  predicate preservation_I (iter'0: t_I) (func'0: t_F) =
+  function preservation_I (iter'0: t_I) (func'0: t_F) : bool =
     forall s: Seq.seq t_Item, e1: t_Item, e2: t_Item, f: MutBorrow.t t_F, b: t_B, i: t_I [produces_I iter'0 (Seq.snoc (Seq.snoc s e1) e2) i, postcondition_mut_F f.current e1 f.final b]. hist_inv_F func'0 f.current
       -> inv_Seq_Item s /\ inv_Item e1 /\ inv_Item e2 /\ inv_refmut_F f
       -> produces_I iter'0 (Seq.snoc (Seq.snoc s e1) e2) i
       -> postcondition_mut_F f.current e1 f.final b -> precondition_F f.final e2
   
-  predicate reinitialize_I =
-    forall iter'0: MutBorrow.t t_I, func'0: t_F. completed_I iter'0
-      -> next_precondition_I iter'0.final func'0 /\ preservation_I iter'0.final func'0
+  constant reinitialize_I: bool = forall iter'0: MutBorrow.t t_I, func'0: t_F. completed_I iter'0
+    -> next_precondition_I iter'0.final func'0 /\ preservation_I iter'0.final func'0
   
-  predicate invariant_Map_I_F (self: t_Map_I_F) =
-    reinitialize_I /\ preservation_I self.iter self.func /\ next_precondition_I self.iter self.func
+  function invariant_Map_I_F (self: t_Map_I_F) : bool = reinitialize_I
+    /\ preservation_I self.iter self.func /\ next_precondition_I self.iter self.func
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate inv_Map_I_F (_1: t_Map_I_F)
+  function inv_Map_I_F (_1: t_Map_I_F) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Map_I_F [inv_Map_I_F _1]. inv_Map_I_F _1
       = (invariant_Map_I_F _1 /\ inv_I _1.iter /\ inv_F _1.func)
   
-  predicate invariant_ref_Map_I_F [@inline:trivial] (self: t_Map_I_F) = inv_Map_I_F self
+  function invariant_ref_Map_I_F [@inline:trivial] (self: t_Map_I_F) : bool = inv_Map_I_F self
   
-  meta "rewrite_def" predicate invariant_ref_Map_I_F
+  meta "rewrite_def" function invariant_ref_Map_I_F
   
-  predicate inv_ref_Map_I_F [@inline:trivial] (_1: t_Map_I_F) = invariant_ref_Map_I_F _1
+  function inv_ref_Map_I_F [@inline:trivial] (_1: t_Map_I_F) : bool = invariant_ref_Map_I_F _1
   
-  meta "rewrite_def" predicate inv_ref_Map_I_F
+  meta "rewrite_def" function inv_ref_Map_I_F
   
-  predicate invariant_ref_I [@inline:trivial] (self: t_I) = inv_I self
+  function invariant_ref_I [@inline:trivial] (self: t_I) : bool = inv_I self
   
-  meta "rewrite_def" predicate invariant_ref_I
+  meta "rewrite_def" function invariant_ref_I
   
-  predicate inv_ref_I [@inline:trivial] (_1: t_I) = invariant_ref_I _1
+  function inv_ref_I [@inline:trivial] (_1: t_I) : bool = invariant_ref_I _1
   
-  meta "rewrite_def" predicate inv_ref_I
+  meta "rewrite_def" function inv_ref_I
   
-  predicate precondition_size_hint (self: ()) (args: t_I)
+  function precondition_size_hint (self: ()) (args: t_I) : bool
   
   axiom precondition_fndef: forall args: t_I [precondition_size_hint () args]. (let self = args in inv_ref_I self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_I (self: t_I) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -1392,7 +1389,7 @@ module M_impl_ExactSizeIterator_for_Map_I_F__size_hint_exact__refines (* <Map<I,
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -1403,9 +1400,9 @@ module M_impl_ExactSizeIterator_for_Map_I_F__size_hint_exact__refines (* <Map<I,
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_I, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -1416,18 +1413,18 @@ module M_impl_ExactSizeIterator_for_Map_I_F__size_hint_exact__refines (* <Map<I,
         | None -> true
         end)
   
-  predicate postcondition_size_hint'0 (self: ()) (args: t_Map_I_F) (result: tup2_usize_Option_usize) =
+  function postcondition_size_hint'0 (self: ()) (args: t_Map_I_F) (result: tup2_usize_Option_usize) : bool =
     let self'0 = args in postcondition_size_hint () self'0.iter result
   
-  meta "rewrite_def" predicate postcondition_size_hint'0
+  meta "rewrite_def" function postcondition_size_hint'0
   
   type t_B
   
-  predicate postcondition_once_F (self: t_F) (args: t_Item) (result: t_B)
+  function postcondition_once_F (self: t_F) (args: t_Item) (result: t_B) : bool
   
-  predicate resolve_F (_1: t_F)
+  function resolve_F (_1: t_F) : bool
   
-  predicate postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B)
+  function postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B) : bool
   
   function fn_mut_once_F (self: t_F) (args: t_Item) (res: t_B) : ()
   
@@ -1435,7 +1432,7 @@ module M_impl_ExactSizeIterator_for_Map_I_F__size_hint_exact__refines (* <Map<I,
     forall self: t_F, args: t_Item, res: t_B [postcondition_once_F self args res]. postcondition_once_F self args res
       = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
   
-  predicate hist_inv_F (self: t_F) (result_state: t_F)
+  function hist_inv_F (self: t_F) (result_state: t_F) : bool
   
   function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
   
@@ -1453,7 +1450,7 @@ module M_impl_ExactSizeIterator_for_Map_I_F__size_hint_exact__refines (* <Map<I,
     forall self: t_F, args: t_Item, res_state: t_F, res: t_B [postcondition_mut_F self args res_state res | hist_inv_F self res_state]. postcondition_mut_F self args res_state res
       -> hist_inv_F self res_state
   
-  predicate produces_Map_I_F [@inline:trivial] (self: t_Map_I_F) (visited: Seq.seq t_B) (succ: t_Map_I_F) =
+  function produces_Map_I_F [@inline:trivial] (self: t_Map_I_F) (visited: Seq.seq t_B) (succ: t_Map_I_F) : bool =
     hist_inv_F self.func succ.func
     /\ (exists fs: Seq.seq (MutBorrow.t t_F). Seq.length fs = Seq.length visited
       /\ (exists s: Seq.seq t_Item [produces_I self.iter s succ.iter]. Seq.length s = Seq.length visited
@@ -1468,7 +1465,7 @@ module M_impl_ExactSizeIterator_for_Map_I_F__size_hint_exact__refines (* <Map<I,
           -> hist_inv_F self.func (Seq.get fs i).current
           /\ postcondition_mut_F (Seq.get fs i).current (Seq.get s i) (Seq.get fs i).final (Seq.get visited i))))
   
-  meta "rewrite_def" predicate produces_Map_I_F
+  meta "rewrite_def" function produces_Map_I_F
   
   function produces_trans_Map_I_F (a: t_Map_I_F) (ab: Seq.seq t_B) (b: t_Map_I_F) (bc: Seq.seq t_B) (c: t_Map_I_F) : ()
    = ()
@@ -1481,86 +1478,85 @@ module M_impl_ExactSizeIterator_for_Map_I_F__size_hint_exact__refines (* <Map<I,
   
   axiom produces_refl_Map_I_F_spec: forall self: t_Map_I_F. produces_Map_I_F self (Seq.empty: Seq.seq t_B) self
   
-  predicate inv_Item (_1: t_Item)
+  function inv_Item (_1: t_Item) : bool
   
-  predicate precondition_F (self: t_F) (args: t_Item)
+  function precondition_F (self: t_F) (args: t_Item) : bool
   
-  predicate next_precondition_I (iter'0: t_I) (func'0: t_F) =
+  function next_precondition_I (iter'0: t_I) (func'0: t_F) : bool =
     forall e: t_Item, i: t_I [produces_I iter'0 (Seq.singleton e) i]. inv_Item e
         /\ produces_I iter'0 (Seq.singleton e) i -> precondition_F func'0 e
   
-  predicate invariant_ref_Item [@inline:trivial] (self: t_Item) = inv_Item self
+  function invariant_ref_Item [@inline:trivial] (self: t_Item) : bool = inv_Item self
   
-  meta "rewrite_def" predicate invariant_ref_Item
+  meta "rewrite_def" function invariant_ref_Item
   
-  predicate inv_ref_Item [@inline:trivial] (_1: t_Item) = invariant_ref_Item _1
+  function inv_ref_Item [@inline:trivial] (_1: t_Item) : bool = invariant_ref_Item _1
   
-  meta "rewrite_def" predicate inv_ref_Item
+  meta "rewrite_def" function inv_ref_Item
   
-  predicate invariant_Seq_Item [@inline:trivial] (self: Seq.seq t_Item) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_Item (Seq.get self i)
+  function invariant_Seq_Item [@inline:trivial] (self: Seq.seq t_Item) : bool = forall i: int. 0 <= i
+        /\ i < Seq.length self -> inv_ref_Item (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_Item
+  meta "rewrite_def" function invariant_Seq_Item
   
-  predicate inv_Seq_Item [@inline:trivial] (_1: Seq.seq t_Item) = invariant_Seq_Item _1
+  function inv_Seq_Item [@inline:trivial] (_1: Seq.seq t_Item) : bool = invariant_Seq_Item _1
   
-  meta "rewrite_def" predicate inv_Seq_Item
+  meta "rewrite_def" function inv_Seq_Item
   
-  predicate inv_F (_1: t_F)
+  function inv_F (_1: t_F) : bool
   
-  predicate invariant_refmut_F [@inline:trivial] (self: MutBorrow.t t_F) = inv_F self.current /\ inv_F self.final
+  function invariant_refmut_F [@inline:trivial] (self: MutBorrow.t t_F) : bool = inv_F self.current /\ inv_F self.final
   
-  meta "rewrite_def" predicate invariant_refmut_F
+  meta "rewrite_def" function invariant_refmut_F
   
-  predicate inv_refmut_F [@inline:trivial] (_1: MutBorrow.t t_F) = invariant_refmut_F _1
+  function inv_refmut_F [@inline:trivial] (_1: MutBorrow.t t_F) : bool = invariant_refmut_F _1
   
-  meta "rewrite_def" predicate inv_refmut_F
+  meta "rewrite_def" function inv_refmut_F
   
-  predicate preservation_I (iter'0: t_I) (func'0: t_F) =
+  function preservation_I (iter'0: t_I) (func'0: t_F) : bool =
     forall s: Seq.seq t_Item, e1: t_Item, e2: t_Item, f: MutBorrow.t t_F, b: t_B, i: t_I [produces_I iter'0 (Seq.snoc (Seq.snoc s e1) e2) i, postcondition_mut_F f.current e1 f.final b]. hist_inv_F func'0 f.current
       -> inv_Seq_Item s /\ inv_Item e1 /\ inv_Item e2 /\ inv_refmut_F f
       -> produces_I iter'0 (Seq.snoc (Seq.snoc s e1) e2) i
       -> postcondition_mut_F f.current e1 f.final b -> precondition_F f.final e2
   
-  predicate reinitialize_I =
-    forall iter'0: MutBorrow.t t_I, func'0: t_F. completed_I iter'0
-      -> next_precondition_I iter'0.final func'0 /\ preservation_I iter'0.final func'0
+  constant reinitialize_I: bool = forall iter'0: MutBorrow.t t_I, func'0: t_F. completed_I iter'0
+    -> next_precondition_I iter'0.final func'0 /\ preservation_I iter'0.final func'0
   
-  predicate invariant_Map_I_F (self: t_Map_I_F) =
-    reinitialize_I /\ preservation_I self.iter self.func /\ next_precondition_I self.iter self.func
+  function invariant_Map_I_F (self: t_Map_I_F) : bool = reinitialize_I
+    /\ preservation_I self.iter self.func /\ next_precondition_I self.iter self.func
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate inv_Map_I_F (_1: t_Map_I_F)
+  function inv_Map_I_F (_1: t_Map_I_F) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Map_I_F [inv_Map_I_F _1]. inv_Map_I_F _1
       = (invariant_Map_I_F _1 /\ inv_I _1.iter /\ inv_F _1.func)
   
-  predicate invariant_ref_Map_I_F [@inline:trivial] (self: t_Map_I_F) = inv_Map_I_F self
+  function invariant_ref_Map_I_F [@inline:trivial] (self: t_Map_I_F) : bool = inv_Map_I_F self
   
-  meta "rewrite_def" predicate invariant_ref_Map_I_F
+  meta "rewrite_def" function invariant_ref_Map_I_F
   
-  predicate inv_ref_Map_I_F [@inline:trivial] (_1: t_Map_I_F) = invariant_ref_Map_I_F _1
+  function inv_ref_Map_I_F [@inline:trivial] (_1: t_Map_I_F) : bool = invariant_ref_Map_I_F _1
   
-  meta "rewrite_def" predicate inv_ref_Map_I_F
+  meta "rewrite_def" function inv_ref_Map_I_F
   
-  predicate invariant_ref_I [@inline:trivial] (self: t_I) = inv_I self
+  function invariant_ref_I [@inline:trivial] (self: t_I) : bool = inv_I self
   
-  meta "rewrite_def" predicate invariant_ref_I
+  meta "rewrite_def" function invariant_ref_I
   
-  predicate inv_ref_I [@inline:trivial] (_1: t_I) = invariant_ref_I _1
+  function inv_ref_I [@inline:trivial] (_1: t_I) : bool = invariant_ref_I _1
   
-  meta "rewrite_def" predicate inv_ref_I
+  meta "rewrite_def" function inv_ref_I
   
-  predicate precondition_size_hint (self: ()) (args: t_I)
+  function precondition_size_hint (self: ()) (args: t_I) : bool
   
   axiom precondition_fndef: forall args: t_I [precondition_size_hint () args]. (let self = args in inv_ref_I self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_I (self: t_I) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -1595,11 +1591,11 @@ module M_impl_Iterator_for_Map_I_F__next (* <Map<I, F> as common::Iterator> *)
   
   type t_Map_I_F = { iter: t_I; func: t_F }
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -1612,23 +1608,23 @@ module M_impl_Iterator_for_Map_I_F__next (* <Map<I, F> as common::Iterator> *)
   
   type t_Option_Item = None | Some t_Item
   
-  predicate invariant_refmut_I [@inline:trivial] (self: MutBorrow.t t_I) = inv_I self.current /\ inv_I self.final
+  function invariant_refmut_I [@inline:trivial] (self: MutBorrow.t t_I) : bool = inv_I self.current /\ inv_I self.final
   
-  meta "rewrite_def" predicate invariant_refmut_I
+  meta "rewrite_def" function invariant_refmut_I
   
-  predicate inv_refmut_I [@inline:trivial] (_1: MutBorrow.t t_I) = invariant_refmut_I _1
+  function inv_refmut_I [@inline:trivial] (_1: MutBorrow.t t_I) : bool = invariant_refmut_I _1
   
-  meta "rewrite_def" predicate inv_refmut_I
+  meta "rewrite_def" function inv_refmut_I
   
-  predicate precondition_next (self: ()) (args: MutBorrow.t t_I)
+  function precondition_next (self: ()) (args: MutBorrow.t t_I) : bool
   
   axiom precondition_fndef:
     forall args: MutBorrow.t t_I [precondition_next () args]. (let self = args in inv_refmut_I self)
       -> precondition_next () args
   
-  predicate inv_Item (_1: t_Item)
+  function inv_Item (_1: t_Item) : bool
   
-  predicate inv_Option_Item (_1: t_Option_Item)
+  function inv_Option_Item (_1: t_Option_Item) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Option_Item [inv_Option_Item _1]. inv_Option_Item _1
       = match _1 with
@@ -1636,9 +1632,9 @@ module M_impl_Iterator_for_Map_I_F__next (* <Map<I, F> as common::Iterator> *)
         | Some f0 -> inv_Item f0
         end
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate postcondition_next (self: ()) (args: MutBorrow.t t_I) (result: t_Option_Item)
+  function postcondition_next (self: ()) (args: MutBorrow.t t_I) (result: t_Option_Item) : bool
   
   axiom postcondition_fndef:
     forall args: MutBorrow.t t_I, result: t_Option_Item [postcondition_next () args result]. postcondition_next () args result
@@ -1648,10 +1644,10 @@ module M_impl_Iterator_for_Map_I_F__next (* <Map<I, F> as common::Iterator> *)
         | Some v -> produces_I self.current (Seq.singleton v) self.final
         end)
   
-  predicate postcondition_once_next (self: ()) (args: MutBorrow.t t_I) (result: t_Option_Item) =
+  function postcondition_once_next (self: ()) (args: MutBorrow.t t_I) (result: t_Option_Item) : bool =
     postcondition_next self args result
   
-  meta "rewrite_def" predicate postcondition_once_next
+  meta "rewrite_def" function postcondition_once_next
   
   let next_I (self: MutBorrow.t t_I) (return (x: t_Option_Item)) =
   {[@stop_split] [@expl:next requires] precondition_next () self}
@@ -1667,29 +1663,29 @@ module M_impl_Iterator_for_Map_I_F__next (* <Map<I, F> as common::Iterator> *)
         end}
       any) ]
   
-  predicate precondition_F (self: t_F) (args: t_Item)
+  function precondition_F (self: t_F) (args: t_Item) : bool
   
   type t_B
   
-  predicate inv_F (_1: t_F)
+  function inv_F (_1: t_F) : bool
   
-  predicate invariant_refmut_F [@inline:trivial] (self: MutBorrow.t t_F) = inv_F self.current /\ inv_F self.final
+  function invariant_refmut_F [@inline:trivial] (self: MutBorrow.t t_F) : bool = inv_F self.current /\ inv_F self.final
   
-  meta "rewrite_def" predicate invariant_refmut_F
+  meta "rewrite_def" function invariant_refmut_F
   
-  predicate inv_refmut_F [@inline:trivial] (_1: MutBorrow.t t_F) = invariant_refmut_F _1
+  function inv_refmut_F [@inline:trivial] (_1: MutBorrow.t t_F) : bool = invariant_refmut_F _1
   
-  meta "rewrite_def" predicate inv_refmut_F
+  meta "rewrite_def" function inv_refmut_F
   
-  predicate next_precondition_I (iter'0: t_I) (func'0: t_F) =
+  function next_precondition_I (iter'0: t_I) (func'0: t_F) : bool =
     forall e: t_Item, i: t_I [produces_I iter'0 (Seq.singleton e) i]. inv_Item e
         /\ produces_I iter'0 (Seq.singleton e) i -> precondition_F func'0 e
   
-  predicate postcondition_once_F (self: t_F) (args: t_Item) (result: t_B)
+  function postcondition_once_F (self: t_F) (args: t_Item) (result: t_B) : bool
   
-  predicate resolve_F (_1: t_F)
+  function resolve_F (_1: t_F) : bool
   
-  predicate postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B)
+  function postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B) : bool
   
   function fn_mut_once_F (self: t_F) (args: t_Item) (res: t_B) : ()
   
@@ -1697,7 +1693,7 @@ module M_impl_Iterator_for_Map_I_F__next (* <Map<I, F> as common::Iterator> *)
     forall self: t_F, args: t_Item, res: t_B [postcondition_once_F self args res]. postcondition_once_F self args res
       = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
   
-  predicate hist_inv_F (self: t_F) (result_state: t_F)
+  function hist_inv_F (self: t_F) (result_state: t_F) : bool
   
   function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
   
@@ -1715,35 +1711,34 @@ module M_impl_Iterator_for_Map_I_F__next (* <Map<I, F> as common::Iterator> *)
     forall self: t_F, args: t_Item, res_state: t_F, res: t_B [postcondition_mut_F self args res_state res | hist_inv_F self res_state]. postcondition_mut_F self args res_state res
       -> hist_inv_F self res_state
   
-  predicate invariant_ref_Item [@inline:trivial] (self: t_Item) = inv_Item self
+  function invariant_ref_Item [@inline:trivial] (self: t_Item) : bool = inv_Item self
   
-  meta "rewrite_def" predicate invariant_ref_Item
+  meta "rewrite_def" function invariant_ref_Item
   
-  predicate inv_ref_Item [@inline:trivial] (_1: t_Item) = invariant_ref_Item _1
+  function inv_ref_Item [@inline:trivial] (_1: t_Item) : bool = invariant_ref_Item _1
   
-  meta "rewrite_def" predicate inv_ref_Item
+  meta "rewrite_def" function inv_ref_Item
   
-  predicate invariant_Seq_Item [@inline:trivial] (self: Seq.seq t_Item) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_Item (Seq.get self i)
+  function invariant_Seq_Item [@inline:trivial] (self: Seq.seq t_Item) : bool = forall i: int. 0 <= i
+        /\ i < Seq.length self -> inv_ref_Item (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_Item
+  meta "rewrite_def" function invariant_Seq_Item
   
-  predicate inv_Seq_Item [@inline:trivial] (_1: Seq.seq t_Item) = invariant_Seq_Item _1
+  function inv_Seq_Item [@inline:trivial] (_1: Seq.seq t_Item) : bool = invariant_Seq_Item _1
   
-  meta "rewrite_def" predicate inv_Seq_Item
+  meta "rewrite_def" function inv_Seq_Item
   
-  predicate preservation_I (iter'0: t_I) (func'0: t_F) =
+  function preservation_I (iter'0: t_I) (func'0: t_F) : bool =
     forall s: Seq.seq t_Item, e1: t_Item, e2: t_Item, f: MutBorrow.t t_F, b: t_B, i: t_I [produces_I iter'0 (Seq.snoc (Seq.snoc s e1) e2) i, postcondition_mut_F f.current e1 f.final b]. hist_inv_F func'0 f.current
       -> inv_Seq_Item s /\ inv_Item e1 /\ inv_Item e2 /\ inv_refmut_F f
       -> produces_I iter'0 (Seq.snoc (Seq.snoc s e1) e2) i
       -> postcondition_mut_F f.current e1 f.final b -> precondition_F f.final e2
   
-  predicate reinitialize_I =
-    forall iter'0: MutBorrow.t t_I, func'0: t_F. completed_I iter'0
-      -> next_precondition_I iter'0.final func'0 /\ preservation_I iter'0.final func'0
+  constant reinitialize_I: bool = forall iter'0: MutBorrow.t t_I, func'0: t_F. completed_I iter'0
+    -> next_precondition_I iter'0.final func'0 /\ preservation_I iter'0.final func'0
   
-  predicate invariant_Map_I_F (self: t_Map_I_F) =
-    reinitialize_I /\ preservation_I self.iter self.func /\ next_precondition_I self.iter self.func
+  function invariant_Map_I_F (self: t_Map_I_F) : bool = reinitialize_I
+    /\ preservation_I self.iter self.func /\ next_precondition_I self.iter self.func
   
   function produces_one_invariant_I (self: t_Map_I_F) (e: t_Item) (r: t_B) (f: MutBorrow.t t_F) (iter'0: t_I) : () = ()
   
@@ -1759,11 +1754,11 @@ module M_impl_Iterator_for_Map_I_F__next (* <Map<I, F> as common::Iterator> *)
       -> produces_I self.iter (Seq.singleton e) iter'0
       -> f.current = self.func -> postcondition_mut_F f.current e f.final r -> next_precondition_I iter'0 f.final
   
-  predicate inv_tup1_Item [@inline:trivial] (_1: t_Item) = inv_Item _1
+  function inv_tup1_Item [@inline:trivial] (_1: t_Item) : bool = inv_Item _1
   
-  meta "rewrite_def" predicate inv_tup1_Item
+  meta "rewrite_def" function inv_tup1_Item
   
-  predicate inv_B (_1: t_B)
+  function inv_B (_1: t_B) : bool
   
   let call_mut_F (self: MutBorrow.t t_F) (args: t_Item) (return (x: t_B)) =
   {[@stop_split] [@expl:call_mut_F requires] ([@stop_split] [@expl:call_mut 'self' type invariant] inv_refmut_F self)
@@ -1775,29 +1770,29 @@ module M_impl_Iterator_for_Map_I_F__next (* <Map<I, F> as common::Iterator> *)
       /\ ([@stop_split] [@expl:call_mut ensures] postcondition_mut_F self.current args self.final result)}
       (! return {result}) ]
   
-  predicate inv_Map_I_F (_1: t_Map_I_F)
+  function inv_Map_I_F (_1: t_Map_I_F) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Map_I_F [inv_Map_I_F _1]. inv_Map_I_F _1
       = (invariant_Map_I_F _1 /\ inv_I _1.iter /\ inv_F _1.func)
   
-  predicate invariant_refmut_Map_I_F [@inline:trivial] (self: MutBorrow.t t_Map_I_F) =
-    inv_Map_I_F self.current /\ inv_Map_I_F self.final
+  function invariant_refmut_Map_I_F [@inline:trivial] (self: MutBorrow.t t_Map_I_F) : bool = inv_Map_I_F self.current
+    /\ inv_Map_I_F self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Map_I_F
+  meta "rewrite_def" function invariant_refmut_Map_I_F
   
-  predicate inv_refmut_Map_I_F [@inline:trivial] (_1: MutBorrow.t t_Map_I_F) = invariant_refmut_Map_I_F _1
+  function inv_refmut_Map_I_F [@inline:trivial] (_1: MutBorrow.t t_Map_I_F) : bool = invariant_refmut_Map_I_F _1
   
-  meta "rewrite_def" predicate inv_refmut_Map_I_F
+  meta "rewrite_def" function inv_refmut_Map_I_F
   
-  predicate resolve_refmut_Map_I_F [@inline:trivial] (_1: MutBorrow.t t_Map_I_F) = _1.final = _1.current
+  function resolve_refmut_Map_I_F [@inline:trivial] (_1: MutBorrow.t t_Map_I_F) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Map_I_F
+  meta "rewrite_def" function resolve_refmut_Map_I_F
   
   type t_Option_B = None'0 | Some'0 t_B
   
-  predicate resolve_Item (_1: t_Item)
+  function resolve_Item (_1: t_Item) : bool
   
-  predicate resolve_Option_Item (_1: t_Option_Item)
+  function resolve_Option_Item (_1: t_Option_Item) : bool
   
   axiom resolve_axiom [@rewrite]: forall _1: t_Option_Item [resolve_Option_Item _1]. resolve_Option_Item _1
       = match _1 with
@@ -1805,7 +1800,7 @@ module M_impl_Iterator_for_Map_I_F__next (* <Map<I, F> as common::Iterator> *)
         | Some x0 -> resolve_Item x0
         end
   
-  predicate inv_Option_B (_1: t_Option_B)
+  function inv_Option_B (_1: t_Option_B) : bool
   
   axiom inv_axiom'1 [@rewrite]: forall _1: t_Option_B [inv_Option_B _1]. inv_Option_B _1
       = match _1 with
@@ -1813,11 +1808,11 @@ module M_impl_Iterator_for_Map_I_F__next (* <Map<I, F> as common::Iterator> *)
         | Some'0 f0 -> inv_B f0
         end
   
-  predicate completed_Map_I_F (self: MutBorrow.t t_Map_I_F) =
+  function completed_Map_I_F (self: MutBorrow.t t_Map_I_F) : bool =
     completed_I (MutBorrow.borrow_logic self.current.iter self.final.iter (MutBorrow.inherit_id (MutBorrow.get_id self) 0))
     /\ self.current.func = self.final.func
   
-  predicate produces_Map_I_F [@inline:trivial] (self: t_Map_I_F) (visited: Seq.seq t_B) (succ: t_Map_I_F) =
+  function produces_Map_I_F [@inline:trivial] (self: t_Map_I_F) (visited: Seq.seq t_B) (succ: t_Map_I_F) : bool =
     hist_inv_F self.func succ.func
     /\ (exists fs: Seq.seq (MutBorrow.t t_F). Seq.length fs = Seq.length visited
       /\ (exists s: Seq.seq t_Item [produces_I self.iter s succ.iter]. Seq.length s = Seq.length visited
@@ -1832,9 +1827,9 @@ module M_impl_Iterator_for_Map_I_F__next (* <Map<I, F> as common::Iterator> *)
           -> hist_inv_F self.func (Seq.get fs i).current
           /\ postcondition_mut_F (Seq.get fs i).current (Seq.get s i) (Seq.get fs i).final (Seq.get visited i))))
   
-  meta "rewrite_def" predicate produces_Map_I_F
+  meta "rewrite_def" function produces_Map_I_F
   
-  predicate produces_one_I (self: t_Map_I_F) (visited: t_B) (succ: t_Map_I_F) =
+  function produces_one_I (self: t_Map_I_F) (visited: t_B) (succ: t_Map_I_F) : bool =
     exists f: MutBorrow.t t_F, e: t_Item [postcondition_mut_F f.current e f.final visited]. f.current = self.func
       /\ f.final = succ.func
       /\ produces_I self.iter (Seq.singleton e) succ.iter /\ postcondition_mut_F f.current e f.final visited
@@ -1910,7 +1905,7 @@ module M_impl_Iterator_for_Map_I_F__next__refines (* <Map<I, F> as common::Itera
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -1921,23 +1916,23 @@ module M_impl_Iterator_for_Map_I_F__next__refines (* <Map<I, F> as common::Itera
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate inv_Item (_1: t_Item)
+  function inv_Item (_1: t_Item) : bool
   
-  predicate precondition_F (self: t_F) (args: t_Item)
+  function precondition_F (self: t_F) (args: t_Item) : bool
   
-  predicate next_precondition_I (iter'0: t_I) (func'0: t_F) =
+  function next_precondition_I (iter'0: t_I) (func'0: t_F) : bool =
     forall e: t_Item, i: t_I [produces_I iter'0 (Seq.singleton e) i]. inv_Item e
         /\ produces_I iter'0 (Seq.singleton e) i -> precondition_F func'0 e
   
   type t_B
   
-  predicate postcondition_once_F (self: t_F) (args: t_Item) (result: t_B)
+  function postcondition_once_F (self: t_F) (args: t_Item) (result: t_B) : bool
   
-  predicate resolve_F (_1: t_F)
+  function resolve_F (_1: t_F) : bool
   
-  predicate postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B)
+  function postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B) : bool
   
   function fn_mut_once_F (self: t_F) (args: t_Item) (res: t_B) : ()
   
@@ -1945,7 +1940,7 @@ module M_impl_Iterator_for_Map_I_F__next__refines (* <Map<I, F> as common::Itera
     forall self: t_F, args: t_Item, res: t_B [postcondition_once_F self args res]. postcondition_once_F self args res
       = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
   
-  predicate hist_inv_F (self: t_F) (result_state: t_F)
+  function hist_inv_F (self: t_F) (result_state: t_F) : bool
   
   function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
   
@@ -1963,67 +1958,66 @@ module M_impl_Iterator_for_Map_I_F__next__refines (* <Map<I, F> as common::Itera
     forall self: t_F, args: t_Item, res_state: t_F, res: t_B [postcondition_mut_F self args res_state res | hist_inv_F self res_state]. postcondition_mut_F self args res_state res
       -> hist_inv_F self res_state
   
-  predicate invariant_ref_Item [@inline:trivial] (self: t_Item) = inv_Item self
+  function invariant_ref_Item [@inline:trivial] (self: t_Item) : bool = inv_Item self
   
-  meta "rewrite_def" predicate invariant_ref_Item
+  meta "rewrite_def" function invariant_ref_Item
   
-  predicate inv_ref_Item [@inline:trivial] (_1: t_Item) = invariant_ref_Item _1
+  function inv_ref_Item [@inline:trivial] (_1: t_Item) : bool = invariant_ref_Item _1
   
-  meta "rewrite_def" predicate inv_ref_Item
+  meta "rewrite_def" function inv_ref_Item
   
-  predicate invariant_Seq_Item [@inline:trivial] (self: Seq.seq t_Item) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_Item (Seq.get self i)
+  function invariant_Seq_Item [@inline:trivial] (self: Seq.seq t_Item) : bool = forall i: int. 0 <= i
+        /\ i < Seq.length self -> inv_ref_Item (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_Item
+  meta "rewrite_def" function invariant_Seq_Item
   
-  predicate inv_Seq_Item [@inline:trivial] (_1: Seq.seq t_Item) = invariant_Seq_Item _1
+  function inv_Seq_Item [@inline:trivial] (_1: Seq.seq t_Item) : bool = invariant_Seq_Item _1
   
-  meta "rewrite_def" predicate inv_Seq_Item
+  meta "rewrite_def" function inv_Seq_Item
   
-  predicate inv_F (_1: t_F)
+  function inv_F (_1: t_F) : bool
   
-  predicate invariant_refmut_F [@inline:trivial] (self: MutBorrow.t t_F) = inv_F self.current /\ inv_F self.final
+  function invariant_refmut_F [@inline:trivial] (self: MutBorrow.t t_F) : bool = inv_F self.current /\ inv_F self.final
   
-  meta "rewrite_def" predicate invariant_refmut_F
+  meta "rewrite_def" function invariant_refmut_F
   
-  predicate inv_refmut_F [@inline:trivial] (_1: MutBorrow.t t_F) = invariant_refmut_F _1
+  function inv_refmut_F [@inline:trivial] (_1: MutBorrow.t t_F) : bool = invariant_refmut_F _1
   
-  meta "rewrite_def" predicate inv_refmut_F
+  meta "rewrite_def" function inv_refmut_F
   
-  predicate preservation_I (iter'0: t_I) (func'0: t_F) =
+  function preservation_I (iter'0: t_I) (func'0: t_F) : bool =
     forall s: Seq.seq t_Item, e1: t_Item, e2: t_Item, f: MutBorrow.t t_F, b: t_B, i: t_I [produces_I iter'0 (Seq.snoc (Seq.snoc s e1) e2) i, postcondition_mut_F f.current e1 f.final b]. hist_inv_F func'0 f.current
       -> inv_Seq_Item s /\ inv_Item e1 /\ inv_Item e2 /\ inv_refmut_F f
       -> produces_I iter'0 (Seq.snoc (Seq.snoc s e1) e2) i
       -> postcondition_mut_F f.current e1 f.final b -> precondition_F f.final e2
   
-  predicate reinitialize_I =
-    forall iter'0: MutBorrow.t t_I, func'0: t_F. completed_I iter'0
-      -> next_precondition_I iter'0.final func'0 /\ preservation_I iter'0.final func'0
+  constant reinitialize_I: bool = forall iter'0: MutBorrow.t t_I, func'0: t_F. completed_I iter'0
+    -> next_precondition_I iter'0.final func'0 /\ preservation_I iter'0.final func'0
   
-  predicate invariant_Map_I_F (self: t_Map_I_F) =
-    reinitialize_I /\ preservation_I self.iter self.func /\ next_precondition_I self.iter self.func
+  function invariant_Map_I_F (self: t_Map_I_F) : bool = reinitialize_I
+    /\ preservation_I self.iter self.func /\ next_precondition_I self.iter self.func
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate inv_Map_I_F (_1: t_Map_I_F)
+  function inv_Map_I_F (_1: t_Map_I_F) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Map_I_F [inv_Map_I_F _1]. inv_Map_I_F _1
       = (invariant_Map_I_F _1 /\ inv_I _1.iter /\ inv_F _1.func)
   
-  predicate invariant_refmut_Map_I_F [@inline:trivial] (self: MutBorrow.t t_Map_I_F) =
-    inv_Map_I_F self.current /\ inv_Map_I_F self.final
+  function invariant_refmut_Map_I_F [@inline:trivial] (self: MutBorrow.t t_Map_I_F) : bool = inv_Map_I_F self.current
+    /\ inv_Map_I_F self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Map_I_F
+  meta "rewrite_def" function invariant_refmut_Map_I_F
   
-  predicate inv_refmut_Map_I_F [@inline:trivial] (_1: MutBorrow.t t_Map_I_F) = invariant_refmut_Map_I_F _1
+  function inv_refmut_Map_I_F [@inline:trivial] (_1: MutBorrow.t t_Map_I_F) : bool = invariant_refmut_Map_I_F _1
   
-  meta "rewrite_def" predicate inv_refmut_Map_I_F
+  meta "rewrite_def" function inv_refmut_Map_I_F
   
   type t_Option_B = None | Some t_B
   
-  predicate inv_B (_1: t_B)
+  function inv_B (_1: t_B) : bool
   
-  predicate inv_Option_B (_1: t_Option_B)
+  function inv_Option_B (_1: t_Option_B) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Option_B [inv_Option_B _1]. inv_Option_B _1
       = match _1 with
@@ -2031,11 +2025,11 @@ module M_impl_Iterator_for_Map_I_F__next__refines (* <Map<I, F> as common::Itera
         | Some f0 -> inv_B f0
         end
   
-  predicate completed_Map_I_F (self: MutBorrow.t t_Map_I_F) =
+  function completed_Map_I_F (self: MutBorrow.t t_Map_I_F) : bool =
     completed_I (MutBorrow.borrow_logic self.current.iter self.final.iter (MutBorrow.inherit_id (MutBorrow.get_id self) 0))
     /\ self.current.func = self.final.func
   
-  predicate produces_Map_I_F [@inline:trivial] (self: t_Map_I_F) (visited: Seq.seq t_B) (succ: t_Map_I_F) =
+  function produces_Map_I_F [@inline:trivial] (self: t_Map_I_F) (visited: Seq.seq t_B) (succ: t_Map_I_F) : bool =
     hist_inv_F self.func succ.func
     /\ (exists fs: Seq.seq (MutBorrow.t t_F). Seq.length fs = Seq.length visited
       /\ (exists s: Seq.seq t_Item [produces_I self.iter s succ.iter]. Seq.length s = Seq.length visited
@@ -2050,9 +2044,9 @@ module M_impl_Iterator_for_Map_I_F__next__refines (* <Map<I, F> as common::Itera
           -> hist_inv_F self.func (Seq.get fs i).current
           /\ postcondition_mut_F (Seq.get fs i).current (Seq.get s i) (Seq.get fs i).final (Seq.get visited i))))
   
-  meta "rewrite_def" predicate produces_Map_I_F
+  meta "rewrite_def" function produces_Map_I_F
   
-  predicate produces_one_I (self: t_Map_I_F) (visited: t_B) (succ: t_Map_I_F) =
+  function produces_one_I (self: t_Map_I_F) (visited: t_B) (succ: t_Map_I_F) : bool =
     exists f: MutBorrow.t t_F, e: t_Item [postcondition_mut_F f.current e f.final visited]. f.current = self.func
       /\ f.final = succ.func
       /\ produces_I self.iter (Seq.singleton e) succ.iter /\ postcondition_mut_F f.current e f.final visited
@@ -2093,7 +2087,7 @@ module M_impl_Iterator_for_Map_I_F__produces_refl (* <Map<I, F> as common::Itera
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -2104,11 +2098,11 @@ module M_impl_Iterator_for_Map_I_F__produces_refl (* <Map<I, F> as common::Itera
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate postcondition_once_F (self: t_F) (args: t_Item) (result: t_B)
+  function postcondition_once_F (self: t_F) (args: t_Item) (result: t_B) : bool
   
-  predicate resolve_F (_1: t_F)
+  function resolve_F (_1: t_F) : bool
   
-  predicate postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B)
+  function postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B) : bool
   
   function fn_mut_once_F (self: t_F) (args: t_Item) (res: t_B) : ()
   
@@ -2116,7 +2110,7 @@ module M_impl_Iterator_for_Map_I_F__produces_refl (* <Map<I, F> as common::Itera
     forall self: t_F, args: t_Item, res: t_B [postcondition_once_F self args res]. postcondition_once_F self args res
       = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
   
-  predicate hist_inv_F (self: t_F) (result_state: t_F)
+  function hist_inv_F (self: t_F) (result_state: t_F) : bool
   
   function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
   
@@ -2134,7 +2128,7 @@ module M_impl_Iterator_for_Map_I_F__produces_refl (* <Map<I, F> as common::Itera
     forall self: t_F, args: t_Item, res_state: t_F, res: t_B [postcondition_mut_F self args res_state res | hist_inv_F self res_state]. postcondition_mut_F self args res_state res
       -> hist_inv_F self res_state
   
-  predicate produces_Map_I_F [@inline:trivial] (self: t_Map_I_F) (visited: Seq.seq t_B) (succ: t_Map_I_F) =
+  function produces_Map_I_F [@inline:trivial] (self: t_Map_I_F) (visited: Seq.seq t_B) (succ: t_Map_I_F) : bool =
     hist_inv_F self.func succ.func
     /\ (exists fs: Seq.seq (MutBorrow.t t_F). Seq.length fs = Seq.length visited
       /\ (exists s: Seq.seq t_Item [produces_I self.iter s succ.iter]. Seq.length s = Seq.length visited
@@ -2149,7 +2143,7 @@ module M_impl_Iterator_for_Map_I_F__produces_refl (* <Map<I, F> as common::Itera
           -> hist_inv_F self.func (Seq.get fs i).current
           /\ postcondition_mut_F (Seq.get fs i).current (Seq.get s i) (Seq.get fs i).final (Seq.get visited i))))
   
-  meta "rewrite_def" predicate produces_Map_I_F
+  meta "rewrite_def" function produces_Map_I_F
   
   meta "compute_max_steps" 1000000
   
@@ -2178,7 +2172,7 @@ module M_impl_Iterator_for_Map_I_F__produces_refl__refines (* <Map<I, F> as comm
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -2189,11 +2183,11 @@ module M_impl_Iterator_for_Map_I_F__produces_refl__refines (* <Map<I, F> as comm
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate postcondition_once_F (self: t_F) (args: t_Item) (result: t_B)
+  function postcondition_once_F (self: t_F) (args: t_Item) (result: t_B) : bool
   
-  predicate resolve_F (_1: t_F)
+  function resolve_F (_1: t_F) : bool
   
-  predicate postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B)
+  function postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B) : bool
   
   function fn_mut_once_F (self: t_F) (args: t_Item) (res: t_B) : ()
   
@@ -2201,7 +2195,7 @@ module M_impl_Iterator_for_Map_I_F__produces_refl__refines (* <Map<I, F> as comm
     forall self: t_F, args: t_Item, res: t_B [postcondition_once_F self args res]. postcondition_once_F self args res
       = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
   
-  predicate hist_inv_F (self: t_F) (result_state: t_F)
+  function hist_inv_F (self: t_F) (result_state: t_F) : bool
   
   function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
   
@@ -2219,7 +2213,7 @@ module M_impl_Iterator_for_Map_I_F__produces_refl__refines (* <Map<I, F> as comm
     forall self: t_F, args: t_Item, res_state: t_F, res: t_B [postcondition_mut_F self args res_state res | hist_inv_F self res_state]. postcondition_mut_F self args res_state res
       -> hist_inv_F self res_state
   
-  predicate produces_Map_I_F [@inline:trivial] (self: t_Map_I_F) (visited: Seq.seq t_B) (succ: t_Map_I_F) =
+  function produces_Map_I_F [@inline:trivial] (self: t_Map_I_F) (visited: Seq.seq t_B) (succ: t_Map_I_F) : bool =
     hist_inv_F self.func succ.func
     /\ (exists fs: Seq.seq (MutBorrow.t t_F). Seq.length fs = Seq.length visited
       /\ (exists s: Seq.seq t_Item [produces_I self.iter s succ.iter]. Seq.length s = Seq.length visited
@@ -2234,7 +2228,7 @@ module M_impl_Iterator_for_Map_I_F__produces_refl__refines (* <Map<I, F> as comm
           -> hist_inv_F self.func (Seq.get fs i).current
           /\ postcondition_mut_F (Seq.get fs i).current (Seq.get s i) (Seq.get fs i).final (Seq.get visited i))))
   
-  meta "rewrite_def" predicate produces_Map_I_F
+  meta "rewrite_def" function produces_Map_I_F
   
   meta "compute_max_steps" 1000000
   
@@ -2259,7 +2253,7 @@ module M_impl_Iterator_for_Map_I_F__produces_trans (* <Map<I, F> as common::Iter
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -2270,11 +2264,11 @@ module M_impl_Iterator_for_Map_I_F__produces_trans (* <Map<I, F> as common::Iter
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate postcondition_once_F (self: t_F) (args: t_Item) (result: t_B)
+  function postcondition_once_F (self: t_F) (args: t_Item) (result: t_B) : bool
   
-  predicate resolve_F (_1: t_F)
+  function resolve_F (_1: t_F) : bool
   
-  predicate postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B)
+  function postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B) : bool
   
   function fn_mut_once_F (self: t_F) (args: t_Item) (res: t_B) : ()
   
@@ -2282,7 +2276,7 @@ module M_impl_Iterator_for_Map_I_F__produces_trans (* <Map<I, F> as common::Iter
     forall self: t_F, args: t_Item, res: t_B [postcondition_once_F self args res]. postcondition_once_F self args res
       = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
   
-  predicate hist_inv_F (self: t_F) (result_state: t_F)
+  function hist_inv_F (self: t_F) (result_state: t_F) : bool
   
   function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
   
@@ -2300,7 +2294,7 @@ module M_impl_Iterator_for_Map_I_F__produces_trans (* <Map<I, F> as common::Iter
     forall self: t_F, args: t_Item, res_state: t_F, res: t_B [postcondition_mut_F self args res_state res | hist_inv_F self res_state]. postcondition_mut_F self args res_state res
       -> hist_inv_F self res_state
   
-  predicate produces_Map_I_F [@inline:trivial] (self: t_Map_I_F) (visited: Seq.seq t_B) (succ: t_Map_I_F) =
+  function produces_Map_I_F [@inline:trivial] (self: t_Map_I_F) (visited: Seq.seq t_B) (succ: t_Map_I_F) : bool =
     hist_inv_F self.func succ.func
     /\ (exists fs: Seq.seq (MutBorrow.t t_F). Seq.length fs = Seq.length visited
       /\ (exists s: Seq.seq t_Item [produces_I self.iter s succ.iter]. Seq.length s = Seq.length visited
@@ -2315,14 +2309,14 @@ module M_impl_Iterator_for_Map_I_F__produces_trans (* <Map<I, F> as common::Iter
           -> hist_inv_F self.func (Seq.get fs i).current
           /\ postcondition_mut_F (Seq.get fs i).current (Seq.get s i) (Seq.get fs i).final (Seq.get visited i))))
   
-  meta "rewrite_def" predicate produces_Map_I_F
+  meta "rewrite_def" function produces_Map_I_F
   
   type tup2_Seq_refmut_F_Seq_Item = { f0: Seq.seq (MutBorrow.t t_F); f1: Seq.seq t_Item }
   
-  predicate index_Mapping_tup2_Seq_refmut_F_Seq_Item_bool [@inline:trivial] (self: Map.map tup2_Seq_refmut_F_Seq_Item bool) (a: tup2_Seq_refmut_F_Seq_Item) =
-    Map.get self a
+  function index_Mapping_tup2_Seq_refmut_F_Seq_Item_bool [@inline:trivial] (self: Map.map tup2_Seq_refmut_F_Seq_Item bool) (a: tup2_Seq_refmut_F_Seq_Item) : bool
+   = Map.get self a
   
-  meta "rewrite_def" predicate index_Mapping_tup2_Seq_refmut_F_Seq_Item_bool
+  meta "rewrite_def" function index_Mapping_tup2_Seq_refmut_F_Seq_Item_bool
   
   function such_that_tup2_Seq_refmut_F_Seq_Item (p: Map.map tup2_Seq_refmut_F_Seq_Item bool) : tup2_Seq_refmut_F_Seq_Item
   
@@ -2468,7 +2462,7 @@ module M_impl_Iterator_for_Map_I_F__produces_trans__refines (* <Map<I, F> as com
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -2479,11 +2473,11 @@ module M_impl_Iterator_for_Map_I_F__produces_trans__refines (* <Map<I, F> as com
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate postcondition_once_F (self: t_F) (args: t_Item) (result: t_B)
+  function postcondition_once_F (self: t_F) (args: t_Item) (result: t_B) : bool
   
-  predicate resolve_F (_1: t_F)
+  function resolve_F (_1: t_F) : bool
   
-  predicate postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B)
+  function postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B) : bool
   
   function fn_mut_once_F (self: t_F) (args: t_Item) (res: t_B) : ()
   
@@ -2491,7 +2485,7 @@ module M_impl_Iterator_for_Map_I_F__produces_trans__refines (* <Map<I, F> as com
     forall self: t_F, args: t_Item, res: t_B [postcondition_once_F self args res]. postcondition_once_F self args res
       = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
   
-  predicate hist_inv_F (self: t_F) (result_state: t_F)
+  function hist_inv_F (self: t_F) (result_state: t_F) : bool
   
   function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
   
@@ -2509,7 +2503,7 @@ module M_impl_Iterator_for_Map_I_F__produces_trans__refines (* <Map<I, F> as com
     forall self: t_F, args: t_Item, res_state: t_F, res: t_B [postcondition_mut_F self args res_state res | hist_inv_F self res_state]. postcondition_mut_F self args res_state res
       -> hist_inv_F self res_state
   
-  predicate produces_Map_I_F [@inline:trivial] (self: t_Map_I_F) (visited: Seq.seq t_B) (succ: t_Map_I_F) =
+  function produces_Map_I_F [@inline:trivial] (self: t_Map_I_F) (visited: Seq.seq t_B) (succ: t_Map_I_F) : bool =
     hist_inv_F self.func succ.func
     /\ (exists fs: Seq.seq (MutBorrow.t t_F). Seq.length fs = Seq.length visited
       /\ (exists s: Seq.seq t_Item [produces_I self.iter s succ.iter]. Seq.length s = Seq.length visited
@@ -2524,7 +2518,7 @@ module M_impl_Iterator_for_Map_I_F__produces_trans__refines (* <Map<I, F> as com
           -> hist_inv_F self.func (Seq.get fs i).current
           /\ postcondition_mut_F (Seq.get fs i).current (Seq.get s i) (Seq.get fs i).final (Seq.get visited i))))
   
-  meta "rewrite_def" predicate produces_Map_I_F
+  meta "rewrite_def" function produces_Map_I_F
   
   meta "compute_max_steps" 1000000
   
@@ -2552,7 +2546,7 @@ module M_impl_Iterator_for_Map_I_F__size_hint (* <Map<I, F> as common::Iterator>
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -2567,24 +2561,24 @@ module M_impl_Iterator_for_Map_I_F__size_hint (* <Map<I, F> as common::Iterator>
   
   type tup2_usize_Option_usize = { f0: UInt64.t; f1: t_Option_usize }
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate invariant_ref_I [@inline:trivial] (self: t_I) = inv_I self
+  function invariant_ref_I [@inline:trivial] (self: t_I) : bool = inv_I self
   
-  meta "rewrite_def" predicate invariant_ref_I
+  meta "rewrite_def" function invariant_ref_I
   
-  predicate inv_ref_I [@inline:trivial] (_1: t_I) = invariant_ref_I _1
+  function inv_ref_I [@inline:trivial] (_1: t_I) : bool = invariant_ref_I _1
   
-  meta "rewrite_def" predicate inv_ref_I
+  meta "rewrite_def" function inv_ref_I
   
-  predicate precondition_size_hint (self: ()) (args: t_I)
+  function precondition_size_hint (self: ()) (args: t_I) : bool
   
   axiom precondition_fndef: forall args: t_I [precondition_size_hint () args]. (let self = args in inv_ref_I self)
       -> precondition_size_hint () args
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_I, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -2595,10 +2589,10 @@ module M_impl_Iterator_for_Map_I_F__size_hint (* <Map<I, F> as common::Iterator>
         | None -> true
         end)
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_I (self: t_I) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -2607,21 +2601,21 @@ module M_impl_Iterator_for_Map_I_F__size_hint (* <Map<I, F> as common::Iterator>
     {[@stop_split] [@expl:size_hint ensures] postcondition_once_size_hint () self result}
       (! return {result}) ]
   
-  predicate inv_Item (_1: t_Item)
+  function inv_Item (_1: t_Item) : bool
   
-  predicate precondition_F (self: t_F) (args: t_Item)
+  function precondition_F (self: t_F) (args: t_Item) : bool
   
-  predicate next_precondition_I (iter'0: t_I) (func'0: t_F) =
+  function next_precondition_I (iter'0: t_I) (func'0: t_F) : bool =
     forall e: t_Item, i: t_I [produces_I iter'0 (Seq.singleton e) i]. inv_Item e
         /\ produces_I iter'0 (Seq.singleton e) i -> precondition_F func'0 e
   
   type t_B
   
-  predicate postcondition_once_F (self: t_F) (args: t_Item) (result: t_B)
+  function postcondition_once_F (self: t_F) (args: t_Item) (result: t_B) : bool
   
-  predicate resolve_F (_1: t_F)
+  function resolve_F (_1: t_F) : bool
   
-  predicate postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B)
+  function postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B) : bool
   
   function fn_mut_once_F (self: t_F) (args: t_Item) (res: t_B) : ()
   
@@ -2629,7 +2623,7 @@ module M_impl_Iterator_for_Map_I_F__size_hint (* <Map<I, F> as common::Iterator>
     forall self: t_F, args: t_Item, res: t_B [postcondition_once_F self args res]. postcondition_once_F self args res
       = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
   
-  predicate hist_inv_F (self: t_F) (result_state: t_F)
+  function hist_inv_F (self: t_F) (result_state: t_F) : bool
   
   function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
   
@@ -2647,58 +2641,57 @@ module M_impl_Iterator_for_Map_I_F__size_hint (* <Map<I, F> as common::Iterator>
     forall self: t_F, args: t_Item, res_state: t_F, res: t_B [postcondition_mut_F self args res_state res | hist_inv_F self res_state]. postcondition_mut_F self args res_state res
       -> hist_inv_F self res_state
   
-  predicate invariant_ref_Item [@inline:trivial] (self: t_Item) = inv_Item self
+  function invariant_ref_Item [@inline:trivial] (self: t_Item) : bool = inv_Item self
   
-  meta "rewrite_def" predicate invariant_ref_Item
+  meta "rewrite_def" function invariant_ref_Item
   
-  predicate inv_ref_Item [@inline:trivial] (_1: t_Item) = invariant_ref_Item _1
+  function inv_ref_Item [@inline:trivial] (_1: t_Item) : bool = invariant_ref_Item _1
   
-  meta "rewrite_def" predicate inv_ref_Item
+  meta "rewrite_def" function inv_ref_Item
   
-  predicate invariant_Seq_Item [@inline:trivial] (self: Seq.seq t_Item) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_Item (Seq.get self i)
+  function invariant_Seq_Item [@inline:trivial] (self: Seq.seq t_Item) : bool = forall i: int. 0 <= i
+        /\ i < Seq.length self -> inv_ref_Item (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_Item
+  meta "rewrite_def" function invariant_Seq_Item
   
-  predicate inv_Seq_Item [@inline:trivial] (_1: Seq.seq t_Item) = invariant_Seq_Item _1
+  function inv_Seq_Item [@inline:trivial] (_1: Seq.seq t_Item) : bool = invariant_Seq_Item _1
   
-  meta "rewrite_def" predicate inv_Seq_Item
+  meta "rewrite_def" function inv_Seq_Item
   
-  predicate inv_F (_1: t_F)
+  function inv_F (_1: t_F) : bool
   
-  predicate invariant_refmut_F [@inline:trivial] (self: MutBorrow.t t_F) = inv_F self.current /\ inv_F self.final
+  function invariant_refmut_F [@inline:trivial] (self: MutBorrow.t t_F) : bool = inv_F self.current /\ inv_F self.final
   
-  meta "rewrite_def" predicate invariant_refmut_F
+  meta "rewrite_def" function invariant_refmut_F
   
-  predicate inv_refmut_F [@inline:trivial] (_1: MutBorrow.t t_F) = invariant_refmut_F _1
+  function inv_refmut_F [@inline:trivial] (_1: MutBorrow.t t_F) : bool = invariant_refmut_F _1
   
-  meta "rewrite_def" predicate inv_refmut_F
+  meta "rewrite_def" function inv_refmut_F
   
-  predicate preservation_I (iter'0: t_I) (func'0: t_F) =
+  function preservation_I (iter'0: t_I) (func'0: t_F) : bool =
     forall s: Seq.seq t_Item, e1: t_Item, e2: t_Item, f: MutBorrow.t t_F, b: t_B, i: t_I [produces_I iter'0 (Seq.snoc (Seq.snoc s e1) e2) i, postcondition_mut_F f.current e1 f.final b]. hist_inv_F func'0 f.current
       -> inv_Seq_Item s /\ inv_Item e1 /\ inv_Item e2 /\ inv_refmut_F f
       -> produces_I iter'0 (Seq.snoc (Seq.snoc s e1) e2) i
       -> postcondition_mut_F f.current e1 f.final b -> precondition_F f.final e2
   
-  predicate reinitialize_I =
-    forall iter'0: MutBorrow.t t_I, func'0: t_F. completed_I iter'0
-      -> next_precondition_I iter'0.final func'0 /\ preservation_I iter'0.final func'0
+  constant reinitialize_I: bool = forall iter'0: MutBorrow.t t_I, func'0: t_F. completed_I iter'0
+    -> next_precondition_I iter'0.final func'0 /\ preservation_I iter'0.final func'0
   
-  predicate invariant_Map_I_F (self: t_Map_I_F) =
-    reinitialize_I /\ preservation_I self.iter self.func /\ next_precondition_I self.iter self.func
+  function invariant_Map_I_F (self: t_Map_I_F) : bool = reinitialize_I
+    /\ preservation_I self.iter self.func /\ next_precondition_I self.iter self.func
   
-  predicate inv_Map_I_F (_1: t_Map_I_F)
+  function inv_Map_I_F (_1: t_Map_I_F) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Map_I_F [inv_Map_I_F _1]. inv_Map_I_F _1
       = (invariant_Map_I_F _1 /\ inv_I _1.iter /\ inv_F _1.func)
   
-  predicate invariant_ref_Map_I_F [@inline:trivial] (self: t_Map_I_F) = inv_Map_I_F self
+  function invariant_ref_Map_I_F [@inline:trivial] (self: t_Map_I_F) : bool = inv_Map_I_F self
   
-  meta "rewrite_def" predicate invariant_ref_Map_I_F
+  meta "rewrite_def" function invariant_ref_Map_I_F
   
-  predicate inv_ref_Map_I_F [@inline:trivial] (_1: t_Map_I_F) = invariant_ref_Map_I_F _1
+  function inv_ref_Map_I_F [@inline:trivial] (_1: t_Map_I_F) : bool = invariant_ref_Map_I_F _1
   
-  meta "rewrite_def" predicate inv_ref_Map_I_F
+  meta "rewrite_def" function inv_ref_Map_I_F
   
   meta "compute_max_steps" 1000000
   
@@ -2728,7 +2721,7 @@ module M_impl_Iterator_for_Map_I_F__size_hint__refines (* <Map<I, F> as common::
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -2739,23 +2732,23 @@ module M_impl_Iterator_for_Map_I_F__size_hint__refines (* <Map<I, F> as common::
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate inv_Item (_1: t_Item)
+  function inv_Item (_1: t_Item) : bool
   
-  predicate precondition_F (self: t_F) (args: t_Item)
+  function precondition_F (self: t_F) (args: t_Item) : bool
   
-  predicate next_precondition_I (iter'0: t_I) (func'0: t_F) =
+  function next_precondition_I (iter'0: t_I) (func'0: t_F) : bool =
     forall e: t_Item, i: t_I [produces_I iter'0 (Seq.singleton e) i]. inv_Item e
         /\ produces_I iter'0 (Seq.singleton e) i -> precondition_F func'0 e
   
   type t_B
   
-  predicate postcondition_once_F (self: t_F) (args: t_Item) (result: t_B)
+  function postcondition_once_F (self: t_F) (args: t_Item) (result: t_B) : bool
   
-  predicate resolve_F (_1: t_F)
+  function resolve_F (_1: t_F) : bool
   
-  predicate postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B)
+  function postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B) : bool
   
   function fn_mut_once_F (self: t_F) (args: t_Item) (res: t_B) : ()
   
@@ -2763,7 +2756,7 @@ module M_impl_Iterator_for_Map_I_F__size_hint__refines (* <Map<I, F> as common::
     forall self: t_F, args: t_Item, res: t_B [postcondition_once_F self args res]. postcondition_once_F self args res
       = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
   
-  predicate hist_inv_F (self: t_F) (result_state: t_F)
+  function hist_inv_F (self: t_F) (result_state: t_F) : bool
   
   function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
   
@@ -2781,66 +2774,65 @@ module M_impl_Iterator_for_Map_I_F__size_hint__refines (* <Map<I, F> as common::
     forall self: t_F, args: t_Item, res_state: t_F, res: t_B [postcondition_mut_F self args res_state res | hist_inv_F self res_state]. postcondition_mut_F self args res_state res
       -> hist_inv_F self res_state
   
-  predicate invariant_ref_Item [@inline:trivial] (self: t_Item) = inv_Item self
+  function invariant_ref_Item [@inline:trivial] (self: t_Item) : bool = inv_Item self
   
-  meta "rewrite_def" predicate invariant_ref_Item
+  meta "rewrite_def" function invariant_ref_Item
   
-  predicate inv_ref_Item [@inline:trivial] (_1: t_Item) = invariant_ref_Item _1
+  function inv_ref_Item [@inline:trivial] (_1: t_Item) : bool = invariant_ref_Item _1
   
-  meta "rewrite_def" predicate inv_ref_Item
+  meta "rewrite_def" function inv_ref_Item
   
-  predicate invariant_Seq_Item [@inline:trivial] (self: Seq.seq t_Item) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_Item (Seq.get self i)
+  function invariant_Seq_Item [@inline:trivial] (self: Seq.seq t_Item) : bool = forall i: int. 0 <= i
+        /\ i < Seq.length self -> inv_ref_Item (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_Item
+  meta "rewrite_def" function invariant_Seq_Item
   
-  predicate inv_Seq_Item [@inline:trivial] (_1: Seq.seq t_Item) = invariant_Seq_Item _1
+  function inv_Seq_Item [@inline:trivial] (_1: Seq.seq t_Item) : bool = invariant_Seq_Item _1
   
-  meta "rewrite_def" predicate inv_Seq_Item
+  meta "rewrite_def" function inv_Seq_Item
   
-  predicate inv_F (_1: t_F)
+  function inv_F (_1: t_F) : bool
   
-  predicate invariant_refmut_F [@inline:trivial] (self: MutBorrow.t t_F) = inv_F self.current /\ inv_F self.final
+  function invariant_refmut_F [@inline:trivial] (self: MutBorrow.t t_F) : bool = inv_F self.current /\ inv_F self.final
   
-  meta "rewrite_def" predicate invariant_refmut_F
+  meta "rewrite_def" function invariant_refmut_F
   
-  predicate inv_refmut_F [@inline:trivial] (_1: MutBorrow.t t_F) = invariant_refmut_F _1
+  function inv_refmut_F [@inline:trivial] (_1: MutBorrow.t t_F) : bool = invariant_refmut_F _1
   
-  meta "rewrite_def" predicate inv_refmut_F
+  meta "rewrite_def" function inv_refmut_F
   
-  predicate preservation_I (iter'0: t_I) (func'0: t_F) =
+  function preservation_I (iter'0: t_I) (func'0: t_F) : bool =
     forall s: Seq.seq t_Item, e1: t_Item, e2: t_Item, f: MutBorrow.t t_F, b: t_B, i: t_I [produces_I iter'0 (Seq.snoc (Seq.snoc s e1) e2) i, postcondition_mut_F f.current e1 f.final b]. hist_inv_F func'0 f.current
       -> inv_Seq_Item s /\ inv_Item e1 /\ inv_Item e2 /\ inv_refmut_F f
       -> produces_I iter'0 (Seq.snoc (Seq.snoc s e1) e2) i
       -> postcondition_mut_F f.current e1 f.final b -> precondition_F f.final e2
   
-  predicate reinitialize_I =
-    forall iter'0: MutBorrow.t t_I, func'0: t_F. completed_I iter'0
-      -> next_precondition_I iter'0.final func'0 /\ preservation_I iter'0.final func'0
+  constant reinitialize_I: bool = forall iter'0: MutBorrow.t t_I, func'0: t_F. completed_I iter'0
+    -> next_precondition_I iter'0.final func'0 /\ preservation_I iter'0.final func'0
   
-  predicate invariant_Map_I_F (self: t_Map_I_F) =
-    reinitialize_I /\ preservation_I self.iter self.func /\ next_precondition_I self.iter self.func
+  function invariant_Map_I_F (self: t_Map_I_F) : bool = reinitialize_I
+    /\ preservation_I self.iter self.func /\ next_precondition_I self.iter self.func
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate inv_Map_I_F (_1: t_Map_I_F)
+  function inv_Map_I_F (_1: t_Map_I_F) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Map_I_F [inv_Map_I_F _1]. inv_Map_I_F _1
       = (invariant_Map_I_F _1 /\ inv_I _1.iter /\ inv_F _1.func)
   
-  predicate invariant_ref_Map_I_F [@inline:trivial] (self: t_Map_I_F) = inv_Map_I_F self
+  function invariant_ref_Map_I_F [@inline:trivial] (self: t_Map_I_F) : bool = inv_Map_I_F self
   
-  meta "rewrite_def" predicate invariant_ref_Map_I_F
+  meta "rewrite_def" function invariant_ref_Map_I_F
   
-  predicate inv_ref_Map_I_F [@inline:trivial] (_1: t_Map_I_F) = invariant_ref_Map_I_F _1
+  function inv_ref_Map_I_F [@inline:trivial] (_1: t_Map_I_F) : bool = invariant_ref_Map_I_F _1
   
-  meta "rewrite_def" predicate inv_ref_Map_I_F
+  meta "rewrite_def" function inv_ref_Map_I_F
   
   type t_Option_usize = None | Some UInt64.t
   
   type tup2_usize_Option_usize = { f0: UInt64.t; f1: t_Option_usize }
   
-  predicate postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_I, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -2851,23 +2843,23 @@ module M_impl_Iterator_for_Map_I_F__size_hint__refines (* <Map<I, F> as common::
         | None -> true
         end)
   
-  predicate invariant_ref_I [@inline:trivial] (self: t_I) = inv_I self
+  function invariant_ref_I [@inline:trivial] (self: t_I) : bool = inv_I self
   
-  meta "rewrite_def" predicate invariant_ref_I
+  meta "rewrite_def" function invariant_ref_I
   
-  predicate inv_ref_I [@inline:trivial] (_1: t_I) = invariant_ref_I _1
+  function inv_ref_I [@inline:trivial] (_1: t_I) : bool = invariant_ref_I _1
   
-  meta "rewrite_def" predicate inv_ref_I
+  meta "rewrite_def" function inv_ref_I
   
-  predicate precondition_size_hint (self: ()) (args: t_I)
+  function precondition_size_hint (self: ()) (args: t_I) : bool
   
   axiom precondition_fndef: forall args: t_I [precondition_size_hint () args]. (let self = args in inv_ref_I self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_I (self: t_I) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -2876,7 +2868,7 @@ module M_impl_Iterator_for_Map_I_F__size_hint__refines (* <Map<I, F> as common::
     {[@stop_split] [@expl:size_hint ensures] postcondition_once_size_hint () self result}
       (! return {result}) ]
   
-  predicate produces_Map_I_F [@inline:trivial] (self: t_Map_I_F) (visited: Seq.seq t_B) (succ: t_Map_I_F) =
+  function produces_Map_I_F [@inline:trivial] (self: t_Map_I_F) (visited: Seq.seq t_B) (succ: t_Map_I_F) : bool =
     hist_inv_F self.func succ.func
     /\ (exists fs: Seq.seq (MutBorrow.t t_F). Seq.length fs = Seq.length visited
       /\ (exists s: Seq.seq t_Item [produces_I self.iter s succ.iter]. Seq.length s = Seq.length visited
@@ -2891,9 +2883,9 @@ module M_impl_Iterator_for_Map_I_F__size_hint__refines (* <Map<I, F> as common::
           -> hist_inv_F self.func (Seq.get fs i).current
           /\ postcondition_mut_F (Seq.get fs i).current (Seq.get s i) (Seq.get fs i).final (Seq.get visited i))))
   
-  meta "rewrite_def" predicate produces_Map_I_F
+  meta "rewrite_def" function produces_Map_I_F
   
-  predicate completed_Map_I_F (self: MutBorrow.t t_Map_I_F) =
+  function completed_Map_I_F (self: MutBorrow.t t_Map_I_F) : bool =
     completed_I (MutBorrow.borrow_logic self.current.iter self.final.iter (MutBorrow.inherit_id (MutBorrow.get_id self) 0))
     /\ self.current.func = self.final.func
   
@@ -2927,7 +2919,7 @@ module M_impl_Map_I_F__produces_instantiate_existential (* Map<I, F> *)
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -2940,11 +2932,11 @@ module M_impl_Map_I_F__produces_instantiate_existential (* Map<I, F> *)
   
   type tup2_Seq_refmut_F_Seq_Item = { f0: Seq.seq (MutBorrow.t t_F); f1: Seq.seq t_Item }
   
-  predicate postcondition_once_F (self: t_F) (args: t_Item) (result: t_B)
+  function postcondition_once_F (self: t_F) (args: t_Item) (result: t_B) : bool
   
-  predicate resolve_F (_1: t_F)
+  function resolve_F (_1: t_F) : bool
   
-  predicate postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B)
+  function postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B) : bool
   
   function fn_mut_once_F (self: t_F) (args: t_Item) (res: t_B) : ()
   
@@ -2952,7 +2944,7 @@ module M_impl_Map_I_F__produces_instantiate_existential (* Map<I, F> *)
     forall self: t_F, args: t_Item, res: t_B [postcondition_once_F self args res]. postcondition_once_F self args res
       = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
   
-  predicate hist_inv_F (self: t_F) (result_state: t_F)
+  function hist_inv_F (self: t_F) (result_state: t_F) : bool
   
   function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
   
@@ -2970,7 +2962,7 @@ module M_impl_Map_I_F__produces_instantiate_existential (* Map<I, F> *)
     forall self: t_F, args: t_Item, res_state: t_F, res: t_B [postcondition_mut_F self args res_state res | hist_inv_F self res_state]. postcondition_mut_F self args res_state res
       -> hist_inv_F self res_state
   
-  predicate produces_Map_I_F [@inline:trivial] (self: t_Map_I_F) (visited: Seq.seq t_B) (succ: t_Map_I_F) =
+  function produces_Map_I_F [@inline:trivial] (self: t_Map_I_F) (visited: Seq.seq t_B) (succ: t_Map_I_F) : bool =
     hist_inv_F self.func succ.func
     /\ (exists fs: Seq.seq (MutBorrow.t t_F). Seq.length fs = Seq.length visited
       /\ (exists s: Seq.seq t_Item [produces_I self.iter s succ.iter]. Seq.length s = Seq.length visited
@@ -2985,7 +2977,7 @@ module M_impl_Map_I_F__produces_instantiate_existential (* Map<I, F> *)
           -> hist_inv_F self.func (Seq.get fs i).current
           /\ postcondition_mut_F (Seq.get fs i).current (Seq.get s i) (Seq.get fs i).final (Seq.get visited i))))
   
-  meta "rewrite_def" predicate produces_Map_I_F
+  meta "rewrite_def" function produces_Map_I_F
   
   function produces_trans_Map_I_F (a: t_Map_I_F) (ab: Seq.seq t_B) (b: t_Map_I_F) (bc: Seq.seq t_B) (c: t_Map_I_F) : ()
    = ()
@@ -2998,10 +2990,10 @@ module M_impl_Map_I_F__produces_instantiate_existential (* Map<I, F> *)
   
   axiom produces_refl_Map_I_F_spec: forall self: t_Map_I_F. produces_Map_I_F self (Seq.empty: Seq.seq t_B) self
   
-  predicate index_Mapping_tup2_Seq_refmut_F_Seq_Item_bool [@inline:trivial] (self: Map.map tup2_Seq_refmut_F_Seq_Item bool) (a: tup2_Seq_refmut_F_Seq_Item) =
-    Map.get self a
+  function index_Mapping_tup2_Seq_refmut_F_Seq_Item_bool [@inline:trivial] (self: Map.map tup2_Seq_refmut_F_Seq_Item bool) (a: tup2_Seq_refmut_F_Seq_Item) : bool
+   = Map.get self a
   
-  meta "rewrite_def" predicate index_Mapping_tup2_Seq_refmut_F_Seq_Item_bool
+  meta "rewrite_def" function index_Mapping_tup2_Seq_refmut_F_Seq_Item_bool
   
   function such_that_tup2_Seq_refmut_F_Seq_Item (p: Map.map tup2_Seq_refmut_F_Seq_Item bool) : tup2_Seq_refmut_F_Seq_Item
   
@@ -3097,7 +3089,7 @@ module M_impl_Map_I_F__produces_one (* Map<I, F> *)
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -3108,11 +3100,11 @@ module M_impl_Map_I_F__produces_one (* Map<I, F> *)
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate postcondition_once_F (self: t_F) (args: t_Item) (result: t_B)
+  function postcondition_once_F (self: t_F) (args: t_Item) (result: t_B) : bool
   
-  predicate resolve_F (_1: t_F)
+  function resolve_F (_1: t_F) : bool
   
-  predicate postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B)
+  function postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B) : bool
   
   function fn_mut_once_F (self: t_F) (args: t_Item) (res: t_B) : ()
   
@@ -3120,7 +3112,7 @@ module M_impl_Map_I_F__produces_one (* Map<I, F> *)
     forall self: t_F, args: t_Item, res: t_B [postcondition_once_F self args res]. postcondition_once_F self args res
       = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
   
-  predicate hist_inv_F (self: t_F) (result_state: t_F)
+  function hist_inv_F (self: t_F) (result_state: t_F) : bool
   
   function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
   
@@ -3138,7 +3130,7 @@ module M_impl_Map_I_F__produces_one (* Map<I, F> *)
     forall self: t_F, args: t_Item, res_state: t_F, res: t_B [postcondition_mut_F self args res_state res | hist_inv_F self res_state]. postcondition_mut_F self args res_state res
       -> hist_inv_F self res_state
   
-  predicate produces_Map_I_F [@inline:trivial] (self: t_Map_I_F) (visited: Seq.seq t_B) (succ: t_Map_I_F) =
+  function produces_Map_I_F [@inline:trivial] (self: t_Map_I_F) (visited: Seq.seq t_B) (succ: t_Map_I_F) : bool =
     hist_inv_F self.func succ.func
     /\ (exists fs: Seq.seq (MutBorrow.t t_F). Seq.length fs = Seq.length visited
       /\ (exists s: Seq.seq t_Item [produces_I self.iter s succ.iter]. Seq.length s = Seq.length visited
@@ -3153,7 +3145,7 @@ module M_impl_Map_I_F__produces_one (* Map<I, F> *)
           -> hist_inv_F self.func (Seq.get fs i).current
           /\ postcondition_mut_F (Seq.get fs i).current (Seq.get s i) (Seq.get fs i).final (Seq.get visited i))))
   
-  meta "rewrite_def" predicate produces_Map_I_F
+  meta "rewrite_def" function produces_Map_I_F
   
   function produces_trans_Map_I_F (a: t_Map_I_F) (ab: Seq.seq t_B) (b: t_Map_I_F) (bc: Seq.seq t_B) (c: t_Map_I_F) : ()
    = ()
@@ -3176,7 +3168,7 @@ module M_impl_Map_I_F__produces_one (* Map<I, F> *)
   
   constant succ : t_Map_I_F
   
-  predicate produces_one_I (self: t_Map_I_F) (visited: t_B) (succ: t_Map_I_F)
+  function produces_one_I (self: t_Map_I_F) (visited: t_B) (succ: t_Map_I_F) : bool
   
   goal vc_produces_one_I: (forall s: Seq.seq t_Item. Seq.length s = 1 -> s = Seq.singleton (Seq.get s 0))
     && (forall local. local = ()
@@ -3200,7 +3192,7 @@ module M_impl_Map_I_F__produces_one_invariant (* Map<I, F> *)
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -3213,31 +3205,31 @@ module M_impl_Map_I_F__produces_one_invariant (* Map<I, F> *)
   
   type t_B
   
-  predicate inv_Item (_1: t_Item)
+  function inv_Item (_1: t_Item) : bool
   
-  predicate inv_F (_1: t_F)
+  function inv_F (_1: t_F) : bool
   
-  predicate invariant_refmut_F [@inline:trivial] (self: MutBorrow.t t_F) = inv_F self.current /\ inv_F self.final
+  function invariant_refmut_F [@inline:trivial] (self: MutBorrow.t t_F) : bool = inv_F self.current /\ inv_F self.final
   
-  meta "rewrite_def" predicate invariant_refmut_F
+  meta "rewrite_def" function invariant_refmut_F
   
-  predicate inv_refmut_F [@inline:trivial] (_1: MutBorrow.t t_F) = invariant_refmut_F _1
+  function inv_refmut_F [@inline:trivial] (_1: MutBorrow.t t_F) : bool = invariant_refmut_F _1
   
-  meta "rewrite_def" predicate inv_refmut_F
+  meta "rewrite_def" function inv_refmut_F
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate precondition_F (self: t_F) (args: t_Item)
+  function precondition_F (self: t_F) (args: t_Item) : bool
   
-  predicate next_precondition_I (iter'0: t_I) (func'0: t_F) =
+  function next_precondition_I (iter'0: t_I) (func'0: t_F) : bool =
     forall e: t_Item, i: t_I [produces_I iter'0 (Seq.singleton e) i]. inv_Item e
         /\ produces_I iter'0 (Seq.singleton e) i -> precondition_F func'0 e
   
-  predicate postcondition_once_F (self: t_F) (args: t_Item) (result: t_B)
+  function postcondition_once_F (self: t_F) (args: t_Item) (result: t_B) : bool
   
-  predicate resolve_F (_1: t_F)
+  function resolve_F (_1: t_F) : bool
   
-  predicate postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B)
+  function postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B) : bool
   
   function fn_mut_once_F (self: t_F) (args: t_Item) (res: t_B) : ()
   
@@ -3245,7 +3237,7 @@ module M_impl_Map_I_F__produces_one_invariant (* Map<I, F> *)
     forall self: t_F, args: t_Item, res: t_B [postcondition_once_F self args res]. postcondition_once_F self args res
       = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
   
-  predicate hist_inv_F (self: t_F) (result_state: t_F)
+  function hist_inv_F (self: t_F) (result_state: t_F) : bool
   
   function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
   
@@ -3263,35 +3255,34 @@ module M_impl_Map_I_F__produces_one_invariant (* Map<I, F> *)
     forall self: t_F, args: t_Item, res_state: t_F, res: t_B [postcondition_mut_F self args res_state res | hist_inv_F self res_state]. postcondition_mut_F self args res_state res
       -> hist_inv_F self res_state
   
-  predicate invariant_ref_Item [@inline:trivial] (self: t_Item) = inv_Item self
+  function invariant_ref_Item [@inline:trivial] (self: t_Item) : bool = inv_Item self
   
-  meta "rewrite_def" predicate invariant_ref_Item
+  meta "rewrite_def" function invariant_ref_Item
   
-  predicate inv_ref_Item [@inline:trivial] (_1: t_Item) = invariant_ref_Item _1
+  function inv_ref_Item [@inline:trivial] (_1: t_Item) : bool = invariant_ref_Item _1
   
-  meta "rewrite_def" predicate inv_ref_Item
+  meta "rewrite_def" function inv_ref_Item
   
-  predicate invariant_Seq_Item [@inline:trivial] (self: Seq.seq t_Item) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_Item (Seq.get self i)
+  function invariant_Seq_Item [@inline:trivial] (self: Seq.seq t_Item) : bool = forall i: int. 0 <= i
+        /\ i < Seq.length self -> inv_ref_Item (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_Item
+  meta "rewrite_def" function invariant_Seq_Item
   
-  predicate inv_Seq_Item [@inline:trivial] (_1: Seq.seq t_Item) = invariant_Seq_Item _1
+  function inv_Seq_Item [@inline:trivial] (_1: Seq.seq t_Item) : bool = invariant_Seq_Item _1
   
-  meta "rewrite_def" predicate inv_Seq_Item
+  meta "rewrite_def" function inv_Seq_Item
   
-  predicate preservation_I (iter'0: t_I) (func'0: t_F) =
+  function preservation_I (iter'0: t_I) (func'0: t_F) : bool =
     forall s: Seq.seq t_Item, e1: t_Item, e2: t_Item, f: MutBorrow.t t_F, b: t_B, i: t_I [produces_I iter'0 (Seq.snoc (Seq.snoc s e1) e2) i, postcondition_mut_F f.current e1 f.final b]. hist_inv_F func'0 f.current
       -> inv_Seq_Item s /\ inv_Item e1 /\ inv_Item e2 /\ inv_refmut_F f
       -> produces_I iter'0 (Seq.snoc (Seq.snoc s e1) e2) i
       -> postcondition_mut_F f.current e1 f.final b -> precondition_F f.final e2
   
-  predicate reinitialize_I =
-    forall iter'0: MutBorrow.t t_I, func'0: t_F. completed_I iter'0
-      -> next_precondition_I iter'0.final func'0 /\ preservation_I iter'0.final func'0
+  constant reinitialize_I: bool = forall iter'0: MutBorrow.t t_I, func'0: t_F. completed_I iter'0
+    -> next_precondition_I iter'0.final func'0 /\ preservation_I iter'0.final func'0
   
-  predicate invariant_Map_I_F (self: t_Map_I_F) =
-    reinitialize_I /\ preservation_I self.iter self.func /\ next_precondition_I self.iter self.func
+  function invariant_Map_I_F (self: t_Map_I_F) : bool = reinitialize_I
+    /\ preservation_I self.iter self.func /\ next_precondition_I self.iter self.func
   
   meta "compute_max_steps" 1000000
   
@@ -3340,13 +3331,13 @@ module M_map
   
   type t_Map_I_F = { iter: t_I; func: t_F }
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate inv_F (_1: t_F)
+  function inv_F (_1: t_F) : bool
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -3357,23 +3348,23 @@ module M_map
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate inv_Item (_1: t_Item)
+  function inv_Item (_1: t_Item) : bool
   
-  predicate precondition_F (self: t_F) (args: t_Item)
+  function precondition_F (self: t_F) (args: t_Item) : bool
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate next_precondition_I (iter'0: t_I) (func'0: t_F) =
+  function next_precondition_I (iter'0: t_I) (func'0: t_F) : bool =
     forall e: t_Item, i: t_I [produces_I iter'0 (Seq.singleton e) i]. inv_Item e
         /\ produces_I iter'0 (Seq.singleton e) i -> precondition_F func'0 e
   
   type t_B
   
-  predicate postcondition_once_F (self: t_F) (args: t_Item) (result: t_B)
+  function postcondition_once_F (self: t_F) (args: t_Item) (result: t_B) : bool
   
-  predicate resolve_F (_1: t_F)
+  function resolve_F (_1: t_F) : bool
   
-  predicate postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B)
+  function postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B) : bool
   
   function fn_mut_once_F (self: t_F) (args: t_Item) (res: t_B) : ()
   
@@ -3381,7 +3372,7 @@ module M_map
     forall self: t_F, args: t_Item, res: t_B [postcondition_once_F self args res]. postcondition_once_F self args res
       = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
   
-  predicate hist_inv_F (self: t_F) (result_state: t_F)
+  function hist_inv_F (self: t_F) (result_state: t_F) : bool
   
   function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
   
@@ -3399,45 +3390,44 @@ module M_map
     forall self: t_F, args: t_Item, res_state: t_F, res: t_B [postcondition_mut_F self args res_state res | hist_inv_F self res_state]. postcondition_mut_F self args res_state res
       -> hist_inv_F self res_state
   
-  predicate invariant_ref_Item [@inline:trivial] (self: t_Item) = inv_Item self
+  function invariant_ref_Item [@inline:trivial] (self: t_Item) : bool = inv_Item self
   
-  meta "rewrite_def" predicate invariant_ref_Item
+  meta "rewrite_def" function invariant_ref_Item
   
-  predicate inv_ref_Item [@inline:trivial] (_1: t_Item) = invariant_ref_Item _1
+  function inv_ref_Item [@inline:trivial] (_1: t_Item) : bool = invariant_ref_Item _1
   
-  meta "rewrite_def" predicate inv_ref_Item
+  meta "rewrite_def" function inv_ref_Item
   
-  predicate invariant_Seq_Item [@inline:trivial] (self: Seq.seq t_Item) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_Item (Seq.get self i)
+  function invariant_Seq_Item [@inline:trivial] (self: Seq.seq t_Item) : bool = forall i: int. 0 <= i
+        /\ i < Seq.length self -> inv_ref_Item (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_Item
+  meta "rewrite_def" function invariant_Seq_Item
   
-  predicate inv_Seq_Item [@inline:trivial] (_1: Seq.seq t_Item) = invariant_Seq_Item _1
+  function inv_Seq_Item [@inline:trivial] (_1: Seq.seq t_Item) : bool = invariant_Seq_Item _1
   
-  meta "rewrite_def" predicate inv_Seq_Item
+  meta "rewrite_def" function inv_Seq_Item
   
-  predicate invariant_refmut_F [@inline:trivial] (self: MutBorrow.t t_F) = inv_F self.current /\ inv_F self.final
+  function invariant_refmut_F [@inline:trivial] (self: MutBorrow.t t_F) : bool = inv_F self.current /\ inv_F self.final
   
-  meta "rewrite_def" predicate invariant_refmut_F
+  meta "rewrite_def" function invariant_refmut_F
   
-  predicate inv_refmut_F [@inline:trivial] (_1: MutBorrow.t t_F) = invariant_refmut_F _1
+  function inv_refmut_F [@inline:trivial] (_1: MutBorrow.t t_F) : bool = invariant_refmut_F _1
   
-  meta "rewrite_def" predicate inv_refmut_F
+  meta "rewrite_def" function inv_refmut_F
   
-  predicate preservation_I (iter'0: t_I) (func'0: t_F) =
+  function preservation_I (iter'0: t_I) (func'0: t_F) : bool =
     forall s: Seq.seq t_Item, e1: t_Item, e2: t_Item, f: MutBorrow.t t_F, b: t_B, i: t_I [produces_I iter'0 (Seq.snoc (Seq.snoc s e1) e2) i, postcondition_mut_F f.current e1 f.final b]. hist_inv_F func'0 f.current
       -> inv_Seq_Item s /\ inv_Item e1 /\ inv_Item e2 /\ inv_refmut_F f
       -> produces_I iter'0 (Seq.snoc (Seq.snoc s e1) e2) i
       -> postcondition_mut_F f.current e1 f.final b -> precondition_F f.final e2
   
-  predicate reinitialize_I =
-    forall iter'0: MutBorrow.t t_I, func'0: t_F. completed_I iter'0
-      -> next_precondition_I iter'0.final func'0 /\ preservation_I iter'0.final func'0
+  constant reinitialize_I: bool = forall iter'0: MutBorrow.t t_I, func'0: t_F. completed_I iter'0
+    -> next_precondition_I iter'0.final func'0 /\ preservation_I iter'0.final func'0
   
-  predicate invariant_Map_I_F (self: t_Map_I_F) =
-    reinitialize_I /\ preservation_I self.iter self.func /\ next_precondition_I self.iter self.func
+  function invariant_Map_I_F (self: t_Map_I_F) : bool = reinitialize_I
+    /\ preservation_I self.iter self.func /\ next_precondition_I self.iter self.func
   
-  predicate inv_Map_I_F (_1: t_Map_I_F)
+  function inv_Map_I_F (_1: t_Map_I_F) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Map_I_F [inv_Map_I_F _1]. inv_Map_I_F _1
       = (invariant_Map_I_F _1 /\ inv_I _1.iter /\ inv_F _1.func)

@@ -8,7 +8,7 @@ type tup2_Option_T_Option_T = { f0: t_Option_T; f1: t_Option_T }
 
 function op_T (self: t_T) (other: t_T) : t_Option_T
 
-predicate incl_T (self: t_T) (other: t_T)
+function incl_T (self: t_T) (other: t_T) : bool
 
 axiom incl_T_spec: forall self: t_T, other: t_T [incl_T self other]. incl_T self other
     = (exists factor: t_T. op_T self factor = Some other)
@@ -35,7 +35,7 @@ function incl_op_T (self: t_T) (other: t_T) (comb: t_T) : ()
 
 axiom incl_op_T_spec: forall self: t_T, other: t_T, comb: t_T. op_T self other = Some comb -> incl_T self comb
 
-predicate eq_T (self: t_T) (other: t_T)
+function eq_T (self: t_T) (other: t_T) : bool
 
 axiom eq_T_spec: forall self: t_T, other: t_T [eq_T self other]. eq_T self other = (self = other)
 
@@ -47,7 +47,7 @@ constant self : t_Option_T
 
 constant other : t_Option_T
 
-predicate eq_Option_T (self: t_Option_T) (other: t_Option_T)
+function eq_Option_T (self: t_Option_T) (other: t_Option_T) : bool
 
 goal vc_eq_Option_T: match { f0 = self; f1 = other } with
     | {f0 = Some s; f1 = Some o} -> ([@stop_split] [@expl:eq ensures] eq_T s o = (s = o))

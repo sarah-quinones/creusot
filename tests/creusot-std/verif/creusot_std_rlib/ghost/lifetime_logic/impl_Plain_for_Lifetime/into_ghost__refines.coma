@@ -4,9 +4,9 @@ type t_Id
 
 type t_Lifetime = { f0: t_Id }
 
-predicate inv_Lifetime [@inline:trivial] (_1: t_Lifetime) = true
+function inv_Lifetime [@inline:trivial] (_1: t_Lifetime) : bool = true
 
-meta "rewrite_def" predicate inv_Lifetime
+meta "rewrite_def" function inv_Lifetime
 
 meta "compute_max_steps" 1000000
 

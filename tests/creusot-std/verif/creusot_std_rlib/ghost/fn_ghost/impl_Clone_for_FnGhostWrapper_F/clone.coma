@@ -6,48 +6,48 @@ type t_F
 
 type t_FnGhostWrapper_F = { f0: t_F }
 
-predicate inv_F (_1: t_F)
+function inv_F (_1: t_F) : bool
 
-predicate invariant_ref_F [@inline:trivial] (self: t_F) = inv_F self
+function invariant_ref_F [@inline:trivial] (self: t_F) : bool = inv_F self
 
-meta "rewrite_def" predicate invariant_ref_F
+meta "rewrite_def" function invariant_ref_F
 
-predicate inv_ref_F [@inline:trivial] (_1: t_F) = invariant_ref_F _1
+function inv_ref_F [@inline:trivial] (_1: t_F) : bool = invariant_ref_F _1
 
-meta "rewrite_def" predicate inv_ref_F
+meta "rewrite_def" function inv_ref_F
 
-predicate precondition_clone (self: ()) (args: t_F)
+function precondition_clone (self: ()) (args: t_F) : bool
 
 axiom precondition_fndef: forall args: t_F [precondition_clone () args]. (let self = args in inv_ref_F self)
     -> precondition_clone () args
 
-predicate postcondition_clone (self: ()) (args: t_F) (result: t_F)
+function postcondition_clone (self: ()) (args: t_F) (result: t_F) : bool
 
 axiom postcondition_fndef:
   forall args: t_F, result: t_F [postcondition_clone () args result]. postcondition_clone () args result
     -> (let self = args in inv_F result)
 
-predicate postcondition_once_clone (self: ()) (args: t_F) (result: t_F) = postcondition_clone self args result
+function postcondition_once_clone (self: ()) (args: t_F) (result: t_F) : bool = postcondition_clone self args result
 
-meta "rewrite_def" predicate postcondition_once_clone
+meta "rewrite_def" function postcondition_once_clone
 
 let clone_F (self: t_F) (return (x: t_F)) = {[@stop_split] [@expl:clone requires] precondition_clone () self}
   any
   [ return (result: t_F) -> {[@stop_split] [@expl:clone ensures] postcondition_once_clone () self result}
     (! return {result}) ]
 
-predicate inv_FnGhostWrapper_F (_1: t_FnGhostWrapper_F)
+function inv_FnGhostWrapper_F (_1: t_FnGhostWrapper_F) : bool
 
 axiom inv_axiom [@rewrite]: forall _1: t_FnGhostWrapper_F [inv_FnGhostWrapper_F _1]. inv_FnGhostWrapper_F _1
     = inv_F _1.f0
 
-predicate invariant_ref_FnGhostWrapper_F [@inline:trivial] (self: t_FnGhostWrapper_F) = inv_FnGhostWrapper_F self
+function invariant_ref_FnGhostWrapper_F [@inline:trivial] (self: t_FnGhostWrapper_F) : bool = inv_FnGhostWrapper_F self
 
-meta "rewrite_def" predicate invariant_ref_FnGhostWrapper_F
+meta "rewrite_def" function invariant_ref_FnGhostWrapper_F
 
-predicate inv_ref_FnGhostWrapper_F [@inline:trivial] (_1: t_FnGhostWrapper_F) = invariant_ref_FnGhostWrapper_F _1
+function inv_ref_FnGhostWrapper_F [@inline:trivial] (_1: t_FnGhostWrapper_F) : bool = invariant_ref_FnGhostWrapper_F _1
 
-meta "rewrite_def" predicate inv_ref_FnGhostWrapper_F
+meta "rewrite_def" function inv_ref_FnGhostWrapper_F
 
 meta "compute_max_steps" 1000000
 

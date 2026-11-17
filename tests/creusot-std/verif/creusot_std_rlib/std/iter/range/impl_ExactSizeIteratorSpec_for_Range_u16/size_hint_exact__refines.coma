@@ -10,9 +10,9 @@ type t_Option_usize = None | Some UInt64.t
 
 type tup2_usize_Option_usize = { f0: UInt64.t; f1: t_Option_usize }
 
-predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
 
-meta "rewrite_def" predicate ge_log_Int
+meta "rewrite_def" function ge_log_Int
 
 function deep_model_u16 [@inline:trivial] (self: UInt16.t) : int = UInt16.t'int self
 
@@ -20,11 +20,11 @@ meta "rewrite_def" function deep_model_u16
 
 constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
 
-predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
 
-meta "rewrite_def" predicate gt_log_Int
+meta "rewrite_def" function gt_log_Int
 
-predicate postcondition_size_hint (self: ()) (args: t_Range_u16) (result: tup2_usize_Option_usize) =
+function postcondition_size_hint (self: ()) (args: t_Range_u16) (result: tup2_usize_Option_usize) : bool =
   let self'0 = args in (ge_log_Int (deep_model_u16 self'0.start) (deep_model_u16 self'0.end')
     -> result = { f0 = (0: UInt64.t); f1 = Some (0: UInt64.t) })
   /\ (let s = deep_model_u16 self'0.end' - deep_model_u16 self'0.start in ge_log_Int s 0 /\ s <= UInt64.t'int const_MAX
@@ -32,7 +32,7 @@ predicate postcondition_size_hint (self: ()) (args: t_Range_u16) (result: tup2_u
   /\ (gt_log_Int (deep_model_u16 self'0.end' - deep_model_u16 self'0.start) (UInt64.t'int const_MAX)
   -> result = { f0 = const_MAX; f1 = None })
 
-meta "rewrite_def" predicate postcondition_size_hint
+meta "rewrite_def" function postcondition_size_hint
 
 let size_hint_Range_u16 (self: t_Range_u16) (return (x: tup2_usize_Option_usize)) = any
   [ return (result: tup2_usize_Option_usize) ->

@@ -3,13 +3,13 @@ module M_lemma_num_of_pos_increasing
   use seq.Seq
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   function num_of_pos (i: int) (j: int) (t: Seq.seq Int32.t) : int
   
@@ -20,10 +20,10 @@ module M_lemma_num_of_pos_increasing
         if gt_log_Int (Int32.to_int (Seq.get t (j - 1))) 0 then num_of_pos i (j - 1) t + 1 else num_of_pos i (j - 1) t
       )
   
-  predicate well_founded_relation_Int [@inline:trivial] (self: int) (other: int) =
-    ge_log_Int self 0 /\ gt_log_Int self other
+  function well_founded_relation_Int [@inline:trivial] (self: int) (other: int) : bool = ge_log_Int self 0
+    /\ gt_log_Int self other
   
-  meta "rewrite_def" predicate well_founded_relation_Int
+  meta "rewrite_def" function well_founded_relation_Int
   
   meta "compute_max_steps" 1000000
   
@@ -54,13 +54,13 @@ module M_lemma_num_of_pos_strictly_increasing
   use seq.Seq
   use int.Int
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function num_of_pos (i: int) (j: int) (t: Seq.seq Int32.t) : int
   
@@ -108,13 +108,13 @@ module M_m
       = Seq.length (view_Vec_i32_Global self)}
       (! return {result}) ]
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   function num_of_pos (i: int) (j: int) (t: Seq.seq Int32.t) : int
   
@@ -125,15 +125,15 @@ module M_m
         if gt_log_Int (Int32.to_int (Seq.get t (j - 1))) 0 then num_of_pos i (j - 1) t + 1 else num_of_pos i (j - 1) t
       )
   
-  predicate in_bounds_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq Int32.t) =
-    UInt64.t'int self < Seq.length seq
+  function in_bounds_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq Int32.t) : bool = UInt64.t'int self
+    < Seq.length seq
   
-  meta "rewrite_def" predicate in_bounds_usize
+  meta "rewrite_def" function in_bounds_usize
   
-  predicate has_value_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq Int32.t) (out: Int32.t) =
+  function has_value_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq Int32.t) (out: Int32.t) : bool =
     Seq.get seq (UInt64.t'int self) = out
   
-  meta "rewrite_def" predicate has_value_usize
+  meta "rewrite_def" function has_value_usize
   
   let index_Vec_i32_Global (self: t_Vec_i32_Global) (index: UInt64.t) (return (x: Int32.t)) =
   {[@stop_split] [@expl:index requires] in_bounds_usize index (view_Vec_i32_Global self)}
@@ -169,10 +169,10 @@ module M_m
   axiom lemma_num_of_pos_increasing_spec: forall i: int, j: int, k: int, t: Seq.seq Int32.t. j <= k
       -> num_of_pos i j t <= num_of_pos i k t
   
-  predicate resolve_elswhere_usize [@inline:trivial] (self: UInt64.t) (old': Seq.seq Int32.t) (fin: Seq.seq Int32.t) =
-    forall i: int. 0 <= i /\ i <> UInt64.t'int self /\ i < Seq.length old' -> Seq.get old' i = Seq.get fin i
+  function resolve_elswhere_usize [@inline:trivial] (self: UInt64.t) (old': Seq.seq Int32.t) (fin: Seq.seq Int32.t) : bool
+   = forall i: int. 0 <= i /\ i <> UInt64.t'int self /\ i < Seq.length old' -> Seq.get old' i = Seq.get fin i
   
-  meta "rewrite_def" predicate resolve_elswhere_usize
+  meta "rewrite_def" function resolve_elswhere_usize
   
   let index_mut_Vec_i32_Global (self: MutBorrow.t t_Vec_i32_Global) (index: UInt64.t)
     (return (x: MutBorrow.t Int32.t)) =
@@ -186,9 +186,9 @@ module M_m
       = Seq.length (view_Vec_i32_Global self.current))}
       (! return {result}) ]
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
   meta "compute_max_steps" 1000000
   
@@ -268,18 +268,18 @@ module M_num_of_pos
   use seq.Seq
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
-  predicate well_founded_relation_Int [@inline:trivial] (self: int) (other: int) =
-    ge_log_Int self 0 /\ gt_log_Int self other
+  function well_founded_relation_Int [@inline:trivial] (self: int) (other: int) : bool = ge_log_Int self 0
+    /\ gt_log_Int self other
   
-  meta "rewrite_def" predicate well_founded_relation_Int
+  meta "rewrite_def" function well_founded_relation_Int
   
   meta "compute_max_steps" 1000000
   

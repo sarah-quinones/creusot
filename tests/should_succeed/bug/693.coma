@@ -3,9 +3,9 @@ module M_f
   
   type t_IfC
   
-  predicate inv_IfC (_1: t_IfC)
+  function inv_IfC (_1: t_IfC) : bool
   
-  predicate resolve_IfC (_1: t_IfC)
+  function resolve_IfC (_1: t_IfC) : bool
   
   meta "compute_max_steps" 1000000
   

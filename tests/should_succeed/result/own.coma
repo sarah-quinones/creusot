@@ -10,9 +10,9 @@ module M_impl_OwnResult_Option_T_E__transpose (* OwnResult<std::option::Option<T
   
   type t_OwnResult_Option_T_E = Ok t_Option_T | Err t_E
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_Option_T (_1: t_Option_T)
+  function inv_Option_T (_1: t_Option_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_T _1
       = match _1 with
@@ -20,9 +20,9 @@ module M_impl_OwnResult_Option_T_E__transpose (* OwnResult<std::option::Option<T
         | Some f0 -> inv_T f0
         end
   
-  predicate inv_E (_1: t_E)
+  function inv_E (_1: t_E) : bool
   
-  predicate inv_OwnResult_Option_T_E (_1: t_OwnResult_Option_T_E)
+  function inv_OwnResult_Option_T_E (_1: t_OwnResult_Option_T_E) : bool
   
   axiom inv_axiom'0 [@rewrite]:
     forall _1: t_OwnResult_Option_T_E [inv_OwnResult_Option_T_E _1]. inv_OwnResult_Option_T_E _1
@@ -31,9 +31,9 @@ module M_impl_OwnResult_Option_T_E__transpose (* OwnResult<std::option::Option<T
         | Err f0 -> inv_E f0
         end
   
-  predicate resolve_T (_1: t_T)
+  function resolve_T (_1: t_T) : bool
   
-  predicate resolve_Option_T (_1: t_Option_T)
+  function resolve_Option_T (_1: t_Option_T) : bool
   
   axiom resolve_axiom [@rewrite]: forall _1: t_Option_T [resolve_Option_T _1]. resolve_Option_T _1
       = match _1 with
@@ -41,9 +41,9 @@ module M_impl_OwnResult_Option_T_E__transpose (* OwnResult<std::option::Option<T
         | Some x0 -> resolve_T x0
         end
   
-  predicate resolve_E (_1: t_E)
+  function resolve_E (_1: t_E) : bool
   
-  predicate resolve_OwnResult_Option_T_E (_1: t_OwnResult_Option_T_E)
+  function resolve_OwnResult_Option_T_E (_1: t_OwnResult_Option_T_E) : bool
   
   axiom resolve_axiom'0 [@rewrite]:
     forall _1: t_OwnResult_Option_T_E [resolve_OwnResult_Option_T_E _1]. resolve_OwnResult_Option_T_E _1
@@ -87,7 +87,7 @@ module M_impl_OwnResult_Option_T_E__transpose (* OwnResult<std::option::Option<T
         end}
       any) ]
   
-  predicate inv_OwnResult_T_E (_1: t_OwnResult_T_E)
+  function inv_OwnResult_T_E (_1: t_OwnResult_T_E) : bool
   
   axiom inv_axiom'1 [@rewrite]: forall _1: t_OwnResult_T_E [inv_OwnResult_T_E _1]. inv_OwnResult_T_E _1
       = match _1 with
@@ -95,7 +95,7 @@ module M_impl_OwnResult_Option_T_E__transpose (* OwnResult<std::option::Option<T
         | Err'0 f0 -> inv_E f0
         end
   
-  predicate inv_Option_OwnResult_T_E (_1: t_Option_OwnResult_T_E)
+  function inv_Option_OwnResult_T_E (_1: t_Option_OwnResult_T_E) : bool
   
   axiom inv_axiom'2 [@rewrite]:
     forall _1: t_Option_OwnResult_T_E [inv_Option_OwnResult_T_E _1]. inv_Option_OwnResult_T_E _1
@@ -162,11 +162,11 @@ module M_impl_OwnResult_T_E__and (* OwnResult<T, E> *)
   
   type t_OwnResult_U_E = Ok'0 t_U | Err'0 t_E
   
-  predicate inv_U (_1: t_U)
+  function inv_U (_1: t_U) : bool
   
-  predicate inv_E (_1: t_E)
+  function inv_E (_1: t_E) : bool
   
-  predicate inv_OwnResult_U_E (_1: t_OwnResult_U_E)
+  function inv_OwnResult_U_E (_1: t_OwnResult_U_E) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_OwnResult_U_E [inv_OwnResult_U_E _1]. inv_OwnResult_U_E _1
       = match _1 with
@@ -174,11 +174,11 @@ module M_impl_OwnResult_T_E__and (* OwnResult<T, E> *)
         | Err'0 f0 -> inv_E f0
         end
   
-  predicate resolve_U (_1: t_U)
+  function resolve_U (_1: t_U) : bool
   
-  predicate resolve_E (_1: t_E)
+  function resolve_E (_1: t_E) : bool
   
-  predicate resolve_OwnResult_U_E (_1: t_OwnResult_U_E)
+  function resolve_OwnResult_U_E (_1: t_OwnResult_U_E) : bool
   
   axiom resolve_axiom [@rewrite]: forall _1: t_OwnResult_U_E [resolve_OwnResult_U_E _1]. resolve_OwnResult_U_E _1
       = match _1 with
@@ -186,9 +186,9 @@ module M_impl_OwnResult_T_E__and (* OwnResult<T, E> *)
         | Err'0 x0 -> resolve_E x0
         end
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_OwnResult_T_E (_1: t_OwnResult_T_E)
+  function inv_OwnResult_T_E (_1: t_OwnResult_T_E) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_OwnResult_T_E [inv_OwnResult_T_E _1]. inv_OwnResult_T_E _1
       = match _1 with
@@ -196,9 +196,9 @@ module M_impl_OwnResult_T_E__and (* OwnResult<T, E> *)
         | Err f0 -> inv_E f0
         end
   
-  predicate resolve_T (_1: t_T)
+  function resolve_T (_1: t_T) : bool
   
-  predicate resolve_OwnResult_T_E (_1: t_OwnResult_T_E)
+  function resolve_OwnResult_T_E (_1: t_OwnResult_T_E) : bool
   
   axiom resolve_axiom'0 [@rewrite]: forall _1: t_OwnResult_T_E [resolve_OwnResult_T_E _1]. resolve_OwnResult_T_E _1
       = match _1 with
@@ -276,21 +276,21 @@ module M_impl_OwnResult_T_E__as_mut (* OwnResult<T, E> *)
         end}
       any) ]
   
-  predicate inv_E (_1: t_E)
+  function inv_E (_1: t_E) : bool
   
   type t_OwnResult_refmut_T_refmut_E = Ok'0 (MutBorrow.t t_T) | Err'0 (MutBorrow.t t_E)
   
-  predicate invariant_refmut_E [@inline:trivial] (self: MutBorrow.t t_E) = inv_E self.current /\ inv_E self.final
+  function invariant_refmut_E [@inline:trivial] (self: MutBorrow.t t_E) : bool = inv_E self.current /\ inv_E self.final
   
-  meta "rewrite_def" predicate invariant_refmut_E
+  meta "rewrite_def" function invariant_refmut_E
   
-  predicate inv_refmut_E [@inline:trivial] (_1: MutBorrow.t t_E) = invariant_refmut_E _1
+  function inv_refmut_E [@inline:trivial] (_1: MutBorrow.t t_E) : bool = invariant_refmut_E _1
   
-  meta "rewrite_def" predicate inv_refmut_E
+  meta "rewrite_def" function inv_refmut_E
   
-  predicate resolve_refmut_E [@inline:trivial] (_1: MutBorrow.t t_E) = _1.final = _1.current
+  function resolve_refmut_E [@inline:trivial] (_1: MutBorrow.t t_E) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_E
+  meta "rewrite_def" function resolve_refmut_E
   
   let elim_Ok (_x: t_OwnResult_T_E) (return (f0: t_T)) = any
     [ _k (f0: t_T) -> {Ok f0 = _x} (! return {f0})
@@ -300,21 +300,21 @@ module M_impl_OwnResult_T_E__as_mut (* OwnResult<T, E> *)
         end}
       any) ]
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) = inv_T self.current /\ inv_T self.final
+  function invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) : bool = inv_T self.current /\ inv_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_T
+  meta "rewrite_def" function invariant_refmut_T
   
-  predicate inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = invariant_refmut_T _1
+  function inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = invariant_refmut_T _1
   
-  meta "rewrite_def" predicate inv_refmut_T
+  meta "rewrite_def" function inv_refmut_T
   
-  predicate resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = _1.final = _1.current
+  function resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_T
+  meta "rewrite_def" function resolve_refmut_T
   
-  predicate inv_OwnResult_T_E (_1: t_OwnResult_T_E)
+  function inv_OwnResult_T_E (_1: t_OwnResult_T_E) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_OwnResult_T_E [inv_OwnResult_T_E _1]. inv_OwnResult_T_E _1
       = match _1 with
@@ -322,21 +322,22 @@ module M_impl_OwnResult_T_E__as_mut (* OwnResult<T, E> *)
         | Err f0 -> inv_E f0
         end
   
-  predicate invariant_refmut_OwnResult_T_E [@inline:trivial] (self: MutBorrow.t t_OwnResult_T_E) =
+  function invariant_refmut_OwnResult_T_E [@inline:trivial] (self: MutBorrow.t t_OwnResult_T_E) : bool =
     inv_OwnResult_T_E self.current /\ inv_OwnResult_T_E self.final
   
-  meta "rewrite_def" predicate invariant_refmut_OwnResult_T_E
+  meta "rewrite_def" function invariant_refmut_OwnResult_T_E
   
-  predicate inv_refmut_OwnResult_T_E [@inline:trivial] (_1: MutBorrow.t t_OwnResult_T_E) =
+  function inv_refmut_OwnResult_T_E [@inline:trivial] (_1: MutBorrow.t t_OwnResult_T_E) : bool =
     invariant_refmut_OwnResult_T_E _1
   
-  meta "rewrite_def" predicate inv_refmut_OwnResult_T_E
+  meta "rewrite_def" function inv_refmut_OwnResult_T_E
   
-  predicate resolve_refmut_OwnResult_T_E [@inline:trivial] (_1: MutBorrow.t t_OwnResult_T_E) = _1.final = _1.current
+  function resolve_refmut_OwnResult_T_E [@inline:trivial] (_1: MutBorrow.t t_OwnResult_T_E) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_OwnResult_T_E
+  meta "rewrite_def" function resolve_refmut_OwnResult_T_E
   
-  predicate inv_OwnResult_refmut_T_refmut_E (_1: t_OwnResult_refmut_T_refmut_E)
+  function inv_OwnResult_refmut_T_refmut_E (_1: t_OwnResult_refmut_T_refmut_E) : bool
   
   axiom inv_axiom'0 [@rewrite]:
     forall _1: t_OwnResult_refmut_T_refmut_E [inv_OwnResult_refmut_T_refmut_E _1]. inv_OwnResult_refmut_T_refmut_E _1
@@ -431,11 +432,11 @@ module M_impl_OwnResult_T_E__as_ref (* OwnResult<T, E> *)
         end}
       any) ]
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_E (_1: t_E)
+  function inv_E (_1: t_E) : bool
   
-  predicate inv_OwnResult_T_E (_1: t_OwnResult_T_E)
+  function inv_OwnResult_T_E (_1: t_OwnResult_T_E) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_OwnResult_T_E [inv_OwnResult_T_E _1]. inv_OwnResult_T_E _1
       = match _1 with
@@ -443,31 +444,31 @@ module M_impl_OwnResult_T_E__as_ref (* OwnResult<T, E> *)
         | Err f0 -> inv_E f0
         end
   
-  predicate invariant_ref_OwnResult_T_E [@inline:trivial] (self: t_OwnResult_T_E) = inv_OwnResult_T_E self
+  function invariant_ref_OwnResult_T_E [@inline:trivial] (self: t_OwnResult_T_E) : bool = inv_OwnResult_T_E self
   
-  meta "rewrite_def" predicate invariant_ref_OwnResult_T_E
+  meta "rewrite_def" function invariant_ref_OwnResult_T_E
   
-  predicate inv_ref_OwnResult_T_E [@inline:trivial] (_1: t_OwnResult_T_E) = invariant_ref_OwnResult_T_E _1
+  function inv_ref_OwnResult_T_E [@inline:trivial] (_1: t_OwnResult_T_E) : bool = invariant_ref_OwnResult_T_E _1
   
-  meta "rewrite_def" predicate inv_ref_OwnResult_T_E
+  meta "rewrite_def" function inv_ref_OwnResult_T_E
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate invariant_ref_E [@inline:trivial] (self: t_E) = inv_E self
+  function invariant_ref_E [@inline:trivial] (self: t_E) : bool = inv_E self
   
-  meta "rewrite_def" predicate invariant_ref_E
+  meta "rewrite_def" function invariant_ref_E
   
-  predicate inv_ref_E [@inline:trivial] (_1: t_E) = invariant_ref_E _1
+  function inv_ref_E [@inline:trivial] (_1: t_E) : bool = invariant_ref_E _1
   
-  meta "rewrite_def" predicate inv_ref_E
+  meta "rewrite_def" function inv_ref_E
   
-  predicate inv_OwnResult_ref_T_ref_E (_1: t_OwnResult_ref_T_ref_E)
+  function inv_OwnResult_ref_T_ref_E (_1: t_OwnResult_ref_T_ref_E) : bool
   
   axiom inv_axiom'0 [@rewrite]:
     forall _1: t_OwnResult_ref_T_ref_E [inv_OwnResult_ref_T_ref_E _1]. inv_OwnResult_ref_T_ref_E _1
@@ -509,11 +510,11 @@ module M_impl_OwnResult_T_E__err (* OwnResult<T, E> *)
   
   type t_OwnResult_T_E = Ok t_T | Err t_E
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_E (_1: t_E)
+  function inv_E (_1: t_E) : bool
   
-  predicate inv_OwnResult_T_E (_1: t_OwnResult_T_E)
+  function inv_OwnResult_T_E (_1: t_OwnResult_T_E) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_OwnResult_T_E [inv_OwnResult_T_E _1]. inv_OwnResult_T_E _1
       = match _1 with
@@ -521,11 +522,11 @@ module M_impl_OwnResult_T_E__err (* OwnResult<T, E> *)
         | Err f0 -> inv_E f0
         end
   
-  predicate resolve_T (_1: t_T)
+  function resolve_T (_1: t_T) : bool
   
-  predicate resolve_E (_1: t_E)
+  function resolve_E (_1: t_E) : bool
   
-  predicate resolve_OwnResult_T_E (_1: t_OwnResult_T_E)
+  function resolve_OwnResult_T_E (_1: t_OwnResult_T_E) : bool
   
   axiom resolve_axiom [@rewrite]: forall _1: t_OwnResult_T_E [resolve_OwnResult_T_E _1]. resolve_OwnResult_T_E _1
       = match _1 with
@@ -551,7 +552,7 @@ module M_impl_OwnResult_T_E__err (* OwnResult<T, E> *)
         end}
       any) ]
   
-  predicate inv_Option_E (_1: t_Option_E)
+  function inv_Option_E (_1: t_Option_E) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Option_E [inv_Option_E _1]. inv_Option_E _1
       = match _1 with
@@ -600,11 +601,11 @@ module M_impl_OwnResult_T_E__expect (* OwnResult<T, E> *)
   
   type t_OwnResult_T_E = Ok t_T | Err t_E
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_E (_1: t_E)
+  function inv_E (_1: t_E) : bool
   
-  predicate inv_OwnResult_T_E (_1: t_OwnResult_T_E)
+  function inv_OwnResult_T_E (_1: t_OwnResult_T_E) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_OwnResult_T_E [inv_OwnResult_T_E _1]. inv_OwnResult_T_E _1
       = match _1 with
@@ -612,11 +613,11 @@ module M_impl_OwnResult_T_E__expect (* OwnResult<T, E> *)
         | Err f0 -> inv_E f0
         end
   
-  predicate resolve_T (_1: t_T)
+  function resolve_T (_1: t_T) : bool
   
-  predicate resolve_E (_1: t_E)
+  function resolve_E (_1: t_E) : bool
   
-  predicate resolve_OwnResult_T_E (_1: t_OwnResult_T_E)
+  function resolve_OwnResult_T_E (_1: t_OwnResult_T_E) : bool
   
   axiom resolve_axiom [@rewrite]: forall _1: t_OwnResult_T_E [resolve_OwnResult_T_E _1]. resolve_OwnResult_T_E _1
       = match _1 with
@@ -680,11 +681,11 @@ module M_impl_OwnResult_T_E__is_err (* OwnResult<T, E> *)
   
   type t_OwnResult_T_E = Ok t_T | Err t_E
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_E (_1: t_E)
+  function inv_E (_1: t_E) : bool
   
-  predicate inv_OwnResult_T_E (_1: t_OwnResult_T_E)
+  function inv_OwnResult_T_E (_1: t_OwnResult_T_E) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_OwnResult_T_E [inv_OwnResult_T_E _1]. inv_OwnResult_T_E _1
       = match _1 with
@@ -692,13 +693,13 @@ module M_impl_OwnResult_T_E__is_err (* OwnResult<T, E> *)
         | Err f0 -> inv_E f0
         end
   
-  predicate invariant_ref_OwnResult_T_E [@inline:trivial] (self: t_OwnResult_T_E) = inv_OwnResult_T_E self
+  function invariant_ref_OwnResult_T_E [@inline:trivial] (self: t_OwnResult_T_E) : bool = inv_OwnResult_T_E self
   
-  meta "rewrite_def" predicate invariant_ref_OwnResult_T_E
+  meta "rewrite_def" function invariant_ref_OwnResult_T_E
   
-  predicate inv_ref_OwnResult_T_E [@inline:trivial] (_1: t_OwnResult_T_E) = invariant_ref_OwnResult_T_E _1
+  function inv_ref_OwnResult_T_E [@inline:trivial] (_1: t_OwnResult_T_E) : bool = invariant_ref_OwnResult_T_E _1
   
-  meta "rewrite_def" predicate inv_ref_OwnResult_T_E
+  meta "rewrite_def" function inv_ref_OwnResult_T_E
   
   let is_ok_T (self: t_OwnResult_T_E) (return (x: bool)) =
   {[@stop_split] [@expl:is_ok 'self' type invariant] inv_ref_OwnResult_T_E self}
@@ -728,11 +729,11 @@ module M_impl_OwnResult_T_E__is_ok (* OwnResult<T, E> *)
   
   type t_OwnResult_T_E = Ok t_T | Err t_E
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_E (_1: t_E)
+  function inv_E (_1: t_E) : bool
   
-  predicate inv_OwnResult_T_E (_1: t_OwnResult_T_E)
+  function inv_OwnResult_T_E (_1: t_OwnResult_T_E) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_OwnResult_T_E [inv_OwnResult_T_E _1]. inv_OwnResult_T_E _1
       = match _1 with
@@ -740,13 +741,13 @@ module M_impl_OwnResult_T_E__is_ok (* OwnResult<T, E> *)
         | Err f0 -> inv_E f0
         end
   
-  predicate invariant_ref_OwnResult_T_E [@inline:trivial] (self: t_OwnResult_T_E) = inv_OwnResult_T_E self
+  function invariant_ref_OwnResult_T_E [@inline:trivial] (self: t_OwnResult_T_E) : bool = inv_OwnResult_T_E self
   
-  meta "rewrite_def" predicate invariant_ref_OwnResult_T_E
+  meta "rewrite_def" function invariant_ref_OwnResult_T_E
   
-  predicate inv_ref_OwnResult_T_E [@inline:trivial] (_1: t_OwnResult_T_E) = invariant_ref_OwnResult_T_E _1
+  function inv_ref_OwnResult_T_E [@inline:trivial] (_1: t_OwnResult_T_E) : bool = invariant_ref_OwnResult_T_E _1
   
-  meta "rewrite_def" predicate inv_ref_OwnResult_T_E
+  meta "rewrite_def" function inv_ref_OwnResult_T_E
   
   meta "compute_max_steps" 1000000
   
@@ -771,11 +772,11 @@ module M_impl_OwnResult_T_E__ok (* OwnResult<T, E> *)
   
   type t_OwnResult_T_E = Ok t_T | Err t_E
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_E (_1: t_E)
+  function inv_E (_1: t_E) : bool
   
-  predicate inv_OwnResult_T_E (_1: t_OwnResult_T_E)
+  function inv_OwnResult_T_E (_1: t_OwnResult_T_E) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_OwnResult_T_E [inv_OwnResult_T_E _1]. inv_OwnResult_T_E _1
       = match _1 with
@@ -783,11 +784,11 @@ module M_impl_OwnResult_T_E__ok (* OwnResult<T, E> *)
         | Err f0 -> inv_E f0
         end
   
-  predicate resolve_T (_1: t_T)
+  function resolve_T (_1: t_T) : bool
   
-  predicate resolve_E (_1: t_E)
+  function resolve_E (_1: t_E) : bool
   
-  predicate resolve_OwnResult_T_E (_1: t_OwnResult_T_E)
+  function resolve_OwnResult_T_E (_1: t_OwnResult_T_E) : bool
   
   axiom resolve_axiom [@rewrite]: forall _1: t_OwnResult_T_E [resolve_OwnResult_T_E _1]. resolve_OwnResult_T_E _1
       = match _1 with
@@ -813,7 +814,7 @@ module M_impl_OwnResult_T_E__ok (* OwnResult<T, E> *)
         end}
       any) ]
   
-  predicate inv_Option_T (_1: t_Option_T)
+  function inv_Option_T (_1: t_Option_T) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_T _1
       = match _1 with
@@ -862,11 +863,11 @@ module M_impl_OwnResult_T_E__or (* OwnResult<T, E> *)
   
   type t_OwnResult_T_E = Ok t_T | Err t_E
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_E (_1: t_E)
+  function inv_E (_1: t_E) : bool
   
-  predicate inv_OwnResult_T_E (_1: t_OwnResult_T_E)
+  function inv_OwnResult_T_E (_1: t_OwnResult_T_E) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_OwnResult_T_E [inv_OwnResult_T_E _1]. inv_OwnResult_T_E _1
       = match _1 with
@@ -874,11 +875,11 @@ module M_impl_OwnResult_T_E__or (* OwnResult<T, E> *)
         | Err f0 -> inv_E f0
         end
   
-  predicate resolve_T (_1: t_T)
+  function resolve_T (_1: t_T) : bool
   
-  predicate resolve_E (_1: t_E)
+  function resolve_E (_1: t_E) : bool
   
-  predicate resolve_OwnResult_T_E (_1: t_OwnResult_T_E)
+  function resolve_OwnResult_T_E (_1: t_OwnResult_T_E) : bool
   
   axiom resolve_axiom [@rewrite]: forall _1: t_OwnResult_T_E [resolve_OwnResult_T_E _1]. resolve_OwnResult_T_E _1
       = match _1 with
@@ -898,9 +899,9 @@ module M_impl_OwnResult_T_E__or (* OwnResult<T, E> *)
   
   type t_OwnResult_T_F = Ok'0 t_T | Err'0 t_F
   
-  predicate inv_F (_1: t_F)
+  function inv_F (_1: t_F) : bool
   
-  predicate inv_OwnResult_T_F (_1: t_OwnResult_T_F)
+  function inv_OwnResult_T_F (_1: t_OwnResult_T_F) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_OwnResult_T_F [inv_OwnResult_T_F _1]. inv_OwnResult_T_F _1
       = match _1 with
@@ -908,9 +909,9 @@ module M_impl_OwnResult_T_E__or (* OwnResult<T, E> *)
         | Err'0 f0 -> inv_F f0
         end
   
-  predicate resolve_F (_1: t_F)
+  function resolve_F (_1: t_F) : bool
   
-  predicate resolve_OwnResult_T_F (_1: t_OwnResult_T_F)
+  function resolve_OwnResult_T_F (_1: t_OwnResult_T_F) : bool
   
   axiom resolve_axiom'0 [@rewrite]: forall _1: t_OwnResult_T_F [resolve_OwnResult_T_F _1]. resolve_OwnResult_T_F _1
       = match _1 with
@@ -971,11 +972,11 @@ module M_impl_OwnResult_T_E__unwrap (* OwnResult<T, E> *)
   
   type t_OwnResult_T_E = Ok t_T | Err t_E
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_E (_1: t_E)
+  function inv_E (_1: t_E) : bool
   
-  predicate inv_OwnResult_T_E (_1: t_OwnResult_T_E)
+  function inv_OwnResult_T_E (_1: t_OwnResult_T_E) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_OwnResult_T_E [inv_OwnResult_T_E _1]. inv_OwnResult_T_E _1
       = match _1 with
@@ -983,11 +984,11 @@ module M_impl_OwnResult_T_E__unwrap (* OwnResult<T, E> *)
         | Err f0 -> inv_E f0
         end
   
-  predicate resolve_T (_1: t_T)
+  function resolve_T (_1: t_T) : bool
   
-  predicate resolve_E (_1: t_E)
+  function resolve_E (_1: t_E) : bool
   
-  predicate resolve_OwnResult_T_E (_1: t_OwnResult_T_E)
+  function resolve_OwnResult_T_E (_1: t_OwnResult_T_E) : bool
   
   axiom resolve_axiom [@rewrite]: forall _1: t_OwnResult_T_E [resolve_OwnResult_T_E _1]. resolve_OwnResult_T_E _1
       = match _1 with
@@ -1051,11 +1052,11 @@ module M_impl_OwnResult_T_E__unwrap_err (* OwnResult<T, E> *)
   
   type t_OwnResult_T_E = Ok t_T | Err t_E
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_E (_1: t_E)
+  function inv_E (_1: t_E) : bool
   
-  predicate inv_OwnResult_T_E (_1: t_OwnResult_T_E)
+  function inv_OwnResult_T_E (_1: t_OwnResult_T_E) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_OwnResult_T_E [inv_OwnResult_T_E _1]. inv_OwnResult_T_E _1
       = match _1 with
@@ -1063,11 +1064,11 @@ module M_impl_OwnResult_T_E__unwrap_err (* OwnResult<T, E> *)
         | Err f0 -> inv_E f0
         end
   
-  predicate resolve_T (_1: t_T)
+  function resolve_T (_1: t_T) : bool
   
-  predicate resolve_E (_1: t_E)
+  function resolve_E (_1: t_E) : bool
   
-  predicate resolve_OwnResult_T_E (_1: t_OwnResult_T_E)
+  function resolve_OwnResult_T_E (_1: t_OwnResult_T_E) : bool
   
   axiom resolve_axiom [@rewrite]: forall _1: t_OwnResult_T_E [resolve_OwnResult_T_E _1]. resolve_OwnResult_T_E _1
       = match _1 with
@@ -1131,11 +1132,11 @@ module M_impl_OwnResult_T_E__unwrap_or (* OwnResult<T, E> *)
   
   type t_OwnResult_T_E = Ok t_T | Err t_E
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_E (_1: t_E)
+  function inv_E (_1: t_E) : bool
   
-  predicate inv_OwnResult_T_E (_1: t_OwnResult_T_E)
+  function inv_OwnResult_T_E (_1: t_OwnResult_T_E) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_OwnResult_T_E [inv_OwnResult_T_E _1]. inv_OwnResult_T_E _1
       = match _1 with
@@ -1143,11 +1144,11 @@ module M_impl_OwnResult_T_E__unwrap_or (* OwnResult<T, E> *)
         | Err f0 -> inv_E f0
         end
   
-  predicate resolve_T (_1: t_T)
+  function resolve_T (_1: t_T) : bool
   
-  predicate resolve_E (_1: t_E)
+  function resolve_E (_1: t_E) : bool
   
-  predicate resolve_OwnResult_T_E (_1: t_OwnResult_T_E)
+  function resolve_OwnResult_T_E (_1: t_OwnResult_T_E) : bool
   
   axiom resolve_axiom [@rewrite]: forall _1: t_OwnResult_T_E [resolve_OwnResult_T_E _1]. resolve_OwnResult_T_E _1
       = match _1 with
@@ -1216,11 +1217,11 @@ module M_impl_OwnResult_T_E__unwrap_or_default (* OwnResult<T, E> *)
   
   type t_OwnResult_T_E = Ok t_T | Err t_E
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_E (_1: t_E)
+  function inv_E (_1: t_E) : bool
   
-  predicate inv_OwnResult_T_E (_1: t_OwnResult_T_E)
+  function inv_OwnResult_T_E (_1: t_OwnResult_T_E) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_OwnResult_T_E [inv_OwnResult_T_E _1]. inv_OwnResult_T_E _1
       = match _1 with
@@ -1228,11 +1229,11 @@ module M_impl_OwnResult_T_E__unwrap_or_default (* OwnResult<T, E> *)
         | Err f0 -> inv_E f0
         end
   
-  predicate resolve_T (_1: t_T)
+  function resolve_T (_1: t_T) : bool
   
-  predicate resolve_E (_1: t_E)
+  function resolve_E (_1: t_E) : bool
   
-  predicate resolve_OwnResult_T_E (_1: t_OwnResult_T_E)
+  function resolve_OwnResult_T_E (_1: t_OwnResult_T_E) : bool
   
   axiom resolve_axiom [@rewrite]: forall _1: t_OwnResult_T_E [resolve_OwnResult_T_E _1]. resolve_OwnResult_T_E _1
       = match _1 with
@@ -1240,20 +1241,21 @@ module M_impl_OwnResult_T_E__unwrap_or_default (* OwnResult<T, E> *)
         | Err x0 -> resolve_E x0
         end
   
-  predicate precondition_default (self: ()) (args: ())
+  function precondition_default (self: ()) (args: ()) : bool
   
   axiom precondition_fndef: forall args: () [precondition_default () args]. (let () = args in true)
       -> precondition_default () args
   
-  predicate postcondition_default (self: ()) (args: ()) (result: t_T)
+  function postcondition_default (self: ()) (args: ()) (result: t_T) : bool
   
   axiom postcondition_fndef:
     forall args: (), result: t_T [postcondition_default () args result]. postcondition_default () args result
       -> (let () = args in inv_T result)
   
-  predicate postcondition_once_default (self: ()) (args: ()) (result: t_T) = postcondition_default self args result
+  function postcondition_once_default (self: ()) (args: ()) (result: t_T) : bool =
+    postcondition_default self args result
   
-  meta "rewrite_def" predicate postcondition_once_default
+  meta "rewrite_def" function postcondition_once_default
   
   let default_T (return (x: t_T)) = {[@stop_split] [@expl:default requires] precondition_default () ()}
     any
@@ -1314,19 +1316,19 @@ module M_impl_OwnResult_ref_T_E__cloned (* OwnResult<&T, E> *)
   
   type t_OwnResult_T_E = Ok'0 t_T | Err'0 t_E
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate inv_E (_1: t_E)
+  function inv_E (_1: t_E) : bool
   
-  predicate inv_OwnResult_ref_T_E (_1: t_OwnResult_ref_T_E)
+  function inv_OwnResult_ref_T_E (_1: t_OwnResult_ref_T_E) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_OwnResult_ref_T_E [inv_OwnResult_ref_T_E _1]. inv_OwnResult_ref_T_E _1
       = match _1 with
@@ -1334,9 +1336,9 @@ module M_impl_OwnResult_ref_T_E__cloned (* OwnResult<&T, E> *)
         | Err f0 -> inv_E f0
         end
   
-  predicate resolve_E (_1: t_E)
+  function resolve_E (_1: t_E) : bool
   
-  predicate resolve_OwnResult_ref_T_E (_1: t_OwnResult_ref_T_E)
+  function resolve_OwnResult_ref_T_E (_1: t_OwnResult_ref_T_E) : bool
   
   axiom resolve_axiom [@rewrite]:
     forall _1: t_OwnResult_ref_T_E [resolve_OwnResult_ref_T_E _1]. resolve_OwnResult_ref_T_E _1
@@ -1353,27 +1355,27 @@ module M_impl_OwnResult_ref_T_E__cloned (* OwnResult<&T, E> *)
         end}
       any) ]
   
-  predicate precondition_clone (self: ()) (args: t_T)
+  function precondition_clone (self: ()) (args: t_T) : bool
   
   axiom precondition_fndef: forall args: t_T [precondition_clone () args]. (let self = args in inv_ref_T self)
       -> precondition_clone () args
   
-  predicate postcondition_clone (self: ()) (args: t_T) (result: t_T)
+  function postcondition_clone (self: ()) (args: t_T) (result: t_T) : bool
   
   axiom postcondition_fndef:
     forall args: t_T, result: t_T [postcondition_clone () args result]. postcondition_clone () args result
       -> (let self = args in inv_T result)
   
-  predicate postcondition_once_clone (self: ()) (args: t_T) (result: t_T) = postcondition_clone self args result
+  function postcondition_once_clone (self: ()) (args: t_T) (result: t_T) : bool = postcondition_clone self args result
   
-  meta "rewrite_def" predicate postcondition_once_clone
+  meta "rewrite_def" function postcondition_once_clone
   
   let clone_T (self: t_T) (return (x: t_T)) = {[@stop_split] [@expl:clone requires] precondition_clone () self}
     any
     [ return (result: t_T) -> {[@stop_split] [@expl:clone ensures] postcondition_once_clone () self result}
       (! return {result}) ]
   
-  predicate inv_OwnResult_T_E (_1: t_OwnResult_T_E)
+  function inv_OwnResult_T_E (_1: t_OwnResult_T_E) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_OwnResult_T_E [inv_OwnResult_T_E _1]. inv_OwnResult_T_E _1
       = match _1 with
@@ -1433,19 +1435,19 @@ module M_impl_OwnResult_ref_T_E__copied (* OwnResult<&T, E> *)
   
   type t_OwnResult_T_E = Ok'0 t_T | Err'0 t_E
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate inv_E (_1: t_E)
+  function inv_E (_1: t_E) : bool
   
-  predicate inv_OwnResult_ref_T_E (_1: t_OwnResult_ref_T_E)
+  function inv_OwnResult_ref_T_E (_1: t_OwnResult_ref_T_E) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_OwnResult_ref_T_E [inv_OwnResult_ref_T_E _1]. inv_OwnResult_ref_T_E _1
       = match _1 with
@@ -1453,9 +1455,9 @@ module M_impl_OwnResult_ref_T_E__copied (* OwnResult<&T, E> *)
         | Err f0 -> inv_E f0
         end
   
-  predicate resolve_E (_1: t_E)
+  function resolve_E (_1: t_E) : bool
   
-  predicate resolve_OwnResult_ref_T_E (_1: t_OwnResult_ref_T_E)
+  function resolve_OwnResult_ref_T_E (_1: t_OwnResult_ref_T_E) : bool
   
   axiom resolve_axiom [@rewrite]:
     forall _1: t_OwnResult_ref_T_E [resolve_OwnResult_ref_T_E _1]. resolve_OwnResult_ref_T_E _1
@@ -1472,7 +1474,7 @@ module M_impl_OwnResult_ref_T_E__copied (* OwnResult<&T, E> *)
         end}
       any) ]
   
-  predicate inv_OwnResult_T_E (_1: t_OwnResult_T_E)
+  function inv_OwnResult_T_E (_1: t_OwnResult_T_E) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_OwnResult_T_E [inv_OwnResult_T_E _1]. inv_OwnResult_T_E _1
       = match _1 with
@@ -1516,19 +1518,19 @@ module M_impl_OwnResult_refmut_T_E__cloned (* OwnResult<&mut T, E> *)
   
   type t_OwnResult_refmut_T_E = Ok (MutBorrow.t t_T) | Err t_E
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) = inv_T self.current /\ inv_T self.final
+  function invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) : bool = inv_T self.current /\ inv_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_T
+  meta "rewrite_def" function invariant_refmut_T
   
-  predicate inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = invariant_refmut_T _1
+  function inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = invariant_refmut_T _1
   
-  meta "rewrite_def" predicate inv_refmut_T
+  meta "rewrite_def" function inv_refmut_T
   
-  predicate inv_E (_1: t_E)
+  function inv_E (_1: t_E) : bool
   
-  predicate inv_OwnResult_refmut_T_E (_1: t_OwnResult_refmut_T_E)
+  function inv_OwnResult_refmut_T_E (_1: t_OwnResult_refmut_T_E) : bool
   
   axiom inv_axiom [@rewrite]:
     forall _1: t_OwnResult_refmut_T_E [inv_OwnResult_refmut_T_E _1]. inv_OwnResult_refmut_T_E _1
@@ -1537,13 +1539,13 @@ module M_impl_OwnResult_refmut_T_E__cloned (* OwnResult<&mut T, E> *)
         | Err f0 -> inv_E f0
         end
   
-  predicate resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = _1.final = _1.current
+  function resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_T
+  meta "rewrite_def" function resolve_refmut_T
   
-  predicate resolve_E (_1: t_E)
+  function resolve_E (_1: t_E) : bool
   
-  predicate resolve_OwnResult_refmut_T_E (_1: t_OwnResult_refmut_T_E)
+  function resolve_OwnResult_refmut_T_E (_1: t_OwnResult_refmut_T_E) : bool
   
   axiom resolve_axiom [@rewrite]:
     forall _1: t_OwnResult_refmut_T_E [resolve_OwnResult_refmut_T_E _1]. resolve_OwnResult_refmut_T_E _1
@@ -1570,35 +1572,35 @@ module M_impl_OwnResult_refmut_T_E__cloned (* OwnResult<&mut T, E> *)
         end}
       any) ]
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate precondition_clone (self: ()) (args: t_T)
+  function precondition_clone (self: ()) (args: t_T) : bool
   
   axiom precondition_fndef: forall args: t_T [precondition_clone () args]. (let self = args in inv_ref_T self)
       -> precondition_clone () args
   
-  predicate postcondition_clone (self: ()) (args: t_T) (result: t_T)
+  function postcondition_clone (self: ()) (args: t_T) (result: t_T) : bool
   
   axiom postcondition_fndef:
     forall args: t_T, result: t_T [postcondition_clone () args result]. postcondition_clone () args result
       -> (let self = args in inv_T result)
   
-  predicate postcondition_once_clone (self: ()) (args: t_T) (result: t_T) = postcondition_clone self args result
+  function postcondition_once_clone (self: ()) (args: t_T) (result: t_T) : bool = postcondition_clone self args result
   
-  meta "rewrite_def" predicate postcondition_once_clone
+  meta "rewrite_def" function postcondition_once_clone
   
   let clone_T (self: t_T) (return (x: t_T)) = {[@stop_split] [@expl:clone requires] precondition_clone () self}
     any
     [ return (result: t_T) -> {[@stop_split] [@expl:clone ensures] postcondition_once_clone () self result}
       (! return {result}) ]
   
-  predicate inv_OwnResult_T_E (_1: t_OwnResult_T_E)
+  function inv_OwnResult_T_E (_1: t_OwnResult_T_E) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_OwnResult_T_E [inv_OwnResult_T_E _1]. inv_OwnResult_T_E _1
       = match _1 with
@@ -1655,19 +1657,19 @@ module M_impl_OwnResult_refmut_T_E__copied (* OwnResult<&mut T, E> *)
   
   type t_OwnResult_refmut_T_E = Ok (MutBorrow.t t_T) | Err t_E
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) = inv_T self.current /\ inv_T self.final
+  function invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) : bool = inv_T self.current /\ inv_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_T
+  meta "rewrite_def" function invariant_refmut_T
   
-  predicate inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = invariant_refmut_T _1
+  function inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = invariant_refmut_T _1
   
-  meta "rewrite_def" predicate inv_refmut_T
+  meta "rewrite_def" function inv_refmut_T
   
-  predicate inv_E (_1: t_E)
+  function inv_E (_1: t_E) : bool
   
-  predicate inv_OwnResult_refmut_T_E (_1: t_OwnResult_refmut_T_E)
+  function inv_OwnResult_refmut_T_E (_1: t_OwnResult_refmut_T_E) : bool
   
   axiom inv_axiom [@rewrite]:
     forall _1: t_OwnResult_refmut_T_E [inv_OwnResult_refmut_T_E _1]. inv_OwnResult_refmut_T_E _1
@@ -1676,13 +1678,13 @@ module M_impl_OwnResult_refmut_T_E__copied (* OwnResult<&mut T, E> *)
         | Err f0 -> inv_E f0
         end
   
-  predicate resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = _1.final = _1.current
+  function resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_T
+  meta "rewrite_def" function resolve_refmut_T
   
-  predicate resolve_E (_1: t_E)
+  function resolve_E (_1: t_E) : bool
   
-  predicate resolve_OwnResult_refmut_T_E (_1: t_OwnResult_refmut_T_E)
+  function resolve_OwnResult_refmut_T_E (_1: t_OwnResult_refmut_T_E) : bool
   
   axiom resolve_axiom [@rewrite]:
     forall _1: t_OwnResult_refmut_T_E [resolve_OwnResult_refmut_T_E _1]. resolve_OwnResult_refmut_T_E _1
@@ -1709,7 +1711,7 @@ module M_impl_OwnResult_refmut_T_E__copied (* OwnResult<&mut T, E> *)
         end}
       any) ]
   
-  predicate inv_OwnResult_T_E (_1: t_OwnResult_T_E)
+  function inv_OwnResult_T_E (_1: t_OwnResult_T_E) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_OwnResult_T_E [inv_OwnResult_T_E _1]. inv_OwnResult_T_E _1
       = match _1 with

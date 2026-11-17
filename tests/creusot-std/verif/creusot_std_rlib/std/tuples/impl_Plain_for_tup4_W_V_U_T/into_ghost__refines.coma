@@ -10,26 +10,26 @@ type t_T
 
 type tup4_W_V_U_T = { f0: t_W; f1: t_V; f2: t_U; f3: t_T }
 
-predicate inv_W (_1: t_W)
+function inv_W (_1: t_W) : bool
 
-predicate inv_V (_1: t_V)
+function inv_V (_1: t_V) : bool
 
-predicate inv_U (_1: t_U)
+function inv_U (_1: t_U) : bool
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate inv_tup4_W_V_U_T [@inline:trivial] (_1: tup4_W_V_U_T) =
-  inv_W _1.f0 /\ inv_V _1.f1 /\ inv_U _1.f2 /\ inv_T _1.f3
+function inv_tup4_W_V_U_T [@inline:trivial] (_1: tup4_W_V_U_T) : bool = inv_W _1.f0
+  /\ inv_V _1.f1 /\ inv_U _1.f2 /\ inv_T _1.f3
 
-meta "rewrite_def" predicate inv_tup4_W_V_U_T
+meta "rewrite_def" function inv_tup4_W_V_U_T
 
-predicate invariant_Ghost_tup4_W_V_U_T [@inline:trivial] (self: tup4_W_V_U_T) = inv_tup4_W_V_U_T self
+function invariant_Ghost_tup4_W_V_U_T [@inline:trivial] (self: tup4_W_V_U_T) : bool = inv_tup4_W_V_U_T self
 
-meta "rewrite_def" predicate invariant_Ghost_tup4_W_V_U_T
+meta "rewrite_def" function invariant_Ghost_tup4_W_V_U_T
 
-predicate inv_Ghost_tup4_W_V_U_T [@inline:trivial] (_1: tup4_W_V_U_T) = invariant_Ghost_tup4_W_V_U_T _1
+function inv_Ghost_tup4_W_V_U_T [@inline:trivial] (_1: tup4_W_V_U_T) : bool = invariant_Ghost_tup4_W_V_U_T _1
 
-meta "rewrite_def" predicate inv_Ghost_tup4_W_V_U_T
+meta "rewrite_def" function inv_Ghost_tup4_W_V_U_T
 
 meta "compute_max_steps" 1000000
 

@@ -7,23 +7,24 @@ module M_impl_Clone_for_IsZero__clone (* <IsZero as std::clone::Clone> *)
   let clone_i32 (self: Int32.t) (return (x: Int32.t)) = any
     [ return (result: Int32.t) -> {[@stop_split] [@expl:clone ensures] result = self} (! return {result}) ]
   
-  predicate invariant_IsZero (self: t_IsZero) = self.f0 = (0: Int32.t)
+  function invariant_IsZero (self: t_IsZero) : bool = self.f0 = (0: Int32.t)
   
-  predicate inv_IsZero (_1: t_IsZero)
+  function inv_IsZero (_1: t_IsZero) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_IsZero [inv_IsZero _1]. inv_IsZero _1 = invariant_IsZero _1
   
-  predicate invariant_ref_IsZero [@inline:trivial] (self: t_IsZero) = inv_IsZero self
+  function invariant_ref_IsZero [@inline:trivial] (self: t_IsZero) : bool = inv_IsZero self
   
-  meta "rewrite_def" predicate invariant_ref_IsZero
+  meta "rewrite_def" function invariant_ref_IsZero
   
-  predicate inv_ref_IsZero [@inline:trivial] (_1: t_IsZero) = invariant_ref_IsZero _1
+  function inv_ref_IsZero [@inline:trivial] (_1: t_IsZero) : bool = invariant_ref_IsZero _1
   
-  meta "rewrite_def" predicate inv_ref_IsZero
+  meta "rewrite_def" function inv_ref_IsZero
   
-  predicate postcondition_clone (self: ()) (args: Int32.t) (result: Int32.t) = let self'0 = args in result = self'0
+  function postcondition_clone (self: ()) (args: Int32.t) (result: Int32.t) : bool = let self'0 = args in result
+    = self'0
   
-  meta "rewrite_def" predicate postcondition_clone
+  meta "rewrite_def" function postcondition_clone
   
   meta "compute_max_steps" 1000000
   
@@ -51,23 +52,24 @@ module M_impl_Clone_for_IsZero__clone__refines (* <IsZero as std::clone::Clone> 
   
   type t_IsZero = { f0: Int32.t }
   
-  predicate invariant_IsZero (self: t_IsZero) = self.f0 = (0: Int32.t)
+  function invariant_IsZero (self: t_IsZero) : bool = self.f0 = (0: Int32.t)
   
-  predicate inv_IsZero (_1: t_IsZero)
+  function inv_IsZero (_1: t_IsZero) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_IsZero [inv_IsZero _1]. inv_IsZero _1 = invariant_IsZero _1
   
-  predicate invariant_ref_IsZero [@inline:trivial] (self: t_IsZero) = inv_IsZero self
+  function invariant_ref_IsZero [@inline:trivial] (self: t_IsZero) : bool = inv_IsZero self
   
-  meta "rewrite_def" predicate invariant_ref_IsZero
+  meta "rewrite_def" function invariant_ref_IsZero
   
-  predicate inv_ref_IsZero [@inline:trivial] (_1: t_IsZero) = invariant_ref_IsZero _1
+  function inv_ref_IsZero [@inline:trivial] (_1: t_IsZero) : bool = invariant_ref_IsZero _1
   
-  meta "rewrite_def" predicate inv_ref_IsZero
+  meta "rewrite_def" function inv_ref_IsZero
   
-  predicate postcondition_clone (self: ()) (args: Int32.t) (result: Int32.t) = let self'0 = args in result = self'0
+  function postcondition_clone (self: ()) (args: Int32.t) (result: Int32.t) : bool = let self'0 = args in result
+    = self'0
   
-  meta "rewrite_def" predicate postcondition_clone
+  meta "rewrite_def" function postcondition_clone
   
   let clone_i32 (self: Int32.t) (return (x: Int32.t)) = any
     [ return (result: Int32.t) -> {[@stop_split] [@expl:clone ensures] result = self} (! return {result}) ]

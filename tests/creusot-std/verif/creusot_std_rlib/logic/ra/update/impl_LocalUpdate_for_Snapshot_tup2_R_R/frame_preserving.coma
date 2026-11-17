@@ -19,7 +19,7 @@ function map_Option_R (self: t_Option_R) (f: Map.map t_R t_Option_R) : t_Option_
 
 function op_R (self: t_R) (other: t_R) : t_Option_R
 
-predicate incl_R (self: t_R) (other: t_R)
+function incl_R (self: t_R) (other: t_R) : bool
 
 axiom incl_R_spec: forall self: t_R, other: t_R [incl_R self other]. incl_R self other
     = (exists factor: t_R. op_R self factor = Some other)
@@ -57,11 +57,11 @@ function commutative_Option_R (a: t_Option_R) (b: t_Option_R) : ()
 
 axiom commutative_Option_R_spec: forall a: t_Option_R, b: t_Option_R. op_Option_R a b = op_Option_R b a
 
-predicate premise_Snapshot_tup2_R_R [@inline:trivial] (self: tup2_R_R) (from_auth: t_R) (from_frag: t_R) =
+function premise_Snapshot_tup2_R_R [@inline:trivial] (self: tup2_R_R) (from_auth: t_R) (from_frag: t_R) : bool =
   forall f: t_Option_R. op_Option_R (Some from_frag) f = Some'0 (Some from_auth)
     -> op_Option_R (Some (self.f1)) f = Some'0 (Some (self.f0))
 
-meta "rewrite_def" predicate premise_Snapshot_tup2_R_R
+meta "rewrite_def" function premise_Snapshot_tup2_R_R
 
 function update_Snapshot_tup2_R_R [@inline:trivial] (self: tup2_R_R) (_2: t_R) (_3: t_R) : tup2_R_R = self
 

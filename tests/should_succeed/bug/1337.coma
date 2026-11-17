@@ -23,27 +23,27 @@ module M_impl_Debug_for_T__fmt (* <T as std::fmt::Debug> *)
   
   type t_Formatter
   
-  predicate inv_Formatter (_1: t_Formatter)
+  function inv_Formatter (_1: t_Formatter) : bool
   
   type t_Result_unit_Error = Ok () | Err ()
   
-  predicate invariant_refmut_Formatter [@inline:trivial] (self: MutBorrow.t t_Formatter) =
+  function invariant_refmut_Formatter [@inline:trivial] (self: MutBorrow.t t_Formatter) : bool =
     inv_Formatter self.current /\ inv_Formatter self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Formatter
+  meta "rewrite_def" function invariant_refmut_Formatter
   
-  predicate inv_refmut_Formatter [@inline:trivial] (_1: MutBorrow.t t_Formatter) = invariant_refmut_Formatter _1
+  function inv_refmut_Formatter [@inline:trivial] (_1: MutBorrow.t t_Formatter) : bool = invariant_refmut_Formatter _1
   
-  meta "rewrite_def" predicate inv_refmut_Formatter
+  meta "rewrite_def" function inv_refmut_Formatter
   
   let debug_tuple_fields_finish (self: MutBorrow.t t_Formatter) (name: string) (values: Slice64.slice dyn_Debug)
     (return (x: t_Result_unit_Error)) =
   {[@stop_split] [@expl:debug_tuple_fields_finish 'self' type invariant] inv_refmut_Formatter self}
     any [ return (result: t_Result_unit_Error) -> (! return {result}) ]
   
-  predicate resolve_refmut_Formatter [@inline:trivial] (_1: MutBorrow.t t_Formatter) = _1.final = _1.current
+  function resolve_refmut_Formatter [@inline:trivial] (_1: MutBorrow.t t_Formatter) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Formatter
+  meta "rewrite_def" function resolve_refmut_Formatter
   
   let elim_A (_x: t_T) (return (x: Int8.t) (y: Int8.t)) = any
     [ _k (x: Int8.t) (y: Int8.t) -> {A x y = _x} (! return {x} {y})

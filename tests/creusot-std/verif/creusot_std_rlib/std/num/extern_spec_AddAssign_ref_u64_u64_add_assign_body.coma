@@ -15,9 +15,9 @@ let add_assign_u64 (self: MutBorrow.t UInt64.t) (other: UInt64.t) (return (x: ()
     = UInt64.t'int self.current + UInt64.t'int other}
     (! return {result}) ]
 
-predicate resolve_refmut_u64 [@inline:trivial] (_1: MutBorrow.t UInt64.t) = _1.final = _1.current
+function resolve_refmut_u64 [@inline:trivial] (_1: MutBorrow.t UInt64.t) : bool = _1.final = _1.current
 
-meta "rewrite_def" predicate resolve_refmut_u64
+meta "rewrite_def" function resolve_refmut_u64
 
 meta "compute_max_steps" 1000000
 

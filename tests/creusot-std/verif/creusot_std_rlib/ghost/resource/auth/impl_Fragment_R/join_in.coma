@@ -28,7 +28,7 @@ type t_Option_R = None'0 | Some'0 t_R
 
 function op_R (self: t_R) (other: t_R) : t_Option_R
 
-predicate incl_R (self: t_R) (other: t_R)
+function incl_R (self: t_R) (other: t_R) : bool
 
 axiom incl_R_spec: forall self: t_R, other: t_R [incl_R self other]. incl_R self other
     = (exists factor: t_R. op_R self factor = Some'0 other)
@@ -73,8 +73,7 @@ constant incl_refl_R : ()
 
 axiom incl_refl_R_spec: forall x: t_R. incl_R x x
 
-predicate rel_AuthViewRel_R (a: t_Option_R) (f: t_R) =
-  match a with
+function rel_AuthViewRel_R (a: t_Option_R) (f: t_R) : bool = match a with
     | Some'0 a'0 -> incl_R f a'0
     | None'0 -> true
     end
@@ -137,9 +136,9 @@ let join_in_View_AuthViewRel_R (self: MutBorrow.t t_Resource_View_AuthViewRel_R)
     = op_View_AuthViewRel_R (view_Resource_View_AuthViewRel_R self.current) (view_Resource_View_AuthViewRel_R other))}
     (! return {result}) ]
 
-predicate resolve_refmut_Fragment_R [@inline:trivial] (_1: MutBorrow.t t_Fragment_R) = _1.final = _1.current
+function resolve_refmut_Fragment_R [@inline:trivial] (_1: MutBorrow.t t_Fragment_R) : bool = _1.final = _1.current
 
-meta "rewrite_def" predicate resolve_refmut_Fragment_R
+meta "rewrite_def" function resolve_refmut_Fragment_R
 
 function id_R (self: t_Fragment_R) : t_Id = id_View_AuthViewRel_R self.f0
 

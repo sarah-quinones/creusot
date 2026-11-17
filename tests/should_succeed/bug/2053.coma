@@ -7,9 +7,9 @@ module M_f
   
   type t_Option_Option_T = None'0 | Some'0 t_Option_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_Option_T (_1: t_Option_T)
+  function inv_Option_T (_1: t_Option_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_T _1
       = match _1 with
@@ -17,7 +17,7 @@ module M_f
         | Some f0 -> inv_T f0
         end
   
-  predicate inv_Option_Option_T (_1: t_Option_Option_T)
+  function inv_Option_Option_T (_1: t_Option_Option_T) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Option_Option_T [inv_Option_Option_T _1]. inv_Option_Option_T _1
       = match _1 with
@@ -55,9 +55,9 @@ module M_impl_Q_T__W (* Q<T> *)
   
   type t_Option_T = None | Some t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_Option_T (_1: t_Option_T)
+  function inv_Option_T (_1: t_Option_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_T _1
       = match _1 with

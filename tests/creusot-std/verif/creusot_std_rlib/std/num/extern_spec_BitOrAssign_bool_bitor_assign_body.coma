@@ -2,13 +2,13 @@ use creusot.prelude.Bool
 use creusot.prelude.MutBorrow
 use creusot.prelude.Any
 
-predicate resolve_refmut_bool [@inline:trivial] (_1: MutBorrow.t bool) = _1.final = _1.current
+function resolve_refmut_bool [@inline:trivial] (_1: MutBorrow.t bool) : bool = _1.final = _1.current
 
-meta "rewrite_def" predicate resolve_refmut_bool
+meta "rewrite_def" function resolve_refmut_bool
 
-predicate bitor_bool [@inline:trivial] (self: bool) (other: bool) = self \/ other
+function bitor_bool [@inline:trivial] (self: bool) (other: bool) : bool = self \/ other
 
-meta "rewrite_def" predicate bitor_bool
+meta "rewrite_def" function bitor_bool
 
 meta "compute_max_steps" 1000000
 

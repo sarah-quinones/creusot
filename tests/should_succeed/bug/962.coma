@@ -7,11 +7,11 @@ module M_disjoint_captures
   
   type closure2 = { c0: MutBorrow.t Int32.t }
   
-  predicate resolve_refmut_closure2 [@inline:trivial] (_1: MutBorrow.t closure2) = _1.final = _1.current
+  function resolve_refmut_closure2 [@inline:trivial] (_1: MutBorrow.t closure2) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_closure2
+  meta "rewrite_def" function resolve_refmut_closure2
   
-  predicate hist_inv_closure2 (self: closure2) (result_state: closure2) = result_state.c0.final = self.c0.final
+  function hist_inv_closure2 (self: closure2) (result_state: closure2) : bool = result_state.c0.final = self.c0.final
   
   let closure2 (self: MutBorrow.t closure2) (return (x: ())) = (! bb0
     [ bb0 = s0
@@ -24,14 +24,14 @@ module M_disjoint_captures
       /\ ([@stop_split] [@expl:closure hist_inv post] hist_inv_closure2 self.current self.final)}
       (! return {result}) ]
   
-  predicate precondition_closure2 (self: closure2) (args: ()) = true
+  function precondition_closure2 (self: closure2) (args: ()) : bool = true
   
-  meta "rewrite_def" predicate precondition_closure2
+  meta "rewrite_def" function precondition_closure2
   
-  predicate postcondition_mut_closure2 (self: closure2) (args: ()) (result_state: closure2) (result: ()) =
+  function postcondition_mut_closure2 (self: closure2) (args: ()) (result_state: closure2) (result: ()) : bool =
     Int32.to_int result_state.c0.current = 1 /\ hist_inv_closure2 self result_state
   
-  meta "rewrite_def" predicate postcondition_mut_closure2
+  meta "rewrite_def" function postcondition_mut_closure2
   
   let call_mut_closure2 (self: MutBorrow.t closure2) (args: ()) (return (x: ())) =
   {[@stop_split] [@expl:call_mut requires] precondition_closure2 self.current args}
@@ -40,13 +40,13 @@ module M_disjoint_captures
     {[@stop_split] [@expl:call_mut ensures] postcondition_mut_closure2 self.current args self.final result}
       (! return {result}) ]
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
-  predicate resolve_closure2 [@inline:trivial] (_1: closure2) = resolve_refmut_i32 _1.c0
+  function resolve_closure2 [@inline:trivial] (_1: closure2) : bool = resolve_refmut_i32 _1.c0
   
-  meta "rewrite_def" predicate resolve_closure2
+  meta "rewrite_def" function resolve_closure2
   
   meta "compute_max_steps" 1000000
   

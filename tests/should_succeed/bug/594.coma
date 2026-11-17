@@ -42,14 +42,15 @@ module M_test_closure
   
   type tup2_i32_tup2_i32_i32 = { f0'0: Int32.t; f1'0: tup2_i32_i32 }
   
-  predicate precondition_closure0 (self: ()) (args: tup2_i32_tup2_i32_i32) = let {f0'0 = _c; f1'0 = _1} = args in true
+  function precondition_closure0 (self: ()) (args: tup2_i32_tup2_i32_i32) : bool =
+    let {f0'0 = _c; f1'0 = _1} = args in true
   
-  meta "rewrite_def" predicate precondition_closure0
+  meta "rewrite_def" function precondition_closure0
   
-  predicate postcondition_closure0 (self: ()) (args: tup2_i32_tup2_i32_i32) (result: Int32.t) =
+  function postcondition_closure0 (self: ()) (args: tup2_i32_tup2_i32_i32) (result: Int32.t) : bool =
     let {f0'0 = _c; f1'0 = _1} = args in let {f0 = _a; f1 = b} = _1 in result = b
   
-  meta "rewrite_def" predicate postcondition_closure0
+  meta "rewrite_def" function postcondition_closure0
   
   let call_closure0 (self: ()) (args: tup2_i32_tup2_i32_i32) (return (x: Int32.t)) =
   {[@stop_split] [@expl:call requires] precondition_closure0 self args}
@@ -57,14 +58,14 @@ module M_test_closure
     [ return (result: Int32.t) -> {[@stop_split] [@expl:call ensures] postcondition_closure0 self args result}
       (! return {result}) ]
   
-  predicate precondition_closure1 (self: ()) (args: tup2_i32_i32) = let _0 = args in true
+  function precondition_closure1 (self: ()) (args: tup2_i32_i32) : bool = let _0 = args in true
   
-  meta "rewrite_def" predicate precondition_closure1
+  meta "rewrite_def" function precondition_closure1
   
-  predicate postcondition_closure1 (self: ()) (args: tup2_i32_i32) (result: Int32.t) =
+  function postcondition_closure1 (self: ()) (args: tup2_i32_i32) (result: Int32.t) : bool =
     let _0 = args in let {f0 = _a; f1 = b} = _0 in result = b
   
-  meta "rewrite_def" predicate postcondition_closure1
+  meta "rewrite_def" function postcondition_closure1
   
   let call_closure1 (self: ()) (args: tup2_i32_i32) (return (x: Int32.t)) =
   {[@stop_split] [@expl:call requires] precondition_closure1 self args}

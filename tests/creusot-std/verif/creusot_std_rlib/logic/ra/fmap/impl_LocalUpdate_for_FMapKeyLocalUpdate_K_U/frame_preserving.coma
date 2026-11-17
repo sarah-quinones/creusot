@@ -25,16 +25,16 @@ function lookup_K [@inline:trivial] (self: t_FMap_K_V) (k: t_K) : t_Option_V = M
 
 meta "rewrite_def" function lookup_K
 
-predicate premise_U (self: t_U) (from_auth: t_V) (from_frag: t_V)
+function premise_U (self: t_U) (from_auth: t_V) (from_frag: t_V) : bool
 
-predicate premise_FMapKeyLocalUpdate_K_U [@inline:trivial] (self: t_FMapKeyLocalUpdate_K_U) (from_auth: t_FMap_K_V) (from_frag: t_FMap_K_V) =
-  match { f0'0 = lookup_K from_auth self.f0; f1'0 = lookup_K from_frag self.f0 } with
+function premise_FMapKeyLocalUpdate_K_U [@inline:trivial] (self: t_FMapKeyLocalUpdate_K_U) (from_auth: t_FMap_K_V) (from_frag: t_FMap_K_V) : bool
+ = match { f0'0 = lookup_K from_auth self.f0; f1'0 = lookup_K from_frag self.f0 } with
     | {f0'0 = Some'0 auth_v; f1'0 = Some'0 frag_v} -> premise_U self.f1 auth_v frag_v
     | {f1'0 = None'0} -> false
     | _ -> true
     end
 
-meta "rewrite_def" predicate premise_FMapKeyLocalUpdate_K_U
+meta "rewrite_def" function premise_FMapKeyLocalUpdate_K_U
 
 type t_Option_Option_FMap_K_V = None'1 | Some'1 t_Option_FMap_K_V
 
@@ -55,7 +55,7 @@ function map_Option_V (self: t_Option_V) (f: Map.map t_V t_Option_V) : t_Option_
 
 function op_V (self: t_V) (other: t_V) : t_Option_V
 
-predicate incl_V (self: t_V) (other: t_V)
+function incl_V (self: t_V) (other: t_V) : bool
 
 axiom incl_V_spec: forall self: t_V, other: t_V [incl_V self other]. incl_V self other
     = (exists factor: t_V. op_V self factor = Some'0 other)
@@ -110,9 +110,9 @@ axiom merge_K_spec:
         = Some'0 (index_Mapping_tup2_V_V_V f { f0'2 = x; f1'2 = y })
         end
 
-predicate index_Mapping_V_bool [@inline:trivial] (self: Map.map t_V bool) (a: t_V) = Map.get self a
+function index_Mapping_V_bool [@inline:trivial] (self: Map.map t_V bool) (a: t_V) : bool = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_V_bool
+meta "rewrite_def" function index_Mapping_V_bool
 
 function such_that_V (p: Map.map t_V bool) : t_V
 
@@ -168,17 +168,17 @@ function index_FMap_K_V [@inline:trivial] (self: t_FMap_K_V) (key: t_K) : t_V = 
 
 meta "rewrite_def" function index_FMap_K_V
 
-predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
 
-meta "rewrite_def" predicate ge_log_Int
+meta "rewrite_def" function ge_log_Int
 
 function len_K (self: t_FMap_K_V) : int
 
 axiom len_K_spec: forall self: t_FMap_K_V [len_K self]. ge_log_Int (len_K self) 0
 
-predicate contains_K [@inline:trivial] (self: t_FMap_K_V) (k: t_K) = lookup_K self k <> None'0
+function contains_K [@inline:trivial] (self: t_FMap_K_V) (k: t_K) : bool = lookup_K self k <> None'0
 
-meta "rewrite_def" predicate contains_K
+meta "rewrite_def" function contains_K
 
 function add_K (self: t_FMap_K_V) (k: t_K) (v: t_V) : t_FMap_K_V
 
@@ -203,7 +203,7 @@ axiom frame_preserving_U_spec:
     -> (let {f0'2 = to_auth; f1'2 = to_frag} = update_U self from_auth from_frag in op_Option_V (Some'0 to_frag) frame
     = Some'2 (Some'0 to_auth))
 
-predicate ext_eq_K (self: t_FMap_K_V) (other: t_FMap_K_V) = forall k: t_K. lookup_K self k = lookup_K other k
+function ext_eq_K (self: t_FMap_K_V) (other: t_FMap_K_V) : bool = forall k: t_K. lookup_K self k = lookup_K other k
 
 axiom ext_eq_K_spec: forall self: t_FMap_K_V, other: t_FMap_K_V [self = other]. ext_eq_K self other = (self = other)
 

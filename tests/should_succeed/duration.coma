@@ -12,11 +12,11 @@ module M_test_duration
   
   constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
   
-  predicate inv_Duration (_1: t_Duration)
+  function inv_Duration (_1: t_Duration) : bool
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function secs_to_nanos (secs: int) : int = secs * 1000000000
   
@@ -34,13 +34,13 @@ module M_test_duration
       = secs_to_nanos (UInt64.t'int secs) + UInt32.t'int nanos)}
       (! return {result}) ]
   
-  predicate invariant_ref_Duration [@inline:trivial] (self: t_Duration) = inv_Duration self
+  function invariant_ref_Duration [@inline:trivial] (self: t_Duration) : bool = inv_Duration self
   
-  meta "rewrite_def" predicate invariant_ref_Duration
+  meta "rewrite_def" function invariant_ref_Duration
   
-  predicate inv_ref_Duration [@inline:trivial] (_1: t_Duration) = invariant_ref_Duration _1
+  function inv_ref_Duration [@inline:trivial] (_1: t_Duration) : bool = invariant_ref_Duration _1
   
-  meta "rewrite_def" predicate inv_ref_Duration
+  meta "rewrite_def" function inv_ref_Duration
   
   let as_nanos (self: t_Duration) (return (x: UInt128.t)) =
   {[@stop_split] [@expl:as_nanos 'self' type invariant] inv_ref_Duration self}
@@ -139,7 +139,7 @@ module M_test_duration
   
   type t_Option_Duration = None | Some t_Duration
   
-  predicate inv_Option_Duration (_1: t_Option_Duration)
+  function inv_Option_Duration (_1: t_Option_Duration) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Option_Duration [inv_Option_Duration _1]. inv_Option_Duration _1
       = match _1 with
@@ -147,9 +147,9 @@ module M_test_duration
         | Some f0 -> inv_Duration f0
         end
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   type t_Option_Int = None'0 | Some'0 int
   
@@ -177,13 +177,13 @@ module M_test_duration
       -> deep_model_Option_Duration result = Some'0 (view_Duration self + view_Duration rhs))}
       (! return {result}) ]
   
-  predicate invariant_ref_Option_Duration [@inline:trivial] (self: t_Option_Duration) = inv_Option_Duration self
+  function invariant_ref_Option_Duration [@inline:trivial] (self: t_Option_Duration) : bool = inv_Option_Duration self
   
-  meta "rewrite_def" predicate invariant_ref_Option_Duration
+  meta "rewrite_def" function invariant_ref_Option_Duration
   
-  predicate inv_ref_Option_Duration [@inline:trivial] (_1: t_Option_Duration) = invariant_ref_Option_Duration _1
+  function inv_ref_Option_Duration [@inline:trivial] (_1: t_Option_Duration) : bool = invariant_ref_Option_Duration _1
   
-  meta "rewrite_def" predicate inv_ref_Option_Duration
+  meta "rewrite_def" function inv_ref_Option_Duration
   
   let is_none_Duration (self: t_Option_Duration) (return (x: bool)) =
   {[@stop_split] [@expl:is_none 'self' type invariant] inv_ref_Option_Duration self}

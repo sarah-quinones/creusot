@@ -18,9 +18,10 @@ function lookup_K [@inline:trivial] (self: t_FMap_K_V) (k: t_K) : t_Option_V = M
 
 meta "rewrite_def" function lookup_K
 
-predicate index_Mapping_tup2_K_V_bool [@inline:trivial] (self: Map.map tup2_K_V bool) (a: tup2_K_V) = Map.get self a
+function index_Mapping_tup2_K_V_bool [@inline:trivial] (self: Map.map tup2_K_V bool) (a: tup2_K_V) : bool =
+  Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_tup2_K_V_bool
+meta "rewrite_def" function index_Mapping_tup2_K_V_bool
 
 function index_Mapping_tup2_K_V_Option_V [@inline:trivial] (self: Map.map tup2_K_V t_Option_V) (a: tup2_K_V) : t_Option_V
  = Map.get self a

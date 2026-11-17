@@ -14,30 +14,31 @@ let elim_Some (_x: t_Option_T) (return (f0: t_T)) = any
 
 type t_Target
 
-predicate precondition_deref (self: ()) (args: t_T)
+function precondition_deref (self: ()) (args: t_T) : bool
 
 axiom precondition_fndef: forall args: t_T [precondition_deref () args]. (let self = args in false)
     -> precondition_deref () args
 
-predicate inv_Target (_1: t_Target)
+function inv_Target (_1: t_Target) : bool
 
-predicate invariant_ref_Target [@inline:trivial] (self: t_Target) = inv_Target self
+function invariant_ref_Target [@inline:trivial] (self: t_Target) : bool = inv_Target self
 
-meta "rewrite_def" predicate invariant_ref_Target
+meta "rewrite_def" function invariant_ref_Target
 
-predicate inv_ref_Target [@inline:trivial] (_1: t_Target) = invariant_ref_Target _1
+function inv_ref_Target [@inline:trivial] (_1: t_Target) : bool = invariant_ref_Target _1
 
-meta "rewrite_def" predicate inv_ref_Target
+meta "rewrite_def" function inv_ref_Target
 
-predicate postcondition_deref (self: ()) (args: t_T) (result: t_Target)
+function postcondition_deref (self: ()) (args: t_T) (result: t_Target) : bool
 
 axiom postcondition_fndef:
   forall args: t_T, result: t_Target [postcondition_deref () args result]. postcondition_deref () args result
     -> (let self = args in inv_ref_Target result)
 
-predicate postcondition_once_deref (self: ()) (args: t_T) (result: t_Target) = postcondition_deref self args result
+function postcondition_once_deref (self: ()) (args: t_T) (result: t_Target) : bool =
+  postcondition_deref self args result
 
-meta "rewrite_def" predicate postcondition_once_deref
+meta "rewrite_def" function postcondition_once_deref
 
 let deref_T (self: t_T) (return (x: t_Target)) = {[@stop_split] [@expl:deref requires] precondition_deref () self}
   any
@@ -46,9 +47,9 @@ let deref_T (self: t_T) (return (x: t_Target)) = {[@stop_split] [@expl:deref req
 
 type t_Option_ref_Target = None'0 | Some'0 t_Target
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate inv_Option_T (_1: t_Option_T)
+function inv_Option_T (_1: t_Option_T) : bool
 
 axiom inv_axiom [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_T _1
     = match _1 with
@@ -56,15 +57,15 @@ axiom inv_axiom [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_
       | Some f0 -> inv_T f0
       end
 
-predicate invariant_ref_Option_T [@inline:trivial] (self: t_Option_T) = inv_Option_T self
+function invariant_ref_Option_T [@inline:trivial] (self: t_Option_T) : bool = inv_Option_T self
 
-meta "rewrite_def" predicate invariant_ref_Option_T
+meta "rewrite_def" function invariant_ref_Option_T
 
-predicate inv_ref_Option_T [@inline:trivial] (_1: t_Option_T) = invariant_ref_Option_T _1
+function inv_ref_Option_T [@inline:trivial] (_1: t_Option_T) : bool = invariant_ref_Option_T _1
 
-meta "rewrite_def" predicate inv_ref_Option_T
+meta "rewrite_def" function inv_ref_Option_T
 
-predicate inv_Option_ref_Target (_1: t_Option_ref_Target)
+function inv_Option_ref_Target (_1: t_Option_ref_Target) : bool
 
 axiom inv_axiom'0 [@rewrite]: forall _1: t_Option_ref_Target [inv_Option_ref_Target _1]. inv_Option_ref_Target _1
     = match _1 with

@@ -5,9 +5,9 @@ module M_f
   
   type t_S_T = { f0: t_T }
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_S_T (_1: t_S_T)
+  function inv_S_T (_1: t_S_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_S_T [inv_S_T _1]. inv_S_T _1 = inv_T _1.f0
   
@@ -35,9 +35,9 @@ module M_impl_F_for_S_T__C (* <S<T> as F> *)
   
   type t_S_T = { f0: t_T }
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_S_T (_1: t_S_T)
+  function inv_S_T (_1: t_S_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_S_T [inv_S_T _1]. inv_S_T _1 = inv_T _1.f0
   

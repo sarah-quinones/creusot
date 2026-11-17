@@ -3,32 +3,33 @@ module M_omg
   
   type t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate resolve_T (_1: t_T)
+  function resolve_T (_1: t_T) : bool
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate precondition_is_true (self: ()) (args: t_T)
+  function precondition_is_true (self: ()) (args: t_T) : bool
   
   axiom precondition_fndef: forall args: t_T [precondition_is_true () args]. (let self = args in inv_ref_T self)
       -> precondition_is_true () args
   
-  predicate postcondition_is_true (self: ()) (args: t_T) (result: bool)
+  function postcondition_is_true (self: ()) (args: t_T) (result: bool) : bool
   
   axiom postcondition_fndef:
     forall args: t_T, result: bool [postcondition_is_true () args result]. postcondition_is_true () args result
       -> (let self = args in result = true)
   
-  predicate postcondition_once_is_true (self: ()) (args: t_T) (result: bool) = postcondition_is_true self args result
+  function postcondition_once_is_true (self: ()) (args: t_T) (result: bool) : bool =
+    postcondition_is_true self args result
   
-  meta "rewrite_def" predicate postcondition_once_is_true
+  meta "rewrite_def" function postcondition_once_is_true
   
   let is_true_T (self: t_T) (return (x: bool)) = {[@stop_split] [@expl:is_true requires] precondition_is_true () self}
     any

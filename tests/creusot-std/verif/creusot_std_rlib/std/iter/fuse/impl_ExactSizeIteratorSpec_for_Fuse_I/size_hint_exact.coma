@@ -19,7 +19,7 @@ function view_Fuse_I (self: t_Fuse_I) : t_Option_I
 
 type t_Item
 
-predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
 
 function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
 
@@ -30,9 +30,9 @@ function produces_refl_I (self: t_I) : ()
 
 axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
 
-predicate completed_I (self: MutBorrow.t t_I)
+function completed_I (self: MutBorrow.t t_I) : bool
 
-predicate postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize)
+function postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool
 
 axiom postcondition_fndef:
   forall args: t_I, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -43,17 +43,17 @@ axiom postcondition_fndef:
       | None -> true
       end)
 
-predicate postcondition_size_hint'0 (self: ()) (args: t_Fuse_I) (result: tup2_usize_Option_usize) =
+function postcondition_size_hint'0 (self: ()) (args: t_Fuse_I) (result: tup2_usize_Option_usize) : bool =
   let self'0 = args in match view_Fuse_I self'0 with
     | Some'0 s -> postcondition_size_hint () s result
     | None'0 -> result = { f0 = (0: UInt64.t); f1 = Some (0: UInt64.t) }
     end
 
-meta "rewrite_def" predicate postcondition_size_hint'0
+meta "rewrite_def" function postcondition_size_hint'0
 
-predicate inv_I (_1: t_I)
+function inv_I (_1: t_I) : bool
 
-predicate inv_Option_I (_1: t_Option_I)
+function inv_Option_I (_1: t_Option_I) : bool
 
 axiom inv_axiom [@rewrite]: forall _1: t_Option_I [inv_Option_I _1]. inv_Option_I _1
     = match _1 with
@@ -61,39 +61,39 @@ axiom inv_axiom [@rewrite]: forall _1: t_Option_I [inv_Option_I _1]. inv_Option_
       | Some'0 f0'0 -> inv_I f0'0
       end
 
-predicate invariant_Fuse_I [@inline:trivial] (self: t_Fuse_I) = inv_Option_I (view_Fuse_I self)
+function invariant_Fuse_I [@inline:trivial] (self: t_Fuse_I) : bool = inv_Option_I (view_Fuse_I self)
 
-meta "rewrite_def" predicate invariant_Fuse_I
+meta "rewrite_def" function invariant_Fuse_I
 
-predicate inv_Fuse_I (_1: t_Fuse_I)
+function inv_Fuse_I (_1: t_Fuse_I) : bool
 
 axiom inv_axiom'0: forall _1: t_Fuse_I [inv_Fuse_I _1]. inv_Fuse_I _1 -> invariant_Fuse_I _1
 
-predicate invariant_ref_Fuse_I [@inline:trivial] (self: t_Fuse_I) = inv_Fuse_I self
+function invariant_ref_Fuse_I [@inline:trivial] (self: t_Fuse_I) : bool = inv_Fuse_I self
 
-meta "rewrite_def" predicate invariant_ref_Fuse_I
+meta "rewrite_def" function invariant_ref_Fuse_I
 
-predicate inv_ref_Fuse_I [@inline:trivial] (_1: t_Fuse_I) = invariant_ref_Fuse_I _1
+function inv_ref_Fuse_I [@inline:trivial] (_1: t_Fuse_I) : bool = invariant_ref_Fuse_I _1
 
-meta "rewrite_def" predicate inv_ref_Fuse_I
+meta "rewrite_def" function inv_ref_Fuse_I
 
-predicate invariant_ref_I [@inline:trivial] (self: t_I) = inv_I self
+function invariant_ref_I [@inline:trivial] (self: t_I) : bool = inv_I self
 
-meta "rewrite_def" predicate invariant_ref_I
+meta "rewrite_def" function invariant_ref_I
 
-predicate inv_ref_I [@inline:trivial] (_1: t_I) = invariant_ref_I _1
+function inv_ref_I [@inline:trivial] (_1: t_I) : bool = invariant_ref_I _1
 
-meta "rewrite_def" predicate inv_ref_I
+meta "rewrite_def" function inv_ref_I
 
-predicate precondition_size_hint (self: ()) (args: t_I)
+function precondition_size_hint (self: ()) (args: t_I) : bool
 
 axiom precondition_fndef: forall args: t_I [precondition_size_hint () args]. (let self = args in inv_ref_I self)
     -> precondition_size_hint () args
 
-predicate postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) =
+function postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool =
   postcondition_size_hint self args result
 
-meta "rewrite_def" predicate postcondition_once_size_hint
+meta "rewrite_def" function postcondition_once_size_hint
 
 let size_hint_I (self: t_I) (return (x: tup2_usize_Option_usize)) =
 {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}

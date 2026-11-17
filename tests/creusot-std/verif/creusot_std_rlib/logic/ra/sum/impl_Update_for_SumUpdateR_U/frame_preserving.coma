@@ -14,15 +14,14 @@ type t_Sum_V_R = Left t_V | Right t_R
 
 type t_Choice
 
-predicate premise_U (self: t_U) (from: t_R)
+function premise_U (self: t_U) (from: t_R) : bool
 
-predicate premise_SumUpdateR_U [@inline:trivial] (self: t_SumUpdateR_U) (from: t_Sum_V_R) =
-  match from with
+function premise_SumUpdateR_U [@inline:trivial] (self: t_SumUpdateR_U) (from: t_Sum_V_R) : bool = match from with
     | Right from'0 -> premise_U self.f0 from'0
     | Left _ -> false
     end
 
-meta "rewrite_def" predicate premise_SumUpdateR_U
+meta "rewrite_def" function premise_SumUpdateR_U
 
 type t_Option_Sum_V_R = None | Some t_Sum_V_R
 
@@ -37,7 +36,7 @@ function map_Option_V (self: t_Option_V) (f: Map.map t_V t_Sum_V_R) : t_Option_S
 
 function op_V (self: t_V) (other: t_V) : t_Option_V
 
-predicate incl_V (self: t_V) (other: t_V)
+function incl_V (self: t_V) (other: t_V) : bool
 
 axiom incl_V_spec: forall self: t_V, other: t_V [incl_V self other]. incl_V self other
     = (exists factor: t_V. op_V self factor = Some'0 other)
@@ -73,7 +72,7 @@ function map_Option_R (self: t_Option_R) (f: Map.map t_R t_Sum_V_R) : t_Option_S
 
 function op_R (self: t_R) (other: t_R) : t_Option_R
 
-predicate incl_R (self: t_R) (other: t_R)
+function incl_R (self: t_R) (other: t_R) : bool
 
 axiom incl_R_spec: forall self: t_R, other: t_R [incl_R self other]. incl_R self other
     = (exists factor: t_R. op_R self factor = Some'1 other)
@@ -126,9 +125,9 @@ axiom frame_preserving_U_spec:
   forall self: t_U, from: t_R, frame: t_R [frame_preserving_U self from frame]. premise_U self from
     -> op_R from frame <> None'1 -> op_R (update_U self from (frame_preserving_U self from frame)) frame <> None'1
 
-predicate index_Mapping_Choice_bool [@inline:trivial] (self: Map.map t_Choice bool) (a: t_Choice) = Map.get self a
+function index_Mapping_Choice_bool [@inline:trivial] (self: Map.map t_Choice bool) (a: t_Choice) : bool = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_Choice_bool
+meta "rewrite_def" function index_Mapping_Choice_bool
 
 function such_that_Choice (p: Map.map t_Choice bool) : t_Choice
 

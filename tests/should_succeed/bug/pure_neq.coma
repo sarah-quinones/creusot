@@ -9,7 +9,7 @@ module M_f
   
   constant y : t_Option_Int
   
-  predicate f (x: t_Option_Int) (y: t_Option_Int)
+  function f (x: t_Option_Int) (y: t_Option_Int) : bool
   
   goal vc_f: [@stop_split] [@expl:f ensures] (x <> y) = (not x = y)
 end

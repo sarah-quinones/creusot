@@ -11,11 +11,11 @@ type t_Option_refmut_T = None | Some (MutBorrow.t t_T)
 
 function view_IterMut_T (self: t_IterMut_T) : t_Option_refmut_T
 
-predicate produces_IterMut_T [@inline:trivial] (self: t_IterMut_T) (visited: Seq.seq (MutBorrow.t t_T)) (o: t_IterMut_T) =
-  visited = (Seq.empty: Seq.seq (MutBorrow.t t_T)) /\ self = o
+function produces_IterMut_T [@inline:trivial] (self: t_IterMut_T) (visited: Seq.seq (MutBorrow.t t_T)) (o: t_IterMut_T) : bool
+ = visited = (Seq.empty: Seq.seq (MutBorrow.t t_T)) /\ self = o
   \/ (exists e: MutBorrow.t t_T. view_IterMut_T self = Some e /\ visited = Seq.singleton e /\ view_IterMut_T o = None)
 
-meta "rewrite_def" predicate produces_IterMut_T
+meta "rewrite_def" function produces_IterMut_T
 
 meta "compute_max_steps" 1000000
 

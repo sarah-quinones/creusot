@@ -10,9 +10,9 @@ type t_Option_U = None'0 | Some'0 t_U
 
 type tup2_Option_T_Option_U = { f0: t_Option_T; f1: t_Option_U }
 
-predicate inv_U (_1: t_U)
+function inv_U (_1: t_U) : bool
 
-predicate inv_Option_U (_1: t_Option_U)
+function inv_Option_U (_1: t_Option_U) : bool
 
 axiom inv_axiom [@rewrite]: forall _1: t_Option_U [inv_Option_U _1]. inv_Option_U _1
     = match _1 with
@@ -20,9 +20,9 @@ axiom inv_axiom [@rewrite]: forall _1: t_Option_U [inv_Option_U _1]. inv_Option_
       | Some'0 f0'0 -> inv_U f0'0
       end
 
-predicate resolve_U (_1: t_U)
+function resolve_U (_1: t_U) : bool
 
-predicate resolve_Option_U (_1: t_Option_U)
+function resolve_Option_U (_1: t_Option_U) : bool
 
 axiom resolve_axiom [@rewrite]: forall _1: t_Option_U [resolve_Option_U _1]. resolve_Option_U _1
     = match _1 with
@@ -30,9 +30,9 @@ axiom resolve_axiom [@rewrite]: forall _1: t_Option_U [resolve_Option_U _1]. res
       | Some'0 x0 -> resolve_U x0
       end
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate resolve_T (_1: t_T)
+function resolve_T (_1: t_T) : bool
 
 type tup2_T_U = { f0'0: t_T; f1'0: t_U }
 
@@ -54,7 +54,7 @@ let elim_Some'0 (_x: t_Option_U) (return (f0'1: t_U)) = any
       end}
     any) ]
 
-predicate inv_Option_T (_1: t_Option_T)
+function inv_Option_T (_1: t_Option_T) : bool
 
 axiom inv_axiom'0 [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_T _1
     = match _1 with
@@ -62,11 +62,11 @@ axiom inv_axiom'0 [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Optio
       | Some f0'1 -> inv_T f0'1
       end
 
-predicate inv_tup2_T_U [@inline:trivial] (_1: tup2_T_U) = inv_T _1.f0'0 /\ inv_U _1.f1'0
+function inv_tup2_T_U [@inline:trivial] (_1: tup2_T_U) : bool = inv_T _1.f0'0 /\ inv_U _1.f1'0
 
-meta "rewrite_def" predicate inv_tup2_T_U
+meta "rewrite_def" function inv_tup2_T_U
 
-predicate inv_Option_tup2_T_U (_1: t_Option_tup2_T_U)
+function inv_Option_tup2_T_U (_1: t_Option_tup2_T_U) : bool
 
 axiom inv_axiom'1 [@rewrite]: forall _1: t_Option_tup2_T_U [inv_Option_tup2_T_U _1]. inv_Option_tup2_T_U _1
     = match _1 with
@@ -74,7 +74,7 @@ axiom inv_axiom'1 [@rewrite]: forall _1: t_Option_tup2_T_U [inv_Option_tup2_T_U 
       | Some'1 f0'1 -> inv_tup2_T_U f0'1
       end
 
-predicate resolve_Option_T (_1: t_Option_T)
+function resolve_Option_T (_1: t_Option_T) : bool
 
 axiom resolve_axiom'0 [@rewrite]: forall _1: t_Option_T [resolve_Option_T _1]. resolve_Option_T _1
     = match _1 with

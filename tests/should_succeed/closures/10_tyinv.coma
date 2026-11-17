@@ -6,17 +6,17 @@ module M_f
   
   type t_Zero_T = { f0: UInt32.t; f1: t_T }
   
-  predicate invariant_Zero_T (self: t_Zero_T) = UInt32.t'int self.f0 = 0
+  function invariant_Zero_T (self: t_Zero_T) : bool = UInt32.t'int self.f0 = 0
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_Zero_T (_1: t_Zero_T)
+  function inv_Zero_T (_1: t_Zero_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Zero_T [inv_Zero_T _1]. inv_Zero_T _1 = (invariant_Zero_T _1 /\ inv_T _1.f1)
   
-  predicate resolve_T (_1: t_T)
+  function resolve_T (_1: t_T) : bool
   
-  predicate resolve_Zero_T (_1: t_Zero_T)
+  function resolve_Zero_T (_1: t_Zero_T) : bool
   
   axiom resolve_axiom [@rewrite]: forall _1: t_Zero_T [resolve_Zero_T _1]. resolve_Zero_T _1 = resolve_T _1.f1
   
@@ -24,25 +24,25 @@ module M_f
   
   type closure1 = { c0'0: t_Zero_T }
   
-  predicate invariant_ref_Zero_T [@inline:trivial] (self: t_Zero_T) = inv_Zero_T self
+  function invariant_ref_Zero_T [@inline:trivial] (self: t_Zero_T) : bool = inv_Zero_T self
   
-  meta "rewrite_def" predicate invariant_ref_Zero_T
+  meta "rewrite_def" function invariant_ref_Zero_T
   
-  predicate inv_ref_Zero_T [@inline:trivial] (_1: t_Zero_T) = invariant_ref_Zero_T _1
+  function inv_ref_Zero_T [@inline:trivial] (_1: t_Zero_T) : bool = invariant_ref_Zero_T _1
   
-  meta "rewrite_def" predicate inv_ref_Zero_T
+  meta "rewrite_def" function inv_ref_Zero_T
   
-  predicate inv_closure1 [@inline:trivial] (_1: closure1) = let {c0'0 = x0} = _1 in inv_ref_Zero_T x0
+  function inv_closure1 [@inline:trivial] (_1: closure1) : bool = let {c0'0 = x0} = _1 in inv_ref_Zero_T x0
   
-  meta "rewrite_def" predicate inv_closure1
+  meta "rewrite_def" function inv_closure1
   
-  predicate invariant_ref_closure1 [@inline:trivial] (self: closure1) = inv_closure1 self
+  function invariant_ref_closure1 [@inline:trivial] (self: closure1) : bool = inv_closure1 self
   
-  meta "rewrite_def" predicate invariant_ref_closure1
+  meta "rewrite_def" function invariant_ref_closure1
   
-  predicate inv_ref_closure1 [@inline:trivial] (_1: closure1) = invariant_ref_closure1 _1
+  function inv_ref_closure1 [@inline:trivial] (_1: closure1) : bool = invariant_ref_closure1 _1
   
-  meta "rewrite_def" predicate inv_ref_closure1
+  meta "rewrite_def" function inv_ref_closure1
   
   let closure1 (self: closure1) (return (x: UInt32.t)) =
   {[@stop_split] [@expl:closure 'self' type invariant] inv_ref_closure1 self}
@@ -59,13 +59,13 @@ module M_f
     | & _6: t_Zero_T = Any.any_l () ])
     [ return (result: UInt32.t) -> {[@stop_split] [@expl:closure ensures] UInt32.t'int result = 0} (! return {result}) ]
   
-  predicate precondition_closure1 (self: closure1) (args: ()) = true
+  function precondition_closure1 (self: closure1) (args: ()) : bool = true
   
-  meta "rewrite_def" predicate precondition_closure1
+  meta "rewrite_def" function precondition_closure1
   
-  predicate postcondition_closure1 (self: closure1) (args: ()) (result: UInt32.t) = UInt32.t'int result = 0
+  function postcondition_closure1 (self: closure1) (args: ()) (result: UInt32.t) : bool = UInt32.t'int result = 0
   
-  meta "rewrite_def" predicate postcondition_closure1
+  meta "rewrite_def" function postcondition_closure1
   
   let call_closure1 (self: closure1) (args: ()) (return (x: UInt32.t)) =
   {[@stop_split] [@expl:call_closure1 requires] ([@stop_split] [@expl:call 'self' type invariant] inv_ref_closure1 self)
@@ -74,18 +74,18 @@ module M_f
     [ return (result: UInt32.t) -> {[@stop_split] [@expl:call ensures] postcondition_closure1 self args result}
       (! return {result}) ]
   
-  predicate inv_closure0 [@inline:trivial] (_1: closure0) =
-    let {c0 = x0; c1 = x1} = _1 in inv_ref_Zero_T x0 /\ inv_ref_Zero_T x1
+  function inv_closure0 [@inline:trivial] (_1: closure0) : bool = let {c0 = x0; c1 = x1} = _1 in inv_ref_Zero_T x0
+    /\ inv_ref_Zero_T x1
   
-  meta "rewrite_def" predicate inv_closure0
+  meta "rewrite_def" function inv_closure0
   
-  predicate invariant_ref_closure0 [@inline:trivial] (self: closure0) = inv_closure0 self
+  function invariant_ref_closure0 [@inline:trivial] (self: closure0) : bool = inv_closure0 self
   
-  meta "rewrite_def" predicate invariant_ref_closure0
+  meta "rewrite_def" function invariant_ref_closure0
   
-  predicate inv_ref_closure0 [@inline:trivial] (_1: closure0) = invariant_ref_closure0 _1
+  function inv_ref_closure0 [@inline:trivial] (_1: closure0) : bool = invariant_ref_closure0 _1
   
-  meta "rewrite_def" predicate inv_ref_closure0
+  meta "rewrite_def" function inv_ref_closure0
   
   let closure0 (self: closure0) (return (x: UInt32.t)) =
   {[@stop_split] [@expl:closure 'self' type invariant] inv_ref_closure0 self}
@@ -107,13 +107,13 @@ module M_f
     | & _11: t_Zero_T = Any.any_l () ])
     [ return (result: UInt32.t) -> {[@stop_split] [@expl:closure ensures] UInt32.t'int result = 0} (! return {result}) ]
   
-  predicate precondition_closure0 (self: closure0) (args: ()) = true
+  function precondition_closure0 (self: closure0) (args: ()) : bool = true
   
-  meta "rewrite_def" predicate precondition_closure0
+  meta "rewrite_def" function precondition_closure0
   
-  predicate postcondition_closure0 (self: closure0) (args: ()) (result: UInt32.t) = UInt32.t'int result = 0
+  function postcondition_closure0 (self: closure0) (args: ()) (result: UInt32.t) : bool = UInt32.t'int result = 0
   
-  meta "rewrite_def" predicate postcondition_closure0
+  meta "rewrite_def" function postcondition_closure0
   
   let call_closure0 (self: closure0) (args: ()) (return (x: UInt32.t)) =
   {[@stop_split] [@expl:call_closure0 requires] ([@stop_split] [@expl:call 'self' type invariant] inv_ref_closure0 self)

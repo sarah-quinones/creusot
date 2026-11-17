@@ -3,35 +3,35 @@ module M_generic_closure
   
   type t_F
   
-  predicate inv_F (_1: t_F)
+  function inv_F (_1: t_F) : bool
   
-  predicate resolve_F (_1: t_F)
+  function resolve_F (_1: t_F) : bool
   
   type t_A
   
   type t_B
   
-  predicate invariant_ref_F [@inline:trivial] (self: t_F) = inv_F self
+  function invariant_ref_F [@inline:trivial] (self: t_F) : bool = inv_F self
   
-  meta "rewrite_def" predicate invariant_ref_F
+  meta "rewrite_def" function invariant_ref_F
   
-  predicate inv_ref_F [@inline:trivial] (_1: t_F) = invariant_ref_F _1
+  function inv_ref_F [@inline:trivial] (_1: t_F) : bool = invariant_ref_F _1
   
-  meta "rewrite_def" predicate inv_ref_F
+  meta "rewrite_def" function inv_ref_F
   
-  predicate inv_A (_1: t_A)
+  function inv_A (_1: t_A) : bool
   
-  predicate inv_tup1_A [@inline:trivial] (_1: t_A) = inv_A _1
+  function inv_tup1_A [@inline:trivial] (_1: t_A) : bool = inv_A _1
   
-  meta "rewrite_def" predicate inv_tup1_A
+  meta "rewrite_def" function inv_tup1_A
   
-  predicate precondition_F (self: t_F) (args: t_A)
+  function precondition_F (self: t_F) (args: t_A) : bool
   
-  predicate inv_B (_1: t_B)
+  function inv_B (_1: t_B) : bool
   
-  predicate postcondition_once_F (self: t_F) (args: t_A) (result: t_B)
+  function postcondition_once_F (self: t_F) (args: t_A) (result: t_B) : bool
   
-  predicate postcondition_mut_F (self: t_F) (args: t_A) (result_state: t_F) (result: t_B)
+  function postcondition_mut_F (self: t_F) (args: t_A) (result_state: t_F) (result: t_B) : bool
   
   function fn_mut_once_F (self: t_F) (args: t_A) (res: t_B) : ()
   
@@ -39,7 +39,7 @@ module M_generic_closure
     forall self: t_F, args: t_A, res: t_B [postcondition_once_F self args res]. postcondition_once_F self args res
       = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
   
-  predicate hist_inv_F (self: t_F) (result_state: t_F)
+  function hist_inv_F (self: t_F) (result_state: t_F) : bool
   
   function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
   
@@ -62,7 +62,7 @@ module M_generic_closure
   axiom fn_hist_inv_F_spec: forall self: t_F, res_state: t_F [hist_inv_F self res_state]. hist_inv_F self res_state
       = (self = res_state)
   
-  predicate postcondition_F (self: t_F) (args: t_A) (result: t_B)
+  function postcondition_F (self: t_F) (args: t_A) (result: t_B) : bool
   
   function fn_once_F (self: t_F) (args: t_A) (res: t_B) : ()
   
@@ -108,9 +108,9 @@ module M_mapper
   
   type t_A
   
-  predicate inv_A (_1: t_A)
+  function inv_A (_1: t_A) : bool
   
-  predicate resolve_A (_1: t_A)
+  function resolve_A (_1: t_A) : bool
   
   let closure0 [@coma:extspec] (self: ()) (_a: t_A) (return (x: ())) =
   {[@stop_split] [@expl:closure '_a' type invariant] inv_A _a}

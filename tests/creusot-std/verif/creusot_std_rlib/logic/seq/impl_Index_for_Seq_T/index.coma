@@ -8,34 +8,34 @@ type t_T
 
 type t_Option_ref_T = None | Some t_T
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
 
-meta "rewrite_def" predicate invariant_ref_T
+meta "rewrite_def" function invariant_ref_T
 
-predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
 
-meta "rewrite_def" predicate inv_ref_T
+meta "rewrite_def" function inv_ref_T
 
-predicate invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) =
-  forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_T (Seq.get self i)
+function invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+    -> inv_ref_T (Seq.get self i)
 
-meta "rewrite_def" predicate invariant_Seq_T
+meta "rewrite_def" function invariant_Seq_T
 
-predicate inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Seq_T _1
+function inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Seq_T _1
 
-meta "rewrite_def" predicate inv_Seq_T
+meta "rewrite_def" function inv_Seq_T
 
-predicate invariant_ref_Seq_T [@inline:trivial] (self: Seq.seq t_T) = inv_Seq_T self
+function invariant_ref_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = inv_Seq_T self
 
-meta "rewrite_def" predicate invariant_ref_Seq_T
+meta "rewrite_def" function invariant_ref_Seq_T
 
-predicate inv_ref_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_ref_Seq_T _1
+function inv_ref_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_ref_Seq_T _1
 
-meta "rewrite_def" predicate inv_ref_Seq_T
+meta "rewrite_def" function inv_ref_Seq_T
 
-predicate inv_Option_ref_T (_1: t_Option_ref_T)
+function inv_Option_ref_T (_1: t_Option_ref_T) : bool
 
 axiom inv_axiom [@rewrite]: forall _1: t_Option_ref_T [inv_Option_ref_T _1]. inv_Option_ref_T _1
     = match _1 with

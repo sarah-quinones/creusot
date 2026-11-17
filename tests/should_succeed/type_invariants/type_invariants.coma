@@ -1,11 +1,11 @@
 module M_id
   use creusot.prelude.Any
   
-  predicate invariant_WithInvariant (self: ()) = true
+  function invariant_WithInvariant (self: ()) : bool = true
   
-  predicate inv_WithInvariant [@inline:trivial] (_1: ()) = invariant_WithInvariant _1
+  function inv_WithInvariant [@inline:trivial] (_1: ()) : bool = invariant_WithInvariant _1
   
-  meta "rewrite_def" predicate inv_WithInvariant
+  meta "rewrite_def" function inv_WithInvariant
   
   meta "compute_max_steps" 1000000
   

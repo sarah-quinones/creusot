@@ -2,9 +2,9 @@ use creusot.int.UInt64
 use creusot.prelude.MutBorrow
 use creusot.prelude.Any
 
-predicate resolve_refmut_usize [@inline:trivial] (_1: MutBorrow.t UInt64.t) = _1.final = _1.current
+function resolve_refmut_usize [@inline:trivial] (_1: MutBorrow.t UInt64.t) : bool = _1.final = _1.current
 
-meta "rewrite_def" predicate resolve_refmut_usize
+meta "rewrite_def" function resolve_refmut_usize
 
 meta "compute_max_steps" 1000000
 

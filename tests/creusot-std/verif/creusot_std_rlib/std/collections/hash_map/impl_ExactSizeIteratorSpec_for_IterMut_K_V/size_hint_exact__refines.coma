@@ -11,9 +11,9 @@ type tup2_usize_Option_usize = { f0: UInt64.t; f1: t_Option_usize }
 
 type t_FMap_DeepModelTy_refmut_V
 
-predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
 
-meta "rewrite_def" predicate ge_log_Int
+meta "rewrite_def" function ge_log_Int
 
 function len_DeepModelTy (self: t_FMap_DeepModelTy_refmut_V) : int
 
@@ -22,21 +22,21 @@ axiom len_DeepModelTy_spec:
 
 function view_IterMut_K_V (self: t_IterMut_K_V) : t_FMap_DeepModelTy_refmut_V
 
-predicate postcondition_size_hint (self: ()) (args: t_IterMut_K_V) (result: tup2_usize_Option_usize) =
+function postcondition_size_hint (self: ()) (args: t_IterMut_K_V) (result: tup2_usize_Option_usize) : bool =
   let self'0 = args in UInt64.t'int result.f0 = len_DeepModelTy (view_IterMut_K_V self'0)
   /\ result.f1 = Some (result.f0)
 
-meta "rewrite_def" predicate postcondition_size_hint
+meta "rewrite_def" function postcondition_size_hint
 
-predicate inv_IterMut_K_V (_1: t_IterMut_K_V)
+function inv_IterMut_K_V (_1: t_IterMut_K_V) : bool
 
-predicate invariant_ref_IterMut_K_V [@inline:trivial] (self: t_IterMut_K_V) = inv_IterMut_K_V self
+function invariant_ref_IterMut_K_V [@inline:trivial] (self: t_IterMut_K_V) : bool = inv_IterMut_K_V self
 
-meta "rewrite_def" predicate invariant_ref_IterMut_K_V
+meta "rewrite_def" function invariant_ref_IterMut_K_V
 
-predicate inv_ref_IterMut_K_V [@inline:trivial] (_1: t_IterMut_K_V) = invariant_ref_IterMut_K_V _1
+function inv_ref_IterMut_K_V [@inline:trivial] (_1: t_IterMut_K_V) : bool = invariant_ref_IterMut_K_V _1
 
-meta "rewrite_def" predicate inv_ref_IterMut_K_V
+meta "rewrite_def" function inv_ref_IterMut_K_V
 
 let size_hint_IterMut_K_V (self: t_IterMut_K_V) (return (x: tup2_usize_Option_usize)) =
 {[@stop_split] [@expl:size_hint 'self' type invariant] inv_ref_IterMut_K_V self}

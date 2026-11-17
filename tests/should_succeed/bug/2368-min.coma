@@ -5,9 +5,9 @@ module M_min_on_tie
   
   type tup2_T_T = { f0: t_T; f1: t_T }
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate precondition_min (self: ()) (args: tup2_T_T)
+  function precondition_min (self: ()) (args: tup2_T_T) : bool
   
   axiom precondition_fndef:
     forall args: tup2_T_T [precondition_min () args]. (let {f0 = self; f1 = other} = args in inv_T self /\ inv_T other)
@@ -15,9 +15,9 @@ module M_min_on_tie
   
   type t_DeepModelTy
   
-  predicate lt_log_DeepModelTy (self: t_DeepModelTy) (other: t_DeepModelTy)
+  function lt_log_DeepModelTy (self: t_DeepModelTy) (other: t_DeepModelTy) : bool
   
-  predicate le_log_DeepModelTy (self: t_DeepModelTy) (other: t_DeepModelTy)
+  function le_log_DeepModelTy (self: t_DeepModelTy) (other: t_DeepModelTy) : bool
   
   function le_lt_log_DeepModelTy (self: t_DeepModelTy) (other: t_DeepModelTy) : ()
   
@@ -35,7 +35,7 @@ module M_min_on_tie
   
   function deep_model_T (self: t_T) : t_DeepModelTy
   
-  predicate postcondition_min (self: ()) (args: tup2_T_T) (result: t_T)
+  function postcondition_min (self: ()) (args: tup2_T_T) (result: t_T) : bool
   
   axiom postcondition_fndef:
     forall args: tup2_T_T, result: t_T [postcondition_min () args result]. postcondition_min () args result
@@ -46,9 +46,9 @@ module M_min_on_tie
       /\ (le_log_DeepModelTy (deep_model_T self) (deep_model_T other) -> result = self)
       /\ (lt_log_DeepModelTy (deep_model_T other) (deep_model_T self) -> result = other))
   
-  predicate postcondition_once_min (self: ()) (args: tup2_T_T) (result: t_T) = postcondition_min self args result
+  function postcondition_once_min (self: ()) (args: tup2_T_T) (result: t_T) : bool = postcondition_min self args result
   
-  meta "rewrite_def" predicate postcondition_once_min
+  meta "rewrite_def" function postcondition_once_min
   
   let min_T (self: t_T) (other: t_T) (return (x: t_T)) =
   {[@stop_split] [@expl:min requires] precondition_min () { f0 = self; f1 = other }}
@@ -70,18 +70,18 @@ module M_min_on_tie
       /\ ([@stop_split] [@expl:min ensures #4] lt_log_DeepModelTy (deep_model_T v2) (deep_model_T v1) -> result = v2)}
       (! return {result}) ]
   
-  predicate precondition_max (self: ()) (args: tup2_T_T)
+  function precondition_max (self: ()) (args: tup2_T_T) : bool
   
   axiom precondition_fndef'0:
     forall args: tup2_T_T [precondition_max () args]. (let {f0 = self; f1 = other} = args in inv_T self /\ inv_T other)
       -> precondition_max () args
   
-  predicate ge_log_DeepModelTy [@inline:trivial] (self: t_DeepModelTy) (other: t_DeepModelTy) =
+  function ge_log_DeepModelTy [@inline:trivial] (self: t_DeepModelTy) (other: t_DeepModelTy) : bool =
     le_log_DeepModelTy other self
   
-  meta "rewrite_def" predicate ge_log_DeepModelTy
+  meta "rewrite_def" function ge_log_DeepModelTy
   
-  predicate postcondition_max (self: ()) (args: tup2_T_T) (result: t_T)
+  function postcondition_max (self: ()) (args: tup2_T_T) (result: t_T) : bool
   
   axiom postcondition_fndef'0:
     forall args: tup2_T_T, result: t_T [postcondition_max () args result]. postcondition_max () args result
@@ -92,9 +92,9 @@ module M_min_on_tie
       /\ (le_log_DeepModelTy (deep_model_T self) (deep_model_T other) -> result = other)
       /\ (lt_log_DeepModelTy (deep_model_T other) (deep_model_T self) -> result = self))
   
-  predicate postcondition_once_max (self: ()) (args: tup2_T_T) (result: t_T) = postcondition_max self args result
+  function postcondition_once_max (self: ()) (args: tup2_T_T) (result: t_T) : bool = postcondition_max self args result
   
-  meta "rewrite_def" predicate postcondition_once_max
+  meta "rewrite_def" function postcondition_once_max
   
   let max_T (self: t_T) (other: t_T) (return (x: t_T)) =
   {[@stop_split] [@expl:max requires] precondition_max () { f0 = self; f1 = other }}
@@ -118,10 +118,10 @@ module M_min_on_tie
   
   type tup4_T_T_T_T = { f0'0: t_T; f1'0: t_T; f2'0: t_T; f3'0: t_T }
   
-  predicate inv_tup4_T_T_T_T [@inline:trivial] (_1: tup4_T_T_T_T) =
-    inv_T _1.f0'0 /\ inv_T _1.f1'0 /\ inv_T _1.f2'0 /\ inv_T _1.f3'0
+  function inv_tup4_T_T_T_T [@inline:trivial] (_1: tup4_T_T_T_T) : bool = inv_T _1.f0'0
+    /\ inv_T _1.f1'0 /\ inv_T _1.f2'0 /\ inv_T _1.f3'0
   
-  meta "rewrite_def" predicate inv_tup4_T_T_T_T
+  meta "rewrite_def" function inv_tup4_T_T_T_T
   
   meta "compute_max_steps" 1000000
   

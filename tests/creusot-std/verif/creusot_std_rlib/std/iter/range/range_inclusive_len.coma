@@ -10,7 +10,7 @@ function start_log_RangeInclusive_Idx (self: t_RangeInclusive_Idx) : t_Idx
 
 function end_log_RangeInclusive_Idx (self: t_RangeInclusive_Idx) : t_Idx
 
-predicate is_empty_log_RangeInclusive_Idx (self: t_RangeInclusive_Idx)
+function is_empty_log_RangeInclusive_Idx (self: t_RangeInclusive_Idx) : bool
 
 axiom is_empty_log_RangeInclusive_Idx_spec:
   forall self: t_RangeInclusive_Idx [is_empty_log_RangeInclusive_Idx self]. not is_empty_log_RangeInclusive_Idx self

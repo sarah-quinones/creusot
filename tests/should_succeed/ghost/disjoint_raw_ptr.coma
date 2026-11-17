@@ -11,44 +11,43 @@ module M_foo
   
   type tup2_ptr_i32_Ghost_Perm_ptr_i32 = { f0: Opaque.ptr; f1: t_Perm_ptr_i32 }
   
-  predicate is_null_ptr_i32 (self: Opaque.ptr) = Ptr.addr_logic_u64 self = (0: UInt64.t)
+  function is_null_ptr_i32 (self: Opaque.ptr) : bool = Ptr.addr_logic_u64 self = (0: UInt64.t)
   
   function ward_ptr_i32 (self: t_Perm_ptr_i32) : Opaque.ptr
   
-  predicate metadata_matches_i32 [@inline:trivial] (_value: Int32.t) (_metadata: ()) = true
+  function metadata_matches_i32 [@inline:trivial] (_value: Int32.t) (_metadata: ()) : bool = true
   
-  meta "rewrite_def" predicate metadata_matches_i32
+  meta "rewrite_def" function metadata_matches_i32
   
   function val_unsized_ptr_i32 (self: t_Perm_ptr_i32) : Int32.t
   
   function metadata_i32 (_1: Opaque.ptr) : ()
   
-  predicate inv_ref_i32 [@inline:trivial] (_1: Int32.t) = true
+  function inv_ref_i32 [@inline:trivial] (_1: Int32.t) : bool = true
   
-  meta "rewrite_def" predicate inv_ref_i32
+  meta "rewrite_def" function inv_ref_i32
   
-  predicate invariant_Perm_ptr_i32 (self: t_Perm_ptr_i32) =
-    not is_null_ptr_i32 (ward_ptr_i32 self)
+  function invariant_Perm_ptr_i32 (self: t_Perm_ptr_i32) : bool = not is_null_ptr_i32 (ward_ptr_i32 self)
     /\ metadata_matches_i32 (val_unsized_ptr_i32 self) (metadata_i32 (ward_ptr_i32 self))
     /\ inv_ref_i32 (val_unsized_ptr_i32 self)
   
-  predicate inv_Perm_ptr_i32 (_1: t_Perm_ptr_i32)
+  function inv_Perm_ptr_i32 (_1: t_Perm_ptr_i32) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Perm_ptr_i32 [inv_Perm_ptr_i32 _1]. inv_Perm_ptr_i32 _1
       = invariant_Perm_ptr_i32 _1
   
-  predicate invariant_Ghost_Perm_ptr_i32 [@inline:trivial] (self: t_Perm_ptr_i32) = inv_Perm_ptr_i32 self
+  function invariant_Ghost_Perm_ptr_i32 [@inline:trivial] (self: t_Perm_ptr_i32) : bool = inv_Perm_ptr_i32 self
   
-  meta "rewrite_def" predicate invariant_Ghost_Perm_ptr_i32
+  meta "rewrite_def" function invariant_Ghost_Perm_ptr_i32
   
-  predicate inv_Ghost_Perm_ptr_i32 [@inline:trivial] (_1: t_Perm_ptr_i32) = invariant_Ghost_Perm_ptr_i32 _1
+  function inv_Ghost_Perm_ptr_i32 [@inline:trivial] (_1: t_Perm_ptr_i32) : bool = invariant_Ghost_Perm_ptr_i32 _1
   
-  meta "rewrite_def" predicate inv_Ghost_Perm_ptr_i32
+  meta "rewrite_def" function inv_Ghost_Perm_ptr_i32
   
-  predicate inv_tup2_ptr_i32_Ghost_Perm_ptr_i32 [@inline:trivial] (_1: tup2_ptr_i32_Ghost_Perm_ptr_i32) =
+  function inv_tup2_ptr_i32_Ghost_Perm_ptr_i32 [@inline:trivial] (_1: tup2_ptr_i32_Ghost_Perm_ptr_i32) : bool =
     inv_Ghost_Perm_ptr_i32 _1.f1
   
-  meta "rewrite_def" predicate inv_tup2_ptr_i32_Ghost_Perm_ptr_i32
+  meta "rewrite_def" function inv_tup2_ptr_i32_Ghost_Perm_ptr_i32
   
   function val_ptr_i32 [@inline:trivial] (self: t_Perm_ptr_i32) : Int32.t = val_unsized_ptr_i32 self
   
@@ -60,25 +59,25 @@ module M_foo
       /\ ([@stop_split] [@expl:new ensures] ward_ptr_i32 result.f1 = result.f0 /\ val_ptr_i32 result.f1 = v)}
       (! return {result}) ]
   
-  predicate invariant_refmut_Ghost_Perm_ptr_i32 [@inline:trivial] (self: MutBorrow.t t_Perm_ptr_i32) =
+  function invariant_refmut_Ghost_Perm_ptr_i32 [@inline:trivial] (self: MutBorrow.t t_Perm_ptr_i32) : bool =
     inv_Ghost_Perm_ptr_i32 self.current /\ inv_Ghost_Perm_ptr_i32 self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Ghost_Perm_ptr_i32
+  meta "rewrite_def" function invariant_refmut_Ghost_Perm_ptr_i32
   
-  predicate inv_refmut_Ghost_Perm_ptr_i32 [@inline:trivial] (_1: MutBorrow.t t_Perm_ptr_i32) =
+  function inv_refmut_Ghost_Perm_ptr_i32 [@inline:trivial] (_1: MutBorrow.t t_Perm_ptr_i32) : bool =
     invariant_refmut_Ghost_Perm_ptr_i32 _1
   
-  meta "rewrite_def" predicate inv_refmut_Ghost_Perm_ptr_i32
+  meta "rewrite_def" function inv_refmut_Ghost_Perm_ptr_i32
   
-  predicate invariant_refmut_Perm_ptr_i32 [@inline:trivial] (self: MutBorrow.t t_Perm_ptr_i32) =
+  function invariant_refmut_Perm_ptr_i32 [@inline:trivial] (self: MutBorrow.t t_Perm_ptr_i32) : bool =
     inv_Perm_ptr_i32 self.current /\ inv_Perm_ptr_i32 self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Perm_ptr_i32
+  meta "rewrite_def" function invariant_refmut_Perm_ptr_i32
   
-  predicate inv_refmut_Perm_ptr_i32 [@inline:trivial] (_1: MutBorrow.t t_Perm_ptr_i32) =
+  function inv_refmut_Perm_ptr_i32 [@inline:trivial] (_1: MutBorrow.t t_Perm_ptr_i32) : bool =
     invariant_refmut_Perm_ptr_i32 _1
   
-  meta "rewrite_def" predicate inv_refmut_Perm_ptr_i32
+  meta "rewrite_def" function inv_refmut_Perm_ptr_i32
   
   let deref_mut_Ghost_Perm_ptr_i32 (self: MutBorrow.t t_Perm_ptr_i32) (return (x: MutBorrow.t t_Perm_ptr_i32)) =
   {[@stop_split] [@expl:deref_mut 'self' type invariant] inv_refmut_Ghost_Perm_ptr_i32 self}
@@ -88,21 +87,23 @@ module M_foo
       /\ ([@stop_split] [@expl:deref_mut ensures] result = self)}
       (! return {result}) ]
   
-  predicate invariant_ref_Ghost_Perm_ptr_i32 [@inline:trivial] (self: t_Perm_ptr_i32) = inv_Ghost_Perm_ptr_i32 self
+  function invariant_ref_Ghost_Perm_ptr_i32 [@inline:trivial] (self: t_Perm_ptr_i32) : bool =
+    inv_Ghost_Perm_ptr_i32 self
   
-  meta "rewrite_def" predicate invariant_ref_Ghost_Perm_ptr_i32
+  meta "rewrite_def" function invariant_ref_Ghost_Perm_ptr_i32
   
-  predicate inv_ref_Ghost_Perm_ptr_i32 [@inline:trivial] (_1: t_Perm_ptr_i32) = invariant_ref_Ghost_Perm_ptr_i32 _1
+  function inv_ref_Ghost_Perm_ptr_i32 [@inline:trivial] (_1: t_Perm_ptr_i32) : bool =
+    invariant_ref_Ghost_Perm_ptr_i32 _1
   
-  meta "rewrite_def" predicate inv_ref_Ghost_Perm_ptr_i32
+  meta "rewrite_def" function inv_ref_Ghost_Perm_ptr_i32
   
-  predicate invariant_ref_Perm_ptr_i32 [@inline:trivial] (self: t_Perm_ptr_i32) = inv_Perm_ptr_i32 self
+  function invariant_ref_Perm_ptr_i32 [@inline:trivial] (self: t_Perm_ptr_i32) : bool = inv_Perm_ptr_i32 self
   
-  meta "rewrite_def" predicate invariant_ref_Perm_ptr_i32
+  meta "rewrite_def" function invariant_ref_Perm_ptr_i32
   
-  predicate inv_ref_Perm_ptr_i32 [@inline:trivial] (_1: t_Perm_ptr_i32) = invariant_ref_Perm_ptr_i32 _1
+  function inv_ref_Perm_ptr_i32 [@inline:trivial] (_1: t_Perm_ptr_i32) : bool = invariant_ref_Perm_ptr_i32 _1
   
-  meta "rewrite_def" predicate inv_ref_Perm_ptr_i32
+  meta "rewrite_def" function inv_ref_Perm_ptr_i32
   
   let deref_Ghost_Perm_ptr_i32 (self: t_Perm_ptr_i32) (return (x: t_Perm_ptr_i32)) =
   {[@stop_split] [@expl:deref 'self' type invariant] inv_ref_Ghost_Perm_ptr_i32 self}
@@ -124,11 +125,11 @@ module M_foo
   
   axiom size_of_val_i32_spec: forall val': Int32.t [size_of_val_i32 val']. 0 <= size_of_val_i32 val'
   
-  predicate is_disjoint_ptr_i32 [@inline:trivial] (self: Opaque.ptr) (self_val: Int32.t) (other: Opaque.ptr) (other_val: Int32.t) =
-    size_of_val_i32 self_val <> 0 /\ size_of_val_i32 other_val <> 0
+  function is_disjoint_ptr_i32 [@inline:trivial] (self: Opaque.ptr) (self_val: Int32.t) (other: Opaque.ptr) (other_val: Int32.t) : bool
+   = size_of_val_i32 self_val <> 0 /\ size_of_val_i32 other_val <> 0
     -> Ptr.addr_logic_u64 self <> Ptr.addr_logic_u64 other
   
-  meta "rewrite_def" predicate is_disjoint_ptr_i32
+  meta "rewrite_def" function is_disjoint_ptr_i32
   
   let disjoint_lemma_ptr_i32 (self: MutBorrow.t t_Perm_ptr_i32) (other: t_Perm_ptr_i32) (return (x: ())) =
   {[@stop_split] [@expl:disjoint_lemma_ptr_i32 requires] ([@stop_split] [@expl:disjoint_lemma 'self' type invariant] inv_refmut_Perm_ptr_i32 self)
@@ -139,13 +140,14 @@ module M_foo
       /\ ([@stop_split] [@expl:disjoint_lemma ensures #1] self.current = self.final)}
       (! return {result}) ]
   
-  predicate resolve_refmut_Ghost_Perm_ptr_i32 [@inline:trivial] (_1: MutBorrow.t t_Perm_ptr_i32) = _1.final = _1.current
+  function resolve_refmut_Ghost_Perm_ptr_i32 [@inline:trivial] (_1: MutBorrow.t t_Perm_ptr_i32) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Ghost_Perm_ptr_i32
+  meta "rewrite_def" function resolve_refmut_Ghost_Perm_ptr_i32
   
-  predicate resolve_refmut_Perm_ptr_i32 [@inline:trivial] (_1: MutBorrow.t t_Perm_ptr_i32) = _1.final = _1.current
+  function resolve_refmut_Perm_ptr_i32 [@inline:trivial] (_1: MutBorrow.t t_Perm_ptr_i32) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Perm_ptr_i32
+  meta "rewrite_def" function resolve_refmut_Perm_ptr_i32
   
   let new_unit (x: ()) (return (x'0: ())) = any
     [ return (result: ()) -> {[@stop_split] [@expl:new ensures] result = x} (! return {result}) ]

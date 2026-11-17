@@ -4,24 +4,24 @@ use int.Int
 
 type t_PositiveInner = { f0: int }
 
-predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
 
-meta "rewrite_def" predicate gt_log_Int
+meta "rewrite_def" function gt_log_Int
 
-predicate invariant_PositiveInner (self: t_PositiveInner) = gt_log_Int self.f0 0
+function invariant_PositiveInner (self: t_PositiveInner) : bool = gt_log_Int self.f0 0
 
-predicate inv_PositiveInner (_1: t_PositiveInner)
+function inv_PositiveInner (_1: t_PositiveInner) : bool
 
 axiom inv_axiom [@rewrite]: forall _1: t_PositiveInner [inv_PositiveInner _1]. inv_PositiveInner _1
     = invariant_PositiveInner _1
 
-predicate invariant_ref_PositiveInner [@inline:trivial] (self: t_PositiveInner) = inv_PositiveInner self
+function invariant_ref_PositiveInner [@inline:trivial] (self: t_PositiveInner) : bool = inv_PositiveInner self
 
-meta "rewrite_def" predicate invariant_ref_PositiveInner
+meta "rewrite_def" function invariant_ref_PositiveInner
 
-predicate inv_ref_PositiveInner [@inline:trivial] (_1: t_PositiveInner) = invariant_ref_PositiveInner _1
+function inv_ref_PositiveInner [@inline:trivial] (_1: t_PositiveInner) : bool = invariant_ref_PositiveInner _1
 
-meta "rewrite_def" predicate inv_ref_PositiveInner
+meta "rewrite_def" function inv_ref_PositiveInner
 
 meta "compute_max_steps" 1000000
 

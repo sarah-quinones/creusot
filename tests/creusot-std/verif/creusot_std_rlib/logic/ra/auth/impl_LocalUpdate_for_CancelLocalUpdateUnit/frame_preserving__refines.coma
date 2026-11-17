@@ -8,7 +8,7 @@ type t_Option_R = None | Some t_R
 
 function op_R (self: t_R) (other: t_R) : t_Option_R
 
-predicate incl_R (self: t_R) (other: t_R)
+function incl_R (self: t_R) (other: t_R) : bool
 
 axiom incl_R_spec: forall self: t_R, other: t_R [incl_R self other]. incl_R self other
     = (exists factor: t_R. op_R self factor = Some other)
@@ -35,12 +35,12 @@ function incl_op_R (self: t_R) (other: t_R) (comb: t_R) : ()
 
 axiom incl_op_R_spec: forall self: t_R, other: t_R, comb: t_R. op_R self other = Some comb -> incl_R self comb
 
-predicate cancelable_R (self: t_R)
+function cancelable_R (self: t_R) : bool
 
 axiom cancelable_R_spec: forall self: t_R [cancelable_R self]. cancelable_R self
     = (forall x: t_R, y: t_R. op_R self x <> None -> op_R self x = op_R self y -> x = y)
 
-predicate premise_CancelLocalUpdateUnit (self: ()) (_2: t_R) (from_frag: t_R) = cancelable_R from_frag
+function premise_CancelLocalUpdateUnit (self: ()) (_2: t_R) (from_frag: t_R) : bool = cancelable_R from_frag
 
 type t_Option_Option_R = None'0 | Some'0 t_Option_R
 
@@ -86,9 +86,9 @@ function factor_R (self: t_R) (factor: t_R) : t_R
 axiom factor_R_spec: forall self: t_R, factor: t_R [factor_R self factor]. incl_R factor self
     -> op_R factor (factor_R self factor) = Some self
 
-predicate index_Mapping_R_bool [@inline:trivial] (self: Map.map t_R bool) (a: t_R) = Map.get self a
+function index_Mapping_R_bool [@inline:trivial] (self: Map.map t_R bool) (a: t_R) : bool = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_R_bool
+meta "rewrite_def" function index_Mapping_R_bool
 
 function such_that_R (p: Map.map t_R bool) : t_R
 

@@ -6,13 +6,13 @@ type t_Range_T = { start: t_T; end': t_T }
 
 type t_Range_T'0 = { start'0: t_T; end''0: t_T }
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate inv_Range_T (_1: t_Range_T)
+function inv_Range_T (_1: t_Range_T) : bool
 
 axiom inv_axiom [@rewrite]: forall _1: t_Range_T [inv_Range_T _1]. inv_Range_T _1 = (inv_T _1.start /\ inv_T _1.end')
 
-predicate inv_Range_T'0 (_1: t_Range_T'0)
+function inv_Range_T'0 (_1: t_Range_T'0) : bool
 
 axiom inv_axiom'0 [@rewrite]: forall _1: t_Range_T'0 [inv_Range_T'0 _1]. inv_Range_T'0 _1
     = (inv_T _1.start'0 /\ inv_T _1.end''0)

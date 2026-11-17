@@ -4,9 +4,9 @@ type t_T
 
 type tup2_T_T = { f0: t_T; f1: t_T }
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate precondition_max (self: ()) (args: tup2_T_T)
+function precondition_max (self: ()) (args: tup2_T_T) : bool
 
 axiom precondition_fndef:
   forall args: tup2_T_T [precondition_max () args]. (let {f0 = self; f1 = other} = args in inv_T self /\ inv_T other)
@@ -14,9 +14,9 @@ axiom precondition_fndef:
 
 type t_DeepModelTy
 
-predicate le_log_DeepModelTy (self: t_DeepModelTy) (other: t_DeepModelTy)
+function le_log_DeepModelTy (self: t_DeepModelTy) (other: t_DeepModelTy) : bool
 
-predicate lt_log_DeepModelTy (self: t_DeepModelTy) (other: t_DeepModelTy)
+function lt_log_DeepModelTy (self: t_DeepModelTy) (other: t_DeepModelTy) : bool
 
 function le_lt_log_DeepModelTy (self: t_DeepModelTy) (other: t_DeepModelTy) : ()
 
@@ -32,14 +32,14 @@ function irreflexive_DeepModelTy (self: t_DeepModelTy) : ()
 
 axiom irreflexive_DeepModelTy_spec: forall self: t_DeepModelTy. not lt_log_DeepModelTy self self
 
-predicate ge_log_DeepModelTy [@inline:trivial] (self: t_DeepModelTy) (other: t_DeepModelTy) =
+function ge_log_DeepModelTy [@inline:trivial] (self: t_DeepModelTy) (other: t_DeepModelTy) : bool =
   le_log_DeepModelTy other self
 
-meta "rewrite_def" predicate ge_log_DeepModelTy
+meta "rewrite_def" function ge_log_DeepModelTy
 
 function deep_model_T (self: t_T) : t_DeepModelTy
 
-predicate postcondition_max (self: ()) (args: tup2_T_T) (result: t_T)
+function postcondition_max (self: ()) (args: tup2_T_T) (result: t_T) : bool
 
 axiom postcondition_fndef:
   forall args: tup2_T_T, result: t_T [postcondition_max () args result]. postcondition_max () args result
@@ -50,9 +50,9 @@ axiom postcondition_fndef:
     /\ (le_log_DeepModelTy (deep_model_T self) (deep_model_T other) -> result = other)
     /\ (lt_log_DeepModelTy (deep_model_T other) (deep_model_T self) -> result = self))
 
-predicate postcondition_once_max (self: ()) (args: tup2_T_T) (result: t_T) = postcondition_max self args result
+function postcondition_once_max (self: ()) (args: tup2_T_T) (result: t_T) : bool = postcondition_max self args result
 
-meta "rewrite_def" predicate postcondition_once_max
+meta "rewrite_def" function postcondition_once_max
 
 let max_T (self: t_T) (other: t_T) (return (x: t_T)) =
 {[@stop_split] [@expl:max requires] precondition_max () { f0 = self; f1 = other }}

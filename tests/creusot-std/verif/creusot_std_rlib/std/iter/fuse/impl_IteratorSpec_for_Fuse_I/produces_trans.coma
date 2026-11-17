@@ -12,7 +12,7 @@ type t_Option_I = None | Some t_I
 
 function view_Fuse_I (self: t_Fuse_I) : t_Option_I
 
-predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
 
 function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
 
@@ -23,8 +23,7 @@ function produces_refl_I (self: t_I) : ()
 
 axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
 
-predicate produces_Fuse_I (self: t_Fuse_I) (prod: Seq.seq t_Item) (other: t_Fuse_I) =
-  match view_Fuse_I self with
+function produces_Fuse_I (self: t_Fuse_I) (prod: Seq.seq t_Item) (other: t_Fuse_I) : bool = match view_Fuse_I self with
     | None -> prod = (Seq.empty: Seq.seq t_Item) /\ view_Fuse_I other = view_Fuse_I self
     | Some i -> match view_Fuse_I other with
       | Some i2 -> produces_I i prod i2

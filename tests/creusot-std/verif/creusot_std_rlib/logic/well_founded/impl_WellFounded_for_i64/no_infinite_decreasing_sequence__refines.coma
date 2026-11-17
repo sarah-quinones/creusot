@@ -4,17 +4,17 @@ use creusot.int.Int64
 use map.Map
 use int.Int
 
-predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
 
-meta "rewrite_def" predicate ge_log_Int
+meta "rewrite_def" function ge_log_Int
 
-predicate gt_log_i64 [@inline:trivial] (self: Int64.t) (other: Int64.t) = Int64.lt other self
+function gt_log_i64 [@inline:trivial] (self: Int64.t) (other: Int64.t) : bool = Int64.lt other self
 
-meta "rewrite_def" predicate gt_log_i64
+meta "rewrite_def" function gt_log_i64
 
-predicate well_founded_relation_i64 [@inline:trivial] (self: Int64.t) (other: Int64.t) = gt_log_i64 self other
+function well_founded_relation_i64 [@inline:trivial] (self: Int64.t) (other: Int64.t) : bool = gt_log_i64 self other
 
-meta "rewrite_def" predicate well_founded_relation_i64
+meta "rewrite_def" function well_founded_relation_i64
 
 function index_Mapping_Int_i64 [@inline:trivial] (self: Map.map int Int64.t) (a: int) : Int64.t = Map.get self a
 

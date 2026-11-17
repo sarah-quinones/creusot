@@ -7,17 +7,17 @@ module M_common__trait_ExactSizeIterator__is_empty
   
   type t_Self
   
-  predicate inv_Self (_1: t_Self)
+  function inv_Self (_1: t_Self) : bool
   
-  predicate invariant_ref_Self [@inline:trivial] (self: t_Self) = inv_Self self
+  function invariant_ref_Self [@inline:trivial] (self: t_Self) : bool = inv_Self self
   
-  meta "rewrite_def" predicate invariant_ref_Self
+  meta "rewrite_def" function invariant_ref_Self
   
-  predicate inv_ref_Self [@inline:trivial] (_1: t_Self) = invariant_ref_Self _1
+  function inv_ref_Self [@inline:trivial] (_1: t_Self) : bool = invariant_ref_Self _1
   
-  meta "rewrite_def" predicate inv_ref_Self
+  meta "rewrite_def" function inv_ref_Self
   
-  predicate precondition_len (self: ()) (args: t_Self)
+  function precondition_len (self: ()) (args: t_Self) : bool
   
   axiom precondition_fndef: forall args: t_Self [precondition_len () args]. (let self = args in inv_ref_Self self)
       -> precondition_len () args
@@ -28,7 +28,7 @@ module M_common__trait_ExactSizeIterator__is_empty
   
   type t_Item
   
-  predicate produces_Self (self: t_Self) (visited: Seq.seq t_Item) (o: t_Self)
+  function produces_Self (self: t_Self) (visited: Seq.seq t_Item) (o: t_Self) : bool
   
   function produces_trans_Self (a: t_Self) (ab: Seq.seq t_Item) (b: t_Self) (bc: Seq.seq t_Item) (c: t_Self) : ()
   
@@ -40,9 +40,9 @@ module M_common__trait_ExactSizeIterator__is_empty
   
   axiom produces_refl_Self_spec: forall self: t_Self. produces_Self self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_Self (self: MutBorrow.t t_Self)
+  function completed_Self (self: MutBorrow.t t_Self) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_Self, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -53,16 +53,16 @@ module M_common__trait_ExactSizeIterator__is_empty
         | None -> true
         end)
   
-  predicate precondition_size_hint (self: ()) (args: t_Self)
+  function precondition_size_hint (self: ()) (args: t_Self) : bool
   
   axiom precondition_fndef'0:
     forall args: t_Self [precondition_size_hint () args]. (let self = args in inv_ref_Self self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_Self (self: t_Self) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -71,15 +71,16 @@ module M_common__trait_ExactSizeIterator__is_empty
     {[@stop_split] [@expl:size_hint ensures] postcondition_once_size_hint () self result}
       (! return {result}) ]
   
-  predicate postcondition_len (self: ()) (args: t_Self) (result: UInt64.t)
+  function postcondition_len (self: ()) (args: t_Self) (result: UInt64.t) : bool
   
   axiom postcondition_fndef'0:
     forall args: t_Self, result: UInt64.t [postcondition_len () args result]. postcondition_len () args result
       -> (let self = args in postcondition_size_hint () self { f0 = result; f1 = Some result })
   
-  predicate postcondition_once_len (self: ()) (args: t_Self) (result: UInt64.t) = postcondition_len self args result
+  function postcondition_once_len (self: ()) (args: t_Self) (result: UInt64.t) : bool =
+    postcondition_len self args result
   
-  meta "rewrite_def" predicate postcondition_once_len
+  meta "rewrite_def" function postcondition_once_len
   
   let len_Self (self: t_Self) (return (x: UInt64.t)) = {[@stop_split] [@expl:len requires] precondition_len () self}
     any
@@ -117,7 +118,7 @@ module M_common__trait_ExactSizeIterator__len
   
   type t_Item
   
-  predicate produces_Self (self: t_Self) (visited: Seq.seq t_Item) (o: t_Self)
+  function produces_Self (self: t_Self) (visited: Seq.seq t_Item) (o: t_Self) : bool
   
   function produces_trans_Self (a: t_Self) (ab: Seq.seq t_Item) (b: t_Self) (bc: Seq.seq t_Item) (c: t_Self) : ()
   
@@ -129,9 +130,9 @@ module M_common__trait_ExactSizeIterator__len
   
   axiom produces_refl_Self_spec: forall self: t_Self. produces_Self self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_Self (self: MutBorrow.t t_Self)
+  function completed_Self (self: MutBorrow.t t_Self) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_Self, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -142,25 +143,25 @@ module M_common__trait_ExactSizeIterator__len
         | None -> true
         end)
   
-  predicate inv_Self (_1: t_Self)
+  function inv_Self (_1: t_Self) : bool
   
-  predicate invariant_ref_Self [@inline:trivial] (self: t_Self) = inv_Self self
+  function invariant_ref_Self [@inline:trivial] (self: t_Self) : bool = inv_Self self
   
-  meta "rewrite_def" predicate invariant_ref_Self
+  meta "rewrite_def" function invariant_ref_Self
   
-  predicate inv_ref_Self [@inline:trivial] (_1: t_Self) = invariant_ref_Self _1
+  function inv_ref_Self [@inline:trivial] (_1: t_Self) : bool = invariant_ref_Self _1
   
-  meta "rewrite_def" predicate inv_ref_Self
+  meta "rewrite_def" function inv_ref_Self
   
-  predicate precondition_size_hint (self: ()) (args: t_Self)
+  function precondition_size_hint (self: ()) (args: t_Self) : bool
   
   axiom precondition_fndef: forall args: t_Self [precondition_size_hint () args]. (let self = args in inv_ref_Self self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_Self (self: t_Self) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -258,7 +259,7 @@ module M_impl_ExactSizeIterator_for_Fuse_I__size_hint_exact (* <Fuse<I> as commo
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -269,9 +270,9 @@ module M_impl_ExactSizeIterator_for_Fuse_I__size_hint_exact (* <Fuse<I> as commo
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_I, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -282,16 +283,15 @@ module M_impl_ExactSizeIterator_for_Fuse_I__size_hint_exact (* <Fuse<I> as commo
         | None'0 -> true
         end)
   
-  predicate postcondition_size_hint'0 (self: ()) (args: t_Fuse_I) (result: tup2_usize_Option_usize) =
+  function postcondition_size_hint'0 (self: ()) (args: t_Fuse_I) (result: tup2_usize_Option_usize) : bool =
     let self'0 = args in match self'0.iter with
       | Some s -> postcondition_size_hint () s result
       | None -> result = { f0 = (0: UInt64.t); f1 = Some'0 (0: UInt64.t) }
       end
   
-  meta "rewrite_def" predicate postcondition_size_hint'0
+  meta "rewrite_def" function postcondition_size_hint'0
   
-  predicate produces_Fuse_I (self: t_Fuse_I) (prod: Seq.seq t_Item) (other: t_Fuse_I) =
-    match self.iter with
+  function produces_Fuse_I (self: t_Fuse_I) (prod: Seq.seq t_Item) (other: t_Fuse_I) : bool = match self.iter with
       | None -> prod = (Seq.empty: Seq.seq t_Item) /\ other.iter = self.iter
       | Some i -> match other.iter with
         | Some i2 -> produces_I i prod i2
@@ -310,9 +310,9 @@ module M_impl_ExactSizeIterator_for_Fuse_I__size_hint_exact (* <Fuse<I> as commo
   
   axiom produces_refl_Fuse_I_spec: forall self: t_Fuse_I. produces_Fuse_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate inv_Option_I (_1: t_Option_I)
+  function inv_Option_I (_1: t_Option_I) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Option_I [inv_Option_I _1]. inv_Option_I _1
       = match _1 with
@@ -320,35 +320,35 @@ module M_impl_ExactSizeIterator_for_Fuse_I__size_hint_exact (* <Fuse<I> as commo
         | Some f0'0 -> inv_I f0'0
         end
   
-  predicate inv_Fuse_I (_1: t_Fuse_I)
+  function inv_Fuse_I (_1: t_Fuse_I) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Fuse_I [inv_Fuse_I _1]. inv_Fuse_I _1 = inv_Option_I _1.iter
   
-  predicate invariant_ref_Fuse_I [@inline:trivial] (self: t_Fuse_I) = inv_Fuse_I self
+  function invariant_ref_Fuse_I [@inline:trivial] (self: t_Fuse_I) : bool = inv_Fuse_I self
   
-  meta "rewrite_def" predicate invariant_ref_Fuse_I
+  meta "rewrite_def" function invariant_ref_Fuse_I
   
-  predicate inv_ref_Fuse_I [@inline:trivial] (_1: t_Fuse_I) = invariant_ref_Fuse_I _1
+  function inv_ref_Fuse_I [@inline:trivial] (_1: t_Fuse_I) : bool = invariant_ref_Fuse_I _1
   
-  meta "rewrite_def" predicate inv_ref_Fuse_I
+  meta "rewrite_def" function inv_ref_Fuse_I
   
-  predicate invariant_ref_I [@inline:trivial] (self: t_I) = inv_I self
+  function invariant_ref_I [@inline:trivial] (self: t_I) : bool = inv_I self
   
-  meta "rewrite_def" predicate invariant_ref_I
+  meta "rewrite_def" function invariant_ref_I
   
-  predicate inv_ref_I [@inline:trivial] (_1: t_I) = invariant_ref_I _1
+  function inv_ref_I [@inline:trivial] (_1: t_I) : bool = invariant_ref_I _1
   
-  meta "rewrite_def" predicate inv_ref_I
+  meta "rewrite_def" function inv_ref_I
   
-  predicate precondition_size_hint (self: ()) (args: t_I)
+  function precondition_size_hint (self: ()) (args: t_I) : bool
   
   axiom precondition_fndef: forall args: t_I [precondition_size_hint () args]. (let self = args in inv_ref_I self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_I (self: t_I) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -402,7 +402,7 @@ module M_impl_ExactSizeIterator_for_Fuse_I__size_hint_exact__refines (* <Fuse<I>
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -413,9 +413,9 @@ module M_impl_ExactSizeIterator_for_Fuse_I__size_hint_exact__refines (* <Fuse<I>
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_I, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -426,16 +426,15 @@ module M_impl_ExactSizeIterator_for_Fuse_I__size_hint_exact__refines (* <Fuse<I>
         | None'0 -> true
         end)
   
-  predicate postcondition_size_hint'0 (self: ()) (args: t_Fuse_I) (result: tup2_usize_Option_usize) =
+  function postcondition_size_hint'0 (self: ()) (args: t_Fuse_I) (result: tup2_usize_Option_usize) : bool =
     let self'0 = args in match self'0.iter with
       | Some s -> postcondition_size_hint () s result
       | None -> result = { f0 = (0: UInt64.t); f1 = Some'0 (0: UInt64.t) }
       end
   
-  meta "rewrite_def" predicate postcondition_size_hint'0
+  meta "rewrite_def" function postcondition_size_hint'0
   
-  predicate produces_Fuse_I (self: t_Fuse_I) (prod: Seq.seq t_Item) (other: t_Fuse_I) =
-    match self.iter with
+  function produces_Fuse_I (self: t_Fuse_I) (prod: Seq.seq t_Item) (other: t_Fuse_I) : bool = match self.iter with
       | None -> prod = (Seq.empty: Seq.seq t_Item) /\ other.iter = self.iter
       | Some i -> match other.iter with
         | Some i2 -> produces_I i prod i2
@@ -454,9 +453,9 @@ module M_impl_ExactSizeIterator_for_Fuse_I__size_hint_exact__refines (* <Fuse<I>
   
   axiom produces_refl_Fuse_I_spec: forall self: t_Fuse_I. produces_Fuse_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate inv_Option_I (_1: t_Option_I)
+  function inv_Option_I (_1: t_Option_I) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Option_I [inv_Option_I _1]. inv_Option_I _1
       = match _1 with
@@ -464,35 +463,35 @@ module M_impl_ExactSizeIterator_for_Fuse_I__size_hint_exact__refines (* <Fuse<I>
         | Some f0'0 -> inv_I f0'0
         end
   
-  predicate inv_Fuse_I (_1: t_Fuse_I)
+  function inv_Fuse_I (_1: t_Fuse_I) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Fuse_I [inv_Fuse_I _1]. inv_Fuse_I _1 = inv_Option_I _1.iter
   
-  predicate invariant_ref_Fuse_I [@inline:trivial] (self: t_Fuse_I) = inv_Fuse_I self
+  function invariant_ref_Fuse_I [@inline:trivial] (self: t_Fuse_I) : bool = inv_Fuse_I self
   
-  meta "rewrite_def" predicate invariant_ref_Fuse_I
+  meta "rewrite_def" function invariant_ref_Fuse_I
   
-  predicate inv_ref_Fuse_I [@inline:trivial] (_1: t_Fuse_I) = invariant_ref_Fuse_I _1
+  function inv_ref_Fuse_I [@inline:trivial] (_1: t_Fuse_I) : bool = invariant_ref_Fuse_I _1
   
-  meta "rewrite_def" predicate inv_ref_Fuse_I
+  meta "rewrite_def" function inv_ref_Fuse_I
   
-  predicate invariant_ref_I [@inline:trivial] (self: t_I) = inv_I self
+  function invariant_ref_I [@inline:trivial] (self: t_I) : bool = inv_I self
   
-  meta "rewrite_def" predicate invariant_ref_I
+  meta "rewrite_def" function invariant_ref_I
   
-  predicate inv_ref_I [@inline:trivial] (_1: t_I) = invariant_ref_I _1
+  function inv_ref_I [@inline:trivial] (_1: t_I) : bool = invariant_ref_I _1
   
-  meta "rewrite_def" predicate inv_ref_I
+  meta "rewrite_def" function inv_ref_I
   
-  predicate precondition_size_hint (self: ()) (args: t_I)
+  function precondition_size_hint (self: ()) (args: t_I) : bool
   
   axiom precondition_fndef: forall args: t_I [precondition_size_hint () args]. (let self = args in inv_ref_I self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_I (self: t_I) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -529,7 +528,7 @@ module M_impl_FusedIterator_for_Fuse_I__is_fused (* <Fuse<I> as FusedIterator> *
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -540,8 +539,7 @@ module M_impl_FusedIterator_for_Fuse_I__is_fused (* <Fuse<I> as FusedIterator> *
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate produces_Fuse_I (self: t_Fuse_I) (prod: Seq.seq t_Item) (other: t_Fuse_I) =
-    match self.iter with
+  function produces_Fuse_I (self: t_Fuse_I) (prod: Seq.seq t_Item) (other: t_Fuse_I) : bool = match self.iter with
       | None -> prod = (Seq.empty: Seq.seq t_Item) /\ other.iter = self.iter
       | Some i -> match other.iter with
         | Some i2 -> produces_I i prod i2
@@ -560,10 +558,10 @@ module M_impl_FusedIterator_for_Fuse_I__is_fused (* <Fuse<I> as FusedIterator> *
   
   axiom produces_refl_Fuse_I_spec: forall self: t_Fuse_I. produces_Fuse_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate completed_Fuse_I (self: MutBorrow.t t_Fuse_I) =
-    (self.current.iter = None \/ (exists it: MutBorrow.t t_I. completed_I it /\ self.current.iter = Some (it.current)))
+  function completed_Fuse_I (self: MutBorrow.t t_Fuse_I) : bool = (self.current.iter = None
+      \/ (exists it: MutBorrow.t t_I. completed_I it /\ self.current.iter = Some (it.current)))
     /\ self.final.iter = None
   
   meta "compute_max_steps" 1000000
@@ -594,7 +592,7 @@ module M_impl_FusedIterator_for_Fuse_I__is_fused__refines (* <Fuse<I> as FusedIt
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -605,8 +603,7 @@ module M_impl_FusedIterator_for_Fuse_I__is_fused__refines (* <Fuse<I> as FusedIt
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate produces_Fuse_I (self: t_Fuse_I) (prod: Seq.seq t_Item) (other: t_Fuse_I) =
-    match self.iter with
+  function produces_Fuse_I (self: t_Fuse_I) (prod: Seq.seq t_Item) (other: t_Fuse_I) : bool = match self.iter with
       | None -> prod = (Seq.empty: Seq.seq t_Item) /\ other.iter = self.iter
       | Some i -> match other.iter with
         | Some i2 -> produces_I i prod i2
@@ -625,10 +622,10 @@ module M_impl_FusedIterator_for_Fuse_I__is_fused__refines (* <Fuse<I> as FusedIt
   
   axiom produces_refl_Fuse_I_spec: forall self: t_Fuse_I. produces_Fuse_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate completed_Fuse_I (self: MutBorrow.t t_Fuse_I) =
-    (self.current.iter = None \/ (exists it: MutBorrow.t t_I. completed_I it /\ self.current.iter = Some (it.current)))
+  function completed_Fuse_I (self: MutBorrow.t t_Fuse_I) : bool = (self.current.iter = None
+      \/ (exists it: MutBorrow.t t_I. completed_I it /\ self.current.iter = Some (it.current)))
     /\ self.final.iter = None
   
   meta "compute_max_steps" 1000000
@@ -652,9 +649,9 @@ module M_impl_Iterator_for_Fuse_I__next (* <Fuse<I> as common::Iterator> *)
   
   type t_Fuse_I = { iter: t_Option_I }
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate inv_Option_I (_1: t_Option_I)
+  function inv_Option_I (_1: t_Option_I) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Option_I [inv_Option_I _1]. inv_Option_I _1
       = match _1 with
@@ -672,7 +669,7 @@ module M_impl_Iterator_for_Fuse_I__next (* <Fuse<I> as common::Iterator> *)
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -685,23 +682,23 @@ module M_impl_Iterator_for_Fuse_I__next (* <Fuse<I> as common::Iterator> *)
   
   type t_Option_Item = None'0 | Some'0 t_Item
   
-  predicate invariant_refmut_I [@inline:trivial] (self: MutBorrow.t t_I) = inv_I self.current /\ inv_I self.final
+  function invariant_refmut_I [@inline:trivial] (self: MutBorrow.t t_I) : bool = inv_I self.current /\ inv_I self.final
   
-  meta "rewrite_def" predicate invariant_refmut_I
+  meta "rewrite_def" function invariant_refmut_I
   
-  predicate inv_refmut_I [@inline:trivial] (_1: MutBorrow.t t_I) = invariant_refmut_I _1
+  function inv_refmut_I [@inline:trivial] (_1: MutBorrow.t t_I) : bool = invariant_refmut_I _1
   
-  meta "rewrite_def" predicate inv_refmut_I
+  meta "rewrite_def" function inv_refmut_I
   
-  predicate precondition_next (self: ()) (args: MutBorrow.t t_I)
+  function precondition_next (self: ()) (args: MutBorrow.t t_I) : bool
   
   axiom precondition_fndef:
     forall args: MutBorrow.t t_I [precondition_next () args]. (let self = args in inv_refmut_I self)
       -> precondition_next () args
   
-  predicate inv_Item (_1: t_Item)
+  function inv_Item (_1: t_Item) : bool
   
-  predicate inv_Option_Item (_1: t_Option_Item)
+  function inv_Option_Item (_1: t_Option_Item) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Option_Item [inv_Option_Item _1]. inv_Option_Item _1
       = match _1 with
@@ -709,9 +706,9 @@ module M_impl_Iterator_for_Fuse_I__next (* <Fuse<I> as common::Iterator> *)
         | Some'0 f0 -> inv_Item f0
         end
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate postcondition_next (self: ()) (args: MutBorrow.t t_I) (result: t_Option_Item)
+  function postcondition_next (self: ()) (args: MutBorrow.t t_I) (result: t_Option_Item) : bool
   
   axiom postcondition_fndef:
     forall args: MutBorrow.t t_I, result: t_Option_Item [postcondition_next () args result]. postcondition_next () args result
@@ -721,10 +718,10 @@ module M_impl_Iterator_for_Fuse_I__next (* <Fuse<I> as common::Iterator> *)
         | Some'0 v -> produces_I self.current (Seq.singleton v) self.final
         end)
   
-  predicate postcondition_once_next (self: ()) (args: MutBorrow.t t_I) (result: t_Option_Item) =
+  function postcondition_once_next (self: ()) (args: MutBorrow.t t_I) (result: t_Option_Item) : bool =
     postcondition_next self args result
   
-  meta "rewrite_def" predicate postcondition_once_next
+  meta "rewrite_def" function postcondition_once_next
   
   let next_I (self: MutBorrow.t t_I) (return (x: t_Option_Item)) =
   {[@stop_split] [@expl:next requires] precondition_next () self}
@@ -732,43 +729,43 @@ module M_impl_Iterator_for_Fuse_I__next (* <Fuse<I> as common::Iterator> *)
     [ return (result: t_Option_Item) -> {[@stop_split] [@expl:next ensures] postcondition_once_next () self result}
       (! return {result}) ]
   
-  predicate resolve_refmut_I [@inline:trivial] (_1: MutBorrow.t t_I) = _1.final = _1.current
+  function resolve_refmut_I [@inline:trivial] (_1: MutBorrow.t t_I) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_I
+  meta "rewrite_def" function resolve_refmut_I
   
-  predicate invariant_refmut_Option_I [@inline:trivial] (self: MutBorrow.t t_Option_I) =
-    inv_Option_I self.current /\ inv_Option_I self.final
+  function invariant_refmut_Option_I [@inline:trivial] (self: MutBorrow.t t_Option_I) : bool = inv_Option_I self.current
+    /\ inv_Option_I self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Option_I
+  meta "rewrite_def" function invariant_refmut_Option_I
   
-  predicate inv_refmut_Option_I [@inline:trivial] (_1: MutBorrow.t t_Option_I) = invariant_refmut_Option_I _1
+  function inv_refmut_Option_I [@inline:trivial] (_1: MutBorrow.t t_Option_I) : bool = invariant_refmut_Option_I _1
   
-  meta "rewrite_def" predicate inv_refmut_Option_I
+  meta "rewrite_def" function inv_refmut_Option_I
   
-  predicate resolve_refmut_Option_I [@inline:trivial] (_1: MutBorrow.t t_Option_I) = _1.final = _1.current
+  function resolve_refmut_Option_I [@inline:trivial] (_1: MutBorrow.t t_Option_I) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Option_I
+  meta "rewrite_def" function resolve_refmut_Option_I
   
-  predicate inv_Fuse_I (_1: t_Fuse_I)
+  function inv_Fuse_I (_1: t_Fuse_I) : bool
   
   axiom inv_axiom'1 [@rewrite]: forall _1: t_Fuse_I [inv_Fuse_I _1]. inv_Fuse_I _1 = inv_Option_I _1.iter
   
-  predicate invariant_refmut_Fuse_I [@inline:trivial] (self: MutBorrow.t t_Fuse_I) =
-    inv_Fuse_I self.current /\ inv_Fuse_I self.final
+  function invariant_refmut_Fuse_I [@inline:trivial] (self: MutBorrow.t t_Fuse_I) : bool = inv_Fuse_I self.current
+    /\ inv_Fuse_I self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Fuse_I
+  meta "rewrite_def" function invariant_refmut_Fuse_I
   
-  predicate inv_refmut_Fuse_I [@inline:trivial] (_1: MutBorrow.t t_Fuse_I) = invariant_refmut_Fuse_I _1
+  function inv_refmut_Fuse_I [@inline:trivial] (_1: MutBorrow.t t_Fuse_I) : bool = invariant_refmut_Fuse_I _1
   
-  meta "rewrite_def" predicate inv_refmut_Fuse_I
+  meta "rewrite_def" function inv_refmut_Fuse_I
   
-  predicate resolve_refmut_Fuse_I [@inline:trivial] (_1: MutBorrow.t t_Fuse_I) = _1.final = _1.current
+  function resolve_refmut_Fuse_I [@inline:trivial] (_1: MutBorrow.t t_Fuse_I) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Fuse_I
+  meta "rewrite_def" function resolve_refmut_Fuse_I
   
-  predicate resolve_Item (_1: t_Item)
+  function resolve_Item (_1: t_Item) : bool
   
-  predicate resolve_Option_Item (_1: t_Option_Item)
+  function resolve_Option_Item (_1: t_Option_Item) : bool
   
   axiom resolve_axiom [@rewrite]: forall _1: t_Option_Item [resolve_Option_Item _1]. resolve_Option_Item _1
       = match _1 with
@@ -776,9 +773,9 @@ module M_impl_Iterator_for_Fuse_I__next (* <Fuse<I> as common::Iterator> *)
         | Some'0 x0 -> resolve_Item x0
         end
   
-  predicate resolve_I (_1: t_I)
+  function resolve_I (_1: t_I) : bool
   
-  predicate resolve_Option_I (_1: t_Option_I)
+  function resolve_Option_I (_1: t_Option_I) : bool
   
   axiom resolve_axiom'0 [@rewrite]: forall _1: t_Option_I [resolve_Option_I _1]. resolve_Option_I _1
       = match _1 with
@@ -786,12 +783,11 @@ module M_impl_Iterator_for_Fuse_I__next (* <Fuse<I> as common::Iterator> *)
         | Some x0 -> resolve_I x0
         end
   
-  predicate completed_Fuse_I (self: MutBorrow.t t_Fuse_I) =
-    (self.current.iter = None \/ (exists it: MutBorrow.t t_I. completed_I it /\ self.current.iter = Some (it.current)))
+  function completed_Fuse_I (self: MutBorrow.t t_Fuse_I) : bool = (self.current.iter = None
+      \/ (exists it: MutBorrow.t t_I. completed_I it /\ self.current.iter = Some (it.current)))
     /\ self.final.iter = None
   
-  predicate produces_Fuse_I (self: t_Fuse_I) (prod: Seq.seq t_Item) (other: t_Fuse_I) =
-    match self.iter with
+  function produces_Fuse_I (self: t_Fuse_I) (prod: Seq.seq t_Item) (other: t_Fuse_I) : bool = match self.iter with
       | None -> prod = (Seq.empty: Seq.seq t_Item) /\ other.iter = self.iter
       | Some i -> match other.iter with
         | Some i2 -> produces_I i prod i2
@@ -882,9 +878,9 @@ module M_impl_Iterator_for_Fuse_I__next__refines (* <Fuse<I> as common::Iterator
   
   type t_Fuse_I = { iter: t_Option_I }
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate inv_Option_I (_1: t_Option_I)
+  function inv_Option_I (_1: t_Option_I) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Option_I [inv_Option_I _1]. inv_Option_I _1
       = match _1 with
@@ -892,22 +888,22 @@ module M_impl_Iterator_for_Fuse_I__next__refines (* <Fuse<I> as common::Iterator
         | Some f0 -> inv_I f0
         end
   
-  predicate inv_Fuse_I (_1: t_Fuse_I)
+  function inv_Fuse_I (_1: t_Fuse_I) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Fuse_I [inv_Fuse_I _1]. inv_Fuse_I _1 = inv_Option_I _1.iter
   
-  predicate invariant_refmut_Fuse_I [@inline:trivial] (self: MutBorrow.t t_Fuse_I) =
-    inv_Fuse_I self.current /\ inv_Fuse_I self.final
+  function invariant_refmut_Fuse_I [@inline:trivial] (self: MutBorrow.t t_Fuse_I) : bool = inv_Fuse_I self.current
+    /\ inv_Fuse_I self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Fuse_I
+  meta "rewrite_def" function invariant_refmut_Fuse_I
   
-  predicate inv_refmut_Fuse_I [@inline:trivial] (_1: MutBorrow.t t_Fuse_I) = invariant_refmut_Fuse_I _1
+  function inv_refmut_Fuse_I [@inline:trivial] (_1: MutBorrow.t t_Fuse_I) : bool = invariant_refmut_Fuse_I _1
   
-  meta "rewrite_def" predicate inv_refmut_Fuse_I
+  meta "rewrite_def" function inv_refmut_Fuse_I
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -920,9 +916,9 @@ module M_impl_Iterator_for_Fuse_I__next__refines (* <Fuse<I> as common::Iterator
   
   type t_Option_Item = None'0 | Some'0 t_Item
   
-  predicate inv_Item (_1: t_Item)
+  function inv_Item (_1: t_Item) : bool
   
-  predicate inv_Option_Item (_1: t_Option_Item)
+  function inv_Option_Item (_1: t_Option_Item) : bool
   
   axiom inv_axiom'1 [@rewrite]: forall _1: t_Option_Item [inv_Option_Item _1]. inv_Option_Item _1
       = match _1 with
@@ -930,14 +926,13 @@ module M_impl_Iterator_for_Fuse_I__next__refines (* <Fuse<I> as common::Iterator
         | Some'0 f0 -> inv_Item f0
         end
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate completed_Fuse_I (self: MutBorrow.t t_Fuse_I) =
-    (self.current.iter = None \/ (exists it: MutBorrow.t t_I. completed_I it /\ self.current.iter = Some (it.current)))
+  function completed_Fuse_I (self: MutBorrow.t t_Fuse_I) : bool = (self.current.iter = None
+      \/ (exists it: MutBorrow.t t_I. completed_I it /\ self.current.iter = Some (it.current)))
     /\ self.final.iter = None
   
-  predicate produces_Fuse_I (self: t_Fuse_I) (prod: Seq.seq t_Item) (other: t_Fuse_I) =
-    match self.iter with
+  function produces_Fuse_I (self: t_Fuse_I) (prod: Seq.seq t_Item) (other: t_Fuse_I) : bool = match self.iter with
       | None -> prod = (Seq.empty: Seq.seq t_Item) /\ other.iter = self.iter
       | Some i -> match other.iter with
         | Some i2 -> produces_I i prod i2
@@ -973,7 +968,7 @@ module M_impl_Iterator_for_Fuse_I__produces_refl (* <Fuse<I> as common::Iterator
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -984,8 +979,7 @@ module M_impl_Iterator_for_Fuse_I__produces_refl (* <Fuse<I> as common::Iterator
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate produces_Fuse_I (self: t_Fuse_I) (prod: Seq.seq t_Item) (other: t_Fuse_I) =
-    match self.iter with
+  function produces_Fuse_I (self: t_Fuse_I) (prod: Seq.seq t_Item) (other: t_Fuse_I) : bool = match self.iter with
       | None -> prod = (Seq.empty: Seq.seq t_Item) /\ other.iter = self.iter
       | Some i -> match other.iter with
         | Some i2 -> produces_I i prod i2
@@ -1015,7 +1009,7 @@ module M_impl_Iterator_for_Fuse_I__produces_refl__refines (* <Fuse<I> as common:
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -1026,8 +1020,7 @@ module M_impl_Iterator_for_Fuse_I__produces_refl__refines (* <Fuse<I> as common:
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate produces_Fuse_I (self: t_Fuse_I) (prod: Seq.seq t_Item) (other: t_Fuse_I) =
-    match self.iter with
+  function produces_Fuse_I (self: t_Fuse_I) (prod: Seq.seq t_Item) (other: t_Fuse_I) : bool = match self.iter with
       | None -> prod = (Seq.empty: Seq.seq t_Item) /\ other.iter = self.iter
       | Some i -> match other.iter with
         | Some i2 -> produces_I i prod i2
@@ -1053,7 +1046,7 @@ module M_impl_Iterator_for_Fuse_I__produces_trans (* <Fuse<I> as common::Iterato
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -1064,8 +1057,7 @@ module M_impl_Iterator_for_Fuse_I__produces_trans (* <Fuse<I> as common::Iterato
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate produces_Fuse_I (self: t_Fuse_I) (prod: Seq.seq t_Item) (other: t_Fuse_I) =
-    match self.iter with
+  function produces_Fuse_I (self: t_Fuse_I) (prod: Seq.seq t_Item) (other: t_Fuse_I) : bool = match self.iter with
       | None -> prod = (Seq.empty: Seq.seq t_Item) /\ other.iter = self.iter
       | Some i -> match other.iter with
         | Some i2 -> produces_I i prod i2
@@ -1103,7 +1095,7 @@ module M_impl_Iterator_for_Fuse_I__produces_trans__refines (* <Fuse<I> as common
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -1114,8 +1106,7 @@ module M_impl_Iterator_for_Fuse_I__produces_trans__refines (* <Fuse<I> as common
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate produces_Fuse_I (self: t_Fuse_I) (prod: Seq.seq t_Item) (other: t_Fuse_I) =
-    match self.iter with
+  function produces_Fuse_I (self: t_Fuse_I) (prod: Seq.seq t_Item) (other: t_Fuse_I) : bool = match self.iter with
       | None -> prod = (Seq.empty: Seq.seq t_Item) /\ other.iter = self.iter
       | Some i -> match other.iter with
         | Some i2 -> produces_I i prod i2
@@ -1157,7 +1148,7 @@ module M_impl_Iterator_for_Fuse_I__size_hint (* <Fuse<I> as common::Iterator> *)
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -1172,24 +1163,24 @@ module M_impl_Iterator_for_Fuse_I__size_hint (* <Fuse<I> as common::Iterator> *)
   
   type tup2_usize_Option_usize = { f0: UInt64.t; f1: t_Option_usize }
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate invariant_ref_I [@inline:trivial] (self: t_I) = inv_I self
+  function invariant_ref_I [@inline:trivial] (self: t_I) : bool = inv_I self
   
-  meta "rewrite_def" predicate invariant_ref_I
+  meta "rewrite_def" function invariant_ref_I
   
-  predicate inv_ref_I [@inline:trivial] (_1: t_I) = invariant_ref_I _1
+  function inv_ref_I [@inline:trivial] (_1: t_I) : bool = invariant_ref_I _1
   
-  meta "rewrite_def" predicate inv_ref_I
+  meta "rewrite_def" function inv_ref_I
   
-  predicate precondition_size_hint (self: ()) (args: t_I)
+  function precondition_size_hint (self: ()) (args: t_I) : bool
   
   axiom precondition_fndef: forall args: t_I [precondition_size_hint () args]. (let self = args in inv_ref_I self)
       -> precondition_size_hint () args
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_I, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -1200,10 +1191,10 @@ module M_impl_Iterator_for_Fuse_I__size_hint (* <Fuse<I> as common::Iterator> *)
         | None'0 -> true
         end)
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_I (self: t_I) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -1212,7 +1203,7 @@ module M_impl_Iterator_for_Fuse_I__size_hint (* <Fuse<I> as common::Iterator> *)
     {[@stop_split] [@expl:size_hint ensures] postcondition_once_size_hint () self result}
       (! return {result}) ]
   
-  predicate inv_Option_I (_1: t_Option_I)
+  function inv_Option_I (_1: t_Option_I) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Option_I [inv_Option_I _1]. inv_Option_I _1
       = match _1 with
@@ -1220,17 +1211,17 @@ module M_impl_Iterator_for_Fuse_I__size_hint (* <Fuse<I> as common::Iterator> *)
         | Some f0'0 -> inv_I f0'0
         end
   
-  predicate inv_Fuse_I (_1: t_Fuse_I)
+  function inv_Fuse_I (_1: t_Fuse_I) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Fuse_I [inv_Fuse_I _1]. inv_Fuse_I _1 = inv_Option_I _1.iter
   
-  predicate invariant_ref_Fuse_I [@inline:trivial] (self: t_Fuse_I) = inv_Fuse_I self
+  function invariant_ref_Fuse_I [@inline:trivial] (self: t_Fuse_I) : bool = inv_Fuse_I self
   
-  meta "rewrite_def" predicate invariant_ref_Fuse_I
+  meta "rewrite_def" function invariant_ref_Fuse_I
   
-  predicate inv_ref_Fuse_I [@inline:trivial] (_1: t_Fuse_I) = invariant_ref_Fuse_I _1
+  function inv_ref_Fuse_I [@inline:trivial] (_1: t_Fuse_I) : bool = invariant_ref_Fuse_I _1
   
-  meta "rewrite_def" predicate inv_ref_Fuse_I
+  meta "rewrite_def" function inv_ref_Fuse_I
   
   meta "compute_max_steps" 1000000
   
@@ -1270,9 +1261,9 @@ module M_impl_Iterator_for_Fuse_I__size_hint__refines (* <Fuse<I> as common::Ite
   
   type t_Fuse_I = { iter: t_Option_I }
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate inv_Option_I (_1: t_Option_I)
+  function inv_Option_I (_1: t_Option_I) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Option_I [inv_Option_I _1]. inv_Option_I _1
       = match _1 with
@@ -1280,17 +1271,17 @@ module M_impl_Iterator_for_Fuse_I__size_hint__refines (* <Fuse<I> as common::Ite
         | Some f0 -> inv_I f0
         end
   
-  predicate inv_Fuse_I (_1: t_Fuse_I)
+  function inv_Fuse_I (_1: t_Fuse_I) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Fuse_I [inv_Fuse_I _1]. inv_Fuse_I _1 = inv_Option_I _1.iter
   
-  predicate invariant_ref_Fuse_I [@inline:trivial] (self: t_Fuse_I) = inv_Fuse_I self
+  function invariant_ref_Fuse_I [@inline:trivial] (self: t_Fuse_I) : bool = inv_Fuse_I self
   
-  meta "rewrite_def" predicate invariant_ref_Fuse_I
+  meta "rewrite_def" function invariant_ref_Fuse_I
   
-  predicate inv_ref_Fuse_I [@inline:trivial] (_1: t_Fuse_I) = invariant_ref_Fuse_I _1
+  function inv_ref_Fuse_I [@inline:trivial] (_1: t_Fuse_I) : bool = invariant_ref_Fuse_I _1
   
-  meta "rewrite_def" predicate inv_ref_Fuse_I
+  meta "rewrite_def" function inv_ref_Fuse_I
   
   type t_Option_usize = None'0 | Some'0 UInt64.t
   
@@ -1298,7 +1289,7 @@ module M_impl_Iterator_for_Fuse_I__size_hint__refines (* <Fuse<I> as common::Ite
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -1309,9 +1300,9 @@ module M_impl_Iterator_for_Fuse_I__size_hint__refines (* <Fuse<I> as common::Ite
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_I, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -1322,23 +1313,23 @@ module M_impl_Iterator_for_Fuse_I__size_hint__refines (* <Fuse<I> as common::Ite
         | None'0 -> true
         end)
   
-  predicate invariant_ref_I [@inline:trivial] (self: t_I) = inv_I self
+  function invariant_ref_I [@inline:trivial] (self: t_I) : bool = inv_I self
   
-  meta "rewrite_def" predicate invariant_ref_I
+  meta "rewrite_def" function invariant_ref_I
   
-  predicate inv_ref_I [@inline:trivial] (_1: t_I) = invariant_ref_I _1
+  function inv_ref_I [@inline:trivial] (_1: t_I) : bool = invariant_ref_I _1
   
-  meta "rewrite_def" predicate inv_ref_I
+  meta "rewrite_def" function inv_ref_I
   
-  predicate precondition_size_hint (self: ()) (args: t_I)
+  function precondition_size_hint (self: ()) (args: t_I) : bool
   
   axiom precondition_fndef: forall args: t_I [precondition_size_hint () args]. (let self = args in inv_ref_I self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_I (self: t_I) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -1347,8 +1338,7 @@ module M_impl_Iterator_for_Fuse_I__size_hint__refines (* <Fuse<I> as common::Ite
     {[@stop_split] [@expl:size_hint ensures] postcondition_once_size_hint () self result}
       (! return {result}) ]
   
-  predicate produces_Fuse_I (self: t_Fuse_I) (prod: Seq.seq t_Item) (other: t_Fuse_I) =
-    match self.iter with
+  function produces_Fuse_I (self: t_Fuse_I) (prod: Seq.seq t_Item) (other: t_Fuse_I) : bool = match self.iter with
       | None -> prod = (Seq.empty: Seq.seq t_Item) /\ other.iter = self.iter
       | Some i -> match other.iter with
         | Some i2 -> produces_I i prod i2
@@ -1356,8 +1346,8 @@ module M_impl_Iterator_for_Fuse_I__size_hint__refines (* <Fuse<I> as common::Ite
         end
       end
   
-  predicate completed_Fuse_I (self: MutBorrow.t t_Fuse_I) =
-    (self.current.iter = None \/ (exists it: MutBorrow.t t_I. completed_I it /\ self.current.iter = Some (it.current)))
+  function completed_Fuse_I (self: MutBorrow.t t_Fuse_I) : bool = (self.current.iter = None
+      \/ (exists it: MutBorrow.t t_I. completed_I it /\ self.current.iter = Some (it.current)))
     /\ self.final.iter = None
   
   meta "compute_max_steps" 1000000

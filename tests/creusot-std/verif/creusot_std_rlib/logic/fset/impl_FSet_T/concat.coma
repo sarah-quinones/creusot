@@ -6,9 +6,9 @@ use map.Map
 
 type t_T
 
-predicate contains_Seq_T [@inline:trivial] (self: Fset.fset (Seq.seq t_T)) (e: Seq.seq t_T) = Fset.mem e self
+function contains_Seq_T [@inline:trivial] (self: Fset.fset (Seq.seq t_T)) (e: Seq.seq t_T) : bool = Fset.mem e self
 
-meta "rewrite_def" predicate contains_Seq_T
+meta "rewrite_def" function contains_Seq_T
 
 function map_Seq_T (self: Fset.fset (Seq.seq t_T)) (f: Map.map (Seq.seq t_T) (Seq.seq t_T)) : Fset.fset (Seq.seq t_T) =
   Fset.map f self

@@ -14,9 +14,9 @@ let div_assign_u32 (self: MutBorrow.t UInt32.t) (other: UInt32.t) (return (x: ()
     = ComputerDivision.div (UInt32.t'int self.current) (UInt32.t'int other)}
     (! return {result}) ]
 
-predicate resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) = _1.final = _1.current
+function resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) : bool = _1.final = _1.current
 
-meta "rewrite_def" predicate resolve_refmut_u32
+meta "rewrite_def" function resolve_refmut_u32
 
 meta "compute_max_steps" 1000000
 

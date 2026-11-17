@@ -11,54 +11,53 @@ type t_Perm_ptr_T
 
 type tup2_ptr_T_Ghost_Perm_ptr_T = { f0: Opaque.ptr; f1: t_Perm_ptr_T }
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate invariant_Box_T_Global (self: t_T) = inv_T self
+function invariant_Box_T_Global (self: t_T) : bool = inv_T self
 
-predicate inv_Box_T_Global [@inline:trivial] (_1: t_T) = invariant_Box_T_Global _1
+function inv_Box_T_Global [@inline:trivial] (_1: t_T) : bool = invariant_Box_T_Global _1
 
-meta "rewrite_def" predicate inv_Box_T_Global
+meta "rewrite_def" function inv_Box_T_Global
 
-predicate is_null_ptr_T (self: Opaque.ptr) = Ptr.addr_logic_u64 self = (0: UInt64.t)
+function is_null_ptr_T (self: Opaque.ptr) : bool = Ptr.addr_logic_u64 self = (0: UInt64.t)
 
 function ward_ptr_T (self: t_Perm_ptr_T) : Opaque.ptr
 
-predicate metadata_matches_T [@inline:trivial] (_value: t_T) (_metadata: ()) = true
+function metadata_matches_T [@inline:trivial] (_value: t_T) (_metadata: ()) : bool = true
 
-meta "rewrite_def" predicate metadata_matches_T
+meta "rewrite_def" function metadata_matches_T
 
 function val_unsized_ptr_T (self: t_Perm_ptr_T) : t_T
 
 function metadata_T (_1: Opaque.ptr) : ()
 
-predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
 
-meta "rewrite_def" predicate invariant_ref_T
+meta "rewrite_def" function invariant_ref_T
 
-predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
 
-meta "rewrite_def" predicate inv_ref_T
+meta "rewrite_def" function inv_ref_T
 
-predicate invariant_Perm_ptr_T (self: t_Perm_ptr_T) =
-  not is_null_ptr_T (ward_ptr_T self)
+function invariant_Perm_ptr_T (self: t_Perm_ptr_T) : bool = not is_null_ptr_T (ward_ptr_T self)
   /\ metadata_matches_T (val_unsized_ptr_T self) (metadata_T (ward_ptr_T self)) /\ inv_ref_T (val_unsized_ptr_T self)
 
-predicate inv_Perm_ptr_T (_1: t_Perm_ptr_T)
+function inv_Perm_ptr_T (_1: t_Perm_ptr_T) : bool
 
 axiom inv_axiom [@rewrite]: forall _1: t_Perm_ptr_T [inv_Perm_ptr_T _1]. inv_Perm_ptr_T _1 = invariant_Perm_ptr_T _1
 
-predicate invariant_Ghost_Perm_ptr_T [@inline:trivial] (self: t_Perm_ptr_T) = inv_Perm_ptr_T self
+function invariant_Ghost_Perm_ptr_T [@inline:trivial] (self: t_Perm_ptr_T) : bool = inv_Perm_ptr_T self
 
-meta "rewrite_def" predicate invariant_Ghost_Perm_ptr_T
+meta "rewrite_def" function invariant_Ghost_Perm_ptr_T
 
-predicate inv_Ghost_Perm_ptr_T [@inline:trivial] (_1: t_Perm_ptr_T) = invariant_Ghost_Perm_ptr_T _1
+function inv_Ghost_Perm_ptr_T [@inline:trivial] (_1: t_Perm_ptr_T) : bool = invariant_Ghost_Perm_ptr_T _1
 
-meta "rewrite_def" predicate inv_Ghost_Perm_ptr_T
+meta "rewrite_def" function inv_Ghost_Perm_ptr_T
 
-predicate inv_tup2_ptr_T_Ghost_Perm_ptr_T [@inline:trivial] (_1: tup2_ptr_T_Ghost_Perm_ptr_T) =
+function inv_tup2_ptr_T_Ghost_Perm_ptr_T [@inline:trivial] (_1: tup2_ptr_T_Ghost_Perm_ptr_T) : bool =
   inv_Ghost_Perm_ptr_T _1.f1
 
-meta "rewrite_def" predicate inv_tup2_ptr_T_Ghost_Perm_ptr_T
+meta "rewrite_def" function inv_tup2_ptr_T_Ghost_Perm_ptr_T
 
 let from_box_T (val': t_T) (return (x: tup2_ptr_T_Ghost_Perm_ptr_T)) =
 {[@stop_split] [@expl:from_box 'val' type invariant] inv_Box_T_Global val'}

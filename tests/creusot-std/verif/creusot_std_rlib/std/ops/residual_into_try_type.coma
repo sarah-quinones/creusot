@@ -4,25 +4,25 @@ type t_R
 
 type t_TryType
 
-predicate inv_R (_1: t_R)
+function inv_R (_1: t_R) : bool
 
-predicate precondition_from_residual (self: ()) (args: t_R)
+function precondition_from_residual (self: ()) (args: t_R) : bool
 
 axiom precondition_fndef: forall args: t_R [precondition_from_residual () args]. (let residual = args in inv_R residual)
     -> precondition_from_residual () args
 
-predicate inv_TryType (_1: t_TryType)
+function inv_TryType (_1: t_TryType) : bool
 
-predicate postcondition_from_residual (self: ()) (args: t_R) (result: t_TryType)
+function postcondition_from_residual (self: ()) (args: t_R) (result: t_TryType) : bool
 
 axiom postcondition_fndef:
   forall args: t_R, result: t_TryType [postcondition_from_residual () args result]. postcondition_from_residual () args result
     -> (let residual = args in inv_TryType result)
 
-predicate postcondition_once_from_residual (self: ()) (args: t_R) (result: t_TryType) =
+function postcondition_once_from_residual (self: ()) (args: t_R) (result: t_TryType) : bool =
   postcondition_from_residual self args result
 
-meta "rewrite_def" predicate postcondition_once_from_residual
+meta "rewrite_def" function postcondition_once_from_residual
 
 let from_residual_TryType (residual: t_R) (return (x: t_TryType)) =
 {[@stop_split] [@expl:from_residual requires] precondition_from_residual () residual}

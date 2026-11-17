@@ -4,7 +4,7 @@ module M_should_use_impl
   
   let default_u32 (self: UInt32.t) (return (x: UInt32.t)) = any [ return (result: UInt32.t) -> (! return {result}) ]
   
-  predicate logic_default_u32 (self: UInt32.t) = true
+  function logic_default_u32 (self: UInt32.t) : bool = true
   
   meta "compute_max_steps" 1000000
   
@@ -21,15 +21,15 @@ module M_trait_T__default
   
   type t_Self
   
-  predicate inv_Self (_1: t_Self)
+  function inv_Self (_1: t_Self) : bool
   
-  predicate invariant_ref_Self [@inline:trivial] (self: t_Self) = inv_Self self
+  function invariant_ref_Self [@inline:trivial] (self: t_Self) : bool = inv_Self self
   
-  meta "rewrite_def" predicate invariant_ref_Self
+  meta "rewrite_def" function invariant_ref_Self
   
-  predicate inv_ref_Self [@inline:trivial] (_1: t_Self) = invariant_ref_Self _1
+  function inv_ref_Self [@inline:trivial] (_1: t_Self) : bool = invariant_ref_Self _1
   
-  meta "rewrite_def" predicate inv_ref_Self
+  meta "rewrite_def" function inv_ref_Self
   
   meta "compute_max_steps" 1000000
   

@@ -8,9 +8,9 @@ module M_ghost_map
     [ return (result: Fset.fset Int32.t) -> {[@stop_split] [@expl:new ensures] Fset.is_empty result}
       (! return {result}) ]
   
-  predicate contains_i32 [@inline:trivial] (self: Fset.fset Int32.t) (e: Int32.t) = Fset.mem e self
+  function contains_i32 [@inline:trivial] (self: Fset.fset Int32.t) (e: Int32.t) : bool = Fset.mem e self
   
-  meta "rewrite_def" predicate contains_i32
+  meta "rewrite_def" function contains_i32
   
   let deref_mut_Ghost_FSet_i32 (self: MutBorrow.t (Fset.fset Int32.t)) (return (x: MutBorrow.t (Fset.fset Int32.t))) =
   any
@@ -28,9 +28,10 @@ module M_ghost_map
       /\ ([@stop_split] [@expl:insert ensures #1] result = (not contains_i32 self.current value))}
       (! return {result}) ]
   
-  predicate resolve_refmut_FSet_i32 [@inline:trivial] (_1: MutBorrow.t (Fset.fset Int32.t)) = _1.final = _1.current
+  function resolve_refmut_FSet_i32 [@inline:trivial] (_1: MutBorrow.t (Fset.fset Int32.t)) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_FSet_i32
+  meta "rewrite_def" function resolve_refmut_FSet_i32
   
   let deref_Ghost_FSet_i32 (self: Fset.fset Int32.t) (return (x: Fset.fset Int32.t)) = any
     [ return (result: Fset.fset Int32.t) -> {[@stop_split] [@expl:deref ensures] result = self} (! return {result}) ]

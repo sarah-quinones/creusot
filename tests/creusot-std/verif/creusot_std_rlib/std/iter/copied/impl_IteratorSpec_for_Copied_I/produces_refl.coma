@@ -9,7 +9,7 @@ type t_T
 
 type t_I
 
-predicate produces_I (self: t_I) (visited: Seq.seq t_T) (o: t_I)
+function produces_I (self: t_I) (visited: Seq.seq t_T) (o: t_I) : bool
 
 function produces_trans_I (a: t_I) (ab: Seq.seq t_T) (b: t_I) (bc: Seq.seq t_T) (c: t_I) : ()
 
@@ -22,7 +22,7 @@ axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.se
 
 function iter_Copied_I (self: t_Copied_I) : t_I
 
-predicate produces_Copied_I (self: t_Copied_I) (visited: Seq.seq t_T) (o: t_Copied_I) =
+function produces_Copied_I (self: t_Copied_I) (visited: Seq.seq t_T) (o: t_Copied_I) : bool =
   exists s: Seq.seq t_T. produces_I (iter_Copied_I self) s (iter_Copied_I o)
     /\ Seq.length visited = Seq.length s
     /\ (forall i: int. 0 <= i /\ i < Seq.length s -> Seq.get visited i = Seq.get s i)

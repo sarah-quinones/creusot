@@ -4,11 +4,11 @@ use int.Int
 
 type t_NatInner = { f0: int }
 
-predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
 
-meta "rewrite_def" predicate ge_log_Int
+meta "rewrite_def" function ge_log_Int
 
-predicate invariant_NatInner (self: t_NatInner) = ge_log_Int self.f0 0
+function invariant_NatInner (self: t_NatInner) : bool = ge_log_Int self.f0 0
 
 meta "compute_max_steps" 1000000
 

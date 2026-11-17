@@ -6,9 +6,9 @@ type t_Args
 
 type t_Output
 
-predicate postcondition_mut_F (self: t_F) (args: t_Args) (result_state: t_F) (result: t_Output)
+function postcondition_mut_F (self: t_F) (args: t_Args) (result_state: t_F) (result: t_Output) : bool
 
-predicate hist_inv_F (self: t_F) (result_state: t_F)
+function hist_inv_F (self: t_F) (result_state: t_F) : bool
 
 meta "compute_max_steps" 1000000
 

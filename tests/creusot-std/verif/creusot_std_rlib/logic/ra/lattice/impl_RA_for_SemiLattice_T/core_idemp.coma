@@ -12,10 +12,10 @@ function core_SemiLattice_T [@inline:trivial] (self: t_SemiLattice_T) : t_Option
 
 meta "rewrite_def" function core_SemiLattice_T
 
-predicate index_Mapping_SemiLattice_T_bool [@inline:trivial] (self: Map.map t_SemiLattice_T bool) (a: t_SemiLattice_T) =
-  Map.get self a
+function index_Mapping_SemiLattice_T_bool [@inline:trivial] (self: Map.map t_SemiLattice_T bool) (a: t_SemiLattice_T) : bool
+ = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_SemiLattice_T_bool
+meta "rewrite_def" function index_Mapping_SemiLattice_T_bool
 
 function such_that_SemiLattice_T (p: Map.map t_SemiLattice_T bool) : t_SemiLattice_T
 
@@ -30,9 +30,9 @@ function unwrap_Option_SemiLattice_T (self: t_Option_SemiLattice_T) : t_SemiLatt
     | None -> any_SemiLattice_T
     end
 
-predicate lt_log_T (self: t_T) (other: t_T)
+function lt_log_T (self: t_T) (other: t_T) : bool
 
-predicate le_log_T (self: t_T) (other: t_T)
+function le_log_T (self: t_T) (other: t_T) : bool
 
 function le_lt_log_T (self: t_T) (other: t_T) : ()
 

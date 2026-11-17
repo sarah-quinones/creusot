@@ -4,7 +4,7 @@ use creusot.prelude.MutBorrow
 
 type t_T
 
-predicate resolve_refmut_T (self: MutBorrow.t t_T) = true
+function resolve_refmut_T (self: MutBorrow.t t_T) : bool = true
 
 meta "compute_max_steps" 1000000
 

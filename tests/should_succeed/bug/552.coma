@@ -1,7 +1,7 @@
 module M_impl_Machine__transition (* Machine *)
   use creusot.prelude.Any
   
-  predicate invariants_Machine (self: ()) = true
+  function invariants_Machine (self: ()) : bool = true
   
   meta "compute_max_steps" 1000000
   
@@ -16,11 +16,11 @@ module M_impl_MachineTrait_for_Machine__step (* <Machine as MachineTrait> *)
   use creusot.prelude.MutBorrow
   use creusot.prelude.Any
   
-  predicate resolve_refmut_Machine [@inline:trivial] (_1: MutBorrow.t ()) = _1.final = _1.current
+  function resolve_refmut_Machine [@inline:trivial] (_1: MutBorrow.t ()) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Machine
+  meta "rewrite_def" function resolve_refmut_Machine
   
-  predicate invariants_Machine (self: ()) = true
+  function invariants_Machine (self: ()) : bool = true
   
   let transition (self: ()) (return (x: ())) = {[@stop_split] [@expl:transition requires] invariants_Machine self}
     any [ return (result: ()) -> (! return {result}) ]
@@ -43,7 +43,7 @@ end
 module M_impl_MachineTrait_for_Machine__step__refines (* <Machine as MachineTrait> *)
   use creusot.prelude.MutBorrow
   
-  predicate invariants_Machine (self: ()) = true
+  function invariants_Machine (self: ()) : bool = true
   
   meta "compute_max_steps" 1000000
   

@@ -27,15 +27,15 @@ module M_binary_search
   
   meta "rewrite_def" function index_Vec_u32_Global
   
-  predicate in_bounds_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq UInt32.t) =
-    UInt64.t'int self < Seq.length seq
+  function in_bounds_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq UInt32.t) : bool = UInt64.t'int self
+    < Seq.length seq
   
-  meta "rewrite_def" predicate in_bounds_usize
+  meta "rewrite_def" function in_bounds_usize
   
-  predicate has_value_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq UInt32.t) (out: UInt32.t) =
+  function has_value_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq UInt32.t) (out: UInt32.t) : bool =
     Seq.get seq (UInt64.t'int self) = out
   
-  meta "rewrite_def" predicate has_value_usize
+  meta "rewrite_def" function has_value_usize
   
   let index_Vec_u32_Global'0 (self: t_Vec_u32_Global) (index: UInt64.t) (return (x: UInt32.t)) =
   {[@stop_split] [@expl:index requires] in_bounds_usize index (view_Vec_u32_Global self)}
@@ -44,10 +44,10 @@ module M_binary_search
     {[@stop_split] [@expl:index ensures] has_value_usize index (view_Vec_u32_Global self) result}
       (! return {result}) ]
   
-  predicate sorted_range (s: Seq.seq UInt32.t) (l: int) (u: int) =
-    forall i: int, j: int. l <= i /\ i < j /\ j < u -> UInt32.le (Seq.get s i) (Seq.get s j)
+  function sorted_range (s: Seq.seq UInt32.t) (l: int) (u: int) : bool = forall i: int, j: int. l <= i /\ i < j /\ j < u
+      -> UInt32.le (Seq.get s i) (Seq.get s j)
   
-  predicate sorted (s: Seq.seq UInt32.t) = sorted_range s 0 (Seq.length s)
+  function sorted (s: Seq.seq UInt32.t) : bool = sorted_range s 0 (Seq.length s)
   
   meta "compute_max_steps" 1000000
   

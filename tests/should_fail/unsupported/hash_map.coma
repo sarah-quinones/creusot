@@ -9,20 +9,20 @@ module M_impl_Foo__add (* Foo *)
   
   type t_Foo = { f0: t_HashMap_u64_u8_RandomState_Global }
   
-  predicate inv_HashMap_u64_u8_RandomState_Global (_1: t_HashMap_u64_u8_RandomState_Global)
+  function inv_HashMap_u64_u8_RandomState_Global (_1: t_HashMap_u64_u8_RandomState_Global) : bool
   
-  predicate inv_Foo (_1: t_Foo)
+  function inv_Foo (_1: t_Foo) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Foo [inv_Foo _1]. inv_Foo _1 = inv_HashMap_u64_u8_RandomState_Global _1.f0
   
-  predicate invariant_refmut_Foo [@inline:trivial] (self: MutBorrow.t t_Foo) =
-    inv_Foo self.current /\ inv_Foo self.final
+  function invariant_refmut_Foo [@inline:trivial] (self: MutBorrow.t t_Foo) : bool = inv_Foo self.current
+    /\ inv_Foo self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Foo
+  meta "rewrite_def" function invariant_refmut_Foo
   
-  predicate inv_refmut_Foo [@inline:trivial] (_1: MutBorrow.t t_Foo) = invariant_refmut_Foo _1
+  function inv_refmut_Foo [@inline:trivial] (_1: MutBorrow.t t_Foo) : bool = invariant_refmut_Foo _1
   
-  meta "rewrite_def" predicate inv_refmut_Foo
+  meta "rewrite_def" function inv_refmut_Foo
   
   type t_FMap_Int_u8
   
@@ -74,9 +74,9 @@ module M_impl_Foo__new (* Foo *)
   
   type t_Foo = { f0: t_HashMap_u64_u8_RandomState_Global }
   
-  predicate inv_HashMap_u64_u8_RandomState_Global (_1: t_HashMap_u64_u8_RandomState_Global)
+  function inv_HashMap_u64_u8_RandomState_Global (_1: t_HashMap_u64_u8_RandomState_Global) : bool
   
-  predicate inv_Foo (_1: t_Foo)
+  function inv_Foo (_1: t_Foo) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Foo [inv_Foo _1]. inv_Foo _1 = inv_HashMap_u64_u8_RandomState_Global _1.f0
   

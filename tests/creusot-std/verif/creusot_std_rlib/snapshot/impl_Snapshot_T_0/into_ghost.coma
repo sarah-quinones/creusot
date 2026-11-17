@@ -4,30 +4,31 @@ use creusot.prelude.Any
 
 type t_T
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate precondition_into_ghost (self: ()) (args: t_T)
+function precondition_into_ghost (self: ()) (args: t_T) : bool
 
 axiom precondition_fndef: forall args: t_T [precondition_into_ghost () args]. (let snap = args in inv_T snap)
     -> precondition_into_ghost () args
 
-predicate invariant_Ghost_T [@inline:trivial] (self: t_T) = inv_T self
+function invariant_Ghost_T [@inline:trivial] (self: t_T) : bool = inv_T self
 
-meta "rewrite_def" predicate invariant_Ghost_T
+meta "rewrite_def" function invariant_Ghost_T
 
-predicate inv_Ghost_T [@inline:trivial] (_1: t_T) = invariant_Ghost_T _1
+function inv_Ghost_T [@inline:trivial] (_1: t_T) : bool = invariant_Ghost_T _1
 
-meta "rewrite_def" predicate inv_Ghost_T
+meta "rewrite_def" function inv_Ghost_T
 
-predicate postcondition_into_ghost (self: ()) (args: t_T) (result: t_T)
+function postcondition_into_ghost (self: ()) (args: t_T) (result: t_T) : bool
 
 axiom postcondition_fndef:
   forall args: t_T, result: t_T [postcondition_into_ghost () args result]. postcondition_into_ghost () args result
     -> (let snap = args in inv_Ghost_T result /\ result = snap)
 
-predicate postcondition_once_into_ghost (self: ()) (args: t_T) (result: t_T) = postcondition_into_ghost self args result
+function postcondition_once_into_ghost (self: ()) (args: t_T) (result: t_T) : bool =
+  postcondition_into_ghost self args result
 
-meta "rewrite_def" predicate postcondition_once_into_ghost
+meta "rewrite_def" function postcondition_once_into_ghost
 
 let into_ghost_T (snap: t_T) (return (x: t_T)) =
 {[@stop_split] [@expl:into_ghost requires] precondition_into_ghost () snap}

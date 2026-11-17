@@ -7,17 +7,17 @@ module M_common__trait_ExactSizeIterator__is_empty
   
   type t_Self
   
-  predicate inv_Self (_1: t_Self)
+  function inv_Self (_1: t_Self) : bool
   
-  predicate invariant_ref_Self [@inline:trivial] (self: t_Self) = inv_Self self
+  function invariant_ref_Self [@inline:trivial] (self: t_Self) : bool = inv_Self self
   
-  meta "rewrite_def" predicate invariant_ref_Self
+  meta "rewrite_def" function invariant_ref_Self
   
-  predicate inv_ref_Self [@inline:trivial] (_1: t_Self) = invariant_ref_Self _1
+  function inv_ref_Self [@inline:trivial] (_1: t_Self) : bool = invariant_ref_Self _1
   
-  meta "rewrite_def" predicate inv_ref_Self
+  meta "rewrite_def" function inv_ref_Self
   
-  predicate precondition_len (self: ()) (args: t_Self)
+  function precondition_len (self: ()) (args: t_Self) : bool
   
   axiom precondition_fndef: forall args: t_Self [precondition_len () args]. (let self = args in inv_ref_Self self)
       -> precondition_len () args
@@ -28,7 +28,7 @@ module M_common__trait_ExactSizeIterator__is_empty
   
   type t_Item
   
-  predicate produces_Self (self: t_Self) (visited: Seq.seq t_Item) (o: t_Self)
+  function produces_Self (self: t_Self) (visited: Seq.seq t_Item) (o: t_Self) : bool
   
   function produces_trans_Self (a: t_Self) (ab: Seq.seq t_Item) (b: t_Self) (bc: Seq.seq t_Item) (c: t_Self) : ()
   
@@ -40,9 +40,9 @@ module M_common__trait_ExactSizeIterator__is_empty
   
   axiom produces_refl_Self_spec: forall self: t_Self. produces_Self self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_Self (self: MutBorrow.t t_Self)
+  function completed_Self (self: MutBorrow.t t_Self) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_Self, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -53,16 +53,16 @@ module M_common__trait_ExactSizeIterator__is_empty
         | None -> true
         end)
   
-  predicate precondition_size_hint (self: ()) (args: t_Self)
+  function precondition_size_hint (self: ()) (args: t_Self) : bool
   
   axiom precondition_fndef'0:
     forall args: t_Self [precondition_size_hint () args]. (let self = args in inv_ref_Self self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_Self (self: t_Self) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -71,15 +71,16 @@ module M_common__trait_ExactSizeIterator__is_empty
     {[@stop_split] [@expl:size_hint ensures] postcondition_once_size_hint () self result}
       (! return {result}) ]
   
-  predicate postcondition_len (self: ()) (args: t_Self) (result: UInt64.t)
+  function postcondition_len (self: ()) (args: t_Self) (result: UInt64.t) : bool
   
   axiom postcondition_fndef'0:
     forall args: t_Self, result: UInt64.t [postcondition_len () args result]. postcondition_len () args result
       -> (let self = args in postcondition_size_hint () self { f0 = result; f1 = Some result })
   
-  predicate postcondition_once_len (self: ()) (args: t_Self) (result: UInt64.t) = postcondition_len self args result
+  function postcondition_once_len (self: ()) (args: t_Self) (result: UInt64.t) : bool =
+    postcondition_len self args result
   
-  meta "rewrite_def" predicate postcondition_once_len
+  meta "rewrite_def" function postcondition_once_len
   
   let len_Self (self: t_Self) (return (x: UInt64.t)) = {[@stop_split] [@expl:len requires] precondition_len () self}
     any
@@ -117,7 +118,7 @@ module M_common__trait_ExactSizeIterator__len
   
   type t_Item
   
-  predicate produces_Self (self: t_Self) (visited: Seq.seq t_Item) (o: t_Self)
+  function produces_Self (self: t_Self) (visited: Seq.seq t_Item) (o: t_Self) : bool
   
   function produces_trans_Self (a: t_Self) (ab: Seq.seq t_Item) (b: t_Self) (bc: Seq.seq t_Item) (c: t_Self) : ()
   
@@ -129,9 +130,9 @@ module M_common__trait_ExactSizeIterator__len
   
   axiom produces_refl_Self_spec: forall self: t_Self. produces_Self self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_Self (self: MutBorrow.t t_Self)
+  function completed_Self (self: MutBorrow.t t_Self) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_Self, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -142,25 +143,25 @@ module M_common__trait_ExactSizeIterator__len
         | None -> true
         end)
   
-  predicate inv_Self (_1: t_Self)
+  function inv_Self (_1: t_Self) : bool
   
-  predicate invariant_ref_Self [@inline:trivial] (self: t_Self) = inv_Self self
+  function invariant_ref_Self [@inline:trivial] (self: t_Self) : bool = inv_Self self
   
-  meta "rewrite_def" predicate invariant_ref_Self
+  meta "rewrite_def" function invariant_ref_Self
   
-  predicate inv_ref_Self [@inline:trivial] (_1: t_Self) = invariant_ref_Self _1
+  function inv_ref_Self [@inline:trivial] (_1: t_Self) : bool = invariant_ref_Self _1
   
-  meta "rewrite_def" predicate inv_ref_Self
+  meta "rewrite_def" function inv_ref_Self
   
-  predicate precondition_size_hint (self: ()) (args: t_Self)
+  function precondition_size_hint (self: ()) (args: t_Self) : bool
   
   axiom precondition_fndef: forall args: t_Self [precondition_size_hint () args]. (let self = args in inv_ref_Self self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_Self (self: t_Self) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -249,11 +250,11 @@ module M_impl_DoubleEndedIterator_for_Rev_I__next_back (* <Rev<I> as common::Dou
   
   type t_Rev_I = { iter: t_I }
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -266,23 +267,23 @@ module M_impl_DoubleEndedIterator_for_Rev_I__next_back (* <Rev<I> as common::Dou
   
   type t_Option_Item = None | Some t_Item
   
-  predicate invariant_refmut_I [@inline:trivial] (self: MutBorrow.t t_I) = inv_I self.current /\ inv_I self.final
+  function invariant_refmut_I [@inline:trivial] (self: MutBorrow.t t_I) : bool = inv_I self.current /\ inv_I self.final
   
-  meta "rewrite_def" predicate invariant_refmut_I
+  meta "rewrite_def" function invariant_refmut_I
   
-  predicate inv_refmut_I [@inline:trivial] (_1: MutBorrow.t t_I) = invariant_refmut_I _1
+  function inv_refmut_I [@inline:trivial] (_1: MutBorrow.t t_I) : bool = invariant_refmut_I _1
   
-  meta "rewrite_def" predicate inv_refmut_I
+  meta "rewrite_def" function inv_refmut_I
   
-  predicate precondition_next (self: ()) (args: MutBorrow.t t_I)
+  function precondition_next (self: ()) (args: MutBorrow.t t_I) : bool
   
   axiom precondition_fndef:
     forall args: MutBorrow.t t_I [precondition_next () args]. (let self = args in inv_refmut_I self)
       -> precondition_next () args
   
-  predicate inv_Item (_1: t_Item)
+  function inv_Item (_1: t_Item) : bool
   
-  predicate inv_Option_Item (_1: t_Option_Item)
+  function inv_Option_Item (_1: t_Option_Item) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Option_Item [inv_Option_Item _1]. inv_Option_Item _1
       = match _1 with
@@ -290,9 +291,9 @@ module M_impl_DoubleEndedIterator_for_Rev_I__next_back (* <Rev<I> as common::Dou
         | Some f0 -> inv_Item f0
         end
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate postcondition_next (self: ()) (args: MutBorrow.t t_I) (result: t_Option_Item)
+  function postcondition_next (self: ()) (args: MutBorrow.t t_I) (result: t_Option_Item) : bool
   
   axiom postcondition_fndef:
     forall args: MutBorrow.t t_I, result: t_Option_Item [postcondition_next () args result]. postcondition_next () args result
@@ -302,10 +303,10 @@ module M_impl_DoubleEndedIterator_for_Rev_I__next_back (* <Rev<I> as common::Dou
         | Some v -> produces_I self.current (Seq.singleton v) self.final
         end)
   
-  predicate postcondition_once_next (self: ()) (args: MutBorrow.t t_I) (result: t_Option_Item) =
+  function postcondition_once_next (self: ()) (args: MutBorrow.t t_I) (result: t_Option_Item) : bool =
     postcondition_next self args result
   
-  meta "rewrite_def" predicate postcondition_once_next
+  meta "rewrite_def" function postcondition_once_next
   
   let next_I (self: MutBorrow.t t_I) (return (x: t_Option_Item)) =
   {[@stop_split] [@expl:next requires] precondition_next () self}
@@ -313,27 +314,27 @@ module M_impl_DoubleEndedIterator_for_Rev_I__next_back (* <Rev<I> as common::Dou
     [ return (result: t_Option_Item) -> {[@stop_split] [@expl:next ensures] postcondition_once_next () self result}
       (! return {result}) ]
   
-  predicate inv_Rev_I (_1: t_Rev_I)
+  function inv_Rev_I (_1: t_Rev_I) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Rev_I [inv_Rev_I _1]. inv_Rev_I _1 = inv_I _1.iter
   
-  predicate invariant_refmut_Rev_I [@inline:trivial] (self: MutBorrow.t t_Rev_I) =
-    inv_Rev_I self.current /\ inv_Rev_I self.final
+  function invariant_refmut_Rev_I [@inline:trivial] (self: MutBorrow.t t_Rev_I) : bool = inv_Rev_I self.current
+    /\ inv_Rev_I self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Rev_I
+  meta "rewrite_def" function invariant_refmut_Rev_I
   
-  predicate inv_refmut_Rev_I [@inline:trivial] (_1: MutBorrow.t t_Rev_I) = invariant_refmut_Rev_I _1
+  function inv_refmut_Rev_I [@inline:trivial] (_1: MutBorrow.t t_Rev_I) : bool = invariant_refmut_Rev_I _1
   
-  meta "rewrite_def" predicate inv_refmut_Rev_I
+  meta "rewrite_def" function inv_refmut_Rev_I
   
-  predicate resolve_refmut_Rev_I [@inline:trivial] (_1: MutBorrow.t t_Rev_I) = _1.final = _1.current
+  function resolve_refmut_Rev_I [@inline:trivial] (_1: MutBorrow.t t_Rev_I) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Rev_I
+  meta "rewrite_def" function resolve_refmut_Rev_I
   
-  predicate completed_back_Rev_I (self: MutBorrow.t t_Rev_I) =
+  function completed_back_Rev_I (self: MutBorrow.t t_Rev_I) : bool =
     completed_I (MutBorrow.borrow_logic self.current.iter self.final.iter (MutBorrow.inherit_id (MutBorrow.get_id self) 0))
   
-  predicate produces_back_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) =
+  function produces_back_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) : bool =
     produces_I self.iter visited o.iter
   
   meta "compute_max_steps" 1000000
@@ -372,24 +373,24 @@ module M_impl_DoubleEndedIterator_for_Rev_I__next_back__refines (* <Rev<I> as co
   
   type t_Rev_I = { iter: t_I }
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate inv_Rev_I (_1: t_Rev_I)
+  function inv_Rev_I (_1: t_Rev_I) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Rev_I [inv_Rev_I _1]. inv_Rev_I _1 = inv_I _1.iter
   
-  predicate invariant_refmut_Rev_I [@inline:trivial] (self: MutBorrow.t t_Rev_I) =
-    inv_Rev_I self.current /\ inv_Rev_I self.final
+  function invariant_refmut_Rev_I [@inline:trivial] (self: MutBorrow.t t_Rev_I) : bool = inv_Rev_I self.current
+    /\ inv_Rev_I self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Rev_I
+  meta "rewrite_def" function invariant_refmut_Rev_I
   
-  predicate inv_refmut_Rev_I [@inline:trivial] (_1: MutBorrow.t t_Rev_I) = invariant_refmut_Rev_I _1
+  function inv_refmut_Rev_I [@inline:trivial] (_1: MutBorrow.t t_Rev_I) : bool = invariant_refmut_Rev_I _1
   
-  meta "rewrite_def" predicate inv_refmut_Rev_I
+  meta "rewrite_def" function inv_refmut_Rev_I
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -402,9 +403,9 @@ module M_impl_DoubleEndedIterator_for_Rev_I__next_back__refines (* <Rev<I> as co
   
   type t_Option_Item = None | Some t_Item
   
-  predicate inv_Item (_1: t_Item)
+  function inv_Item (_1: t_Item) : bool
   
-  predicate inv_Option_Item (_1: t_Option_Item)
+  function inv_Option_Item (_1: t_Option_Item) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Option_Item [inv_Option_Item _1]. inv_Option_Item _1
       = match _1 with
@@ -412,12 +413,12 @@ module M_impl_DoubleEndedIterator_for_Rev_I__next_back__refines (* <Rev<I> as co
         | Some f0 -> inv_Item f0
         end
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate completed_back_Rev_I (self: MutBorrow.t t_Rev_I) =
+  function completed_back_Rev_I (self: MutBorrow.t t_Rev_I) : bool =
     completed_I (MutBorrow.borrow_logic self.current.iter self.final.iter (MutBorrow.inherit_id (MutBorrow.get_id self) 0))
   
-  predicate produces_back_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) =
+  function produces_back_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) : bool =
     produces_I self.iter visited o.iter
   
   meta "compute_max_steps" 1000000
@@ -446,7 +447,7 @@ module M_impl_DoubleEndedIterator_for_Rev_I__produces_back_refl (* <Rev<I> as co
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -457,7 +458,7 @@ module M_impl_DoubleEndedIterator_for_Rev_I__produces_back_refl (* <Rev<I> as co
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate produces_back_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) =
+  function produces_back_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) : bool =
     produces_I self.iter visited o.iter
   
   meta "compute_max_steps" 1000000
@@ -480,7 +481,7 @@ module M_impl_DoubleEndedIterator_for_Rev_I__produces_back_refl__refines (* <Rev
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -491,7 +492,7 @@ module M_impl_DoubleEndedIterator_for_Rev_I__produces_back_refl__refines (* <Rev
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate produces_back_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) =
+  function produces_back_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) : bool =
     produces_I self.iter visited o.iter
   
   meta "compute_max_steps" 1000000
@@ -510,7 +511,7 @@ module M_impl_DoubleEndedIterator_for_Rev_I__produces_back_trans (* <Rev<I> as c
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -521,7 +522,7 @@ module M_impl_DoubleEndedIterator_for_Rev_I__produces_back_trans (* <Rev<I> as c
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate produces_back_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) =
+  function produces_back_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) : bool =
     produces_I self.iter visited o.iter
   
   meta "compute_max_steps" 1000000
@@ -553,7 +554,7 @@ module M_impl_DoubleEndedIterator_for_Rev_I__produces_back_trans__refines (* <Re
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -564,7 +565,7 @@ module M_impl_DoubleEndedIterator_for_Rev_I__produces_back_trans__refines (* <Re
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate produces_back_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) =
+  function produces_back_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) : bool =
     produces_I self.iter visited o.iter
   
   meta "compute_max_steps" 1000000
@@ -594,7 +595,7 @@ module M_impl_DoubleEndedIterator_for_Rev_I__size_hint_back_spec (* <Rev<I> as c
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -605,9 +606,9 @@ module M_impl_DoubleEndedIterator_for_Rev_I__size_hint_back_spec (* <Rev<I> as c
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_I, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -618,30 +619,30 @@ module M_impl_DoubleEndedIterator_for_Rev_I__size_hint_back_spec (* <Rev<I> as c
         | None -> true
         end)
   
-  predicate postcondition_size_hint'0 (self: ()) (args: t_Rev_I) (result: tup2_usize_Option_usize) =
+  function postcondition_size_hint'0 (self: ()) (args: t_Rev_I) (result: tup2_usize_Option_usize) : bool =
     let self'0 = args in postcondition_size_hint () self'0.iter result
   
-  meta "rewrite_def" predicate postcondition_size_hint'0
+  meta "rewrite_def" function postcondition_size_hint'0
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate invariant_ref_I [@inline:trivial] (self: t_I) = inv_I self
+  function invariant_ref_I [@inline:trivial] (self: t_I) : bool = inv_I self
   
-  meta "rewrite_def" predicate invariant_ref_I
+  meta "rewrite_def" function invariant_ref_I
   
-  predicate inv_ref_I [@inline:trivial] (_1: t_I) = invariant_ref_I _1
+  function inv_ref_I [@inline:trivial] (_1: t_I) : bool = invariant_ref_I _1
   
-  meta "rewrite_def" predicate inv_ref_I
+  meta "rewrite_def" function inv_ref_I
   
-  predicate precondition_size_hint (self: ()) (args: t_I)
+  function precondition_size_hint (self: ()) (args: t_I) : bool
   
   axiom precondition_fndef: forall args: t_I [precondition_size_hint () args]. (let self = args in inv_ref_I self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_I (self: t_I) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -650,9 +651,9 @@ module M_impl_DoubleEndedIterator_for_Rev_I__size_hint_back_spec (* <Rev<I> as c
     {[@stop_split] [@expl:size_hint ensures] postcondition_once_size_hint () self result}
       (! return {result}) ]
   
-  predicate completed_back_I (self: MutBorrow.t t_I)
+  function completed_back_I (self: MutBorrow.t t_I) : bool
   
-  predicate produces_back_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_back_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function size_hint_back_spec_I (self: t_I) (r: tup2_usize_Option_usize) : ()
   
@@ -676,7 +677,7 @@ module M_impl_DoubleEndedIterator_for_Rev_I__size_hint_back_spec (* <Rev<I> as c
   
   axiom produces_back_refl_I_spec: forall self: t_I. produces_back_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate produces_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) =
+  function produces_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) : bool =
     produces_back_I self.iter visited o.iter
   
   function produces_trans_Rev_I (a: t_Rev_I) (ab: Seq.seq t_Item) (b: t_Rev_I) (bc: Seq.seq t_Item) (c: t_Rev_I) : () =
@@ -690,17 +691,17 @@ module M_impl_DoubleEndedIterator_for_Rev_I__size_hint_back_spec (* <Rev<I> as c
   
   axiom produces_refl_Rev_I_spec: forall self: t_Rev_I. produces_Rev_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate inv_Rev_I (_1: t_Rev_I)
+  function inv_Rev_I (_1: t_Rev_I) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Rev_I [inv_Rev_I _1]. inv_Rev_I _1 = inv_I _1.iter
   
-  predicate invariant_ref_Rev_I [@inline:trivial] (self: t_Rev_I) = inv_Rev_I self
+  function invariant_ref_Rev_I [@inline:trivial] (self: t_Rev_I) : bool = inv_Rev_I self
   
-  meta "rewrite_def" predicate invariant_ref_Rev_I
+  meta "rewrite_def" function invariant_ref_Rev_I
   
-  predicate inv_ref_Rev_I [@inline:trivial] (_1: t_Rev_I) = invariant_ref_Rev_I _1
+  function inv_ref_Rev_I [@inline:trivial] (_1: t_Rev_I) : bool = invariant_ref_Rev_I _1
   
-  meta "rewrite_def" predicate inv_ref_Rev_I
+  meta "rewrite_def" function inv_ref_Rev_I
   
   let size_hint_Rev_I (self: t_Rev_I) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint 'self' type invariant] inv_ref_Rev_I self}
@@ -709,10 +710,10 @@ module M_impl_DoubleEndedIterator_for_Rev_I__size_hint_back_spec (* <Rev<I> as c
     {[@stop_split] [@expl:size_hint ensures] postcondition_size_hint () self.iter result}
       (! return {result}) ]
   
-  predicate produces_back_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) =
+  function produces_back_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) : bool =
     produces_I self.iter visited o.iter
   
-  predicate completed_back_Rev_I (self: MutBorrow.t t_Rev_I) =
+  function completed_back_Rev_I (self: MutBorrow.t t_Rev_I) : bool =
     completed_I (MutBorrow.borrow_logic self.current.iter self.final.iter (MutBorrow.inherit_id (MutBorrow.get_id self) 0))
   
   meta "compute_max_steps" 1000000
@@ -750,7 +751,7 @@ module M_impl_DoubleEndedIterator_for_Rev_I__size_hint_back_spec__refines (* <Re
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -761,9 +762,9 @@ module M_impl_DoubleEndedIterator_for_Rev_I__size_hint_back_spec__refines (* <Re
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_I, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -774,30 +775,30 @@ module M_impl_DoubleEndedIterator_for_Rev_I__size_hint_back_spec__refines (* <Re
         | None -> true
         end)
   
-  predicate postcondition_size_hint'0 (self: ()) (args: t_Rev_I) (result: tup2_usize_Option_usize) =
+  function postcondition_size_hint'0 (self: ()) (args: t_Rev_I) (result: tup2_usize_Option_usize) : bool =
     let self'0 = args in postcondition_size_hint () self'0.iter result
   
-  meta "rewrite_def" predicate postcondition_size_hint'0
+  meta "rewrite_def" function postcondition_size_hint'0
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate invariant_ref_I [@inline:trivial] (self: t_I) = inv_I self
+  function invariant_ref_I [@inline:trivial] (self: t_I) : bool = inv_I self
   
-  meta "rewrite_def" predicate invariant_ref_I
+  meta "rewrite_def" function invariant_ref_I
   
-  predicate inv_ref_I [@inline:trivial] (_1: t_I) = invariant_ref_I _1
+  function inv_ref_I [@inline:trivial] (_1: t_I) : bool = invariant_ref_I _1
   
-  meta "rewrite_def" predicate inv_ref_I
+  meta "rewrite_def" function inv_ref_I
   
-  predicate precondition_size_hint (self: ()) (args: t_I)
+  function precondition_size_hint (self: ()) (args: t_I) : bool
   
   axiom precondition_fndef: forall args: t_I [precondition_size_hint () args]. (let self = args in inv_ref_I self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_I (self: t_I) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -806,9 +807,9 @@ module M_impl_DoubleEndedIterator_for_Rev_I__size_hint_back_spec__refines (* <Re
     {[@stop_split] [@expl:size_hint ensures] postcondition_once_size_hint () self result}
       (! return {result}) ]
   
-  predicate completed_back_I (self: MutBorrow.t t_I)
+  function completed_back_I (self: MutBorrow.t t_I) : bool
   
-  predicate produces_back_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_back_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function size_hint_back_spec_I (self: t_I) (r: tup2_usize_Option_usize) : ()
   
@@ -832,7 +833,7 @@ module M_impl_DoubleEndedIterator_for_Rev_I__size_hint_back_spec__refines (* <Re
   
   axiom produces_back_refl_I_spec: forall self: t_I. produces_back_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate produces_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) =
+  function produces_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) : bool =
     produces_back_I self.iter visited o.iter
   
   function produces_trans_Rev_I (a: t_Rev_I) (ab: Seq.seq t_Item) (b: t_Rev_I) (bc: Seq.seq t_Item) (c: t_Rev_I) : () =
@@ -846,17 +847,17 @@ module M_impl_DoubleEndedIterator_for_Rev_I__size_hint_back_spec__refines (* <Re
   
   axiom produces_refl_Rev_I_spec: forall self: t_Rev_I. produces_Rev_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate inv_Rev_I (_1: t_Rev_I)
+  function inv_Rev_I (_1: t_Rev_I) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Rev_I [inv_Rev_I _1]. inv_Rev_I _1 = inv_I _1.iter
   
-  predicate invariant_ref_Rev_I [@inline:trivial] (self: t_Rev_I) = inv_Rev_I self
+  function invariant_ref_Rev_I [@inline:trivial] (self: t_Rev_I) : bool = inv_Rev_I self
   
-  meta "rewrite_def" predicate invariant_ref_Rev_I
+  meta "rewrite_def" function invariant_ref_Rev_I
   
-  predicate inv_ref_Rev_I [@inline:trivial] (_1: t_Rev_I) = invariant_ref_Rev_I _1
+  function inv_ref_Rev_I [@inline:trivial] (_1: t_Rev_I) : bool = invariant_ref_Rev_I _1
   
-  meta "rewrite_def" predicate inv_ref_Rev_I
+  meta "rewrite_def" function inv_ref_Rev_I
   
   let size_hint_Rev_I (self: t_Rev_I) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint 'self' type invariant] inv_ref_Rev_I self}
@@ -865,10 +866,10 @@ module M_impl_DoubleEndedIterator_for_Rev_I__size_hint_back_spec__refines (* <Re
     {[@stop_split] [@expl:size_hint ensures] postcondition_size_hint () self.iter result}
       (! return {result}) ]
   
-  predicate produces_back_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) =
+  function produces_back_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) : bool =
     produces_I self.iter visited o.iter
   
-  predicate completed_back_Rev_I (self: MutBorrow.t t_Rev_I) =
+  function completed_back_Rev_I (self: MutBorrow.t t_Rev_I) : bool =
     completed_I (MutBorrow.borrow_logic self.current.iter self.final.iter (MutBorrow.inherit_id (MutBorrow.get_id self) 0))
   
   meta "compute_max_steps" 1000000
@@ -903,7 +904,7 @@ module M_impl_ExactSizeIterator_for_Rev_I__is_empty (* <Rev<I> as common::ExactS
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -920,9 +921,9 @@ module M_impl_ExactSizeIterator_for_Rev_I__is_empty (* <Rev<I> as common::ExactS
   
   type tup2_usize_Option_usize = { f0: UInt64.t; f1: t_Option_usize }
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_I, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -933,25 +934,25 @@ module M_impl_ExactSizeIterator_for_Rev_I__is_empty (* <Rev<I> as common::ExactS
         | None -> true
         end)
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate invariant_ref_I [@inline:trivial] (self: t_I) = inv_I self
+  function invariant_ref_I [@inline:trivial] (self: t_I) : bool = inv_I self
   
-  meta "rewrite_def" predicate invariant_ref_I
+  meta "rewrite_def" function invariant_ref_I
   
-  predicate inv_ref_I [@inline:trivial] (_1: t_I) = invariant_ref_I _1
+  function inv_ref_I [@inline:trivial] (_1: t_I) : bool = invariant_ref_I _1
   
-  meta "rewrite_def" predicate inv_ref_I
+  meta "rewrite_def" function inv_ref_I
   
-  predicate precondition_size_hint (self: ()) (args: t_I)
+  function precondition_size_hint (self: ()) (args: t_I) : bool
   
   axiom precondition_fndef: forall args: t_I [precondition_size_hint () args]. (let self = args in inv_ref_I self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_I (self: t_I) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -965,21 +966,22 @@ module M_impl_ExactSizeIterator_for_Rev_I__is_empty (* <Rev<I> as common::ExactS
   axiom size_hint_exact_I_spec: forall self: t_I, r: tup2_usize_Option_usize. postcondition_size_hint () self r
       -> r.f1 = Some (r.f0)
   
-  predicate precondition_is_empty (self: ()) (args: t_I)
+  function precondition_is_empty (self: ()) (args: t_I) : bool
   
   axiom precondition_fndef'0: forall args: t_I [precondition_is_empty () args]. (let self = args in inv_ref_I self)
       -> precondition_is_empty () args
   
-  predicate postcondition_is_empty (self: ()) (args: t_I) (result: bool)
+  function postcondition_is_empty (self: ()) (args: t_I) (result: bool) : bool
   
   axiom postcondition_fndef'0:
     forall args: t_I, result: bool [postcondition_is_empty () args result]. postcondition_is_empty () args result
       -> (let self = args in exists l: UInt64.t. postcondition_size_hint () self { f0 = l; f1 = Some l }
         /\ result = (l = (0: UInt64.t)))
   
-  predicate postcondition_once_is_empty (self: ()) (args: t_I) (result: bool) = postcondition_is_empty self args result
+  function postcondition_once_is_empty (self: ()) (args: t_I) (result: bool) : bool =
+    postcondition_is_empty self args result
   
-  meta "rewrite_def" predicate postcondition_once_is_empty
+  meta "rewrite_def" function postcondition_once_is_empty
   
   let is_empty_I (self: t_I) (return (x: bool)) =
   {[@stop_split] [@expl:is_empty requires] precondition_is_empty () self}
@@ -987,26 +989,26 @@ module M_impl_ExactSizeIterator_for_Rev_I__is_empty (* <Rev<I> as common::ExactS
     [ return (result: bool) -> {[@stop_split] [@expl:is_empty ensures] postcondition_once_is_empty () self result}
       (! return {result}) ]
   
-  predicate inv_Rev_I (_1: t_Rev_I)
+  function inv_Rev_I (_1: t_Rev_I) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Rev_I [inv_Rev_I _1]. inv_Rev_I _1 = inv_I _1.iter
   
-  predicate invariant_ref_Rev_I [@inline:trivial] (self: t_Rev_I) = inv_Rev_I self
+  function invariant_ref_Rev_I [@inline:trivial] (self: t_Rev_I) : bool = inv_Rev_I self
   
-  meta "rewrite_def" predicate invariant_ref_Rev_I
+  meta "rewrite_def" function invariant_ref_Rev_I
   
-  predicate inv_ref_Rev_I [@inline:trivial] (_1: t_Rev_I) = invariant_ref_Rev_I _1
+  function inv_ref_Rev_I [@inline:trivial] (_1: t_Rev_I) : bool = invariant_ref_Rev_I _1
   
-  meta "rewrite_def" predicate inv_ref_Rev_I
+  meta "rewrite_def" function inv_ref_Rev_I
   
-  predicate postcondition_size_hint'0 (self: ()) (args: t_Rev_I) (result: tup2_usize_Option_usize) =
+  function postcondition_size_hint'0 (self: ()) (args: t_Rev_I) (result: tup2_usize_Option_usize) : bool =
     let self'0 = args in postcondition_size_hint () self'0.iter result
   
-  meta "rewrite_def" predicate postcondition_size_hint'0
+  meta "rewrite_def" function postcondition_size_hint'0
   
-  predicate completed_back_I (self: MutBorrow.t t_I)
+  function completed_back_I (self: MutBorrow.t t_I) : bool
   
-  predicate produces_back_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_back_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function size_hint_back_spec_I (self: t_I) (r: tup2_usize_Option_usize) : ()
   
@@ -1030,7 +1032,7 @@ module M_impl_ExactSizeIterator_for_Rev_I__is_empty (* <Rev<I> as common::ExactS
   
   axiom produces_back_refl_I_spec: forall self: t_I. produces_back_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate produces_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) =
+  function produces_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) : bool =
     produces_back_I self.iter visited o.iter
   
   function produces_trans_Rev_I (a: t_Rev_I) (ab: Seq.seq t_Item) (b: t_Rev_I) (bc: Seq.seq t_Item) (c: t_Rev_I) : () =
@@ -1078,19 +1080,19 @@ module M_impl_ExactSizeIterator_for_Rev_I__is_empty__refines (* <Rev<I> as commo
   
   type t_Rev_I = { iter: t_I }
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate inv_Rev_I (_1: t_Rev_I)
+  function inv_Rev_I (_1: t_Rev_I) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Rev_I [inv_Rev_I _1]. inv_Rev_I _1 = inv_I _1.iter
   
-  predicate invariant_ref_Rev_I [@inline:trivial] (self: t_Rev_I) = inv_Rev_I self
+  function invariant_ref_Rev_I [@inline:trivial] (self: t_Rev_I) : bool = inv_Rev_I self
   
-  meta "rewrite_def" predicate invariant_ref_Rev_I
+  meta "rewrite_def" function invariant_ref_Rev_I
   
-  predicate inv_ref_Rev_I [@inline:trivial] (_1: t_Rev_I) = invariant_ref_Rev_I _1
+  function inv_ref_Rev_I [@inline:trivial] (_1: t_Rev_I) : bool = invariant_ref_Rev_I _1
   
-  meta "rewrite_def" predicate inv_ref_Rev_I
+  meta "rewrite_def" function inv_ref_Rev_I
   
   type t_Option_usize = None | Some UInt64.t
   
@@ -1098,7 +1100,7 @@ module M_impl_ExactSizeIterator_for_Rev_I__is_empty__refines (* <Rev<I> as commo
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -1109,9 +1111,9 @@ module M_impl_ExactSizeIterator_for_Rev_I__is_empty__refines (* <Rev<I> as commo
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_I, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -1122,28 +1124,28 @@ module M_impl_ExactSizeIterator_for_Rev_I__is_empty__refines (* <Rev<I> as commo
         | None -> true
         end)
   
-  predicate postcondition_size_hint'0 (self: ()) (args: t_Rev_I) (result: tup2_usize_Option_usize) =
+  function postcondition_size_hint'0 (self: ()) (args: t_Rev_I) (result: tup2_usize_Option_usize) : bool =
     let self'0 = args in postcondition_size_hint () self'0.iter result
   
-  meta "rewrite_def" predicate postcondition_size_hint'0
+  meta "rewrite_def" function postcondition_size_hint'0
   
-  predicate invariant_ref_I [@inline:trivial] (self: t_I) = inv_I self
+  function invariant_ref_I [@inline:trivial] (self: t_I) : bool = inv_I self
   
-  meta "rewrite_def" predicate invariant_ref_I
+  meta "rewrite_def" function invariant_ref_I
   
-  predicate inv_ref_I [@inline:trivial] (_1: t_I) = invariant_ref_I _1
+  function inv_ref_I [@inline:trivial] (_1: t_I) : bool = invariant_ref_I _1
   
-  meta "rewrite_def" predicate inv_ref_I
+  meta "rewrite_def" function inv_ref_I
   
-  predicate precondition_size_hint (self: ()) (args: t_I)
+  function precondition_size_hint (self: ()) (args: t_I) : bool
   
   axiom precondition_fndef: forall args: t_I [precondition_size_hint () args]. (let self = args in inv_ref_I self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_I (self: t_I) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -1152,9 +1154,9 @@ module M_impl_ExactSizeIterator_for_Rev_I__is_empty__refines (* <Rev<I> as commo
     {[@stop_split] [@expl:size_hint ensures] postcondition_once_size_hint () self result}
       (! return {result}) ]
   
-  predicate completed_back_I (self: MutBorrow.t t_I)
+  function completed_back_I (self: MutBorrow.t t_I) : bool
   
-  predicate produces_back_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_back_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function size_hint_back_spec_I (self: t_I) (r: tup2_usize_Option_usize) : ()
   
@@ -1178,7 +1180,7 @@ module M_impl_ExactSizeIterator_for_Rev_I__is_empty__refines (* <Rev<I> as commo
   
   axiom produces_back_refl_I_spec: forall self: t_I. produces_back_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate produces_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) =
+  function produces_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) : bool =
     produces_back_I self.iter visited o.iter
   
   function produces_trans_Rev_I (a: t_Rev_I) (ab: Seq.seq t_Item) (b: t_Rev_I) (bc: Seq.seq t_Item) (c: t_Rev_I) : () =
@@ -1227,7 +1229,7 @@ module M_impl_ExactSizeIterator_for_Rev_I__len (* <Rev<I> as common::ExactSizeIt
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -1238,9 +1240,9 @@ module M_impl_ExactSizeIterator_for_Rev_I__len (* <Rev<I> as common::ExactSizeIt
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_I, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -1251,25 +1253,25 @@ module M_impl_ExactSizeIterator_for_Rev_I__len (* <Rev<I> as common::ExactSizeIt
         | None -> true
         end)
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate invariant_ref_I [@inline:trivial] (self: t_I) = inv_I self
+  function invariant_ref_I [@inline:trivial] (self: t_I) : bool = inv_I self
   
-  meta "rewrite_def" predicate invariant_ref_I
+  meta "rewrite_def" function invariant_ref_I
   
-  predicate inv_ref_I [@inline:trivial] (_1: t_I) = invariant_ref_I _1
+  function inv_ref_I [@inline:trivial] (_1: t_I) : bool = invariant_ref_I _1
   
-  meta "rewrite_def" predicate inv_ref_I
+  meta "rewrite_def" function inv_ref_I
   
-  predicate precondition_size_hint (self: ()) (args: t_I)
+  function precondition_size_hint (self: ()) (args: t_I) : bool
   
   axiom precondition_fndef: forall args: t_I [precondition_size_hint () args]. (let self = args in inv_ref_I self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_I (self: t_I) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -1283,46 +1285,46 @@ module M_impl_ExactSizeIterator_for_Rev_I__len (* <Rev<I> as common::ExactSizeIt
   axiom size_hint_exact_I_spec: forall self: t_I, r: tup2_usize_Option_usize. postcondition_size_hint () self r
       -> r.f1 = Some (r.f0)
   
-  predicate precondition_len (self: ()) (args: t_I)
+  function precondition_len (self: ()) (args: t_I) : bool
   
   axiom precondition_fndef'0: forall args: t_I [precondition_len () args]. (let self = args in inv_ref_I self)
       -> precondition_len () args
   
-  predicate postcondition_len (self: ()) (args: t_I) (result: UInt64.t)
+  function postcondition_len (self: ()) (args: t_I) (result: UInt64.t) : bool
   
   axiom postcondition_fndef'0:
     forall args: t_I, result: UInt64.t [postcondition_len () args result]. postcondition_len () args result
       -> (let self = args in postcondition_size_hint () self { f0 = result; f1 = Some result })
   
-  predicate postcondition_once_len (self: ()) (args: t_I) (result: UInt64.t) = postcondition_len self args result
+  function postcondition_once_len (self: ()) (args: t_I) (result: UInt64.t) : bool = postcondition_len self args result
   
-  meta "rewrite_def" predicate postcondition_once_len
+  meta "rewrite_def" function postcondition_once_len
   
   let len_I (self: t_I) (return (x: UInt64.t)) = {[@stop_split] [@expl:len requires] precondition_len () self}
     any
     [ return (result: UInt64.t) -> {[@stop_split] [@expl:len ensures] postcondition_once_len () self result}
       (! return {result}) ]
   
-  predicate inv_Rev_I (_1: t_Rev_I)
+  function inv_Rev_I (_1: t_Rev_I) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Rev_I [inv_Rev_I _1]. inv_Rev_I _1 = inv_I _1.iter
   
-  predicate invariant_ref_Rev_I [@inline:trivial] (self: t_Rev_I) = inv_Rev_I self
+  function invariant_ref_Rev_I [@inline:trivial] (self: t_Rev_I) : bool = inv_Rev_I self
   
-  meta "rewrite_def" predicate invariant_ref_Rev_I
+  meta "rewrite_def" function invariant_ref_Rev_I
   
-  predicate inv_ref_Rev_I [@inline:trivial] (_1: t_Rev_I) = invariant_ref_Rev_I _1
+  function inv_ref_Rev_I [@inline:trivial] (_1: t_Rev_I) : bool = invariant_ref_Rev_I _1
   
-  meta "rewrite_def" predicate inv_ref_Rev_I
+  meta "rewrite_def" function inv_ref_Rev_I
   
-  predicate postcondition_size_hint'0 (self: ()) (args: t_Rev_I) (result: tup2_usize_Option_usize) =
+  function postcondition_size_hint'0 (self: ()) (args: t_Rev_I) (result: tup2_usize_Option_usize) : bool =
     let self'0 = args in postcondition_size_hint () self'0.iter result
   
-  meta "rewrite_def" predicate postcondition_size_hint'0
+  meta "rewrite_def" function postcondition_size_hint'0
   
-  predicate completed_back_I (self: MutBorrow.t t_I)
+  function completed_back_I (self: MutBorrow.t t_I) : bool
   
-  predicate produces_back_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_back_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function size_hint_back_spec_I (self: t_I) (r: tup2_usize_Option_usize) : ()
   
@@ -1346,7 +1348,7 @@ module M_impl_ExactSizeIterator_for_Rev_I__len (* <Rev<I> as common::ExactSizeIt
   
   axiom produces_back_refl_I_spec: forall self: t_I. produces_back_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate produces_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) =
+  function produces_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) : bool =
     produces_back_I self.iter visited o.iter
   
   function produces_trans_Rev_I (a: t_Rev_I) (ab: Seq.seq t_Item) (b: t_Rev_I) (bc: Seq.seq t_Item) (c: t_Rev_I) : () =
@@ -1390,19 +1392,19 @@ module M_impl_ExactSizeIterator_for_Rev_I__len__refines (* <Rev<I> as common::Ex
   
   type t_Rev_I = { iter: t_I }
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate inv_Rev_I (_1: t_Rev_I)
+  function inv_Rev_I (_1: t_Rev_I) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Rev_I [inv_Rev_I _1]. inv_Rev_I _1 = inv_I _1.iter
   
-  predicate invariant_ref_Rev_I [@inline:trivial] (self: t_Rev_I) = inv_Rev_I self
+  function invariant_ref_Rev_I [@inline:trivial] (self: t_Rev_I) : bool = inv_Rev_I self
   
-  meta "rewrite_def" predicate invariant_ref_Rev_I
+  meta "rewrite_def" function invariant_ref_Rev_I
   
-  predicate inv_ref_Rev_I [@inline:trivial] (_1: t_Rev_I) = invariant_ref_Rev_I _1
+  function inv_ref_Rev_I [@inline:trivial] (_1: t_Rev_I) : bool = invariant_ref_Rev_I _1
   
-  meta "rewrite_def" predicate inv_ref_Rev_I
+  meta "rewrite_def" function inv_ref_Rev_I
   
   type t_Option_usize = None | Some UInt64.t
   
@@ -1410,7 +1412,7 @@ module M_impl_ExactSizeIterator_for_Rev_I__len__refines (* <Rev<I> as common::Ex
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -1421,9 +1423,9 @@ module M_impl_ExactSizeIterator_for_Rev_I__len__refines (* <Rev<I> as common::Ex
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_I, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -1434,28 +1436,28 @@ module M_impl_ExactSizeIterator_for_Rev_I__len__refines (* <Rev<I> as common::Ex
         | None -> true
         end)
   
-  predicate postcondition_size_hint'0 (self: ()) (args: t_Rev_I) (result: tup2_usize_Option_usize) =
+  function postcondition_size_hint'0 (self: ()) (args: t_Rev_I) (result: tup2_usize_Option_usize) : bool =
     let self'0 = args in postcondition_size_hint () self'0.iter result
   
-  meta "rewrite_def" predicate postcondition_size_hint'0
+  meta "rewrite_def" function postcondition_size_hint'0
   
-  predicate invariant_ref_I [@inline:trivial] (self: t_I) = inv_I self
+  function invariant_ref_I [@inline:trivial] (self: t_I) : bool = inv_I self
   
-  meta "rewrite_def" predicate invariant_ref_I
+  meta "rewrite_def" function invariant_ref_I
   
-  predicate inv_ref_I [@inline:trivial] (_1: t_I) = invariant_ref_I _1
+  function inv_ref_I [@inline:trivial] (_1: t_I) : bool = invariant_ref_I _1
   
-  meta "rewrite_def" predicate inv_ref_I
+  meta "rewrite_def" function inv_ref_I
   
-  predicate precondition_size_hint (self: ()) (args: t_I)
+  function precondition_size_hint (self: ()) (args: t_I) : bool
   
   axiom precondition_fndef: forall args: t_I [precondition_size_hint () args]. (let self = args in inv_ref_I self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_I (self: t_I) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -1464,9 +1466,9 @@ module M_impl_ExactSizeIterator_for_Rev_I__len__refines (* <Rev<I> as common::Ex
     {[@stop_split] [@expl:size_hint ensures] postcondition_once_size_hint () self result}
       (! return {result}) ]
   
-  predicate completed_back_I (self: MutBorrow.t t_I)
+  function completed_back_I (self: MutBorrow.t t_I) : bool
   
-  predicate produces_back_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_back_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function size_hint_back_spec_I (self: t_I) (r: tup2_usize_Option_usize) : ()
   
@@ -1490,7 +1492,7 @@ module M_impl_ExactSizeIterator_for_Rev_I__len__refines (* <Rev<I> as common::Ex
   
   axiom produces_back_refl_I_spec: forall self: t_I. produces_back_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate produces_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) =
+  function produces_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) : bool =
     produces_back_I self.iter visited o.iter
   
   function produces_trans_Rev_I (a: t_Rev_I) (ab: Seq.seq t_Item) (b: t_Rev_I) (bc: Seq.seq t_Item) (c: t_Rev_I) : () =
@@ -1536,7 +1538,7 @@ module M_impl_ExactSizeIterator_for_Rev_I__size_hint_exact (* <Rev<I> as common:
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -1547,9 +1549,9 @@ module M_impl_ExactSizeIterator_for_Rev_I__size_hint_exact (* <Rev<I> as common:
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_I, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -1560,30 +1562,30 @@ module M_impl_ExactSizeIterator_for_Rev_I__size_hint_exact (* <Rev<I> as common:
         | None -> true
         end)
   
-  predicate postcondition_size_hint'0 (self: ()) (args: t_Rev_I) (result: tup2_usize_Option_usize) =
+  function postcondition_size_hint'0 (self: ()) (args: t_Rev_I) (result: tup2_usize_Option_usize) : bool =
     let self'0 = args in postcondition_size_hint () self'0.iter result
   
-  meta "rewrite_def" predicate postcondition_size_hint'0
+  meta "rewrite_def" function postcondition_size_hint'0
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate invariant_ref_I [@inline:trivial] (self: t_I) = inv_I self
+  function invariant_ref_I [@inline:trivial] (self: t_I) : bool = inv_I self
   
-  meta "rewrite_def" predicate invariant_ref_I
+  meta "rewrite_def" function invariant_ref_I
   
-  predicate inv_ref_I [@inline:trivial] (_1: t_I) = invariant_ref_I _1
+  function inv_ref_I [@inline:trivial] (_1: t_I) : bool = invariant_ref_I _1
   
-  meta "rewrite_def" predicate inv_ref_I
+  meta "rewrite_def" function inv_ref_I
   
-  predicate precondition_size_hint (self: ()) (args: t_I)
+  function precondition_size_hint (self: ()) (args: t_I) : bool
   
   axiom precondition_fndef: forall args: t_I [precondition_size_hint () args]. (let self = args in inv_ref_I self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_I (self: t_I) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -1592,9 +1594,9 @@ module M_impl_ExactSizeIterator_for_Rev_I__size_hint_exact (* <Rev<I> as common:
     {[@stop_split] [@expl:size_hint ensures] postcondition_once_size_hint () self result}
       (! return {result}) ]
   
-  predicate completed_back_I (self: MutBorrow.t t_I)
+  function completed_back_I (self: MutBorrow.t t_I) : bool
   
-  predicate produces_back_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_back_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function size_hint_back_spec_I (self: t_I) (r: tup2_usize_Option_usize) : ()
   
@@ -1618,7 +1620,7 @@ module M_impl_ExactSizeIterator_for_Rev_I__size_hint_exact (* <Rev<I> as common:
   
   axiom produces_back_refl_I_spec: forall self: t_I. produces_back_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate produces_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) =
+  function produces_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) : bool =
     produces_back_I self.iter visited o.iter
   
   function produces_trans_Rev_I (a: t_Rev_I) (ab: Seq.seq t_Item) (b: t_Rev_I) (bc: Seq.seq t_Item) (c: t_Rev_I) : () =
@@ -1632,17 +1634,17 @@ module M_impl_ExactSizeIterator_for_Rev_I__size_hint_exact (* <Rev<I> as common:
   
   axiom produces_refl_Rev_I_spec: forall self: t_Rev_I. produces_Rev_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate inv_Rev_I (_1: t_Rev_I)
+  function inv_Rev_I (_1: t_Rev_I) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Rev_I [inv_Rev_I _1]. inv_Rev_I _1 = inv_I _1.iter
   
-  predicate invariant_ref_Rev_I [@inline:trivial] (self: t_Rev_I) = inv_Rev_I self
+  function invariant_ref_Rev_I [@inline:trivial] (self: t_Rev_I) : bool = inv_Rev_I self
   
-  meta "rewrite_def" predicate invariant_ref_Rev_I
+  meta "rewrite_def" function invariant_ref_Rev_I
   
-  predicate inv_ref_Rev_I [@inline:trivial] (_1: t_Rev_I) = invariant_ref_Rev_I _1
+  function inv_ref_Rev_I [@inline:trivial] (_1: t_Rev_I) : bool = invariant_ref_Rev_I _1
   
-  meta "rewrite_def" predicate inv_ref_Rev_I
+  meta "rewrite_def" function inv_ref_Rev_I
   
   let size_hint_Rev_I (self: t_Rev_I) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint 'self' type invariant] inv_ref_Rev_I self}
@@ -1687,7 +1689,7 @@ module M_impl_ExactSizeIterator_for_Rev_I__size_hint_exact__refines (* <Rev<I> a
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -1698,9 +1700,9 @@ module M_impl_ExactSizeIterator_for_Rev_I__size_hint_exact__refines (* <Rev<I> a
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_I, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -1711,30 +1713,30 @@ module M_impl_ExactSizeIterator_for_Rev_I__size_hint_exact__refines (* <Rev<I> a
         | None -> true
         end)
   
-  predicate postcondition_size_hint'0 (self: ()) (args: t_Rev_I) (result: tup2_usize_Option_usize) =
+  function postcondition_size_hint'0 (self: ()) (args: t_Rev_I) (result: tup2_usize_Option_usize) : bool =
     let self'0 = args in postcondition_size_hint () self'0.iter result
   
-  meta "rewrite_def" predicate postcondition_size_hint'0
+  meta "rewrite_def" function postcondition_size_hint'0
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate invariant_ref_I [@inline:trivial] (self: t_I) = inv_I self
+  function invariant_ref_I [@inline:trivial] (self: t_I) : bool = inv_I self
   
-  meta "rewrite_def" predicate invariant_ref_I
+  meta "rewrite_def" function invariant_ref_I
   
-  predicate inv_ref_I [@inline:trivial] (_1: t_I) = invariant_ref_I _1
+  function inv_ref_I [@inline:trivial] (_1: t_I) : bool = invariant_ref_I _1
   
-  meta "rewrite_def" predicate inv_ref_I
+  meta "rewrite_def" function inv_ref_I
   
-  predicate precondition_size_hint (self: ()) (args: t_I)
+  function precondition_size_hint (self: ()) (args: t_I) : bool
   
   axiom precondition_fndef: forall args: t_I [precondition_size_hint () args]. (let self = args in inv_ref_I self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_I (self: t_I) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -1743,9 +1745,9 @@ module M_impl_ExactSizeIterator_for_Rev_I__size_hint_exact__refines (* <Rev<I> a
     {[@stop_split] [@expl:size_hint ensures] postcondition_once_size_hint () self result}
       (! return {result}) ]
   
-  predicate completed_back_I (self: MutBorrow.t t_I)
+  function completed_back_I (self: MutBorrow.t t_I) : bool
   
-  predicate produces_back_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_back_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function size_hint_back_spec_I (self: t_I) (r: tup2_usize_Option_usize) : ()
   
@@ -1769,7 +1771,7 @@ module M_impl_ExactSizeIterator_for_Rev_I__size_hint_exact__refines (* <Rev<I> a
   
   axiom produces_back_refl_I_spec: forall self: t_I. produces_back_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate produces_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) =
+  function produces_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) : bool =
     produces_back_I self.iter visited o.iter
   
   function produces_trans_Rev_I (a: t_Rev_I) (ab: Seq.seq t_Item) (b: t_Rev_I) (bc: Seq.seq t_Item) (c: t_Rev_I) : () =
@@ -1783,17 +1785,17 @@ module M_impl_ExactSizeIterator_for_Rev_I__size_hint_exact__refines (* <Rev<I> a
   
   axiom produces_refl_Rev_I_spec: forall self: t_Rev_I. produces_Rev_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate inv_Rev_I (_1: t_Rev_I)
+  function inv_Rev_I (_1: t_Rev_I) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Rev_I [inv_Rev_I _1]. inv_Rev_I _1 = inv_I _1.iter
   
-  predicate invariant_ref_Rev_I [@inline:trivial] (self: t_Rev_I) = inv_Rev_I self
+  function invariant_ref_Rev_I [@inline:trivial] (self: t_Rev_I) : bool = inv_Rev_I self
   
-  meta "rewrite_def" predicate invariant_ref_Rev_I
+  meta "rewrite_def" function invariant_ref_Rev_I
   
-  predicate inv_ref_Rev_I [@inline:trivial] (_1: t_Rev_I) = invariant_ref_Rev_I _1
+  function inv_ref_Rev_I [@inline:trivial] (_1: t_Rev_I) : bool = invariant_ref_Rev_I _1
   
-  meta "rewrite_def" predicate inv_ref_Rev_I
+  meta "rewrite_def" function inv_ref_Rev_I
   
   let size_hint_Rev_I (self: t_Rev_I) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint 'self' type invariant] inv_ref_Rev_I self}
@@ -1820,7 +1822,7 @@ module M_impl_Iterator_for_Rev_I__next (* <Rev<I> as common::Iterator> *)
   
   type t_Rev_I = { iter: t_I }
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
   type t_Option_usize = None | Some UInt64.t
   
@@ -1828,7 +1830,7 @@ module M_impl_Iterator_for_Rev_I__next (* <Rev<I> as common::Iterator> *)
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -1839,9 +1841,9 @@ module M_impl_Iterator_for_Rev_I__next (* <Rev<I> as common::Iterator> *)
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_I, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -1852,23 +1854,23 @@ module M_impl_Iterator_for_Rev_I__next (* <Rev<I> as common::Iterator> *)
         | None -> true
         end)
   
-  predicate invariant_ref_I [@inline:trivial] (self: t_I) = inv_I self
+  function invariant_ref_I [@inline:trivial] (self: t_I) : bool = inv_I self
   
-  meta "rewrite_def" predicate invariant_ref_I
+  meta "rewrite_def" function invariant_ref_I
   
-  predicate inv_ref_I [@inline:trivial] (_1: t_I) = invariant_ref_I _1
+  function inv_ref_I [@inline:trivial] (_1: t_I) : bool = invariant_ref_I _1
   
-  meta "rewrite_def" predicate inv_ref_I
+  meta "rewrite_def" function inv_ref_I
   
-  predicate precondition_size_hint (self: ()) (args: t_I)
+  function precondition_size_hint (self: ()) (args: t_I) : bool
   
   axiom precondition_fndef: forall args: t_I [precondition_size_hint () args]. (let self = args in inv_ref_I self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_I (self: t_I) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -1877,9 +1879,9 @@ module M_impl_Iterator_for_Rev_I__next (* <Rev<I> as common::Iterator> *)
     {[@stop_split] [@expl:size_hint ensures] postcondition_once_size_hint () self result}
       (! return {result}) ]
   
-  predicate produces_back_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_back_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
-  predicate completed_back_I (self: MutBorrow.t t_I)
+  function completed_back_I (self: MutBorrow.t t_I) : bool
   
   function size_hint_back_spec_I (self: t_I) (r: tup2_usize_Option_usize) : ()
   
@@ -1905,23 +1907,23 @@ module M_impl_Iterator_for_Rev_I__next (* <Rev<I> as common::Iterator> *)
   
   type t_Option_Item = None'0 | Some'0 t_Item
   
-  predicate invariant_refmut_I [@inline:trivial] (self: MutBorrow.t t_I) = inv_I self.current /\ inv_I self.final
+  function invariant_refmut_I [@inline:trivial] (self: MutBorrow.t t_I) : bool = inv_I self.current /\ inv_I self.final
   
-  meta "rewrite_def" predicate invariant_refmut_I
+  meta "rewrite_def" function invariant_refmut_I
   
-  predicate inv_refmut_I [@inline:trivial] (_1: MutBorrow.t t_I) = invariant_refmut_I _1
+  function inv_refmut_I [@inline:trivial] (_1: MutBorrow.t t_I) : bool = invariant_refmut_I _1
   
-  meta "rewrite_def" predicate inv_refmut_I
+  meta "rewrite_def" function inv_refmut_I
   
-  predicate precondition_next_back (self: ()) (args: MutBorrow.t t_I)
+  function precondition_next_back (self: ()) (args: MutBorrow.t t_I) : bool
   
   axiom precondition_fndef'0:
     forall args: MutBorrow.t t_I [precondition_next_back () args]. (let self = args in inv_refmut_I self)
       -> precondition_next_back () args
   
-  predicate inv_Item (_1: t_Item)
+  function inv_Item (_1: t_Item) : bool
   
-  predicate inv_Option_Item (_1: t_Option_Item)
+  function inv_Option_Item (_1: t_Option_Item) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Option_Item [inv_Option_Item _1]. inv_Option_Item _1
       = match _1 with
@@ -1929,7 +1931,7 @@ module M_impl_Iterator_for_Rev_I__next (* <Rev<I> as common::Iterator> *)
         | Some'0 f0'0 -> inv_Item f0'0
         end
   
-  predicate postcondition_next_back (self: ()) (args: MutBorrow.t t_I) (result: t_Option_Item)
+  function postcondition_next_back (self: ()) (args: MutBorrow.t t_I) (result: t_Option_Item) : bool
   
   axiom postcondition_fndef'0:
     forall args: MutBorrow.t t_I, result: t_Option_Item [postcondition_next_back () args result]. postcondition_next_back () args result
@@ -1939,10 +1941,10 @@ module M_impl_Iterator_for_Rev_I__next (* <Rev<I> as common::Iterator> *)
         | Some'0 v -> produces_back_I self.current (Seq.singleton v) self.final
         end)
   
-  predicate postcondition_once_next_back (self: ()) (args: MutBorrow.t t_I) (result: t_Option_Item) =
+  function postcondition_once_next_back (self: ()) (args: MutBorrow.t t_I) (result: t_Option_Item) : bool =
     postcondition_next_back self args result
   
-  meta "rewrite_def" predicate postcondition_once_next_back
+  meta "rewrite_def" function postcondition_once_next_back
   
   let next_back_I (self: MutBorrow.t t_I) (return (x: t_Option_Item)) =
   {[@stop_split] [@expl:next_back requires] precondition_next_back () self}
@@ -1951,27 +1953,27 @@ module M_impl_Iterator_for_Rev_I__next (* <Rev<I> as common::Iterator> *)
     {[@stop_split] [@expl:next_back ensures] postcondition_once_next_back () self result}
       (! return {result}) ]
   
-  predicate inv_Rev_I (_1: t_Rev_I)
+  function inv_Rev_I (_1: t_Rev_I) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Rev_I [inv_Rev_I _1]. inv_Rev_I _1 = inv_I _1.iter
   
-  predicate invariant_refmut_Rev_I [@inline:trivial] (self: MutBorrow.t t_Rev_I) =
-    inv_Rev_I self.current /\ inv_Rev_I self.final
+  function invariant_refmut_Rev_I [@inline:trivial] (self: MutBorrow.t t_Rev_I) : bool = inv_Rev_I self.current
+    /\ inv_Rev_I self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Rev_I
+  meta "rewrite_def" function invariant_refmut_Rev_I
   
-  predicate inv_refmut_Rev_I [@inline:trivial] (_1: MutBorrow.t t_Rev_I) = invariant_refmut_Rev_I _1
+  function inv_refmut_Rev_I [@inline:trivial] (_1: MutBorrow.t t_Rev_I) : bool = invariant_refmut_Rev_I _1
   
-  meta "rewrite_def" predicate inv_refmut_Rev_I
+  meta "rewrite_def" function inv_refmut_Rev_I
   
-  predicate resolve_refmut_Rev_I [@inline:trivial] (_1: MutBorrow.t t_Rev_I) = _1.final = _1.current
+  function resolve_refmut_Rev_I [@inline:trivial] (_1: MutBorrow.t t_Rev_I) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Rev_I
+  meta "rewrite_def" function resolve_refmut_Rev_I
   
-  predicate completed_Rev_I (self: MutBorrow.t t_Rev_I) =
+  function completed_Rev_I (self: MutBorrow.t t_Rev_I) : bool =
     completed_back_I (MutBorrow.borrow_logic self.current.iter self.final.iter (MutBorrow.inherit_id (MutBorrow.get_id self) 0))
   
-  predicate produces_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) =
+  function produces_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) : bool =
     produces_back_I self.iter visited o.iter
   
   meta "compute_max_steps" 1000000
@@ -2012,24 +2014,24 @@ module M_impl_Iterator_for_Rev_I__next__refines (* <Rev<I> as common::Iterator> 
   
   type t_Rev_I = { iter: t_I }
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate inv_Rev_I (_1: t_Rev_I)
+  function inv_Rev_I (_1: t_Rev_I) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Rev_I [inv_Rev_I _1]. inv_Rev_I _1 = inv_I _1.iter
   
-  predicate invariant_refmut_Rev_I [@inline:trivial] (self: MutBorrow.t t_Rev_I) =
-    inv_Rev_I self.current /\ inv_Rev_I self.final
+  function invariant_refmut_Rev_I [@inline:trivial] (self: MutBorrow.t t_Rev_I) : bool = inv_Rev_I self.current
+    /\ inv_Rev_I self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Rev_I
+  meta "rewrite_def" function invariant_refmut_Rev_I
   
-  predicate inv_refmut_Rev_I [@inline:trivial] (_1: MutBorrow.t t_Rev_I) = invariant_refmut_Rev_I _1
+  function inv_refmut_Rev_I [@inline:trivial] (_1: MutBorrow.t t_Rev_I) : bool = invariant_refmut_Rev_I _1
   
-  meta "rewrite_def" predicate inv_refmut_Rev_I
+  meta "rewrite_def" function inv_refmut_Rev_I
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -2042,9 +2044,9 @@ module M_impl_Iterator_for_Rev_I__next__refines (* <Rev<I> as common::Iterator> 
   
   type t_Option_Item = None | Some t_Item
   
-  predicate inv_Item (_1: t_Item)
+  function inv_Item (_1: t_Item) : bool
   
-  predicate inv_Option_Item (_1: t_Option_Item)
+  function inv_Option_Item (_1: t_Option_Item) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Option_Item [inv_Option_Item _1]. inv_Option_Item _1
       = match _1 with
@@ -2056,9 +2058,9 @@ module M_impl_Iterator_for_Rev_I__next__refines (* <Rev<I> as common::Iterator> 
   
   type tup2_usize_Option_usize = { f0: UInt64.t; f1: t_Option_usize }
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_I, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -2069,23 +2071,23 @@ module M_impl_Iterator_for_Rev_I__next__refines (* <Rev<I> as common::Iterator> 
         | None'0 -> true
         end)
   
-  predicate invariant_ref_I [@inline:trivial] (self: t_I) = inv_I self
+  function invariant_ref_I [@inline:trivial] (self: t_I) : bool = inv_I self
   
-  meta "rewrite_def" predicate invariant_ref_I
+  meta "rewrite_def" function invariant_ref_I
   
-  predicate inv_ref_I [@inline:trivial] (_1: t_I) = invariant_ref_I _1
+  function inv_ref_I [@inline:trivial] (_1: t_I) : bool = invariant_ref_I _1
   
-  meta "rewrite_def" predicate inv_ref_I
+  meta "rewrite_def" function inv_ref_I
   
-  predicate precondition_size_hint (self: ()) (args: t_I)
+  function precondition_size_hint (self: ()) (args: t_I) : bool
   
   axiom precondition_fndef: forall args: t_I [precondition_size_hint () args]. (let self = args in inv_ref_I self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_I (self: t_I) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -2094,9 +2096,9 @@ module M_impl_Iterator_for_Rev_I__next__refines (* <Rev<I> as common::Iterator> 
     {[@stop_split] [@expl:size_hint ensures] postcondition_once_size_hint () self result}
       (! return {result}) ]
   
-  predicate produces_back_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_back_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
-  predicate completed_back_I (self: MutBorrow.t t_I)
+  function completed_back_I (self: MutBorrow.t t_I) : bool
   
   function size_hint_back_spec_I (self: t_I) (r: tup2_usize_Option_usize) : ()
   
@@ -2120,10 +2122,10 @@ module M_impl_Iterator_for_Rev_I__next__refines (* <Rev<I> as common::Iterator> 
   
   axiom produces_back_refl_I_spec: forall self: t_I. produces_back_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_Rev_I (self: MutBorrow.t t_Rev_I) =
+  function completed_Rev_I (self: MutBorrow.t t_Rev_I) : bool =
     completed_back_I (MutBorrow.borrow_logic self.current.iter self.final.iter (MutBorrow.inherit_id (MutBorrow.get_id self) 0))
   
-  predicate produces_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) =
+  function produces_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) : bool =
     produces_back_I self.iter visited o.iter
   
   meta "compute_max_steps" 1000000
@@ -2155,7 +2157,7 @@ module M_impl_Iterator_for_Rev_I__produces_refl (* <Rev<I> as common::Iterator> 
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -2170,9 +2172,9 @@ module M_impl_Iterator_for_Rev_I__produces_refl (* <Rev<I> as common::Iterator> 
   
   type tup2_usize_Option_usize = { f0: UInt64.t; f1: t_Option_usize }
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_I, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -2183,25 +2185,25 @@ module M_impl_Iterator_for_Rev_I__produces_refl (* <Rev<I> as common::Iterator> 
         | None -> true
         end)
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate invariant_ref_I [@inline:trivial] (self: t_I) = inv_I self
+  function invariant_ref_I [@inline:trivial] (self: t_I) : bool = inv_I self
   
-  meta "rewrite_def" predicate invariant_ref_I
+  meta "rewrite_def" function invariant_ref_I
   
-  predicate inv_ref_I [@inline:trivial] (_1: t_I) = invariant_ref_I _1
+  function inv_ref_I [@inline:trivial] (_1: t_I) : bool = invariant_ref_I _1
   
-  meta "rewrite_def" predicate inv_ref_I
+  meta "rewrite_def" function inv_ref_I
   
-  predicate precondition_size_hint (self: ()) (args: t_I)
+  function precondition_size_hint (self: ()) (args: t_I) : bool
   
   axiom precondition_fndef: forall args: t_I [precondition_size_hint () args]. (let self = args in inv_ref_I self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_I (self: t_I) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -2210,9 +2212,9 @@ module M_impl_Iterator_for_Rev_I__produces_refl (* <Rev<I> as common::Iterator> 
     {[@stop_split] [@expl:size_hint ensures] postcondition_once_size_hint () self result}
       (! return {result}) ]
   
-  predicate completed_back_I (self: MutBorrow.t t_I)
+  function completed_back_I (self: MutBorrow.t t_I) : bool
   
-  predicate produces_back_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_back_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function size_hint_back_spec_I (self: t_I) (r: tup2_usize_Option_usize) : ()
   
@@ -2236,7 +2238,7 @@ module M_impl_Iterator_for_Rev_I__produces_refl (* <Rev<I> as common::Iterator> 
   
   axiom produces_back_refl_I_spec: forall self: t_I. produces_back_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate produces_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) =
+  function produces_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) : bool =
     produces_back_I self.iter visited o.iter
   
   meta "compute_max_steps" 1000000
@@ -2262,7 +2264,7 @@ module M_impl_Iterator_for_Rev_I__produces_refl__refines (* <Rev<I> as common::I
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -2277,9 +2279,9 @@ module M_impl_Iterator_for_Rev_I__produces_refl__refines (* <Rev<I> as common::I
   
   type tup2_usize_Option_usize = { f0: UInt64.t; f1: t_Option_usize }
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_I, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -2290,25 +2292,25 @@ module M_impl_Iterator_for_Rev_I__produces_refl__refines (* <Rev<I> as common::I
         | None -> true
         end)
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate invariant_ref_I [@inline:trivial] (self: t_I) = inv_I self
+  function invariant_ref_I [@inline:trivial] (self: t_I) : bool = inv_I self
   
-  meta "rewrite_def" predicate invariant_ref_I
+  meta "rewrite_def" function invariant_ref_I
   
-  predicate inv_ref_I [@inline:trivial] (_1: t_I) = invariant_ref_I _1
+  function inv_ref_I [@inline:trivial] (_1: t_I) : bool = invariant_ref_I _1
   
-  meta "rewrite_def" predicate inv_ref_I
+  meta "rewrite_def" function inv_ref_I
   
-  predicate precondition_size_hint (self: ()) (args: t_I)
+  function precondition_size_hint (self: ()) (args: t_I) : bool
   
   axiom precondition_fndef: forall args: t_I [precondition_size_hint () args]. (let self = args in inv_ref_I self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_I (self: t_I) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -2317,9 +2319,9 @@ module M_impl_Iterator_for_Rev_I__produces_refl__refines (* <Rev<I> as common::I
     {[@stop_split] [@expl:size_hint ensures] postcondition_once_size_hint () self result}
       (! return {result}) ]
   
-  predicate completed_back_I (self: MutBorrow.t t_I)
+  function completed_back_I (self: MutBorrow.t t_I) : bool
   
-  predicate produces_back_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_back_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function size_hint_back_spec_I (self: t_I) (r: tup2_usize_Option_usize) : ()
   
@@ -2343,7 +2345,7 @@ module M_impl_Iterator_for_Rev_I__produces_refl__refines (* <Rev<I> as common::I
   
   axiom produces_back_refl_I_spec: forall self: t_I. produces_back_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate produces_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) =
+  function produces_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) : bool =
     produces_back_I self.iter visited o.iter
   
   meta "compute_max_steps" 1000000
@@ -2365,7 +2367,7 @@ module M_impl_Iterator_for_Rev_I__produces_trans (* <Rev<I> as common::Iterator>
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -2380,9 +2382,9 @@ module M_impl_Iterator_for_Rev_I__produces_trans (* <Rev<I> as common::Iterator>
   
   type tup2_usize_Option_usize = { f0: UInt64.t; f1: t_Option_usize }
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_I, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -2393,25 +2395,25 @@ module M_impl_Iterator_for_Rev_I__produces_trans (* <Rev<I> as common::Iterator>
         | None -> true
         end)
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate invariant_ref_I [@inline:trivial] (self: t_I) = inv_I self
+  function invariant_ref_I [@inline:trivial] (self: t_I) : bool = inv_I self
   
-  meta "rewrite_def" predicate invariant_ref_I
+  meta "rewrite_def" function invariant_ref_I
   
-  predicate inv_ref_I [@inline:trivial] (_1: t_I) = invariant_ref_I _1
+  function inv_ref_I [@inline:trivial] (_1: t_I) : bool = invariant_ref_I _1
   
-  meta "rewrite_def" predicate inv_ref_I
+  meta "rewrite_def" function inv_ref_I
   
-  predicate precondition_size_hint (self: ()) (args: t_I)
+  function precondition_size_hint (self: ()) (args: t_I) : bool
   
   axiom precondition_fndef: forall args: t_I [precondition_size_hint () args]. (let self = args in inv_ref_I self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_I (self: t_I) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -2420,9 +2422,9 @@ module M_impl_Iterator_for_Rev_I__produces_trans (* <Rev<I> as common::Iterator>
     {[@stop_split] [@expl:size_hint ensures] postcondition_once_size_hint () self result}
       (! return {result}) ]
   
-  predicate completed_back_I (self: MutBorrow.t t_I)
+  function completed_back_I (self: MutBorrow.t t_I) : bool
   
-  predicate produces_back_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_back_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function size_hint_back_spec_I (self: t_I) (r: tup2_usize_Option_usize) : ()
   
@@ -2446,7 +2448,7 @@ module M_impl_Iterator_for_Rev_I__produces_trans (* <Rev<I> as common::Iterator>
   
   axiom produces_back_refl_I_spec: forall self: t_I. produces_back_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate produces_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) =
+  function produces_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) : bool =
     produces_back_I self.iter visited o.iter
   
   meta "compute_max_steps" 1000000
@@ -2480,7 +2482,7 @@ module M_impl_Iterator_for_Rev_I__produces_trans__refines (* <Rev<I> as common::
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -2495,9 +2497,9 @@ module M_impl_Iterator_for_Rev_I__produces_trans__refines (* <Rev<I> as common::
   
   type tup2_usize_Option_usize = { f0: UInt64.t; f1: t_Option_usize }
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_I, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -2508,25 +2510,25 @@ module M_impl_Iterator_for_Rev_I__produces_trans__refines (* <Rev<I> as common::
         | None -> true
         end)
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate invariant_ref_I [@inline:trivial] (self: t_I) = inv_I self
+  function invariant_ref_I [@inline:trivial] (self: t_I) : bool = inv_I self
   
-  meta "rewrite_def" predicate invariant_ref_I
+  meta "rewrite_def" function invariant_ref_I
   
-  predicate inv_ref_I [@inline:trivial] (_1: t_I) = invariant_ref_I _1
+  function inv_ref_I [@inline:trivial] (_1: t_I) : bool = invariant_ref_I _1
   
-  meta "rewrite_def" predicate inv_ref_I
+  meta "rewrite_def" function inv_ref_I
   
-  predicate precondition_size_hint (self: ()) (args: t_I)
+  function precondition_size_hint (self: ()) (args: t_I) : bool
   
   axiom precondition_fndef: forall args: t_I [precondition_size_hint () args]. (let self = args in inv_ref_I self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_I (self: t_I) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -2535,9 +2537,9 @@ module M_impl_Iterator_for_Rev_I__produces_trans__refines (* <Rev<I> as common::
     {[@stop_split] [@expl:size_hint ensures] postcondition_once_size_hint () self result}
       (! return {result}) ]
   
-  predicate completed_back_I (self: MutBorrow.t t_I)
+  function completed_back_I (self: MutBorrow.t t_I) : bool
   
-  predicate produces_back_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_back_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function size_hint_back_spec_I (self: t_I) (r: tup2_usize_Option_usize) : ()
   
@@ -2561,7 +2563,7 @@ module M_impl_Iterator_for_Rev_I__produces_trans__refines (* <Rev<I> as common::
   
   axiom produces_back_refl_I_spec: forall self: t_I. produces_back_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate produces_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) =
+  function produces_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) : bool =
     produces_back_I self.iter visited o.iter
   
   meta "compute_max_steps" 1000000
@@ -2587,7 +2589,7 @@ module M_impl_Iterator_for_Rev_I__size_hint (* <Rev<I> as common::Iterator> *)
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -2602,24 +2604,24 @@ module M_impl_Iterator_for_Rev_I__size_hint (* <Rev<I> as common::Iterator> *)
   
   type tup2_usize_Option_usize = { f0: UInt64.t; f1: t_Option_usize }
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate invariant_ref_I [@inline:trivial] (self: t_I) = inv_I self
+  function invariant_ref_I [@inline:trivial] (self: t_I) : bool = inv_I self
   
-  meta "rewrite_def" predicate invariant_ref_I
+  meta "rewrite_def" function invariant_ref_I
   
-  predicate inv_ref_I [@inline:trivial] (_1: t_I) = invariant_ref_I _1
+  function inv_ref_I [@inline:trivial] (_1: t_I) : bool = invariant_ref_I _1
   
-  meta "rewrite_def" predicate inv_ref_I
+  meta "rewrite_def" function inv_ref_I
   
-  predicate precondition_size_hint (self: ()) (args: t_I)
+  function precondition_size_hint (self: ()) (args: t_I) : bool
   
   axiom precondition_fndef: forall args: t_I [precondition_size_hint () args]. (let self = args in inv_ref_I self)
       -> precondition_size_hint () args
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_I, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -2630,10 +2632,10 @@ module M_impl_Iterator_for_Rev_I__size_hint (* <Rev<I> as common::Iterator> *)
         | None -> true
         end)
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_I (self: t_I) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -2642,17 +2644,17 @@ module M_impl_Iterator_for_Rev_I__size_hint (* <Rev<I> as common::Iterator> *)
     {[@stop_split] [@expl:size_hint ensures] postcondition_once_size_hint () self result}
       (! return {result}) ]
   
-  predicate inv_Rev_I (_1: t_Rev_I)
+  function inv_Rev_I (_1: t_Rev_I) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Rev_I [inv_Rev_I _1]. inv_Rev_I _1 = inv_I _1.iter
   
-  predicate invariant_ref_Rev_I [@inline:trivial] (self: t_Rev_I) = inv_Rev_I self
+  function invariant_ref_Rev_I [@inline:trivial] (self: t_Rev_I) : bool = inv_Rev_I self
   
-  meta "rewrite_def" predicate invariant_ref_Rev_I
+  meta "rewrite_def" function invariant_ref_Rev_I
   
-  predicate inv_ref_Rev_I [@inline:trivial] (_1: t_Rev_I) = invariant_ref_Rev_I _1
+  function inv_ref_Rev_I [@inline:trivial] (_1: t_Rev_I) : bool = invariant_ref_Rev_I _1
   
-  meta "rewrite_def" predicate inv_ref_Rev_I
+  meta "rewrite_def" function inv_ref_Rev_I
   
   meta "compute_max_steps" 1000000
   
@@ -2678,19 +2680,19 @@ module M_impl_Iterator_for_Rev_I__size_hint__refines (* <Rev<I> as common::Itera
   
   type t_Rev_I = { iter: t_I }
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate inv_Rev_I (_1: t_Rev_I)
+  function inv_Rev_I (_1: t_Rev_I) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Rev_I [inv_Rev_I _1]. inv_Rev_I _1 = inv_I _1.iter
   
-  predicate invariant_ref_Rev_I [@inline:trivial] (self: t_Rev_I) = inv_Rev_I self
+  function invariant_ref_Rev_I [@inline:trivial] (self: t_Rev_I) : bool = inv_Rev_I self
   
-  meta "rewrite_def" predicate invariant_ref_Rev_I
+  meta "rewrite_def" function invariant_ref_Rev_I
   
-  predicate inv_ref_Rev_I [@inline:trivial] (_1: t_Rev_I) = invariant_ref_Rev_I _1
+  function inv_ref_Rev_I [@inline:trivial] (_1: t_Rev_I) : bool = invariant_ref_Rev_I _1
   
-  meta "rewrite_def" predicate inv_ref_Rev_I
+  meta "rewrite_def" function inv_ref_Rev_I
   
   type t_Option_usize = None | Some UInt64.t
   
@@ -2698,7 +2700,7 @@ module M_impl_Iterator_for_Rev_I__size_hint__refines (* <Rev<I> as common::Itera
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -2709,9 +2711,9 @@ module M_impl_Iterator_for_Rev_I__size_hint__refines (* <Rev<I> as common::Itera
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_I, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -2722,23 +2724,23 @@ module M_impl_Iterator_for_Rev_I__size_hint__refines (* <Rev<I> as common::Itera
         | None -> true
         end)
   
-  predicate invariant_ref_I [@inline:trivial] (self: t_I) = inv_I self
+  function invariant_ref_I [@inline:trivial] (self: t_I) : bool = inv_I self
   
-  meta "rewrite_def" predicate invariant_ref_I
+  meta "rewrite_def" function invariant_ref_I
   
-  predicate inv_ref_I [@inline:trivial] (_1: t_I) = invariant_ref_I _1
+  function inv_ref_I [@inline:trivial] (_1: t_I) : bool = invariant_ref_I _1
   
-  meta "rewrite_def" predicate inv_ref_I
+  meta "rewrite_def" function inv_ref_I
   
-  predicate precondition_size_hint (self: ()) (args: t_I)
+  function precondition_size_hint (self: ()) (args: t_I) : bool
   
   axiom precondition_fndef: forall args: t_I [precondition_size_hint () args]. (let self = args in inv_ref_I self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_I (self: t_I) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -2747,9 +2749,9 @@ module M_impl_Iterator_for_Rev_I__size_hint__refines (* <Rev<I> as common::Itera
     {[@stop_split] [@expl:size_hint ensures] postcondition_once_size_hint () self result}
       (! return {result}) ]
   
-  predicate completed_back_I (self: MutBorrow.t t_I)
+  function completed_back_I (self: MutBorrow.t t_I) : bool
   
-  predicate produces_back_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_back_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function size_hint_back_spec_I (self: t_I) (r: tup2_usize_Option_usize) : ()
   
@@ -2773,10 +2775,10 @@ module M_impl_Iterator_for_Rev_I__size_hint__refines (* <Rev<I> as common::Itera
   
   axiom produces_back_refl_I_spec: forall self: t_I. produces_back_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate produces_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) =
+  function produces_Rev_I (self: t_Rev_I) (visited: Seq.seq t_Item) (o: t_Rev_I) : bool =
     produces_back_I self.iter visited o.iter
   
-  predicate completed_Rev_I (self: MutBorrow.t t_Rev_I) =
+  function completed_Rev_I (self: MutBorrow.t t_Rev_I) : bool =
     completed_back_I (MutBorrow.borrow_logic self.current.iter self.final.iter (MutBorrow.inherit_id (MutBorrow.get_id self) 0))
   
   meta "compute_max_steps" 1000000
@@ -2800,9 +2802,9 @@ module M_rev
   
   type t_Rev_I = { iter: t_I }
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate inv_Rev_I (_1: t_Rev_I)
+  function inv_Rev_I (_1: t_Rev_I) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Rev_I [inv_Rev_I _1]. inv_Rev_I _1 = inv_I _1.iter
   

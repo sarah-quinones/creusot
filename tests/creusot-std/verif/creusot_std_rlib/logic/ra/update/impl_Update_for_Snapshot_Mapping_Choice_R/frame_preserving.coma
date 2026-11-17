@@ -10,7 +10,7 @@ type t_Option_R = None | Some t_R
 
 function op_R (self: t_R) (other: t_R) : t_Option_R
 
-predicate incl_R (self: t_R) (other: t_R)
+function incl_R (self: t_R) (other: t_R) : bool
 
 axiom incl_R_spec: forall self: t_R, other: t_R [incl_R self other]. incl_R self other
     = (exists factor: t_R. op_R self factor = Some other)
@@ -41,19 +41,19 @@ function index_Mapping_Choice_R [@inline:trivial] (self: Map.map t_Choice t_R) (
 
 meta "rewrite_def" function index_Mapping_Choice_R
 
-predicate premise_Snapshot_Mapping_Choice_R [@inline:trivial] (self: Map.map t_Choice t_R) (from: t_R) =
+function premise_Snapshot_Mapping_Choice_R [@inline:trivial] (self: Map.map t_Choice t_R) (from: t_R) : bool =
   forall y: t_R. op_R from y <> None -> (exists ch: t_Choice. op_R (index_Mapping_Choice_R self ch) y <> None)
 
-meta "rewrite_def" predicate premise_Snapshot_Mapping_Choice_R
+meta "rewrite_def" function premise_Snapshot_Mapping_Choice_R
 
 function update_Snapshot_Mapping_Choice_R [@inline:trivial] (self: Map.map t_Choice t_R) (from: t_R) (ch: t_Choice) : t_R
  = index_Mapping_Choice_R self ch
 
 meta "rewrite_def" function update_Snapshot_Mapping_Choice_R
 
-predicate index_Mapping_Choice_bool [@inline:trivial] (self: Map.map t_Choice bool) (a: t_Choice) = Map.get self a
+function index_Mapping_Choice_bool [@inline:trivial] (self: Map.map t_Choice bool) (a: t_Choice) : bool = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_Choice_bool
+meta "rewrite_def" function index_Mapping_Choice_bool
 
 function such_that_Choice (p: Map.map t_Choice bool) : t_Choice
 

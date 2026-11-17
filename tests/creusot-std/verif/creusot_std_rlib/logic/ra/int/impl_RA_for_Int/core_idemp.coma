@@ -5,9 +5,9 @@ use int.Int
 
 type t_Option_Int = None | Some int
 
-predicate index_Mapping_Int_bool [@inline:trivial] (self: Map.map int bool) (a: int) = Map.get self a
+function index_Mapping_Int_bool [@inline:trivial] (self: Map.map int bool) (a: int) : bool = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_Int_bool
+meta "rewrite_def" function index_Mapping_Int_bool
 
 function such_that_Int (p: Map.map int bool) : int
 

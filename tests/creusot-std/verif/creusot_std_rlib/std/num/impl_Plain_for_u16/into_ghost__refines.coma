@@ -2,9 +2,9 @@
 
 use creusot.int.UInt16
 
-predicate inv_u16 [@inline:trivial] (_1: UInt16.t) = true
+function inv_u16 [@inline:trivial] (_1: UInt16.t) : bool = true
 
-meta "rewrite_def" predicate inv_u16
+meta "rewrite_def" function inv_u16
 
 meta "compute_max_steps" 1000000
 

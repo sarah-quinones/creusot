@@ -2,21 +2,21 @@
 
 type t_Perm_C
 
-predicate inv_Perm_C (_1: t_Perm_C)
+function inv_Perm_C (_1: t_Perm_C) : bool
 
-predicate structural_resolve_Perm_C (_1: t_Perm_C)
+function structural_resolve_Perm_C (_1: t_Perm_C) : bool
 
 type t_Value
 
-predicate resolve_ref_Value [@inline:trivial] (_1: t_Value) = true
+function resolve_ref_Value [@inline:trivial] (_1: t_Value) : bool = true
 
-meta "rewrite_def" predicate resolve_ref_Value
+meta "rewrite_def" function resolve_ref_Value
 
 function val_unsized_C (self: t_Perm_C) : t_Value
 
-predicate resolve_Perm_C [@inline:trivial] (self: t_Perm_C) = resolve_ref_Value (val_unsized_C self)
+function resolve_Perm_C [@inline:trivial] (self: t_Perm_C) : bool = resolve_ref_Value (val_unsized_C self)
 
-meta "rewrite_def" predicate resolve_Perm_C
+meta "rewrite_def" function resolve_Perm_C
 
 meta "compute_max_steps" 1000000
 

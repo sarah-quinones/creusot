@@ -7,9 +7,9 @@ type t_PositiveReal
 
 type t_Option_PositiveReal = None | Some t_PositiveReal
 
-predicate gt_log_Real [@inline:trivial] (self: Real.real) (other: Real.real) = Real.(<) other self
+function gt_log_Real [@inline:trivial] (self: Real.real) (other: Real.real) : bool = Real.(<) other self
 
-meta "rewrite_def" predicate gt_log_Real
+meta "rewrite_def" function gt_log_Real
 
 function to_real (self: t_PositiveReal) : Real.real
 
@@ -26,7 +26,7 @@ function op_PositiveReal [@inline:trivial] (self: t_PositiveReal) (other: t_Posi
 
 meta "rewrite_def" function op_PositiveReal
 
-predicate ext_eq (self: t_PositiveReal) (other: t_PositiveReal) = to_real self = to_real other
+function ext_eq (self: t_PositiveReal) (other: t_PositiveReal) : bool = to_real self = to_real other
 
 axiom ext_eq_spec: forall self: t_PositiveReal, other: t_PositiveReal [self = other]. ext_eq self other = (self = other)
 
@@ -42,7 +42,7 @@ constant self : t_PositiveReal
 
 constant other : t_PositiveReal
 
-predicate incl_PositiveReal (self: t_PositiveReal) (other: t_PositiveReal)
+function incl_PositiveReal (self: t_PositiveReal) (other: t_PositiveReal) : bool
 
 goal vc_incl_PositiveReal: forall local. local = ()
     -> ([@stop_split] [@expl:to_real ensures] gt_log_Real (to_real self) (FromInt.from_int 0))

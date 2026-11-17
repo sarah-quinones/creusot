@@ -23,7 +23,7 @@ module M_search
   
   type t_RangeInclusive_usize
   
-  predicate inv_RangeInclusive_usize (_1: t_RangeInclusive_usize)
+  function inv_RangeInclusive_usize (_1: t_RangeInclusive_usize) : bool
   
   function start_log_RangeInclusive_usize (self: t_RangeInclusive_usize) : UInt64.t
   
@@ -33,7 +33,7 @@ module M_search
   
   meta "rewrite_def" function deep_model_usize
   
-  predicate is_empty_log_RangeInclusive_usize (self: t_RangeInclusive_usize)
+  function is_empty_log_RangeInclusive_usize (self: t_RangeInclusive_usize) : bool
   
   axiom is_empty_log_RangeInclusive_usize_spec:
     forall self: t_RangeInclusive_usize [is_empty_log_RangeInclusive_usize self]. not is_empty_log_RangeInclusive_usize self
@@ -58,15 +58,15 @@ module M_search
   
   type t_Option_usize = None | Some UInt64.t
   
-  predicate invariant_refmut_RangeInclusive_usize [@inline:trivial] (self: MutBorrow.t t_RangeInclusive_usize) =
+  function invariant_refmut_RangeInclusive_usize [@inline:trivial] (self: MutBorrow.t t_RangeInclusive_usize) : bool =
     inv_RangeInclusive_usize self.current /\ inv_RangeInclusive_usize self.final
   
-  meta "rewrite_def" predicate invariant_refmut_RangeInclusive_usize
+  meta "rewrite_def" function invariant_refmut_RangeInclusive_usize
   
-  predicate inv_refmut_RangeInclusive_usize [@inline:trivial] (_1: MutBorrow.t t_RangeInclusive_usize) =
+  function inv_refmut_RangeInclusive_usize [@inline:trivial] (_1: MutBorrow.t t_RangeInclusive_usize) : bool =
     invariant_refmut_RangeInclusive_usize _1
   
-  meta "rewrite_def" predicate inv_refmut_RangeInclusive_usize
+  meta "rewrite_def" function inv_refmut_RangeInclusive_usize
   
   function range_inclusive_len_usize (r: t_RangeInclusive_usize) : int = if is_empty_log_RangeInclusive_usize r then
       0
@@ -78,8 +78,8 @@ module M_search
     forall r: t_RangeInclusive_usize [range_inclusive_len_usize r]. is_empty_log_RangeInclusive_usize r
       = (range_inclusive_len_usize r = 0)
   
-  predicate produces_RangeInclusive_usize (self: t_RangeInclusive_usize) (visited: Seq.seq UInt64.t) (o: t_RangeInclusive_usize) =
-    Seq.length visited = range_inclusive_len_usize self - range_inclusive_len_usize o
+  function produces_RangeInclusive_usize (self: t_RangeInclusive_usize) (visited: Seq.seq UInt64.t) (o: t_RangeInclusive_usize) : bool
+   = Seq.length visited = range_inclusive_len_usize self - range_inclusive_len_usize o
     /\ (is_empty_log_RangeInclusive_usize self -> is_empty_log_RangeInclusive_usize o)
     /\ (is_empty_log_RangeInclusive_usize o \/ end_log_RangeInclusive_usize self = end_log_RangeInclusive_usize o)
     /\ (forall i: int. 0 <= i /\ i < Seq.length visited
@@ -96,7 +96,7 @@ module M_search
   axiom produces_refl_RangeInclusive_usize_spec:
     forall self: t_RangeInclusive_usize. produces_RangeInclusive_usize self (Seq.empty: Seq.seq UInt64.t) self
   
-  predicate completed_RangeInclusive_usize (self: MutBorrow.t t_RangeInclusive_usize) =
+  function completed_RangeInclusive_usize (self: MutBorrow.t t_RangeInclusive_usize) : bool =
     is_empty_log_RangeInclusive_usize self.current /\ is_empty_log_RangeInclusive_usize self.final
   
   let next_RangeInclusive_usize (self: MutBorrow.t t_RangeInclusive_usize) (return (x: t_Option_usize)) =
@@ -108,24 +108,24 @@ module M_search
         end}
       (! return {result}) ]
   
-  predicate resolve_refmut_RangeInclusive_usize [@inline:trivial] (_1: MutBorrow.t t_RangeInclusive_usize) =
+  function resolve_refmut_RangeInclusive_usize [@inline:trivial] (_1: MutBorrow.t t_RangeInclusive_usize) : bool =
     _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_RangeInclusive_usize
+  meta "rewrite_def" function resolve_refmut_RangeInclusive_usize
   
   function index_Vec_u8_Global [@inline:trivial] (self: t_Vec_u8_Global) (ix: int) : UInt8.t =
     Seq.get (view_Vec_u8_Global self) ix
   
   meta "rewrite_def" function index_Vec_u8_Global
   
-  predicate match_at (needle: t_Vec_u8_Global) (haystack: t_Vec_u8_Global) (pos: int) (len: int) =
-    len <= Seq.length (view_Vec_u8_Global needle)
+  function match_at (needle: t_Vec_u8_Global) (haystack: t_Vec_u8_Global) (pos: int) (len: int) : bool = len
+      <= Seq.length (view_Vec_u8_Global needle)
     /\ pos <= Seq.length (view_Vec_u8_Global haystack) - len
     /\ (forall i: int. 0 <= i /\ i < len -> index_Vec_u8_Global needle i = index_Vec_u8_Global haystack (pos + i))
   
-  predicate inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) = true
+  function inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_usize
+  meta "rewrite_def" function inv_Seq_usize
   
   let elim_Some (_x: t_Option_usize) (return (f0: UInt64.t)) = any
     [ _k (f0: UInt64.t) -> {Some f0 = _x} (! return {f0})
@@ -140,12 +140,12 @@ module M_search
   let into_iter_Range_usize (self: t_Range_usize) (return (x: t_Range_usize)) = any
     [ return (result: t_Range_usize) -> {[@stop_split] [@expl:into_iter ensures] result = self} (! return {result}) ]
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
-  predicate produces_Range_usize (self: t_Range_usize) (visited: Seq.seq UInt64.t) (o: t_Range_usize) =
-    self.end' = o.end'
+  function produces_Range_usize (self: t_Range_usize) (visited: Seq.seq UInt64.t) (o: t_Range_usize) : bool = self.end'
+      = o.end'
     /\ deep_model_usize self.start <= deep_model_usize o.start
     /\ (gt_log_Int (Seq.length visited) 0 -> deep_model_usize o.start <= deep_model_usize o.end')
     /\ Seq.length visited = deep_model_usize o.start - deep_model_usize self.start
@@ -163,16 +163,15 @@ module M_search
   axiom produces_refl_Range_usize_spec:
     forall self: t_Range_usize. produces_Range_usize self (Seq.empty: Seq.seq UInt64.t) self
   
-  predicate resolve_refmut_Range_usize [@inline:trivial] (_1: MutBorrow.t t_Range_usize) = _1.final = _1.current
+  function resolve_refmut_Range_usize [@inline:trivial] (_1: MutBorrow.t t_Range_usize) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Range_usize
+  meta "rewrite_def" function resolve_refmut_Range_usize
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate completed_Range_usize (self: MutBorrow.t t_Range_usize) =
-    resolve_refmut_Range_usize self
+  function completed_Range_usize (self: MutBorrow.t t_Range_usize) : bool = resolve_refmut_Range_usize self
     /\ ge_log_Int (deep_model_usize self.current.start) (deep_model_usize self.current.end')
   
   let next_Range_usize (self: MutBorrow.t t_Range_usize) (return (x: t_Option_usize)) = any
@@ -182,15 +181,15 @@ module M_search
         end}
       (! return {result}) ]
   
-  predicate in_bounds_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq UInt8.t) =
-    UInt64.t'int self < Seq.length seq
+  function in_bounds_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq UInt8.t) : bool = UInt64.t'int self
+    < Seq.length seq
   
-  meta "rewrite_def" predicate in_bounds_usize
+  meta "rewrite_def" function in_bounds_usize
   
-  predicate has_value_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq UInt8.t) (out: UInt8.t) =
+  function has_value_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq UInt8.t) (out: UInt8.t) : bool =
     Seq.get seq (UInt64.t'int self) = out
   
-  meta "rewrite_def" predicate has_value_usize
+  meta "rewrite_def" function has_value_usize
   
   let index_Vec_u8_Global'0 (self: t_Vec_u8_Global) (index: UInt64.t) (return (x: UInt8.t)) =
   {[@stop_split] [@expl:index requires] in_bounds_usize index (view_Vec_u8_Global self)}
@@ -199,7 +198,7 @@ module M_search
     {[@stop_split] [@expl:index ensures] has_value_usize index (view_Vec_u8_Global self) result}
       (! return {result}) ]
   
-  predicate resolve_RangeInclusive_usize (_1: t_RangeInclusive_usize)
+  function resolve_RangeInclusive_usize (_1: t_RangeInclusive_usize) : bool
   
   meta "compute_max_steps" 1000000
   

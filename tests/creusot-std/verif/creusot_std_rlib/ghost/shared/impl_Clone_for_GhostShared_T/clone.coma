@@ -4,23 +4,23 @@ use creusot.prelude.Any
 
 type t_T
 
-predicate resolve_T (_1: t_T)
+function resolve_T (_1: t_T) : bool
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate invariant_GhostShared_T (self: t_T) = resolve_T self /\ inv_T self
+function invariant_GhostShared_T (self: t_T) : bool = resolve_T self /\ inv_T self
 
-predicate inv_GhostShared_T [@inline:trivial] (_1: t_T) = invariant_GhostShared_T _1
+function inv_GhostShared_T [@inline:trivial] (_1: t_T) : bool = invariant_GhostShared_T _1
 
-meta "rewrite_def" predicate inv_GhostShared_T
+meta "rewrite_def" function inv_GhostShared_T
 
-predicate invariant_ref_GhostShared_T [@inline:trivial] (self: t_T) = inv_GhostShared_T self
+function invariant_ref_GhostShared_T [@inline:trivial] (self: t_T) : bool = inv_GhostShared_T self
 
-meta "rewrite_def" predicate invariant_ref_GhostShared_T
+meta "rewrite_def" function invariant_ref_GhostShared_T
 
-predicate inv_ref_GhostShared_T [@inline:trivial] (_1: t_T) = invariant_ref_GhostShared_T _1
+function inv_ref_GhostShared_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_GhostShared_T _1
 
-meta "rewrite_def" predicate inv_ref_GhostShared_T
+meta "rewrite_def" function inv_ref_GhostShared_T
 
 meta "compute_max_steps" 1000000
 

@@ -3,13 +3,13 @@
 use map.Map
 use int.Int
 
-predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
 
-meta "rewrite_def" predicate ge_log_Int
+meta "rewrite_def" function ge_log_Int
 
-predicate well_founded_relation_unit [@inline:trivial] (self: ()) (_2: ()) = false
+function well_founded_relation_unit [@inline:trivial] (self: ()) (_2: ()) : bool = false
 
-meta "rewrite_def" predicate well_founded_relation_unit
+meta "rewrite_def" function well_founded_relation_unit
 
 function index_Mapping_Int_unit [@inline:trivial] (self: Map.map int ()) (a: int) : () = Map.get self a
 

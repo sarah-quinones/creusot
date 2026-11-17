@@ -190,17 +190,17 @@ module M_test_string_len
   
   type t_String
   
-  predicate inv_String (_1: t_String)
+  function inv_String (_1: t_String) : bool
   
-  predicate resolve_String (_1: t_String)
+  function resolve_String (_1: t_String) : bool
   
-  predicate invariant_ref_String [@inline:trivial] (self: t_String) = inv_String self
+  function invariant_ref_String [@inline:trivial] (self: t_String) : bool = inv_String self
   
-  meta "rewrite_def" predicate invariant_ref_String
+  meta "rewrite_def" function invariant_ref_String
   
-  predicate inv_ref_String [@inline:trivial] (_1: t_String) = invariant_ref_String _1
+  function inv_ref_String [@inline:trivial] (_1: t_String) : bool = invariant_ref_String _1
   
-  meta "rewrite_def" predicate inv_ref_String
+  meta "rewrite_def" function inv_ref_String
   
   type t_RangeFrom_Int = { start: int }
   

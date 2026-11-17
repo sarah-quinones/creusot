@@ -7,19 +7,20 @@ use int.Int
 
 type t_T
 
-predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
 
-meta "rewrite_def" predicate ge_log_Int
+meta "rewrite_def" function ge_log_Int
 
-predicate contains_Seq_T [@inline:trivial] (self: Fset.fset (Seq.seq t_T)) (e: Seq.seq t_T) = Fset.mem e self
+function contains_Seq_T [@inline:trivial] (self: Fset.fset (Seq.seq t_T)) (e: Seq.seq t_T) : bool = Fset.mem e self
 
-meta "rewrite_def" predicate contains_Seq_T
+meta "rewrite_def" function contains_Seq_T
 
-predicate contains_T (self: Seq.seq t_T) (x: t_T) = exists i: int. 0 <= i /\ i < Seq.length self /\ Seq.get self i = x
+function contains_T (self: Seq.seq t_T) (x: t_T) : bool = exists i: int. 0 <= i
+    /\ i < Seq.length self /\ Seq.get self i = x
 
-predicate contains_T'0 [@inline:trivial] (self: Fset.fset t_T) (e: t_T) = Fset.mem e self
+function contains_T'0 [@inline:trivial] (self: Fset.fset t_T) (e: t_T) : bool = Fset.mem e self
 
-meta "rewrite_def" predicate contains_T'0
+meta "rewrite_def" function contains_T'0
 
 function add_Seq_T [@inline:trivial] (self: Fset.fset (Seq.seq t_T)) (e: Seq.seq t_T) : Fset.fset (Seq.seq t_T) =
   Fset.add e self
@@ -137,14 +138,14 @@ axiom concat_replicate_T_def: forall self: Fset.fset t_T, n: int, m: int [concat
 axiom concat_replicate_T_spec: forall self: Fset.fset t_T, n: int, m: int. 0 <= n /\ 0 <= m
     -> replicate_T self (n + m) = concat_T (replicate_T self n) (replicate_T self m)
 
-predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
 
-meta "rewrite_def" predicate gt_log_Int
+meta "rewrite_def" function gt_log_Int
 
-predicate well_founded_relation_Int [@inline:trivial] (self: int) (other: int) =
-  ge_log_Int self 0 /\ gt_log_Int self other
+function well_founded_relation_Int [@inline:trivial] (self: int) (other: int) : bool = ge_log_Int self 0
+  /\ gt_log_Int self other
 
-meta "rewrite_def" predicate well_founded_relation_Int
+meta "rewrite_def" function well_founded_relation_Int
 
 meta "compute_max_steps" 1000000
 

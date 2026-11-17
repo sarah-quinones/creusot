@@ -34,7 +34,7 @@ module M_check_iter_len
   
   type t_Iter_i32
   
-  predicate inv_Iter_i32 (_1: t_Iter_i32)
+  function inv_Iter_i32 (_1: t_Iter_i32) : bool
   
   function view_Iter_i32 (self: t_Iter_i32) : Slice64.slice Int32.t
   
@@ -44,13 +44,13 @@ module M_check_iter_len
       /\ ([@stop_split] [@expl:iter ensures] view_Iter_i32 result = self)}
       (! return {result}) ]
   
-  predicate invariant_ref_Iter_i32 [@inline:trivial] (self: t_Iter_i32) = inv_Iter_i32 self
+  function invariant_ref_Iter_i32 [@inline:trivial] (self: t_Iter_i32) : bool = inv_Iter_i32 self
   
-  meta "rewrite_def" predicate invariant_ref_Iter_i32
+  meta "rewrite_def" function invariant_ref_Iter_i32
   
-  predicate inv_ref_Iter_i32 [@inline:trivial] (_1: t_Iter_i32) = invariant_ref_Iter_i32 _1
+  function inv_ref_Iter_i32 [@inline:trivial] (_1: t_Iter_i32) : bool = invariant_ref_Iter_i32 _1
   
-  meta "rewrite_def" predicate inv_ref_Iter_i32
+  meta "rewrite_def" function inv_ref_Iter_i32
   
   let len_Iter_i32 (self: t_Iter_i32) (return (x: UInt64.t)) =
   {[@stop_split] [@expl:len 'self' type invariant] inv_ref_Iter_i32 self}
@@ -61,14 +61,14 @@ module M_check_iter_len
   
   type t_Option_ref_i32 = None | Some Int32.t
   
-  predicate invariant_refmut_Iter_i32 [@inline:trivial] (self: MutBorrow.t t_Iter_i32) =
-    inv_Iter_i32 self.current /\ inv_Iter_i32 self.final
+  function invariant_refmut_Iter_i32 [@inline:trivial] (self: MutBorrow.t t_Iter_i32) : bool = inv_Iter_i32 self.current
+    /\ inv_Iter_i32 self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Iter_i32
+  meta "rewrite_def" function invariant_refmut_Iter_i32
   
-  predicate inv_refmut_Iter_i32 [@inline:trivial] (_1: MutBorrow.t t_Iter_i32) = invariant_refmut_Iter_i32 _1
+  function inv_refmut_Iter_i32 [@inline:trivial] (_1: MutBorrow.t t_Iter_i32) : bool = invariant_refmut_Iter_i32 _1
   
-  meta "rewrite_def" predicate inv_refmut_Iter_i32
+  meta "rewrite_def" function inv_refmut_Iter_i32
   
   function index_slice_i32 [@inline:trivial] (self: Slice64.slice Int32.t) (ix: int) : Int32.t =
     Seq.get (Slice64.view self) ix
@@ -86,7 +86,7 @@ module M_check_iter_len
           /\ i < Seq.length (to_ref_seq_slice_i32 self)
         -> Seq.get (to_ref_seq_slice_i32 self) i = index_slice_i32 self i
   
-  predicate produces_Iter_i32 (self: t_Iter_i32) (visited: Seq.seq Int32.t) (tl: t_Iter_i32) =
+  function produces_Iter_i32 (self: t_Iter_i32) (visited: Seq.seq Int32.t) (tl: t_Iter_i32) : bool =
     to_ref_seq_slice_i32 (view_Iter_i32 self) = Seq.(++) visited (to_ref_seq_slice_i32 (view_Iter_i32 tl))
   
   function produces_trans_Iter_i32 (a: t_Iter_i32) (ab: Seq.seq Int32.t) (b: t_Iter_i32) (bc: Seq.seq Int32.t) (c: t_Iter_i32) : ()
@@ -99,12 +99,12 @@ module M_check_iter_len
   
   axiom produces_refl_Iter_i32_spec: forall self: t_Iter_i32. produces_Iter_i32 self (Seq.empty: Seq.seq Int32.t) self
   
-  predicate resolve_refmut_Iter_i32 [@inline:trivial] (_1: MutBorrow.t t_Iter_i32) = _1.final = _1.current
+  function resolve_refmut_Iter_i32 [@inline:trivial] (_1: MutBorrow.t t_Iter_i32) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Iter_i32
+  meta "rewrite_def" function resolve_refmut_Iter_i32
   
-  predicate completed_Iter_i32 (self: MutBorrow.t t_Iter_i32) =
-    resolve_refmut_Iter_i32 self /\ Slice64.view (view_Iter_i32 self.current) = (Seq.empty: Seq.seq Int32.t)
+  function completed_Iter_i32 (self: MutBorrow.t t_Iter_i32) : bool = resolve_refmut_Iter_i32 self
+    /\ Slice64.view (view_Iter_i32 self.current) = (Seq.empty: Seq.seq Int32.t)
   
   let next_Iter_i32 (self: MutBorrow.t t_Iter_i32) (return (x: t_Option_ref_i32)) =
   {[@stop_split] [@expl:next 'self' type invariant] inv_refmut_Iter_i32 self}
@@ -115,7 +115,7 @@ module M_check_iter_len
         end}
       (! return {result}) ]
   
-  predicate resolve_Iter_i32 (_1: t_Iter_i32)
+  function resolve_Iter_i32 (_1: t_Iter_i32) : bool
   
   meta "compute_max_steps" 1000000
   
@@ -200,7 +200,7 @@ module M_check_iter_mut_len
   
   type t_Iter_i32
   
-  predicate inv_Iter_i32 (_1: t_Iter_i32)
+  function inv_Iter_i32 (_1: t_Iter_i32) : bool
   
   function view_Iter_i32 (self: t_Iter_i32) : Slice64.slice Int32.t
   
@@ -210,13 +210,13 @@ module M_check_iter_mut_len
       /\ ([@stop_split] [@expl:iter ensures] view_Iter_i32 result = self)}
       (! return {result}) ]
   
-  predicate invariant_ref_Iter_i32 [@inline:trivial] (self: t_Iter_i32) = inv_Iter_i32 self
+  function invariant_ref_Iter_i32 [@inline:trivial] (self: t_Iter_i32) : bool = inv_Iter_i32 self
   
-  meta "rewrite_def" predicate invariant_ref_Iter_i32
+  meta "rewrite_def" function invariant_ref_Iter_i32
   
-  predicate inv_ref_Iter_i32 [@inline:trivial] (_1: t_Iter_i32) = invariant_ref_Iter_i32 _1
+  function inv_ref_Iter_i32 [@inline:trivial] (_1: t_Iter_i32) : bool = invariant_ref_Iter_i32 _1
   
-  meta "rewrite_def" predicate inv_ref_Iter_i32
+  meta "rewrite_def" function inv_ref_Iter_i32
   
   let len_Iter_i32 (self: t_Iter_i32) (return (x: UInt64.t)) =
   {[@stop_split] [@expl:len 'self' type invariant] inv_ref_Iter_i32 self}
@@ -227,14 +227,14 @@ module M_check_iter_mut_len
   
   type t_Option_ref_i32 = None | Some Int32.t
   
-  predicate invariant_refmut_Iter_i32 [@inline:trivial] (self: MutBorrow.t t_Iter_i32) =
-    inv_Iter_i32 self.current /\ inv_Iter_i32 self.final
+  function invariant_refmut_Iter_i32 [@inline:trivial] (self: MutBorrow.t t_Iter_i32) : bool = inv_Iter_i32 self.current
+    /\ inv_Iter_i32 self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Iter_i32
+  meta "rewrite_def" function invariant_refmut_Iter_i32
   
-  predicate inv_refmut_Iter_i32 [@inline:trivial] (_1: MutBorrow.t t_Iter_i32) = invariant_refmut_Iter_i32 _1
+  function inv_refmut_Iter_i32 [@inline:trivial] (_1: MutBorrow.t t_Iter_i32) : bool = invariant_refmut_Iter_i32 _1
   
-  meta "rewrite_def" predicate inv_refmut_Iter_i32
+  meta "rewrite_def" function inv_refmut_Iter_i32
   
   function index_slice_i32 [@inline:trivial] (self: Slice64.slice Int32.t) (ix: int) : Int32.t =
     Seq.get (Slice64.view self) ix
@@ -252,7 +252,7 @@ module M_check_iter_mut_len
           /\ i < Seq.length (to_ref_seq_slice_i32 self)
         -> Seq.get (to_ref_seq_slice_i32 self) i = index_slice_i32 self i
   
-  predicate produces_Iter_i32 (self: t_Iter_i32) (visited: Seq.seq Int32.t) (tl: t_Iter_i32) =
+  function produces_Iter_i32 (self: t_Iter_i32) (visited: Seq.seq Int32.t) (tl: t_Iter_i32) : bool =
     to_ref_seq_slice_i32 (view_Iter_i32 self) = Seq.(++) visited (to_ref_seq_slice_i32 (view_Iter_i32 tl))
   
   function produces_trans_Iter_i32 (a: t_Iter_i32) (ab: Seq.seq Int32.t) (b: t_Iter_i32) (bc: Seq.seq Int32.t) (c: t_Iter_i32) : ()
@@ -265,12 +265,12 @@ module M_check_iter_mut_len
   
   axiom produces_refl_Iter_i32_spec: forall self: t_Iter_i32. produces_Iter_i32 self (Seq.empty: Seq.seq Int32.t) self
   
-  predicate resolve_refmut_Iter_i32 [@inline:trivial] (_1: MutBorrow.t t_Iter_i32) = _1.final = _1.current
+  function resolve_refmut_Iter_i32 [@inline:trivial] (_1: MutBorrow.t t_Iter_i32) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Iter_i32
+  meta "rewrite_def" function resolve_refmut_Iter_i32
   
-  predicate completed_Iter_i32 (self: MutBorrow.t t_Iter_i32) =
-    resolve_refmut_Iter_i32 self /\ Slice64.view (view_Iter_i32 self.current) = (Seq.empty: Seq.seq Int32.t)
+  function completed_Iter_i32 (self: MutBorrow.t t_Iter_i32) : bool = resolve_refmut_Iter_i32 self
+    /\ Slice64.view (view_Iter_i32 self.current) = (Seq.empty: Seq.seq Int32.t)
   
   let next_Iter_i32 (self: MutBorrow.t t_Iter_i32) (return (x: t_Option_ref_i32)) =
   {[@stop_split] [@expl:next 'self' type invariant] inv_refmut_Iter_i32 self}
@@ -281,7 +281,7 @@ module M_check_iter_mut_len
         end}
       (! return {result}) ]
   
-  predicate resolve_Iter_i32 (_1: t_Iter_i32)
+  function resolve_Iter_i32 (_1: t_Iter_i32) : bool
   
   meta "compute_max_steps" 1000000
   

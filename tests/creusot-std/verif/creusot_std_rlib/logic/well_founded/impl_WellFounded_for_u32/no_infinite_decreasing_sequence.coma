@@ -4,17 +4,17 @@ use creusot.int.UInt32
 use map.Map
 use int.Int
 
-predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
 
-meta "rewrite_def" predicate ge_log_Int
+meta "rewrite_def" function ge_log_Int
 
-predicate gt_log_u32 [@inline:trivial] (self: UInt32.t) (other: UInt32.t) = UInt32.lt other self
+function gt_log_u32 [@inline:trivial] (self: UInt32.t) (other: UInt32.t) : bool = UInt32.lt other self
 
-meta "rewrite_def" predicate gt_log_u32
+meta "rewrite_def" function gt_log_u32
 
-predicate well_founded_relation_u32 [@inline:trivial] (self: UInt32.t) (other: UInt32.t) = gt_log_u32 self other
+function well_founded_relation_u32 [@inline:trivial] (self: UInt32.t) (other: UInt32.t) : bool = gt_log_u32 self other
 
-meta "rewrite_def" predicate well_founded_relation_u32
+meta "rewrite_def" function well_founded_relation_u32
 
 function index_Mapping_Int_u32 [@inline:trivial] (self: Map.map int UInt32.t) (a: int) : UInt32.t = Map.get self a
 
@@ -22,14 +22,14 @@ meta "rewrite_def" function index_Mapping_Int_u32
 
 constant const_MIN: UInt32.t = (0: UInt32.t)
 
-predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
 
-meta "rewrite_def" predicate gt_log_Int
+meta "rewrite_def" function gt_log_Int
 
-predicate well_founded_relation_Int [@inline:trivial] (self: int) (other: int) =
-  ge_log_Int self 0 /\ gt_log_Int self other
+function well_founded_relation_Int [@inline:trivial] (self: int) (other: int) : bool = ge_log_Int self 0
+  /\ gt_log_Int self other
 
-meta "rewrite_def" predicate well_founded_relation_Int
+meta "rewrite_def" function well_founded_relation_Int
 
 function index_Mapping_Int_Int [@inline:trivial] (self: Map.map int int) (a: int) : int = Map.get self a
 

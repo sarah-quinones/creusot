@@ -23,41 +23,41 @@ module M_fetch_add
   
   type t_AtomicI32
   
-  predicate inv_AtomicI32 (_1: t_AtomicI32)
+  function inv_AtomicI32 (_1: t_AtomicI32) : bool
   
-  predicate invariant_ref_AtomicI32 [@inline:trivial] (self: t_AtomicI32) = inv_AtomicI32 self
+  function invariant_ref_AtomicI32 [@inline:trivial] (self: t_AtomicI32) : bool = inv_AtomicI32 self
   
-  meta "rewrite_def" predicate invariant_ref_AtomicI32
+  meta "rewrite_def" function invariant_ref_AtomicI32
   
-  predicate inv_ref_AtomicI32 [@inline:trivial] (_1: t_AtomicI32) = invariant_ref_AtomicI32 _1
+  function inv_ref_AtomicI32 [@inline:trivial] (_1: t_AtomicI32) : bool = invariant_ref_AtomicI32 _1
   
-  meta "rewrite_def" predicate inv_ref_AtomicI32
+  meta "rewrite_def" function inv_ref_AtomicI32
   
-  predicate shot_store_AtomicI32 (self: t_Committer_AtomicI32_i32_SeqCst_unit)
+  function shot_store_AtomicI32 (self: t_Committer_AtomicI32_i32_SeqCst_unit) : bool
   
   function ward_AtomicI32 (self: t_Committer_AtomicI32_i32_SeqCst_unit) : t_AtomicI32
   
-  predicate precondition_closure2 (self: ()) (args: t_Committer_AtomicI32_i32_SeqCst_unit) =
+  function precondition_closure2 (self: ()) (args: t_Committer_AtomicI32_i32_SeqCst_unit) : bool =
     let _0 = args in closure2'pre self _0
   
-  meta "rewrite_def" predicate precondition_closure2
+  meta "rewrite_def" function precondition_closure2
   
-  predicate precondition_FnGhostWrapper_closure2 (self: t_FnGhostWrapper_closure2) (args: t_Committer_AtomicI32_i32_SeqCst_unit) =
-    precondition_closure2 self.f0 args
+  function precondition_FnGhostWrapper_closure2 (self: t_FnGhostWrapper_closure2) (args: t_Committer_AtomicI32_i32_SeqCst_unit) : bool
+   = precondition_closure2 self.f0 args
   
-  meta "rewrite_def" predicate precondition_FnGhostWrapper_closure2
+  meta "rewrite_def" function precondition_FnGhostWrapper_closure2
   
   function val_load_AtomicI32 (self: t_Committer_AtomicI32_i32_SeqCst_unit) : Int32.t
   
-  predicate postcondition_once_closure2 (self: ()) (args: t_Committer_AtomicI32_i32_SeqCst_unit) (result: ()) =
+  function postcondition_once_closure2 (self: ()) (args: t_Committer_AtomicI32_i32_SeqCst_unit) (result: ()) : bool =
     let _0 = args in closure2'post'return self _0 result
   
-  meta "rewrite_def" predicate postcondition_once_closure2
+  meta "rewrite_def" function postcondition_once_closure2
   
-  predicate postcondition_once_FnGhostWrapper_closure2 (self: t_FnGhostWrapper_closure2) (args: t_Committer_AtomicI32_i32_SeqCst_unit) (result: ()) =
-    postcondition_once_closure2 self.f0 args result
+  function postcondition_once_FnGhostWrapper_closure2 (self: t_FnGhostWrapper_closure2) (args: t_Committer_AtomicI32_i32_SeqCst_unit) (result: ()) : bool
+   = postcondition_once_closure2 self.f0 args result
   
-  meta "rewrite_def" predicate postcondition_once_FnGhostWrapper_closure2
+  meta "rewrite_def" function postcondition_once_FnGhostWrapper_closure2
   
   let load_FnGhostWrapper_closure2 (self: t_AtomicI32) (f: t_FnGhostWrapper_closure2) (return (x: Int32.t)) =
   {[@stop_split] [@expl:load_FnGhostWrapper_closure2 requires] ([@stop_split] [@expl:load 'self' type invariant] inv_ref_AtomicI32 self)
@@ -72,15 +72,15 @@ module M_fetch_add
   
   type t_F
   
-  predicate inv_F (_1: t_F)
+  function inv_F (_1: t_F) : bool
   
-  predicate invariant_Ghost_F [@inline:trivial] (self: t_F) = inv_F self
+  function invariant_Ghost_F [@inline:trivial] (self: t_F) : bool = inv_F self
   
-  meta "rewrite_def" predicate invariant_Ghost_F
+  meta "rewrite_def" function invariant_Ghost_F
   
-  predicate inv_Ghost_F [@inline:trivial] (_1: t_F) = invariant_Ghost_F _1
+  function inv_Ghost_F [@inline:trivial] (_1: t_F) : bool = invariant_Ghost_F _1
   
-  meta "rewrite_def" predicate inv_Ghost_F
+  meta "rewrite_def" function inv_Ghost_F
   
   let into_inner_F (self: t_F) (return (x: t_F)) =
   {[@stop_split] [@expl:into_inner 'self' type invariant] inv_Ghost_F self}
@@ -92,7 +92,7 @@ module M_fetch_add
   
   type t_Option_F = None | Some t_F
   
-  predicate inv_Option_F (_1: t_Option_F)
+  function inv_Option_F (_1: t_Option_F) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Option_F [inv_Option_F _1]. inv_Option_F _1
       = match _1 with
@@ -100,13 +100,13 @@ module M_fetch_add
         | Some f0'0 -> inv_F f0'0
         end
   
-  predicate invariant_Ghost_Option_F [@inline:trivial] (self: t_Option_F) = inv_Option_F self
+  function invariant_Ghost_Option_F [@inline:trivial] (self: t_Option_F) : bool = inv_Option_F self
   
-  meta "rewrite_def" predicate invariant_Ghost_Option_F
+  meta "rewrite_def" function invariant_Ghost_Option_F
   
-  predicate inv_Ghost_Option_F [@inline:trivial] (_1: t_Option_F) = invariant_Ghost_Option_F _1
+  function inv_Ghost_Option_F [@inline:trivial] (_1: t_Option_F) : bool = invariant_Ghost_Option_F _1
   
-  meta "rewrite_def" predicate inv_Ghost_Option_F
+  meta "rewrite_def" function inv_Ghost_Option_F
   
   let new_Option_F (x: t_Option_F) (return (x'0: t_Option_F)) =
   {[@stop_split] [@expl:new 'x' type invariant] inv_Option_F x}
@@ -126,39 +126,39 @@ module M_fetch_add
     | Ok (MutBorrow.t t_Committer_AtomicI32_i32_SeqCst_SeqCst)
     | Err t_Committer_AtomicI32_i32_SeqCst_unit
   
-  predicate resolve_refmut_Committer_AtomicI32_i32_SeqCst_SeqCst [@inline:trivial] (_1: MutBorrow.t t_Committer_AtomicI32_i32_SeqCst_SeqCst) =
-    _1.final = _1.current
+  function resolve_refmut_Committer_AtomicI32_i32_SeqCst_SeqCst [@inline:trivial] (_1: MutBorrow.t t_Committer_AtomicI32_i32_SeqCst_SeqCst) : bool
+   = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Committer_AtomicI32_i32_SeqCst_SeqCst
+  meta "rewrite_def" function resolve_refmut_Committer_AtomicI32_i32_SeqCst_SeqCst
   
   type closure6 = { c0: MutBorrow.t t_Option_F }
   
-  predicate invariant_refmut_Ghost_Option_F [@inline:trivial] (self: MutBorrow.t t_Option_F) =
+  function invariant_refmut_Ghost_Option_F [@inline:trivial] (self: MutBorrow.t t_Option_F) : bool =
     inv_Ghost_Option_F self.current /\ inv_Ghost_Option_F self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Ghost_Option_F
+  meta "rewrite_def" function invariant_refmut_Ghost_Option_F
   
-  predicate inv_refmut_Ghost_Option_F [@inline:trivial] (_1: MutBorrow.t t_Option_F) =
+  function inv_refmut_Ghost_Option_F [@inline:trivial] (_1: MutBorrow.t t_Option_F) : bool =
     invariant_refmut_Ghost_Option_F _1
   
-  meta "rewrite_def" predicate inv_refmut_Ghost_Option_F
+  meta "rewrite_def" function inv_refmut_Ghost_Option_F
   
-  predicate inv_closure6 [@inline:trivial] (_1: closure6) = let {c0 = x0} = _1 in inv_refmut_Ghost_Option_F x0
+  function inv_closure6 [@inline:trivial] (_1: closure6) : bool = let {c0 = x0} = _1 in inv_refmut_Ghost_Option_F x0
   
-  meta "rewrite_def" predicate inv_closure6
+  meta "rewrite_def" function inv_closure6
   
-  predicate invariant_refmut_closure6 [@inline:trivial] (self: MutBorrow.t closure6) =
-    inv_closure6 self.current /\ inv_closure6 self.final
+  function invariant_refmut_closure6 [@inline:trivial] (self: MutBorrow.t closure6) : bool = inv_closure6 self.current
+    /\ inv_closure6 self.final
   
-  meta "rewrite_def" predicate invariant_refmut_closure6
+  meta "rewrite_def" function invariant_refmut_closure6
   
-  predicate inv_refmut_closure6 [@inline:trivial] (_1: MutBorrow.t closure6) = invariant_refmut_closure6 _1
+  function inv_refmut_closure6 [@inline:trivial] (_1: MutBorrow.t closure6) : bool = invariant_refmut_closure6 _1
   
-  meta "rewrite_def" predicate inv_refmut_closure6
+  meta "rewrite_def" function inv_refmut_closure6
   
-  predicate resolve_refmut_closure6 [@inline:trivial] (_1: MutBorrow.t closure6) = _1.final = _1.current
+  function resolve_refmut_closure6 [@inline:trivial] (_1: MutBorrow.t closure6) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_closure6
+  meta "rewrite_def" function resolve_refmut_closure6
   
   let elim_Ok (_x: t_Result_refmut_Committer_AtomicI32_i32_SeqCst_SeqCst_ref_Committer_AtomicI32_i32_SeqCst_unit)
     (return (f0'0: MutBorrow.t t_Committer_AtomicI32_i32_SeqCst_SeqCst)) = any
@@ -169,14 +169,14 @@ module M_fetch_add
         end}
       any) ]
   
-  predicate invariant_refmut_Option_F [@inline:trivial] (self: MutBorrow.t t_Option_F) =
-    inv_Option_F self.current /\ inv_Option_F self.final
+  function invariant_refmut_Option_F [@inline:trivial] (self: MutBorrow.t t_Option_F) : bool = inv_Option_F self.current
+    /\ inv_Option_F self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Option_F
+  meta "rewrite_def" function invariant_refmut_Option_F
   
-  predicate inv_refmut_Option_F [@inline:trivial] (_1: MutBorrow.t t_Option_F) = invariant_refmut_Option_F _1
+  function inv_refmut_Option_F [@inline:trivial] (_1: MutBorrow.t t_Option_F) : bool = invariant_refmut_Option_F _1
   
-  meta "rewrite_def" predicate inv_refmut_Option_F
+  meta "rewrite_def" function inv_refmut_Option_F
   
   let deref_mut_Ghost_Option_F (self: MutBorrow.t t_Option_F) (return (x: MutBorrow.t t_Option_F)) =
   {[@stop_split] [@expl:deref_mut 'self' type invariant] inv_refmut_Ghost_Option_F self}
@@ -194,9 +194,9 @@ module M_fetch_add
       /\ ([@stop_split] [@expl:take ensures] result = self.current /\ self.final = None)}
       (! return {result}) ]
   
-  predicate resolve_refmut_Option_F [@inline:trivial] (_1: MutBorrow.t t_Option_F) = _1.final = _1.current
+  function resolve_refmut_Option_F [@inline:trivial] (_1: MutBorrow.t t_Option_F) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Option_F
+  meta "rewrite_def" function resolve_refmut_Option_F
   
   let unwrap_F (self: t_Option_F) (return (x: t_F)) =
   {[@stop_split] [@expl:unwrap_F requires] ([@stop_split] [@expl:unwrap 'self' type invariant] inv_Option_F self)
@@ -207,9 +207,9 @@ module M_fetch_add
       /\ ([@stop_split] [@expl:unwrap ensures] Some result = self)}
       (! return {result}) ]
   
-  predicate precondition_F (self: t_F) (args: MutBorrow.t t_Committer_AtomicI32_i32_SeqCst_SeqCst)
+  function precondition_F (self: t_F) (args: MutBorrow.t t_Committer_AtomicI32_i32_SeqCst_SeqCst) : bool
   
-  predicate postcondition_once_F (self: t_F) (args: MutBorrow.t t_Committer_AtomicI32_i32_SeqCst_SeqCst) (result: ())
+  function postcondition_once_F (self: t_F) (args: MutBorrow.t t_Committer_AtomicI32_i32_SeqCst_SeqCst) (result: ()) : bool
   
   let call_once_F (self: t_F) (args: MutBorrow.t t_Committer_AtomicI32_i32_SeqCst_SeqCst) (return (x: ())) =
   {[@stop_split] [@expl:call_once_F requires] ([@stop_split] [@expl:call_once 'self' type invariant] inv_F self)
@@ -218,7 +218,7 @@ module M_fetch_add
     [ return (result: ()) -> {[@stop_split] [@expl:call_once ensures] postcondition_once_F self args result}
       (! return {result}) ]
   
-  predicate hist_inv_closure6 (self: closure6) (result_state: closure6) = result_state.c0.final = self.c0.final
+  function hist_inv_closure6 (self: closure6) (result_state: closure6) : bool = result_state.c0.final = self.c0.final
   
   let closure6 [@coma:extspec] (self: MutBorrow.t closure6)
     (c: t_Result_refmut_Committer_AtomicI32_i32_SeqCst_SeqCst_ref_Committer_AtomicI32_i32_SeqCst_unit)
@@ -282,7 +282,7 @@ module M_fetch_add
   
   type t_FnGhostWrapper_closure6 = { f0'0: closure6 }
   
-  predicate inv_FnGhostWrapper_closure6 (_1: t_FnGhostWrapper_closure6)
+  function inv_FnGhostWrapper_closure6 (_1: t_FnGhostWrapper_closure6) : bool
   
   axiom inv_axiom'0 [@rewrite]:
     forall _1: t_FnGhostWrapper_closure6 [inv_FnGhostWrapper_closure6 _1]. inv_FnGhostWrapper_closure6 _1
@@ -296,15 +296,15 @@ module M_fetch_add
       /\ ([@stop_split] [@expl:__new ensures] result.f0'0 = f)}
       (! return {result}) ]
   
-  predicate invariant_Ghost_FnGhostWrapper_closure6 [@inline:trivial] (self: t_FnGhostWrapper_closure6) =
+  function invariant_Ghost_FnGhostWrapper_closure6 [@inline:trivial] (self: t_FnGhostWrapper_closure6) : bool =
     inv_FnGhostWrapper_closure6 self
   
-  meta "rewrite_def" predicate invariant_Ghost_FnGhostWrapper_closure6
+  meta "rewrite_def" function invariant_Ghost_FnGhostWrapper_closure6
   
-  predicate inv_Ghost_FnGhostWrapper_closure6 [@inline:trivial] (_1: t_FnGhostWrapper_closure6) =
+  function inv_Ghost_FnGhostWrapper_closure6 [@inline:trivial] (_1: t_FnGhostWrapper_closure6) : bool =
     invariant_Ghost_FnGhostWrapper_closure6 _1
   
-  meta "rewrite_def" predicate inv_Ghost_FnGhostWrapper_closure6
+  meta "rewrite_def" function inv_Ghost_FnGhostWrapper_closure6
   
   let new_FnGhostWrapper_closure6 (x: t_FnGhostWrapper_closure6) (return (x'0: t_FnGhostWrapper_closure6)) =
   {[@stop_split] [@expl:new 'x' type invariant] inv_FnGhostWrapper_closure6 x}
@@ -316,7 +316,7 @@ module M_fetch_add
   
   type t_Result_i32_i32 = Ok'0 Int32.t | Err'0 Int32.t
   
-  predicate shot_store_AtomicI32'0 (self: t_Committer_AtomicI32_i32_SeqCst_SeqCst)
+  function shot_store_AtomicI32'0 (self: t_Committer_AtomicI32_i32_SeqCst_SeqCst) : bool
   
   function ward_AtomicI32'0 (self: t_Committer_AtomicI32_i32_SeqCst_SeqCst) : t_AtomicI32
   
@@ -328,36 +328,36 @@ module M_fetch_add
   
   function val_store_AtomicI32 (self: t_Committer_AtomicI32_i32_SeqCst_SeqCst) : Int32.t
   
-  predicate precondition_closure6 (self: closure6) (args: t_Result_refmut_Committer_AtomicI32_i32_SeqCst_SeqCst_ref_Committer_AtomicI32_i32_SeqCst_unit) =
-    let c = args in forall bor_self: MutBorrow.t closure6. bor_self.current = self /\ inv_closure6 bor_self.final
+  function precondition_closure6 (self: closure6) (args: t_Result_refmut_Committer_AtomicI32_i32_SeqCst_SeqCst_ref_Committer_AtomicI32_i32_SeqCst_unit) : bool
+   = let c = args in forall bor_self: MutBorrow.t closure6. bor_self.current = self /\ inv_closure6 bor_self.final
       -> closure6'pre bor_self c
   
-  meta "rewrite_def" predicate precondition_closure6
+  meta "rewrite_def" function precondition_closure6
   
-  predicate precondition_FnGhostWrapper_closure6 (self: t_FnGhostWrapper_closure6) (args: t_Result_refmut_Committer_AtomicI32_i32_SeqCst_SeqCst_ref_Committer_AtomicI32_i32_SeqCst_unit) =
-    precondition_closure6 self.f0'0 args
+  function precondition_FnGhostWrapper_closure6 (self: t_FnGhostWrapper_closure6) (args: t_Result_refmut_Committer_AtomicI32_i32_SeqCst_SeqCst_ref_Committer_AtomicI32_i32_SeqCst_unit) : bool
+   = precondition_closure6 self.f0'0 args
   
-  meta "rewrite_def" predicate precondition_FnGhostWrapper_closure6
+  meta "rewrite_def" function precondition_FnGhostWrapper_closure6
   
-  predicate resolve_refmut_Ghost_Option_F [@inline:trivial] (_1: MutBorrow.t t_Option_F) = _1.final = _1.current
+  function resolve_refmut_Ghost_Option_F [@inline:trivial] (_1: MutBorrow.t t_Option_F) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Ghost_Option_F
+  meta "rewrite_def" function resolve_refmut_Ghost_Option_F
   
-  predicate resolve_closure6 [@inline:trivial] (_1: closure6) = resolve_refmut_Ghost_Option_F _1.c0
+  function resolve_closure6 [@inline:trivial] (_1: closure6) : bool = resolve_refmut_Ghost_Option_F _1.c0
   
-  meta "rewrite_def" predicate resolve_closure6
+  meta "rewrite_def" function resolve_closure6
   
-  predicate postcondition_once_closure6 (self: closure6) (args: t_Result_refmut_Committer_AtomicI32_i32_SeqCst_SeqCst_ref_Committer_AtomicI32_i32_SeqCst_unit) (result: ()) =
-    let c = args in exists e: closure6. (exists bor_self: MutBorrow.t closure6. bor_self.current = self
+  function postcondition_once_closure6 (self: closure6) (args: t_Result_refmut_Committer_AtomicI32_i32_SeqCst_SeqCst_ref_Committer_AtomicI32_i32_SeqCst_unit) (result: ()) : bool
+   = let c = args in exists e: closure6. (exists bor_self: MutBorrow.t closure6. bor_self.current = self
           /\ bor_self.final = e /\ closure6'post'return bor_self c result /\ hist_inv_closure6 self e)
       /\ resolve_closure6 e
   
-  meta "rewrite_def" predicate postcondition_once_closure6
+  meta "rewrite_def" function postcondition_once_closure6
   
-  predicate postcondition_once_FnGhostWrapper_closure6 (self: t_FnGhostWrapper_closure6) (args: t_Result_refmut_Committer_AtomicI32_i32_SeqCst_SeqCst_ref_Committer_AtomicI32_i32_SeqCst_unit) (result: ()) =
-    postcondition_once_closure6 self.f0'0 args result
+  function postcondition_once_FnGhostWrapper_closure6 (self: t_FnGhostWrapper_closure6) (args: t_Result_refmut_Committer_AtomicI32_i32_SeqCst_SeqCst_ref_Committer_AtomicI32_i32_SeqCst_unit) (result: ()) : bool
+   = postcondition_once_closure6 self.f0'0 args result
   
-  meta "rewrite_def" predicate postcondition_once_FnGhostWrapper_closure6
+  meta "rewrite_def" function postcondition_once_FnGhostWrapper_closure6
   
   let compare_exchange_weak_FnGhostWrapper_closure6 (self: t_AtomicI32) (current': Int32.t) (new: Int32.t)
     (f: t_FnGhostWrapper_closure6) (return (x: t_Result_i32_i32)) =
@@ -392,9 +392,9 @@ module M_fetch_add
         end}
       any) ]
   
-  predicate resolve_F (_1: t_F)
+  function resolve_F (_1: t_F) : bool
   
-  predicate resolve_Option_F (_1: t_Option_F)
+  function resolve_Option_F (_1: t_Option_F) : bool
   
   axiom resolve_axiom [@rewrite]: forall _1: t_Option_F [resolve_Option_F _1]. resolve_Option_F _1
       = match _1 with
@@ -402,13 +402,13 @@ module M_fetch_add
         | Some x0 -> resolve_F x0
         end
   
-  predicate resolve_Ghost_Option_F [@inline:trivial] (self: t_Option_F) = resolve_Option_F self
+  function resolve_Ghost_Option_F [@inline:trivial] (self: t_Option_F) : bool = resolve_Option_F self
   
-  meta "rewrite_def" predicate resolve_Ghost_Option_F
+  meta "rewrite_def" function resolve_Ghost_Option_F
   
-  predicate resolve_Ghost_Option_F'0 [@inline:trivial] (_1: t_Option_F) = resolve_Ghost_Option_F _1
+  function resolve_Ghost_Option_F'0 [@inline:trivial] (_1: t_Option_F) : bool = resolve_Ghost_Option_F _1
   
-  meta "rewrite_def" predicate resolve_Ghost_Option_F'0
+  meta "rewrite_def" function resolve_Ghost_Option_F'0
   
   meta "compute_max_steps" 1000000
   

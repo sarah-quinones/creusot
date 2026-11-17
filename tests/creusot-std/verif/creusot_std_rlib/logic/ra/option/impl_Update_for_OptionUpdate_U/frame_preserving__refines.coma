@@ -10,15 +10,14 @@ type t_R
 
 type t_Option_R = None | Some t_R
 
-predicate premise_U (self: t_U) (from: t_R)
+function premise_U (self: t_U) (from: t_R) : bool
 
-predicate premise_OptionUpdate_U [@inline:trivial] (self: t_OptionUpdate_U) (from: t_Option_R) =
-  match from with
+function premise_OptionUpdate_U [@inline:trivial] (self: t_OptionUpdate_U) (from: t_Option_R) : bool = match from with
     | Some from'0 -> premise_U self.f0 from'0
     | None -> false
     end
 
-meta "rewrite_def" predicate premise_OptionUpdate_U
+meta "rewrite_def" function premise_OptionUpdate_U
 
 type t_Option_Option_R = None'0 | Some'0 t_Option_R
 
@@ -31,7 +30,7 @@ function map_Option_R (self: t_Option_R) (f: Map.map t_R t_Option_R) : t_Option_
 
 function op_R (self: t_R) (other: t_R) : t_Option_R
 
-predicate incl_R (self: t_R) (other: t_R)
+function incl_R (self: t_R) (other: t_R) : bool
 
 axiom incl_R_spec: forall self: t_R, other: t_R [incl_R self other]. incl_R self other
     = (exists factor: t_R. op_R self factor = Some other)

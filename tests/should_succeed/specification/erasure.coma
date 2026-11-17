@@ -4,11 +4,11 @@ module M_apply
   
   type t_F
   
-  predicate inv_F (_1: t_F)
+  function inv_F (_1: t_F) : bool
   
-  predicate precondition_F (self: t_F) (args: Int32.t)
+  function precondition_F (self: t_F) (args: Int32.t) : bool
   
-  predicate postcondition_once_F (self: t_F) (args: Int32.t) (result: Int32.t)
+  function postcondition_once_F (self: t_F) (args: Int32.t) (result: Int32.t) : bool
   
   let call_once_F (self: t_F) (args: Int32.t) (return (x: Int32.t)) =
   {[@stop_split] [@expl:call_once_F requires] ([@stop_split] [@expl:call_once 'self' type invariant] inv_F self)
@@ -37,9 +37,9 @@ module M_apply_test
   
   let foo (x: Int32.t) (return (x'0: Int32.t)) = any [ return (result: Int32.t) -> (! return {result}) ]
   
-  predicate precondition_foo (self: ()) (args: Int32.t) = let x = args in true
+  function precondition_foo (self: ()) (args: Int32.t) : bool = let x = args in true
   
-  meta "rewrite_def" predicate precondition_foo
+  meta "rewrite_def" function precondition_foo
   
   let apply_foo (f: ()) (return (x: Int32.t)) = {[@stop_split] [@expl:apply requires] precondition_foo f (0: Int32.t)}
     any [ return (result: Int32.t) -> (! return {result}) ]
@@ -58,9 +58,9 @@ module M_apply_test2
   
   let foo3 (x: Int32.t) (return (x'0: Int32.t)) = any [ return (result: Int32.t) -> (! return {result}) ]
   
-  predicate precondition_foo3 (self: ()) (args: Int32.t) = let x = args in true
+  function precondition_foo3 (self: ()) (args: Int32.t) : bool = let x = args in true
   
-  meta "rewrite_def" predicate precondition_foo3
+  meta "rewrite_def" function precondition_foo3
   
   let apply_foo3 (f: ()) (return (x: Int32.t)) = {[@stop_split] [@expl:apply requires] precondition_foo3 f (0: Int32.t)}
     any [ return (result: Int32.t) -> (! return {result}) ]
@@ -331,47 +331,48 @@ module M_slice_as_mut_ptr
   
   type t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_T (Seq.get self i)
+  function invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+      -> inv_ref_T (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_T
+  meta "rewrite_def" function invariant_Seq_T
   
-  predicate inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Seq_T _1
+  function inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Seq_T
+  meta "rewrite_def" function inv_Seq_T
   
-  predicate invariant_slice_T (self: Slice64.slice t_T) = inv_Seq_T (Slice64.view self)
+  function invariant_slice_T (self: Slice64.slice t_T) : bool = inv_Seq_T (Slice64.view self)
   
-  predicate inv_slice_T [@inline:trivial] (_1: Slice64.slice t_T) = invariant_slice_T _1
+  function inv_slice_T [@inline:trivial] (_1: Slice64.slice t_T) : bool = invariant_slice_T _1
   
-  meta "rewrite_def" predicate inv_slice_T
+  meta "rewrite_def" function inv_slice_T
   
-  predicate invariant_refmut_slice_T [@inline:trivial] (self: MutBorrow.t (Slice64.slice t_T)) =
+  function invariant_refmut_slice_T [@inline:trivial] (self: MutBorrow.t (Slice64.slice t_T)) : bool =
     inv_slice_T self.current /\ inv_slice_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_slice_T
+  meta "rewrite_def" function invariant_refmut_slice_T
   
-  predicate inv_refmut_slice_T [@inline:trivial] (_1: MutBorrow.t (Slice64.slice t_T)) = invariant_refmut_slice_T _1
+  function inv_refmut_slice_T [@inline:trivial] (_1: MutBorrow.t (Slice64.slice t_T)) : bool =
+    invariant_refmut_slice_T _1
   
-  meta "rewrite_def" predicate inv_refmut_slice_T
+  meta "rewrite_def" function inv_refmut_slice_T
   
   let as_mut_ptr_T (self: MutBorrow.t (Slice64.slice t_T)) (return (x: Opaque.ptr)) =
   {[@stop_split] [@expl:as_mut_ptr 'self' type invariant] inv_refmut_slice_T self}
     any [ return (result: Opaque.ptr) -> (! return {result}) ]
   
-  predicate resolve_refmut_slice_T [@inline:trivial] (_1: MutBorrow.t (Slice64.slice t_T)) = _1.final = _1.current
+  function resolve_refmut_slice_T [@inline:trivial] (_1: MutBorrow.t (Slice64.slice t_T)) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_slice_T
+  meta "rewrite_def" function resolve_refmut_slice_T
   
   meta "compute_max_steps" 1000000
   
@@ -406,30 +407,30 @@ module M_slice_as_mut_ptr_perm
   
   type t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_T (Seq.get self i)
+  function invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+      -> inv_ref_T (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_T
+  meta "rewrite_def" function invariant_Seq_T
   
-  predicate inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Seq_T _1
+  function inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Seq_T
+  meta "rewrite_def" function inv_Seq_T
   
-  predicate invariant_slice_T (self: Slice64.slice t_T) = inv_Seq_T (Slice64.view self)
+  function invariant_slice_T (self: Slice64.slice t_T) : bool = inv_Seq_T (Slice64.view self)
   
-  predicate inv_slice_T [@inline:trivial] (_1: Slice64.slice t_T) = invariant_slice_T _1
+  function inv_slice_T [@inline:trivial] (_1: Slice64.slice t_T) : bool = invariant_slice_T _1
   
-  meta "rewrite_def" predicate inv_slice_T
+  meta "rewrite_def" function inv_slice_T
   
   type t_Perm_ptr_slice_T
   
@@ -442,91 +443,92 @@ module M_slice_as_mut_ptr_perm
     f0: Opaque.ptr;
     f1: t_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T }
   
-  predicate invariant_refmut_slice_T [@inline:trivial] (self: MutBorrow.t (Slice64.slice t_T)) =
+  function invariant_refmut_slice_T [@inline:trivial] (self: MutBorrow.t (Slice64.slice t_T)) : bool =
     inv_slice_T self.current /\ inv_slice_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_slice_T
+  meta "rewrite_def" function invariant_refmut_slice_T
   
-  predicate inv_refmut_slice_T [@inline:trivial] (_1: MutBorrow.t (Slice64.slice t_T)) = invariant_refmut_slice_T _1
+  function inv_refmut_slice_T [@inline:trivial] (_1: MutBorrow.t (Slice64.slice t_T)) : bool =
+    invariant_refmut_slice_T _1
   
-  meta "rewrite_def" predicate inv_refmut_slice_T
+  meta "rewrite_def" function inv_refmut_slice_T
   
   function ward_ptr_slice_T (self: t_Perm_ptr_slice_T) : Opaque.ptr
   
-  predicate guards_ref_ptr_slice_T [@inline:trivial] (self: Opaque.ptr) (c: t_Perm_ptr_slice_T) =
+  function guards_ref_ptr_slice_T [@inline:trivial] (self: Opaque.ptr) (c: t_Perm_ptr_slice_T) : bool =
     ward_ptr_slice_T c = self
   
-  meta "rewrite_def" predicate guards_ref_ptr_slice_T
+  meta "rewrite_def" function guards_ref_ptr_slice_T
   
-  predicate guards_ptr_slice_T [@inline:trivial] (self: Opaque.ptr) (initial: MutBorrow.t t_Perm_ptr_slice_T) (current': MutBorrow.t t_Perm_ptr_slice_T) =
-    guards_ref_ptr_slice_T self current'.current /\ initial.final = current'.final
+  function guards_ptr_slice_T [@inline:trivial] (self: Opaque.ptr) (initial: MutBorrow.t t_Perm_ptr_slice_T) (current': MutBorrow.t t_Perm_ptr_slice_T) : bool
+   = guards_ref_ptr_slice_T self current'.current /\ initial.final = current'.final
   
-  meta "rewrite_def" predicate guards_ptr_slice_T
+  meta "rewrite_def" function guards_ptr_slice_T
   
-  predicate invariant_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T [@inline:trivial] (self: t_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T) =
-    guards_ptr_slice_T self._guard self._initial self.inner
+  function invariant_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T [@inline:trivial] (self: t_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T) : bool
+   = guards_ptr_slice_T self._guard self._initial self.inner
   
-  meta "rewrite_def" predicate invariant_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T
+  meta "rewrite_def" function invariant_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T
   
-  predicate is_null_ptr_slice_T (self: Opaque.ptr) = Ptr.addr_logic_u64 self = (0: UInt64.t)
+  function is_null_ptr_slice_T (self: Opaque.ptr) : bool = Ptr.addr_logic_u64 self = (0: UInt64.t)
   
-  predicate metadata_matches_slice_T [@inline:trivial] (_value: Slice64.slice t_T) (_metadata: UInt64.t) =
+  function metadata_matches_slice_T [@inline:trivial] (_value: Slice64.slice t_T) (_metadata: UInt64.t) : bool =
     Seq.length (Slice64.view _value) = UInt64.t'int _metadata
   
-  meta "rewrite_def" predicate metadata_matches_slice_T
+  meta "rewrite_def" function metadata_matches_slice_T
   
   function val_unsized_ptr_slice_T (self: t_Perm_ptr_slice_T) : Slice64.slice t_T
   
   function metadata_slice_T (_1: Opaque.ptr) : UInt64.t
   
-  predicate invariant_ref_slice_T [@inline:trivial] (self: Slice64.slice t_T) = inv_slice_T self
+  function invariant_ref_slice_T [@inline:trivial] (self: Slice64.slice t_T) : bool = inv_slice_T self
   
-  meta "rewrite_def" predicate invariant_ref_slice_T
+  meta "rewrite_def" function invariant_ref_slice_T
   
-  predicate inv_ref_slice_T [@inline:trivial] (_1: Slice64.slice t_T) = invariant_ref_slice_T _1
+  function inv_ref_slice_T [@inline:trivial] (_1: Slice64.slice t_T) : bool = invariant_ref_slice_T _1
   
-  meta "rewrite_def" predicate inv_ref_slice_T
+  meta "rewrite_def" function inv_ref_slice_T
   
-  predicate invariant_Perm_ptr_slice_T (self: t_Perm_ptr_slice_T) =
+  function invariant_Perm_ptr_slice_T (self: t_Perm_ptr_slice_T) : bool =
     not is_null_ptr_slice_T (ward_ptr_slice_T self)
     /\ metadata_matches_slice_T (val_unsized_ptr_slice_T self) (metadata_slice_T (ward_ptr_slice_T self))
     /\ inv_ref_slice_T (val_unsized_ptr_slice_T self)
   
-  predicate inv_Perm_ptr_slice_T (_1: t_Perm_ptr_slice_T)
+  function inv_Perm_ptr_slice_T (_1: t_Perm_ptr_slice_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Perm_ptr_slice_T [inv_Perm_ptr_slice_T _1]. inv_Perm_ptr_slice_T _1
       = invariant_Perm_ptr_slice_T _1
   
-  predicate invariant_refmut_Perm_ptr_slice_T [@inline:trivial] (self: MutBorrow.t t_Perm_ptr_slice_T) =
+  function invariant_refmut_Perm_ptr_slice_T [@inline:trivial] (self: MutBorrow.t t_Perm_ptr_slice_T) : bool =
     inv_Perm_ptr_slice_T self.current /\ inv_Perm_ptr_slice_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Perm_ptr_slice_T
+  meta "rewrite_def" function invariant_refmut_Perm_ptr_slice_T
   
-  predicate inv_refmut_Perm_ptr_slice_T [@inline:trivial] (_1: MutBorrow.t t_Perm_ptr_slice_T) =
+  function inv_refmut_Perm_ptr_slice_T [@inline:trivial] (_1: MutBorrow.t t_Perm_ptr_slice_T) : bool =
     invariant_refmut_Perm_ptr_slice_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Perm_ptr_slice_T
+  meta "rewrite_def" function inv_refmut_Perm_ptr_slice_T
   
-  predicate inv_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T (_1: t_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T)
+  function inv_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T (_1: t_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T) : bool
   
   axiom inv_axiom'0 [@rewrite]:
     forall _1: t_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T [inv_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T _1]. inv_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T _1
       = (invariant_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T _1 /\ inv_refmut_Perm_ptr_slice_T _1.inner)
   
-  predicate invariant_Ghost_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T [@inline:trivial] (self: t_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T) =
-    inv_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T self
+  function invariant_Ghost_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T [@inline:trivial] (self: t_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T) : bool
+   = inv_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T
+  meta "rewrite_def" function invariant_Ghost_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T
   
-  predicate inv_Ghost_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T [@inline:trivial] (_1: t_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T) =
-    invariant_Ghost_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T _1
+  function inv_Ghost_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T [@inline:trivial] (_1: t_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T) : bool
+   = invariant_Ghost_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T
+  meta "rewrite_def" function inv_Ghost_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T
   
-  predicate inv_tup2_ptr_T_Ghost_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T [@inline:trivial] (_1: tup2_ptr_T_Ghost_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T) =
-    inv_Ghost_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T _1.f1
+  function inv_tup2_ptr_T_Ghost_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T [@inline:trivial] (_1: tup2_ptr_T_Ghost_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T) : bool
+   = inv_Ghost_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T _1.f1
   
-  meta "rewrite_def" predicate inv_tup2_ptr_T_Ghost_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T
+  meta "rewrite_def" function inv_tup2_ptr_T_Ghost_Guarded_refmut_Perm_ptr_slice_T_ptr_slice_T
   
   function len_ptr_slice_T [@inline:trivial] (self: Opaque.ptr) : UInt64.t = metadata_slice_T self
   
@@ -560,9 +562,9 @@ module M_slice_as_mut_ptr_perm
       /\ ([@stop_split] [@expl:as_mut_ptr_perm ensures #2] self.final = val_unsized_ptr_slice_T result.f1.inner.final)}
       (! return {result}) ]
   
-  predicate resolve_refmut_slice_T [@inline:trivial] (_1: MutBorrow.t (Slice64.slice t_T)) = _1.final = _1.current
+  function resolve_refmut_slice_T [@inline:trivial] (_1: MutBorrow.t (Slice64.slice t_T)) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_slice_T
+  meta "rewrite_def" function resolve_refmut_slice_T
   
   meta "compute_max_steps" 1000000
   
@@ -599,38 +601,38 @@ module M_slice_as_ptr
   
   type t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_T (Seq.get self i)
+  function invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+      -> inv_ref_T (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_T
+  meta "rewrite_def" function invariant_Seq_T
   
-  predicate inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Seq_T _1
+  function inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Seq_T
+  meta "rewrite_def" function inv_Seq_T
   
-  predicate invariant_slice_T (self: Slice64.slice t_T) = inv_Seq_T (Slice64.view self)
+  function invariant_slice_T (self: Slice64.slice t_T) : bool = inv_Seq_T (Slice64.view self)
   
-  predicate inv_slice_T [@inline:trivial] (_1: Slice64.slice t_T) = invariant_slice_T _1
+  function inv_slice_T [@inline:trivial] (_1: Slice64.slice t_T) : bool = invariant_slice_T _1
   
-  meta "rewrite_def" predicate inv_slice_T
+  meta "rewrite_def" function inv_slice_T
   
-  predicate invariant_ref_slice_T [@inline:trivial] (self: Slice64.slice t_T) = inv_slice_T self
+  function invariant_ref_slice_T [@inline:trivial] (self: Slice64.slice t_T) : bool = inv_slice_T self
   
-  meta "rewrite_def" predicate invariant_ref_slice_T
+  meta "rewrite_def" function invariant_ref_slice_T
   
-  predicate inv_ref_slice_T [@inline:trivial] (_1: Slice64.slice t_T) = invariant_ref_slice_T _1
+  function inv_ref_slice_T [@inline:trivial] (_1: Slice64.slice t_T) : bool = invariant_ref_slice_T _1
   
-  meta "rewrite_def" predicate inv_ref_slice_T
+  meta "rewrite_def" function inv_ref_slice_T
   
   let as_ptr_T (self: Slice64.slice t_T) (return (x: Opaque.ptr)) =
   {[@stop_split] [@expl:as_ptr 'self' type invariant] inv_ref_slice_T self}
@@ -662,84 +664,86 @@ module M_slice_as_ptr_perm
   
   type tup2_ptr_T_Ghost_ref_Perm_ptr_slice_T = { f0: Opaque.ptr; f1: t_Perm_ptr_slice_T }
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_T (Seq.get self i)
+  function invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+      -> inv_ref_T (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_T
+  meta "rewrite_def" function invariant_Seq_T
   
-  predicate inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Seq_T _1
+  function inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Seq_T
+  meta "rewrite_def" function inv_Seq_T
   
-  predicate invariant_slice_T (self: Slice64.slice t_T) = inv_Seq_T (Slice64.view self)
+  function invariant_slice_T (self: Slice64.slice t_T) : bool = inv_Seq_T (Slice64.view self)
   
-  predicate inv_slice_T [@inline:trivial] (_1: Slice64.slice t_T) = invariant_slice_T _1
+  function inv_slice_T [@inline:trivial] (_1: Slice64.slice t_T) : bool = invariant_slice_T _1
   
-  meta "rewrite_def" predicate inv_slice_T
+  meta "rewrite_def" function inv_slice_T
   
-  predicate invariant_ref_slice_T [@inline:trivial] (self: Slice64.slice t_T) = inv_slice_T self
+  function invariant_ref_slice_T [@inline:trivial] (self: Slice64.slice t_T) : bool = inv_slice_T self
   
-  meta "rewrite_def" predicate invariant_ref_slice_T
+  meta "rewrite_def" function invariant_ref_slice_T
   
-  predicate inv_ref_slice_T [@inline:trivial] (_1: Slice64.slice t_T) = invariant_ref_slice_T _1
+  function inv_ref_slice_T [@inline:trivial] (_1: Slice64.slice t_T) : bool = invariant_ref_slice_T _1
   
-  meta "rewrite_def" predicate inv_ref_slice_T
+  meta "rewrite_def" function inv_ref_slice_T
   
-  predicate is_null_ptr_slice_T (self: Opaque.ptr) = Ptr.addr_logic_u64 self = (0: UInt64.t)
+  function is_null_ptr_slice_T (self: Opaque.ptr) : bool = Ptr.addr_logic_u64 self = (0: UInt64.t)
   
   function ward_ptr_slice_T (self: t_Perm_ptr_slice_T) : Opaque.ptr
   
-  predicate metadata_matches_slice_T [@inline:trivial] (_value: Slice64.slice t_T) (_metadata: UInt64.t) =
+  function metadata_matches_slice_T [@inline:trivial] (_value: Slice64.slice t_T) (_metadata: UInt64.t) : bool =
     Seq.length (Slice64.view _value) = UInt64.t'int _metadata
   
-  meta "rewrite_def" predicate metadata_matches_slice_T
+  meta "rewrite_def" function metadata_matches_slice_T
   
   function val_unsized_ptr_slice_T (self: t_Perm_ptr_slice_T) : Slice64.slice t_T
   
   function metadata_slice_T (_1: Opaque.ptr) : UInt64.t
   
-  predicate invariant_Perm_ptr_slice_T (self: t_Perm_ptr_slice_T) =
+  function invariant_Perm_ptr_slice_T (self: t_Perm_ptr_slice_T) : bool =
     not is_null_ptr_slice_T (ward_ptr_slice_T self)
     /\ metadata_matches_slice_T (val_unsized_ptr_slice_T self) (metadata_slice_T (ward_ptr_slice_T self))
     /\ inv_ref_slice_T (val_unsized_ptr_slice_T self)
   
-  predicate inv_Perm_ptr_slice_T (_1: t_Perm_ptr_slice_T)
+  function inv_Perm_ptr_slice_T (_1: t_Perm_ptr_slice_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Perm_ptr_slice_T [inv_Perm_ptr_slice_T _1]. inv_Perm_ptr_slice_T _1
       = invariant_Perm_ptr_slice_T _1
   
-  predicate invariant_ref_Perm_ptr_slice_T [@inline:trivial] (self: t_Perm_ptr_slice_T) = inv_Perm_ptr_slice_T self
+  function invariant_ref_Perm_ptr_slice_T [@inline:trivial] (self: t_Perm_ptr_slice_T) : bool =
+    inv_Perm_ptr_slice_T self
   
-  meta "rewrite_def" predicate invariant_ref_Perm_ptr_slice_T
+  meta "rewrite_def" function invariant_ref_Perm_ptr_slice_T
   
-  predicate inv_ref_Perm_ptr_slice_T [@inline:trivial] (_1: t_Perm_ptr_slice_T) = invariant_ref_Perm_ptr_slice_T _1
+  function inv_ref_Perm_ptr_slice_T [@inline:trivial] (_1: t_Perm_ptr_slice_T) : bool =
+    invariant_ref_Perm_ptr_slice_T _1
   
-  meta "rewrite_def" predicate inv_ref_Perm_ptr_slice_T
+  meta "rewrite_def" function inv_ref_Perm_ptr_slice_T
   
-  predicate invariant_Ghost_ref_Perm_ptr_slice_T [@inline:trivial] (self: t_Perm_ptr_slice_T) =
+  function invariant_Ghost_ref_Perm_ptr_slice_T [@inline:trivial] (self: t_Perm_ptr_slice_T) : bool =
     inv_ref_Perm_ptr_slice_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_ref_Perm_ptr_slice_T
+  meta "rewrite_def" function invariant_Ghost_ref_Perm_ptr_slice_T
   
-  predicate inv_Ghost_ref_Perm_ptr_slice_T [@inline:trivial] (_1: t_Perm_ptr_slice_T) =
+  function inv_Ghost_ref_Perm_ptr_slice_T [@inline:trivial] (_1: t_Perm_ptr_slice_T) : bool =
     invariant_Ghost_ref_Perm_ptr_slice_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_ref_Perm_ptr_slice_T
+  meta "rewrite_def" function inv_Ghost_ref_Perm_ptr_slice_T
   
-  predicate inv_tup2_ptr_T_Ghost_ref_Perm_ptr_slice_T [@inline:trivial] (_1: tup2_ptr_T_Ghost_ref_Perm_ptr_slice_T) =
-    inv_Ghost_ref_Perm_ptr_slice_T _1.f1
+  function inv_tup2_ptr_T_Ghost_ref_Perm_ptr_slice_T [@inline:trivial] (_1: tup2_ptr_T_Ghost_ref_Perm_ptr_slice_T) : bool
+   = inv_Ghost_ref_Perm_ptr_slice_T _1.f1
   
-  meta "rewrite_def" predicate inv_tup2_ptr_T_Ghost_ref_Perm_ptr_slice_T
+  meta "rewrite_def" function inv_tup2_ptr_T_Ghost_ref_Perm_ptr_slice_T
   
   let as_ptr_perm_slice_T (self: Slice64.slice t_T) (return (x: tup2_ptr_T_Ghost_ref_Perm_ptr_slice_T)) =
   {[@stop_split] [@expl:as_ptr_perm 'self' type invariant] inv_ref_slice_T self}
@@ -986,51 +990,50 @@ module M_test_ptr2
   
   type t_T
   
-  predicate is_null_ptr_T (self: Opaque.ptr) = Ptr.addr_logic_u64 self = (0: UInt64.t)
+  function is_null_ptr_T (self: Opaque.ptr) : bool = Ptr.addr_logic_u64 self = (0: UInt64.t)
   
   function ward_ptr_T (self: t_Perm_ptr_T) : Opaque.ptr
   
-  predicate metadata_matches_T [@inline:trivial] (_value: t_T) (_metadata: ()) = true
+  function metadata_matches_T [@inline:trivial] (_value: t_T) (_metadata: ()) : bool = true
   
-  meta "rewrite_def" predicate metadata_matches_T
+  meta "rewrite_def" function metadata_matches_T
   
   function val_unsized_ptr_T (self: t_Perm_ptr_T) : t_T
   
   function metadata_T (_1: Opaque.ptr) : ()
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate invariant_Perm_ptr_T (self: t_Perm_ptr_T) =
-    not is_null_ptr_T (ward_ptr_T self)
+  function invariant_Perm_ptr_T (self: t_Perm_ptr_T) : bool = not is_null_ptr_T (ward_ptr_T self)
     /\ metadata_matches_T (val_unsized_ptr_T self) (metadata_T (ward_ptr_T self)) /\ inv_ref_T (val_unsized_ptr_T self)
   
-  predicate inv_Perm_ptr_T (_1: t_Perm_ptr_T)
+  function inv_Perm_ptr_T (_1: t_Perm_ptr_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Perm_ptr_T [inv_Perm_ptr_T _1]. inv_Perm_ptr_T _1 = invariant_Perm_ptr_T _1
   
-  predicate invariant_ref_Perm_ptr_T [@inline:trivial] (self: t_Perm_ptr_T) = inv_Perm_ptr_T self
+  function invariant_ref_Perm_ptr_T [@inline:trivial] (self: t_Perm_ptr_T) : bool = inv_Perm_ptr_T self
   
-  meta "rewrite_def" predicate invariant_ref_Perm_ptr_T
+  meta "rewrite_def" function invariant_ref_Perm_ptr_T
   
-  predicate inv_ref_Perm_ptr_T [@inline:trivial] (_1: t_Perm_ptr_T) = invariant_ref_Perm_ptr_T _1
+  function inv_ref_Perm_ptr_T [@inline:trivial] (_1: t_Perm_ptr_T) : bool = invariant_ref_Perm_ptr_T _1
   
-  meta "rewrite_def" predicate inv_ref_Perm_ptr_T
+  meta "rewrite_def" function inv_ref_Perm_ptr_T
   
-  predicate invariant_Ghost_ref_Perm_ptr_T [@inline:trivial] (self: t_Perm_ptr_T) = inv_ref_Perm_ptr_T self
+  function invariant_Ghost_ref_Perm_ptr_T [@inline:trivial] (self: t_Perm_ptr_T) : bool = inv_ref_Perm_ptr_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_ref_Perm_ptr_T
+  meta "rewrite_def" function invariant_Ghost_ref_Perm_ptr_T
   
-  predicate inv_Ghost_ref_Perm_ptr_T [@inline:trivial] (_1: t_Perm_ptr_T) = invariant_Ghost_ref_Perm_ptr_T _1
+  function inv_Ghost_ref_Perm_ptr_T [@inline:trivial] (_1: t_Perm_ptr_T) : bool = invariant_Ghost_ref_Perm_ptr_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_ref_Perm_ptr_T
+  meta "rewrite_def" function inv_Ghost_ref_Perm_ptr_T
   
   let as_ref_T (ptr: Opaque.ptr) (own: t_Perm_ptr_T) (return (x: t_T)) =
   {[@stop_split] [@expl:as_ref_T requires] ([@stop_split] [@expl:as_ref 'own' type invariant] inv_Ghost_ref_Perm_ptr_T own)
@@ -1065,62 +1068,62 @@ module M_test_ptr_mut2
   
   type t_T
   
-  predicate is_null_ptr_T (self: Opaque.ptr) = Ptr.addr_logic_u64 self = (0: UInt64.t)
+  function is_null_ptr_T (self: Opaque.ptr) : bool = Ptr.addr_logic_u64 self = (0: UInt64.t)
   
   function ward_ptr_T (self: t_Perm_ptr_T) : Opaque.ptr
   
-  predicate metadata_matches_T [@inline:trivial] (_value: t_T) (_metadata: ()) = true
+  function metadata_matches_T [@inline:trivial] (_value: t_T) (_metadata: ()) : bool = true
   
-  meta "rewrite_def" predicate metadata_matches_T
+  meta "rewrite_def" function metadata_matches_T
   
   function val_unsized_ptr_T (self: t_Perm_ptr_T) : t_T
   
   function metadata_T (_1: Opaque.ptr) : ()
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate invariant_Perm_ptr_T (self: t_Perm_ptr_T) =
-    not is_null_ptr_T (ward_ptr_T self)
+  function invariant_Perm_ptr_T (self: t_Perm_ptr_T) : bool = not is_null_ptr_T (ward_ptr_T self)
     /\ metadata_matches_T (val_unsized_ptr_T self) (metadata_T (ward_ptr_T self)) /\ inv_ref_T (val_unsized_ptr_T self)
   
-  predicate inv_Perm_ptr_T (_1: t_Perm_ptr_T)
+  function inv_Perm_ptr_T (_1: t_Perm_ptr_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Perm_ptr_T [inv_Perm_ptr_T _1]. inv_Perm_ptr_T _1 = invariant_Perm_ptr_T _1
   
-  predicate invariant_refmut_Perm_ptr_T [@inline:trivial] (self: MutBorrow.t t_Perm_ptr_T) =
+  function invariant_refmut_Perm_ptr_T [@inline:trivial] (self: MutBorrow.t t_Perm_ptr_T) : bool =
     inv_Perm_ptr_T self.current /\ inv_Perm_ptr_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Perm_ptr_T
+  meta "rewrite_def" function invariant_refmut_Perm_ptr_T
   
-  predicate inv_refmut_Perm_ptr_T [@inline:trivial] (_1: MutBorrow.t t_Perm_ptr_T) = invariant_refmut_Perm_ptr_T _1
+  function inv_refmut_Perm_ptr_T [@inline:trivial] (_1: MutBorrow.t t_Perm_ptr_T) : bool =
+    invariant_refmut_Perm_ptr_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Perm_ptr_T
+  meta "rewrite_def" function inv_refmut_Perm_ptr_T
   
-  predicate invariant_Ghost_refmut_Perm_ptr_T [@inline:trivial] (self: MutBorrow.t t_Perm_ptr_T) =
+  function invariant_Ghost_refmut_Perm_ptr_T [@inline:trivial] (self: MutBorrow.t t_Perm_ptr_T) : bool =
     inv_refmut_Perm_ptr_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_refmut_Perm_ptr_T
+  meta "rewrite_def" function invariant_Ghost_refmut_Perm_ptr_T
   
-  predicate inv_Ghost_refmut_Perm_ptr_T [@inline:trivial] (_1: MutBorrow.t t_Perm_ptr_T) =
+  function inv_Ghost_refmut_Perm_ptr_T [@inline:trivial] (_1: MutBorrow.t t_Perm_ptr_T) : bool =
     invariant_Ghost_refmut_Perm_ptr_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_refmut_Perm_ptr_T
+  meta "rewrite_def" function inv_Ghost_refmut_Perm_ptr_T
   
-  predicate invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) = inv_T self.current /\ inv_T self.final
+  function invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) : bool = inv_T self.current /\ inv_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_T
+  meta "rewrite_def" function invariant_refmut_T
   
-  predicate inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = invariant_refmut_T _1
+  function inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = invariant_refmut_T _1
   
-  meta "rewrite_def" predicate inv_refmut_T
+  meta "rewrite_def" function inv_refmut_T
   
   function fin_Ghost_refmut_Perm_ptr_T [@inline:trivial] (self: MutBorrow.t t_Perm_ptr_T) : t_Perm_ptr_T = self.final
   
@@ -1137,9 +1140,9 @@ module M_test_ptr_mut2
       /\ ([@stop_split] [@expl:as_mut ensures #2] val_unsized_ptr_T (fin_Ghost_refmut_Perm_ptr_T own) = result.final)}
       (! return {result}) ]
   
-  predicate resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = _1.final = _1.current
+  function resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_T
+  meta "rewrite_def" function resolve_refmut_T
   
   meta "compute_max_steps" 1000000
   
@@ -1188,55 +1191,55 @@ module M_unsize
   
   type t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_T (Seq.get self i)
+  function invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+      -> inv_ref_T (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_T
+  meta "rewrite_def" function invariant_Seq_T
   
-  predicate inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Seq_T _1
+  function inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Seq_T
+  meta "rewrite_def" function inv_Seq_T
   
   constant const_N : UInt64.t
   
-  predicate invariant_array_T_n (self: Slice64.array t_T) =
-    inv_Seq_T (Slice64.view self) /\ Seq.length (Slice64.view self) = UInt64.t'int const_N
+  function invariant_array_T_n (self: Slice64.array t_T) : bool = inv_Seq_T (Slice64.view self)
+    /\ Seq.length (Slice64.view self) = UInt64.t'int const_N
   
-  predicate inv_array_T_n [@inline:trivial] (_1: Slice64.array t_T) = invariant_array_T_n _1
+  function inv_array_T_n [@inline:trivial] (_1: Slice64.array t_T) : bool = invariant_array_T_n _1
   
-  meta "rewrite_def" predicate inv_array_T_n
+  meta "rewrite_def" function inv_array_T_n
   
-  predicate invariant_ref_array_T_n [@inline:trivial] (self: Slice64.array t_T) = inv_array_T_n self
+  function invariant_ref_array_T_n [@inline:trivial] (self: Slice64.array t_T) : bool = inv_array_T_n self
   
-  meta "rewrite_def" predicate invariant_ref_array_T_n
+  meta "rewrite_def" function invariant_ref_array_T_n
   
-  predicate inv_ref_array_T_n [@inline:trivial] (_1: Slice64.array t_T) = invariant_ref_array_T_n _1
+  function inv_ref_array_T_n [@inline:trivial] (_1: Slice64.array t_T) : bool = invariant_ref_array_T_n _1
   
-  meta "rewrite_def" predicate inv_ref_array_T_n
+  meta "rewrite_def" function inv_ref_array_T_n
   
-  predicate invariant_slice_T (self: Slice64.slice t_T) = inv_Seq_T (Slice64.view self)
+  function invariant_slice_T (self: Slice64.slice t_T) : bool = inv_Seq_T (Slice64.view self)
   
-  predicate inv_slice_T [@inline:trivial] (_1: Slice64.slice t_T) = invariant_slice_T _1
+  function inv_slice_T [@inline:trivial] (_1: Slice64.slice t_T) : bool = invariant_slice_T _1
   
-  meta "rewrite_def" predicate inv_slice_T
+  meta "rewrite_def" function inv_slice_T
   
-  predicate invariant_ref_slice_T [@inline:trivial] (self: Slice64.slice t_T) = inv_slice_T self
+  function invariant_ref_slice_T [@inline:trivial] (self: Slice64.slice t_T) : bool = inv_slice_T self
   
-  meta "rewrite_def" predicate invariant_ref_slice_T
+  meta "rewrite_def" function invariant_ref_slice_T
   
-  predicate inv_ref_slice_T [@inline:trivial] (_1: Slice64.slice t_T) = invariant_ref_slice_T _1
+  function inv_ref_slice_T [@inline:trivial] (_1: Slice64.slice t_T) : bool = invariant_ref_slice_T _1
   
-  meta "rewrite_def" predicate inv_ref_slice_T
+  meta "rewrite_def" function inv_ref_slice_T
   
   meta "compute_max_steps" 1000000
   
@@ -1263,55 +1266,55 @@ module M_unsize2
   
   type t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_T (Seq.get self i)
+  function invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+      -> inv_ref_T (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_T
+  meta "rewrite_def" function invariant_Seq_T
   
-  predicate inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Seq_T _1
+  function inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Seq_T
+  meta "rewrite_def" function inv_Seq_T
   
   constant const_N : UInt64.t
   
-  predicate invariant_array_T_n (self: Slice64.array t_T) =
-    inv_Seq_T (Slice64.view self) /\ Seq.length (Slice64.view self) = UInt64.t'int const_N
+  function invariant_array_T_n (self: Slice64.array t_T) : bool = inv_Seq_T (Slice64.view self)
+    /\ Seq.length (Slice64.view self) = UInt64.t'int const_N
   
-  predicate inv_array_T_n [@inline:trivial] (_1: Slice64.array t_T) = invariant_array_T_n _1
+  function inv_array_T_n [@inline:trivial] (_1: Slice64.array t_T) : bool = invariant_array_T_n _1
   
-  meta "rewrite_def" predicate inv_array_T_n
+  meta "rewrite_def" function inv_array_T_n
   
-  predicate invariant_ref_array_T_n [@inline:trivial] (self: Slice64.array t_T) = inv_array_T_n self
+  function invariant_ref_array_T_n [@inline:trivial] (self: Slice64.array t_T) : bool = inv_array_T_n self
   
-  meta "rewrite_def" predicate invariant_ref_array_T_n
+  meta "rewrite_def" function invariant_ref_array_T_n
   
-  predicate inv_ref_array_T_n [@inline:trivial] (_1: Slice64.array t_T) = invariant_ref_array_T_n _1
+  function inv_ref_array_T_n [@inline:trivial] (_1: Slice64.array t_T) : bool = invariant_ref_array_T_n _1
   
-  meta "rewrite_def" predicate inv_ref_array_T_n
+  meta "rewrite_def" function inv_ref_array_T_n
   
-  predicate invariant_slice_T (self: Slice64.slice t_T) = inv_Seq_T (Slice64.view self)
+  function invariant_slice_T (self: Slice64.slice t_T) : bool = inv_Seq_T (Slice64.view self)
   
-  predicate inv_slice_T [@inline:trivial] (_1: Slice64.slice t_T) = invariant_slice_T _1
+  function inv_slice_T [@inline:trivial] (_1: Slice64.slice t_T) : bool = invariant_slice_T _1
   
-  meta "rewrite_def" predicate inv_slice_T
+  meta "rewrite_def" function inv_slice_T
   
-  predicate invariant_ref_slice_T [@inline:trivial] (self: Slice64.slice t_T) = inv_slice_T self
+  function invariant_ref_slice_T [@inline:trivial] (self: Slice64.slice t_T) : bool = inv_slice_T self
   
-  meta "rewrite_def" predicate invariant_ref_slice_T
+  meta "rewrite_def" function invariant_ref_slice_T
   
-  predicate inv_ref_slice_T [@inline:trivial] (_1: Slice64.slice t_T) = invariant_ref_slice_T _1
+  function inv_ref_slice_T [@inline:trivial] (_1: Slice64.slice t_T) : bool = invariant_ref_slice_T _1
   
-  meta "rewrite_def" predicate inv_ref_slice_T
+  meta "rewrite_def" function inv_ref_slice_T
   
   meta "compute_max_steps" 1000000
   

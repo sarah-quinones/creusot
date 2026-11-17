@@ -15,9 +15,9 @@ let sub_assign_u16 (self: MutBorrow.t UInt16.t) (other: UInt16.t) (return (x: ()
     = UInt16.t'int self.current - UInt16.t'int other}
     (! return {result}) ]
 
-predicate resolve_refmut_u16 [@inline:trivial] (_1: MutBorrow.t UInt16.t) = _1.final = _1.current
+function resolve_refmut_u16 [@inline:trivial] (_1: MutBorrow.t UInt16.t) : bool = _1.final = _1.current
 
-meta "rewrite_def" predicate resolve_refmut_u16
+meta "rewrite_def" function resolve_refmut_u16
 
 meta "compute_max_steps" 1000000
 

@@ -18,14 +18,14 @@ type t_Choice'0
 
 type tup2_Choice_Choice = { f0'1: t_Choice; f1'1: t_Choice'0 }
 
-predicate premise_T1 (self: t_T1) (from: t_R1)
+function premise_T1 (self: t_T1) (from: t_R1) : bool
 
-predicate premise_T2 (self: t_T2) (from: t_R2)
+function premise_T2 (self: t_T2) (from: t_R2) : bool
 
-predicate premise_tup2_T1_T2 [@inline:trivial] (self: tup2_T1_T2) (from: tup2_R1_R2) =
+function premise_tup2_T1_T2 [@inline:trivial] (self: tup2_T1_T2) (from: tup2_R1_R2) : bool =
   premise_T1 self.f0 from.f0'0 /\ premise_T2 self.f1 from.f1'0
 
-meta "rewrite_def" predicate premise_tup2_T1_T2
+meta "rewrite_def" function premise_tup2_T1_T2
 
 type t_Option_tup2_R1_R2 = None | Some tup2_R1_R2
 
@@ -37,7 +37,7 @@ type tup2_Option_R1_Option_R2 = { f0'2: t_Option_R1; f1'2: t_Option_R2 }
 
 function op_R1 (self: t_R1) (other: t_R1) : t_Option_R1
 
-predicate incl_R1 (self: t_R1) (other: t_R1)
+function incl_R1 (self: t_R1) (other: t_R1) : bool
 
 axiom incl_R1_spec: forall self: t_R1, other: t_R1 [incl_R1 self other]. incl_R1 self other
     = (exists factor: t_R1. op_R1 self factor = Some'0 other)
@@ -66,7 +66,7 @@ axiom incl_op_R1_spec: forall self: t_R1, other: t_R1, comb: t_R1. op_R1 self ot
 
 function op_R2 (self: t_R2) (other: t_R2) : t_Option_R2
 
-predicate incl_R2 (self: t_R2) (other: t_R2)
+function incl_R2 (self: t_R2) (other: t_R2) : bool
 
 axiom incl_R2_spec: forall self: t_R2, other: t_R2 [incl_R2 self other]. incl_R2 self other
     = (exists factor: t_R2. op_R2 self factor = Some'1 other)

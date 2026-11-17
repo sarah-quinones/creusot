@@ -5,16 +5,16 @@ use int.Int
 
 type t_T0
 
-predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
 
-meta "rewrite_def" predicate ge_log_Int
+meta "rewrite_def" function ge_log_Int
 
-predicate well_founded_relation_T0 (self: t_T0) (other: t_T0)
+function well_founded_relation_T0 (self: t_T0) (other: t_T0) : bool
 
-predicate well_founded_relation_tup1_T0 [@inline:trivial] (self: t_T0) (other: t_T0) =
+function well_founded_relation_tup1_T0 [@inline:trivial] (self: t_T0) (other: t_T0) : bool =
   well_founded_relation_T0 self other
 
-meta "rewrite_def" predicate well_founded_relation_tup1_T0
+meta "rewrite_def" function well_founded_relation_tup1_T0
 
 function index_Mapping_Int_tup1_T0 [@inline:trivial] (self: Map.map int t_T0) (a: int) : t_T0 = Map.get self a
 

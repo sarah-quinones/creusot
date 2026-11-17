@@ -16,17 +16,17 @@ function lookup_K [@inline:trivial] (self: t_FMap_K_V) (k: t_K) : t_Option_V = M
 
 meta "rewrite_def" function lookup_K
 
-predicate contains_K [@inline:trivial] (self: t_FMap_K_V) (k: t_K) = lookup_K self k <> None
+function contains_K [@inline:trivial] (self: t_FMap_K_V) (k: t_K) : bool = lookup_K self k <> None
 
-meta "rewrite_def" predicate contains_K
+meta "rewrite_def" function contains_K
 
-predicate inv_K (_1: t_K)
+function inv_K (_1: t_K) : bool
 
-predicate inv_V (_1: t_V)
+function inv_V (_1: t_V) : bool
 
-predicate index_Mapping_V_bool [@inline:trivial] (self: Map.map t_V bool) (a: t_V) = Map.get self a
+function index_Mapping_V_bool [@inline:trivial] (self: Map.map t_V bool) (a: t_V) : bool = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_V_bool
+meta "rewrite_def" function index_Mapping_V_bool
 
 function such_that_V (p: Map.map t_V bool) : t_V
 
@@ -44,23 +44,23 @@ function index_FMap_K_V [@inline:trivial] (self: t_FMap_K_V) (key: t_K) : t_V = 
 
 meta "rewrite_def" function index_FMap_K_V
 
-predicate invariant_FMap_K_V [@inline:trivial] (self: t_FMap_K_V) =
-  forall k: t_K. contains_K self k -> inv_K k /\ inv_V (index_FMap_K_V self k)
+function invariant_FMap_K_V [@inline:trivial] (self: t_FMap_K_V) : bool = forall k: t_K. contains_K self k
+    -> inv_K k /\ inv_V (index_FMap_K_V self k)
 
-meta "rewrite_def" predicate invariant_FMap_K_V
+meta "rewrite_def" function invariant_FMap_K_V
 
-predicate inv_FMap_K_V (_1: t_FMap_K_V)
+function inv_FMap_K_V (_1: t_FMap_K_V) : bool
 
 axiom inv_axiom [@rewrite]: forall _1: t_FMap_K_V [inv_FMap_K_V _1]. inv_FMap_K_V _1 = invariant_FMap_K_V _1
 
-predicate structural_resolve_FMap_K_V (_1: t_FMap_K_V)
+function structural_resolve_FMap_K_V (_1: t_FMap_K_V) : bool
 
-predicate resolve_K (_1: t_K)
+function resolve_K (_1: t_K) : bool
 
-predicate resolve_V (_1: t_V)
+function resolve_V (_1: t_V) : bool
 
-predicate resolve_FMap_K_V (self: t_FMap_K_V) =
-  forall k: t_K, v: t_V. lookup_K self k = Some v -> resolve_K k /\ resolve_V v
+function resolve_FMap_K_V (self: t_FMap_K_V) : bool = forall k: t_K, v: t_V. lookup_K self k = Some v
+    -> resolve_K k /\ resolve_V v
 
 meta "compute_max_steps" 1000000
 

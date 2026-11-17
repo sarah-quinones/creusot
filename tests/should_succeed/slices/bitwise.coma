@@ -36,16 +36,16 @@ module M_all_ldz
     [ return (result: UInt32BW.t) -> {[@stop_split] [@expl:leading_zeros ensures] result = leading_zeros_u64 self}
       (! return {result}) ]
   
-  predicate inv_Seq_u64 [@inline:trivial] (_1: Seq.seq UInt64BW.t) = true
+  function inv_Seq_u64 [@inline:trivial] (_1: Seq.seq UInt64BW.t) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_u64
+  meta "rewrite_def" function inv_Seq_u64
   
-  predicate invariant_array_u64_25 (self: Slice64BW.array UInt64BW.t) =
-    inv_Seq_u64 (Slice64BW.view self) /\ Seq.length (Slice64BW.view self) = UInt64BW.t'int (25: UInt64BW.t)
+  function invariant_array_u64_25 (self: Slice64BW.array UInt64BW.t) : bool = inv_Seq_u64 (Slice64BW.view self)
+    /\ Seq.length (Slice64BW.view self) = UInt64BW.t'int (25: UInt64BW.t)
   
-  predicate inv_array_u64_25 [@inline:trivial] (_1: Slice64BW.array UInt64BW.t) = invariant_array_u64_25 _1
+  function inv_array_u64_25 [@inline:trivial] (_1: Slice64BW.array UInt64BW.t) : bool = invariant_array_u64_25 _1
   
-  meta "rewrite_def" predicate inv_array_u64_25
+  meta "rewrite_def" function inv_array_u64_25
   
   meta "compute_max_steps" 1000000
   
@@ -102,9 +102,9 @@ module M_boolvec_to_bitvec
       = UInt64BW.t'int result}
       (! return {result}) ]
   
-  predicate resolve_refmut_u64 [@inline:trivial] (_1: MutBorrow.t UInt64BW.t) = _1.final = _1.current
+  function resolve_refmut_u64 [@inline:trivial] (_1: MutBorrow.t UInt64BW.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_u64
+  meta "rewrite_def" function resolve_refmut_u64
   
   meta "compute_max_steps" 1000000
   

@@ -10,45 +10,45 @@ type tup2_ref_slice_T_ref_slice_T = { f0: Slice64.slice t_T; f1: Slice64.slice t
 
 type t_Option_tup2_ref_slice_T_ref_slice_T = None | Some tup2_ref_slice_T_ref_slice_T
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
 
-meta "rewrite_def" predicate invariant_ref_T
+meta "rewrite_def" function invariant_ref_T
 
-predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
 
-meta "rewrite_def" predicate inv_ref_T
+meta "rewrite_def" function inv_ref_T
 
-predicate invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) =
-  forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_T (Seq.get self i)
+function invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+    -> inv_ref_T (Seq.get self i)
 
-meta "rewrite_def" predicate invariant_Seq_T
+meta "rewrite_def" function invariant_Seq_T
 
-predicate inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Seq_T _1
+function inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Seq_T _1
 
-meta "rewrite_def" predicate inv_Seq_T
+meta "rewrite_def" function inv_Seq_T
 
-predicate invariant_slice_T (self: Slice64.slice t_T) = inv_Seq_T (Slice64.view self)
+function invariant_slice_T (self: Slice64.slice t_T) : bool = inv_Seq_T (Slice64.view self)
 
-predicate inv_slice_T [@inline:trivial] (_1: Slice64.slice t_T) = invariant_slice_T _1
+function inv_slice_T [@inline:trivial] (_1: Slice64.slice t_T) : bool = invariant_slice_T _1
 
-meta "rewrite_def" predicate inv_slice_T
+meta "rewrite_def" function inv_slice_T
 
-predicate invariant_ref_slice_T [@inline:trivial] (self: Slice64.slice t_T) = inv_slice_T self
+function invariant_ref_slice_T [@inline:trivial] (self: Slice64.slice t_T) : bool = inv_slice_T self
 
-meta "rewrite_def" predicate invariant_ref_slice_T
+meta "rewrite_def" function invariant_ref_slice_T
 
-predicate inv_ref_slice_T [@inline:trivial] (_1: Slice64.slice t_T) = invariant_ref_slice_T _1
+function inv_ref_slice_T [@inline:trivial] (_1: Slice64.slice t_T) : bool = invariant_ref_slice_T _1
 
-meta "rewrite_def" predicate inv_ref_slice_T
+meta "rewrite_def" function inv_ref_slice_T
 
-predicate inv_tup2_ref_slice_T_ref_slice_T [@inline:trivial] (_1: tup2_ref_slice_T_ref_slice_T) =
+function inv_tup2_ref_slice_T_ref_slice_T [@inline:trivial] (_1: tup2_ref_slice_T_ref_slice_T) : bool =
   inv_ref_slice_T _1.f0 /\ inv_ref_slice_T _1.f1
 
-meta "rewrite_def" predicate inv_tup2_ref_slice_T_ref_slice_T
+meta "rewrite_def" function inv_tup2_ref_slice_T_ref_slice_T
 
-predicate inv_Option_tup2_ref_slice_T_ref_slice_T (_1: t_Option_tup2_ref_slice_T_ref_slice_T)
+function inv_Option_tup2_ref_slice_T_ref_slice_T (_1: t_Option_tup2_ref_slice_T_ref_slice_T) : bool
 
 axiom inv_axiom [@rewrite]:
   forall _1: t_Option_tup2_ref_slice_T_ref_slice_T [inv_Option_tup2_ref_slice_T_ref_slice_T _1]. inv_Option_tup2_ref_slice_T_ref_slice_T _1
@@ -71,9 +71,9 @@ function index_Seq_T'0 [@inline:trivial] (self: Seq.seq t_T) (range: t_RangeFrom
 
 meta "rewrite_def" function index_Seq_T'0
 
-predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
 
-meta "rewrite_def" predicate gt_log_Int
+meta "rewrite_def" function gt_log_Int
 
 let split_at_checked_T (self: Slice64.slice t_T) (mid: UInt64.t) (return (x: t_Option_tup2_ref_slice_T_ref_slice_T)) =
 {[@stop_split] [@expl:split_at_checked 'self' type invariant] inv_ref_slice_T self}
@@ -94,11 +94,11 @@ type t_ControlFlow_Option_Infallible_tup2_ref_slice_T_ref_slice_T =
   | Continue tup2_ref_slice_T_ref_slice_T
   | Break t_Option_Infallible
 
-predicate inv_Infallible [@inline:trivial] (_1: ()) = false
+function inv_Infallible [@inline:trivial] (_1: ()) : bool = false
 
-meta "rewrite_def" predicate inv_Infallible
+meta "rewrite_def" function inv_Infallible
 
-predicate inv_Option_Infallible (_1: t_Option_Infallible)
+function inv_Option_Infallible (_1: t_Option_Infallible) : bool
 
 axiom inv_axiom'0 [@rewrite]: forall _1: t_Option_Infallible [inv_Option_Infallible _1]. inv_Option_Infallible _1
     = match _1 with
@@ -106,7 +106,7 @@ axiom inv_axiom'0 [@rewrite]: forall _1: t_Option_Infallible [inv_Option_Infalli
       | Some'0 f0'0 -> inv_Infallible f0'0
       end
 
-predicate inv_ControlFlow_Option_Infallible_tup2_ref_slice_T_ref_slice_T (_1: t_ControlFlow_Option_Infallible_tup2_ref_slice_T_ref_slice_T)
+function inv_ControlFlow_Option_Infallible_tup2_ref_slice_T_ref_slice_T (_1: t_ControlFlow_Option_Infallible_tup2_ref_slice_T_ref_slice_T) : bool
 
 axiom inv_axiom'1 [@rewrite]:
   forall _1: t_ControlFlow_Option_Infallible_tup2_ref_slice_T_ref_slice_T [inv_ControlFlow_Option_Infallible_tup2_ref_slice_T_ref_slice_T _1]. inv_ControlFlow_Option_Infallible_tup2_ref_slice_T_ref_slice_T _1
@@ -140,12 +140,12 @@ type tup2_ref_T_ref_slice_T = { f0'0: t_T; f1'0: Slice64.slice t_T }
 
 type t_Option_tup2_ref_T_ref_slice_T = None'1 | Some'1 tup2_ref_T_ref_slice_T
 
-predicate inv_tup2_ref_T_ref_slice_T [@inline:trivial] (_1: tup2_ref_T_ref_slice_T) =
-  inv_ref_T _1.f0'0 /\ inv_ref_slice_T _1.f1'0
+function inv_tup2_ref_T_ref_slice_T [@inline:trivial] (_1: tup2_ref_T_ref_slice_T) : bool = inv_ref_T _1.f0'0
+  /\ inv_ref_slice_T _1.f1'0
 
-meta "rewrite_def" predicate inv_tup2_ref_T_ref_slice_T
+meta "rewrite_def" function inv_tup2_ref_T_ref_slice_T
 
-predicate inv_Option_tup2_ref_T_ref_slice_T (_1: t_Option_tup2_ref_T_ref_slice_T)
+function inv_Option_tup2_ref_T_ref_slice_T (_1: t_Option_tup2_ref_T_ref_slice_T) : bool
 
 axiom inv_axiom'2 [@rewrite]:
   forall _1: t_Option_tup2_ref_T_ref_slice_T [inv_Option_tup2_ref_T_ref_slice_T _1]. inv_Option_tup2_ref_T_ref_slice_T _1

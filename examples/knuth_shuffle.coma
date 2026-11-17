@@ -11,24 +11,24 @@ module M_knuth_shuffle
   
   type t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_T (Seq.get self i)
+  function invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+      -> inv_ref_T (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_T
+  meta "rewrite_def" function invariant_Seq_T
   
-  predicate inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Seq_T _1
+  function inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Seq_T
+  meta "rewrite_def" function inv_Seq_T
   
   constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
   
@@ -37,19 +37,19 @@ module M_knuth_shuffle
   axiom view_Vec_T_Global_spec:
     forall self: t_Vec_T_Global [view_Vec_T_Global self]. Seq.length (view_Vec_T_Global self) <= UInt64.t'int const_MAX
   
-  predicate invariant_Vec_T_Global (self: t_Vec_T_Global) = inv_Seq_T (view_Vec_T_Global self)
+  function invariant_Vec_T_Global (self: t_Vec_T_Global) : bool = inv_Seq_T (view_Vec_T_Global self)
   
-  predicate inv_Vec_T_Global (_1: t_Vec_T_Global)
+  function inv_Vec_T_Global (_1: t_Vec_T_Global) : bool
   
   axiom inv_axiom: forall _1: t_Vec_T_Global [inv_Vec_T_Global _1]. inv_Vec_T_Global _1 -> invariant_Vec_T_Global _1
   
-  predicate invariant_ref_Vec_T_Global [@inline:trivial] (self: t_Vec_T_Global) = inv_Vec_T_Global self
+  function invariant_ref_Vec_T_Global [@inline:trivial] (self: t_Vec_T_Global) : bool = inv_Vec_T_Global self
   
-  meta "rewrite_def" predicate invariant_ref_Vec_T_Global
+  meta "rewrite_def" function invariant_ref_Vec_T_Global
   
-  predicate inv_ref_Vec_T_Global [@inline:trivial] (_1: t_Vec_T_Global) = invariant_ref_Vec_T_Global _1
+  function inv_ref_Vec_T_Global [@inline:trivial] (_1: t_Vec_T_Global) : bool = invariant_ref_Vec_T_Global _1
   
-  meta "rewrite_def" predicate inv_ref_Vec_T_Global
+  meta "rewrite_def" function inv_ref_Vec_T_Global
   
   let len_T (self: t_Vec_T_Global) (return (x: UInt64.t)) =
   {[@stop_split] [@expl:len 'self' type invariant] inv_ref_Vec_T_Global self}
@@ -69,12 +69,12 @@ module M_knuth_shuffle
   
   meta "rewrite_def" function deep_model_usize
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
-  predicate produces_Range_usize (self: t_Range_usize) (visited: Seq.seq UInt64.t) (o: t_Range_usize) =
-    self.end' = o.end'
+  function produces_Range_usize (self: t_Range_usize) (visited: Seq.seq UInt64.t) (o: t_Range_usize) : bool = self.end'
+      = o.end'
     /\ deep_model_usize self.start <= deep_model_usize o.start
     /\ (gt_log_Int (Seq.length visited) 0 -> deep_model_usize o.start <= deep_model_usize o.end')
     /\ Seq.length visited = deep_model_usize o.start - deep_model_usize self.start
@@ -92,16 +92,15 @@ module M_knuth_shuffle
   axiom produces_refl_Range_usize_spec:
     forall self: t_Range_usize. produces_Range_usize self (Seq.empty: Seq.seq UInt64.t) self
   
-  predicate resolve_refmut_Range_usize [@inline:trivial] (_1: MutBorrow.t t_Range_usize) = _1.final = _1.current
+  function resolve_refmut_Range_usize [@inline:trivial] (_1: MutBorrow.t t_Range_usize) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Range_usize
+  meta "rewrite_def" function resolve_refmut_Range_usize
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate completed_Range_usize (self: MutBorrow.t t_Range_usize) =
-    resolve_refmut_Range_usize self
+  function completed_Range_usize (self: MutBorrow.t t_Range_usize) : bool = resolve_refmut_Range_usize self
     /\ ge_log_Int (deep_model_usize self.current.start) (deep_model_usize self.current.end')
   
   let next_Range_usize (self: MutBorrow.t t_Range_usize) (return (x: t_Option_usize)) = any
@@ -111,21 +110,22 @@ module M_knuth_shuffle
         end}
       (! return {result}) ]
   
-  predicate permutation_of_T (self: Seq.seq t_T) (other: Seq.seq t_T) = Permut.permut self other 0 (Seq.length self)
+  function permutation_of_T (self: Seq.seq t_T) (other: Seq.seq t_T) : bool =
+    Permut.permut self other 0 (Seq.length self)
   
-  predicate inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) = true
+  function inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_usize
+  meta "rewrite_def" function inv_Seq_usize
   
-  predicate invariant_refmut_Vec_T_Global [@inline:trivial] (self: MutBorrow.t t_Vec_T_Global) =
+  function invariant_refmut_Vec_T_Global [@inline:trivial] (self: MutBorrow.t t_Vec_T_Global) : bool =
     inv_Vec_T_Global self.current /\ inv_Vec_T_Global self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Vec_T_Global
+  meta "rewrite_def" function invariant_refmut_Vec_T_Global
   
-  predicate inv_refmut_Vec_T_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_T_Global) =
+  function inv_refmut_Vec_T_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_T_Global) : bool =
     invariant_refmut_Vec_T_Global _1
   
-  meta "rewrite_def" predicate inv_refmut_Vec_T_Global
+  meta "rewrite_def" function inv_refmut_Vec_T_Global
   
   let elim_Some (_x: t_Option_usize) (return (f0: UInt64.t)) = any
     [ _k (f0: UInt64.t) -> {Some f0 = _x} (! return {f0})
@@ -142,20 +142,21 @@ module M_knuth_shuffle
       /\ UInt64.t'int result < UInt64.t'int u}
       (! return {result}) ]
   
-  predicate invariant_slice_T (self: Slice64.slice t_T) = inv_Seq_T (Slice64.view self)
+  function invariant_slice_T (self: Slice64.slice t_T) : bool = inv_Seq_T (Slice64.view self)
   
-  predicate inv_slice_T [@inline:trivial] (_1: Slice64.slice t_T) = invariant_slice_T _1
+  function inv_slice_T [@inline:trivial] (_1: Slice64.slice t_T) : bool = invariant_slice_T _1
   
-  meta "rewrite_def" predicate inv_slice_T
+  meta "rewrite_def" function inv_slice_T
   
-  predicate invariant_refmut_slice_T [@inline:trivial] (self: MutBorrow.t (Slice64.slice t_T)) =
+  function invariant_refmut_slice_T [@inline:trivial] (self: MutBorrow.t (Slice64.slice t_T)) : bool =
     inv_slice_T self.current /\ inv_slice_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_slice_T
+  meta "rewrite_def" function invariant_refmut_slice_T
   
-  predicate inv_refmut_slice_T [@inline:trivial] (_1: MutBorrow.t (Slice64.slice t_T)) = invariant_refmut_slice_T _1
+  function inv_refmut_slice_T [@inline:trivial] (_1: MutBorrow.t (Slice64.slice t_T)) : bool =
+    invariant_refmut_slice_T _1
   
-  meta "rewrite_def" predicate inv_refmut_slice_T
+  meta "rewrite_def" function inv_refmut_slice_T
   
   let deref_mut_Vec_T_Global (self: MutBorrow.t t_Vec_T_Global) (return (x: MutBorrow.t (Slice64.slice t_T))) =
   {[@stop_split] [@expl:deref_mut 'self' type invariant] inv_refmut_Vec_T_Global self}
@@ -177,13 +178,13 @@ module M_knuth_shuffle
     {[@stop_split] [@expl:swap ensures] Permut.exchange (Slice64.view self.final) (Slice64.view self.current) (UInt64.t'int a) (UInt64.t'int b)}
       (! return {result}) ]
   
-  predicate resolve_refmut_slice_T [@inline:trivial] (_1: MutBorrow.t (Slice64.slice t_T)) = _1.final = _1.current
+  function resolve_refmut_slice_T [@inline:trivial] (_1: MutBorrow.t (Slice64.slice t_T)) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_slice_T
+  meta "rewrite_def" function resolve_refmut_slice_T
   
-  predicate resolve_refmut_Vec_T_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_T_Global) = _1.final = _1.current
+  function resolve_refmut_Vec_T_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_T_Global) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Vec_T_Global
+  meta "rewrite_def" function resolve_refmut_Vec_T_Global
   
   meta "compute_max_steps" 1000000
   

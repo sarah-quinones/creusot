@@ -16,7 +16,7 @@ type tup2_Option_T1_Option_T2 = { f0'0: t_Option_T1; f1'0: t_Option_T2 }
 
 function op_T1 (self: t_T1) (other: t_T1) : t_Option_T1
 
-predicate incl_T1 (self: t_T1) (other: t_T1)
+function incl_T1 (self: t_T1) (other: t_T1) : bool
 
 axiom incl_T1_spec: forall self: t_T1, other: t_T1 [incl_T1 self other]. incl_T1 self other
     = (exists factor: t_T1. op_T1 self factor = Some'0 other)
@@ -45,7 +45,7 @@ axiom incl_op_T1_spec: forall self: t_T1, other: t_T1, comb: t_T1. op_T1 self ot
 
 function op_T2 (self: t_T2) (other: t_T2) : t_Option_T2
 
-predicate incl_T2 (self: t_T2) (other: t_T2)
+function incl_T2 (self: t_T2) (other: t_T2) : bool
 
 axiom incl_T2_spec: forall self: t_T2, other: t_T2 [incl_T2 self other]. incl_T2 self other
     = (exists factor: t_T2. op_T2 self factor = Some'1 other)
@@ -78,12 +78,12 @@ function op_tup2_T1_T2 (self: tup2_T1_T2) (other: tup2_T1_T2) : t_Option_tup2_T1
     | _ -> None
     end
 
-predicate cancelable_T1 (self: t_T1)
+function cancelable_T1 (self: t_T1) : bool
 
 axiom cancelable_T1_spec: forall self: t_T1 [cancelable_T1 self]. cancelable_T1 self
     = (forall x: t_T1, y: t_T1. op_T1 self x <> None'0 -> op_T1 self x = op_T1 self y -> x = y)
 
-predicate cancelable_T2 (self: t_T2)
+function cancelable_T2 (self: t_T2) : bool
 
 axiom cancelable_T2_spec: forall self: t_T2 [cancelable_T2 self]. cancelable_T2 self
     = (forall x: t_T2, y: t_T2. op_T2 self x <> None'1 -> op_T2 self x = op_T2 self y -> x = y)
@@ -94,7 +94,7 @@ meta "select_lsinst" "all"
 
 constant self : tup2_T1_T2
 
-predicate cancelable_tup2_T1_T2 (self: tup2_T1_T2)
+function cancelable_tup2_T1_T2 (self: tup2_T1_T2) : bool
 
 goal vc_cancelable_tup2_T1_T2: (forall v1: t_T1, v2: t_T2. op_T1 self.f0 v1 <> None'0
       -> op_T2 self.f1 v2 <> None'1

@@ -7,19 +7,19 @@ module M_count_paths
   
   type t_Range_isize = { start: Int64.t; end': Int64.t }
   
-  predicate resolve_refmut_closure0 [@inline:trivial] (_1: MutBorrow.t ()) = _1.final = _1.current
+  function resolve_refmut_closure0 [@inline:trivial] (_1: MutBorrow.t ()) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_closure0
+  meta "rewrite_def" function resolve_refmut_closure0
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   let count_paths (i: Int64.t) (return (x: ())) =
   {[@stop_split] [@expl:count_paths requires] ge_log_Int (Int64.to_int i) 0}
     any [ return (result: ()) -> (! return {result}) ]
   
-  predicate hist_inv_closure0 (self: ()) (result_state: ()) = true
+  function hist_inv_closure0 (self: ()) (result_state: ()) : bool = true
   
   let closure0 [@coma:extspec] (self: MutBorrow.t ()) (j: Int64.t) (return (x: ())) = bb0
     [ bb0 = s0
@@ -39,12 +39,12 @@ module M_count_paths
   
   meta "rewrite_def" function deep_model_isize
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
-  predicate produces_Range_isize (self: t_Range_isize) (visited: Seq.seq Int64.t) (o: t_Range_isize) =
-    self.end' = o.end'
+  function produces_Range_isize (self: t_Range_isize) (visited: Seq.seq Int64.t) (o: t_Range_isize) : bool = self.end'
+      = o.end'
     /\ deep_model_isize self.start <= deep_model_isize o.start
     /\ (gt_log_Int (Seq.length visited) 0 -> deep_model_isize o.start <= deep_model_isize o.end')
     /\ Seq.length visited = deep_model_isize o.start - deep_model_isize self.start
@@ -62,76 +62,74 @@ module M_count_paths
   axiom produces_refl_Range_isize_spec:
     forall self: t_Range_isize. produces_Range_isize self (Seq.empty: Seq.seq Int64.t) self
   
-  predicate inv_isize [@inline:trivial] (_1: Int64.t) = true
+  function inv_isize [@inline:trivial] (_1: Int64.t) : bool = true
   
-  meta "rewrite_def" predicate inv_isize
+  meta "rewrite_def" function inv_isize
   
-  predicate precondition_closure0 (self: ()) (args: Int64.t) =
+  function precondition_closure0 (self: ()) (args: Int64.t) : bool =
     let j = args in forall bor_self: MutBorrow.t (). bor_self.current = self -> closure0'pre bor_self j
   
-  meta "rewrite_def" predicate precondition_closure0
+  meta "rewrite_def" function precondition_closure0
   
-  predicate resolve_refmut_Range_isize [@inline:trivial] (_1: MutBorrow.t t_Range_isize) = _1.final = _1.current
+  function resolve_refmut_Range_isize [@inline:trivial] (_1: MutBorrow.t t_Range_isize) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Range_isize
+  meta "rewrite_def" function resolve_refmut_Range_isize
   
-  predicate completed_Range_isize (self: MutBorrow.t t_Range_isize) =
-    resolve_refmut_Range_isize self
+  function completed_Range_isize (self: MutBorrow.t t_Range_isize) : bool = resolve_refmut_Range_isize self
     /\ ge_log_Int (deep_model_isize self.current.start) (deep_model_isize self.current.end')
   
-  predicate next_precondition_Range_isize [@inline:trivial] (iter: t_Range_isize) (func: ()) =
+  function next_precondition_Range_isize [@inline:trivial] (iter: t_Range_isize) (func: ()) : bool =
     forall e: Int64.t, i: t_Range_isize [produces_Range_isize iter (Seq.singleton e) i]. inv_isize e
         /\ produces_Range_isize iter (Seq.singleton e) i -> precondition_closure0 func e
   
-  meta "rewrite_def" predicate next_precondition_Range_isize
+  meta "rewrite_def" function next_precondition_Range_isize
   
-  predicate inv_Seq_isize [@inline:trivial] (_1: Seq.seq Int64.t) = true
+  function inv_Seq_isize [@inline:trivial] (_1: Seq.seq Int64.t) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_isize
+  meta "rewrite_def" function inv_Seq_isize
   
-  predicate inv_refmut_closure0 [@inline:trivial] (_1: MutBorrow.t ()) = true
+  function inv_refmut_closure0 [@inline:trivial] (_1: MutBorrow.t ()) : bool = true
   
-  meta "rewrite_def" predicate inv_refmut_closure0
+  meta "rewrite_def" function inv_refmut_closure0
   
-  predicate postcondition_mut_closure0 (self: ()) (args: Int64.t) (result_state: ()) (result: ()) =
+  function postcondition_mut_closure0 (self: ()) (args: Int64.t) (result_state: ()) (result: ()) : bool =
     let j = args in exists bor_self: MutBorrow.t (). bor_self.current = self
       /\ bor_self.final = result_state /\ closure0'post'return bor_self j result /\ hist_inv_closure0 self result_state
   
-  meta "rewrite_def" predicate postcondition_mut_closure0
+  meta "rewrite_def" function postcondition_mut_closure0
   
-  predicate preservation_Range_isize [@inline:trivial] (iter: t_Range_isize) (func: ()) =
+  function preservation_Range_isize [@inline:trivial] (iter: t_Range_isize) (func: ()) : bool =
     forall s: Seq.seq Int64.t, e1: Int64.t, e2: Int64.t, f: MutBorrow.t (), b: (), i: t_Range_isize [produces_Range_isize iter (Seq.snoc (Seq.snoc s e1) e2) i, postcondition_mut_closure0 f.current e1 f.final b]. hist_inv_closure0 func f.current
       -> inv_Seq_isize s /\ inv_isize e1 /\ inv_isize e2 /\ inv_refmut_closure0 f
       -> produces_Range_isize iter (Seq.snoc (Seq.snoc s e1) e2) i
       -> postcondition_mut_closure0 f.current e1 f.final b -> precondition_closure0 f.final e2
   
-  meta "rewrite_def" predicate preservation_Range_isize
+  meta "rewrite_def" function preservation_Range_isize
   
-  predicate reinitialize_Range_isize [@inline:trivial] =
-    forall iter: MutBorrow.t t_Range_isize, func: (). completed_Range_isize iter
-      -> next_precondition_Range_isize iter.final func /\ preservation_Range_isize iter.final func
+  constant reinitialize_Range_isize: bool = forall iter: MutBorrow.t t_Range_isize, func: (). completed_Range_isize iter
+    -> next_precondition_Range_isize iter.final func /\ preservation_Range_isize iter.final func
   
-  meta "rewrite_def" predicate reinitialize_Range_isize
+  meta "rewrite_def" constant reinitialize_Range_isize
   
-  predicate inv_Range_isize [@inline:trivial] (_1: t_Range_isize) = true
+  function inv_Range_isize [@inline:trivial] (_1: t_Range_isize) : bool = true
   
-  meta "rewrite_def" predicate inv_Range_isize
+  meta "rewrite_def" function inv_Range_isize
   
   function iter_Map_Range_isize_closure0 (self: t_Map_Range_isize_closure0) : t_Range_isize
   
-  predicate inv_closure0 [@inline:trivial] (_1: ()) = true
+  function inv_closure0 [@inline:trivial] (_1: ()) : bool = true
   
-  meta "rewrite_def" predicate inv_closure0
+  meta "rewrite_def" function inv_closure0
   
   function func_Map_Range_isize_closure0 (self: t_Map_Range_isize_closure0) : ()
   
-  predicate invariant_Map_Range_isize_closure0 (self: t_Map_Range_isize_closure0)
+  function invariant_Map_Range_isize_closure0 (self: t_Map_Range_isize_closure0) : bool
   
   axiom invariant_Map_Range_isize_closure0_spec:
     forall self: t_Map_Range_isize_closure0 [invariant_Map_Range_isize_closure0 self]. invariant_Map_Range_isize_closure0 self
       -> inv_Range_isize (iter_Map_Range_isize_closure0 self) /\ inv_closure0 (func_Map_Range_isize_closure0 self)
   
-  predicate inv_Map_Range_isize_closure0 (_1: t_Map_Range_isize_closure0)
+  function inv_Map_Range_isize_closure0 (_1: t_Map_Range_isize_closure0) : bool
   
   axiom inv_axiom:
     forall _1: t_Map_Range_isize_closure0 [inv_Map_Range_isize_closure0 _1]. inv_Map_Range_isize_closure0 _1
@@ -149,20 +147,20 @@ module M_count_paths
       /\ func_Map_Range_isize_closure0 result = f)}
       (! return {result}) ]
   
-  predicate resolve_Range_isize [@inline:trivial] (_1: t_Range_isize) = true
+  function resolve_Range_isize [@inline:trivial] (_1: t_Range_isize) : bool = true
   
-  meta "rewrite_def" predicate resolve_Range_isize
+  meta "rewrite_def" function resolve_Range_isize
   
-  predicate resolve_closure0 [@inline:trivial] (_1: ()) = true
+  function resolve_closure0 [@inline:trivial] (_1: ()) : bool = true
   
-  meta "rewrite_def" predicate resolve_closure0
+  meta "rewrite_def" function resolve_closure0
   
-  predicate resolve_Map_Range_isize_closure0 [@inline:trivial] (self: t_Map_Range_isize_closure0) =
+  function resolve_Map_Range_isize_closure0 [@inline:trivial] (self: t_Map_Range_isize_closure0) : bool =
     resolve_Range_isize (iter_Map_Range_isize_closure0 self) /\ resolve_closure0 (func_Map_Range_isize_closure0 self)
   
-  meta "rewrite_def" predicate resolve_Map_Range_isize_closure0
+  meta "rewrite_def" function resolve_Map_Range_isize_closure0
   
-  predicate resolve_Map_Range_isize_closure0'0 (_1: t_Map_Range_isize_closure0)
+  function resolve_Map_Range_isize_closure0'0 (_1: t_Map_Range_isize_closure0) : bool
   
   axiom resolve_axiom:
     forall _1: t_Map_Range_isize_closure0 [resolve_Map_Range_isize_closure0'0 _1]. resolve_Map_Range_isize_closure0'0 _1

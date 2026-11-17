@@ -5,20 +5,20 @@ use int.Int
 
 type t_IntoIter_T_A
 
-predicate inv_IntoIter_T_A (_1: t_IntoIter_T_A)
+function inv_IntoIter_T_A (_1: t_IntoIter_T_A) : bool
 
-predicate structural_resolve_IntoIter_T_A (_1: t_IntoIter_T_A)
+function structural_resolve_IntoIter_T_A (_1: t_IntoIter_T_A) : bool
 
 type t_T
 
 function view_IntoIter_T_A (self: t_IntoIter_T_A) : Seq.seq t_T
 
-predicate resolve_T (_1: t_T)
+function resolve_T (_1: t_T) : bool
 
-predicate resolve_IntoIter_T_A [@inline:trivial] (self: t_IntoIter_T_A) =
-  forall i: int. 0 <= i /\ i < Seq.length (view_IntoIter_T_A self) -> resolve_T (Seq.get (view_IntoIter_T_A self) i)
+function resolve_IntoIter_T_A [@inline:trivial] (self: t_IntoIter_T_A) : bool = forall i: int. 0 <= i
+      /\ i < Seq.length (view_IntoIter_T_A self) -> resolve_T (Seq.get (view_IntoIter_T_A self) i)
 
-meta "rewrite_def" predicate resolve_IntoIter_T_A
+meta "rewrite_def" function resolve_IntoIter_T_A
 
 meta "compute_max_steps" 1000000
 

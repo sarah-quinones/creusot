@@ -6,9 +6,9 @@ type t_Id
 
 type t_Lifetime = { f0: t_Id }
 
-predicate inv_Id [@inline:trivial] (_1: t_Id) = true
+function inv_Id [@inline:trivial] (_1: t_Id) : bool = true
 
-meta "rewrite_def" predicate inv_Id
+meta "rewrite_def" function inv_Id
 
 let into_ghost_Id (self: t_Id) (return (x: t_Id)) = {[@stop_split] [@expl:into_ghost requires] inv_Id self}
   any [ return (result: t_Id) -> {[@stop_split] [@expl:into_ghost ensures] result = self} (! return {result}) ]

@@ -8,9 +8,9 @@ module M_ghost_map
   
   type t_FMap_i32_i32
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function len_i32 (self: t_FMap_i32_i32) : int
   
@@ -25,8 +25,8 @@ module M_ghost_map
   
   meta "rewrite_def" function lookup_i32
   
-  predicate ext_eq_i32 (self: t_FMap_i32_i32) (other: t_FMap_i32_i32) =
-    forall k: Int32.t. lookup_i32 self k = lookup_i32 other k
+  function ext_eq_i32 (self: t_FMap_i32_i32) (other: t_FMap_i32_i32) : bool = forall k: Int32.t. lookup_i32 self k
+      = lookup_i32 other k
   
   axiom ext_eq_i32_spec: forall self: t_FMap_i32_i32, other: t_FMap_i32_i32 [self = other]. ext_eq_i32 self other
       = (self = other)
@@ -37,16 +37,16 @@ module M_ghost_map
   
   axiom empty_i32_spec'0: to_mapping_i32 empty_i32 = Const.const (None)
   
-  predicate is_empty_i32 (self: t_FMap_i32_i32) = ext_eq_i32 self empty_i32
+  function is_empty_i32 (self: t_FMap_i32_i32) : bool = ext_eq_i32 self empty_i32
   
   axiom is_empty_i32_spec: forall self: t_FMap_i32_i32 [is_empty_i32 self]. is_empty_i32 self = (len_i32 self = 0)
   
   let new_i32 (return (x: t_FMap_i32_i32)) = any
     [ return (result: t_FMap_i32_i32) -> {[@stop_split] [@expl:new ensures] is_empty_i32 result} (! return {result}) ]
   
-  predicate contains_i32 [@inline:trivial] (self: t_FMap_i32_i32) (k: Int32.t) = lookup_i32 self k <> None
+  function contains_i32 [@inline:trivial] (self: t_FMap_i32_i32) (k: Int32.t) : bool = lookup_i32 self k <> None
   
-  meta "rewrite_def" predicate contains_i32
+  meta "rewrite_def" function contains_i32
   
   let deref_mut_Ghost_FMap_i32_i32 (self: MutBorrow.t t_FMap_i32_i32) (return (x: MutBorrow.t t_FMap_i32_i32)) = any
     [ return (result: MutBorrow.t t_FMap_i32_i32) -> {[@stop_split] [@expl:deref_mut ensures] result = self}
@@ -69,9 +69,9 @@ module M_ghost_map
       /\ ([@stop_split] [@expl:insert ensures #1] result = lookup_i32 self.current key)}
       (! return {result}) ]
   
-  predicate resolve_refmut_FMap_i32_i32 [@inline:trivial] (_1: MutBorrow.t t_FMap_i32_i32) = _1.final = _1.current
+  function resolve_refmut_FMap_i32_i32 [@inline:trivial] (_1: MutBorrow.t t_FMap_i32_i32) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_FMap_i32_i32
+  meta "rewrite_def" function resolve_refmut_FMap_i32_i32
   
   let deref_Ghost_FMap_i32_i32 (self: t_FMap_i32_i32) (return (x: t_FMap_i32_i32)) = any
     [ return (result: t_FMap_i32_i32) -> {[@stop_split] [@expl:deref ensures] result = self} (! return {result}) ]
@@ -109,9 +109,9 @@ module M_ghost_map
       /\ ([@stop_split] [@expl:get_mut ensures #2] len_i32 self.current = len_i32 self.final)}
       (! return {result}) ]
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
   let elim_Some (_x: t_Option_refmut_i32) (return (f0: MutBorrow.t Int32.t)) = any
     [ _k (f0: MutBorrow.t Int32.t) -> {Some'0 f0 = _x} (! return {f0})

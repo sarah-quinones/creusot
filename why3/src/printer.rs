@@ -321,7 +321,6 @@ impl Print for Decl {
     {
         match self {
             Decl::LogicDefn(log) => log.pretty(alloc, scope),
-            Decl::PredDecl(p) => p.pretty(alloc, scope),
             Decl::TyDecl(t) => t.pretty(alloc, scope),
             Decl::LogicDecl(v) => v.pretty(alloc, scope),
             Decl::UseDecls(uses) => {
@@ -507,12 +506,10 @@ impl Print for Signature {
                 )
                 .nest(2),
             )
-            .append(
-                self.retty.as_ref().map_or_else(
-                    || alloc.nil(),
-                    |t| alloc.text(" : ").append(t.pretty(alloc, scope)),
-                ),
-            )
+            .append({
+                let t = &self.retty;
+                alloc.text(" : ").append(t.pretty(alloc, scope))
+            })
             .nest(2)
             .group()
     }
@@ -644,7 +641,6 @@ impl Print for LogicDecl {
     {
         let doc = match self.kind {
             Some(DeclKind::Function) => alloc.text("function "),
-            Some(DeclKind::Predicate) => alloc.text("predicate "),
             Some(DeclKind::Constant) => alloc.text("constant "),
             None => alloc.nil(),
         };

@@ -8,38 +8,38 @@ type t_T
 
 type t_Vec_T_Global
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
 
-meta "rewrite_def" predicate invariant_ref_T
+meta "rewrite_def" function invariant_ref_T
 
-predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
 
-meta "rewrite_def" predicate inv_ref_T
+meta "rewrite_def" function inv_ref_T
 
-predicate invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) =
-  forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_T (Seq.get self i)
+function invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+    -> inv_ref_T (Seq.get self i)
 
-meta "rewrite_def" predicate invariant_Seq_T
+meta "rewrite_def" function invariant_Seq_T
 
-predicate inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Seq_T _1
+function inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Seq_T _1
 
-meta "rewrite_def" predicate inv_Seq_T
+meta "rewrite_def" function inv_Seq_T
 
-predicate invariant_slice_T (self: Slice64.slice t_T) = inv_Seq_T (Slice64.view self)
+function invariant_slice_T (self: Slice64.slice t_T) : bool = inv_Seq_T (Slice64.view self)
 
-predicate inv_slice_T [@inline:trivial] (_1: Slice64.slice t_T) = invariant_slice_T _1
+function inv_slice_T [@inline:trivial] (_1: Slice64.slice t_T) : bool = invariant_slice_T _1
 
-meta "rewrite_def" predicate inv_slice_T
+meta "rewrite_def" function inv_slice_T
 
-predicate invariant_ref_slice_T [@inline:trivial] (self: Slice64.slice t_T) = inv_slice_T self
+function invariant_ref_slice_T [@inline:trivial] (self: Slice64.slice t_T) : bool = inv_slice_T self
 
-meta "rewrite_def" predicate invariant_ref_slice_T
+meta "rewrite_def" function invariant_ref_slice_T
 
-predicate inv_ref_slice_T [@inline:trivial] (_1: Slice64.slice t_T) = invariant_ref_slice_T _1
+function inv_ref_slice_T [@inline:trivial] (_1: Slice64.slice t_T) : bool = invariant_ref_slice_T _1
 
-meta "rewrite_def" predicate inv_ref_slice_T
+meta "rewrite_def" function inv_ref_slice_T
 
 constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
 
@@ -48,26 +48,26 @@ function view_Vec_T_Global (self: t_Vec_T_Global) : Seq.seq t_T
 axiom view_Vec_T_Global_spec: forall self: t_Vec_T_Global [view_Vec_T_Global self]. Seq.length (view_Vec_T_Global self)
     <= UInt64.t'int const_MAX
 
-predicate invariant_Vec_T_Global (self: t_Vec_T_Global) = inv_Seq_T (view_Vec_T_Global self)
+function invariant_Vec_T_Global (self: t_Vec_T_Global) : bool = inv_Seq_T (view_Vec_T_Global self)
 
-predicate inv_Vec_T_Global (_1: t_Vec_T_Global)
+function inv_Vec_T_Global (_1: t_Vec_T_Global) : bool
 
 axiom inv_axiom: forall _1: t_Vec_T_Global [inv_Vec_T_Global _1]. inv_Vec_T_Global _1 -> invariant_Vec_T_Global _1
 
-predicate postcondition_clone (self: ()) (args: t_T) (result: t_T)
+function postcondition_clone (self: ()) (args: t_T) (result: t_T) : bool
 
 axiom postcondition_fndef:
   forall args: t_T, result: t_T [postcondition_clone () args result]. postcondition_clone () args result
     -> (let self = args in inv_T result)
 
-predicate precondition_clone (self: ()) (args: t_T)
+function precondition_clone (self: ()) (args: t_T) : bool
 
 axiom precondition_fndef: forall args: t_T [precondition_clone () args]. (let self = args in inv_ref_T self)
     -> precondition_clone () args
 
-predicate postcondition_once_clone (self: ()) (args: t_T) (result: t_T) = postcondition_clone self args result
+function postcondition_once_clone (self: ()) (args: t_T) (result: t_T) : bool = postcondition_clone self args result
 
-meta "rewrite_def" predicate postcondition_once_clone
+meta "rewrite_def" function postcondition_once_clone
 
 let clone_T (self: t_T) (return (x: t_T)) = {[@stop_split] [@expl:clone requires] precondition_clone () self}
   any

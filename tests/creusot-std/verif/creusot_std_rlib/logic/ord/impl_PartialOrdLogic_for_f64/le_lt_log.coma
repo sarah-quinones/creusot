@@ -2,9 +2,10 @@
 
 use creusot.float.Float64
 
-predicate le_log_f64 [@inline:trivial] (self: Float64.t) (other: Float64.t) = Float64.lt self other \/ self = other
+function le_log_f64 [@inline:trivial] (self: Float64.t) (other: Float64.t) : bool = Float64.lt self other
+  \/ self = other
 
-meta "rewrite_def" predicate le_log_f64
+meta "rewrite_def" function le_log_f64
 
 meta "compute_max_steps" 1000000
 

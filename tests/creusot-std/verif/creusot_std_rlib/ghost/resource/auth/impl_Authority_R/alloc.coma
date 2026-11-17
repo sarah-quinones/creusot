@@ -8,7 +8,7 @@ type t_Option_R = None | Some t_R
 
 function op_R (self: t_R) (other: t_R) : t_Option_R
 
-predicate incl_R (self: t_R) (other: t_R)
+function incl_R (self: t_R) (other: t_R) : bool
 
 axiom incl_R_spec: forall self: t_R, other: t_R [incl_R self other]. incl_R self other
     = (exists factor: t_R. op_R self factor = Some other)
@@ -55,8 +55,7 @@ axiom incl_refl_R_spec: forall x: t_R. incl_R x x
 
 type t_View_AuthViewRel_R
 
-predicate rel_AuthViewRel_R (a: t_Option_R) (f: t_R) =
-  match a with
+function rel_AuthViewRel_R (a: t_Option_R) (f: t_R) : bool = match a with
     | Some a'0 -> incl_R f a'0
     | None -> true
     end
@@ -117,20 +116,20 @@ let into_inner_Resource_View_AuthViewRel_R (self: t_Resource_View_AuthViewRel_R)
 
 type t_Authority_R = { f0: t_Resource_View_AuthViewRel_R }
 
-predicate invariant_Authority_R (self: t_Authority_R) =
+function invariant_Authority_R (self: t_Authority_R) : bool =
   auth_AuthViewRel_R (view_Resource_View_AuthViewRel_R self.f0) <> None
 
-predicate inv_Authority_R (_1: t_Authority_R)
+function inv_Authority_R (_1: t_Authority_R) : bool
 
 axiom inv_axiom [@rewrite]: forall _1: t_Authority_R [inv_Authority_R _1]. inv_Authority_R _1 = invariant_Authority_R _1
 
-predicate invariant_Ghost_Authority_R [@inline:trivial] (self: t_Authority_R) = inv_Authority_R self
+function invariant_Ghost_Authority_R [@inline:trivial] (self: t_Authority_R) : bool = inv_Authority_R self
 
-meta "rewrite_def" predicate invariant_Ghost_Authority_R
+meta "rewrite_def" function invariant_Ghost_Authority_R
 
-predicate inv_Ghost_Authority_R [@inline:trivial] (_1: t_Authority_R) = invariant_Ghost_Authority_R _1
+function inv_Ghost_Authority_R [@inline:trivial] (_1: t_Authority_R) : bool = invariant_Ghost_Authority_R _1
 
-meta "rewrite_def" predicate inv_Ghost_Authority_R
+meta "rewrite_def" function inv_Ghost_Authority_R
 
 let new_Authority_R (x: t_Authority_R) (return (x'0: t_Authority_R)) =
 {[@stop_split] [@expl:new 'x' type invariant] inv_Authority_R x}

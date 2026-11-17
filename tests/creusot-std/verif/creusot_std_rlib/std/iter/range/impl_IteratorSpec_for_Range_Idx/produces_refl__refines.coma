@@ -9,12 +9,11 @@ type t_Range_Idx = { start: t_Idx; end': t_Idx }
 
 function deep_model_Idx (self: t_Idx) : int
 
-predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
 
-meta "rewrite_def" predicate gt_log_Int
+meta "rewrite_def" function gt_log_Int
 
-predicate produces_Range_Idx (self: t_Range_Idx) (visited: Seq.seq t_Idx) (o: t_Range_Idx) =
-  self.end' = o.end'
+function produces_Range_Idx (self: t_Range_Idx) (visited: Seq.seq t_Idx) (o: t_Range_Idx) : bool = self.end' = o.end'
   /\ deep_model_Idx self.start <= deep_model_Idx o.start
   /\ (gt_log_Int (Seq.length visited) 0 -> deep_model_Idx o.start <= deep_model_Idx o.end')
   /\ Seq.length visited = deep_model_Idx o.start - deep_model_Idx self.start

@@ -2,9 +2,9 @@
 
 use creusot.int.Int8
 
-predicate inv_i8 [@inline:trivial] (_1: Int8.t) = true
+function inv_i8 [@inline:trivial] (_1: Int8.t) : bool = true
 
-meta "rewrite_def" predicate inv_i8
+meta "rewrite_def" function inv_i8
 
 meta "compute_max_steps" 1000000
 

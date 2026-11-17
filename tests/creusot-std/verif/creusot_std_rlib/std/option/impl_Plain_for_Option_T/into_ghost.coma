@@ -6,9 +6,9 @@ type t_T
 
 type t_Option_T = None | Some t_T
 
-predicate inv_bool [@inline:trivial] (_1: bool) = true
+function inv_bool [@inline:trivial] (_1: bool) : bool = true
 
-meta "rewrite_def" predicate inv_bool
+meta "rewrite_def" function inv_bool
 
 let into_ghost_bool (self: bool) (return (x: bool)) = {[@stop_split] [@expl:into_ghost requires] inv_bool self}
   any [ return (result: bool) -> {[@stop_split] [@expl:into_ghost ensures] result = self} (! return {result}) ]
@@ -23,15 +23,15 @@ function unwrap_Option_T (self: t_Option_T) : t_T = match self with
     | None -> any_T
     end
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate invariant_Ghost_T [@inline:trivial] (self: t_T) = inv_T self
+function invariant_Ghost_T [@inline:trivial] (self: t_T) : bool = inv_T self
 
-meta "rewrite_def" predicate invariant_Ghost_T
+meta "rewrite_def" function invariant_Ghost_T
 
-predicate inv_Ghost_T [@inline:trivial] (_1: t_T) = invariant_Ghost_T _1
+function inv_Ghost_T [@inline:trivial] (_1: t_T) : bool = invariant_Ghost_T _1
 
-meta "rewrite_def" predicate inv_Ghost_T
+meta "rewrite_def" function inv_Ghost_T
 
 let into_ghost_T (self: t_T) (return (x: t_T)) = {[@stop_split] [@expl:into_ghost requires] inv_T self}
   any
@@ -40,21 +40,21 @@ let into_ghost_T (self: t_T) (return (x: t_T)) = {[@stop_split] [@expl:into_ghos
     /\ ([@stop_split] [@expl:into_ghost ensures] result = self)}
     (! return {result}) ]
 
-predicate invariant_ref_Ghost_T [@inline:trivial] (self: t_T) = inv_Ghost_T self
+function invariant_ref_Ghost_T [@inline:trivial] (self: t_T) : bool = inv_Ghost_T self
 
-meta "rewrite_def" predicate invariant_ref_Ghost_T
+meta "rewrite_def" function invariant_ref_Ghost_T
 
-predicate inv_ref_Ghost_T [@inline:trivial] (_1: t_T) = invariant_ref_Ghost_T _1
+function inv_ref_Ghost_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_Ghost_T _1
 
-meta "rewrite_def" predicate inv_ref_Ghost_T
+meta "rewrite_def" function inv_ref_Ghost_T
 
-predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
 
-meta "rewrite_def" predicate invariant_ref_T
+meta "rewrite_def" function invariant_ref_T
 
-predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
 
-meta "rewrite_def" predicate inv_ref_T
+meta "rewrite_def" function inv_ref_T
 
 let deref_Ghost_T (self: t_T) (return (x: t_T)) =
 {[@stop_split] [@expl:deref 'self' type invariant] inv_ref_Ghost_T self}
@@ -64,7 +64,7 @@ let deref_Ghost_T (self: t_T) (return (x: t_T)) =
     /\ ([@stop_split] [@expl:deref ensures] result = self)}
     (! return {result}) ]
 
-predicate inv_Option_T (_1: t_Option_T)
+function inv_Option_T (_1: t_Option_T) : bool
 
 axiom inv_axiom [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_T _1
     = match _1 with
@@ -72,13 +72,13 @@ axiom inv_axiom [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_
       | Some f0 -> inv_T f0
       end
 
-predicate invariant_Ghost_Option_T [@inline:trivial] (self: t_Option_T) = inv_Option_T self
+function invariant_Ghost_Option_T [@inline:trivial] (self: t_Option_T) : bool = inv_Option_T self
 
-meta "rewrite_def" predicate invariant_Ghost_Option_T
+meta "rewrite_def" function invariant_Ghost_Option_T
 
-predicate inv_Ghost_Option_T [@inline:trivial] (_1: t_Option_T) = invariant_Ghost_Option_T _1
+function inv_Ghost_Option_T [@inline:trivial] (_1: t_Option_T) : bool = invariant_Ghost_Option_T _1
 
-meta "rewrite_def" predicate inv_Ghost_Option_T
+meta "rewrite_def" function inv_Ghost_Option_T
 
 let new_Option_T (x: t_Option_T) (return (x'0: t_Option_T)) =
 {[@stop_split] [@expl:new 'x' type invariant] inv_Option_T x}

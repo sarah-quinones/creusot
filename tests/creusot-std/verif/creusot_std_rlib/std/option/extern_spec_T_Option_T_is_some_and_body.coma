@@ -14,17 +14,17 @@ let elim_Some (_x: t_Option_T) (return (f0: t_T)) = any
 
 type impl_32_FnOnce_40_T_41__32__45__62__32_bool_32__43__32_Destruct
 
-predicate inv_impl_32_FnOnce_40_T_41__32__45__62__32_bool_32__43__32_Destruct (_1: impl_32_FnOnce_40_T_41__32__45__62__32_bool_32__43__32_Destruct)
+function inv_impl_32_FnOnce_40_T_41__32__45__62__32_bool_32__43__32_Destruct (_1: impl_32_FnOnce_40_T_41__32__45__62__32_bool_32__43__32_Destruct) : bool
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate inv_tup1_T [@inline:trivial] (_1: t_T) = inv_T _1
+function inv_tup1_T [@inline:trivial] (_1: t_T) : bool = inv_T _1
 
-meta "rewrite_def" predicate inv_tup1_T
+meta "rewrite_def" function inv_tup1_T
 
-predicate precondition_impl_32_FnOnce_40_T_41__32__45__62__32_bool_32__43__32_Destruct (self: impl_32_FnOnce_40_T_41__32__45__62__32_bool_32__43__32_Destruct) (args: t_T)
+function precondition_impl_32_FnOnce_40_T_41__32__45__62__32_bool_32__43__32_Destruct (self: impl_32_FnOnce_40_T_41__32__45__62__32_bool_32__43__32_Destruct) (args: t_T) : bool
 
-predicate postcondition_once_impl_32_FnOnce_40_T_41__32__45__62__32_bool_32__43__32_Destruct (self: impl_32_FnOnce_40_T_41__32__45__62__32_bool_32__43__32_Destruct) (args: t_T) (result: bool)
+function postcondition_once_impl_32_FnOnce_40_T_41__32__45__62__32_bool_32__43__32_Destruct (self: impl_32_FnOnce_40_T_41__32__45__62__32_bool_32__43__32_Destruct) (args: t_T) (result: bool) : bool
 
 let call_once_impl_32_FnOnce_40_T_41__32__45__62__32_bool_32__43__32_Destruct
   (self: impl_32_FnOnce_40_T_41__32__45__62__32_bool_32__43__32_Destruct) (args: t_T) (return (x: bool)) =
@@ -36,9 +36,9 @@ let call_once_impl_32_FnOnce_40_T_41__32__45__62__32_bool_32__43__32_Destruct
   {[@stop_split] [@expl:call_once ensures] postcondition_once_impl_32_FnOnce_40_T_41__32__45__62__32_bool_32__43__32_Destruct self args result}
     (! return {result}) ]
 
-predicate resolve_impl_32_FnOnce_40_T_41__32__45__62__32_bool_32__43__32_Destruct (_1: impl_32_FnOnce_40_T_41__32__45__62__32_bool_32__43__32_Destruct)
+function resolve_impl_32_FnOnce_40_T_41__32__45__62__32_bool_32__43__32_Destruct (_1: impl_32_FnOnce_40_T_41__32__45__62__32_bool_32__43__32_Destruct) : bool
 
-predicate inv_Option_T (_1: t_Option_T)
+function inv_Option_T (_1: t_Option_T) : bool
 
 axiom inv_axiom [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_T _1
     = match _1 with
@@ -46,9 +46,9 @@ axiom inv_axiom [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_
       | Some f0 -> inv_T f0
       end
 
-predicate resolve_T (_1: t_T)
+function resolve_T (_1: t_T) : bool
 
-predicate resolve_Option_T (_1: t_Option_T)
+function resolve_Option_T (_1: t_Option_T) : bool
 
 axiom resolve_axiom [@rewrite]: forall _1: t_Option_T [resolve_Option_T _1]. resolve_Option_T _1
     = match _1 with

@@ -24,9 +24,9 @@ module M_split_at_checked
   
   meta "rewrite_def" function index_Seq_i32'0
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   let split_at_checked_i32 (self: Slice64.slice Int32.t) (mid: UInt64.t)
     (return (x: t_Option_tup2_ref_slice_i32_ref_slice_i32)) = any
@@ -88,16 +88,16 @@ module M_split_at_mut_checked
   use creusot.prelude.Any
   use int.Int
   
-  predicate inv_Seq_i32 [@inline:trivial] (_1: Seq.seq Int32.t) = true
+  function inv_Seq_i32 [@inline:trivial] (_1: Seq.seq Int32.t) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_i32
+  meta "rewrite_def" function inv_Seq_i32
   
-  predicate invariant_array_i32_4 (self: Slice64.array Int32.t) =
-    inv_Seq_i32 (Slice64.view self) /\ Seq.length (Slice64.view self) = UInt64.t'int (4: UInt64.t)
+  function invariant_array_i32_4 (self: Slice64.array Int32.t) : bool = inv_Seq_i32 (Slice64.view self)
+    /\ Seq.length (Slice64.view self) = UInt64.t'int (4: UInt64.t)
   
-  predicate inv_array_i32_4 [@inline:trivial] (_1: Slice64.array Int32.t) = invariant_array_i32_4 _1
+  function inv_array_i32_4 [@inline:trivial] (_1: Slice64.array Int32.t) : bool = invariant_array_i32_4 _1
   
-  meta "rewrite_def" predicate inv_array_i32_4
+  meta "rewrite_def" function inv_array_i32_4
   
   type tup2_refmut_slice_i32_refmut_slice_i32 = {
     f0: MutBorrow.t (Slice64.slice Int32.t);
@@ -119,9 +119,9 @@ module M_split_at_mut_checked
   
   meta "rewrite_def" function index_Seq_i32'0
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   let split_at_mut_checked_i32 (self: MutBorrow.t (Slice64.slice Int32.t)) (mid: UInt64.t)
     (return (x: t_Option_tup2_refmut_slice_i32_refmut_slice_i32)) = any
@@ -138,16 +138,17 @@ module M_split_at_mut_checked
         end)}
       (! return {result}) ]
   
-  predicate resolve_refmut_slice_i32 [@inline:trivial] (_1: MutBorrow.t (Slice64.slice Int32.t)) = _1.final = _1.current
+  function resolve_refmut_slice_i32 [@inline:trivial] (_1: MutBorrow.t (Slice64.slice Int32.t)) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_slice_i32
+  meta "rewrite_def" function resolve_refmut_slice_i32
   
-  predicate resolve_tup2_refmut_slice_i32_refmut_slice_i32 [@inline:trivial] (_1: tup2_refmut_slice_i32_refmut_slice_i32) =
-    resolve_refmut_slice_i32 _1.f0 /\ resolve_refmut_slice_i32 _1.f1
+  function resolve_tup2_refmut_slice_i32_refmut_slice_i32 [@inline:trivial] (_1: tup2_refmut_slice_i32_refmut_slice_i32) : bool
+   = resolve_refmut_slice_i32 _1.f0 /\ resolve_refmut_slice_i32 _1.f1
   
-  meta "rewrite_def" predicate resolve_tup2_refmut_slice_i32_refmut_slice_i32
+  meta "rewrite_def" function resolve_tup2_refmut_slice_i32_refmut_slice_i32
   
-  predicate resolve_Option_tup2_refmut_slice_i32_refmut_slice_i32 (_1: t_Option_tup2_refmut_slice_i32_refmut_slice_i32)
+  function resolve_Option_tup2_refmut_slice_i32_refmut_slice_i32 (_1: t_Option_tup2_refmut_slice_i32_refmut_slice_i32) : bool
   
   axiom resolve_axiom [@rewrite]:
     forall _1: t_Option_tup2_refmut_slice_i32_refmut_slice_i32 [resolve_Option_tup2_refmut_slice_i32_refmut_slice_i32 _1]. resolve_Option_tup2_refmut_slice_i32_refmut_slice_i32 _1
@@ -398,16 +399,16 @@ module M_split_last_mut_1
   use creusot.prelude.Any
   use int.Int
   
-  predicate inv_Seq_i32 [@inline:trivial] (_1: Seq.seq Int32.t) = true
+  function inv_Seq_i32 [@inline:trivial] (_1: Seq.seq Int32.t) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_i32
+  meta "rewrite_def" function inv_Seq_i32
   
-  predicate invariant_array_i32_4 (self: Slice64.array Int32.t) =
-    inv_Seq_i32 (Slice64.view self) /\ Seq.length (Slice64.view self) = UInt64.t'int (4: UInt64.t)
+  function invariant_array_i32_4 (self: Slice64.array Int32.t) : bool = inv_Seq_i32 (Slice64.view self)
+    /\ Seq.length (Slice64.view self) = UInt64.t'int (4: UInt64.t)
   
-  predicate inv_array_i32_4 [@inline:trivial] (_1: Slice64.array Int32.t) = invariant_array_i32_4 _1
+  function inv_array_i32_4 [@inline:trivial] (_1: Slice64.array Int32.t) : bool = invariant_array_i32_4 _1
   
-  meta "rewrite_def" predicate inv_array_i32_4
+  meta "rewrite_def" function inv_array_i32_4
   
   type tup2_refmut_i32_refmut_slice_i32 = { f0: MutBorrow.t Int32.t; f1: MutBorrow.t (Slice64.slice Int32.t) }
   
@@ -445,20 +446,21 @@ module M_split_last_mut_1
         end)}
       (! return {result}) ]
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
-  predicate resolve_refmut_slice_i32 [@inline:trivial] (_1: MutBorrow.t (Slice64.slice Int32.t)) = _1.final = _1.current
+  function resolve_refmut_slice_i32 [@inline:trivial] (_1: MutBorrow.t (Slice64.slice Int32.t)) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_slice_i32
+  meta "rewrite_def" function resolve_refmut_slice_i32
   
-  predicate resolve_tup2_refmut_i32_refmut_slice_i32 [@inline:trivial] (_1: tup2_refmut_i32_refmut_slice_i32) =
+  function resolve_tup2_refmut_i32_refmut_slice_i32 [@inline:trivial] (_1: tup2_refmut_i32_refmut_slice_i32) : bool =
     resolve_refmut_i32 _1.f0 /\ resolve_refmut_slice_i32 _1.f1
   
-  meta "rewrite_def" predicate resolve_tup2_refmut_i32_refmut_slice_i32
+  meta "rewrite_def" function resolve_tup2_refmut_i32_refmut_slice_i32
   
-  predicate resolve_Option_tup2_refmut_i32_refmut_slice_i32 (_1: t_Option_tup2_refmut_i32_refmut_slice_i32)
+  function resolve_Option_tup2_refmut_i32_refmut_slice_i32 (_1: t_Option_tup2_refmut_i32_refmut_slice_i32) : bool
   
   axiom resolve_axiom [@rewrite]:
     forall _1: t_Option_tup2_refmut_i32_refmut_slice_i32 [resolve_Option_tup2_refmut_i32_refmut_slice_i32 _1]. resolve_Option_tup2_refmut_i32_refmut_slice_i32 _1
@@ -511,16 +513,16 @@ module M_split_last_mut_2
   use creusot.prelude.Any
   use int.Int
   
-  predicate inv_Seq_i32 [@inline:trivial] (_1: Seq.seq Int32.t) = true
+  function inv_Seq_i32 [@inline:trivial] (_1: Seq.seq Int32.t) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_i32
+  meta "rewrite_def" function inv_Seq_i32
   
-  predicate invariant_array_i32_0 (self: Slice64.array Int32.t) =
-    inv_Seq_i32 (Slice64.view self) /\ Seq.length (Slice64.view self) = UInt64.t'int (0: UInt64.t)
+  function invariant_array_i32_0 (self: Slice64.array Int32.t) : bool = inv_Seq_i32 (Slice64.view self)
+    /\ Seq.length (Slice64.view self) = UInt64.t'int (0: UInt64.t)
   
-  predicate inv_array_i32_0 [@inline:trivial] (_1: Slice64.array Int32.t) = invariant_array_i32_0 _1
+  function inv_array_i32_0 [@inline:trivial] (_1: Slice64.array Int32.t) : bool = invariant_array_i32_0 _1
   
-  meta "rewrite_def" predicate inv_array_i32_0
+  meta "rewrite_def" function inv_array_i32_0
   
   type tup2_refmut_i32_refmut_slice_i32 = { f0: MutBorrow.t Int32.t; f1: MutBorrow.t (Slice64.slice Int32.t) }
   
@@ -558,20 +560,21 @@ module M_split_last_mut_2
         end)}
       (! return {result}) ]
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
-  predicate resolve_refmut_slice_i32 [@inline:trivial] (_1: MutBorrow.t (Slice64.slice Int32.t)) = _1.final = _1.current
+  function resolve_refmut_slice_i32 [@inline:trivial] (_1: MutBorrow.t (Slice64.slice Int32.t)) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_slice_i32
+  meta "rewrite_def" function resolve_refmut_slice_i32
   
-  predicate resolve_tup2_refmut_i32_refmut_slice_i32 [@inline:trivial] (_1: tup2_refmut_i32_refmut_slice_i32) =
+  function resolve_tup2_refmut_i32_refmut_slice_i32 [@inline:trivial] (_1: tup2_refmut_i32_refmut_slice_i32) : bool =
     resolve_refmut_i32 _1.f0 /\ resolve_refmut_slice_i32 _1.f1
   
-  meta "rewrite_def" predicate resolve_tup2_refmut_i32_refmut_slice_i32
+  meta "rewrite_def" function resolve_tup2_refmut_i32_refmut_slice_i32
   
-  predicate resolve_Option_tup2_refmut_i32_refmut_slice_i32 (_1: t_Option_tup2_refmut_i32_refmut_slice_i32)
+  function resolve_Option_tup2_refmut_i32_refmut_slice_i32 (_1: t_Option_tup2_refmut_i32_refmut_slice_i32) : bool
   
   axiom resolve_axiom [@rewrite]:
     forall _1: t_Option_tup2_refmut_i32_refmut_slice_i32 [resolve_Option_tup2_refmut_i32_refmut_slice_i32 _1]. resolve_Option_tup2_refmut_i32_refmut_slice_i32 _1

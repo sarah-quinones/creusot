@@ -6,9 +6,9 @@ type t_RangeInclusive_T = { start: t_T; last: t_T }
 
 type t_RangeInclusive_T'0
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate inv_RangeInclusive_T (_1: t_RangeInclusive_T'0)
+function inv_RangeInclusive_T (_1: t_RangeInclusive_T'0) : bool
 
 function start_log_RangeInclusive_T (self: t_RangeInclusive_T'0) : t_T
 
@@ -16,9 +16,9 @@ function end_log_RangeInclusive_T (self: t_RangeInclusive_T'0) : t_T
 
 type t_DeepModelTy
 
-predicate lt_log_DeepModelTy (self: t_DeepModelTy) (other: t_DeepModelTy)
+function lt_log_DeepModelTy (self: t_DeepModelTy) (other: t_DeepModelTy) : bool
 
-predicate le_log_DeepModelTy (self: t_DeepModelTy) (other: t_DeepModelTy)
+function le_log_DeepModelTy (self: t_DeepModelTy) (other: t_DeepModelTy) : bool
 
 function le_lt_log_DeepModelTy (self: t_DeepModelTy) (other: t_DeepModelTy) : ()
 
@@ -36,7 +36,7 @@ axiom irreflexive_DeepModelTy_spec: forall self: t_DeepModelTy. not lt_log_DeepM
 
 function deep_model_T (self: t_T) : t_DeepModelTy
 
-predicate is_empty_log_RangeInclusive_T (self: t_RangeInclusive_T'0)
+function is_empty_log_RangeInclusive_T (self: t_RangeInclusive_T'0) : bool
 
 axiom is_empty_log_RangeInclusive_T_spec:
   forall self: t_RangeInclusive_T'0 [is_empty_log_RangeInclusive_T self]. not is_empty_log_RangeInclusive_T self
@@ -54,7 +54,7 @@ let new_T (start'0: t_T) (end': t_T) (return (x: t_RangeInclusive_T'0)) =
     -> not is_empty_log_RangeInclusive_T result)}
     (! return {result}) ]
 
-predicate inv_RangeInclusive_T'0 (_1: t_RangeInclusive_T)
+function inv_RangeInclusive_T'0 (_1: t_RangeInclusive_T) : bool
 
 axiom inv_axiom [@rewrite]: forall _1: t_RangeInclusive_T [inv_RangeInclusive_T'0 _1]. inv_RangeInclusive_T'0 _1
     = (inv_T _1.start /\ inv_T _1.last)

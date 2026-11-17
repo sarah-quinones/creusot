@@ -4,13 +4,13 @@ type t_F
 
 type t_T
 
-predicate inv_F (_1: t_F)
+function inv_F (_1: t_F) : bool
 
-predicate precondition_F (self: t_F) (args: ())
+function precondition_F (self: t_F) (args: ()) : bool
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate postcondition_once_F (self: t_F) (args: ()) (result: t_T)
+function postcondition_once_F (self: t_F) (args: ()) (result: t_T) : bool
 
 let call_once_F (self: t_F) (args: ()) (return (x: t_T)) =
 {[@stop_split] [@expl:call_once_F requires] ([@stop_split] [@expl:call_once 'self' type invariant] inv_F self)
@@ -23,9 +23,9 @@ let call_once_F (self: t_F) (args: ()) (return (x: t_T)) =
 
 type t_Option_T = None | Some t_T
 
-predicate resolve_F (_1: t_F)
+function resolve_F (_1: t_F) : bool
 
-predicate inv_Option_T (_1: t_Option_T)
+function inv_Option_T (_1: t_Option_T) : bool
 
 axiom inv_axiom [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_T _1
     = match _1 with

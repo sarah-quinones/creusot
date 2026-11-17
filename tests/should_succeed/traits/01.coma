@@ -4,22 +4,23 @@ module M_uses_generic
   
   type t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate precondition_from_b (self: ()) (args: t_T)
+  function precondition_from_b (self: ()) (args: t_T) : bool
   
   axiom precondition_fndef: forall args: t_T [precondition_from_b () args]. (let x = args in inv_T x)
       -> precondition_from_b () args
   
-  predicate postcondition_from_b (self: ()) (args: t_T) (result: UInt32.t)
+  function postcondition_from_b (self: ()) (args: t_T) (result: UInt32.t) : bool
   
   axiom postcondition_fndef:
     forall args: t_T, result: UInt32.t [postcondition_from_b () args result]. postcondition_from_b () args result
       -> (let x = args in true)
   
-  predicate postcondition_once_from_b (self: ()) (args: t_T) (result: UInt32.t) = postcondition_from_b self args result
+  function postcondition_once_from_b (self: ()) (args: t_T) (result: UInt32.t) : bool =
+    postcondition_from_b self args result
   
-  meta "rewrite_def" predicate postcondition_once_from_b
+  meta "rewrite_def" function postcondition_once_from_b
   
   let from_b_T (x: t_T) (return (x'0: UInt32.t)) = {[@stop_split] [@expl:from_b requires] precondition_from_b () x}
     any

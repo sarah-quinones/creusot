@@ -24,7 +24,7 @@ axiom to_ref_seq_slice_T_spec'0: forall self: Slice64.slice t_T [to_ref_seq_slic
 
 function view_Iter_T (self: t_Iter_T) : Slice64.slice t_T
 
-predicate produces_back_Iter_T (self: t_Iter_T) (visited: Seq.seq t_T) (o: t_Iter_T) =
+function produces_back_Iter_T (self: t_Iter_T) (visited: Seq.seq t_T) (o: t_Iter_T) : bool =
   to_ref_seq_slice_T (view_Iter_T self) = Seq.(++) (to_ref_seq_slice_T (view_Iter_T o)) (Reverse.reverse visited)
 
 function reverse_concat_ref_T (self: Seq.seq t_T) (other: Seq.seq t_T) : ()

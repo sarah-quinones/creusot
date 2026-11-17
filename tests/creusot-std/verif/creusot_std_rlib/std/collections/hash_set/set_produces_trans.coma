@@ -10,16 +10,18 @@ type t_DeepModelTy
 
 function view_I (self: t_I) : Fset.fset t_DeepModelTy
 
-predicate contains_DeepModelTy [@inline:trivial] (self: Fset.fset t_DeepModelTy) (e: t_DeepModelTy) = Fset.mem e self
+function contains_DeepModelTy [@inline:trivial] (self: Fset.fset t_DeepModelTy) (e: t_DeepModelTy) : bool =
+  Fset.mem e self
 
-meta "rewrite_def" predicate contains_DeepModelTy
+meta "rewrite_def" function contains_DeepModelTy
 
 function deep_model_T (self: t_T) : t_DeepModelTy
 
-predicate contains_T (self: Seq.seq t_T) (x: t_T) = exists i: int. 0 <= i /\ i < Seq.length self /\ Seq.get self i = x
+function contains_T (self: Seq.seq t_T) (x: t_T) : bool = exists i: int. 0 <= i
+    /\ i < Seq.length self /\ Seq.get self i = x
 
-predicate set_produces_T (start: t_I) (visited: Seq.seq t_T) (end': t_I) =
-  Fset.cardinal (view_I start) = Seq.length visited + Fset.cardinal (view_I end')
+function set_produces_T (start: t_I) (visited: Seq.seq t_T) (end': t_I) : bool = Fset.cardinal (view_I start)
+    = Seq.length visited + Fset.cardinal (view_I end')
   /\ (forall x: t_DeepModelTy. contains_DeepModelTy (view_I start) x
       -> (exists x1: t_T. deep_model_T x1 = x /\ contains_T visited x1) \/ contains_DeepModelTy (view_I end') x)
   /\ (forall x: t_T. contains_T visited x

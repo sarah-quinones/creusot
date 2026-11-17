@@ -5,9 +5,9 @@ type t_T
 
 type t_Option_T = None | Some t_T
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate inv_Option_T (_1: t_Option_T)
+function inv_Option_T (_1: t_Option_T) : bool
 
 axiom inv_axiom [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_T _1
     = match _1 with
@@ -15,9 +15,9 @@ axiom inv_axiom [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_
       | Some f0 -> inv_T f0
       end
 
-predicate resolve_T (_1: t_T)
+function resolve_T (_1: t_T) : bool
 
-predicate resolve_Option_T (_1: t_Option_T)
+function resolve_Option_T (_1: t_Option_T) : bool
 
 axiom resolve_axiom [@rewrite]: forall _1: t_Option_T [resolve_Option_T _1]. resolve_Option_T _1
     = match _1 with
@@ -33,30 +33,30 @@ let elim_Some (_x: t_Option_T) (return (f0: t_T)) = any
       end}
     any) ]
 
-predicate invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) = inv_T self.current /\ inv_T self.final
+function invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) : bool = inv_T self.current /\ inv_T self.final
 
-meta "rewrite_def" predicate invariant_refmut_T
+meta "rewrite_def" function invariant_refmut_T
 
-predicate inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = invariant_refmut_T _1
+function inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = invariant_refmut_T _1
 
-meta "rewrite_def" predicate inv_refmut_T
+meta "rewrite_def" function inv_refmut_T
 
-predicate resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = _1.final = _1.current
+function resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = _1.final = _1.current
 
-meta "rewrite_def" predicate resolve_refmut_T
+meta "rewrite_def" function resolve_refmut_T
 
-predicate invariant_refmut_Option_T [@inline:trivial] (self: MutBorrow.t t_Option_T) =
-  inv_Option_T self.current /\ inv_Option_T self.final
+function invariant_refmut_Option_T [@inline:trivial] (self: MutBorrow.t t_Option_T) : bool = inv_Option_T self.current
+  /\ inv_Option_T self.final
 
-meta "rewrite_def" predicate invariant_refmut_Option_T
+meta "rewrite_def" function invariant_refmut_Option_T
 
-predicate inv_refmut_Option_T [@inline:trivial] (_1: MutBorrow.t t_Option_T) = invariant_refmut_Option_T _1
+function inv_refmut_Option_T [@inline:trivial] (_1: MutBorrow.t t_Option_T) : bool = invariant_refmut_Option_T _1
 
-meta "rewrite_def" predicate inv_refmut_Option_T
+meta "rewrite_def" function inv_refmut_Option_T
 
-predicate resolve_refmut_Option_T [@inline:trivial] (_1: MutBorrow.t t_Option_T) = _1.final = _1.current
+function resolve_refmut_Option_T [@inline:trivial] (_1: MutBorrow.t t_Option_T) : bool = _1.final = _1.current
 
-meta "rewrite_def" predicate resolve_refmut_Option_T
+meta "rewrite_def" function resolve_refmut_Option_T
 
 meta "compute_max_steps" 1000000
 

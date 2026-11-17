@@ -10,7 +10,7 @@ type t_Option_T1 = None | Some t_T1
 
 function op_T1 (self: t_T1) (other: t_T1) : t_Option_T1
 
-predicate incl_T1 (self: t_T1) (other: t_T1)
+function incl_T1 (self: t_T1) (other: t_T1) : bool
 
 axiom incl_T1_spec: forall self: t_T1, other: t_T1 [incl_T1 self other]. incl_T1 self other
     = (exists factor: t_T1. op_T1 self factor = Some other)
@@ -37,7 +37,7 @@ function incl_op_T1 (self: t_T1) (other: t_T1) (comb: t_T1) : ()
 
 axiom incl_op_T1_spec: forall self: t_T1, other: t_T1, comb: t_T1. op_T1 self other = Some comb -> incl_T1 self comb
 
-predicate eq_T1 (self: t_T1) (other: t_T1)
+function eq_T1 (self: t_T1) (other: t_T1) : bool
 
 axiom eq_T1_spec: forall self: t_T1, other: t_T1 [eq_T1 self other]. eq_T1 self other = (self = other)
 
@@ -45,7 +45,7 @@ type t_Option_T2 = None'0 | Some'0 t_T2
 
 function op_T2 (self: t_T2) (other: t_T2) : t_Option_T2
 
-predicate incl_T2 (self: t_T2) (other: t_T2)
+function incl_T2 (self: t_T2) (other: t_T2) : bool
 
 axiom incl_T2_spec: forall self: t_T2, other: t_T2 [incl_T2 self other]. incl_T2 self other
     = (exists factor: t_T2. op_T2 self factor = Some'0 other)
@@ -72,7 +72,7 @@ function incl_op_T2 (self: t_T2) (other: t_T2) (comb: t_T2) : ()
 
 axiom incl_op_T2_spec: forall self: t_T2, other: t_T2, comb: t_T2. op_T2 self other = Some'0 comb -> incl_T2 self comb
 
-predicate eq_T2 (self: t_T2) (other: t_T2)
+function eq_T2 (self: t_T2) (other: t_T2) : bool
 
 axiom eq_T2_spec: forall self: t_T2, other: t_T2 [eq_T2 self other]. eq_T2 self other = (self = other)
 
@@ -84,7 +84,7 @@ constant self : tup2_T1_T2
 
 constant other : tup2_T1_T2
 
-predicate eq_tup2_T1_T2 (self: tup2_T1_T2) (other: tup2_T1_T2)
+function eq_tup2_T1_T2 (self: tup2_T1_T2) (other: tup2_T1_T2) : bool
 
 goal vc_eq_tup2_T1_T2: ([@stop_split] [@expl:eq ensures] eq_T1 self.f0 other.f0 = (self.f0 = other.f0))
   -> (if eq_T1 self.f0 other.f0 then

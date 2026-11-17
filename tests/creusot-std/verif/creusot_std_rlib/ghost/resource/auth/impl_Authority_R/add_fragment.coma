@@ -24,20 +24,20 @@ function view_Resource_View_AuthViewRel_R [@inline:trivial] (self: t_Resource_Vi
 
 meta "rewrite_def" function view_Resource_View_AuthViewRel_R
 
-predicate invariant_Authority_R (self: t_Authority_R) =
+function invariant_Authority_R (self: t_Authority_R) : bool =
   auth_AuthViewRel_R (view_Resource_View_AuthViewRel_R self.f0) <> None
 
-predicate inv_Authority_R (_1: t_Authority_R)
+function inv_Authority_R (_1: t_Authority_R) : bool
 
 axiom inv_axiom [@rewrite]: forall _1: t_Authority_R [inv_Authority_R _1]. inv_Authority_R _1 = invariant_Authority_R _1
 
-predicate invariant_ref_Authority_R [@inline:trivial] (self: t_Authority_R) = inv_Authority_R self
+function invariant_ref_Authority_R [@inline:trivial] (self: t_Authority_R) : bool = inv_Authority_R self
 
-meta "rewrite_def" predicate invariant_ref_Authority_R
+meta "rewrite_def" function invariant_ref_Authority_R
 
-predicate inv_ref_Authority_R [@inline:trivial] (_1: t_Authority_R) = invariant_ref_Authority_R _1
+function inv_ref_Authority_R [@inline:trivial] (_1: t_Authority_R) : bool = invariant_ref_Authority_R _1
 
-meta "rewrite_def" predicate inv_ref_Authority_R
+meta "rewrite_def" function inv_ref_Authority_R
 
 function id_View_AuthViewRel_R (self: t_Resource_View_AuthViewRel_R) : t_Id
 
@@ -51,7 +51,7 @@ type t_Fragment_R = { f0'0: t_Resource_View_AuthViewRel_R }
 
 function op_R (self: t_R) (other: t_R) : t_Option_R
 
-predicate incl_R (self: t_R) (other: t_R)
+function incl_R (self: t_R) (other: t_R) : bool
 
 axiom incl_R_spec: forall self: t_R, other: t_R [incl_R self other]. incl_R self other
     = (exists factor: t_R. op_R self factor = Some other)
@@ -96,8 +96,7 @@ constant incl_refl_R : ()
 
 axiom incl_refl_R_spec: forall x: t_R. incl_R x x
 
-predicate rel_AuthViewRel_R (a: t_Option_R) (f: t_R) =
-  match a with
+function rel_AuthViewRel_R (a: t_Option_R) (f: t_R) : bool = match a with
     | Some a'0 -> incl_R f a'0
     | None -> true
     end
@@ -131,17 +130,18 @@ let new_unit_R (id: t_Id) (return (x: t_Fragment_R)) = any
 
 type t_OpLocalUpdate_R = { f0'1: t_R }
 
-predicate invariant_refmut_Authority_R [@inline:trivial] (self: MutBorrow.t t_Authority_R) =
+function invariant_refmut_Authority_R [@inline:trivial] (self: MutBorrow.t t_Authority_R) : bool =
   inv_Authority_R self.current /\ inv_Authority_R self.final
 
-meta "rewrite_def" predicate invariant_refmut_Authority_R
+meta "rewrite_def" function invariant_refmut_Authority_R
 
-predicate inv_refmut_Authority_R [@inline:trivial] (_1: MutBorrow.t t_Authority_R) = invariant_refmut_Authority_R _1
+function inv_refmut_Authority_R [@inline:trivial] (_1: MutBorrow.t t_Authority_R) : bool =
+  invariant_refmut_Authority_R _1
 
-meta "rewrite_def" predicate inv_refmut_Authority_R
+meta "rewrite_def" function inv_refmut_Authority_R
 
-predicate premise_OpLocalUpdate_R (self: t_OpLocalUpdate_R) (from_auth: t_R) (_3: t_R) =
-  op_R from_auth self.f0'1 <> None
+function premise_OpLocalUpdate_R (self: t_OpLocalUpdate_R) (from_auth: t_R) (_3: t_R) : bool = op_R from_auth self.f0'1
+  <> None
 
 constant any_R : t_R
 
@@ -174,13 +174,13 @@ let update_R (self: MutBorrow.t t_Authority_R) (frag: MutBorrow.t t_Fragment_R) 
     = (update_OpLocalUpdate_R upd (view_Authority_R self.current) (view_Fragment_R frag.current)).f1'2)}
     (! return {result}) ]
 
-predicate resolve_refmut_Fragment_R [@inline:trivial] (_1: MutBorrow.t t_Fragment_R) = _1.final = _1.current
+function resolve_refmut_Fragment_R [@inline:trivial] (_1: MutBorrow.t t_Fragment_R) : bool = _1.final = _1.current
 
-meta "rewrite_def" predicate resolve_refmut_Fragment_R
+meta "rewrite_def" function resolve_refmut_Fragment_R
 
-predicate resolve_refmut_Authority_R [@inline:trivial] (_1: MutBorrow.t t_Authority_R) = _1.final = _1.current
+function resolve_refmut_Authority_R [@inline:trivial] (_1: MutBorrow.t t_Authority_R) : bool = _1.final = _1.current
 
-meta "rewrite_def" predicate resolve_refmut_Authority_R
+meta "rewrite_def" function resolve_refmut_Authority_R
 
 meta "compute_max_steps" 1000000
 

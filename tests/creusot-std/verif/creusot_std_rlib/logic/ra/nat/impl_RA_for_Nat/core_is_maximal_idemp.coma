@@ -6,9 +6,9 @@ type t_Nat
 
 type t_Option_Nat = None | Some t_Nat
 
-predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
 
-meta "rewrite_def" predicate ge_log_Int
+meta "rewrite_def" function ge_log_Int
 
 function to_int (self: t_Nat) : int
 
@@ -33,7 +33,7 @@ function core_Nat [@inline:trivial] (self: t_Nat) : t_Option_Nat = Some (new 0)
 
 meta "rewrite_def" function core_Nat
 
-predicate incl_Nat (self: t_Nat) (other: t_Nat) = let r = to_int self <= to_int other in r
+function incl_Nat (self: t_Nat) (other: t_Nat) : bool = let r = to_int self <= to_int other in r
 
 axiom incl_Nat_spec: forall self: t_Nat, other: t_Nat [incl_Nat self other]. incl_Nat self other
     = (exists factor: t_Nat. op_Nat self factor = Some other)

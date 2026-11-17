@@ -3,15 +3,15 @@ use creusot.prelude.Any
 
 type t_T
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) = inv_T self.current /\ inv_T self.final
+function invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) : bool = inv_T self.current /\ inv_T self.final
 
-meta "rewrite_def" predicate invariant_refmut_T
+meta "rewrite_def" function invariant_refmut_T
 
-predicate inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = invariant_refmut_T _1
+function inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = invariant_refmut_T _1
 
-meta "rewrite_def" predicate inv_refmut_T
+meta "rewrite_def" function inv_refmut_T
 
 let swap_T (x: MutBorrow.t t_T) (y: MutBorrow.t t_T) (return (x'0: ())) =
 {[@stop_split] [@expl:swap_T requires] ([@stop_split] [@expl:swap 'x' type invariant] inv_refmut_T x)
@@ -22,9 +22,9 @@ let swap_T (x: MutBorrow.t t_T) (y: MutBorrow.t t_T) (return (x'0: ())) =
     /\ ([@stop_split] [@expl:swap ensures #1] y.final = x.current)}
     (! return {result}) ]
 
-predicate resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = _1.final = _1.current
+function resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = _1.final = _1.current
 
-meta "rewrite_def" predicate resolve_refmut_T
+meta "rewrite_def" function resolve_refmut_T
 
 meta "compute_max_steps" 1000000
 

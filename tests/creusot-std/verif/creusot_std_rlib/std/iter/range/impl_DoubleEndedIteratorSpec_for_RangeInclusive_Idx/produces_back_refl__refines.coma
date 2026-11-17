@@ -13,7 +13,7 @@ function start_log_RangeInclusive_Idx (self: t_RangeInclusive_Idx) : t_Idx
 
 function end_log_RangeInclusive_Idx (self: t_RangeInclusive_Idx) : t_Idx
 
-predicate is_empty_log_RangeInclusive_Idx (self: t_RangeInclusive_Idx)
+function is_empty_log_RangeInclusive_Idx (self: t_RangeInclusive_Idx) : bool
 
 axiom is_empty_log_RangeInclusive_Idx_spec:
   forall self: t_RangeInclusive_Idx [is_empty_log_RangeInclusive_Idx self]. not is_empty_log_RangeInclusive_Idx self
@@ -29,8 +29,8 @@ axiom range_inclusive_len_Idx_spec:
   forall r: t_RangeInclusive_Idx [range_inclusive_len_Idx r]. is_empty_log_RangeInclusive_Idx r
     = (range_inclusive_len_Idx r = 0)
 
-predicate produces_back_RangeInclusive_Idx (self: t_RangeInclusive_Idx) (visited: Seq.seq t_Idx) (o: t_RangeInclusive_Idx) =
-  Seq.length visited = range_inclusive_len_Idx self - range_inclusive_len_Idx o
+function produces_back_RangeInclusive_Idx (self: t_RangeInclusive_Idx) (visited: Seq.seq t_Idx) (o: t_RangeInclusive_Idx) : bool
+ = Seq.length visited = range_inclusive_len_Idx self - range_inclusive_len_Idx o
   /\ (is_empty_log_RangeInclusive_Idx self -> is_empty_log_RangeInclusive_Idx o)
   /\ (is_empty_log_RangeInclusive_Idx o \/ start_log_RangeInclusive_Idx self = start_log_RangeInclusive_Idx o)
   /\ (forall i: int. 0 <= i /\ i < Seq.length visited

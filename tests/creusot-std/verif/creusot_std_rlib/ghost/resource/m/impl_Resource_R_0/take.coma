@@ -17,7 +17,7 @@ type t_Option_R = None | Some t_R
 
 function op_R (self: t_R) (other: t_R) : t_Option_R
 
-predicate incl_R (self: t_R) (other: t_R)
+function incl_R (self: t_R) (other: t_R) : bool
 
 axiom incl_R_spec: forall self: t_R, other: t_R [incl_R self other]. incl_R self other
     = (exists factor: t_R. op_R self factor = Some other)
@@ -62,14 +62,13 @@ constant incl_refl_R : ()
 
 axiom incl_refl_R_spec: forall x: t_R. incl_R x x
 
-predicate eq_R (self: t_R) (other: t_R)
+function eq_R (self: t_R) (other: t_R) : bool
 
 axiom eq_R_spec: forall self: t_R, other: t_R [eq_R self other]. eq_R self other = (self = other)
 
-predicate incl_eq_R (self: t_R) (other: t_R) = eq_R self other \/ incl_R self other
+function incl_eq_R (self: t_R) (other: t_R) : bool = eq_R self other \/ incl_R self other
 
-predicate incl_eq_op_R (a: t_R) (b: t_R) (x: t_R) =
-  match op_R a b with
+function incl_eq_op_R (a: t_R) (b: t_R) (x: t_R) : bool = match op_R a b with
     | None -> false
     | Some ab -> incl_eq_R ab x
     end
@@ -89,9 +88,9 @@ let split_off_R (self: MutBorrow.t t_Resource_R) (r: t_R) (s: t_R) (return (x: t
     /\ ([@stop_split] [@expl:split_off ensures #2] view_Resource_R result = r)}
     (! return {result}) ]
 
-predicate resolve_refmut_Resource_R [@inline:trivial] (_1: MutBorrow.t t_Resource_R) = _1.final = _1.current
+function resolve_refmut_Resource_R [@inline:trivial] (_1: MutBorrow.t t_Resource_R) : bool = _1.final = _1.current
 
-meta "rewrite_def" predicate resolve_refmut_Resource_R
+meta "rewrite_def" function resolve_refmut_Resource_R
 
 meta "compute_max_steps" 1000000
 

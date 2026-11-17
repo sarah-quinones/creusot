@@ -2,9 +2,9 @@ use creusot.prelude.Any
 
 type t_DeepModelTy
 
-predicate le_log_DeepModelTy (self: t_DeepModelTy) (other: t_DeepModelTy)
+function le_log_DeepModelTy (self: t_DeepModelTy) (other: t_DeepModelTy) : bool
 
-predicate lt_log_DeepModelTy (self: t_DeepModelTy) (other: t_DeepModelTy)
+function lt_log_DeepModelTy (self: t_DeepModelTy) (other: t_DeepModelTy) : bool
 
 function le_lt_log_DeepModelTy (self: t_DeepModelTy) (other: t_DeepModelTy) : ()
 
@@ -29,26 +29,26 @@ type t_Self_
 
 type tup2_ref_Self__ref_Self_ = { f0: t_Self_; f1: t_Self_ }
 
-predicate inv_Self_ (_1: t_Self_)
+function inv_Self_ (_1: t_Self_) : bool
 
-predicate invariant_ref_Self_ [@inline:trivial] (self: t_Self_) = inv_Self_ self
+function invariant_ref_Self_ [@inline:trivial] (self: t_Self_) : bool = inv_Self_ self
 
-meta "rewrite_def" predicate invariant_ref_Self_
+meta "rewrite_def" function invariant_ref_Self_
 
-predicate inv_ref_Self_ [@inline:trivial] (_1: t_Self_) = invariant_ref_Self_ _1
+function inv_ref_Self_ [@inline:trivial] (_1: t_Self_) : bool = invariant_ref_Self_ _1
 
-meta "rewrite_def" predicate inv_ref_Self_
+meta "rewrite_def" function inv_ref_Self_
 
-predicate precondition_gt (self: ()) (args: tup2_ref_Self__ref_Self_)
+function precondition_gt (self: ()) (args: tup2_ref_Self__ref_Self_) : bool
 
 axiom precondition_fndef:
   forall args: tup2_ref_Self__ref_Self_ [precondition_gt () args]. (let {f0 = self; f1 = other} = args in inv_ref_Self_ self
       /\ inv_ref_Self_ other) -> precondition_gt () args
 
-predicate gt_log_DeepModelTy [@inline:trivial] (self: t_DeepModelTy) (other: t_DeepModelTy) =
+function gt_log_DeepModelTy [@inline:trivial] (self: t_DeepModelTy) (other: t_DeepModelTy) : bool =
   lt_log_DeepModelTy other self
 
-meta "rewrite_def" predicate gt_log_DeepModelTy
+meta "rewrite_def" function gt_log_DeepModelTy
 
 function deep_model_Self_ (self: t_Self_) : t_DeepModelTy
 
@@ -56,17 +56,17 @@ function deep_model_ref_Self_ [@inline:trivial] (self: t_Self_) : t_DeepModelTy 
 
 meta "rewrite_def" function deep_model_ref_Self_
 
-predicate postcondition_gt (self: ()) (args: tup2_ref_Self__ref_Self_) (result: bool)
+function postcondition_gt (self: ()) (args: tup2_ref_Self__ref_Self_) (result: bool) : bool
 
 axiom postcondition_fndef:
   forall args: tup2_ref_Self__ref_Self_, result: bool [postcondition_gt () args result]. postcondition_gt () args result
     -> (let {f0 = self; f1 = other} = args in result
     = gt_log_DeepModelTy (deep_model_ref_Self_ self) (deep_model_ref_Self_ other))
 
-predicate postcondition_once_gt (self: ()) (args: tup2_ref_Self__ref_Self_) (result: bool) =
+function postcondition_once_gt (self: ()) (args: tup2_ref_Self__ref_Self_) (result: bool) : bool =
   postcondition_gt self args result
 
-meta "rewrite_def" predicate postcondition_once_gt
+meta "rewrite_def" function postcondition_once_gt
 
 let gt_Self_ (self: t_Self_) (other: t_Self_) (return (x: bool)) =
 {[@stop_split] [@expl:gt requires] precondition_gt () { f0 = self; f1 = other }}
@@ -75,25 +75,25 @@ let gt_Self_ (self: t_Self_) (other: t_Self_) (return (x: bool)) =
                                                                                           f1 = other } result}
     (! return {result}) ]
 
-predicate resolve_Self_ (_1: t_Self_)
+function resolve_Self_ (_1: t_Self_) : bool
 
-predicate precondition_lt (self: ()) (args: tup2_ref_Self__ref_Self_)
+function precondition_lt (self: ()) (args: tup2_ref_Self__ref_Self_) : bool
 
 axiom precondition_fndef'0:
   forall args: tup2_ref_Self__ref_Self_ [precondition_lt () args]. (let {f0 = self; f1 = other} = args in inv_ref_Self_ self
       /\ inv_ref_Self_ other) -> precondition_lt () args
 
-predicate postcondition_lt (self: ()) (args: tup2_ref_Self__ref_Self_) (result: bool)
+function postcondition_lt (self: ()) (args: tup2_ref_Self__ref_Self_) (result: bool) : bool
 
 axiom postcondition_fndef'0:
   forall args: tup2_ref_Self__ref_Self_, result: bool [postcondition_lt () args result]. postcondition_lt () args result
     -> (let {f0 = self; f1 = other} = args in result
     = lt_log_DeepModelTy (deep_model_ref_Self_ self) (deep_model_ref_Self_ other))
 
-predicate postcondition_once_lt (self: ()) (args: tup2_ref_Self__ref_Self_) (result: bool) =
+function postcondition_once_lt (self: ()) (args: tup2_ref_Self__ref_Self_) (result: bool) : bool =
   postcondition_lt self args result
 
-meta "rewrite_def" predicate postcondition_once_lt
+meta "rewrite_def" function postcondition_once_lt
 
 let lt_Self_ (self: t_Self_) (other: t_Self_) (return (x: bool)) =
 {[@stop_split] [@expl:lt requires] precondition_lt () { f0 = self; f1 = other }}
@@ -102,10 +102,10 @@ let lt_Self_ (self: t_Self_) (other: t_Self_) (return (x: bool)) =
                                                                                           f1 = other } result}
     (! return {result}) ]
 
-predicate ge_log_DeepModelTy [@inline:trivial] (self: t_DeepModelTy) (other: t_DeepModelTy) =
+function ge_log_DeepModelTy [@inline:trivial] (self: t_DeepModelTy) (other: t_DeepModelTy) : bool =
   le_log_DeepModelTy other self
 
-meta "rewrite_def" predicate ge_log_DeepModelTy
+meta "rewrite_def" function ge_log_DeepModelTy
 
 meta "compute_max_steps" 1000000
 

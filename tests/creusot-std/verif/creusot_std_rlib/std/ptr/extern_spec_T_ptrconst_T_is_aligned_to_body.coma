@@ -14,13 +14,13 @@ let addr_T (self: Opaque.ptr) (return (x: UInt64BW.t)) = any
 
 type t_Arguments
 
-predicate inv_Arguments (_1: t_Arguments)
+function inv_Arguments (_1: t_Arguments) : bool
 
 let from_str (s: string) (return (x: t_Arguments)) = any
   [ return (result: t_Arguments) -> {[@stop_split] [@expl:from_str result type invariant] inv_Arguments result}
     (! return {result}) ]
 
-predicate is_aligned_to_ptr_T (self: Opaque.ptr) (align: UInt64BW.t) =
+function is_aligned_to_ptr_T (self: Opaque.ptr) (align: UInt64BW.t) : bool =
   UInt64BW.bw_and (PtrBW.addr_logic_u64 self) (UInt64BW.sub align (1: UInt64BW.t)) = (0: UInt64BW.t)
 
 meta "compute_max_steps" 1000000

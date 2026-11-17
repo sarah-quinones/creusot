@@ -3,9 +3,9 @@ module M_mc91
   use creusot.prelude.Any
   use int.Int
   
-  predicate gt_log_u32 [@inline:trivial] (self: UInt32.t) (other: UInt32.t) = UInt32.lt other self
+  function gt_log_u32 [@inline:trivial] (self: UInt32.t) (other: UInt32.t) : bool = UInt32.lt other self
   
-  meta "rewrite_def" predicate gt_log_u32
+  meta "rewrite_def" function gt_log_u32
   
   let mc91 (x: UInt32.t) (return (x'0: UInt32.t)) = any
     [ return (result: UInt32.t) -> {[@stop_split] [@expl:mc91 ensures] UInt32.le x (100: UInt32.t)

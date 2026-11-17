@@ -3,7 +3,7 @@ module M_D
   
   type t_S
   
-  predicate inv_S (_1: t_S)
+  function inv_S (_1: t_S) : bool
   
   constant const_D : t_S
   
@@ -35,16 +35,16 @@ module M_PEANOS
   
   type t_Peano = Z | S t_Peano
   
-  predicate inv_Seq_Peano [@inline:trivial] (_1: Seq.seq t_Peano) = true
+  function inv_Seq_Peano [@inline:trivial] (_1: Seq.seq t_Peano) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_Peano
+  meta "rewrite_def" function inv_Seq_Peano
   
-  predicate invariant_array_Peano_2 (self: Slice64.array t_Peano) =
-    inv_Seq_Peano (Slice64.view self) /\ Seq.length (Slice64.view self) = UInt64.t'int (2: UInt64.t)
+  function invariant_array_Peano_2 (self: Slice64.array t_Peano) : bool = inv_Seq_Peano (Slice64.view self)
+    /\ Seq.length (Slice64.view self) = UInt64.t'int (2: UInt64.t)
   
-  predicate inv_array_Peano_2 [@inline:trivial] (_1: Slice64.array t_Peano) = invariant_array_Peano_2 _1
+  function inv_array_Peano_2 [@inline:trivial] (_1: Slice64.array t_Peano) : bool = invariant_array_Peano_2 _1
   
-  meta "rewrite_def" predicate inv_array_Peano_2
+  meta "rewrite_def" function inv_array_Peano_2
   
   constant const_PEANOS : Slice64.array t_Peano
   
@@ -82,7 +82,7 @@ module M_abstract_const
   
   type t_S
   
-  predicate inv_S (_1: t_S)
+  function inv_S (_1: t_S) : bool
   
   constant s : t_S
   
@@ -173,16 +173,16 @@ module M_array
   use creusot.int.UInt64
   use creusot.prelude.Any
   
-  predicate inv_Seq_i32 [@inline:trivial] (_1: Seq.seq Int32.t) = true
+  function inv_Seq_i32 [@inline:trivial] (_1: Seq.seq Int32.t) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_i32
+  meta "rewrite_def" function inv_Seq_i32
   
-  predicate invariant_array_i32_9 (self: Slice64.array Int32.t) =
-    inv_Seq_i32 (Slice64.view self) /\ Seq.length (Slice64.view self) = UInt64.t'int (9: UInt64.t)
+  function invariant_array_i32_9 (self: Slice64.array Int32.t) : bool = inv_Seq_i32 (Slice64.view self)
+    /\ Seq.length (Slice64.view self) = UInt64.t'int (9: UInt64.t)
   
-  predicate inv_array_i32_9 [@inline:trivial] (_1: Slice64.array Int32.t) = invariant_array_i32_9 _1
+  function inv_array_i32_9 [@inline:trivial] (_1: Slice64.array Int32.t) : bool = invariant_array_i32_9 _1
   
-  meta "rewrite_def" predicate inv_array_i32_9
+  meta "rewrite_def" function inv_array_i32_9
   
   constant const_X : Slice64.array Int32.t
   
@@ -200,12 +200,12 @@ module M_array
       = UInt64.t'int result}
       (! return {result}) ]
   
-  predicate invariant_array_i32_43 (self: Slice64.array Int32.t) =
-    inv_Seq_i32 (Slice64.view self) /\ Seq.length (Slice64.view self) = UInt64.t'int (43: UInt64.t)
+  function invariant_array_i32_43 (self: Slice64.array Int32.t) : bool = inv_Seq_i32 (Slice64.view self)
+    /\ Seq.length (Slice64.view self) = UInt64.t'int (43: UInt64.t)
   
-  predicate inv_array_i32_43 [@inline:trivial] (_1: Slice64.array Int32.t) = invariant_array_i32_43 _1
+  function inv_array_i32_43 [@inline:trivial] (_1: Slice64.array Int32.t) : bool = invariant_array_i32_43 _1
   
-  meta "rewrite_def" predicate inv_array_i32_43
+  meta "rewrite_def" function inv_array_i32_43
   
   constant const_Y : Slice64.array Int32.t
   
@@ -252,16 +252,16 @@ module M_array__X
   use creusot.int.UInt64
   use creusot.prelude.Any
   
-  predicate inv_Seq_i32 [@inline:trivial] (_1: Seq.seq Int32.t) = true
+  function inv_Seq_i32 [@inline:trivial] (_1: Seq.seq Int32.t) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_i32
+  meta "rewrite_def" function inv_Seq_i32
   
-  predicate invariant_array_i32_9 (self: Slice64.array Int32.t) =
-    inv_Seq_i32 (Slice64.view self) /\ Seq.length (Slice64.view self) = UInt64.t'int (9: UInt64.t)
+  function invariant_array_i32_9 (self: Slice64.array Int32.t) : bool = inv_Seq_i32 (Slice64.view self)
+    /\ Seq.length (Slice64.view self) = UInt64.t'int (9: UInt64.t)
   
-  predicate inv_array_i32_9 [@inline:trivial] (_1: Slice64.array Int32.t) = invariant_array_i32_9 _1
+  function inv_array_i32_9 [@inline:trivial] (_1: Slice64.array Int32.t) : bool = invariant_array_i32_9 _1
   
-  meta "rewrite_def" predicate inv_array_i32_9
+  meta "rewrite_def" function inv_array_i32_9
   
   constant const_X : Slice64.array Int32.t
   
@@ -287,16 +287,16 @@ module M_array__Y
   use creusot.int.UInt64
   use creusot.prelude.Any
   
-  predicate inv_Seq_i32 [@inline:trivial] (_1: Seq.seq Int32.t) = true
+  function inv_Seq_i32 [@inline:trivial] (_1: Seq.seq Int32.t) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_i32
+  meta "rewrite_def" function inv_Seq_i32
   
-  predicate invariant_array_i32_43 (self: Slice64.array Int32.t) =
-    inv_Seq_i32 (Slice64.view self) /\ Seq.length (Slice64.view self) = UInt64.t'int (43: UInt64.t)
+  function invariant_array_i32_43 (self: Slice64.array Int32.t) : bool = inv_Seq_i32 (Slice64.view self)
+    /\ Seq.length (Slice64.view self) = UInt64.t'int (43: UInt64.t)
   
-  predicate inv_array_i32_43 [@inline:trivial] (_1: Slice64.array Int32.t) = invariant_array_i32_43 _1
+  function inv_array_i32_43 [@inline:trivial] (_1: Slice64.array Int32.t) : bool = invariant_array_i32_43 _1
   
-  meta "rewrite_def" predicate inv_array_i32_43
+  meta "rewrite_def" function inv_array_i32_43
   
   constant const_Y : Slice64.array Int32.t
   
@@ -401,9 +401,10 @@ module M_impl_Clone_for_Peano__clone (* <Peano as std::clone::Clone> *)
   
   type tup2_Peano_Peano = { f0: t_Peano; f1: t_Peano }
   
-  predicate postcondition_clone (self: ()) (args: t_Peano) (result: t_Peano) = let self'0 = args in result = self'0
+  function postcondition_clone (self: ()) (args: t_Peano) (result: t_Peano) : bool = let self'0 = args in result
+    = self'0
   
-  meta "rewrite_def" predicate postcondition_clone
+  meta "rewrite_def" function postcondition_clone
   
   meta "compute_max_steps" 1000000
   
@@ -537,9 +538,9 @@ module M_max_entries_capacity
   use creusot.prelude.Any
   use int.Int
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   constant const_MAX_ENTRIES_CAPACITY: UInt64.t = (1152921504606846975: UInt64.t)
   
@@ -799,16 +800,16 @@ module M_zero
   
   type t_Peano = Z | S t_Peano
   
-  predicate inv_Seq_Peano [@inline:trivial] (_1: Seq.seq t_Peano) = true
+  function inv_Seq_Peano [@inline:trivial] (_1: Seq.seq t_Peano) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_Peano
+  meta "rewrite_def" function inv_Seq_Peano
   
-  predicate invariant_array_Peano_2 (self: Slice64.array t_Peano) =
-    inv_Seq_Peano (Slice64.view self) /\ Seq.length (Slice64.view self) = UInt64.t'int (2: UInt64.t)
+  function invariant_array_Peano_2 (self: Slice64.array t_Peano) : bool = inv_Seq_Peano (Slice64.view self)
+    /\ Seq.length (Slice64.view self) = UInt64.t'int (2: UInt64.t)
   
-  predicate inv_array_Peano_2 [@inline:trivial] (_1: Slice64.array t_Peano) = invariant_array_Peano_2 _1
+  function inv_array_Peano_2 [@inline:trivial] (_1: Slice64.array t_Peano) : bool = invariant_array_Peano_2 _1
   
-  meta "rewrite_def" predicate inv_array_Peano_2
+  meta "rewrite_def" function inv_array_Peano_2
   
   constant const_PEANOS : Slice64.array t_Peano
   

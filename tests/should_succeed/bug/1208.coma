@@ -3,7 +3,7 @@ module M_impl_Q__mul (* Q *)
   
   type t_Q = Zero | Frac1 int
   
-  predicate invariant_Q (self: t_Q) = true
+  function invariant_Q (self: t_Q) : bool = true
   
   type tup2_Q_Q = { f0: t_Q; f1: t_Q }
   

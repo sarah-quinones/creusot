@@ -16,9 +16,9 @@ module M_f
   
   type t_Option_u32 = None'0 | Some'0 UInt32.t
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   function get (self: t_List) (ix: int) : t_Option_u32 = let {f0 = i; f1 = ls} = self in if gt_log_Int ix 0 then
       match ls with
@@ -39,9 +39,9 @@ module M_f
         -> get l.current i = get l.final i)}
       (! return {result}) ]
   
-  predicate resolve_refmut_List [@inline:trivial] (_1: MutBorrow.t t_List) = _1.final = _1.current
+  function resolve_refmut_List [@inline:trivial] (_1: MutBorrow.t t_List) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_List
+  meta "rewrite_def" function resolve_refmut_List
   
   meta "compute_max_steps" 1000000
   
@@ -87,9 +87,9 @@ module M_index_mut
   
   type t_Option_u32 = None'0 | Some'0 UInt32.t
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   function get (self: t_List) (ix: int) : t_Option_u32 = let {f0 = i; f1 = ls} = self in if gt_log_Int ix 0 then
       match ls with
@@ -118,17 +118,17 @@ module M_index_mut
     [ return (result: MutBorrow.t t_List) -> {[@stop_split] [@expl:unwrap ensures] Some'1 result = self}
       (! return {result}) ]
   
-  predicate resolve_refmut_List [@inline:trivial] (_1: MutBorrow.t t_List) = _1.final = _1.current
+  function resolve_refmut_List [@inline:trivial] (_1: MutBorrow.t t_List) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_List
+  meta "rewrite_def" function resolve_refmut_List
   
-  predicate resolve_refmut_Box_List_Global [@inline:trivial] (_1: MutBorrow.t t_List) = _1.final = _1.current
+  function resolve_refmut_Box_List_Global [@inline:trivial] (_1: MutBorrow.t t_List) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Box_List_Global
+  meta "rewrite_def" function resolve_refmut_Box_List_Global
   
-  predicate resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) = _1.final = _1.current
+  function resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_u32
+  meta "rewrite_def" function resolve_refmut_u32
   
   meta "compute_max_steps" 1000000
   
@@ -215,9 +215,9 @@ module M_write
   
   type t_Option_u32 = None'0 | Some'0 UInt32.t
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   function get (self: t_List) (ix: int) : t_Option_u32 = let {f0 = i; f1 = ls} = self in if gt_log_Int ix 0 then
       match ls with
@@ -240,13 +240,13 @@ module M_write
         -> get l.current i = get l.final i)}
       (! return {result}) ]
   
-  predicate resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) = _1.final = _1.current
+  function resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_u32
+  meta "rewrite_def" function resolve_refmut_u32
   
-  predicate resolve_refmut_List [@inline:trivial] (_1: MutBorrow.t t_List) = _1.final = _1.current
+  function resolve_refmut_List [@inline:trivial] (_1: MutBorrow.t t_List) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_List
+  meta "rewrite_def" function resolve_refmut_List
   
   meta "compute_max_steps" 1000000
   

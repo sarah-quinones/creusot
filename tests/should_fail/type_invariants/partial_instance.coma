@@ -5,9 +5,9 @@ module M_evil
   
   type t_S_i32 = { f0: Int32.t; f1: Opaque.ptr }
   
-  predicate invariant_S_i32 (self: t_S_i32) = Int32.to_int self.f0 = 0
+  function invariant_S_i32 (self: t_S_i32) : bool = Int32.to_int self.f0 = 0
   
-  predicate inv_S_i32 (_1: t_S_i32)
+  function inv_S_i32 (_1: t_S_i32) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_S_i32 [inv_S_i32 _1]. inv_S_i32 _1 = invariant_S_i32 _1
   
@@ -36,14 +36,14 @@ module M_mk_s
   use creusot.int.Int32
   use creusot.prelude.Any
   
-  predicate is_null_ptr_T (self: Opaque.ptr) = Ptr.addr_logic_u64 self = (0: UInt64.t)
+  function is_null_ptr_T (self: Opaque.ptr) : bool = Ptr.addr_logic_u64 self = (0: UInt64.t)
   
   let null_T (return (x: Opaque.ptr)) = any
     [ return (result: Opaque.ptr) -> {[@stop_split] [@expl:null ensures] is_null_ptr_T result} (! return {result}) ]
   
   type t_S_T = { f0: Int32.t; f1: Opaque.ptr }
   
-  predicate inv_S_T (_1: t_S_T)
+  function inv_S_T (_1: t_S_T) : bool
   
   meta "compute_max_steps" 1000000
   

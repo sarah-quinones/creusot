@@ -7,7 +7,7 @@ module M_basic
   
   constant a : int
   
-  predicate basic (a: int)
+  function basic (a: int) : bool
   
   goal vc_basic: [@stop_split] [@expl:basic ensures] forall c: int. a + c - c = a
 end
@@ -22,7 +22,7 @@ module M_multi_arg
   
   constant b : int
   
-  predicate multi_arg (a: int) (b: int)
+  function multi_arg (a: int) (b: int) : bool
   
   goal vc_multi_arg: [@stop_split] [@expl:multi_arg ensures] forall c: int, d: int. a + c - c = a /\ a - d + d = a
 end
@@ -37,7 +37,7 @@ module M_triggers
   
   constant b : int
   
-  predicate triggers (a: int) (b: int)
+  function triggers (a: int) (b: int) : bool
   
   goal vc_triggers: [@stop_split] [@expl:triggers ensures] forall c: int, d: int [a + c, a + d]. a + c - c = a
       /\ a - d + d = a

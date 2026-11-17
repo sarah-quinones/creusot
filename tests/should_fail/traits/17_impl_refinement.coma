@@ -2,9 +2,9 @@ module M_impl_ReqFalse_for_unit__need_false__refines (* <() as ReqFalse> *)
   use creusot.int.UInt64
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   meta "compute_max_steps" 1000000
   
@@ -17,9 +17,9 @@ module M_impl_Tr_for_unit__my_function (* <() as Tr> *)
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   meta "compute_max_steps" 1000000
   
@@ -34,9 +34,9 @@ module M_impl_Tr_for_unit__my_function__refines (* <() as Tr> *)
   use creusot.int.UInt64
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   meta "compute_max_steps" 1000000
   

@@ -13,18 +13,18 @@ module M_bar [#"spans.rs" 24 0 24 33]
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = [%#sord] other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = [%#sord] other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = [%#sord'0] other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = [%#sord'0] other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
-  predicate well_founded_relation_Int [@inline:trivial] (self: int) (other: int) =
+  function well_founded_relation_Int [@inline:trivial] (self: int) (other: int) : bool =
     [%#swell_founded] ge_log_Int self 0 /\ gt_log_Int self other
   
-  meta "rewrite_def" predicate well_founded_relation_Int
+  meta "rewrite_def" function well_founded_relation_Int
   
   meta "compute_max_steps" 1000000
   
@@ -58,18 +58,18 @@ module M_baz [#"spans.rs" 37 0 37 25]
   
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = [%#sord] other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = [%#sord] other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = [%#sord'0] other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = [%#sord'0] other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
-  predicate well_founded_relation_Int [@inline:trivial] (self: int) (other: int) =
+  function well_founded_relation_Int [@inline:trivial] (self: int) (other: int) : bool =
     [%#swell_founded] ge_log_Int self 0 /\ gt_log_Int self other
   
-  meta "rewrite_def" predicate well_founded_relation_Int
+  meta "rewrite_def" function well_founded_relation_Int
   
   meta "compute_max_steps" 1000000
   
@@ -104,9 +104,9 @@ module M_impl_NonNeg__decr [#"spans.rs" 60 4 60 29] (* NonNeg *)
   
   type t_NonNeg = { f0: UInt64.t }
   
-  predicate invariant_NonNeg [#"spans.rs" 51 4 51 30] (self: t_NonNeg) = [%#sspans'5] 0 <= UInt64.t'int self.f0
+  function invariant_NonNeg [#"spans.rs" 51 4 51 30] (self: t_NonNeg) : bool = [%#sspans'5] 0 <= UInt64.t'int self.f0
   
-  predicate inv_NonNeg (_1: t_NonNeg)
+  function inv_NonNeg (_1: t_NonNeg) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_NonNeg [inv_NonNeg _1]. inv_NonNeg _1 = invariant_NonNeg _1
   
@@ -181,9 +181,9 @@ module M_quux [#"spans.rs" 68 0 68 32]
   
   type t_NonNeg = { f0: UInt64.t }
   
-  predicate invariant_NonNeg [#"spans.rs" 51 4 51 30] (self: t_NonNeg) = [%#sspans'10] 0 <= UInt64.t'int self.f0
+  function invariant_NonNeg [#"spans.rs" 51 4 51 30] (self: t_NonNeg) : bool = [%#sspans'10] 0 <= UInt64.t'int self.f0
   
-  predicate inv_NonNeg (_1: t_NonNeg)
+  function inv_NonNeg (_1: t_NonNeg) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_NonNeg [inv_NonNeg _1]. inv_NonNeg _1 = invariant_NonNeg _1
   
@@ -203,18 +203,18 @@ module M_quux [#"spans.rs" 68 0 68 32]
     [ return (result: t_NonNeg) -> {[@stop_split] [@expl:quux result type invariant] [%#sspans'5] inv_NonNeg result}
       (! return {result}) ]
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = [%#sord] other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = [%#sord] other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = [%#sord'0] other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = [%#sord'0] other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
-  predicate well_founded_relation_Int [@inline:trivial] (self: int) (other: int) =
+  function well_founded_relation_Int [@inline:trivial] (self: int) (other: int) : bool =
     [%#swell_founded] ge_log_Int self 0 /\ gt_log_Int self other
   
-  meta "rewrite_def" predicate well_founded_relation_Int
+  meta "rewrite_def" function well_founded_relation_Int
   
   meta "compute_max_steps" 1000000
   

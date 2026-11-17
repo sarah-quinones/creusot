@@ -32,14 +32,14 @@ module M_index_mut_keeps_the_rest
         -> Seq.get (view_VecDeque_u32_Global self.final) j = Seq.get (view_VecDeque_u32_Global self.current) j)}
       (! return {result}) ]
   
-  predicate resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) = _1.final = _1.current
+  function resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_u32
+  meta "rewrite_def" function resolve_refmut_u32
   
-  predicate resolve_refmut_VecDeque_u32_Global [@inline:trivial] (_1: MutBorrow.t t_VecDeque_u32_Global) =
+  function resolve_refmut_VecDeque_u32_Global [@inline:trivial] (_1: MutBorrow.t t_VecDeque_u32_Global) : bool =
     _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_VecDeque_u32_Global
+  meta "rewrite_def" function resolve_refmut_VecDeque_u32_Global
   
   meta "compute_max_steps" 1000000
   

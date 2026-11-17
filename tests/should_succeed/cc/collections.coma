@@ -9,19 +9,19 @@ module M_hashset_difference
   
   type t_Difference_T_RandomState_Global
   
-  predicate inv_HashSet_T_RandomState_Global (_1: t_HashSet_T_RandomState_Global)
+  function inv_HashSet_T_RandomState_Global (_1: t_HashSet_T_RandomState_Global) : bool
   
-  predicate invariant_ref_HashSet_T_RandomState_Global [@inline:trivial] (self: t_HashSet_T_RandomState_Global) =
+  function invariant_ref_HashSet_T_RandomState_Global [@inline:trivial] (self: t_HashSet_T_RandomState_Global) : bool =
     inv_HashSet_T_RandomState_Global self
   
-  meta "rewrite_def" predicate invariant_ref_HashSet_T_RandomState_Global
+  meta "rewrite_def" function invariant_ref_HashSet_T_RandomState_Global
   
-  predicate inv_ref_HashSet_T_RandomState_Global [@inline:trivial] (_1: t_HashSet_T_RandomState_Global) =
+  function inv_ref_HashSet_T_RandomState_Global [@inline:trivial] (_1: t_HashSet_T_RandomState_Global) : bool =
     invariant_ref_HashSet_T_RandomState_Global _1
   
-  meta "rewrite_def" predicate inv_ref_HashSet_T_RandomState_Global
+  meta "rewrite_def" function inv_ref_HashSet_T_RandomState_Global
   
-  predicate inv_Difference_T_RandomState_Global (_1: t_Difference_T_RandomState_Global)
+  function inv_Difference_T_RandomState_Global (_1: t_Difference_T_RandomState_Global) : bool
   
   type t_DeepModelTy
   
@@ -44,12 +44,12 @@ module M_hashset_difference
   
   function iter_Copied_Difference_T_RandomState_Global (self: t_Copied_Difference_T_RandomState_Global) : t_Difference_T_RandomState_Global
   
-  predicate invariant_Copied_Difference_T_RandomState_Global [@inline:trivial] (self: t_Copied_Difference_T_RandomState_Global) =
-    inv_Difference_T_RandomState_Global (iter_Copied_Difference_T_RandomState_Global self)
+  function invariant_Copied_Difference_T_RandomState_Global [@inline:trivial] (self: t_Copied_Difference_T_RandomState_Global) : bool
+   = inv_Difference_T_RandomState_Global (iter_Copied_Difference_T_RandomState_Global self)
   
-  meta "rewrite_def" predicate invariant_Copied_Difference_T_RandomState_Global
+  meta "rewrite_def" function invariant_Copied_Difference_T_RandomState_Global
   
-  predicate inv_Copied_Difference_T_RandomState_Global (_1: t_Copied_Difference_T_RandomState_Global)
+  function inv_Copied_Difference_T_RandomState_Global (_1: t_Copied_Difference_T_RandomState_Global) : bool
   
   axiom inv_axiom:
     forall _1: t_Copied_Difference_T_RandomState_Global [inv_Copied_Difference_T_RandomState_Global _1]. inv_Copied_Difference_T_RandomState_Global _1
@@ -64,15 +64,15 @@ module M_hashset_difference
       /\ ([@stop_split] [@expl:copied ensures] iter_Copied_Difference_T_RandomState_Global result = self)}
       (! return {result}) ]
   
-  predicate precondition_into_iter (self: ()) (args: t_Copied_Difference_T_RandomState_Global) =
+  function precondition_into_iter (self: ()) (args: t_Copied_Difference_T_RandomState_Global) : bool =
     let self'0 = args in inv_Copied_Difference_T_RandomState_Global self'0
   
-  meta "rewrite_def" predicate precondition_into_iter
+  meta "rewrite_def" function precondition_into_iter
   
-  predicate precondition_from_iter (self: ()) (args: t_Copied_Difference_T_RandomState_Global) =
+  function precondition_from_iter (self: ()) (args: t_Copied_Difference_T_RandomState_Global) : bool =
     let iter = args in inv_Copied_Difference_T_RandomState_Global iter /\ precondition_into_iter () iter
   
-  meta "rewrite_def" predicate precondition_from_iter
+  meta "rewrite_def" function precondition_from_iter
   
   let into_iter_Copied_Difference_T_RandomState_Global (self: t_Copied_Difference_T_RandomState_Global)
     (return (x: t_Copied_Difference_T_RandomState_Global)) =
@@ -83,16 +83,17 @@ module M_hashset_difference
       /\ ([@stop_split] [@expl:into_iter ensures] result = self)}
       (! return {result}) ]
   
-  predicate postcondition_into_iter (self: ()) (args: t_Copied_Difference_T_RandomState_Global) (result: t_Copied_Difference_T_RandomState_Global) =
-    let self'0 = args in inv_Copied_Difference_T_RandomState_Global result /\ result = self'0
+  function postcondition_into_iter (self: ()) (args: t_Copied_Difference_T_RandomState_Global) (result: t_Copied_Difference_T_RandomState_Global) : bool
+   = let self'0 = args in inv_Copied_Difference_T_RandomState_Global result /\ result = self'0
   
-  meta "rewrite_def" predicate postcondition_into_iter
+  meta "rewrite_def" function postcondition_into_iter
   
   type t_T
   
-  predicate contains_DeepModelTy [@inline:trivial] (self: Fset.fset t_DeepModelTy) (e: t_DeepModelTy) = Fset.mem e self
+  function contains_DeepModelTy [@inline:trivial] (self: Fset.fset t_DeepModelTy) (e: t_DeepModelTy) : bool =
+    Fset.mem e self
   
-  meta "rewrite_def" predicate contains_DeepModelTy
+  meta "rewrite_def" function contains_DeepModelTy
   
   function deep_model_T (self: t_T) : t_DeepModelTy
   
@@ -100,11 +101,11 @@ module M_hashset_difference
   
   meta "rewrite_def" function deep_model_ref_T
   
-  predicate contains_ref_T (self: Seq.seq t_T) (x: t_T) =
-    exists i: int. 0 <= i /\ i < Seq.length self /\ Seq.get self i = x
+  function contains_ref_T (self: Seq.seq t_T) (x: t_T) : bool = exists i: int. 0 <= i
+      /\ i < Seq.length self /\ Seq.get self i = x
   
-  predicate set_produces_ref_T (start: t_Difference_T_RandomState_Global) (visited: Seq.seq t_T) (end': t_Difference_T_RandomState_Global) =
-    Fset.cardinal (view_Difference_T_RandomState_Global start)
+  function set_produces_ref_T (start: t_Difference_T_RandomState_Global) (visited: Seq.seq t_T) (end': t_Difference_T_RandomState_Global) : bool
+   = Fset.cardinal (view_Difference_T_RandomState_Global start)
       = Seq.length visited + Fset.cardinal (view_Difference_T_RandomState_Global end')
     /\ (forall x: t_DeepModelTy. contains_DeepModelTy (view_Difference_T_RandomState_Global start) x
         -> (exists x1: t_T. deep_model_ref_T x1 = x /\ contains_ref_T visited x1)
@@ -121,8 +122,8 @@ module M_hashset_difference
         /\ j < Seq.length visited /\ deep_model_ref_T (Seq.get visited i) = deep_model_ref_T (Seq.get visited j)
       -> i = j)
   
-  predicate produces_Difference_T_RandomState_Global (self: t_Difference_T_RandomState_Global) (visited: Seq.seq t_T) (o: t_Difference_T_RandomState_Global) =
-    set_produces_ref_T self visited o
+  function produces_Difference_T_RandomState_Global (self: t_Difference_T_RandomState_Global) (visited: Seq.seq t_T) (o: t_Difference_T_RandomState_Global) : bool
+   = set_produces_ref_T self visited o
   
   function produces_trans_Difference_T_RandomState_Global (a: t_Difference_T_RandomState_Global) (ab: Seq.seq t_T) (b: t_Difference_T_RandomState_Global) (bc: Seq.seq t_T) (c: t_Difference_T_RandomState_Global) : ()
   
@@ -136,7 +137,8 @@ module M_hashset_difference
   axiom produces_refl_Difference_T_RandomState_Global_spec:
     forall self: t_Difference_T_RandomState_Global. produces_Difference_T_RandomState_Global self (Seq.empty: Seq.seq t_T) self
   
-  predicate produces_Copied_Difference_T_RandomState_Global (self: t_Copied_Difference_T_RandomState_Global) (visited: Seq.seq t_T) (o: t_Copied_Difference_T_RandomState_Global) =
+  function produces_Copied_Difference_T_RandomState_Global (self: t_Copied_Difference_T_RandomState_Global) (visited: Seq.seq t_T) (o: t_Copied_Difference_T_RandomState_Global) : bool
+   =
     exists s: Seq.seq t_T. produces_Difference_T_RandomState_Global (iter_Copied_Difference_T_RandomState_Global self) s (iter_Copied_Difference_T_RandomState_Global o)
       /\ Seq.length visited = Seq.length s
       /\ (forall i: int. 0 <= i /\ i < Seq.length s -> Seq.get visited i = Seq.get s i)
@@ -153,35 +155,36 @@ module M_hashset_difference
   axiom produces_refl_Copied_Difference_T_RandomState_Global_spec:
     forall self: t_Copied_Difference_T_RandomState_Global. produces_Copied_Difference_T_RandomState_Global self (Seq.empty: Seq.seq t_T) self
   
-  predicate resolve_refmut_Difference_T_RandomState_Global [@inline:trivial] (_1: MutBorrow.t t_Difference_T_RandomState_Global) =
-    _1.final = _1.current
+  function resolve_refmut_Difference_T_RandomState_Global [@inline:trivial] (_1: MutBorrow.t t_Difference_T_RandomState_Global) : bool
+   = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Difference_T_RandomState_Global
+  meta "rewrite_def" function resolve_refmut_Difference_T_RandomState_Global
   
-  predicate completed_Difference_T_RandomState_Global (self: MutBorrow.t t_Difference_T_RandomState_Global) =
+  function completed_Difference_T_RandomState_Global (self: MutBorrow.t t_Difference_T_RandomState_Global) : bool =
     resolve_refmut_Difference_T_RandomState_Global self
     /\ Fset.is_empty (view_Difference_T_RandomState_Global self.current)
   
-  predicate completed_Copied_Difference_T_RandomState_Global (self: MutBorrow.t t_Copied_Difference_T_RandomState_Global) =
-    exists inner: MutBorrow.t t_Difference_T_RandomState_Global. inner.current
+  function completed_Copied_Difference_T_RandomState_Global (self: MutBorrow.t t_Copied_Difference_T_RandomState_Global) : bool
+   = exists inner: MutBorrow.t t_Difference_T_RandomState_Global. inner.current
         = iter_Copied_Difference_T_RandomState_Global self.current
       /\ inner.final = iter_Copied_Difference_T_RandomState_Global self.final
       /\ completed_Difference_T_RandomState_Global inner
   
-  predicate resolve_Difference_T_RandomState_Global (_1: t_Difference_T_RandomState_Global)
+  function resolve_Difference_T_RandomState_Global (_1: t_Difference_T_RandomState_Global) : bool
   
-  predicate resolve_Copied_Difference_T_RandomState_Global [@inline:trivial] (self: t_Copied_Difference_T_RandomState_Global) =
-    resolve_Difference_T_RandomState_Global (iter_Copied_Difference_T_RandomState_Global self)
+  function resolve_Copied_Difference_T_RandomState_Global [@inline:trivial] (self: t_Copied_Difference_T_RandomState_Global) : bool
+   = resolve_Difference_T_RandomState_Global (iter_Copied_Difference_T_RandomState_Global self)
   
-  meta "rewrite_def" predicate resolve_Copied_Difference_T_RandomState_Global
+  meta "rewrite_def" function resolve_Copied_Difference_T_RandomState_Global
   
-  predicate resolve_Copied_Difference_T_RandomState_Global'0 (_1: t_Copied_Difference_T_RandomState_Global)
+  function resolve_Copied_Difference_T_RandomState_Global'0 (_1: t_Copied_Difference_T_RandomState_Global) : bool
   
   axiom resolve_axiom:
     forall _1: t_Copied_Difference_T_RandomState_Global [resolve_Copied_Difference_T_RandomState_Global'0 _1]. resolve_Copied_Difference_T_RandomState_Global'0 _1
       -> resolve_Copied_Difference_T_RandomState_Global _1
   
-  predicate contains_T (self: Seq.seq t_T) (x: t_T) = exists i: int. 0 <= i /\ i < Seq.length self /\ Seq.get self i = x
+  function contains_T (self: Seq.seq t_T) (x: t_T) : bool = exists i: int. 0 <= i
+      /\ i < Seq.length self /\ Seq.get self i = x
   
   let from_iter_HashSet_T_RandomState_Global (iter: t_Copied_Difference_T_RandomState_Global)
     (return (x: t_HashSet_T_RandomState_Global)) =
@@ -198,8 +201,8 @@ module M_hashset_difference
           = (exists x1: t_T. deep_model_T x1 = x /\ contains_T prod x1)))}
       (! return {result}) ]
   
-  predicate postcondition_from_iter (self: ()) (args: t_Copied_Difference_T_RandomState_Global) (result: t_HashSet_T_RandomState_Global) =
-    let iter = args in inv_HashSet_T_RandomState_Global result
+  function postcondition_from_iter (self: ()) (args: t_Copied_Difference_T_RandomState_Global) (result: t_HashSet_T_RandomState_Global) : bool
+   = let iter = args in inv_HashSet_T_RandomState_Global result
     /\ (exists into_iter: t_Copied_Difference_T_RandomState_Global, prod: Seq.seq t_T, done': MutBorrow.t t_Copied_Difference_T_RandomState_Global. postcondition_into_iter () iter into_iter
       /\ produces_Copied_Difference_T_RandomState_Global into_iter prod done'.current
       /\ completed_Copied_Difference_T_RandomState_Global done'
@@ -207,7 +210,7 @@ module M_hashset_difference
       /\ (forall x: t_DeepModelTy. contains_DeepModelTy (view_HashSet_T_RandomState_Global result) x
         = (exists x1: t_T. deep_model_T x1 = x /\ contains_T prod x1)))
   
-  meta "rewrite_def" predicate postcondition_from_iter
+  meta "rewrite_def" function postcondition_from_iter
   
   let collect_Copied_Difference_T_RandomState_Global (self: t_Copied_Difference_T_RandomState_Global)
     (return (x: t_HashSet_T_RandomState_Global)) =
@@ -257,19 +260,19 @@ module M_hashset_intersection
   
   type t_Intersection_T_RandomState_Global
   
-  predicate inv_HashSet_T_RandomState_Global (_1: t_HashSet_T_RandomState_Global)
+  function inv_HashSet_T_RandomState_Global (_1: t_HashSet_T_RandomState_Global) : bool
   
-  predicate invariant_ref_HashSet_T_RandomState_Global [@inline:trivial] (self: t_HashSet_T_RandomState_Global) =
+  function invariant_ref_HashSet_T_RandomState_Global [@inline:trivial] (self: t_HashSet_T_RandomState_Global) : bool =
     inv_HashSet_T_RandomState_Global self
   
-  meta "rewrite_def" predicate invariant_ref_HashSet_T_RandomState_Global
+  meta "rewrite_def" function invariant_ref_HashSet_T_RandomState_Global
   
-  predicate inv_ref_HashSet_T_RandomState_Global [@inline:trivial] (_1: t_HashSet_T_RandomState_Global) =
+  function inv_ref_HashSet_T_RandomState_Global [@inline:trivial] (_1: t_HashSet_T_RandomState_Global) : bool =
     invariant_ref_HashSet_T_RandomState_Global _1
   
-  meta "rewrite_def" predicate inv_ref_HashSet_T_RandomState_Global
+  meta "rewrite_def" function inv_ref_HashSet_T_RandomState_Global
   
-  predicate inv_Intersection_T_RandomState_Global (_1: t_Intersection_T_RandomState_Global)
+  function inv_Intersection_T_RandomState_Global (_1: t_Intersection_T_RandomState_Global) : bool
   
   type t_DeepModelTy
   
@@ -292,12 +295,12 @@ module M_hashset_intersection
   
   function iter_Copied_Intersection_T_RandomState_Global (self: t_Copied_Intersection_T_RandomState_Global) : t_Intersection_T_RandomState_Global
   
-  predicate invariant_Copied_Intersection_T_RandomState_Global [@inline:trivial] (self: t_Copied_Intersection_T_RandomState_Global) =
-    inv_Intersection_T_RandomState_Global (iter_Copied_Intersection_T_RandomState_Global self)
+  function invariant_Copied_Intersection_T_RandomState_Global [@inline:trivial] (self: t_Copied_Intersection_T_RandomState_Global) : bool
+   = inv_Intersection_T_RandomState_Global (iter_Copied_Intersection_T_RandomState_Global self)
   
-  meta "rewrite_def" predicate invariant_Copied_Intersection_T_RandomState_Global
+  meta "rewrite_def" function invariant_Copied_Intersection_T_RandomState_Global
   
-  predicate inv_Copied_Intersection_T_RandomState_Global (_1: t_Copied_Intersection_T_RandomState_Global)
+  function inv_Copied_Intersection_T_RandomState_Global (_1: t_Copied_Intersection_T_RandomState_Global) : bool
   
   axiom inv_axiom:
     forall _1: t_Copied_Intersection_T_RandomState_Global [inv_Copied_Intersection_T_RandomState_Global _1]. inv_Copied_Intersection_T_RandomState_Global _1
@@ -312,15 +315,15 @@ module M_hashset_intersection
       /\ ([@stop_split] [@expl:copied ensures] iter_Copied_Intersection_T_RandomState_Global result = self)}
       (! return {result}) ]
   
-  predicate precondition_into_iter (self: ()) (args: t_Copied_Intersection_T_RandomState_Global) =
+  function precondition_into_iter (self: ()) (args: t_Copied_Intersection_T_RandomState_Global) : bool =
     let self'0 = args in inv_Copied_Intersection_T_RandomState_Global self'0
   
-  meta "rewrite_def" predicate precondition_into_iter
+  meta "rewrite_def" function precondition_into_iter
   
-  predicate precondition_from_iter (self: ()) (args: t_Copied_Intersection_T_RandomState_Global) =
+  function precondition_from_iter (self: ()) (args: t_Copied_Intersection_T_RandomState_Global) : bool =
     let iter = args in inv_Copied_Intersection_T_RandomState_Global iter /\ precondition_into_iter () iter
   
-  meta "rewrite_def" predicate precondition_from_iter
+  meta "rewrite_def" function precondition_from_iter
   
   let into_iter_Copied_Intersection_T_RandomState_Global (self: t_Copied_Intersection_T_RandomState_Global)
     (return (x: t_Copied_Intersection_T_RandomState_Global)) =
@@ -331,16 +334,17 @@ module M_hashset_intersection
       /\ ([@stop_split] [@expl:into_iter ensures] result = self)}
       (! return {result}) ]
   
-  predicate postcondition_into_iter (self: ()) (args: t_Copied_Intersection_T_RandomState_Global) (result: t_Copied_Intersection_T_RandomState_Global) =
-    let self'0 = args in inv_Copied_Intersection_T_RandomState_Global result /\ result = self'0
+  function postcondition_into_iter (self: ()) (args: t_Copied_Intersection_T_RandomState_Global) (result: t_Copied_Intersection_T_RandomState_Global) : bool
+   = let self'0 = args in inv_Copied_Intersection_T_RandomState_Global result /\ result = self'0
   
-  meta "rewrite_def" predicate postcondition_into_iter
+  meta "rewrite_def" function postcondition_into_iter
   
   type t_T
   
-  predicate contains_DeepModelTy [@inline:trivial] (self: Fset.fset t_DeepModelTy) (e: t_DeepModelTy) = Fset.mem e self
+  function contains_DeepModelTy [@inline:trivial] (self: Fset.fset t_DeepModelTy) (e: t_DeepModelTy) : bool =
+    Fset.mem e self
   
-  meta "rewrite_def" predicate contains_DeepModelTy
+  meta "rewrite_def" function contains_DeepModelTy
   
   function deep_model_T (self: t_T) : t_DeepModelTy
   
@@ -348,11 +352,11 @@ module M_hashset_intersection
   
   meta "rewrite_def" function deep_model_ref_T
   
-  predicate contains_ref_T (self: Seq.seq t_T) (x: t_T) =
-    exists i: int. 0 <= i /\ i < Seq.length self /\ Seq.get self i = x
+  function contains_ref_T (self: Seq.seq t_T) (x: t_T) : bool = exists i: int. 0 <= i
+      /\ i < Seq.length self /\ Seq.get self i = x
   
-  predicate set_produces_ref_T (start: t_Intersection_T_RandomState_Global) (visited: Seq.seq t_T) (end': t_Intersection_T_RandomState_Global) =
-    Fset.cardinal (view_Intersection_T_RandomState_Global start)
+  function set_produces_ref_T (start: t_Intersection_T_RandomState_Global) (visited: Seq.seq t_T) (end': t_Intersection_T_RandomState_Global) : bool
+   = Fset.cardinal (view_Intersection_T_RandomState_Global start)
       = Seq.length visited + Fset.cardinal (view_Intersection_T_RandomState_Global end')
     /\ (forall x: t_DeepModelTy. contains_DeepModelTy (view_Intersection_T_RandomState_Global start) x
         -> (exists x1: t_T. deep_model_ref_T x1 = x /\ contains_ref_T visited x1)
@@ -369,8 +373,8 @@ module M_hashset_intersection
         /\ j < Seq.length visited /\ deep_model_ref_T (Seq.get visited i) = deep_model_ref_T (Seq.get visited j)
       -> i = j)
   
-  predicate produces_Intersection_T_RandomState_Global (self: t_Intersection_T_RandomState_Global) (visited: Seq.seq t_T) (o: t_Intersection_T_RandomState_Global) =
-    set_produces_ref_T self visited o
+  function produces_Intersection_T_RandomState_Global (self: t_Intersection_T_RandomState_Global) (visited: Seq.seq t_T) (o: t_Intersection_T_RandomState_Global) : bool
+   = set_produces_ref_T self visited o
   
   function produces_trans_Intersection_T_RandomState_Global (a: t_Intersection_T_RandomState_Global) (ab: Seq.seq t_T) (b: t_Intersection_T_RandomState_Global) (bc: Seq.seq t_T) (c: t_Intersection_T_RandomState_Global) : ()
   
@@ -384,7 +388,8 @@ module M_hashset_intersection
   axiom produces_refl_Intersection_T_RandomState_Global_spec:
     forall self: t_Intersection_T_RandomState_Global. produces_Intersection_T_RandomState_Global self (Seq.empty: Seq.seq t_T) self
   
-  predicate produces_Copied_Intersection_T_RandomState_Global (self: t_Copied_Intersection_T_RandomState_Global) (visited: Seq.seq t_T) (o: t_Copied_Intersection_T_RandomState_Global) =
+  function produces_Copied_Intersection_T_RandomState_Global (self: t_Copied_Intersection_T_RandomState_Global) (visited: Seq.seq t_T) (o: t_Copied_Intersection_T_RandomState_Global) : bool
+   =
     exists s: Seq.seq t_T. produces_Intersection_T_RandomState_Global (iter_Copied_Intersection_T_RandomState_Global self) s (iter_Copied_Intersection_T_RandomState_Global o)
       /\ Seq.length visited = Seq.length s
       /\ (forall i: int. 0 <= i /\ i < Seq.length s -> Seq.get visited i = Seq.get s i)
@@ -401,35 +406,36 @@ module M_hashset_intersection
   axiom produces_refl_Copied_Intersection_T_RandomState_Global_spec:
     forall self: t_Copied_Intersection_T_RandomState_Global. produces_Copied_Intersection_T_RandomState_Global self (Seq.empty: Seq.seq t_T) self
   
-  predicate resolve_refmut_Intersection_T_RandomState_Global [@inline:trivial] (_1: MutBorrow.t t_Intersection_T_RandomState_Global) =
-    _1.final = _1.current
+  function resolve_refmut_Intersection_T_RandomState_Global [@inline:trivial] (_1: MutBorrow.t t_Intersection_T_RandomState_Global) : bool
+   = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Intersection_T_RandomState_Global
+  meta "rewrite_def" function resolve_refmut_Intersection_T_RandomState_Global
   
-  predicate completed_Intersection_T_RandomState_Global (self: MutBorrow.t t_Intersection_T_RandomState_Global) =
+  function completed_Intersection_T_RandomState_Global (self: MutBorrow.t t_Intersection_T_RandomState_Global) : bool =
     resolve_refmut_Intersection_T_RandomState_Global self
     /\ Fset.is_empty (view_Intersection_T_RandomState_Global self.current)
   
-  predicate completed_Copied_Intersection_T_RandomState_Global (self: MutBorrow.t t_Copied_Intersection_T_RandomState_Global) =
-    exists inner: MutBorrow.t t_Intersection_T_RandomState_Global. inner.current
+  function completed_Copied_Intersection_T_RandomState_Global (self: MutBorrow.t t_Copied_Intersection_T_RandomState_Global) : bool
+   = exists inner: MutBorrow.t t_Intersection_T_RandomState_Global. inner.current
         = iter_Copied_Intersection_T_RandomState_Global self.current
       /\ inner.final = iter_Copied_Intersection_T_RandomState_Global self.final
       /\ completed_Intersection_T_RandomState_Global inner
   
-  predicate resolve_Intersection_T_RandomState_Global (_1: t_Intersection_T_RandomState_Global)
+  function resolve_Intersection_T_RandomState_Global (_1: t_Intersection_T_RandomState_Global) : bool
   
-  predicate resolve_Copied_Intersection_T_RandomState_Global [@inline:trivial] (self: t_Copied_Intersection_T_RandomState_Global) =
-    resolve_Intersection_T_RandomState_Global (iter_Copied_Intersection_T_RandomState_Global self)
+  function resolve_Copied_Intersection_T_RandomState_Global [@inline:trivial] (self: t_Copied_Intersection_T_RandomState_Global) : bool
+   = resolve_Intersection_T_RandomState_Global (iter_Copied_Intersection_T_RandomState_Global self)
   
-  meta "rewrite_def" predicate resolve_Copied_Intersection_T_RandomState_Global
+  meta "rewrite_def" function resolve_Copied_Intersection_T_RandomState_Global
   
-  predicate resolve_Copied_Intersection_T_RandomState_Global'0 (_1: t_Copied_Intersection_T_RandomState_Global)
+  function resolve_Copied_Intersection_T_RandomState_Global'0 (_1: t_Copied_Intersection_T_RandomState_Global) : bool
   
   axiom resolve_axiom:
     forall _1: t_Copied_Intersection_T_RandomState_Global [resolve_Copied_Intersection_T_RandomState_Global'0 _1]. resolve_Copied_Intersection_T_RandomState_Global'0 _1
       -> resolve_Copied_Intersection_T_RandomState_Global _1
   
-  predicate contains_T (self: Seq.seq t_T) (x: t_T) = exists i: int. 0 <= i /\ i < Seq.length self /\ Seq.get self i = x
+  function contains_T (self: Seq.seq t_T) (x: t_T) : bool = exists i: int. 0 <= i
+      /\ i < Seq.length self /\ Seq.get self i = x
   
   let from_iter_HashSet_T_RandomState_Global (iter: t_Copied_Intersection_T_RandomState_Global)
     (return (x: t_HashSet_T_RandomState_Global)) =
@@ -446,8 +452,8 @@ module M_hashset_intersection
           = (exists x1: t_T. deep_model_T x1 = x /\ contains_T prod x1)))}
       (! return {result}) ]
   
-  predicate postcondition_from_iter (self: ()) (args: t_Copied_Intersection_T_RandomState_Global) (result: t_HashSet_T_RandomState_Global) =
-    let iter = args in inv_HashSet_T_RandomState_Global result
+  function postcondition_from_iter (self: ()) (args: t_Copied_Intersection_T_RandomState_Global) (result: t_HashSet_T_RandomState_Global) : bool
+   = let iter = args in inv_HashSet_T_RandomState_Global result
     /\ (exists into_iter: t_Copied_Intersection_T_RandomState_Global, prod: Seq.seq t_T, done': MutBorrow.t t_Copied_Intersection_T_RandomState_Global. postcondition_into_iter () iter into_iter
       /\ produces_Copied_Intersection_T_RandomState_Global into_iter prod done'.current
       /\ completed_Copied_Intersection_T_RandomState_Global done'
@@ -455,7 +461,7 @@ module M_hashset_intersection
       /\ (forall x: t_DeepModelTy. contains_DeepModelTy (view_HashSet_T_RandomState_Global result) x
         = (exists x1: t_T. deep_model_T x1 = x /\ contains_T prod x1)))
   
-  meta "rewrite_def" predicate postcondition_from_iter
+  meta "rewrite_def" function postcondition_from_iter
   
   let collect_Copied_Intersection_T_RandomState_Global (self: t_Copied_Intersection_T_RandomState_Global)
     (return (x: t_HashSet_T_RandomState_Global)) =
@@ -506,9 +512,9 @@ module M_roundtrip_hashmap_into_iter
   
   type t_IntoIter_K_V_Global
   
-  predicate inv_HashMap_K_V_RandomState_Global (_1: t_HashMap_K_V_RandomState_Global)
+  function inv_HashMap_K_V_RandomState_Global (_1: t_HashMap_K_V_RandomState_Global) : bool
   
-  predicate inv_IntoIter_K_V_Global (_1: t_IntoIter_K_V_Global)
+  function inv_IntoIter_K_V_Global (_1: t_IntoIter_K_V_Global) : bool
   
   type t_FMap_DeepModelTy_V
   
@@ -526,15 +532,15 @@ module M_roundtrip_hashmap_into_iter
       = view_IntoIter_K_V_Global result)}
       (! return {result}) ]
   
-  predicate precondition_into_iter (self: ()) (args: t_IntoIter_K_V_Global) =
+  function precondition_into_iter (self: ()) (args: t_IntoIter_K_V_Global) : bool =
     let self'0 = args in inv_IntoIter_K_V_Global self'0
   
-  meta "rewrite_def" predicate precondition_into_iter
+  meta "rewrite_def" function precondition_into_iter
   
-  predicate precondition_from_iter (self: ()) (args: t_IntoIter_K_V_Global) =
+  function precondition_from_iter (self: ()) (args: t_IntoIter_K_V_Global) : bool =
     let iter = args in inv_IntoIter_K_V_Global iter /\ precondition_into_iter () iter
   
-  meta "rewrite_def" predicate precondition_from_iter
+  meta "rewrite_def" function precondition_from_iter
   
   let into_iter_IntoIter_K_V_Global (self: t_IntoIter_K_V_Global) (return (x: t_IntoIter_K_V_Global)) =
   {[@stop_split] [@expl:into_iter 'self' type invariant] inv_IntoIter_K_V_Global self}
@@ -544,10 +550,10 @@ module M_roundtrip_hashmap_into_iter
       /\ ([@stop_split] [@expl:into_iter ensures] result = self)}
       (! return {result}) ]
   
-  predicate postcondition_into_iter (self: ()) (args: t_IntoIter_K_V_Global) (result: t_IntoIter_K_V_Global) =
+  function postcondition_into_iter (self: ()) (args: t_IntoIter_K_V_Global) (result: t_IntoIter_K_V_Global) : bool =
     let self'0 = args in inv_IntoIter_K_V_Global result /\ result = self'0
   
-  meta "rewrite_def" predicate postcondition_into_iter
+  meta "rewrite_def" function postcondition_into_iter
   
   type t_K
   
@@ -555,17 +561,17 @@ module M_roundtrip_hashmap_into_iter
   
   type tup2_K_V = { f0: t_K; f1: t_V }
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function len_DeepModelTy (self: t_FMap_DeepModelTy_V) : int
   
   axiom len_DeepModelTy_spec:
     forall self: t_FMap_DeepModelTy_V [len_DeepModelTy self]. ge_log_Int (len_DeepModelTy self) 0
   
-  predicate contains_tup2_K_V (self: Seq.seq tup2_K_V) (x: tup2_K_V) =
-    exists i: int. 0 <= i /\ i < Seq.length self /\ Seq.get self i = x
+  function contains_tup2_K_V (self: Seq.seq tup2_K_V) (x: tup2_K_V) : bool = exists i: int. 0 <= i
+      /\ i < Seq.length self /\ Seq.get self i = x
   
   type t_DeepModelTy
   
@@ -580,8 +586,8 @@ module M_roundtrip_hashmap_into_iter
   
   function deep_model_K (self: t_K) : t_DeepModelTy
   
-  predicate produces_IntoIter_K_V_Global [@inline:trivial] (self: t_IntoIter_K_V_Global) (visited: Seq.seq tup2_K_V) (o: t_IntoIter_K_V_Global) =
-    len_DeepModelTy (view_IntoIter_K_V_Global self) = Seq.length visited + len_DeepModelTy (view_IntoIter_K_V_Global o)
+  function produces_IntoIter_K_V_Global [@inline:trivial] (self: t_IntoIter_K_V_Global) (visited: Seq.seq tup2_K_V) (o: t_IntoIter_K_V_Global) : bool
+   = len_DeepModelTy (view_IntoIter_K_V_Global self) = Seq.length visited + len_DeepModelTy (view_IntoIter_K_V_Global o)
     /\ (forall k: t_K, v: t_V. contains_tup2_K_V visited { f0 = k; f1 = v }
         -> lookup_DeepModelTy (view_IntoIter_K_V_Global self) (deep_model_K k) = Some v
         /\ lookup_DeepModelTy (view_IntoIter_K_V_Global o) (deep_model_K k) = None)
@@ -597,7 +603,7 @@ module M_roundtrip_hashmap_into_iter
         /\ i2 < Seq.length visited /\ deep_model_K (Seq.get visited i1).f0 = deep_model_K (Seq.get visited i2).f0
       -> i1 = i2)
   
-  meta "rewrite_def" predicate produces_IntoIter_K_V_Global
+  meta "rewrite_def" function produces_IntoIter_K_V_Global
   
   function produces_trans_IntoIter_K_V_Global (a: t_IntoIter_K_V_Global) (ab: Seq.seq tup2_K_V) (b: t_IntoIter_K_V_Global) (bc: Seq.seq tup2_K_V) (c: t_IntoIter_K_V_Global) : ()
   
@@ -610,12 +616,12 @@ module M_roundtrip_hashmap_into_iter
   axiom produces_refl_IntoIter_K_V_Global_spec:
     forall self: t_IntoIter_K_V_Global. produces_IntoIter_K_V_Global self (Seq.empty: Seq.seq tup2_K_V) self
   
-  predicate resolve_refmut_IntoIter_K_V_Global [@inline:trivial] (_1: MutBorrow.t t_IntoIter_K_V_Global) =
+  function resolve_refmut_IntoIter_K_V_Global [@inline:trivial] (_1: MutBorrow.t t_IntoIter_K_V_Global) : bool =
     _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_IntoIter_K_V_Global
+  meta "rewrite_def" function resolve_refmut_IntoIter_K_V_Global
   
-  predicate ext_eq_DeepModelTy (self: t_FMap_DeepModelTy_V) (other: t_FMap_DeepModelTy_V) =
+  function ext_eq_DeepModelTy (self: t_FMap_DeepModelTy_V) (other: t_FMap_DeepModelTy_V) : bool =
     forall k: t_DeepModelTy. lookup_DeepModelTy self k = lookup_DeepModelTy other k
   
   axiom ext_eq_DeepModelTy_spec: forall self: t_FMap_DeepModelTy_V, other: t_FMap_DeepModelTy_V [self
@@ -627,16 +633,16 @@ module M_roundtrip_hashmap_into_iter
   
   axiom empty_DeepModelTy_spec'0: to_mapping_DeepModelTy empty_DeepModelTy = Const.const (None)
   
-  predicate is_empty_DeepModelTy (self: t_FMap_DeepModelTy_V) = ext_eq_DeepModelTy self empty_DeepModelTy
+  function is_empty_DeepModelTy (self: t_FMap_DeepModelTy_V) : bool = ext_eq_DeepModelTy self empty_DeepModelTy
   
   axiom is_empty_DeepModelTy_spec:
     forall self: t_FMap_DeepModelTy_V [is_empty_DeepModelTy self]. is_empty_DeepModelTy self
       = (len_DeepModelTy self = 0)
   
-  predicate completed_IntoIter_K_V_Global (self: MutBorrow.t t_IntoIter_K_V_Global) =
+  function completed_IntoIter_K_V_Global (self: MutBorrow.t t_IntoIter_K_V_Global) : bool =
     resolve_refmut_IntoIter_K_V_Global self /\ is_empty_DeepModelTy (view_IntoIter_K_V_Global self.current)
   
-  predicate resolve_IntoIter_K_V_Global (_1: t_IntoIter_K_V_Global)
+  function resolve_IntoIter_K_V_Global (_1: t_IntoIter_K_V_Global) : bool
   
   let from_iter_HashMap_K_V_RandomState_Global (iter: t_IntoIter_K_V_Global)
     (return (x: t_HashMap_K_V_RandomState_Global)) =
@@ -658,8 +664,8 @@ module M_roundtrip_hashmap_into_iter
             /\ (forall j: int. i < j /\ j < Seq.length prod -> deep_model_K (Seq.get prod j).f0 <> k))))}
       (! return {result}) ]
   
-  predicate postcondition_from_iter (self: ()) (args: t_IntoIter_K_V_Global) (result: t_HashMap_K_V_RandomState_Global) =
-    let iter = args in inv_HashMap_K_V_RandomState_Global result
+  function postcondition_from_iter (self: ()) (args: t_IntoIter_K_V_Global) (result: t_HashMap_K_V_RandomState_Global) : bool
+   = let iter = args in inv_HashMap_K_V_RandomState_Global result
     /\ (exists into_iter: t_IntoIter_K_V_Global, prod: Seq.seq tup2_K_V, done': MutBorrow.t t_IntoIter_K_V_Global. postcondition_into_iter () iter into_iter
       /\ produces_IntoIter_K_V_Global into_iter prod done'.current
       /\ completed_IntoIter_K_V_Global done'
@@ -671,7 +677,7 @@ module M_roundtrip_hashmap_into_iter
           /\ Seq.get prod i = { f0 = k1; f1 = v }
           /\ (forall j: int. i < j /\ j < Seq.length prod -> deep_model_K (Seq.get prod j).f0 <> k))))
   
-  meta "rewrite_def" predicate postcondition_from_iter
+  meta "rewrite_def" function postcondition_from_iter
   
   let collect_IntoIter_K_V_Global (self: t_IntoIter_K_V_Global) (return (x: t_HashMap_K_V_RandomState_Global)) =
   {[@stop_split] [@expl:collect_IntoIter_K_V_Global requires] ([@stop_split] [@expl:collect 'self' type invariant] inv_IntoIter_K_V_Global self)
@@ -682,10 +688,10 @@ module M_roundtrip_hashmap_into_iter
       /\ ([@stop_split] [@expl:collect ensures] postcondition_from_iter () self result)}
       (! return {result}) ]
   
-  predicate contains_DeepModelTy [@inline:trivial] (self: t_FMap_DeepModelTy_V) (k: t_DeepModelTy) =
+  function contains_DeepModelTy [@inline:trivial] (self: t_FMap_DeepModelTy_V) (k: t_DeepModelTy) : bool =
     lookup_DeepModelTy self k <> None
   
-  meta "rewrite_def" predicate contains_DeepModelTy
+  meta "rewrite_def" function contains_DeepModelTy
   
   constant any_V : t_V
   
@@ -754,19 +760,19 @@ module M_roundtrip_hashmap_iter
   
   type t_Iter_K_V
   
-  predicate inv_HashMap_K_V_RandomState_Global (_1: t_HashMap_K_V_RandomState_Global)
+  function inv_HashMap_K_V_RandomState_Global (_1: t_HashMap_K_V_RandomState_Global) : bool
   
-  predicate invariant_ref_HashMap_K_V_RandomState_Global [@inline:trivial] (self: t_HashMap_K_V_RandomState_Global) =
-    inv_HashMap_K_V_RandomState_Global self
+  function invariant_ref_HashMap_K_V_RandomState_Global [@inline:trivial] (self: t_HashMap_K_V_RandomState_Global) : bool
+   = inv_HashMap_K_V_RandomState_Global self
   
-  meta "rewrite_def" predicate invariant_ref_HashMap_K_V_RandomState_Global
+  meta "rewrite_def" function invariant_ref_HashMap_K_V_RandomState_Global
   
-  predicate inv_ref_HashMap_K_V_RandomState_Global [@inline:trivial] (_1: t_HashMap_K_V_RandomState_Global) =
+  function inv_ref_HashMap_K_V_RandomState_Global [@inline:trivial] (_1: t_HashMap_K_V_RandomState_Global) : bool =
     invariant_ref_HashMap_K_V_RandomState_Global _1
   
-  meta "rewrite_def" predicate inv_ref_HashMap_K_V_RandomState_Global
+  meta "rewrite_def" function inv_ref_HashMap_K_V_RandomState_Global
   
-  predicate inv_Iter_K_V (_1: t_Iter_K_V)
+  function inv_Iter_K_V (_1: t_Iter_K_V) : bool
   
   type t_FMap_DeepModelTy_V
   
@@ -784,14 +790,14 @@ module M_roundtrip_hashmap_iter
   
   type t_HashMap_ref_K_ref_V_RandomState_Global
   
-  predicate precondition_into_iter (self: ()) (args: t_Iter_K_V) = let self'0 = args in inv_Iter_K_V self'0
+  function precondition_into_iter (self: ()) (args: t_Iter_K_V) : bool = let self'0 = args in inv_Iter_K_V self'0
   
-  meta "rewrite_def" predicate precondition_into_iter
+  meta "rewrite_def" function precondition_into_iter
   
-  predicate precondition_from_iter (self: ()) (args: t_Iter_K_V) =
-    let iter = args in inv_Iter_K_V iter /\ precondition_into_iter () iter
+  function precondition_from_iter (self: ()) (args: t_Iter_K_V) : bool = let iter = args in inv_Iter_K_V iter
+    /\ precondition_into_iter () iter
   
-  meta "rewrite_def" predicate precondition_from_iter
+  meta "rewrite_def" function precondition_from_iter
   
   let into_iter_Iter_K_V (self: t_Iter_K_V) (return (x: t_Iter_K_V)) =
   {[@stop_split] [@expl:into_iter 'self' type invariant] inv_Iter_K_V self}
@@ -801,12 +807,12 @@ module M_roundtrip_hashmap_iter
       /\ ([@stop_split] [@expl:into_iter ensures] result = self)}
       (! return {result}) ]
   
-  predicate inv_HashMap_ref_K_ref_V_RandomState_Global (_1: t_HashMap_ref_K_ref_V_RandomState_Global)
+  function inv_HashMap_ref_K_ref_V_RandomState_Global (_1: t_HashMap_ref_K_ref_V_RandomState_Global) : bool
   
-  predicate postcondition_into_iter (self: ()) (args: t_Iter_K_V) (result: t_Iter_K_V) =
+  function postcondition_into_iter (self: ()) (args: t_Iter_K_V) (result: t_Iter_K_V) : bool =
     let self'0 = args in inv_Iter_K_V result /\ result = self'0
   
-  meta "rewrite_def" predicate postcondition_into_iter
+  meta "rewrite_def" function postcondition_into_iter
   
   type t_K
   
@@ -814,17 +820,18 @@ module M_roundtrip_hashmap_iter
   
   type tup2_ref_K_ref_V = { f0: t_K; f1: t_V }
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function len_DeepModelTy (self: t_FMap_DeepModelTy_V) : int
   
   axiom len_DeepModelTy_spec:
     forall self: t_FMap_DeepModelTy_V [len_DeepModelTy self]. ge_log_Int (len_DeepModelTy self) 0
   
-  predicate contains_tup2_ref_K_ref_V (self: Seq.seq tup2_ref_K_ref_V) (x: tup2_ref_K_ref_V) =
-    exists i: int. 0 <= i /\ i < Seq.length self /\ Seq.get self i = x
+  function contains_tup2_ref_K_ref_V (self: Seq.seq tup2_ref_K_ref_V) (x: tup2_ref_K_ref_V) : bool = exists i: int. 0
+        <= i
+      /\ i < Seq.length self /\ Seq.get self i = x
   
   type t_DeepModelTy
   
@@ -843,8 +850,8 @@ module M_roundtrip_hashmap_iter
   
   meta "rewrite_def" function deep_model_ref_K
   
-  predicate produces_Iter_K_V [@inline:trivial] (self: t_Iter_K_V) (visited: Seq.seq tup2_ref_K_ref_V) (o: t_Iter_K_V) =
-    len_DeepModelTy (view_Iter_K_V self) = Seq.length visited + len_DeepModelTy (view_Iter_K_V o)
+  function produces_Iter_K_V [@inline:trivial] (self: t_Iter_K_V) (visited: Seq.seq tup2_ref_K_ref_V) (o: t_Iter_K_V) : bool
+   = len_DeepModelTy (view_Iter_K_V self) = Seq.length visited + len_DeepModelTy (view_Iter_K_V o)
     /\ (forall k: t_K, v: t_V. contains_tup2_ref_K_ref_V visited { f0 = k; f1 = v }
         -> lookup_DeepModelTy (view_Iter_K_V self) (deep_model_K k) = Some v
         /\ lookup_DeepModelTy (view_Iter_K_V o) (deep_model_K k) = None)
@@ -861,7 +868,7 @@ module M_roundtrip_hashmap_iter
         /\ i2 < Seq.length visited
         /\ deep_model_ref_K (Seq.get visited i1).f0 = deep_model_ref_K (Seq.get visited i2).f0 -> i1 = i2)
   
-  meta "rewrite_def" predicate produces_Iter_K_V
+  meta "rewrite_def" function produces_Iter_K_V
   
   function produces_trans_Iter_K_V (a: t_Iter_K_V) (ab: Seq.seq tup2_ref_K_ref_V) (b: t_Iter_K_V) (bc: Seq.seq tup2_ref_K_ref_V) (c: t_Iter_K_V) : ()
   
@@ -874,11 +881,11 @@ module M_roundtrip_hashmap_iter
   axiom produces_refl_Iter_K_V_spec:
     forall self: t_Iter_K_V. produces_Iter_K_V self (Seq.empty: Seq.seq tup2_ref_K_ref_V) self
   
-  predicate resolve_refmut_Iter_K_V [@inline:trivial] (_1: MutBorrow.t t_Iter_K_V) = _1.final = _1.current
+  function resolve_refmut_Iter_K_V [@inline:trivial] (_1: MutBorrow.t t_Iter_K_V) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Iter_K_V
+  meta "rewrite_def" function resolve_refmut_Iter_K_V
   
-  predicate ext_eq_DeepModelTy (self: t_FMap_DeepModelTy_V) (other: t_FMap_DeepModelTy_V) =
+  function ext_eq_DeepModelTy (self: t_FMap_DeepModelTy_V) (other: t_FMap_DeepModelTy_V) : bool =
     forall k: t_DeepModelTy. lookup_DeepModelTy self k = lookup_DeepModelTy other k
   
   axiom ext_eq_DeepModelTy_spec: forall self: t_FMap_DeepModelTy_V, other: t_FMap_DeepModelTy_V [self
@@ -890,16 +897,16 @@ module M_roundtrip_hashmap_iter
   
   axiom empty_DeepModelTy_spec'0: to_mapping_DeepModelTy empty_DeepModelTy = Const.const (None)
   
-  predicate is_empty_DeepModelTy (self: t_FMap_DeepModelTy_V) = ext_eq_DeepModelTy self empty_DeepModelTy
+  function is_empty_DeepModelTy (self: t_FMap_DeepModelTy_V) : bool = ext_eq_DeepModelTy self empty_DeepModelTy
   
   axiom is_empty_DeepModelTy_spec:
     forall self: t_FMap_DeepModelTy_V [is_empty_DeepModelTy self]. is_empty_DeepModelTy self
       = (len_DeepModelTy self = 0)
   
-  predicate completed_Iter_K_V (self: MutBorrow.t t_Iter_K_V) =
-    resolve_refmut_Iter_K_V self /\ is_empty_DeepModelTy (view_Iter_K_V self.current)
+  function completed_Iter_K_V (self: MutBorrow.t t_Iter_K_V) : bool = resolve_refmut_Iter_K_V self
+    /\ is_empty_DeepModelTy (view_Iter_K_V self.current)
   
-  predicate resolve_Iter_K_V (_1: t_Iter_K_V)
+  function resolve_Iter_K_V (_1: t_Iter_K_V) : bool
   
   type t_FMap_DeepModelTy_ref_V
   
@@ -934,8 +941,8 @@ module M_roundtrip_hashmap_iter
             /\ (forall j: int. i < j /\ j < Seq.length prod -> deep_model_ref_K (Seq.get prod j).f0 <> k))))}
       (! return {result}) ]
   
-  predicate postcondition_from_iter (self: ()) (args: t_Iter_K_V) (result: t_HashMap_ref_K_ref_V_RandomState_Global) =
-    let iter = args in inv_HashMap_ref_K_ref_V_RandomState_Global result
+  function postcondition_from_iter (self: ()) (args: t_Iter_K_V) (result: t_HashMap_ref_K_ref_V_RandomState_Global) : bool
+   = let iter = args in inv_HashMap_ref_K_ref_V_RandomState_Global result
     /\ (exists into_iter: t_Iter_K_V, prod: Seq.seq tup2_ref_K_ref_V, done': MutBorrow.t t_Iter_K_V. postcondition_into_iter () iter into_iter
       /\ produces_Iter_K_V into_iter prod done'.current
       /\ completed_Iter_K_V done'
@@ -948,7 +955,7 @@ module M_roundtrip_hashmap_iter
           /\ Seq.get prod i = { f0 = k1; f1 = v }
           /\ (forall j: int. i < j /\ j < Seq.length prod -> deep_model_ref_K (Seq.get prod j).f0 <> k))))
   
-  meta "rewrite_def" predicate postcondition_from_iter
+  meta "rewrite_def" function postcondition_from_iter
   
   let collect_Iter_K_V (self: t_Iter_K_V) (return (x: t_HashMap_ref_K_ref_V_RandomState_Global)) =
   {[@stop_split] [@expl:collect_Iter_K_V requires] ([@stop_split] [@expl:collect 'self' type invariant] inv_Iter_K_V self)
@@ -1002,21 +1009,21 @@ module M_roundtrip_hashmap_iter_mut
   
   type t_HashMap_K_V_RandomState_Global
   
-  predicate inv_HashMap_K_V_RandomState_Global (_1: t_HashMap_K_V_RandomState_Global)
+  function inv_HashMap_K_V_RandomState_Global (_1: t_HashMap_K_V_RandomState_Global) : bool
   
   type t_IterMut_K_V
   
-  predicate invariant_refmut_HashMap_K_V_RandomState_Global [@inline:trivial] (self: MutBorrow.t t_HashMap_K_V_RandomState_Global) =
-    inv_HashMap_K_V_RandomState_Global self.current /\ inv_HashMap_K_V_RandomState_Global self.final
+  function invariant_refmut_HashMap_K_V_RandomState_Global [@inline:trivial] (self: MutBorrow.t t_HashMap_K_V_RandomState_Global) : bool
+   = inv_HashMap_K_V_RandomState_Global self.current /\ inv_HashMap_K_V_RandomState_Global self.final
   
-  meta "rewrite_def" predicate invariant_refmut_HashMap_K_V_RandomState_Global
+  meta "rewrite_def" function invariant_refmut_HashMap_K_V_RandomState_Global
   
-  predicate inv_refmut_HashMap_K_V_RandomState_Global [@inline:trivial] (_1: MutBorrow.t t_HashMap_K_V_RandomState_Global) =
-    invariant_refmut_HashMap_K_V_RandomState_Global _1
+  function inv_refmut_HashMap_K_V_RandomState_Global [@inline:trivial] (_1: MutBorrow.t t_HashMap_K_V_RandomState_Global) : bool
+   = invariant_refmut_HashMap_K_V_RandomState_Global _1
   
-  meta "rewrite_def" predicate inv_refmut_HashMap_K_V_RandomState_Global
+  meta "rewrite_def" function inv_refmut_HashMap_K_V_RandomState_Global
   
-  predicate inv_IterMut_K_V (_1: t_IterMut_K_V)
+  function inv_IterMut_K_V (_1: t_IterMut_K_V) : bool
   
   type t_FMap_DeepModelTy_V
   
@@ -1033,10 +1040,10 @@ module M_roundtrip_hashmap_iter_mut
   
   meta "rewrite_def" function lookup_DeepModelTy
   
-  predicate contains_DeepModelTy [@inline:trivial] (self: t_FMap_DeepModelTy_V) (k: t_DeepModelTy) =
+  function contains_DeepModelTy [@inline:trivial] (self: t_FMap_DeepModelTy_V) (k: t_DeepModelTy) : bool =
     lookup_DeepModelTy self k <> None
   
-  meta "rewrite_def" predicate contains_DeepModelTy
+  meta "rewrite_def" function contains_DeepModelTy
   
   function view_HashMap_K_V_RandomState_Global (self: t_HashMap_K_V_RandomState_Global) : t_FMap_DeepModelTy_V
   
@@ -1051,10 +1058,10 @@ module M_roundtrip_hashmap_iter_mut
   
   meta "rewrite_def" function lookup_DeepModelTy'0
   
-  predicate contains_DeepModelTy'0 [@inline:trivial] (self: t_FMap_DeepModelTy_refmut_V) (k: t_DeepModelTy) =
+  function contains_DeepModelTy'0 [@inline:trivial] (self: t_FMap_DeepModelTy_refmut_V) (k: t_DeepModelTy) : bool =
     lookup_DeepModelTy'0 self k <> None'0
   
-  meta "rewrite_def" predicate contains_DeepModelTy'0
+  meta "rewrite_def" function contains_DeepModelTy'0
   
   function view_IterMut_K_V (self: t_IterMut_K_V) : t_FMap_DeepModelTy_refmut_V
   
@@ -1100,14 +1107,14 @@ module M_roundtrip_hashmap_iter_mut
   
   type t_HashMap_ref_K_refmut_V_RandomState_Global
   
-  predicate precondition_into_iter (self: ()) (args: t_IterMut_K_V) = let self'0 = args in inv_IterMut_K_V self'0
+  function precondition_into_iter (self: ()) (args: t_IterMut_K_V) : bool = let self'0 = args in inv_IterMut_K_V self'0
   
-  meta "rewrite_def" predicate precondition_into_iter
+  meta "rewrite_def" function precondition_into_iter
   
-  predicate precondition_from_iter (self: ()) (args: t_IterMut_K_V) =
-    let iter = args in inv_IterMut_K_V iter /\ precondition_into_iter () iter
+  function precondition_from_iter (self: ()) (args: t_IterMut_K_V) : bool = let iter = args in inv_IterMut_K_V iter
+    /\ precondition_into_iter () iter
   
-  meta "rewrite_def" predicate precondition_from_iter
+  meta "rewrite_def" function precondition_from_iter
   
   let into_iter_IterMut_K_V (self: t_IterMut_K_V) (return (x: t_IterMut_K_V)) =
   {[@stop_split] [@expl:into_iter 'self' type invariant] inv_IterMut_K_V self}
@@ -1117,27 +1124,27 @@ module M_roundtrip_hashmap_iter_mut
       /\ ([@stop_split] [@expl:into_iter ensures] result = self)}
       (! return {result}) ]
   
-  predicate inv_HashMap_ref_K_refmut_V_RandomState_Global (_1: t_HashMap_ref_K_refmut_V_RandomState_Global)
+  function inv_HashMap_ref_K_refmut_V_RandomState_Global (_1: t_HashMap_ref_K_refmut_V_RandomState_Global) : bool
   
-  predicate postcondition_into_iter (self: ()) (args: t_IterMut_K_V) (result: t_IterMut_K_V) =
+  function postcondition_into_iter (self: ()) (args: t_IterMut_K_V) (result: t_IterMut_K_V) : bool =
     let self'0 = args in inv_IterMut_K_V result /\ result = self'0
   
-  meta "rewrite_def" predicate postcondition_into_iter
+  meta "rewrite_def" function postcondition_into_iter
   
   type t_K
   
   type tup2_ref_K_refmut_V = { f0: t_K; f1: MutBorrow.t t_V }
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function len_DeepModelTy (self: t_FMap_DeepModelTy_refmut_V) : int
   
   axiom len_DeepModelTy_spec:
     forall self: t_FMap_DeepModelTy_refmut_V [len_DeepModelTy self]. ge_log_Int (len_DeepModelTy self) 0
   
-  predicate contains_tup2_ref_K_refmut_V (self: Seq.seq tup2_ref_K_refmut_V) (x: tup2_ref_K_refmut_V) =
+  function contains_tup2_ref_K_refmut_V (self: Seq.seq tup2_ref_K_refmut_V) (x: tup2_ref_K_refmut_V) : bool =
     exists i: int. 0 <= i /\ i < Seq.length self /\ Seq.get self i = x
   
   function deep_model_K (self: t_K) : t_DeepModelTy
@@ -1146,8 +1153,8 @@ module M_roundtrip_hashmap_iter_mut
   
   meta "rewrite_def" function deep_model_ref_K
   
-  predicate produces_IterMut_K_V [@inline:trivial] (self: t_IterMut_K_V) (visited: Seq.seq tup2_ref_K_refmut_V) (o: t_IterMut_K_V) =
-    len_DeepModelTy (view_IterMut_K_V self) = Seq.length visited + len_DeepModelTy (view_IterMut_K_V o)
+  function produces_IterMut_K_V [@inline:trivial] (self: t_IterMut_K_V) (visited: Seq.seq tup2_ref_K_refmut_V) (o: t_IterMut_K_V) : bool
+   = len_DeepModelTy (view_IterMut_K_V self) = Seq.length visited + len_DeepModelTy (view_IterMut_K_V o)
     /\ (forall k: t_K, v: MutBorrow.t t_V. contains_tup2_ref_K_refmut_V visited { f0 = k; f1 = v }
         -> lookup_DeepModelTy'0 (view_IterMut_K_V self) (deep_model_K k) = Some'0 v
         /\ lookup_DeepModelTy'0 (view_IterMut_K_V o) (deep_model_K k) = None'0)
@@ -1164,7 +1171,7 @@ module M_roundtrip_hashmap_iter_mut
         /\ i2 < Seq.length visited
         /\ deep_model_ref_K (Seq.get visited i1).f0 = deep_model_ref_K (Seq.get visited i2).f0 -> i1 = i2)
   
-  meta "rewrite_def" predicate produces_IterMut_K_V
+  meta "rewrite_def" function produces_IterMut_K_V
   
   function produces_trans_IterMut_K_V (a: t_IterMut_K_V) (ab: Seq.seq tup2_ref_K_refmut_V) (b: t_IterMut_K_V) (bc: Seq.seq tup2_ref_K_refmut_V) (c: t_IterMut_K_V) : ()
   
@@ -1177,11 +1184,11 @@ module M_roundtrip_hashmap_iter_mut
   axiom produces_refl_IterMut_K_V_spec:
     forall self: t_IterMut_K_V. produces_IterMut_K_V self (Seq.empty: Seq.seq tup2_ref_K_refmut_V) self
   
-  predicate resolve_refmut_IterMut_K_V [@inline:trivial] (_1: MutBorrow.t t_IterMut_K_V) = _1.final = _1.current
+  function resolve_refmut_IterMut_K_V [@inline:trivial] (_1: MutBorrow.t t_IterMut_K_V) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_IterMut_K_V
+  meta "rewrite_def" function resolve_refmut_IterMut_K_V
   
-  predicate ext_eq_DeepModelTy (self: t_FMap_DeepModelTy_refmut_V) (other: t_FMap_DeepModelTy_refmut_V) =
+  function ext_eq_DeepModelTy (self: t_FMap_DeepModelTy_refmut_V) (other: t_FMap_DeepModelTy_refmut_V) : bool =
     forall k: t_DeepModelTy. lookup_DeepModelTy'0 self k = lookup_DeepModelTy'0 other k
   
   axiom ext_eq_DeepModelTy_spec: forall self: t_FMap_DeepModelTy_refmut_V, other: t_FMap_DeepModelTy_refmut_V [self
@@ -1193,16 +1200,16 @@ module M_roundtrip_hashmap_iter_mut
   
   axiom empty_DeepModelTy_spec'0: to_mapping_DeepModelTy'0 empty_DeepModelTy = Const.const (None'0)
   
-  predicate is_empty_DeepModelTy (self: t_FMap_DeepModelTy_refmut_V) = ext_eq_DeepModelTy self empty_DeepModelTy
+  function is_empty_DeepModelTy (self: t_FMap_DeepModelTy_refmut_V) : bool = ext_eq_DeepModelTy self empty_DeepModelTy
   
   axiom is_empty_DeepModelTy_spec:
     forall self: t_FMap_DeepModelTy_refmut_V [is_empty_DeepModelTy self]. is_empty_DeepModelTy self
       = (len_DeepModelTy self = 0)
   
-  predicate completed_IterMut_K_V (self: MutBorrow.t t_IterMut_K_V) =
-    resolve_refmut_IterMut_K_V self /\ is_empty_DeepModelTy (view_IterMut_K_V self.current)
+  function completed_IterMut_K_V (self: MutBorrow.t t_IterMut_K_V) : bool = resolve_refmut_IterMut_K_V self
+    /\ is_empty_DeepModelTy (view_IterMut_K_V self.current)
   
-  predicate resolve_IterMut_K_V (_1: t_IterMut_K_V)
+  function resolve_IterMut_K_V (_1: t_IterMut_K_V) : bool
   
   function view_HashMap_ref_K_refmut_V_RandomState_Global (self: t_HashMap_ref_K_refmut_V_RandomState_Global) : t_FMap_DeepModelTy_refmut_V
   
@@ -1226,8 +1233,8 @@ module M_roundtrip_hashmap_iter_mut
             /\ (forall j: int. i < j /\ j < Seq.length prod -> deep_model_ref_K (Seq.get prod j).f0 <> k))))}
       (! return {result}) ]
   
-  predicate postcondition_from_iter (self: ()) (args: t_IterMut_K_V) (result: t_HashMap_ref_K_refmut_V_RandomState_Global) =
-    let iter = args in inv_HashMap_ref_K_refmut_V_RandomState_Global result
+  function postcondition_from_iter (self: ()) (args: t_IterMut_K_V) (result: t_HashMap_ref_K_refmut_V_RandomState_Global) : bool
+   = let iter = args in inv_HashMap_ref_K_refmut_V_RandomState_Global result
     /\ (exists into_iter: t_IterMut_K_V, prod: Seq.seq tup2_ref_K_refmut_V, done': MutBorrow.t t_IterMut_K_V. postcondition_into_iter () iter into_iter
       /\ produces_IterMut_K_V into_iter prod done'.current
       /\ completed_IterMut_K_V done'
@@ -1240,7 +1247,7 @@ module M_roundtrip_hashmap_iter_mut
           /\ Seq.get prod i = { f0 = k1; f1 = v }
           /\ (forall j: int. i < j /\ j < Seq.length prod -> deep_model_ref_K (Seq.get prod j).f0 <> k))))
   
-  meta "rewrite_def" predicate postcondition_from_iter
+  meta "rewrite_def" function postcondition_from_iter
   
   let collect_IterMut_K_V (self: t_IterMut_K_V) (return (x: t_HashMap_ref_K_refmut_V_RandomState_Global)) =
   {[@stop_split] [@expl:collect_IterMut_K_V requires] ([@stop_split] [@expl:collect 'self' type invariant] inv_IterMut_K_V self)
@@ -1251,10 +1258,10 @@ module M_roundtrip_hashmap_iter_mut
       /\ ([@stop_split] [@expl:collect ensures] postcondition_from_iter () self result)}
       (! return {result}) ]
   
-  predicate resolve_refmut_HashMap_K_V_RandomState_Global [@inline:trivial] (_1: MutBorrow.t t_HashMap_K_V_RandomState_Global) =
-    _1.final = _1.current
+  function resolve_refmut_HashMap_K_V_RandomState_Global [@inline:trivial] (_1: MutBorrow.t t_HashMap_K_V_RandomState_Global) : bool
+   = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_HashMap_K_V_RandomState_Global
+  meta "rewrite_def" function resolve_refmut_HashMap_K_V_RandomState_Global
   
   meta "compute_max_steps" 1000000
   
@@ -1317,9 +1324,9 @@ module M_roundtrip_hashset_into_iter
   
   type t_IntoIter_T_Global
   
-  predicate inv_HashSet_T_RandomState_Global (_1: t_HashSet_T_RandomState_Global)
+  function inv_HashSet_T_RandomState_Global (_1: t_HashSet_T_RandomState_Global) : bool
   
-  predicate inv_IntoIter_T_Global (_1: t_IntoIter_T_Global)
+  function inv_IntoIter_T_Global (_1: t_IntoIter_T_Global) : bool
   
   type t_DeepModelTy
   
@@ -1336,15 +1343,15 @@ module M_roundtrip_hashset_into_iter
       = view_IntoIter_T_Global result)}
       (! return {result}) ]
   
-  predicate precondition_into_iter (self: ()) (args: t_IntoIter_T_Global) =
+  function precondition_into_iter (self: ()) (args: t_IntoIter_T_Global) : bool =
     let self'0 = args in inv_IntoIter_T_Global self'0
   
-  meta "rewrite_def" predicate precondition_into_iter
+  meta "rewrite_def" function precondition_into_iter
   
-  predicate precondition_from_iter (self: ()) (args: t_IntoIter_T_Global) =
+  function precondition_from_iter (self: ()) (args: t_IntoIter_T_Global) : bool =
     let iter = args in inv_IntoIter_T_Global iter /\ precondition_into_iter () iter
   
-  meta "rewrite_def" predicate precondition_from_iter
+  meta "rewrite_def" function precondition_from_iter
   
   let into_iter_IntoIter_T_Global (self: t_IntoIter_T_Global) (return (x: t_IntoIter_T_Global)) =
   {[@stop_split] [@expl:into_iter 'self' type invariant] inv_IntoIter_T_Global self}
@@ -1354,22 +1361,24 @@ module M_roundtrip_hashset_into_iter
       /\ ([@stop_split] [@expl:into_iter ensures] result = self)}
       (! return {result}) ]
   
-  predicate postcondition_into_iter (self: ()) (args: t_IntoIter_T_Global) (result: t_IntoIter_T_Global) =
+  function postcondition_into_iter (self: ()) (args: t_IntoIter_T_Global) (result: t_IntoIter_T_Global) : bool =
     let self'0 = args in inv_IntoIter_T_Global result /\ result = self'0
   
-  meta "rewrite_def" predicate postcondition_into_iter
+  meta "rewrite_def" function postcondition_into_iter
   
   type t_T
   
-  predicate contains_DeepModelTy [@inline:trivial] (self: Fset.fset t_DeepModelTy) (e: t_DeepModelTy) = Fset.mem e self
+  function contains_DeepModelTy [@inline:trivial] (self: Fset.fset t_DeepModelTy) (e: t_DeepModelTy) : bool =
+    Fset.mem e self
   
-  meta "rewrite_def" predicate contains_DeepModelTy
+  meta "rewrite_def" function contains_DeepModelTy
   
   function deep_model_T (self: t_T) : t_DeepModelTy
   
-  predicate contains_T (self: Seq.seq t_T) (x: t_T) = exists i: int. 0 <= i /\ i < Seq.length self /\ Seq.get self i = x
+  function contains_T (self: Seq.seq t_T) (x: t_T) : bool = exists i: int. 0 <= i
+      /\ i < Seq.length self /\ Seq.get self i = x
   
-  predicate set_produces_T (start: t_IntoIter_T_Global) (visited: Seq.seq t_T) (end': t_IntoIter_T_Global) =
+  function set_produces_T (start: t_IntoIter_T_Global) (visited: Seq.seq t_T) (end': t_IntoIter_T_Global) : bool =
     Fset.cardinal (view_IntoIter_T_Global start) = Seq.length visited + Fset.cardinal (view_IntoIter_T_Global end')
     /\ (forall x: t_DeepModelTy. contains_DeepModelTy (view_IntoIter_T_Global start) x
         -> (exists x1: t_T. deep_model_T x1 = x /\ contains_T visited x1)
@@ -1385,8 +1394,8 @@ module M_roundtrip_hashset_into_iter
         /\ 0 <= j /\ j < Seq.length visited /\ deep_model_T (Seq.get visited i) = deep_model_T (Seq.get visited j)
       -> i = j)
   
-  predicate produces_IntoIter_T_Global (self: t_IntoIter_T_Global) (visited: Seq.seq t_T) (o: t_IntoIter_T_Global) =
-    set_produces_T self visited o
+  function produces_IntoIter_T_Global (self: t_IntoIter_T_Global) (visited: Seq.seq t_T) (o: t_IntoIter_T_Global) : bool
+   = set_produces_T self visited o
   
   function produces_trans_IntoIter_T_Global (a: t_IntoIter_T_Global) (ab: Seq.seq t_T) (b: t_IntoIter_T_Global) (bc: Seq.seq t_T) (c: t_IntoIter_T_Global) : ()
   
@@ -1399,10 +1408,10 @@ module M_roundtrip_hashset_into_iter
   axiom produces_refl_IntoIter_T_Global_spec:
     forall self: t_IntoIter_T_Global. produces_IntoIter_T_Global self (Seq.empty: Seq.seq t_T) self
   
-  predicate completed_IntoIter_T_Global (self: MutBorrow.t t_IntoIter_T_Global) =
+  function completed_IntoIter_T_Global (self: MutBorrow.t t_IntoIter_T_Global) : bool =
     Fset.is_empty (view_IntoIter_T_Global self.current)
   
-  predicate resolve_IntoIter_T_Global (_1: t_IntoIter_T_Global)
+  function resolve_IntoIter_T_Global (_1: t_IntoIter_T_Global) : bool
   
   let from_iter_HashSet_T_RandomState_Global (iter: t_IntoIter_T_Global) (return (x: t_HashSet_T_RandomState_Global)) =
   {[@stop_split] [@expl:from_iter_HashSet_T_RandomState_Global requires] ([@stop_split] [@expl:from_iter 'iter' type invariant] inv_IntoIter_T_Global iter)
@@ -1418,8 +1427,8 @@ module M_roundtrip_hashset_into_iter
           = (exists x1: t_T. deep_model_T x1 = x /\ contains_T prod x1)))}
       (! return {result}) ]
   
-  predicate postcondition_from_iter (self: ()) (args: t_IntoIter_T_Global) (result: t_HashSet_T_RandomState_Global) =
-    let iter = args in inv_HashSet_T_RandomState_Global result
+  function postcondition_from_iter (self: ()) (args: t_IntoIter_T_Global) (result: t_HashSet_T_RandomState_Global) : bool
+   = let iter = args in inv_HashSet_T_RandomState_Global result
     /\ (exists into_iter: t_IntoIter_T_Global, prod: Seq.seq t_T, done': MutBorrow.t t_IntoIter_T_Global. postcondition_into_iter () iter into_iter
       /\ produces_IntoIter_T_Global into_iter prod done'.current
       /\ completed_IntoIter_T_Global done'
@@ -1427,7 +1436,7 @@ module M_roundtrip_hashset_into_iter
       /\ (forall x: t_DeepModelTy. contains_DeepModelTy (view_HashSet_T_RandomState_Global result) x
         = (exists x1: t_T. deep_model_T x1 = x /\ contains_T prod x1)))
   
-  meta "rewrite_def" predicate postcondition_from_iter
+  meta "rewrite_def" function postcondition_from_iter
   
   let collect_IntoIter_T_Global (self: t_IntoIter_T_Global) (return (x: t_HashSet_T_RandomState_Global)) =
   {[@stop_split] [@expl:collect_IntoIter_T_Global requires] ([@stop_split] [@expl:collect 'self' type invariant] inv_IntoIter_T_Global self)
@@ -1469,19 +1478,19 @@ module M_roundtrip_hashset_iter
   
   type t_Iter_T
   
-  predicate inv_HashSet_T_RandomState_Global (_1: t_HashSet_T_RandomState_Global)
+  function inv_HashSet_T_RandomState_Global (_1: t_HashSet_T_RandomState_Global) : bool
   
-  predicate invariant_ref_HashSet_T_RandomState_Global [@inline:trivial] (self: t_HashSet_T_RandomState_Global) =
+  function invariant_ref_HashSet_T_RandomState_Global [@inline:trivial] (self: t_HashSet_T_RandomState_Global) : bool =
     inv_HashSet_T_RandomState_Global self
   
-  meta "rewrite_def" predicate invariant_ref_HashSet_T_RandomState_Global
+  meta "rewrite_def" function invariant_ref_HashSet_T_RandomState_Global
   
-  predicate inv_ref_HashSet_T_RandomState_Global [@inline:trivial] (_1: t_HashSet_T_RandomState_Global) =
+  function inv_ref_HashSet_T_RandomState_Global [@inline:trivial] (_1: t_HashSet_T_RandomState_Global) : bool =
     invariant_ref_HashSet_T_RandomState_Global _1
   
-  meta "rewrite_def" predicate inv_ref_HashSet_T_RandomState_Global
+  meta "rewrite_def" function inv_ref_HashSet_T_RandomState_Global
   
-  predicate inv_Iter_T (_1: t_Iter_T)
+  function inv_Iter_T (_1: t_Iter_T) : bool
   
   type t_DeepModelTy
   
@@ -1499,14 +1508,14 @@ module M_roundtrip_hashset_iter
   
   type t_HashSet_ref_T_RandomState_Global
   
-  predicate precondition_into_iter (self: ()) (args: t_Iter_T) = let self'0 = args in inv_Iter_T self'0
+  function precondition_into_iter (self: ()) (args: t_Iter_T) : bool = let self'0 = args in inv_Iter_T self'0
   
-  meta "rewrite_def" predicate precondition_into_iter
+  meta "rewrite_def" function precondition_into_iter
   
-  predicate precondition_from_iter (self: ()) (args: t_Iter_T) =
-    let iter = args in inv_Iter_T iter /\ precondition_into_iter () iter
+  function precondition_from_iter (self: ()) (args: t_Iter_T) : bool = let iter = args in inv_Iter_T iter
+    /\ precondition_into_iter () iter
   
-  meta "rewrite_def" predicate precondition_from_iter
+  meta "rewrite_def" function precondition_from_iter
   
   let into_iter_Iter_T (self: t_Iter_T) (return (x: t_Iter_T)) =
   {[@stop_split] [@expl:into_iter 'self' type invariant] inv_Iter_T self}
@@ -1516,18 +1525,19 @@ module M_roundtrip_hashset_iter
       /\ ([@stop_split] [@expl:into_iter ensures] result = self)}
       (! return {result}) ]
   
-  predicate inv_HashSet_ref_T_RandomState_Global (_1: t_HashSet_ref_T_RandomState_Global)
+  function inv_HashSet_ref_T_RandomState_Global (_1: t_HashSet_ref_T_RandomState_Global) : bool
   
-  predicate postcondition_into_iter (self: ()) (args: t_Iter_T) (result: t_Iter_T) =
+  function postcondition_into_iter (self: ()) (args: t_Iter_T) (result: t_Iter_T) : bool =
     let self'0 = args in inv_Iter_T result /\ result = self'0
   
-  meta "rewrite_def" predicate postcondition_into_iter
+  meta "rewrite_def" function postcondition_into_iter
   
   type t_T
   
-  predicate contains_DeepModelTy [@inline:trivial] (self: Fset.fset t_DeepModelTy) (e: t_DeepModelTy) = Fset.mem e self
+  function contains_DeepModelTy [@inline:trivial] (self: Fset.fset t_DeepModelTy) (e: t_DeepModelTy) : bool =
+    Fset.mem e self
   
-  meta "rewrite_def" predicate contains_DeepModelTy
+  meta "rewrite_def" function contains_DeepModelTy
   
   function deep_model_T (self: t_T) : t_DeepModelTy
   
@@ -1535,10 +1545,10 @@ module M_roundtrip_hashset_iter
   
   meta "rewrite_def" function deep_model_ref_T
   
-  predicate contains_ref_T (self: Seq.seq t_T) (x: t_T) =
-    exists i: int. 0 <= i /\ i < Seq.length self /\ Seq.get self i = x
+  function contains_ref_T (self: Seq.seq t_T) (x: t_T) : bool = exists i: int. 0 <= i
+      /\ i < Seq.length self /\ Seq.get self i = x
   
-  predicate set_produces_ref_T (start: t_Iter_T) (visited: Seq.seq t_T) (end': t_Iter_T) =
+  function set_produces_ref_T (start: t_Iter_T) (visited: Seq.seq t_T) (end': t_Iter_T) : bool =
     Fset.cardinal (view_Iter_T start) = Seq.length visited + Fset.cardinal (view_Iter_T end')
     /\ (forall x: t_DeepModelTy. contains_DeepModelTy (view_Iter_T start) x
         -> (exists x1: t_T. deep_model_ref_T x1 = x /\ contains_ref_T visited x1)
@@ -1555,7 +1565,8 @@ module M_roundtrip_hashset_iter
         /\ j < Seq.length visited /\ deep_model_ref_T (Seq.get visited i) = deep_model_ref_T (Seq.get visited j)
       -> i = j)
   
-  predicate produces_Iter_T (self: t_Iter_T) (visited: Seq.seq t_T) (o: t_Iter_T) = set_produces_ref_T self visited o
+  function produces_Iter_T (self: t_Iter_T) (visited: Seq.seq t_T) (o: t_Iter_T) : bool =
+    set_produces_ref_T self visited o
   
   function produces_trans_Iter_T (a: t_Iter_T) (ab: Seq.seq t_T) (b: t_Iter_T) (bc: Seq.seq t_T) (c: t_Iter_T) : ()
   
@@ -1567,9 +1578,9 @@ module M_roundtrip_hashset_iter
   
   axiom produces_refl_Iter_T_spec: forall self: t_Iter_T. produces_Iter_T self (Seq.empty: Seq.seq t_T) self
   
-  predicate completed_Iter_T (self: MutBorrow.t t_Iter_T) = Fset.is_empty (view_Iter_T self.current)
+  function completed_Iter_T (self: MutBorrow.t t_Iter_T) : bool = Fset.is_empty (view_Iter_T self.current)
   
-  predicate resolve_Iter_T (_1: t_Iter_T)
+  function resolve_Iter_T (_1: t_Iter_T) : bool
   
   function view_HashSet_ref_T_RandomState_Global (self: t_HashSet_ref_T_RandomState_Global) : Fset.fset t_DeepModelTy
   
@@ -1587,7 +1598,7 @@ module M_roundtrip_hashset_iter
           = (exists x1: t_T. deep_model_ref_T x1 = x /\ contains_ref_T prod x1)))}
       (! return {result}) ]
   
-  predicate postcondition_from_iter (self: ()) (args: t_Iter_T) (result: t_HashSet_ref_T_RandomState_Global) =
+  function postcondition_from_iter (self: ()) (args: t_Iter_T) (result: t_HashSet_ref_T_RandomState_Global) : bool =
     let iter = args in inv_HashSet_ref_T_RandomState_Global result
     /\ (exists into_iter: t_Iter_T, prod: Seq.seq t_T, done': MutBorrow.t t_Iter_T. postcondition_into_iter () iter into_iter
       /\ produces_Iter_T into_iter prod done'.current
@@ -1596,7 +1607,7 @@ module M_roundtrip_hashset_iter
       /\ (forall x: t_DeepModelTy. contains_DeepModelTy (view_HashSet_ref_T_RandomState_Global result) x
         = (exists x1: t_T. deep_model_ref_T x1 = x /\ contains_ref_T prod x1)))
   
-  meta "rewrite_def" predicate postcondition_from_iter
+  meta "rewrite_def" function postcondition_from_iter
   
   let collect_Iter_T (self: t_Iter_T) (return (x: t_HashSet_ref_T_RandomState_Global)) =
   {[@stop_split] [@expl:collect_Iter_T requires] ([@stop_split] [@expl:collect 'self' type invariant] inv_Iter_T self)

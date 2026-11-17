@@ -6,9 +6,9 @@ type t_B
 
 type tup2_A_B = { f0: t_A; f1: t_B }
 
-predicate lt_log_B (self: t_B) (other: t_B)
+function lt_log_B (self: t_B) (other: t_B) : bool
 
-predicate le_log_B (self: t_B) (other: t_B)
+function le_log_B (self: t_B) (other: t_B) : bool
 
 function le_lt_log_B (self: t_B) (other: t_B) : ()
 
@@ -22,9 +22,9 @@ function irreflexive_B (self: t_B) : ()
 
 axiom irreflexive_B_spec: forall self: t_B. not lt_log_B self self
 
-predicate le_log_A (self: t_A) (other: t_A)
+function le_log_A (self: t_A) (other: t_A) : bool
 
-predicate lt_log_A (self: t_A) (other: t_A)
+function lt_log_A (self: t_A) (other: t_A) : bool
 
 function le_lt_log_A (self: t_A) (other: t_A) : ()
 
@@ -38,11 +38,11 @@ function irreflexive_A (self: t_A) : ()
 
 axiom irreflexive_A_spec: forall self: t_A. not lt_log_A self self
 
-predicate le_log_tup2_A_B (self: tup2_A_B) (o: tup2_A_B) =
-  self.f0 = o.f0 /\ le_log_B self.f1 o.f1 \/ lt_log_A self.f0 o.f0
+function le_log_tup2_A_B (self: tup2_A_B) (o: tup2_A_B) : bool = self.f0 = o.f0 /\ le_log_B self.f1 o.f1
+  \/ lt_log_A self.f0 o.f0
 
-predicate lt_log_tup2_A_B (self: tup2_A_B) (o: tup2_A_B) =
-  self.f0 = o.f0 /\ lt_log_B self.f1 o.f1 \/ lt_log_A self.f0 o.f0
+function lt_log_tup2_A_B (self: tup2_A_B) (o: tup2_A_B) : bool = self.f0 = o.f0 /\ lt_log_B self.f1 o.f1
+  \/ lt_log_A self.f0 o.f0
 
 meta "compute_max_steps" 1000000
 

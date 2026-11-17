@@ -7,17 +7,17 @@ module M_common__trait_ExactSizeIterator__is_empty
   
   type t_Self
   
-  predicate inv_Self (_1: t_Self)
+  function inv_Self (_1: t_Self) : bool
   
-  predicate invariant_ref_Self [@inline:trivial] (self: t_Self) = inv_Self self
+  function invariant_ref_Self [@inline:trivial] (self: t_Self) : bool = inv_Self self
   
-  meta "rewrite_def" predicate invariant_ref_Self
+  meta "rewrite_def" function invariant_ref_Self
   
-  predicate inv_ref_Self [@inline:trivial] (_1: t_Self) = invariant_ref_Self _1
+  function inv_ref_Self [@inline:trivial] (_1: t_Self) : bool = invariant_ref_Self _1
   
-  meta "rewrite_def" predicate inv_ref_Self
+  meta "rewrite_def" function inv_ref_Self
   
-  predicate precondition_len (self: ()) (args: t_Self)
+  function precondition_len (self: ()) (args: t_Self) : bool
   
   axiom precondition_fndef: forall args: t_Self [precondition_len () args]. (let self = args in inv_ref_Self self)
       -> precondition_len () args
@@ -28,7 +28,7 @@ module M_common__trait_ExactSizeIterator__is_empty
   
   type t_Item
   
-  predicate produces_Self (self: t_Self) (visited: Seq.seq t_Item) (o: t_Self)
+  function produces_Self (self: t_Self) (visited: Seq.seq t_Item) (o: t_Self) : bool
   
   function produces_trans_Self (a: t_Self) (ab: Seq.seq t_Item) (b: t_Self) (bc: Seq.seq t_Item) (c: t_Self) : ()
   
@@ -40,9 +40,9 @@ module M_common__trait_ExactSizeIterator__is_empty
   
   axiom produces_refl_Self_spec: forall self: t_Self. produces_Self self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_Self (self: MutBorrow.t t_Self)
+  function completed_Self (self: MutBorrow.t t_Self) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_Self, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -53,16 +53,16 @@ module M_common__trait_ExactSizeIterator__is_empty
         | None -> true
         end)
   
-  predicate precondition_size_hint (self: ()) (args: t_Self)
+  function precondition_size_hint (self: ()) (args: t_Self) : bool
   
   axiom precondition_fndef'0:
     forall args: t_Self [precondition_size_hint () args]. (let self = args in inv_ref_Self self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_Self (self: t_Self) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -71,15 +71,16 @@ module M_common__trait_ExactSizeIterator__is_empty
     {[@stop_split] [@expl:size_hint ensures] postcondition_once_size_hint () self result}
       (! return {result}) ]
   
-  predicate postcondition_len (self: ()) (args: t_Self) (result: UInt64.t)
+  function postcondition_len (self: ()) (args: t_Self) (result: UInt64.t) : bool
   
   axiom postcondition_fndef'0:
     forall args: t_Self, result: UInt64.t [postcondition_len () args result]. postcondition_len () args result
       -> (let self = args in postcondition_size_hint () self { f0 = result; f1 = Some result })
   
-  predicate postcondition_once_len (self: ()) (args: t_Self) (result: UInt64.t) = postcondition_len self args result
+  function postcondition_once_len (self: ()) (args: t_Self) (result: UInt64.t) : bool =
+    postcondition_len self args result
   
-  meta "rewrite_def" predicate postcondition_once_len
+  meta "rewrite_def" function postcondition_once_len
   
   let len_Self (self: t_Self) (return (x: UInt64.t)) = {[@stop_split] [@expl:len requires] precondition_len () self}
     any
@@ -117,7 +118,7 @@ module M_common__trait_ExactSizeIterator__len
   
   type t_Item
   
-  predicate produces_Self (self: t_Self) (visited: Seq.seq t_Item) (o: t_Self)
+  function produces_Self (self: t_Self) (visited: Seq.seq t_Item) (o: t_Self) : bool
   
   function produces_trans_Self (a: t_Self) (ab: Seq.seq t_Item) (b: t_Self) (bc: Seq.seq t_Item) (c: t_Self) : ()
   
@@ -129,9 +130,9 @@ module M_common__trait_ExactSizeIterator__len
   
   axiom produces_refl_Self_spec: forall self: t_Self. produces_Self self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_Self (self: MutBorrow.t t_Self)
+  function completed_Self (self: MutBorrow.t t_Self) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_Self, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -142,25 +143,25 @@ module M_common__trait_ExactSizeIterator__len
         | None -> true
         end)
   
-  predicate inv_Self (_1: t_Self)
+  function inv_Self (_1: t_Self) : bool
   
-  predicate invariant_ref_Self [@inline:trivial] (self: t_Self) = inv_Self self
+  function invariant_ref_Self [@inline:trivial] (self: t_Self) : bool = inv_Self self
   
-  meta "rewrite_def" predicate invariant_ref_Self
+  meta "rewrite_def" function invariant_ref_Self
   
-  predicate inv_ref_Self [@inline:trivial] (_1: t_Self) = invariant_ref_Self _1
+  function inv_ref_Self [@inline:trivial] (_1: t_Self) : bool = invariant_ref_Self _1
   
-  meta "rewrite_def" predicate inv_ref_Self
+  meta "rewrite_def" function inv_ref_Self
   
-  predicate precondition_size_hint (self: ()) (args: t_Self)
+  function precondition_size_hint (self: ()) (args: t_Self) : bool
   
   axiom precondition_fndef: forall args: t_Self [precondition_size_hint () args]. (let self = args in inv_ref_Self self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_Self (self: t_Self) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -251,9 +252,9 @@ module M_impl_ExactSizeIterator_for_Once_T__len (* <Once<T> as common::ExactSize
   
   type t_Once_T = { f0: t_Option_T }
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_Option_T (_1: t_Option_T)
+  function inv_Option_T (_1: t_Option_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_T _1
       = match _1 with
@@ -261,23 +262,23 @@ module M_impl_ExactSizeIterator_for_Once_T__len (* <Once<T> as common::ExactSize
         | Some f0'0 -> inv_T f0'0
         end
   
-  predicate inv_Once_T (_1: t_Once_T)
+  function inv_Once_T (_1: t_Once_T) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Once_T [inv_Once_T _1]. inv_Once_T _1 = inv_Option_T _1.f0
   
-  predicate invariant_ref_Once_T [@inline:trivial] (self: t_Once_T) = inv_Once_T self
+  function invariant_ref_Once_T [@inline:trivial] (self: t_Once_T) : bool = inv_Once_T self
   
-  meta "rewrite_def" predicate invariant_ref_Once_T
+  meta "rewrite_def" function invariant_ref_Once_T
   
-  predicate inv_ref_Once_T [@inline:trivial] (_1: t_Once_T) = invariant_ref_Once_T _1
+  function inv_ref_Once_T [@inline:trivial] (_1: t_Once_T) : bool = invariant_ref_Once_T _1
   
-  meta "rewrite_def" predicate inv_ref_Once_T
+  meta "rewrite_def" function inv_ref_Once_T
   
   type t_Option_usize = None'0 | Some'0 UInt64.t
   
   type tup2_usize_Option_usize = { f0'0: UInt64.t; f1'0: t_Option_usize }
   
-  predicate postcondition_size_hint (self: ()) (args: t_Once_T) (result: tup2_usize_Option_usize) =
+  function postcondition_size_hint (self: ()) (args: t_Once_T) (result: tup2_usize_Option_usize) : bool =
     let self'0 = args in result.f0'0
       = match self'0.f0 with
         | Some _ -> (1: UInt64.t)
@@ -285,13 +286,14 @@ module M_impl_ExactSizeIterator_for_Once_T__len (* <Once<T> as common::ExactSize
         end
     /\ result.f1'0 = Some'0 (result.f0'0)
   
-  meta "rewrite_def" predicate postcondition_size_hint
+  meta "rewrite_def" function postcondition_size_hint
   
-  predicate produces_Once_T [@inline:trivial] (self: t_Once_T) (visited: Seq.seq t_T) (o: t_Once_T) =
-    visited = (Seq.empty: Seq.seq t_T) /\ self = o
+  function produces_Once_T [@inline:trivial] (self: t_Once_T) (visited: Seq.seq t_T) (o: t_Once_T) : bool = visited
+        = (Seq.empty: Seq.seq t_T)
+      /\ self = o
     \/ (exists e: t_T. self = { f0 = Some e } /\ visited = Seq.singleton e /\ o = { f0 = None })
   
-  meta "rewrite_def" predicate produces_Once_T
+  meta "rewrite_def" function produces_Once_T
   
   function produces_trans_Once_T (a: t_Once_T) (ab: Seq.seq t_T) (b: t_Once_T) (bc: Seq.seq t_T) (c: t_Once_T) : () = ()
   
@@ -340,9 +342,9 @@ module M_impl_ExactSizeIterator_for_Once_T__len__refines (* <Once<T> as common::
   
   type t_Once_T = { f0: t_Option_T }
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_Option_T (_1: t_Option_T)
+  function inv_Option_T (_1: t_Option_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_T _1
       = match _1 with
@@ -350,23 +352,23 @@ module M_impl_ExactSizeIterator_for_Once_T__len__refines (* <Once<T> as common::
         | Some f0'0 -> inv_T f0'0
         end
   
-  predicate inv_Once_T (_1: t_Once_T)
+  function inv_Once_T (_1: t_Once_T) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Once_T [inv_Once_T _1]. inv_Once_T _1 = inv_Option_T _1.f0
   
-  predicate invariant_ref_Once_T [@inline:trivial] (self: t_Once_T) = inv_Once_T self
+  function invariant_ref_Once_T [@inline:trivial] (self: t_Once_T) : bool = inv_Once_T self
   
-  meta "rewrite_def" predicate invariant_ref_Once_T
+  meta "rewrite_def" function invariant_ref_Once_T
   
-  predicate inv_ref_Once_T [@inline:trivial] (_1: t_Once_T) = invariant_ref_Once_T _1
+  function inv_ref_Once_T [@inline:trivial] (_1: t_Once_T) : bool = invariant_ref_Once_T _1
   
-  meta "rewrite_def" predicate inv_ref_Once_T
+  meta "rewrite_def" function inv_ref_Once_T
   
   type t_Option_usize = None'0 | Some'0 UInt64.t
   
   type tup2_usize_Option_usize = { f0'0: UInt64.t; f1'0: t_Option_usize }
   
-  predicate postcondition_size_hint (self: ()) (args: t_Once_T) (result: tup2_usize_Option_usize) =
+  function postcondition_size_hint (self: ()) (args: t_Once_T) (result: tup2_usize_Option_usize) : bool =
     let self'0 = args in result.f0'0
       = match self'0.f0 with
         | Some _ -> (1: UInt64.t)
@@ -374,13 +376,14 @@ module M_impl_ExactSizeIterator_for_Once_T__len__refines (* <Once<T> as common::
         end
     /\ result.f1'0 = Some'0 (result.f0'0)
   
-  meta "rewrite_def" predicate postcondition_size_hint
+  meta "rewrite_def" function postcondition_size_hint
   
-  predicate produces_Once_T [@inline:trivial] (self: t_Once_T) (visited: Seq.seq t_T) (o: t_Once_T) =
-    visited = (Seq.empty: Seq.seq t_T) /\ self = o
+  function produces_Once_T [@inline:trivial] (self: t_Once_T) (visited: Seq.seq t_T) (o: t_Once_T) : bool = visited
+        = (Seq.empty: Seq.seq t_T)
+      /\ self = o
     \/ (exists e: t_T. self = { f0 = Some e } /\ visited = Seq.singleton e /\ o = { f0 = None })
   
-  meta "rewrite_def" predicate produces_Once_T
+  meta "rewrite_def" function produces_Once_T
   
   function produces_trans_Once_T (a: t_Once_T) (ab: Seq.seq t_T) (b: t_Once_T) (bc: Seq.seq t_T) (c: t_Once_T) : () = ()
   
@@ -427,7 +430,7 @@ module M_impl_ExactSizeIterator_for_Once_T__size_hint_exact (* <Once<T> as commo
   
   type tup2_usize_Option_usize = { f0'0: UInt64.t; f1'0: t_Option_usize }
   
-  predicate postcondition_size_hint (self: ()) (args: t_Once_T) (result: tup2_usize_Option_usize) =
+  function postcondition_size_hint (self: ()) (args: t_Once_T) (result: tup2_usize_Option_usize) : bool =
     let self'0 = args in result.f0'0
       = match self'0.f0 with
         | Some _ -> (1: UInt64.t)
@@ -435,13 +438,14 @@ module M_impl_ExactSizeIterator_for_Once_T__size_hint_exact (* <Once<T> as commo
         end
     /\ result.f1'0 = Some'0 (result.f0'0)
   
-  meta "rewrite_def" predicate postcondition_size_hint
+  meta "rewrite_def" function postcondition_size_hint
   
-  predicate produces_Once_T [@inline:trivial] (self: t_Once_T) (visited: Seq.seq t_T) (o: t_Once_T) =
-    visited = (Seq.empty: Seq.seq t_T) /\ self = o
+  function produces_Once_T [@inline:trivial] (self: t_Once_T) (visited: Seq.seq t_T) (o: t_Once_T) : bool = visited
+        = (Seq.empty: Seq.seq t_T)
+      /\ self = o
     \/ (exists e: t_T. self = { f0 = Some e } /\ visited = Seq.singleton e /\ o = { f0 = None })
   
-  meta "rewrite_def" predicate produces_Once_T
+  meta "rewrite_def" function produces_Once_T
   
   function produces_trans_Once_T (a: t_Once_T) (ab: Seq.seq t_T) (b: t_Once_T) (bc: Seq.seq t_T) (c: t_Once_T) : () = ()
   
@@ -453,9 +457,9 @@ module M_impl_ExactSizeIterator_for_Once_T__size_hint_exact (* <Once<T> as commo
   
   axiom produces_refl_Once_T_spec: forall self: t_Once_T. produces_Once_T self (Seq.empty: Seq.seq t_T) self
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_Option_T (_1: t_Option_T)
+  function inv_Option_T (_1: t_Option_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_T _1
       = match _1 with
@@ -463,17 +467,17 @@ module M_impl_ExactSizeIterator_for_Once_T__size_hint_exact (* <Once<T> as commo
         | Some f0'1 -> inv_T f0'1
         end
   
-  predicate inv_Once_T (_1: t_Once_T)
+  function inv_Once_T (_1: t_Once_T) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Once_T [inv_Once_T _1]. inv_Once_T _1 = inv_Option_T _1.f0
   
-  predicate invariant_ref_Once_T [@inline:trivial] (self: t_Once_T) = inv_Once_T self
+  function invariant_ref_Once_T [@inline:trivial] (self: t_Once_T) : bool = inv_Once_T self
   
-  meta "rewrite_def" predicate invariant_ref_Once_T
+  meta "rewrite_def" function invariant_ref_Once_T
   
-  predicate inv_ref_Once_T [@inline:trivial] (_1: t_Once_T) = invariant_ref_Once_T _1
+  function inv_ref_Once_T [@inline:trivial] (_1: t_Once_T) : bool = invariant_ref_Once_T _1
   
-  meta "rewrite_def" predicate inv_ref_Once_T
+  meta "rewrite_def" function inv_ref_Once_T
   
   let size_hint_Once_T (self: t_Once_T) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint 'self' type invariant] inv_ref_Once_T self}
@@ -514,7 +518,7 @@ module M_impl_ExactSizeIterator_for_Once_T__size_hint_exact__refines (* <Once<T>
   
   type tup2_usize_Option_usize = { f0'0: UInt64.t; f1'0: t_Option_usize }
   
-  predicate postcondition_size_hint (self: ()) (args: t_Once_T) (result: tup2_usize_Option_usize) =
+  function postcondition_size_hint (self: ()) (args: t_Once_T) (result: tup2_usize_Option_usize) : bool =
     let self'0 = args in result.f0'0
       = match self'0.f0 with
         | Some _ -> (1: UInt64.t)
@@ -522,13 +526,14 @@ module M_impl_ExactSizeIterator_for_Once_T__size_hint_exact__refines (* <Once<T>
         end
     /\ result.f1'0 = Some'0 (result.f0'0)
   
-  meta "rewrite_def" predicate postcondition_size_hint
+  meta "rewrite_def" function postcondition_size_hint
   
-  predicate produces_Once_T [@inline:trivial] (self: t_Once_T) (visited: Seq.seq t_T) (o: t_Once_T) =
-    visited = (Seq.empty: Seq.seq t_T) /\ self = o
+  function produces_Once_T [@inline:trivial] (self: t_Once_T) (visited: Seq.seq t_T) (o: t_Once_T) : bool = visited
+        = (Seq.empty: Seq.seq t_T)
+      /\ self = o
     \/ (exists e: t_T. self = { f0 = Some e } /\ visited = Seq.singleton e /\ o = { f0 = None })
   
-  meta "rewrite_def" predicate produces_Once_T
+  meta "rewrite_def" function produces_Once_T
   
   function produces_trans_Once_T (a: t_Once_T) (ab: Seq.seq t_T) (b: t_Once_T) (bc: Seq.seq t_T) (c: t_Once_T) : () = ()
   
@@ -540,9 +545,9 @@ module M_impl_ExactSizeIterator_for_Once_T__size_hint_exact__refines (* <Once<T>
   
   axiom produces_refl_Once_T_spec: forall self: t_Once_T. produces_Once_T self (Seq.empty: Seq.seq t_T) self
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_Option_T (_1: t_Option_T)
+  function inv_Option_T (_1: t_Option_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_T _1
       = match _1 with
@@ -550,17 +555,17 @@ module M_impl_ExactSizeIterator_for_Once_T__size_hint_exact__refines (* <Once<T>
         | Some f0'1 -> inv_T f0'1
         end
   
-  predicate inv_Once_T (_1: t_Once_T)
+  function inv_Once_T (_1: t_Once_T) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Once_T [inv_Once_T _1]. inv_Once_T _1 = inv_Option_T _1.f0
   
-  predicate invariant_ref_Once_T [@inline:trivial] (self: t_Once_T) = inv_Once_T self
+  function invariant_ref_Once_T [@inline:trivial] (self: t_Once_T) : bool = inv_Once_T self
   
-  meta "rewrite_def" predicate invariant_ref_Once_T
+  meta "rewrite_def" function invariant_ref_Once_T
   
-  predicate inv_ref_Once_T [@inline:trivial] (_1: t_Once_T) = invariant_ref_Once_T _1
+  function inv_ref_Once_T [@inline:trivial] (_1: t_Once_T) : bool = invariant_ref_Once_T _1
   
-  meta "rewrite_def" predicate inv_ref_Once_T
+  meta "rewrite_def" function inv_ref_Once_T
   
   let size_hint_Once_T (self: t_Once_T) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint 'self' type invariant] inv_ref_Once_T self}
@@ -592,9 +597,9 @@ module M_impl_Iterator_for_Once_T__next (* <Once<T> as common::Iterator> *)
   
   type t_Once_T = { f0: t_Option_T }
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_Option_T (_1: t_Option_T)
+  function inv_Option_T (_1: t_Option_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_T _1
       = match _1 with
@@ -602,14 +607,14 @@ module M_impl_Iterator_for_Once_T__next (* <Once<T> as common::Iterator> *)
         | Some f0'0 -> inv_T f0'0
         end
   
-  predicate invariant_refmut_Option_T [@inline:trivial] (self: MutBorrow.t t_Option_T) =
-    inv_Option_T self.current /\ inv_Option_T self.final
+  function invariant_refmut_Option_T [@inline:trivial] (self: MutBorrow.t t_Option_T) : bool = inv_Option_T self.current
+    /\ inv_Option_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Option_T
+  meta "rewrite_def" function invariant_refmut_Option_T
   
-  predicate inv_refmut_Option_T [@inline:trivial] (_1: MutBorrow.t t_Option_T) = invariant_refmut_Option_T _1
+  function inv_refmut_Option_T [@inline:trivial] (_1: MutBorrow.t t_Option_T) : bool = invariant_refmut_Option_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Option_T
+  meta "rewrite_def" function inv_refmut_Option_T
   
   let take_T (self: MutBorrow.t t_Option_T) (return (x: t_Option_T)) =
   {[@stop_split] [@expl:take 'self' type invariant] inv_refmut_Option_T self}
@@ -619,30 +624,32 @@ module M_impl_Iterator_for_Once_T__next (* <Once<T> as common::Iterator> *)
       /\ ([@stop_split] [@expl:take ensures] result = self.current /\ self.final = None)}
       (! return {result}) ]
   
-  predicate inv_Once_T (_1: t_Once_T)
+  function inv_Once_T (_1: t_Once_T) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Once_T [inv_Once_T _1]. inv_Once_T _1 = inv_Option_T _1.f0
   
-  predicate invariant_refmut_Once_T [@inline:trivial] (self: MutBorrow.t t_Once_T) =
-    inv_Once_T self.current /\ inv_Once_T self.final
+  function invariant_refmut_Once_T [@inline:trivial] (self: MutBorrow.t t_Once_T) : bool = inv_Once_T self.current
+    /\ inv_Once_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Once_T
+  meta "rewrite_def" function invariant_refmut_Once_T
   
-  predicate inv_refmut_Once_T [@inline:trivial] (_1: MutBorrow.t t_Once_T) = invariant_refmut_Once_T _1
+  function inv_refmut_Once_T [@inline:trivial] (_1: MutBorrow.t t_Once_T) : bool = invariant_refmut_Once_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Once_T
+  meta "rewrite_def" function inv_refmut_Once_T
   
-  predicate resolve_refmut_Once_T [@inline:trivial] (_1: MutBorrow.t t_Once_T) = _1.final = _1.current
+  function resolve_refmut_Once_T [@inline:trivial] (_1: MutBorrow.t t_Once_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Once_T
+  meta "rewrite_def" function resolve_refmut_Once_T
   
-  predicate completed_Once_T (self: MutBorrow.t t_Once_T) = self.current = { f0 = None } /\ resolve_refmut_Once_T self
+  function completed_Once_T (self: MutBorrow.t t_Once_T) : bool = self.current = { f0 = None }
+    /\ resolve_refmut_Once_T self
   
-  predicate produces_Once_T [@inline:trivial] (self: t_Once_T) (visited: Seq.seq t_T) (o: t_Once_T) =
-    visited = (Seq.empty: Seq.seq t_T) /\ self = o
+  function produces_Once_T [@inline:trivial] (self: t_Once_T) (visited: Seq.seq t_T) (o: t_Once_T) : bool = visited
+        = (Seq.empty: Seq.seq t_T)
+      /\ self = o
     \/ (exists e: t_T. self = { f0 = Some e } /\ visited = Seq.singleton e /\ o = { f0 = None })
   
-  meta "rewrite_def" predicate produces_Once_T
+  meta "rewrite_def" function produces_Once_T
   
   meta "compute_max_steps" 1000000
   
@@ -682,9 +689,9 @@ module M_impl_Iterator_for_Once_T__next__refines (* <Once<T> as common::Iterator
   
   type t_Once_T = { f0: t_Option_T }
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_Option_T (_1: t_Option_T)
+  function inv_Option_T (_1: t_Option_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_T _1
       = match _1 with
@@ -692,30 +699,32 @@ module M_impl_Iterator_for_Once_T__next__refines (* <Once<T> as common::Iterator
         | Some f0'0 -> inv_T f0'0
         end
   
-  predicate inv_Once_T (_1: t_Once_T)
+  function inv_Once_T (_1: t_Once_T) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Once_T [inv_Once_T _1]. inv_Once_T _1 = inv_Option_T _1.f0
   
-  predicate invariant_refmut_Once_T [@inline:trivial] (self: MutBorrow.t t_Once_T) =
-    inv_Once_T self.current /\ inv_Once_T self.final
+  function invariant_refmut_Once_T [@inline:trivial] (self: MutBorrow.t t_Once_T) : bool = inv_Once_T self.current
+    /\ inv_Once_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Once_T
+  meta "rewrite_def" function invariant_refmut_Once_T
   
-  predicate inv_refmut_Once_T [@inline:trivial] (_1: MutBorrow.t t_Once_T) = invariant_refmut_Once_T _1
+  function inv_refmut_Once_T [@inline:trivial] (_1: MutBorrow.t t_Once_T) : bool = invariant_refmut_Once_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Once_T
+  meta "rewrite_def" function inv_refmut_Once_T
   
-  predicate resolve_refmut_Once_T [@inline:trivial] (_1: MutBorrow.t t_Once_T) = _1.final = _1.current
+  function resolve_refmut_Once_T [@inline:trivial] (_1: MutBorrow.t t_Once_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Once_T
+  meta "rewrite_def" function resolve_refmut_Once_T
   
-  predicate completed_Once_T (self: MutBorrow.t t_Once_T) = self.current = { f0 = None } /\ resolve_refmut_Once_T self
+  function completed_Once_T (self: MutBorrow.t t_Once_T) : bool = self.current = { f0 = None }
+    /\ resolve_refmut_Once_T self
   
-  predicate produces_Once_T [@inline:trivial] (self: t_Once_T) (visited: Seq.seq t_T) (o: t_Once_T) =
-    visited = (Seq.empty: Seq.seq t_T) /\ self = o
+  function produces_Once_T [@inline:trivial] (self: t_Once_T) (visited: Seq.seq t_T) (o: t_Once_T) : bool = visited
+        = (Seq.empty: Seq.seq t_T)
+      /\ self = o
     \/ (exists e: t_T. self = { f0 = Some e } /\ visited = Seq.singleton e /\ o = { f0 = None })
   
-  meta "rewrite_def" predicate produces_Once_T
+  meta "rewrite_def" function produces_Once_T
   
   meta "compute_max_steps" 1000000
   
@@ -743,11 +752,12 @@ module M_impl_Iterator_for_Once_T__produces_refl (* <Once<T> as common::Iterator
   
   type t_Once_T = { f0: t_Option_T }
   
-  predicate produces_Once_T [@inline:trivial] (self: t_Once_T) (visited: Seq.seq t_T) (o: t_Once_T) =
-    visited = (Seq.empty: Seq.seq t_T) /\ self = o
+  function produces_Once_T [@inline:trivial] (self: t_Once_T) (visited: Seq.seq t_T) (o: t_Once_T) : bool = visited
+        = (Seq.empty: Seq.seq t_T)
+      /\ self = o
     \/ (exists e: t_T. self = { f0 = Some e } /\ visited = Seq.singleton e /\ o = { f0 = None })
   
-  meta "rewrite_def" predicate produces_Once_T
+  meta "rewrite_def" function produces_Once_T
   
   meta "compute_max_steps" 1000000
   
@@ -769,11 +779,12 @@ module M_impl_Iterator_for_Once_T__produces_refl__refines (* <Once<T> as common:
   
   type t_Once_T = { f0: t_Option_T }
   
-  predicate produces_Once_T [@inline:trivial] (self: t_Once_T) (visited: Seq.seq t_T) (o: t_Once_T) =
-    visited = (Seq.empty: Seq.seq t_T) /\ self = o
+  function produces_Once_T [@inline:trivial] (self: t_Once_T) (visited: Seq.seq t_T) (o: t_Once_T) : bool = visited
+        = (Seq.empty: Seq.seq t_T)
+      /\ self = o
     \/ (exists e: t_T. self = { f0 = Some e } /\ visited = Seq.singleton e /\ o = { f0 = None })
   
-  meta "rewrite_def" predicate produces_Once_T
+  meta "rewrite_def" function produces_Once_T
   
   meta "compute_max_steps" 1000000
   
@@ -791,11 +802,12 @@ module M_impl_Iterator_for_Once_T__produces_trans (* <Once<T> as common::Iterato
   
   type t_Once_T = { f0: t_Option_T }
   
-  predicate produces_Once_T [@inline:trivial] (self: t_Once_T) (visited: Seq.seq t_T) (o: t_Once_T) =
-    visited = (Seq.empty: Seq.seq t_T) /\ self = o
+  function produces_Once_T [@inline:trivial] (self: t_Once_T) (visited: Seq.seq t_T) (o: t_Once_T) : bool = visited
+        = (Seq.empty: Seq.seq t_T)
+      /\ self = o
     \/ (exists e: t_T. self = { f0 = Some e } /\ visited = Seq.singleton e /\ o = { f0 = None })
   
-  meta "rewrite_def" predicate produces_Once_T
+  meta "rewrite_def" function produces_Once_T
   
   meta "compute_max_steps" 1000000
   
@@ -825,11 +837,12 @@ module M_impl_Iterator_for_Once_T__produces_trans__refines (* <Once<T> as common
   
   type t_Once_T = { f0: t_Option_T }
   
-  predicate produces_Once_T [@inline:trivial] (self: t_Once_T) (visited: Seq.seq t_T) (o: t_Once_T) =
-    visited = (Seq.empty: Seq.seq t_T) /\ self = o
+  function produces_Once_T [@inline:trivial] (self: t_Once_T) (visited: Seq.seq t_T) (o: t_Once_T) : bool = visited
+        = (Seq.empty: Seq.seq t_T)
+      /\ self = o
     \/ (exists e: t_T. self = { f0 = Some e } /\ visited = Seq.singleton e /\ o = { f0 = None })
   
-  meta "rewrite_def" predicate produces_Once_T
+  meta "rewrite_def" function produces_Once_T
   
   meta "compute_max_steps" 1000000
   
@@ -855,9 +868,9 @@ module M_impl_Iterator_for_Once_T__size_hint (* <Once<T> as common::Iterator> *)
   
   type tup2_usize_Option_usize = { f0'0: UInt64.t; f1'0: t_Option_usize }
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_Option_T (_1: t_Option_T)
+  function inv_Option_T (_1: t_Option_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_T _1
       = match _1 with
@@ -865,17 +878,17 @@ module M_impl_Iterator_for_Once_T__size_hint (* <Once<T> as common::Iterator> *)
         | Some f0'1 -> inv_T f0'1
         end
   
-  predicate inv_Once_T (_1: t_Once_T)
+  function inv_Once_T (_1: t_Once_T) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Once_T [inv_Once_T _1]. inv_Once_T _1 = inv_Option_T _1.f0
   
-  predicate invariant_ref_Once_T [@inline:trivial] (self: t_Once_T) = inv_Once_T self
+  function invariant_ref_Once_T [@inline:trivial] (self: t_Once_T) : bool = inv_Once_T self
   
-  meta "rewrite_def" predicate invariant_ref_Once_T
+  meta "rewrite_def" function invariant_ref_Once_T
   
-  predicate inv_ref_Once_T [@inline:trivial] (_1: t_Once_T) = invariant_ref_Once_T _1
+  function inv_ref_Once_T [@inline:trivial] (_1: t_Once_T) : bool = invariant_ref_Once_T _1
   
-  meta "rewrite_def" predicate inv_ref_Once_T
+  meta "rewrite_def" function inv_ref_Once_T
   
   meta "compute_max_steps" 1000000
   
@@ -913,9 +926,9 @@ module M_impl_Iterator_for_Once_T__size_hint__refines (* <Once<T> as common::Ite
   
   type t_Once_T = { f0: t_Option_T }
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_Option_T (_1: t_Option_T)
+  function inv_Option_T (_1: t_Option_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_T _1
       = match _1 with
@@ -923,33 +936,35 @@ module M_impl_Iterator_for_Once_T__size_hint__refines (* <Once<T> as common::Ite
         | Some f0'0 -> inv_T f0'0
         end
   
-  predicate inv_Once_T (_1: t_Once_T)
+  function inv_Once_T (_1: t_Once_T) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Once_T [inv_Once_T _1]. inv_Once_T _1 = inv_Option_T _1.f0
   
-  predicate invariant_ref_Once_T [@inline:trivial] (self: t_Once_T) = inv_Once_T self
+  function invariant_ref_Once_T [@inline:trivial] (self: t_Once_T) : bool = inv_Once_T self
   
-  meta "rewrite_def" predicate invariant_ref_Once_T
+  meta "rewrite_def" function invariant_ref_Once_T
   
-  predicate inv_ref_Once_T [@inline:trivial] (_1: t_Once_T) = invariant_ref_Once_T _1
+  function inv_ref_Once_T [@inline:trivial] (_1: t_Once_T) : bool = invariant_ref_Once_T _1
   
-  meta "rewrite_def" predicate inv_ref_Once_T
+  meta "rewrite_def" function inv_ref_Once_T
   
   type t_Option_usize = None'0 | Some'0 UInt64.t
   
   type tup2_usize_Option_usize = { f0'0: UInt64.t; f1'0: t_Option_usize }
   
-  predicate produces_Once_T [@inline:trivial] (self: t_Once_T) (visited: Seq.seq t_T) (o: t_Once_T) =
-    visited = (Seq.empty: Seq.seq t_T) /\ self = o
+  function produces_Once_T [@inline:trivial] (self: t_Once_T) (visited: Seq.seq t_T) (o: t_Once_T) : bool = visited
+        = (Seq.empty: Seq.seq t_T)
+      /\ self = o
     \/ (exists e: t_T. self = { f0 = Some e } /\ visited = Seq.singleton e /\ o = { f0 = None })
   
-  meta "rewrite_def" predicate produces_Once_T
+  meta "rewrite_def" function produces_Once_T
   
-  predicate resolve_refmut_Once_T [@inline:trivial] (_1: MutBorrow.t t_Once_T) = _1.final = _1.current
+  function resolve_refmut_Once_T [@inline:trivial] (_1: MutBorrow.t t_Once_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Once_T
+  meta "rewrite_def" function resolve_refmut_Once_T
   
-  predicate completed_Once_T (self: MutBorrow.t t_Once_T) = self.current = { f0 = None } /\ resolve_refmut_Once_T self
+  function completed_Once_T (self: MutBorrow.t t_Once_T) : bool = self.current = { f0 = None }
+    /\ resolve_refmut_Once_T self
   
   meta "compute_max_steps" 1000000
   

@@ -1,7 +1,7 @@
 module M_test_maintains
   use creusot.prelude.Any
   
-  predicate test = true
+  constant test: bool = true
   
   meta "compute_max_steps" 1000000
   

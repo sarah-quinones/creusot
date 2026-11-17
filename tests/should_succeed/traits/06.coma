@@ -8,34 +8,34 @@ module M_test
   
   type tup2_ref_T_usize = { f0: t_T; f1: UInt64.t }
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate precondition_ix (self: ()) (args: tup2_ref_T_usize)
+  function precondition_ix (self: ()) (args: tup2_ref_T_usize) : bool
   
   axiom precondition_fndef:
     forall args: tup2_ref_T_usize [precondition_ix () args]. (let {f0 = self; f1 = ix} = args in inv_ref_T self)
       -> precondition_ix () args
   
-  predicate inv_Tgt (_1: t_Tgt)
+  function inv_Tgt (_1: t_Tgt) : bool
   
-  predicate postcondition_ix (self: ()) (args: tup2_ref_T_usize) (result: t_Tgt)
+  function postcondition_ix (self: ()) (args: tup2_ref_T_usize) (result: t_Tgt) : bool
   
   axiom postcondition_fndef:
     forall args: tup2_ref_T_usize, result: t_Tgt [postcondition_ix () args result]. postcondition_ix () args result
       -> (let {f0 = self; f1 = ix} = args in inv_Tgt result)
   
-  predicate postcondition_once_ix (self: ()) (args: tup2_ref_T_usize) (result: t_Tgt) =
+  function postcondition_once_ix (self: ()) (args: tup2_ref_T_usize) (result: t_Tgt) : bool =
     postcondition_ix self args result
   
-  meta "rewrite_def" predicate postcondition_once_ix
+  meta "rewrite_def" function postcondition_once_ix
   
   let ix_T (self: t_T) (ix: UInt64.t) (return (x: t_Tgt)) =
   {[@stop_split] [@expl:ix requires] precondition_ix () { f0 = self; f1 = ix }}

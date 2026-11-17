@@ -14,7 +14,7 @@ meta "select_lsinst" "all"
 
 constant self : int
 
-predicate cancelable_Int (self: int)
+function cancelable_Int (self: int) : bool
 
 goal vc_cancelable_Int: [@stop_split] [@expl:cancelable ensures] true
   = (forall x: int, y: int. op_Int self x <> None -> op_Int self x = op_Int self y -> x = y)

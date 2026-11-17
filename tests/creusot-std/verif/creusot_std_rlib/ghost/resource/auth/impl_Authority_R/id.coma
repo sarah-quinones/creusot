@@ -29,20 +29,20 @@ function view_Resource_View_AuthViewRel_R [@inline:trivial] (self: t_Resource_Vi
 
 meta "rewrite_def" function view_Resource_View_AuthViewRel_R
 
-predicate invariant_Authority_R (self: t_Authority_R) =
+function invariant_Authority_R (self: t_Authority_R) : bool =
   auth_AuthViewRel_R (view_Resource_View_AuthViewRel_R self.f0) <> None
 
-predicate inv_Authority_R (_1: t_Authority_R)
+function inv_Authority_R (_1: t_Authority_R) : bool
 
 axiom inv_axiom [@rewrite]: forall _1: t_Authority_R [inv_Authority_R _1]. inv_Authority_R _1 = invariant_Authority_R _1
 
-predicate invariant_ref_Authority_R [@inline:trivial] (self: t_Authority_R) = inv_Authority_R self
+function invariant_ref_Authority_R [@inline:trivial] (self: t_Authority_R) : bool = inv_Authority_R self
 
-meta "rewrite_def" predicate invariant_ref_Authority_R
+meta "rewrite_def" function invariant_ref_Authority_R
 
-predicate inv_ref_Authority_R [@inline:trivial] (_1: t_Authority_R) = invariant_ref_Authority_R _1
+function inv_ref_Authority_R [@inline:trivial] (_1: t_Authority_R) : bool = invariant_ref_Authority_R _1
 
-meta "rewrite_def" predicate inv_ref_Authority_R
+meta "rewrite_def" function inv_ref_Authority_R
 
 function id_R (self: t_Authority_R) : t_Id = id_View_AuthViewRel_R self.f0
 

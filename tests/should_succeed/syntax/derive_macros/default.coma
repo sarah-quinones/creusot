@@ -3,22 +3,23 @@ module M_impl_Default_for_ENamed_T_U__default (* <ENamed<T, U> as std::default::
   
   type t_T
   
-  predicate precondition_default (self: ()) (args: ())
+  function precondition_default (self: ()) (args: ()) : bool
   
   axiom precondition_fndef: forall args: () [precondition_default () args]. (let () = args in true)
       -> precondition_default () args
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate postcondition_default (self: ()) (args: ()) (result: t_T)
+  function postcondition_default (self: ()) (args: ()) (result: t_T) : bool
   
   axiom postcondition_fndef:
     forall args: (), result: t_T [postcondition_default () args result]. postcondition_default () args result
       -> (let () = args in inv_T result)
   
-  predicate postcondition_once_default (self: ()) (args: ()) (result: t_T) = postcondition_default self args result
+  function postcondition_once_default (self: ()) (args: ()) (result: t_T) : bool =
+    postcondition_default self args result
   
-  meta "rewrite_def" predicate postcondition_once_default
+  meta "rewrite_def" function postcondition_once_default
   
   let default_T (return (x: t_T)) = {[@stop_split] [@expl:default requires] precondition_default () ()}
     any
@@ -27,22 +28,23 @@ module M_impl_Default_for_ENamed_T_U__default (* <ENamed<T, U> as std::default::
   
   type t_U
   
-  predicate precondition_default'0 (self: ()) (args: ())
+  function precondition_default'0 (self: ()) (args: ()) : bool
   
   axiom precondition_fndef'0: forall args: () [precondition_default'0 () args]. (let () = args in true)
       -> precondition_default'0 () args
   
-  predicate inv_U (_1: t_U)
+  function inv_U (_1: t_U) : bool
   
-  predicate postcondition_default'0 (self: ()) (args: ()) (result: t_U)
+  function postcondition_default'0 (self: ()) (args: ()) (result: t_U) : bool
   
   axiom postcondition_fndef'0:
     forall args: (), result: t_U [postcondition_default'0 () args result]. postcondition_default'0 () args result
       -> (let () = args in inv_U result)
   
-  predicate postcondition_once_default'0 (self: ()) (args: ()) (result: t_U) = postcondition_default'0 self args result
+  function postcondition_once_default'0 (self: ()) (args: ()) (result: t_U) : bool =
+    postcondition_default'0 self args result
   
-  meta "rewrite_def" predicate postcondition_once_default'0
+  meta "rewrite_def" function postcondition_once_default'0
   
   let default_U (return (x: t_U)) = {[@stop_split] [@expl:default requires] precondition_default'0 () ()}
     any
@@ -51,7 +53,7 @@ module M_impl_Default_for_ENamed_T_U__default (* <ENamed<T, U> as std::default::
   
   type t_ENamed_T_U = A t_T t_U | B
   
-  predicate inv_ENamed_T_U (_1: t_ENamed_T_U)
+  function inv_ENamed_T_U (_1: t_ENamed_T_U) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_ENamed_T_U [inv_ENamed_T_U _1]. inv_ENamed_T_U _1
       = match _1 with
@@ -85,11 +87,11 @@ module M_impl_Default_for_ENamed_T_U__default__refines (* <ENamed<T, U> as std::
   
   type t_ENamed_T_U = A t_T t_U | B
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_U (_1: t_U)
+  function inv_U (_1: t_U) : bool
   
-  predicate inv_ENamed_T_U (_1: t_ENamed_T_U)
+  function inv_ENamed_T_U (_1: t_ENamed_T_U) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_ENamed_T_U [inv_ENamed_T_U _1]. inv_ENamed_T_U _1
       = match _1 with
@@ -97,40 +99,42 @@ module M_impl_Default_for_ENamed_T_U__default__refines (* <ENamed<T, U> as std::
         | B -> true
         end
   
-  predicate postcondition_default (self: ()) (args: ()) (result: t_T)
+  function postcondition_default (self: ()) (args: ()) (result: t_T) : bool
   
   axiom postcondition_fndef:
     forall args: (), result: t_T [postcondition_default () args result]. postcondition_default () args result
       -> (let () = args in inv_T result)
   
-  predicate precondition_default (self: ()) (args: ())
+  function precondition_default (self: ()) (args: ()) : bool
   
   axiom precondition_fndef: forall args: () [precondition_default () args]. (let () = args in true)
       -> precondition_default () args
   
-  predicate postcondition_once_default (self: ()) (args: ()) (result: t_T) = postcondition_default self args result
+  function postcondition_once_default (self: ()) (args: ()) (result: t_T) : bool =
+    postcondition_default self args result
   
-  meta "rewrite_def" predicate postcondition_once_default
+  meta "rewrite_def" function postcondition_once_default
   
   let default_T (return (x: t_T)) = {[@stop_split] [@expl:default requires] precondition_default () ()}
     any
     [ return (result: t_T) -> {[@stop_split] [@expl:default ensures] postcondition_once_default () () result}
       (! return {result}) ]
   
-  predicate postcondition_default'0 (self: ()) (args: ()) (result: t_U)
+  function postcondition_default'0 (self: ()) (args: ()) (result: t_U) : bool
   
   axiom postcondition_fndef'0:
     forall args: (), result: t_U [postcondition_default'0 () args result]. postcondition_default'0 () args result
       -> (let () = args in inv_U result)
   
-  predicate precondition_default'0 (self: ()) (args: ())
+  function precondition_default'0 (self: ()) (args: ()) : bool
   
   axiom precondition_fndef'0: forall args: () [precondition_default'0 () args]. (let () = args in true)
       -> precondition_default'0 () args
   
-  predicate postcondition_once_default'0 (self: ()) (args: ()) (result: t_U) = postcondition_default'0 self args result
+  function postcondition_once_default'0 (self: ()) (args: ()) (result: t_U) : bool =
+    postcondition_default'0 self args result
   
-  meta "rewrite_def" predicate postcondition_once_default'0
+  meta "rewrite_def" function postcondition_once_default'0
   
   let default_U (return (x: t_U)) = {[@stop_split] [@expl:default requires] precondition_default'0 () ()}
     any
@@ -158,9 +162,9 @@ module M_impl_Default_for_ETuple__default (* <ETuple as std::default::Default> *
   
   type t_ETuple = A Int32.t Int32.t | B t_Vec_i32_Global
   
-  predicate postcondition_default (self: ()) (args: ()) (result: Int32.t) = let () = args in result = (0: Int32.t)
+  function postcondition_default (self: ()) (args: ()) (result: Int32.t) : bool = let () = args in result = (0: Int32.t)
   
-  meta "rewrite_def" predicate postcondition_default
+  meta "rewrite_def" function postcondition_default
   
   meta "compute_max_steps" 1000000
   
@@ -205,22 +209,23 @@ module M_impl_Default_for_Named_T__default (* <Named<T> as std::default::Default
   
   type t_T
   
-  predicate precondition_default (self: ()) (args: ())
+  function precondition_default (self: ()) (args: ()) : bool
   
   axiom precondition_fndef: forall args: () [precondition_default () args]. (let () = args in true)
       -> precondition_default () args
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate postcondition_default (self: ()) (args: ()) (result: t_T)
+  function postcondition_default (self: ()) (args: ()) (result: t_T) : bool
   
   axiom postcondition_fndef:
     forall args: (), result: t_T [postcondition_default () args result]. postcondition_default () args result
       -> (let () = args in inv_T result)
   
-  predicate postcondition_once_default (self: ()) (args: ()) (result: t_T) = postcondition_default self args result
+  function postcondition_once_default (self: ()) (args: ()) (result: t_T) : bool =
+    postcondition_default self args result
   
-  meta "rewrite_def" predicate postcondition_once_default
+  meta "rewrite_def" function postcondition_once_default
   
   let default_T (return (x: t_T)) = {[@stop_split] [@expl:default requires] precondition_default () ()}
     any
@@ -229,13 +234,14 @@ module M_impl_Default_for_Named_T__default (* <Named<T> as std::default::Default
   
   type t_Named_T = { x: Int32.t; y: t_T }
   
-  predicate inv_Named_T (_1: t_Named_T)
+  function inv_Named_T (_1: t_Named_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Named_T [inv_Named_T _1]. inv_Named_T _1 = inv_T _1.y
   
-  predicate postcondition_default'0 (self: ()) (args: ()) (result: Int32.t) = let () = args in result = (0: Int32.t)
+  function postcondition_default'0 (self: ()) (args: ()) (result: Int32.t) : bool = let () = args in result
+    = (0: Int32.t)
   
-  meta "rewrite_def" predicate postcondition_default'0
+  meta "rewrite_def" function postcondition_default'0
   
   meta "compute_max_steps" 1000000
   
@@ -259,35 +265,36 @@ module M_impl_Default_for_Named_T__default__refines (* <Named<T> as std::default
   
   type t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
   type t_Named_T = { x: Int32.t; y: t_T }
   
-  predicate inv_Named_T (_1: t_Named_T)
+  function inv_Named_T (_1: t_Named_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Named_T [inv_Named_T _1]. inv_Named_T _1 = inv_T _1.y
   
-  predicate postcondition_default (self: ()) (args: ()) (result: Int32.t) = let () = args in result = (0: Int32.t)
+  function postcondition_default (self: ()) (args: ()) (result: Int32.t) : bool = let () = args in result = (0: Int32.t)
   
-  meta "rewrite_def" predicate postcondition_default
+  meta "rewrite_def" function postcondition_default
   
   let default_i32 (return (x'0: Int32.t)) = any
     [ return (result: Int32.t) -> {[@stop_split] [@expl:default ensures] result = (0: Int32.t)} (! return {result}) ]
   
-  predicate postcondition_default'0 (self: ()) (args: ()) (result: t_T)
+  function postcondition_default'0 (self: ()) (args: ()) (result: t_T) : bool
   
   axiom postcondition_fndef:
     forall args: (), result: t_T [postcondition_default'0 () args result]. postcondition_default'0 () args result
       -> (let () = args in inv_T result)
   
-  predicate precondition_default (self: ()) (args: ())
+  function precondition_default (self: ()) (args: ()) : bool
   
   axiom precondition_fndef: forall args: () [precondition_default () args]. (let () = args in true)
       -> precondition_default () args
   
-  predicate postcondition_once_default (self: ()) (args: ()) (result: t_T) = postcondition_default'0 self args result
+  function postcondition_once_default (self: ()) (args: ()) (result: t_T) : bool =
+    postcondition_default'0 self args result
   
-  meta "rewrite_def" predicate postcondition_once_default
+  meta "rewrite_def" function postcondition_once_default
   
   let default_T (return (x'0: t_T)) = {[@stop_split] [@expl:default requires] precondition_default () ()}
     any
@@ -314,13 +321,14 @@ module M_impl_Default_for_Tuple__default (* <Tuple as std::default::Default> *)
   
   type t_Tuple = { f0: Int32.t; f1: Int64.t }
   
-  predicate postcondition_default (self: ()) (args: ()) (result: Int32.t) = let () = args in result = (0: Int32.t)
+  function postcondition_default (self: ()) (args: ()) (result: Int32.t) : bool = let () = args in result = (0: Int32.t)
   
-  meta "rewrite_def" predicate postcondition_default
+  meta "rewrite_def" function postcondition_default
   
-  predicate postcondition_default'0 (self: ()) (args: ()) (result: Int64.t) = let () = args in result = (0: Int64.t)
+  function postcondition_default'0 (self: ()) (args: ()) (result: Int64.t) : bool = let () = args in result
+    = (0: Int64.t)
   
-  meta "rewrite_def" predicate postcondition_default'0
+  meta "rewrite_def" function postcondition_default'0
   
   meta "compute_max_steps" 1000000
   

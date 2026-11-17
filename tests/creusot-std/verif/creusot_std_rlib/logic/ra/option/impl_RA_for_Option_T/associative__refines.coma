@@ -23,7 +23,7 @@ function map_Option_T (self: t_Option_T) (f: Map.map t_T t_Option_T) : t_Option_
 
 function op_T (self: t_T) (other: t_T) : t_Option_T
 
-predicate incl_T (self: t_T) (other: t_T)
+function incl_T (self: t_T) (other: t_T) : bool
 
 axiom incl_T_spec: forall self: t_T, other: t_T [incl_T self other]. incl_T self other
     = (exists factor: t_T. op_T self factor = Some other)

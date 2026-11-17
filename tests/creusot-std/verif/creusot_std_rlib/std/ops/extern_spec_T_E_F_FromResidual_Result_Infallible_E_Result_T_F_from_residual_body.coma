@@ -4,13 +4,13 @@ type t_E
 
 type t_Result_Infallible_E = Ok () | Err t_E
 
-predicate inv_Infallible [@inline:trivial] (_1: ()) = false
+function inv_Infallible [@inline:trivial] (_1: ()) : bool = false
 
-meta "rewrite_def" predicate inv_Infallible
+meta "rewrite_def" function inv_Infallible
 
-predicate inv_E (_1: t_E)
+function inv_E (_1: t_E) : bool
 
-predicate inv_Result_Infallible_E (_1: t_Result_Infallible_E)
+function inv_Result_Infallible_E (_1: t_Result_Infallible_E) : bool
 
 axiom inv_axiom [@rewrite]: forall _1: t_Result_Infallible_E [inv_Result_Infallible_E _1]. inv_Result_Infallible_E _1
     = match _1 with
@@ -18,9 +18,9 @@ axiom inv_axiom [@rewrite]: forall _1: t_Result_Infallible_E [inv_Result_Infalli
       | Err f0 -> inv_E f0
       end
 
-predicate resolve_E (_1: t_E)
+function resolve_E (_1: t_E) : bool
 
-predicate resolve_Result_Infallible_E (_1: t_Result_Infallible_E)
+function resolve_Result_Infallible_E (_1: t_Result_Infallible_E) : bool
 
 axiom resolve_axiom [@rewrite]:
   forall _1: t_Result_Infallible_E [resolve_Result_Infallible_E _1]. resolve_Result_Infallible_E _1
@@ -39,22 +39,22 @@ let elim_Err (_x: t_Result_Infallible_E) (return (f0: t_E)) = any
 
 type t_F
 
-predicate precondition_from (self: ()) (args: t_E)
+function precondition_from (self: ()) (args: t_E) : bool
 
 axiom precondition_fndef: forall args: t_E [precondition_from () args]. (let value = args in inv_E value)
     -> precondition_from () args
 
-predicate inv_F (_1: t_F)
+function inv_F (_1: t_F) : bool
 
-predicate postcondition_from (self: ()) (args: t_E) (result: t_F)
+function postcondition_from (self: ()) (args: t_E) (result: t_F) : bool
 
 axiom postcondition_fndef:
   forall args: t_E, result: t_F [postcondition_from () args result]. postcondition_from () args result
     -> (let value = args in inv_F result)
 
-predicate postcondition_once_from (self: ()) (args: t_E) (result: t_F) = postcondition_from self args result
+function postcondition_once_from (self: ()) (args: t_E) (result: t_F) : bool = postcondition_from self args result
 
-meta "rewrite_def" predicate postcondition_once_from
+meta "rewrite_def" function postcondition_once_from
 
 let from_F (value: t_E) (return (x: t_F)) = {[@stop_split] [@expl:from requires] precondition_from () value}
   any
@@ -65,9 +65,9 @@ type t_T
 
 type t_Result_T_F = Ok'0 t_T | Err'0 t_F
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate inv_Result_T_F (_1: t_Result_T_F)
+function inv_Result_T_F (_1: t_Result_T_F) : bool
 
 axiom inv_axiom'0 [@rewrite]: forall _1: t_Result_T_F [inv_Result_T_F _1]. inv_Result_T_F _1
     = match _1 with

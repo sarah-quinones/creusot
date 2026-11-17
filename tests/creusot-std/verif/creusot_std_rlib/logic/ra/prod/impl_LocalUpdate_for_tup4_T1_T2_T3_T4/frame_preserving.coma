@@ -24,20 +24,20 @@ type tup4_R1_R2_R3_R4 = { f0'0: t_R1; f1'0: t_R2; f2'0: t_R3; f3'0: t_R4 }
 
 type t_Option_tup4_R1_R2_R3_R4 = None | Some tup4_R1_R2_R3_R4
 
-predicate premise_T1 (self: t_T1) (from_auth: t_R1) (from_frag: t_R1)
+function premise_T1 (self: t_T1) (from_auth: t_R1) (from_frag: t_R1) : bool
 
-predicate premise_T2 (self: t_T2) (from_auth: t_R2) (from_frag: t_R2)
+function premise_T2 (self: t_T2) (from_auth: t_R2) (from_frag: t_R2) : bool
 
-predicate premise_T3 (self: t_T3) (from_auth: t_R3) (from_frag: t_R3)
+function premise_T3 (self: t_T3) (from_auth: t_R3) (from_frag: t_R3) : bool
 
-predicate premise_T4 (self: t_T4) (from_auth: t_R4) (from_frag: t_R4)
+function premise_T4 (self: t_T4) (from_auth: t_R4) (from_frag: t_R4) : bool
 
-predicate premise_tup4_T1_T2_T3_T4 [@inline:trivial] (self: tup4_T1_T2_T3_T4) (from_auth: tup4_R1_R2_R3_R4) (from_frag: tup4_R1_R2_R3_R4) =
-  premise_T1 self.f0 from_auth.f0'0 from_frag.f0'0
+function premise_tup4_T1_T2_T3_T4 [@inline:trivial] (self: tup4_T1_T2_T3_T4) (from_auth: tup4_R1_R2_R3_R4) (from_frag: tup4_R1_R2_R3_R4) : bool
+ = premise_T1 self.f0 from_auth.f0'0 from_frag.f0'0
   /\ premise_T2 self.f1 from_auth.f1'0 from_frag.f1'0
   /\ premise_T3 self.f2 from_auth.f2'0 from_frag.f2'0 /\ premise_T4 self.f3 from_auth.f3'0 from_frag.f3'0
 
-meta "rewrite_def" predicate premise_tup4_T1_T2_T3_T4
+meta "rewrite_def" function premise_tup4_T1_T2_T3_T4
 
 type t_Option_Option_tup4_R1_R2_R3_R4 = None'0 | Some'0 t_Option_tup4_R1_R2_R3_R4
 
@@ -67,7 +67,7 @@ type tup4_Option_R1_Option_R2_Option_R3_Option_R4 = {
 
 function op_R1 (self: t_R1) (other: t_R1) : t_Option_R1
 
-predicate incl_R1 (self: t_R1) (other: t_R1)
+function incl_R1 (self: t_R1) (other: t_R1) : bool
 
 axiom incl_R1_spec: forall self: t_R1, other: t_R1 [incl_R1 self other]. incl_R1 self other
     = (exists factor: t_R1. op_R1 self factor = Some'1 other)
@@ -96,7 +96,7 @@ axiom incl_op_R1_spec: forall self: t_R1, other: t_R1, comb: t_R1. op_R1 self ot
 
 function op_R2 (self: t_R2) (other: t_R2) : t_Option_R2
 
-predicate incl_R2 (self: t_R2) (other: t_R2)
+function incl_R2 (self: t_R2) (other: t_R2) : bool
 
 axiom incl_R2_spec: forall self: t_R2, other: t_R2 [incl_R2 self other]. incl_R2 self other
     = (exists factor: t_R2. op_R2 self factor = Some'2 other)
@@ -125,7 +125,7 @@ axiom incl_op_R2_spec: forall self: t_R2, other: t_R2, comb: t_R2. op_R2 self ot
 
 function op_R3 (self: t_R3) (other: t_R3) : t_Option_R3
 
-predicate incl_R3 (self: t_R3) (other: t_R3)
+function incl_R3 (self: t_R3) (other: t_R3) : bool
 
 axiom incl_R3_spec: forall self: t_R3, other: t_R3 [incl_R3 self other]. incl_R3 self other
     = (exists factor: t_R3. op_R3 self factor = Some'3 other)
@@ -154,7 +154,7 @@ axiom incl_op_R3_spec: forall self: t_R3, other: t_R3, comb: t_R3. op_R3 self ot
 
 function op_R4 (self: t_R4) (other: t_R4) : t_Option_R4
 
-predicate incl_R4 (self: t_R4) (other: t_R4)
+function incl_R4 (self: t_R4) (other: t_R4) : bool
 
 axiom incl_R4_spec: forall self: t_R4, other: t_R4 [incl_R4 self other]. incl_R4 self other
     = (exists factor: t_R4. op_R4 self factor = Some'4 other)

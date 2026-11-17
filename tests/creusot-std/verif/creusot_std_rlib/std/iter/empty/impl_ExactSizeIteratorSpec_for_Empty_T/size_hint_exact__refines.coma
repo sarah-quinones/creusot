@@ -8,20 +8,20 @@ type t_Option_usize = None | Some UInt64.t
 
 type tup2_usize_Option_usize = { f0: UInt64.t; f1: t_Option_usize }
 
-predicate postcondition_size_hint (self: ()) (args: t_Empty_T) (result: tup2_usize_Option_usize) =
+function postcondition_size_hint (self: ()) (args: t_Empty_T) (result: tup2_usize_Option_usize) : bool =
   let self'0 = args in result = { f0 = (0: UInt64.t); f1 = Some (0: UInt64.t) }
 
-meta "rewrite_def" predicate postcondition_size_hint
+meta "rewrite_def" function postcondition_size_hint
 
-predicate inv_Empty_T (_1: t_Empty_T)
+function inv_Empty_T (_1: t_Empty_T) : bool
 
-predicate invariant_ref_Empty_T [@inline:trivial] (self: t_Empty_T) = inv_Empty_T self
+function invariant_ref_Empty_T [@inline:trivial] (self: t_Empty_T) : bool = inv_Empty_T self
 
-meta "rewrite_def" predicate invariant_ref_Empty_T
+meta "rewrite_def" function invariant_ref_Empty_T
 
-predicate inv_ref_Empty_T [@inline:trivial] (_1: t_Empty_T) = invariant_ref_Empty_T _1
+function inv_ref_Empty_T [@inline:trivial] (_1: t_Empty_T) : bool = invariant_ref_Empty_T _1
 
-meta "rewrite_def" predicate inv_ref_Empty_T
+meta "rewrite_def" function inv_ref_Empty_T
 
 let size_hint_Empty_T (self: t_Empty_T) (return (x: tup2_usize_Option_usize)) =
 {[@stop_split] [@expl:size_hint 'self' type invariant] inv_ref_Empty_T self}

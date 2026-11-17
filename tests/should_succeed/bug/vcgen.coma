@@ -2,26 +2,26 @@ module M_set_max
   use set.Fset
   use int.Int
   
-  predicate contains_Int [@inline:trivial] (self: Fset.fset int) (e: int) = Fset.mem e self
+  function contains_Int [@inline:trivial] (self: Fset.fset int) (e: int) : bool = Fset.mem e self
   
-  meta "rewrite_def" predicate contains_Int
+  meta "rewrite_def" function contains_Int
   
   function remove_Int [@inline:trivial] (self: Fset.fset int) (e: int) : Fset.fset int = Fset.remove e self
   
   meta "rewrite_def" function remove_Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
-  predicate well_founded_relation_Int [@inline:trivial] (self: int) (other: int) =
-    ge_log_Int self 0 /\ gt_log_Int self other
+  function well_founded_relation_Int [@inline:trivial] (self: int) (other: int) : bool = ge_log_Int self 0
+    /\ gt_log_Int self other
   
-  meta "rewrite_def" predicate well_founded_relation_Int
+  meta "rewrite_def" function well_founded_relation_Int
   
   meta "compute_max_steps" 1000000
   

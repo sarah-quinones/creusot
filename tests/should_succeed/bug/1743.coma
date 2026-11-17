@@ -11,71 +11,72 @@ module M_impl_S__minimize (* S *)
   
   type t_S = { perm: t_Perm_ptr_i32; ptr: Opaque.ptr }
   
-  predicate is_null_ptr_i32 (self: Opaque.ptr) = Ptr.addr_logic_u64 self = (0: UInt64.t)
+  function is_null_ptr_i32 (self: Opaque.ptr) : bool = Ptr.addr_logic_u64 self = (0: UInt64.t)
   
   function ward_ptr_i32 (self: t_Perm_ptr_i32) : Opaque.ptr
   
-  predicate metadata_matches_i32 [@inline:trivial] (_value: Int32.t) (_metadata: ()) = true
+  function metadata_matches_i32 [@inline:trivial] (_value: Int32.t) (_metadata: ()) : bool = true
   
-  meta "rewrite_def" predicate metadata_matches_i32
+  meta "rewrite_def" function metadata_matches_i32
   
   function val_unsized_ptr_i32 (self: t_Perm_ptr_i32) : Int32.t
   
   function metadata_i32 (_1: Opaque.ptr) : ()
   
-  predicate inv_ref_i32 [@inline:trivial] (_1: Int32.t) = true
+  function inv_ref_i32 [@inline:trivial] (_1: Int32.t) : bool = true
   
-  meta "rewrite_def" predicate inv_ref_i32
+  meta "rewrite_def" function inv_ref_i32
   
-  predicate invariant_Perm_ptr_i32 (self: t_Perm_ptr_i32) =
-    not is_null_ptr_i32 (ward_ptr_i32 self)
+  function invariant_Perm_ptr_i32 (self: t_Perm_ptr_i32) : bool = not is_null_ptr_i32 (ward_ptr_i32 self)
     /\ metadata_matches_i32 (val_unsized_ptr_i32 self) (metadata_i32 (ward_ptr_i32 self))
     /\ inv_ref_i32 (val_unsized_ptr_i32 self)
   
-  predicate inv_Perm_ptr_i32 (_1: t_Perm_ptr_i32)
+  function inv_Perm_ptr_i32 (_1: t_Perm_ptr_i32) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Perm_ptr_i32 [inv_Perm_ptr_i32 _1]. inv_Perm_ptr_i32 _1
       = invariant_Perm_ptr_i32 _1
   
-  predicate invariant_Ghost_Perm_ptr_i32 [@inline:trivial] (self: t_Perm_ptr_i32) = inv_Perm_ptr_i32 self
+  function invariant_Ghost_Perm_ptr_i32 [@inline:trivial] (self: t_Perm_ptr_i32) : bool = inv_Perm_ptr_i32 self
   
-  meta "rewrite_def" predicate invariant_Ghost_Perm_ptr_i32
+  meta "rewrite_def" function invariant_Ghost_Perm_ptr_i32
   
-  predicate inv_Ghost_Perm_ptr_i32 [@inline:trivial] (_1: t_Perm_ptr_i32) = invariant_Ghost_Perm_ptr_i32 _1
+  function inv_Ghost_Perm_ptr_i32 [@inline:trivial] (_1: t_Perm_ptr_i32) : bool = invariant_Ghost_Perm_ptr_i32 _1
   
-  meta "rewrite_def" predicate inv_Ghost_Perm_ptr_i32
+  meta "rewrite_def" function inv_Ghost_Perm_ptr_i32
   
-  predicate inv_S (_1: t_S)
+  function inv_S (_1: t_S) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_S [inv_S _1]. inv_S _1 = inv_Ghost_Perm_ptr_i32 _1.perm
   
-  predicate invariant_refmut_S [@inline:trivial] (self: MutBorrow.t t_S) = inv_S self.current /\ inv_S self.final
+  function invariant_refmut_S [@inline:trivial] (self: MutBorrow.t t_S) : bool = inv_S self.current /\ inv_S self.final
   
-  meta "rewrite_def" predicate invariant_refmut_S
+  meta "rewrite_def" function invariant_refmut_S
   
-  predicate inv_refmut_S [@inline:trivial] (_1: MutBorrow.t t_S) = invariant_refmut_S _1
+  function inv_refmut_S [@inline:trivial] (_1: MutBorrow.t t_S) : bool = invariant_refmut_S _1
   
-  meta "rewrite_def" predicate inv_refmut_S
+  meta "rewrite_def" function inv_refmut_S
   
-  predicate resolve_refmut_S [@inline:trivial] (_1: MutBorrow.t t_S) = _1.final = _1.current
+  function resolve_refmut_S [@inline:trivial] (_1: MutBorrow.t t_S) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_S
+  meta "rewrite_def" function resolve_refmut_S
   
-  predicate invariant_ref_Ghost_Perm_ptr_i32 [@inline:trivial] (self: t_Perm_ptr_i32) = inv_Ghost_Perm_ptr_i32 self
+  function invariant_ref_Ghost_Perm_ptr_i32 [@inline:trivial] (self: t_Perm_ptr_i32) : bool =
+    inv_Ghost_Perm_ptr_i32 self
   
-  meta "rewrite_def" predicate invariant_ref_Ghost_Perm_ptr_i32
+  meta "rewrite_def" function invariant_ref_Ghost_Perm_ptr_i32
   
-  predicate inv_ref_Ghost_Perm_ptr_i32 [@inline:trivial] (_1: t_Perm_ptr_i32) = invariant_ref_Ghost_Perm_ptr_i32 _1
+  function inv_ref_Ghost_Perm_ptr_i32 [@inline:trivial] (_1: t_Perm_ptr_i32) : bool =
+    invariant_ref_Ghost_Perm_ptr_i32 _1
   
-  meta "rewrite_def" predicate inv_ref_Ghost_Perm_ptr_i32
+  meta "rewrite_def" function inv_ref_Ghost_Perm_ptr_i32
   
-  predicate invariant_ref_Perm_ptr_i32 [@inline:trivial] (self: t_Perm_ptr_i32) = inv_Perm_ptr_i32 self
+  function invariant_ref_Perm_ptr_i32 [@inline:trivial] (self: t_Perm_ptr_i32) : bool = inv_Perm_ptr_i32 self
   
-  meta "rewrite_def" predicate invariant_ref_Perm_ptr_i32
+  meta "rewrite_def" function invariant_ref_Perm_ptr_i32
   
-  predicate inv_ref_Perm_ptr_i32 [@inline:trivial] (_1: t_Perm_ptr_i32) = invariant_ref_Perm_ptr_i32 _1
+  function inv_ref_Perm_ptr_i32 [@inline:trivial] (_1: t_Perm_ptr_i32) : bool = invariant_ref_Perm_ptr_i32 _1
   
-  meta "rewrite_def" predicate inv_ref_Perm_ptr_i32
+  meta "rewrite_def" function inv_ref_Perm_ptr_i32
   
   let deref_Ghost_Perm_ptr_i32 (self: t_Perm_ptr_i32) (return (x: t_Perm_ptr_i32)) =
   {[@stop_split] [@expl:deref 'self' type invariant] inv_ref_Ghost_Perm_ptr_i32 self}
@@ -85,13 +86,14 @@ module M_impl_S__minimize (* S *)
       /\ ([@stop_split] [@expl:deref ensures] result = self)}
       (! return {result}) ]
   
-  predicate invariant_Ghost_ref_Perm_ptr_i32 [@inline:trivial] (self: t_Perm_ptr_i32) = inv_ref_Perm_ptr_i32 self
+  function invariant_Ghost_ref_Perm_ptr_i32 [@inline:trivial] (self: t_Perm_ptr_i32) : bool = inv_ref_Perm_ptr_i32 self
   
-  meta "rewrite_def" predicate invariant_Ghost_ref_Perm_ptr_i32
+  meta "rewrite_def" function invariant_Ghost_ref_Perm_ptr_i32
   
-  predicate inv_Ghost_ref_Perm_ptr_i32 [@inline:trivial] (_1: t_Perm_ptr_i32) = invariant_Ghost_ref_Perm_ptr_i32 _1
+  function inv_Ghost_ref_Perm_ptr_i32 [@inline:trivial] (_1: t_Perm_ptr_i32) : bool =
+    invariant_Ghost_ref_Perm_ptr_i32 _1
   
-  meta "rewrite_def" predicate inv_Ghost_ref_Perm_ptr_i32
+  meta "rewrite_def" function inv_Ghost_ref_Perm_ptr_i32
   
   let new_ref_Perm_ptr_i32 (x: t_Perm_ptr_i32) (return (x'0: t_Perm_ptr_i32)) =
   {[@stop_split] [@expl:new 'x' type invariant] inv_ref_Perm_ptr_i32 x}

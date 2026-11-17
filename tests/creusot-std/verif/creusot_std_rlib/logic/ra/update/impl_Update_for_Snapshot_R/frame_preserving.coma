@@ -6,7 +6,7 @@ type t_Option_R = None | Some t_R
 
 function op_R (self: t_R) (other: t_R) : t_Option_R
 
-predicate incl_R (self: t_R) (other: t_R)
+function incl_R (self: t_R) (other: t_R) : bool
 
 axiom incl_R_spec: forall self: t_R, other: t_R [incl_R self other]. incl_R self other
     = (exists factor: t_R. op_R self factor = Some other)
@@ -33,10 +33,10 @@ function incl_op_R (self: t_R) (other: t_R) (comb: t_R) : ()
 
 axiom incl_op_R_spec: forall self: t_R, other: t_R, comb: t_R. op_R self other = Some comb -> incl_R self comb
 
-predicate premise_Snapshot_R [@inline:trivial] (self: t_R) (from: t_R) =
-  forall y: t_R. op_R from y <> None -> op_R self y <> None
+function premise_Snapshot_R [@inline:trivial] (self: t_R) (from: t_R) : bool = forall y: t_R. op_R from y <> None
+    -> op_R self y <> None
 
-meta "rewrite_def" predicate premise_Snapshot_R
+meta "rewrite_def" function premise_Snapshot_R
 
 function update_Snapshot_R [@inline:trivial] (self: t_R) (from: t_R) (_3: ()) : t_R = self
 

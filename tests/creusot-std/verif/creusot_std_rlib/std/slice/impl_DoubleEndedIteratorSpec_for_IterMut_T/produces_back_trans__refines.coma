@@ -32,7 +32,7 @@ axiom view_IterMut_T_spec:
   forall self: t_IterMut_T [view_IterMut_T self]. Seq.length (Slice64.view (view_IterMut_T self).final)
     = Seq.length (Slice64.view (view_IterMut_T self).current)
 
-predicate produces_back_IterMut_T (self: t_IterMut_T) (visited: Seq.seq (MutBorrow.t t_T)) (o: t_IterMut_T) =
+function produces_back_IterMut_T (self: t_IterMut_T) (visited: Seq.seq (MutBorrow.t t_T)) (o: t_IterMut_T) : bool =
   to_mut_seq_slice_T (view_IterMut_T self) = Seq.(++) (to_mut_seq_slice_T (view_IterMut_T o)) (Reverse.reverse visited)
 
 meta "compute_max_steps" 1000000

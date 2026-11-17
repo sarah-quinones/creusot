@@ -2,26 +2,26 @@
 
 type t_Map_I_F
 
-predicate inv_Map_I_F (_1: t_Map_I_F)
+function inv_Map_I_F (_1: t_Map_I_F) : bool
 
-predicate structural_resolve_Map_I_F (_1: t_Map_I_F)
+function structural_resolve_Map_I_F (_1: t_Map_I_F) : bool
 
 type t_I
 
-predicate resolve_I (_1: t_I)
+function resolve_I (_1: t_I) : bool
 
 function iter_Map_I_F (self: t_Map_I_F) : t_I
 
 type t_F
 
-predicate resolve_F (_1: t_F)
+function resolve_F (_1: t_F) : bool
 
 function func_Map_I_F (self: t_Map_I_F) : t_F
 
-predicate resolve_Map_I_F [@inline:trivial] (self: t_Map_I_F) =
-  resolve_I (iter_Map_I_F self) /\ resolve_F (func_Map_I_F self)
+function resolve_Map_I_F [@inline:trivial] (self: t_Map_I_F) : bool = resolve_I (iter_Map_I_F self)
+  /\ resolve_F (func_Map_I_F self)
 
-meta "rewrite_def" predicate resolve_Map_I_F
+meta "rewrite_def" function resolve_Map_I_F
 
 meta "compute_max_steps" 1000000
 

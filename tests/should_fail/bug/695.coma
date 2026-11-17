@@ -3,23 +3,23 @@ module M_inversed_if
   
   type t_C
   
-  predicate inv_C (_1: t_C)
+  function inv_C (_1: t_C) : bool
   
-  predicate resolve_C (_1: t_C)
+  function resolve_C (_1: t_C) : bool
   
-  predicate invariant_ref_C [@inline:trivial] (self: t_C) = inv_C self
+  function invariant_ref_C [@inline:trivial] (self: t_C) : bool = inv_C self
   
-  meta "rewrite_def" predicate invariant_ref_C
+  meta "rewrite_def" function invariant_ref_C
   
-  predicate inv_ref_C [@inline:trivial] (_1: t_C) = invariant_ref_C _1
+  function inv_ref_C [@inline:trivial] (_1: t_C) : bool = invariant_ref_C _1
   
-  meta "rewrite_def" predicate inv_ref_C
+  meta "rewrite_def" function inv_ref_C
   
-  predicate precondition_C (self: t_C) (args: ())
+  function precondition_C (self: t_C) (args: ()) : bool
   
-  predicate postcondition_once_C (self: t_C) (args: ()) (result: bool)
+  function postcondition_once_C (self: t_C) (args: ()) (result: bool) : bool
   
-  predicate postcondition_mut_C (self: t_C) (args: ()) (result_state: t_C) (result: bool)
+  function postcondition_mut_C (self: t_C) (args: ()) (result_state: t_C) (result: bool) : bool
   
   function fn_mut_once_C (self: t_C) (args: ()) (res: bool) : ()
   
@@ -27,7 +27,7 @@ module M_inversed_if
     forall self: t_C, args: (), res: bool [postcondition_once_C self args res]. postcondition_once_C self args res
       = (exists res_state: t_C. postcondition_mut_C self args res_state res /\ resolve_C res_state)
   
-  predicate hist_inv_C (self: t_C) (result_state: t_C)
+  function hist_inv_C (self: t_C) (result_state: t_C) : bool
   
   function hist_inv_trans_C (self: t_C) (b: t_C) (c: t_C) : ()
   
@@ -50,7 +50,7 @@ module M_inversed_if
   axiom fn_hist_inv_C_spec: forall self: t_C, res_state: t_C [hist_inv_C self res_state]. hist_inv_C self res_state
       = (self = res_state)
   
-  predicate postcondition_C (self: t_C) (args: ()) (result: bool)
+  function postcondition_C (self: t_C) (args: ()) (result: bool) : bool
   
   function fn_once_C (self: t_C) (args: ()) (res: bool) : ()
   
@@ -73,11 +73,11 @@ module M_inversed_if
   
   type t_B
   
-  predicate inv_B (_1: t_B)
+  function inv_B (_1: t_B) : bool
   
-  predicate precondition_B (self: t_B) (args: bool)
+  function precondition_B (self: t_B) (args: bool) : bool
   
-  predicate postcondition_once_B (self: t_B) (args: bool) (result: ())
+  function postcondition_once_B (self: t_B) (args: bool) (result: ()) : bool
   
   let call_once_B (self: t_B) (args: bool) (return (x: ())) =
   {[@stop_split] [@expl:call_once_B requires] ([@stop_split] [@expl:call_once 'self' type invariant] inv_B self)
@@ -126,9 +126,9 @@ module M_valid
   
   type closure1 = { c0: UInt32.t }
   
-  predicate gt_log_u32 [@inline:trivial] (self: UInt32.t) (other: UInt32.t) = UInt32.lt other self
+  function gt_log_u32 [@inline:trivial] (self: UInt32.t) (other: UInt32.t) : bool = UInt32.lt other self
   
-  meta "rewrite_def" predicate gt_log_u32
+  meta "rewrite_def" function gt_log_u32
   
   let closure1 (self: closure1) (return (x: bool)) = (! bb0
     [ bb0 = s0 [ s0 = [ &res <- UInt32.gt self.c0 (7: UInt32.t) ] s1 | s1 = [ &_ret <- res ] s2 | s2 = return {_ret} ] ]
@@ -138,11 +138,12 @@ module M_valid
   
   type closure2 = { c0'0: MutBorrow.t UInt32.t }
   
-  predicate resolve_refmut_closure2 [@inline:trivial] (_1: MutBorrow.t closure2) = _1.final = _1.current
+  function resolve_refmut_closure2 [@inline:trivial] (_1: MutBorrow.t closure2) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_closure2
+  meta "rewrite_def" function resolve_refmut_closure2
   
-  predicate hist_inv_closure2 (self: closure2) (result_state: closure2) = result_state.c0'0.final = self.c0'0.final
+  function hist_inv_closure2 (self: closure2) (result_state: closure2) : bool = result_state.c0'0.final
+    = self.c0'0.final
   
   let closure2 (self: MutBorrow.t closure2) (b: bool) (return (x: ())) = (! bb0
     [ bb0 = any [ br0 -> {b = false} (! bb2) | br1 -> {b} (! bb1) ]
@@ -159,23 +160,24 @@ module M_valid
       /\ ([@stop_split] [@expl:closure hist_inv post] hist_inv_closure2 self.current self.final)}
       (! return {result}) ]
   
-  predicate precondition_closure1 (self: closure1) (args: ()) = true
+  function precondition_closure1 (self: closure1) (args: ()) : bool = true
   
-  meta "rewrite_def" predicate precondition_closure1
+  meta "rewrite_def" function precondition_closure1
   
-  predicate precondition_closure2 (self: closure2) (args: bool) = let b = args in true
+  function precondition_closure2 (self: closure2) (args: bool) : bool = let b = args in true
   
-  meta "rewrite_def" predicate precondition_closure2
+  meta "rewrite_def" function precondition_closure2
   
-  predicate postcondition_closure1 (self: closure1) (args: ()) (result: bool) =
-    result = gt_log_u32 self.c0 (7: UInt32.t)
+  function postcondition_closure1 (self: closure1) (args: ()) (result: bool) : bool = result
+    = gt_log_u32 self.c0 (7: UInt32.t)
   
-  meta "rewrite_def" predicate postcondition_closure1
+  meta "rewrite_def" function postcondition_closure1
   
-  predicate postcondition_once_closure2 (self: closure2) (args: bool) (result: ()) =
-    let b = args in b /\ self.c0'0.final = (2: UInt32.t) \/ not b /\ self.c0'0.final = (1: UInt32.t)
+  function postcondition_once_closure2 (self: closure2) (args: bool) (result: ()) : bool = let b = args in b
+      /\ self.c0'0.final = (2: UInt32.t)
+    \/ not b /\ self.c0'0.final = (1: UInt32.t)
   
-  meta "rewrite_def" predicate postcondition_once_closure2
+  meta "rewrite_def" function postcondition_once_closure2
   
   let inversed_if_closure1 (cond: closure1) (branch: closure2) (return (x: ())) =
   {[@stop_split] [@expl:inversed_if requires] precondition_closure1 cond ()

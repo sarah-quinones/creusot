@@ -1,6 +1,6 @@
-predicate inv_never [@inline:trivial] (_1: ()) = false
+function inv_never [@inline:trivial] (_1: ()) : bool = false
 
-meta "rewrite_def" predicate inv_never
+meta "rewrite_def" function inv_never
 
 meta "compute_max_steps" 1000000
 

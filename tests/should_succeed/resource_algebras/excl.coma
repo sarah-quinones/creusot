@@ -41,10 +41,10 @@ module M_exclusivity
       <> None)}
       (! return {result}) ]
   
-  predicate resolve_refmut_Resource_Excl_i32 [@inline:trivial] (_1: MutBorrow.t t_Resource_Excl_i32) =
-    _1.final = _1.current
+  function resolve_refmut_Resource_Excl_i32 [@inline:trivial] (_1: MutBorrow.t t_Resource_Excl_i32) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Resource_Excl_i32
+  meta "rewrite_def" function resolve_refmut_Resource_Excl_i32
   
   meta "compute_max_steps" 1000000
   

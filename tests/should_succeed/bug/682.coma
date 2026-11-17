@@ -5,15 +5,15 @@ module M_add_some
   use int.ComputerDivision
   use int.Int
   
-  predicate resolve_refmut_u64 [@inline:trivial] (_1: MutBorrow.t UInt64.t) = _1.final = _1.current
+  function resolve_refmut_u64 [@inline:trivial] (_1: MutBorrow.t UInt64.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_u64
+  meta "rewrite_def" function resolve_refmut_u64
   
   constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
   
-  predicate gt_log_u64 [@inline:trivial] (self: UInt64.t) (other: UInt64.t) = UInt64.lt other self
+  function gt_log_u64 [@inline:trivial] (self: UInt64.t) (other: UInt64.t) : bool = UInt64.lt other self
   
-  meta "rewrite_def" predicate gt_log_u64
+  meta "rewrite_def" function gt_log_u64
   
   meta "compute_max_steps" 1000000
   
@@ -37,18 +37,18 @@ module M_foo
   
   constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
   
-  predicate gt_log_u64 [@inline:trivial] (self: UInt64.t) (other: UInt64.t) = UInt64.lt other self
+  function gt_log_u64 [@inline:trivial] (self: UInt64.t) (other: UInt64.t) : bool = UInt64.lt other self
   
-  meta "rewrite_def" predicate gt_log_u64
+  meta "rewrite_def" function gt_log_u64
   
   let add_some (a: MutBorrow.t UInt64.t) (return (x: ())) =
   {[@stop_split] [@expl:add_some requires] UInt64.t'int a.current <= ComputerDivision.div (UInt64.t'int const_MAX) 2}
     any
     [ return (result: ()) -> {[@stop_split] [@expl:add_some ensures] gt_log_u64 a.final a.current} (! return {result}) ]
   
-  predicate resolve_refmut_u64 [@inline:trivial] (_1: MutBorrow.t UInt64.t) = _1.final = _1.current
+  function resolve_refmut_u64 [@inline:trivial] (_1: MutBorrow.t UInt64.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_u64
+  meta "rewrite_def" function resolve_refmut_u64
   
   meta "compute_max_steps" 1000000
   

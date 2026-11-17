@@ -15,9 +15,9 @@ let add_assign_u128 (self: MutBorrow.t UInt128.t) (other: UInt128.t) (return (x:
     = UInt128.t'int self.current + UInt128.t'int other}
     (! return {result}) ]
 
-predicate resolve_refmut_u128 [@inline:trivial] (_1: MutBorrow.t UInt128.t) = _1.final = _1.current
+function resolve_refmut_u128 [@inline:trivial] (_1: MutBorrow.t UInt128.t) : bool = _1.final = _1.current
 
-meta "rewrite_def" predicate resolve_refmut_u128
+meta "rewrite_def" function resolve_refmut_u128
 
 meta "compute_max_steps" 1000000
 

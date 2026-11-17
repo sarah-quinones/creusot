@@ -15,7 +15,7 @@ type t_A
 
 type t_Item
 
-predicate produces_A (self: t_A) (visited: Seq.seq t_Item) (o: t_A)
+function produces_A (self: t_A) (visited: Seq.seq t_Item) (o: t_A) : bool
 
 function produces_trans_A (a: t_A) (ab: Seq.seq t_Item) (b: t_A) (bc: Seq.seq t_Item) (c: t_A) : ()
 
@@ -26,9 +26,9 @@ function produces_refl_A (self: t_A) : ()
 
 axiom produces_refl_A_spec: forall self: t_A. produces_A self (Seq.empty: Seq.seq t_Item) self
 
-predicate completed_A (self: MutBorrow.t t_A)
+function completed_A (self: MutBorrow.t t_A) : bool
 
-predicate postcondition_size_hint (self: ()) (args: t_A) (result: tup2_usize_Option_usize)
+function postcondition_size_hint (self: ()) (args: t_A) (result: tup2_usize_Option_usize) : bool
 
 axiom postcondition_fndef:
   forall args: t_A, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -45,7 +45,7 @@ type t_B
 
 type t_Item'0
 
-predicate produces_B (self: t_B) (visited: Seq.seq t_Item'0) (o: t_B)
+function produces_B (self: t_B) (visited: Seq.seq t_Item'0) (o: t_B) : bool
 
 function produces_trans_B (a: t_B) (ab: Seq.seq t_Item'0) (b: t_B) (bc: Seq.seq t_Item'0) (c: t_B) : ()
 
@@ -57,9 +57,9 @@ function produces_refl_B (self: t_B) : ()
 
 axiom produces_refl_B_spec: forall self: t_B. produces_B self (Seq.empty: Seq.seq t_Item'0) self
 
-predicate completed_B (self: MutBorrow.t t_B)
+function completed_B (self: MutBorrow.t t_B) : bool
 
-predicate postcondition_size_hint'0 (self: ()) (args: t_B) (result: tup2_usize_Option_usize)
+function postcondition_size_hint'0 (self: ()) (args: t_B) (result: tup2_usize_Option_usize) : bool
 
 axiom postcondition_fndef'0:
   forall args: t_B, result: tup2_usize_Option_usize [postcondition_size_hint'0 () args result]. postcondition_size_hint'0 () args result
@@ -72,13 +72,13 @@ axiom postcondition_fndef'0:
 
 function iter_b_Zip_A_B (self: t_Zip_A_B) : t_B
 
-predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
 
-meta "rewrite_def" predicate ge_log_Int
+meta "rewrite_def" function ge_log_Int
 
 type tup2_Option_usize_Option_usize = { f0'0: t_Option_usize; f1'0: t_Option_usize }
 
-predicate postcondition_size_hint'1 (self: ()) (args: t_Zip_A_B) (result: tup2_usize_Option_usize) =
+function postcondition_size_hint'1 (self: ()) (args: t_Zip_A_B) (result: tup2_usize_Option_usize) : bool =
   let self'0 = args in exists ra: tup2_usize_Option_usize, rb: tup2_usize_Option_usize. postcondition_size_hint () (iter_a_Zip_A_B self'0) ra
     /\ postcondition_size_hint'0 () (iter_b_Zip_A_B self'0) rb
     /\ (UInt64.t'int ra.f0 <= UInt64.t'int rb.f0 -> result.f0 = ra.f0)
@@ -91,46 +91,46 @@ predicate postcondition_size_hint'1 (self: ()) (args: t_Zip_A_B) (result: tup2_u
       | {f0'0 = None; f1'0 = None} -> result.f1 = None
       end
 
-meta "rewrite_def" predicate postcondition_size_hint'1
+meta "rewrite_def" function postcondition_size_hint'1
 
-predicate inv_A (_1: t_A)
+function inv_A (_1: t_A) : bool
 
-predicate inv_B (_1: t_B)
+function inv_B (_1: t_B) : bool
 
-predicate invariant_Zip_A_B [@inline:trivial] (self: t_Zip_A_B) =
-  inv_A (iter_a_Zip_A_B self) /\ inv_B (iter_b_Zip_A_B self)
+function invariant_Zip_A_B [@inline:trivial] (self: t_Zip_A_B) : bool = inv_A (iter_a_Zip_A_B self)
+  /\ inv_B (iter_b_Zip_A_B self)
 
-meta "rewrite_def" predicate invariant_Zip_A_B
+meta "rewrite_def" function invariant_Zip_A_B
 
-predicate inv_Zip_A_B (_1: t_Zip_A_B)
+function inv_Zip_A_B (_1: t_Zip_A_B) : bool
 
 axiom inv_axiom: forall _1: t_Zip_A_B [inv_Zip_A_B _1]. inv_Zip_A_B _1 -> invariant_Zip_A_B _1
 
-predicate invariant_ref_Zip_A_B [@inline:trivial] (self: t_Zip_A_B) = inv_Zip_A_B self
+function invariant_ref_Zip_A_B [@inline:trivial] (self: t_Zip_A_B) : bool = inv_Zip_A_B self
 
-meta "rewrite_def" predicate invariant_ref_Zip_A_B
+meta "rewrite_def" function invariant_ref_Zip_A_B
 
-predicate inv_ref_Zip_A_B [@inline:trivial] (_1: t_Zip_A_B) = invariant_ref_Zip_A_B _1
+function inv_ref_Zip_A_B [@inline:trivial] (_1: t_Zip_A_B) : bool = invariant_ref_Zip_A_B _1
 
-meta "rewrite_def" predicate inv_ref_Zip_A_B
+meta "rewrite_def" function inv_ref_Zip_A_B
 
-predicate invariant_ref_A [@inline:trivial] (self: t_A) = inv_A self
+function invariant_ref_A [@inline:trivial] (self: t_A) : bool = inv_A self
 
-meta "rewrite_def" predicate invariant_ref_A
+meta "rewrite_def" function invariant_ref_A
 
-predicate inv_ref_A [@inline:trivial] (_1: t_A) = invariant_ref_A _1
+function inv_ref_A [@inline:trivial] (_1: t_A) : bool = invariant_ref_A _1
 
-meta "rewrite_def" predicate inv_ref_A
+meta "rewrite_def" function inv_ref_A
 
-predicate precondition_size_hint (self: ()) (args: t_A)
+function precondition_size_hint (self: ()) (args: t_A) : bool
 
 axiom precondition_fndef: forall args: t_A [precondition_size_hint () args]. (let self = args in inv_ref_A self)
     -> precondition_size_hint () args
 
-predicate postcondition_once_size_hint (self: ()) (args: t_A) (result: tup2_usize_Option_usize) =
+function postcondition_once_size_hint (self: ()) (args: t_A) (result: tup2_usize_Option_usize) : bool =
   postcondition_size_hint self args result
 
-meta "rewrite_def" predicate postcondition_once_size_hint
+meta "rewrite_def" function postcondition_once_size_hint
 
 let size_hint_A (self: t_A) (return (x: tup2_usize_Option_usize)) =
 {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -139,23 +139,23 @@ let size_hint_A (self: t_A) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint ensures] postcondition_once_size_hint () self result}
     (! return {result}) ]
 
-predicate invariant_ref_B [@inline:trivial] (self: t_B) = inv_B self
+function invariant_ref_B [@inline:trivial] (self: t_B) : bool = inv_B self
 
-meta "rewrite_def" predicate invariant_ref_B
+meta "rewrite_def" function invariant_ref_B
 
-predicate inv_ref_B [@inline:trivial] (_1: t_B) = invariant_ref_B _1
+function inv_ref_B [@inline:trivial] (_1: t_B) : bool = invariant_ref_B _1
 
-meta "rewrite_def" predicate inv_ref_B
+meta "rewrite_def" function inv_ref_B
 
-predicate precondition_size_hint'0 (self: ()) (args: t_B)
+function precondition_size_hint'0 (self: ()) (args: t_B) : bool
 
 axiom precondition_fndef'0: forall args: t_B [precondition_size_hint'0 () args]. (let self = args in inv_ref_B self)
     -> precondition_size_hint'0 () args
 
-predicate postcondition_once_size_hint'0 (self: ()) (args: t_B) (result: tup2_usize_Option_usize) =
+function postcondition_once_size_hint'0 (self: ()) (args: t_B) (result: tup2_usize_Option_usize) : bool =
   postcondition_size_hint'0 self args result
 
-meta "rewrite_def" predicate postcondition_once_size_hint'0
+meta "rewrite_def" function postcondition_once_size_hint'0
 
 let size_hint_B (self: t_B) (return (x: tup2_usize_Option_usize)) =
 {[@stop_split] [@expl:size_hint requires] precondition_size_hint'0 () self}

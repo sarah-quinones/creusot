@@ -7,32 +7,32 @@ module M_reverse_ghost
   
   type t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_T (Seq.get self i)
+  function invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+      -> inv_ref_T (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_T
+  meta "rewrite_def" function invariant_Seq_T
   
-  predicate inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Seq_T _1
+  function inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Seq_T
+  meta "rewrite_def" function inv_Seq_T
   
-  predicate invariant_Ghost_Seq_T [@inline:trivial] (self: Seq.seq t_T) = inv_Seq_T self
+  function invariant_Ghost_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = inv_Seq_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_Seq_T
+  meta "rewrite_def" function invariant_Ghost_Seq_T
   
-  predicate inv_Ghost_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Ghost_Seq_T _1
+  function inv_Ghost_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Ghost_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_Seq_T
+  meta "rewrite_def" function inv_Ghost_Seq_T
   
   let new_T (return (x: Seq.seq t_T)) = any
     [ return (result: Seq.seq t_T) ->
@@ -50,7 +50,7 @@ module M_reverse_ghost
   
   type t_Iter_T
   
-  predicate inv_Iter_T (_1: t_Iter_T)
+  function inv_Iter_T (_1: t_Iter_T) : bool
   
   function view_Iter_T (self: t_Iter_T) : Seq.seq t_T
   
@@ -62,31 +62,31 @@ module M_reverse_ghost
       /\ ([@stop_split] [@expl:into_iter ensures] self = view_Iter_T result)}
       (! return {result}) ]
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
-  predicate well_founded_relation_Int [@inline:trivial] (self: int) (other: int) =
-    ge_log_Int self 0 /\ gt_log_Int self other
+  function well_founded_relation_Int [@inline:trivial] (self: int) (other: int) : bool = ge_log_Int self 0
+    /\ gt_log_Int self other
   
-  meta "rewrite_def" predicate well_founded_relation_Int
+  meta "rewrite_def" function well_founded_relation_Int
   
   type t_Option_T = None | Some t_T
   
-  predicate invariant_refmut_Iter_T [@inline:trivial] (self: MutBorrow.t t_Iter_T) =
-    inv_Iter_T self.current /\ inv_Iter_T self.final
+  function invariant_refmut_Iter_T [@inline:trivial] (self: MutBorrow.t t_Iter_T) : bool = inv_Iter_T self.current
+    /\ inv_Iter_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Iter_T
+  meta "rewrite_def" function invariant_refmut_Iter_T
   
-  predicate inv_refmut_Iter_T [@inline:trivial] (_1: MutBorrow.t t_Iter_T) = invariant_refmut_Iter_T _1
+  function inv_refmut_Iter_T [@inline:trivial] (_1: MutBorrow.t t_Iter_T) : bool = invariant_refmut_Iter_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Iter_T
+  meta "rewrite_def" function inv_refmut_Iter_T
   
-  predicate inv_Option_T (_1: t_Option_T)
+  function inv_Option_T (_1: t_Option_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_T _1
       = match _1 with
@@ -94,10 +94,10 @@ module M_reverse_ghost
         | Some f0 -> inv_T f0
         end
   
-  predicate produces_Iter_T [@inline:trivial] (self: t_Iter_T) (visited: Seq.seq t_T) (o: t_Iter_T) =
+  function produces_Iter_T [@inline:trivial] (self: t_Iter_T) (visited: Seq.seq t_T) (o: t_Iter_T) : bool =
     view_Iter_T self = Seq.(++) visited (view_Iter_T o)
   
-  meta "rewrite_def" predicate produces_Iter_T
+  meta "rewrite_def" function produces_Iter_T
   
   function produces_trans_Iter_T (a: t_Iter_T) (ab: Seq.seq t_T) (b: t_Iter_T) (bc: Seq.seq t_T) (c: t_Iter_T) : ()
   
@@ -109,10 +109,10 @@ module M_reverse_ghost
   
   axiom produces_refl_Iter_T_spec: forall self: t_Iter_T. produces_Iter_T self (Seq.empty: Seq.seq t_T) self
   
-  predicate completed_Iter_T [@inline:trivial] (self: MutBorrow.t t_Iter_T) =
-    view_Iter_T self.current = (Seq.empty: Seq.seq t_T)
+  function completed_Iter_T [@inline:trivial] (self: MutBorrow.t t_Iter_T) : bool = view_Iter_T self.current
+    = (Seq.empty: Seq.seq t_T)
   
-  meta "rewrite_def" predicate completed_Iter_T
+  meta "rewrite_def" function completed_Iter_T
   
   let next_Iter_T (self: MutBorrow.t t_Iter_T) (return (x: t_Option_T)) =
   {[@stop_split] [@expl:next 'self' type invariant] inv_refmut_Iter_T self}
@@ -125,9 +125,9 @@ module M_reverse_ghost
         end)}
       (! return {result}) ]
   
-  predicate resolve_refmut_Iter_T [@inline:trivial] (_1: MutBorrow.t t_Iter_T) = _1.final = _1.current
+  function resolve_refmut_Iter_T [@inline:trivial] (_1: MutBorrow.t t_Iter_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Iter_T
+  meta "rewrite_def" function resolve_refmut_Iter_T
   
   let elim_Some (_x: t_Option_T) (return (f0: t_T)) = any
     [ _k (f0: t_T) -> {Some f0 = _x} (! return {f0})
@@ -137,14 +137,14 @@ module M_reverse_ghost
         end}
       any) ]
   
-  predicate invariant_refmut_Seq_T [@inline:trivial] (self: MutBorrow.t (Seq.seq t_T)) =
-    inv_Seq_T self.current /\ inv_Seq_T self.final
+  function invariant_refmut_Seq_T [@inline:trivial] (self: MutBorrow.t (Seq.seq t_T)) : bool = inv_Seq_T self.current
+    /\ inv_Seq_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Seq_T
+  meta "rewrite_def" function invariant_refmut_Seq_T
   
-  predicate inv_refmut_Seq_T [@inline:trivial] (_1: MutBorrow.t (Seq.seq t_T)) = invariant_refmut_Seq_T _1
+  function inv_refmut_Seq_T [@inline:trivial] (_1: MutBorrow.t (Seq.seq t_T)) : bool = invariant_refmut_Seq_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Seq_T
+  meta "rewrite_def" function inv_refmut_Seq_T
   
   function cons_T [@inline:trivial] (self: Seq.seq t_T) (x: t_T) : Seq.seq t_T = Seq.cons x self
   
@@ -157,9 +157,9 @@ module M_reverse_ghost
     [ return (result: ()) -> {[@stop_split] [@expl:push_front ensures] self.final = cons_T self.current x}
       (! return {result}) ]
   
-  predicate resolve_T (_1: t_T)
+  function resolve_T (_1: t_T) : bool
   
-  predicate resolve_Option_T (_1: t_Option_T)
+  function resolve_Option_T (_1: t_Option_T) : bool
   
   axiom resolve_axiom [@rewrite]: forall _1: t_Option_T [resolve_Option_T _1]. resolve_Option_T _1
       = match _1 with
@@ -167,18 +167,18 @@ module M_reverse_ghost
         | Some x0 -> resolve_T x0
         end
   
-  predicate resolve_Seq_T (self: Seq.seq t_T) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> resolve_T (Seq.get self i)
+  function resolve_Seq_T (self: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+      -> resolve_T (Seq.get self i)
   
-  predicate resolve_Seq_T'0 [@inline:trivial] (_1: Seq.seq t_T) = resolve_Seq_T _1
+  function resolve_Seq_T'0 [@inline:trivial] (_1: Seq.seq t_T) : bool = resolve_Seq_T _1
   
-  meta "rewrite_def" predicate resolve_Seq_T'0
+  meta "rewrite_def" function resolve_Seq_T'0
   
-  predicate resolve_Iter_T [@inline:trivial] (self: t_Iter_T) = resolve_Seq_T'0 (view_Iter_T self)
+  function resolve_Iter_T [@inline:trivial] (self: t_Iter_T) : bool = resolve_Seq_T'0 (view_Iter_T self)
   
-  meta "rewrite_def" predicate resolve_Iter_T
+  meta "rewrite_def" function resolve_Iter_T
   
-  predicate resolve_Iter_T'0 (_1: t_Iter_T)
+  function resolve_Iter_T'0 (_1: t_Iter_T) : bool
   
   axiom resolve_axiom'0: forall _1: t_Iter_T [resolve_Iter_T'0 _1]. resolve_Iter_T'0 _1 -> resolve_Iter_T _1
   
@@ -278,40 +278,40 @@ module M_reverse_ghost_ref
   
   type t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate invariant_ref_ref_T [@inline:trivial] (self: t_T) = inv_ref_T self
+  function invariant_ref_ref_T [@inline:trivial] (self: t_T) : bool = inv_ref_T self
   
-  meta "rewrite_def" predicate invariant_ref_ref_T
+  meta "rewrite_def" function invariant_ref_ref_T
   
-  predicate inv_ref_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_ref_T _1
+  function inv_ref_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_ref_T
+  meta "rewrite_def" function inv_ref_ref_T
   
-  predicate invariant_Seq_ref_T [@inline:trivial] (self: Seq.seq t_T) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_ref_T (Seq.get self i)
+  function invariant_Seq_ref_T [@inline:trivial] (self: Seq.seq t_T) : bool = forall i: int. 0 <= i
+        /\ i < Seq.length self -> inv_ref_ref_T (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_ref_T
+  meta "rewrite_def" function invariant_Seq_ref_T
   
-  predicate inv_Seq_ref_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Seq_ref_T _1
+  function inv_Seq_ref_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Seq_ref_T _1
   
-  meta "rewrite_def" predicate inv_Seq_ref_T
+  meta "rewrite_def" function inv_Seq_ref_T
   
-  predicate invariant_Ghost_Seq_ref_T [@inline:trivial] (self: Seq.seq t_T) = inv_Seq_ref_T self
+  function invariant_Ghost_Seq_ref_T [@inline:trivial] (self: Seq.seq t_T) : bool = inv_Seq_ref_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_Seq_ref_T
+  meta "rewrite_def" function invariant_Ghost_Seq_ref_T
   
-  predicate inv_Ghost_Seq_ref_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Ghost_Seq_ref_T _1
+  function inv_Ghost_Seq_ref_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Ghost_Seq_ref_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_Seq_ref_T
+  meta "rewrite_def" function inv_Ghost_Seq_ref_T
   
   let new_ref_T (return (x: Seq.seq t_T)) = any
     [ return (result: Seq.seq t_T) ->
@@ -327,30 +327,30 @@ module M_reverse_ghost_ref
       /\ ([@stop_split] [@expl:into_inner ensures] result = self)}
       (! return {result}) ]
   
-  predicate invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_T (Seq.get self i)
+  function invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+      -> inv_ref_T (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_T
+  meta "rewrite_def" function invariant_Seq_T
   
-  predicate inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Seq_T _1
+  function inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Seq_T
+  meta "rewrite_def" function inv_Seq_T
   
-  predicate invariant_ref_Seq_T [@inline:trivial] (self: Seq.seq t_T) = inv_Seq_T self
+  function invariant_ref_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = inv_Seq_T self
   
-  meta "rewrite_def" predicate invariant_ref_Seq_T
+  meta "rewrite_def" function invariant_ref_Seq_T
   
-  predicate inv_ref_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_ref_Seq_T _1
+  function inv_ref_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_ref_Seq_T _1
   
-  meta "rewrite_def" predicate inv_ref_Seq_T
+  meta "rewrite_def" function inv_ref_Seq_T
   
-  predicate invariant_Ghost_ref_Seq_T [@inline:trivial] (self: Seq.seq t_T) = inv_ref_Seq_T self
+  function invariant_Ghost_ref_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = inv_ref_Seq_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_ref_Seq_T
+  meta "rewrite_def" function invariant_Ghost_ref_Seq_T
   
-  predicate inv_Ghost_ref_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Ghost_ref_Seq_T _1
+  function inv_Ghost_ref_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Ghost_ref_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_ref_Seq_T
+  meta "rewrite_def" function inv_Ghost_ref_Seq_T
   
   let into_inner_ref_Seq_T (self: Seq.seq t_T) (return (x: Seq.seq t_T)) =
   {[@stop_split] [@expl:into_inner 'self' type invariant] inv_Ghost_ref_Seq_T self}
@@ -362,7 +362,7 @@ module M_reverse_ghost_ref
   
   type t_Iter_ref_T
   
-  predicate inv_Iter_ref_T (_1: t_Iter_ref_T)
+  function inv_Iter_ref_T (_1: t_Iter_ref_T) : bool
   
   function view_Iter_ref_T (self: t_Iter_ref_T) : Seq.seq t_T
   
@@ -374,31 +374,32 @@ module M_reverse_ghost_ref
       /\ ([@stop_split] [@expl:into_iter ensures] self = view_Iter_ref_T result)}
       (! return {result}) ]
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
-  predicate well_founded_relation_Int [@inline:trivial] (self: int) (other: int) =
-    ge_log_Int self 0 /\ gt_log_Int self other
+  function well_founded_relation_Int [@inline:trivial] (self: int) (other: int) : bool = ge_log_Int self 0
+    /\ gt_log_Int self other
   
-  meta "rewrite_def" predicate well_founded_relation_Int
+  meta "rewrite_def" function well_founded_relation_Int
   
   type t_Option_ref_T = None | Some t_T
   
-  predicate invariant_refmut_Iter_ref_T [@inline:trivial] (self: MutBorrow.t t_Iter_ref_T) =
+  function invariant_refmut_Iter_ref_T [@inline:trivial] (self: MutBorrow.t t_Iter_ref_T) : bool =
     inv_Iter_ref_T self.current /\ inv_Iter_ref_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Iter_ref_T
+  meta "rewrite_def" function invariant_refmut_Iter_ref_T
   
-  predicate inv_refmut_Iter_ref_T [@inline:trivial] (_1: MutBorrow.t t_Iter_ref_T) = invariant_refmut_Iter_ref_T _1
+  function inv_refmut_Iter_ref_T [@inline:trivial] (_1: MutBorrow.t t_Iter_ref_T) : bool =
+    invariant_refmut_Iter_ref_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Iter_ref_T
+  meta "rewrite_def" function inv_refmut_Iter_ref_T
   
-  predicate inv_Option_ref_T (_1: t_Option_ref_T)
+  function inv_Option_ref_T (_1: t_Option_ref_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Option_ref_T [inv_Option_ref_T _1]. inv_Option_ref_T _1
       = match _1 with
@@ -406,10 +407,10 @@ module M_reverse_ghost_ref
         | Some f0 -> inv_ref_T f0
         end
   
-  predicate produces_Iter_ref_T [@inline:trivial] (self: t_Iter_ref_T) (visited: Seq.seq t_T) (o: t_Iter_ref_T) =
+  function produces_Iter_ref_T [@inline:trivial] (self: t_Iter_ref_T) (visited: Seq.seq t_T) (o: t_Iter_ref_T) : bool =
     view_Iter_ref_T self = Seq.(++) visited (view_Iter_ref_T o)
   
-  meta "rewrite_def" predicate produces_Iter_ref_T
+  meta "rewrite_def" function produces_Iter_ref_T
   
   function produces_trans_Iter_ref_T (a: t_Iter_ref_T) (ab: Seq.seq t_T) (b: t_Iter_ref_T) (bc: Seq.seq t_T) (c: t_Iter_ref_T) : ()
   
@@ -421,10 +422,10 @@ module M_reverse_ghost_ref
   
   axiom produces_refl_Iter_ref_T_spec: forall self: t_Iter_ref_T. produces_Iter_ref_T self (Seq.empty: Seq.seq t_T) self
   
-  predicate completed_Iter_ref_T [@inline:trivial] (self: MutBorrow.t t_Iter_ref_T) =
-    view_Iter_ref_T self.current = (Seq.empty: Seq.seq t_T)
+  function completed_Iter_ref_T [@inline:trivial] (self: MutBorrow.t t_Iter_ref_T) : bool = view_Iter_ref_T self.current
+    = (Seq.empty: Seq.seq t_T)
   
-  meta "rewrite_def" predicate completed_Iter_ref_T
+  meta "rewrite_def" function completed_Iter_ref_T
   
   let next_Iter_ref_T (self: MutBorrow.t t_Iter_ref_T) (return (x: t_Option_ref_T)) =
   {[@stop_split] [@expl:next 'self' type invariant] inv_refmut_Iter_ref_T self}
@@ -437,9 +438,9 @@ module M_reverse_ghost_ref
         end)}
       (! return {result}) ]
   
-  predicate resolve_refmut_Iter_ref_T [@inline:trivial] (_1: MutBorrow.t t_Iter_ref_T) = _1.final = _1.current
+  function resolve_refmut_Iter_ref_T [@inline:trivial] (_1: MutBorrow.t t_Iter_ref_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Iter_ref_T
+  meta "rewrite_def" function resolve_refmut_Iter_ref_T
   
   let elim_Some (_x: t_Option_ref_T) (return (f0: t_T)) = any
     [ _k (f0: t_T) -> {Some f0 = _x} (! return {f0})
@@ -449,14 +450,14 @@ module M_reverse_ghost_ref
         end}
       any) ]
   
-  predicate invariant_refmut_Seq_ref_T [@inline:trivial] (self: MutBorrow.t (Seq.seq t_T)) =
+  function invariant_refmut_Seq_ref_T [@inline:trivial] (self: MutBorrow.t (Seq.seq t_T)) : bool =
     inv_Seq_ref_T self.current /\ inv_Seq_ref_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Seq_ref_T
+  meta "rewrite_def" function invariant_refmut_Seq_ref_T
   
-  predicate inv_refmut_Seq_ref_T [@inline:trivial] (_1: MutBorrow.t (Seq.seq t_T)) = invariant_refmut_Seq_ref_T _1
+  function inv_refmut_Seq_ref_T [@inline:trivial] (_1: MutBorrow.t (Seq.seq t_T)) : bool = invariant_refmut_Seq_ref_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Seq_ref_T
+  meta "rewrite_def" function inv_refmut_Seq_ref_T
   
   function cons_ref_T [@inline:trivial] (self: Seq.seq t_T) (x: t_T) : Seq.seq t_T = Seq.cons x self
   

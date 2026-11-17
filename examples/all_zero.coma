@@ -32,12 +32,12 @@ module M_all_zero
   
   meta "rewrite_def" function deep_model_usize
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
-  predicate produces_Range_usize (self: t_Range_usize) (visited: Seq.seq UInt64.t) (o: t_Range_usize) =
-    self.end' = o.end'
+  function produces_Range_usize (self: t_Range_usize) (visited: Seq.seq UInt64.t) (o: t_Range_usize) : bool = self.end'
+      = o.end'
     /\ deep_model_usize self.start <= deep_model_usize o.start
     /\ (gt_log_Int (Seq.length visited) 0 -> deep_model_usize o.start <= deep_model_usize o.end')
     /\ Seq.length visited = deep_model_usize o.start - deep_model_usize self.start
@@ -55,16 +55,15 @@ module M_all_zero
   axiom produces_refl_Range_usize_spec:
     forall self: t_Range_usize. produces_Range_usize self (Seq.empty: Seq.seq UInt64.t) self
   
-  predicate resolve_refmut_Range_usize [@inline:trivial] (_1: MutBorrow.t t_Range_usize) = _1.final = _1.current
+  function resolve_refmut_Range_usize [@inline:trivial] (_1: MutBorrow.t t_Range_usize) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Range_usize
+  meta "rewrite_def" function resolve_refmut_Range_usize
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate completed_Range_usize (self: MutBorrow.t t_Range_usize) =
-    resolve_refmut_Range_usize self
+  function completed_Range_usize (self: MutBorrow.t t_Range_usize) : bool = resolve_refmut_Range_usize self
     /\ ge_log_Int (deep_model_usize self.current.start) (deep_model_usize self.current.end')
   
   let next_Range_usize (self: MutBorrow.t t_Range_usize) (return (x: t_Option_usize)) = any
@@ -79,9 +78,9 @@ module M_all_zero
   
   meta "rewrite_def" function index_Vec_u32_Global
   
-  predicate inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) = true
+  function inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_usize
+  meta "rewrite_def" function inv_Seq_usize
   
   let elim_Some (_x: t_Option_usize) (return (f0: UInt64.t)) = any
     [ _k (f0: UInt64.t) -> {Some f0 = _x} (! return {f0})
@@ -91,20 +90,20 @@ module M_all_zero
         end}
       any) ]
   
-  predicate in_bounds_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq UInt32.t) =
-    UInt64.t'int self < Seq.length seq
+  function in_bounds_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq UInt32.t) : bool = UInt64.t'int self
+    < Seq.length seq
   
-  meta "rewrite_def" predicate in_bounds_usize
+  meta "rewrite_def" function in_bounds_usize
   
-  predicate has_value_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq UInt32.t) (out: UInt32.t) =
+  function has_value_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq UInt32.t) (out: UInt32.t) : bool =
     Seq.get seq (UInt64.t'int self) = out
   
-  meta "rewrite_def" predicate has_value_usize
+  meta "rewrite_def" function has_value_usize
   
-  predicate resolve_elswhere_usize [@inline:trivial] (self: UInt64.t) (old': Seq.seq UInt32.t) (fin: Seq.seq UInt32.t) =
-    forall i: int. 0 <= i /\ i <> UInt64.t'int self /\ i < Seq.length old' -> Seq.get old' i = Seq.get fin i
+  function resolve_elswhere_usize [@inline:trivial] (self: UInt64.t) (old': Seq.seq UInt32.t) (fin: Seq.seq UInt32.t) : bool
+   = forall i: int. 0 <= i /\ i <> UInt64.t'int self /\ i < Seq.length old' -> Seq.get old' i = Seq.get fin i
   
-  meta "rewrite_def" predicate resolve_elswhere_usize
+  meta "rewrite_def" function resolve_elswhere_usize
   
   let index_mut_Vec_u32_Global (self: MutBorrow.t t_Vec_u32_Global) (index: UInt64.t)
     (return (x: MutBorrow.t UInt32.t)) =
@@ -118,13 +117,14 @@ module M_all_zero
       = Seq.length (view_Vec_u32_Global self.current))}
       (! return {result}) ]
   
-  predicate resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) = _1.final = _1.current
+  function resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_u32
+  meta "rewrite_def" function resolve_refmut_u32
   
-  predicate resolve_refmut_Vec_u32_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_u32_Global) = _1.final = _1.current
+  function resolve_refmut_Vec_u32_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_u32_Global) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Vec_u32_Global
+  meta "rewrite_def" function resolve_refmut_Vec_u32_Global
   
   meta "compute_max_steps" 1000000
   

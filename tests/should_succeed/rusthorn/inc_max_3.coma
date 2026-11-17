@@ -7,13 +7,14 @@ module M_inc_max_3
     [ return (result: ()) -> {[@stop_split] [@expl:swap ensures] mma.final = mmb.current /\ mmb.final = mma.current}
       (! return {result}) ]
   
-  predicate resolve_refmut_refmut_u32 [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t UInt32.t)) = _1.final = _1.current
+  function resolve_refmut_refmut_u32 [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t UInt32.t)) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_refmut_u32
+  meta "rewrite_def" function resolve_refmut_refmut_u32
   
-  predicate resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) = _1.final = _1.current
+  function resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_u32
+  meta "rewrite_def" function resolve_refmut_u32
   
   meta "compute_max_steps" 1000000
   
@@ -124,9 +125,9 @@ module M_test_inc_max_3
       /\ mb.final <> mc.final /\ mc.final <> ma.final}
       (! return {result}) ]
   
-  predicate resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) = _1.final = _1.current
+  function resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_u32
+  meta "rewrite_def" function resolve_refmut_u32
   
   meta "compute_max_steps" 1000000
   

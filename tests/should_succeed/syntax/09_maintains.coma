@@ -2,7 +2,7 @@ module M_test_1
   use creusot.prelude.Any
   use creusot.int.UInt64
   
-  predicate invariant' (self: ()) (b: bool) (c: UInt64.t) = true
+  function invariant' (self: ()) (b: bool) (c: UInt64.t) : bool = true
   
   meta "compute_max_steps" 1000000
   
@@ -18,11 +18,11 @@ module M_test_2
   use creusot.prelude.Any
   use creusot.int.UInt64
   
-  predicate resolve_refmut_A [@inline:trivial] (_1: MutBorrow.t ()) = _1.final = _1.current
+  function resolve_refmut_A [@inline:trivial] (_1: MutBorrow.t ()) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_A
+  meta "rewrite_def" function resolve_refmut_A
   
-  predicate invariant' (self: ()) (b: bool) (c: UInt64.t) = true
+  function invariant' (self: ()) (b: bool) (c: UInt64.t) : bool = true
   
   meta "compute_max_steps" 1000000
   
@@ -40,15 +40,15 @@ module M_test_3
   use creusot.prelude.Any
   use creusot.int.UInt64
   
-  predicate resolve_refmut_bool [@inline:trivial] (_1: MutBorrow.t bool) = _1.final = _1.current
+  function resolve_refmut_bool [@inline:trivial] (_1: MutBorrow.t bool) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_bool
+  meta "rewrite_def" function resolve_refmut_bool
   
-  predicate resolve_refmut_A [@inline:trivial] (_1: MutBorrow.t ()) = _1.final = _1.current
+  function resolve_refmut_A [@inline:trivial] (_1: MutBorrow.t ()) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_A
+  meta "rewrite_def" function resolve_refmut_A
   
-  predicate invariant' (self: ()) (b: bool) (c: UInt64.t) = true
+  function invariant' (self: ()) (b: bool) (c: UInt64.t) : bool = true
   
   meta "compute_max_steps" 1000000
   
@@ -66,7 +66,7 @@ module M_test_5
   use creusot.int.UInt64
   use int.Int
   
-  predicate inv2 (self: ()) (b: int) = true
+  function inv2 (self: ()) (b: int) : bool = true
   
   meta "compute_max_steps" 1000000
   
@@ -81,7 +81,7 @@ end
 module M_test_6
   use creusot.prelude.Any
   
-  predicate other_inv (a: ()) (b: bool) = true
+  function other_inv (a: ()) (b: bool) : bool = true
   
   meta "compute_max_steps" 1000000
   

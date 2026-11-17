@@ -8,21 +8,21 @@ function view_NonZero_T [@inline:trivial] (self: t_T) : int = view_T self
 
 meta "rewrite_def" function view_NonZero_T
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate invariant_NonZero_T (self: t_T) = view_NonZero_T self <> 0 /\ inv_T self
+function invariant_NonZero_T (self: t_T) : bool = view_NonZero_T self <> 0 /\ inv_T self
 
-predicate inv_NonZero_T [@inline:trivial] (_1: t_T) = invariant_NonZero_T _1
+function inv_NonZero_T [@inline:trivial] (_1: t_T) : bool = invariant_NonZero_T _1
 
-meta "rewrite_def" predicate inv_NonZero_T
+meta "rewrite_def" function inv_NonZero_T
 
-predicate invariant_Ghost_NonZero_T [@inline:trivial] (self: t_T) = inv_NonZero_T self
+function invariant_Ghost_NonZero_T [@inline:trivial] (self: t_T) : bool = inv_NonZero_T self
 
-meta "rewrite_def" predicate invariant_Ghost_NonZero_T
+meta "rewrite_def" function invariant_Ghost_NonZero_T
 
-predicate inv_Ghost_NonZero_T [@inline:trivial] (_1: t_T) = invariant_Ghost_NonZero_T _1
+function inv_Ghost_NonZero_T [@inline:trivial] (_1: t_T) : bool = invariant_Ghost_NonZero_T _1
 
-meta "rewrite_def" predicate inv_Ghost_NonZero_T
+meta "rewrite_def" function inv_Ghost_NonZero_T
 
 meta "compute_max_steps" 1000000
 

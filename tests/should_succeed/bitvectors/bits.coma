@@ -178,8 +178,8 @@ module M_merge_bvs
   
   meta "rewrite_def" function shl_usize
   
-  predicate has_bit (bitvec: UInt64BW.t) (bit: UInt8BW.t) =
-    UInt64BW.bw_and bitvec (shl_usize (1: UInt64BW.t) bit) <> (0: UInt64BW.t)
+  function has_bit (bitvec: UInt64BW.t) (bit: UInt8BW.t) : bool = UInt64BW.bw_and bitvec (shl_usize (1: UInt64BW.t) bit)
+    <> (0: UInt64BW.t)
   
   meta "compute_max_steps" 1000000
   
@@ -229,8 +229,8 @@ module M_set_bit
   
   meta "rewrite_def" function shl_usize
   
-  predicate has_bit (bitvec: UInt64BW.t) (bit: UInt8BW.t) =
-    UInt64BW.bw_and bitvec (shl_usize (1: UInt64BW.t) bit) <> (0: UInt64BW.t)
+  function has_bit (bitvec: UInt64BW.t) (bit: UInt8BW.t) : bool = UInt64BW.bw_and bitvec (shl_usize (1: UInt64BW.t) bit)
+    <> (0: UInt64BW.t)
   
   meta "compute_max_steps" 1000000
   
@@ -288,8 +288,8 @@ module M_unset_bit
   
   meta "rewrite_def" function shl_usize
   
-  predicate has_bit (bitvec: UInt64BW.t) (bit: UInt8BW.t) =
-    UInt64BW.bw_and bitvec (shl_usize (1: UInt64BW.t) bit) <> (0: UInt64BW.t)
+  function has_bit (bitvec: UInt64BW.t) (bit: UInt8BW.t) : bool = UInt64BW.bw_and bitvec (shl_usize (1: UInt64BW.t) bit)
+    <> (0: UInt64BW.t)
   
   meta "compute_max_steps" 1000000
   

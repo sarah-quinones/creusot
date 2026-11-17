@@ -47,60 +47,60 @@ module M_impl_SpinLockGuard_T__deref (* SpinLockGuard<'a, T> *)
   
   function ward_PCell_T (self: t_Perm_PCell_T) : t_PCell_T
   
-  predicate guards_ref_PCell_T [@inline:trivial] (self: t_PCell_T) (c: t_Perm_PCell_T) = ward_PCell_T c = self
+  function guards_ref_PCell_T [@inline:trivial] (self: t_PCell_T) (c: t_Perm_PCell_T) : bool = ward_PCell_T c = self
   
-  meta "rewrite_def" predicate guards_ref_PCell_T
+  meta "rewrite_def" function guards_ref_PCell_T
   
   function cur_Perm_PCell_T (self: t_FullBorrow_Perm_PCell_T) : t_Perm_PCell_T
   
   function fin_FullBorrow_Perm_PCell_T (self: t_FullBorrow_Perm_PCell_T) : t_Perm_PCell_T
   
-  predicate guards_PCell_T [@inline:trivial] (self: t_PCell_T) (initial: t_FullBorrow_Perm_PCell_T) (current': t_FullBorrow_Perm_PCell_T) =
-    guards_ref_PCell_T self (cur_Perm_PCell_T current')
+  function guards_PCell_T [@inline:trivial] (self: t_PCell_T) (initial: t_FullBorrow_Perm_PCell_T) (current': t_FullBorrow_Perm_PCell_T) : bool
+   = guards_ref_PCell_T self (cur_Perm_PCell_T current')
     /\ fin_FullBorrow_Perm_PCell_T initial = fin_FullBorrow_Perm_PCell_T current'
   
-  meta "rewrite_def" predicate guards_PCell_T
+  meta "rewrite_def" function guards_PCell_T
   
-  predicate invariant_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    guards_PCell_T self._guard self._initial self.inner
+  function invariant_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = guards_PCell_T self._guard self._initial self.inner
   
-  meta "rewrite_def" predicate invariant_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function invariant_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
-  predicate inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T (_1: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T)
+  function inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T (_1: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
   
   axiom inv_axiom [@rewrite]:
     forall _1: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T [inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1]. inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
       = invariant_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
   
-  predicate invariant_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T self
+  function invariant_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function invariant_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
-  predicate inv_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    invariant_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
+  function inv_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = invariant_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function inv_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
-  predicate invariant_ref_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    inv_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T self
+  function invariant_ref_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = inv_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T self
   
-  meta "rewrite_def" predicate invariant_ref_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function invariant_ref_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
-  predicate inv_ref_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    invariant_ref_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
+  function inv_ref_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = invariant_ref_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
   
-  meta "rewrite_def" predicate inv_ref_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function inv_ref_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
-  predicate invariant_ref_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T self
+  function invariant_ref_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T self
   
-  meta "rewrite_def" predicate invariant_ref_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function invariant_ref_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
-  predicate inv_ref_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    invariant_ref_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
+  function inv_ref_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = invariant_ref_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
   
-  meta "rewrite_def" predicate inv_ref_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function inv_ref_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
   let deref_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T (self: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T)
     (return (x: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T)) =
@@ -111,31 +111,33 @@ module M_impl_SpinLockGuard_T__deref (* SpinLockGuard<'a, T> *)
       /\ ([@stop_split] [@expl:deref ensures] result = self)}
       (! return {result}) ]
   
-  predicate inv_LifetimeToken (_1: t_LifetimeToken)
+  function inv_LifetimeToken (_1: t_LifetimeToken) : bool
   
-  predicate invariant_Ghost_LifetimeToken [@inline:trivial] (self: t_LifetimeToken) = inv_LifetimeToken self
+  function invariant_Ghost_LifetimeToken [@inline:trivial] (self: t_LifetimeToken) : bool = inv_LifetimeToken self
   
-  meta "rewrite_def" predicate invariant_Ghost_LifetimeToken
+  meta "rewrite_def" function invariant_Ghost_LifetimeToken
   
-  predicate inv_Ghost_LifetimeToken [@inline:trivial] (_1: t_LifetimeToken) = invariant_Ghost_LifetimeToken _1
+  function inv_Ghost_LifetimeToken [@inline:trivial] (_1: t_LifetimeToken) : bool = invariant_Ghost_LifetimeToken _1
   
-  meta "rewrite_def" predicate inv_Ghost_LifetimeToken
+  meta "rewrite_def" function inv_Ghost_LifetimeToken
   
-  predicate invariant_ref_Ghost_LifetimeToken [@inline:trivial] (self: t_LifetimeToken) = inv_Ghost_LifetimeToken self
+  function invariant_ref_Ghost_LifetimeToken [@inline:trivial] (self: t_LifetimeToken) : bool =
+    inv_Ghost_LifetimeToken self
   
-  meta "rewrite_def" predicate invariant_ref_Ghost_LifetimeToken
+  meta "rewrite_def" function invariant_ref_Ghost_LifetimeToken
   
-  predicate inv_ref_Ghost_LifetimeToken [@inline:trivial] (_1: t_LifetimeToken) = invariant_ref_Ghost_LifetimeToken _1
+  function inv_ref_Ghost_LifetimeToken [@inline:trivial] (_1: t_LifetimeToken) : bool =
+    invariant_ref_Ghost_LifetimeToken _1
   
-  meta "rewrite_def" predicate inv_ref_Ghost_LifetimeToken
+  meta "rewrite_def" function inv_ref_Ghost_LifetimeToken
   
-  predicate invariant_ref_LifetimeToken [@inline:trivial] (self: t_LifetimeToken) = inv_LifetimeToken self
+  function invariant_ref_LifetimeToken [@inline:trivial] (self: t_LifetimeToken) : bool = inv_LifetimeToken self
   
-  meta "rewrite_def" predicate invariant_ref_LifetimeToken
+  meta "rewrite_def" function invariant_ref_LifetimeToken
   
-  predicate inv_ref_LifetimeToken [@inline:trivial] (_1: t_LifetimeToken) = invariant_ref_LifetimeToken _1
+  function inv_ref_LifetimeToken [@inline:trivial] (_1: t_LifetimeToken) : bool = invariant_ref_LifetimeToken _1
   
-  meta "rewrite_def" predicate inv_ref_LifetimeToken
+  meta "rewrite_def" function inv_ref_LifetimeToken
   
   let deref_Ghost_LifetimeToken (self: t_LifetimeToken) (return (x: t_LifetimeToken)) =
   {[@stop_split] [@expl:deref 'self' type invariant] inv_ref_Ghost_LifetimeToken self}
@@ -161,15 +163,15 @@ module M_impl_SpinLockGuard_T__deref (* SpinLockGuard<'a, T> *)
   let new_ref_Perm_PCell_T (x: t_Perm_PCell_T) (return (x'0: t_Perm_PCell_T)) = any
     [ return (result: t_Perm_PCell_T) -> {[@stop_split] [@expl:new ensures] result = x} (! return {result}) ]
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
   function val_unsized_PCell_T (self: t_Perm_PCell_T) : t_T
   
@@ -208,8 +210,8 @@ module M_impl_SpinLockGuard_T__deref (* SpinLockGuard<'a, T> *)
   
   function public_SpinLockInv_T (self: t_AtomicInvariant_SpinLockInv_T) : tup2_tup4_PCell_T_AtomicBool_Lifetime_Mapping_T_bool_Id
   
-  predicate invariant_SpinLockGuard_T (self: t_SpinLockGuard_T) =
-    guard_FullBorrow_Perm_PCell_T self.perm'0 = self.lock'0.data
+  function invariant_SpinLockGuard_T (self: t_SpinLockGuard_T) : bool = guard_FullBorrow_Perm_PCell_T self.perm'0
+      = self.lock'0.data
     /\ lft_Perm_PCell_T self.perm'0.inner = lft self.lock'0.lft_tok
     /\ val_Option_Excl_unit self.excl'0 <> None
     /\ id_Option_Excl_unit self.excl'0 = (public_SpinLockInv_T self.lock'0.inner_inv).f1'1
@@ -219,9 +221,9 @@ module M_impl_SpinLockGuard_T__deref (* SpinLockGuard<'a, T> *)
   
   function frac (self: t_LifetimeToken) : t_PositiveReal
   
-  predicate gt_log_Real [@inline:trivial] (self: Real.real) (other: Real.real) = Real.(<) other self
+  function gt_log_Real [@inline:trivial] (self: Real.real) (other: Real.real) : bool = Real.(<) other self
   
-  meta "rewrite_def" predicate gt_log_Real
+  meta "rewrite_def" function gt_log_Real
   
   function to_real (self: t_PositiveReal) : Real.real
   
@@ -246,42 +248,41 @@ module M_impl_SpinLockGuard_T__deref (* SpinLockGuard<'a, T> *)
   
   function namespace_SpinLockInv_T (self: t_AtomicInvariant_SpinLockInv_T) : t_Namespace
   
-  predicate invariant_SpinLock_T (self: t_SpinLock_T) =
-    (public_SpinLockInv_T self.inner_inv).f0'1
+  function invariant_SpinLock_T (self: t_SpinLock_T) : bool = (public_SpinLockInv_T self.inner_inv).f0'1
       = { f0'0 = self.data; f1'0 = self.atomic; f2'0 = lft self.lft_tok; f3'0 = self.inv }
     /\ frac self.lft_tok = from_int 1
     /\ lft_Perm_PCell_T'0 self.end' = lft self.lft_tok
     /\ ward_PCell_T (fin_Ghost_EndBorrow_Perm_PCell_T self.end') = self.data
     /\ namespace_SpinLockInv_T self.inner_inv = Namespace_SPIN_LOCK 0
   
-  predicate inv_AtomicBool (_1: t_AtomicBool)
+  function inv_AtomicBool (_1: t_AtomicBool) : bool
   
-  predicate inv_SpinLock_T (_1: t_SpinLock_T)
+  function inv_SpinLock_T (_1: t_SpinLock_T) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_SpinLock_T [inv_SpinLock_T _1]. inv_SpinLock_T _1
       = (invariant_SpinLock_T _1 /\ inv_AtomicBool _1.atomic /\ inv_Ghost_LifetimeToken _1.lft_tok)
   
-  predicate invariant_ref_SpinLock_T [@inline:trivial] (self: t_SpinLock_T) = inv_SpinLock_T self
+  function invariant_ref_SpinLock_T [@inline:trivial] (self: t_SpinLock_T) : bool = inv_SpinLock_T self
   
-  meta "rewrite_def" predicate invariant_ref_SpinLock_T
+  meta "rewrite_def" function invariant_ref_SpinLock_T
   
-  predicate inv_ref_SpinLock_T [@inline:trivial] (_1: t_SpinLock_T) = invariant_ref_SpinLock_T _1
+  function inv_ref_SpinLock_T [@inline:trivial] (_1: t_SpinLock_T) : bool = invariant_ref_SpinLock_T _1
   
-  meta "rewrite_def" predicate inv_ref_SpinLock_T
+  meta "rewrite_def" function inv_ref_SpinLock_T
   
-  predicate inv_SpinLockGuard_T (_1: t_SpinLockGuard_T)
+  function inv_SpinLockGuard_T (_1: t_SpinLockGuard_T) : bool
   
   axiom inv_axiom'1 [@rewrite]: forall _1: t_SpinLockGuard_T [inv_SpinLockGuard_T _1]. inv_SpinLockGuard_T _1
       = (invariant_SpinLockGuard_T _1
       /\ inv_ref_SpinLock_T _1.lock'0 /\ inv_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1.perm'0)
   
-  predicate invariant_ref_SpinLockGuard_T [@inline:trivial] (self: t_SpinLockGuard_T) = inv_SpinLockGuard_T self
+  function invariant_ref_SpinLockGuard_T [@inline:trivial] (self: t_SpinLockGuard_T) : bool = inv_SpinLockGuard_T self
   
-  meta "rewrite_def" predicate invariant_ref_SpinLockGuard_T
+  meta "rewrite_def" function invariant_ref_SpinLockGuard_T
   
-  predicate inv_ref_SpinLockGuard_T [@inline:trivial] (_1: t_SpinLockGuard_T) = invariant_ref_SpinLockGuard_T _1
+  function inv_ref_SpinLockGuard_T [@inline:trivial] (_1: t_SpinLockGuard_T) : bool = invariant_ref_SpinLockGuard_T _1
   
-  meta "rewrite_def" predicate inv_ref_SpinLockGuard_T
+  meta "rewrite_def" function inv_ref_SpinLockGuard_T
   
   function val_PCell_T [@inline:trivial] (self: t_Perm_PCell_T) : t_T = val_unsized_PCell_T self
   
@@ -369,61 +370,61 @@ module M_impl_SpinLockGuard_T__deref_mut (* SpinLockGuard<'a, T> *)
   
   function ward_PCell_T (self: t_Perm_PCell_T) : t_PCell_T
   
-  predicate guards_ref_PCell_T [@inline:trivial] (self: t_PCell_T) (c: t_Perm_PCell_T) = ward_PCell_T c = self
+  function guards_ref_PCell_T [@inline:trivial] (self: t_PCell_T) (c: t_Perm_PCell_T) : bool = ward_PCell_T c = self
   
-  meta "rewrite_def" predicate guards_ref_PCell_T
+  meta "rewrite_def" function guards_ref_PCell_T
   
   function cur_Perm_PCell_T (self: t_FullBorrow_Perm_PCell_T) : t_Perm_PCell_T
   
   function fin_FullBorrow_Perm_PCell_T (self: t_FullBorrow_Perm_PCell_T) : t_Perm_PCell_T
   
-  predicate guards_PCell_T [@inline:trivial] (self: t_PCell_T) (initial: t_FullBorrow_Perm_PCell_T) (current': t_FullBorrow_Perm_PCell_T) =
-    guards_ref_PCell_T self (cur_Perm_PCell_T current')
+  function guards_PCell_T [@inline:trivial] (self: t_PCell_T) (initial: t_FullBorrow_Perm_PCell_T) (current': t_FullBorrow_Perm_PCell_T) : bool
+   = guards_ref_PCell_T self (cur_Perm_PCell_T current')
     /\ fin_FullBorrow_Perm_PCell_T initial = fin_FullBorrow_Perm_PCell_T current'
   
-  meta "rewrite_def" predicate guards_PCell_T
+  meta "rewrite_def" function guards_PCell_T
   
-  predicate invariant_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    guards_PCell_T self._guard self._initial self.inner
+  function invariant_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = guards_PCell_T self._guard self._initial self.inner
   
-  meta "rewrite_def" predicate invariant_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function invariant_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
-  predicate inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T (_1: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T)
+  function inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T (_1: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
   
   axiom inv_axiom [@rewrite]:
     forall _1: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T [inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1]. inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
       = invariant_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
   
-  predicate invariant_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T self
+  function invariant_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function invariant_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
-  predicate inv_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    invariant_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
+  function inv_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = invariant_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function inv_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
-  predicate invariant_refmut_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: MutBorrow.t t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    inv_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T self.current
+  function invariant_refmut_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: MutBorrow.t t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = inv_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T self.current
     /\ inv_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function invariant_refmut_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
-  predicate inv_refmut_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: MutBorrow.t t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    invariant_refmut_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
+  function inv_refmut_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: MutBorrow.t t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = invariant_refmut_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function inv_refmut_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
-  predicate invariant_refmut_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: MutBorrow.t t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T self.current /\ inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T self.final
+  function invariant_refmut_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: MutBorrow.t t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T self.current /\ inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function invariant_refmut_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
-  predicate inv_refmut_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: MutBorrow.t t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    invariant_refmut_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
+  function inv_refmut_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: MutBorrow.t t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = invariant_refmut_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function inv_refmut_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
   let deref_mut_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T
     (self: MutBorrow.t t_Guarded_FullBorrow_Perm_PCell_T_PCell_T)
@@ -445,31 +446,33 @@ module M_impl_SpinLockGuard_T__deref_mut (* SpinLockGuard<'a, T> *)
     [ return (result: MutBorrow.t t_FullBorrow_Perm_PCell_T) -> {[@stop_split] [@expl:into_inner ensures] result = self}
       (! return {result}) ]
   
-  predicate inv_LifetimeToken (_1: t_LifetimeToken)
+  function inv_LifetimeToken (_1: t_LifetimeToken) : bool
   
-  predicate invariant_Ghost_LifetimeToken [@inline:trivial] (self: t_LifetimeToken) = inv_LifetimeToken self
+  function invariant_Ghost_LifetimeToken [@inline:trivial] (self: t_LifetimeToken) : bool = inv_LifetimeToken self
   
-  meta "rewrite_def" predicate invariant_Ghost_LifetimeToken
+  meta "rewrite_def" function invariant_Ghost_LifetimeToken
   
-  predicate inv_Ghost_LifetimeToken [@inline:trivial] (_1: t_LifetimeToken) = invariant_Ghost_LifetimeToken _1
+  function inv_Ghost_LifetimeToken [@inline:trivial] (_1: t_LifetimeToken) : bool = invariant_Ghost_LifetimeToken _1
   
-  meta "rewrite_def" predicate inv_Ghost_LifetimeToken
+  meta "rewrite_def" function inv_Ghost_LifetimeToken
   
-  predicate invariant_ref_Ghost_LifetimeToken [@inline:trivial] (self: t_LifetimeToken) = inv_Ghost_LifetimeToken self
+  function invariant_ref_Ghost_LifetimeToken [@inline:trivial] (self: t_LifetimeToken) : bool =
+    inv_Ghost_LifetimeToken self
   
-  meta "rewrite_def" predicate invariant_ref_Ghost_LifetimeToken
+  meta "rewrite_def" function invariant_ref_Ghost_LifetimeToken
   
-  predicate inv_ref_Ghost_LifetimeToken [@inline:trivial] (_1: t_LifetimeToken) = invariant_ref_Ghost_LifetimeToken _1
+  function inv_ref_Ghost_LifetimeToken [@inline:trivial] (_1: t_LifetimeToken) : bool =
+    invariant_ref_Ghost_LifetimeToken _1
   
-  meta "rewrite_def" predicate inv_ref_Ghost_LifetimeToken
+  meta "rewrite_def" function inv_ref_Ghost_LifetimeToken
   
-  predicate invariant_ref_LifetimeToken [@inline:trivial] (self: t_LifetimeToken) = inv_LifetimeToken self
+  function invariant_ref_LifetimeToken [@inline:trivial] (self: t_LifetimeToken) : bool = inv_LifetimeToken self
   
-  meta "rewrite_def" predicate invariant_ref_LifetimeToken
+  meta "rewrite_def" function invariant_ref_LifetimeToken
   
-  predicate inv_ref_LifetimeToken [@inline:trivial] (_1: t_LifetimeToken) = invariant_ref_LifetimeToken _1
+  function inv_ref_LifetimeToken [@inline:trivial] (_1: t_LifetimeToken) : bool = invariant_ref_LifetimeToken _1
   
-  meta "rewrite_def" predicate inv_ref_LifetimeToken
+  meta "rewrite_def" function inv_ref_LifetimeToken
   
   let deref_Ghost_LifetimeToken (self: t_LifetimeToken) (return (x: t_LifetimeToken)) =
   {[@stop_split] [@expl:deref 'self' type invariant] inv_ref_Ghost_LifetimeToken self}
@@ -499,28 +502,28 @@ module M_impl_SpinLockGuard_T__deref_mut (* SpinLockGuard<'a, T> *)
       /\ cur_Perm_PCell_T self.final = result.final)}
       (! return {result}) ]
   
-  predicate resolve_refmut_FullBorrow_Perm_PCell_T [@inline:trivial] (_1: MutBorrow.t t_FullBorrow_Perm_PCell_T) =
+  function resolve_refmut_FullBorrow_Perm_PCell_T [@inline:trivial] (_1: MutBorrow.t t_FullBorrow_Perm_PCell_T) : bool =
     _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_FullBorrow_Perm_PCell_T
+  meta "rewrite_def" function resolve_refmut_FullBorrow_Perm_PCell_T
   
-  predicate resolve_refmut_Perm_PCell_T [@inline:trivial] (_1: MutBorrow.t t_Perm_PCell_T) = _1.final = _1.current
+  function resolve_refmut_Perm_PCell_T [@inline:trivial] (_1: MutBorrow.t t_Perm_PCell_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Perm_PCell_T
+  meta "rewrite_def" function resolve_refmut_Perm_PCell_T
   
   let new_refmut_Perm_PCell_T (x: MutBorrow.t t_Perm_PCell_T) (return (x'0: MutBorrow.t t_Perm_PCell_T)) = any
     [ return (result: MutBorrow.t t_Perm_PCell_T) -> {[@stop_split] [@expl:new ensures] result = x}
       (! return {result}) ]
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) = inv_T self.current /\ inv_T self.final
+  function invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) : bool = inv_T self.current /\ inv_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_T
+  meta "rewrite_def" function invariant_refmut_T
   
-  predicate inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = invariant_refmut_T _1
+  function inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = invariant_refmut_T _1
   
-  meta "rewrite_def" predicate inv_refmut_T
+  meta "rewrite_def" function inv_refmut_T
   
   function fin_Ghost_refmut_Perm_PCell_T [@inline:trivial] (self: MutBorrow.t t_Perm_PCell_T) : t_Perm_PCell_T =
     self.final
@@ -540,14 +543,14 @@ module M_impl_SpinLockGuard_T__deref_mut (* SpinLockGuard<'a, T> *)
       = val_unsized_PCell_T (fin_Ghost_refmut_Perm_PCell_T perm))}
       (! return {result}) ]
   
-  predicate resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = _1.final = _1.current
+  function resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_T
+  meta "rewrite_def" function resolve_refmut_T
   
-  predicate resolve_refmut_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: MutBorrow.t t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    _1.final = _1.current
+  function resolve_refmut_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: MutBorrow.t t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function resolve_refmut_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
   function guard_FullBorrow_Perm_PCell_T [@inline:trivial] (self: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : t_PCell_T
    = self._guard
@@ -576,8 +579,8 @@ module M_impl_SpinLockGuard_T__deref_mut (* SpinLockGuard<'a, T> *)
   
   function public_SpinLockInv_T (self: t_AtomicInvariant_SpinLockInv_T) : tup2_tup4_PCell_T_AtomicBool_Lifetime_Mapping_T_bool_Id
   
-  predicate invariant_SpinLockGuard_T (self: t_SpinLockGuard_T) =
-    guard_FullBorrow_Perm_PCell_T self.perm'0 = self.lock'0.data
+  function invariant_SpinLockGuard_T (self: t_SpinLockGuard_T) : bool = guard_FullBorrow_Perm_PCell_T self.perm'0
+      = self.lock'0.data
     /\ lft_Perm_PCell_T self.perm'0.inner = lft self.lock'0.lft_tok
     /\ val_Option_Excl_unit self.excl'0 <> None
     /\ id_Option_Excl_unit self.excl'0 = (public_SpinLockInv_T self.lock'0.inner_inv).f1'1
@@ -587,9 +590,9 @@ module M_impl_SpinLockGuard_T__deref_mut (* SpinLockGuard<'a, T> *)
   
   function frac (self: t_LifetimeToken) : t_PositiveReal
   
-  predicate gt_log_Real [@inline:trivial] (self: Real.real) (other: Real.real) = Real.(<) other self
+  function gt_log_Real [@inline:trivial] (self: Real.real) (other: Real.real) : bool = Real.(<) other self
   
-  meta "rewrite_def" predicate gt_log_Real
+  meta "rewrite_def" function gt_log_Real
   
   function to_real (self: t_PositiveReal) : Real.real
   
@@ -614,48 +617,48 @@ module M_impl_SpinLockGuard_T__deref_mut (* SpinLockGuard<'a, T> *)
   
   function namespace_SpinLockInv_T (self: t_AtomicInvariant_SpinLockInv_T) : t_Namespace
   
-  predicate invariant_SpinLock_T (self: t_SpinLock_T) =
-    (public_SpinLockInv_T self.inner_inv).f0'1
+  function invariant_SpinLock_T (self: t_SpinLock_T) : bool = (public_SpinLockInv_T self.inner_inv).f0'1
       = { f0'0 = self.data; f1'0 = self.atomic; f2'0 = lft self.lft_tok; f3'0 = self.inv }
     /\ frac self.lft_tok = from_int 1
     /\ lft_Perm_PCell_T'0 self.end' = lft self.lft_tok
     /\ ward_PCell_T (fin_Ghost_EndBorrow_Perm_PCell_T self.end') = self.data
     /\ namespace_SpinLockInv_T self.inner_inv = Namespace_SPIN_LOCK 0
   
-  predicate inv_AtomicBool (_1: t_AtomicBool)
+  function inv_AtomicBool (_1: t_AtomicBool) : bool
   
-  predicate inv_SpinLock_T (_1: t_SpinLock_T)
+  function inv_SpinLock_T (_1: t_SpinLock_T) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_SpinLock_T [inv_SpinLock_T _1]. inv_SpinLock_T _1
       = (invariant_SpinLock_T _1 /\ inv_AtomicBool _1.atomic /\ inv_Ghost_LifetimeToken _1.lft_tok)
   
-  predicate invariant_ref_SpinLock_T [@inline:trivial] (self: t_SpinLock_T) = inv_SpinLock_T self
+  function invariant_ref_SpinLock_T [@inline:trivial] (self: t_SpinLock_T) : bool = inv_SpinLock_T self
   
-  meta "rewrite_def" predicate invariant_ref_SpinLock_T
+  meta "rewrite_def" function invariant_ref_SpinLock_T
   
-  predicate inv_ref_SpinLock_T [@inline:trivial] (_1: t_SpinLock_T) = invariant_ref_SpinLock_T _1
+  function inv_ref_SpinLock_T [@inline:trivial] (_1: t_SpinLock_T) : bool = invariant_ref_SpinLock_T _1
   
-  meta "rewrite_def" predicate inv_ref_SpinLock_T
+  meta "rewrite_def" function inv_ref_SpinLock_T
   
-  predicate inv_SpinLockGuard_T (_1: t_SpinLockGuard_T)
+  function inv_SpinLockGuard_T (_1: t_SpinLockGuard_T) : bool
   
   axiom inv_axiom'1 [@rewrite]: forall _1: t_SpinLockGuard_T [inv_SpinLockGuard_T _1]. inv_SpinLockGuard_T _1
       = (invariant_SpinLockGuard_T _1
       /\ inv_ref_SpinLock_T _1.lock'0 /\ inv_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1.perm'0)
   
-  predicate invariant_refmut_SpinLockGuard_T [@inline:trivial] (self: MutBorrow.t t_SpinLockGuard_T) =
+  function invariant_refmut_SpinLockGuard_T [@inline:trivial] (self: MutBorrow.t t_SpinLockGuard_T) : bool =
     inv_SpinLockGuard_T self.current /\ inv_SpinLockGuard_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_SpinLockGuard_T
+  meta "rewrite_def" function invariant_refmut_SpinLockGuard_T
   
-  predicate inv_refmut_SpinLockGuard_T [@inline:trivial] (_1: MutBorrow.t t_SpinLockGuard_T) =
+  function inv_refmut_SpinLockGuard_T [@inline:trivial] (_1: MutBorrow.t t_SpinLockGuard_T) : bool =
     invariant_refmut_SpinLockGuard_T _1
   
-  meta "rewrite_def" predicate inv_refmut_SpinLockGuard_T
+  meta "rewrite_def" function inv_refmut_SpinLockGuard_T
   
-  predicate resolve_refmut_SpinLockGuard_T [@inline:trivial] (_1: MutBorrow.t t_SpinLockGuard_T) = _1.final = _1.current
+  function resolve_refmut_SpinLockGuard_T [@inline:trivial] (_1: MutBorrow.t t_SpinLockGuard_T) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_SpinLockGuard_T
+  meta "rewrite_def" function resolve_refmut_SpinLockGuard_T
   
   function val_PCell_T [@inline:trivial] (self: t_Perm_PCell_T) : t_T = val_unsized_PCell_T self
   
@@ -917,57 +920,57 @@ module M_impl_SpinLockGuard_T__unlock (* SpinLockGuard<'a, T> *)
   
   function ward_PCell_T (self: t_Perm_PCell_T) : t_PCell_T
   
-  predicate guards_ref_PCell_T [@inline:trivial] (self: t_PCell_T) (c: t_Perm_PCell_T) = ward_PCell_T c = self
+  function guards_ref_PCell_T [@inline:trivial] (self: t_PCell_T) (c: t_Perm_PCell_T) : bool = ward_PCell_T c = self
   
-  meta "rewrite_def" predicate guards_ref_PCell_T
+  meta "rewrite_def" function guards_ref_PCell_T
   
   function cur_Perm_PCell_T (self: t_FullBorrow_Perm_PCell_T) : t_Perm_PCell_T
   
   function fin_FullBorrow_Perm_PCell_T (self: t_FullBorrow_Perm_PCell_T) : t_Perm_PCell_T
   
-  predicate guards_PCell_T [@inline:trivial] (self: t_PCell_T) (initial: t_FullBorrow_Perm_PCell_T) (current': t_FullBorrow_Perm_PCell_T) =
-    guards_ref_PCell_T self (cur_Perm_PCell_T current')
+  function guards_PCell_T [@inline:trivial] (self: t_PCell_T) (initial: t_FullBorrow_Perm_PCell_T) (current': t_FullBorrow_Perm_PCell_T) : bool
+   = guards_ref_PCell_T self (cur_Perm_PCell_T current')
     /\ fin_FullBorrow_Perm_PCell_T initial = fin_FullBorrow_Perm_PCell_T current'
   
-  meta "rewrite_def" predicate guards_PCell_T
+  meta "rewrite_def" function guards_PCell_T
   
-  predicate invariant_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    guards_PCell_T self._guard self._initial self.inner
+  function invariant_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = guards_PCell_T self._guard self._initial self.inner
   
-  meta "rewrite_def" predicate invariant_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function invariant_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
-  predicate inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T (_1: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T)
+  function inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T (_1: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
   
   axiom inv_axiom [@rewrite]:
     forall _1: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T [inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1]. inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
       = invariant_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
   
-  predicate invariant_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T self
+  function invariant_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function invariant_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
-  predicate inv_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    invariant_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
+  function inv_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = invariant_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function inv_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
-  predicate inv_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T (_1: t_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T)
+  function inv_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T (_1: t_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
   
-  predicate inv_tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    inv_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1.f1'1
+  function inv_tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = inv_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1.f1'1
   
-  meta "rewrite_def" predicate inv_tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function inv_tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
-  predicate invariant_Ghost_tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    inv_tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T self
+  function invariant_Ghost_tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = inv_tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function invariant_Ghost_tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
-  predicate inv_Ghost_tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    invariant_Ghost_tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
+  function inv_Ghost_tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = invariant_Ghost_tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function inv_Ghost_tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
   function view_Guarded_FullBorrow_Perm_PCell_T_PCell_T (self: t_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : t_SyncView
   
@@ -993,31 +996,31 @@ module M_impl_SpinLockGuard_T__unlock (* SpinLockGuard<'a, T> *)
       /\ ([@stop_split] [@expl:into_inner ensures] result = self)}
       (! return {result}) ]
   
-  predicate shot_store_AtomicBool (self: t_Committer_AtomicBool_bool_unit_Release)
+  function shot_store_AtomicBool (self: t_Committer_AtomicBool_bool_unit_Release) : bool
   
   function ward_AtomicBool (self: t_Committer_AtomicBool_bool_unit_Release) : t_AtomicBool
   
   function ward_AtomicBool'0 (self: t_Perm_AtomicBool) : t_AtomicBool
   
-  predicate val_load_AtomicBool (self: t_Committer_AtomicBool_bool_unit_Release)
+  function val_load_AtomicBool (self: t_Committer_AtomicBool_bool_unit_Release) : bool
   
-  predicate val_store_AtomicBool (self: t_Committer_AtomicBool_bool_unit_Release)
+  function val_store_AtomicBool (self: t_Committer_AtomicBool_bool_unit_Release) : bool
   
   function timestamp_AtomicBool (self: t_Committer_AtomicBool_bool_unit_Release) : int
   
-  predicate hist_inv_AtomicBool [@inline:trivial] (self: t_Committer_AtomicBool_bool_unit_Release) (other: t_Committer_AtomicBool_bool_unit_Release) =
-    ward_AtomicBool self = ward_AtomicBool other
+  function hist_inv_AtomicBool [@inline:trivial] (self: t_Committer_AtomicBool_bool_unit_Release) (other: t_Committer_AtomicBool_bool_unit_Release) : bool
+   = ward_AtomicBool self = ward_AtomicBool other
     /\ val_load_AtomicBool self = val_load_AtomicBool other
     /\ val_store_AtomicBool self = val_store_AtomicBool other /\ timestamp_AtomicBool self = timestamp_AtomicBool other
   
-  meta "rewrite_def" predicate hist_inv_AtomicBool
+  meta "rewrite_def" function hist_inv_AtomicBool
   
-  predicate lt_log_SyncView (self: t_SyncView) (_2: t_SyncView)
+  function lt_log_SyncView (self: t_SyncView) (_2: t_SyncView) : bool
   
-  predicate le_log_SyncView [@inline:trivial] (self: t_SyncView) (other: t_SyncView) =
-    lt_log_SyncView self other \/ self = other
+  function le_log_SyncView [@inline:trivial] (self: t_SyncView) (other: t_SyncView) : bool = lt_log_SyncView self other
+    \/ self = other
   
-  meta "rewrite_def" predicate le_log_SyncView
+  meta "rewrite_def" function le_log_SyncView
   
   function le_lt_log_SyncView (self: t_SyncView) (other: t_SyncView) : ()
   
@@ -1061,17 +1064,18 @@ module M_impl_SpinLockGuard_T__unlock (* SpinLockGuard<'a, T> *)
   
   meta "rewrite_def" function val_AtomicBool
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function len_Int (self: t_FMap_Int_tup2_bool_SyncView) : int
   
   axiom len_Int_spec: forall self: t_FMap_Int_tup2_bool_SyncView [len_Int self]. ge_log_Int (len_Int self) 0
   
-  predicate contains_Int [@inline:trivial] (self: t_FMap_Int_tup2_bool_SyncView) (k: int) = lookup_Int self k <> None'3
+  function contains_Int [@inline:trivial] (self: t_FMap_Int_tup2_bool_SyncView) (k: int) : bool = lookup_Int self k
+    <> None'3
   
-  meta "rewrite_def" predicate contains_Int
+  meta "rewrite_def" function contains_Int
   
   function add_Int (self: t_FMap_Int_tup2_bool_SyncView) (k: int) (v: tup2_bool_SyncView) : t_FMap_Int_tup2_bool_SyncView
   
@@ -1105,20 +1109,21 @@ module M_impl_SpinLockGuard_T__unlock (* SpinLockGuard<'a, T> *)
       + 1) { f0'2 = val_store_AtomicBool self.current; f1'2 = sync_view.final })}
       (! return {result}) ]
   
-  predicate resolve_refmut_SyncView [@inline:trivial] (_1: MutBorrow.t t_SyncView) = _1.final = _1.current
+  function resolve_refmut_SyncView [@inline:trivial] (_1: MutBorrow.t t_SyncView) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_SyncView
+  meta "rewrite_def" function resolve_refmut_SyncView
   
-  predicate resolve_refmut_Perm_AtomicBool [@inline:trivial] (_1: MutBorrow.t t_Perm_AtomicBool) = _1.final = _1.current
+  function resolve_refmut_Perm_AtomicBool [@inline:trivial] (_1: MutBorrow.t t_Perm_AtomicBool) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Perm_AtomicBool
+  meta "rewrite_def" function resolve_refmut_Perm_AtomicBool
   
-  predicate resolve_refmut_refmut_Committer_AtomicBool_bool_unit_Release [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_Committer_AtomicBool_bool_unit_Release)) =
-    _1.final = _1.current
+  function resolve_refmut_refmut_Committer_AtomicBool_bool_unit_Release [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_Committer_AtomicBool_bool_unit_Release)) : bool
+   = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_refmut_Committer_AtomicBool_bool_unit_Release
+  meta "rewrite_def" function resolve_refmut_refmut_Committer_AtomicBool_bool_unit_Release
   
-  predicate inv_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T (_1: t_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T)
+  function inv_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T (_1: t_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
   
   axiom inv_axiom'0 [@rewrite]:
     forall _1: t_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T [inv_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1]. inv_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
@@ -1127,9 +1132,9 @@ module M_impl_SpinLockGuard_T__unlock (* SpinLockGuard<'a, T> *)
         | Some f0'3 -> inv_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T f0'3
         end
   
-  predicate resolve_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T (_1: t_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T)
+  function resolve_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T (_1: t_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
   
-  predicate resolve_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T (_1: t_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T)
+  function resolve_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T (_1: t_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
   
   axiom resolve_axiom [@rewrite]:
     forall _1: t_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T [resolve_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1]. resolve_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
@@ -1138,9 +1143,9 @@ module M_impl_SpinLockGuard_T__unlock (* SpinLockGuard<'a, T> *)
         | Some x0 -> resolve_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T x0
         end
   
-  predicate inv_Int [@inline:trivial] (_1: int) = true
+  function inv_Int [@inline:trivial] (_1: int) : bool = true
   
-  meta "rewrite_def" predicate inv_Int
+  meta "rewrite_def" function inv_Int
   
   let into_ghost_Int (self: int) (return (x: int)) = {[@stop_split] [@expl:into_ghost requires] inv_Int self}
     any [ return (result: int) -> {[@stop_split] [@expl:into_ghost ensures] result = self} (! return {result}) ]
@@ -1148,29 +1153,30 @@ module M_impl_SpinLockGuard_T__unlock (* SpinLockGuard<'a, T> *)
   let deref_Ghost_Int (self: int) (return (x: int)) = any
     [ return (result: int) -> {[@stop_split] [@expl:deref ensures] result = self} (! return {result}) ]
   
-  predicate inv_SpinLockInv_T (_1: t_SpinLockInv_T)
+  function inv_SpinLockInv_T (_1: t_SpinLockInv_T) : bool
   
   axiom inv_axiom'1 [@rewrite]: forall _1: t_SpinLockInv_T [inv_SpinLockInv_T _1]. inv_SpinLockInv_T _1
       = inv_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1.perm'0
   
-  predicate invariant_refmut_SpinLockInv_T [@inline:trivial] (self: MutBorrow.t t_SpinLockInv_T) =
+  function invariant_refmut_SpinLockInv_T [@inline:trivial] (self: MutBorrow.t t_SpinLockInv_T) : bool =
     inv_SpinLockInv_T self.current /\ inv_SpinLockInv_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_SpinLockInv_T
+  meta "rewrite_def" function invariant_refmut_SpinLockInv_T
   
-  predicate inv_refmut_SpinLockInv_T [@inline:trivial] (_1: MutBorrow.t t_SpinLockInv_T) =
+  function inv_refmut_SpinLockInv_T [@inline:trivial] (_1: MutBorrow.t t_SpinLockInv_T) : bool =
     invariant_refmut_SpinLockInv_T _1
   
-  meta "rewrite_def" predicate inv_refmut_SpinLockInv_T
+  meta "rewrite_def" function inv_refmut_SpinLockInv_T
   
-  predicate resolve_refmut_SpinLockInv_T [@inline:trivial] (_1: MutBorrow.t t_SpinLockInv_T) = _1.final = _1.current
+  function resolve_refmut_SpinLockInv_T [@inline:trivial] (_1: MutBorrow.t t_SpinLockInv_T) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_SpinLockInv_T
+  meta "rewrite_def" function resolve_refmut_SpinLockInv_T
   
-  predicate inv_closure0 [@inline:trivial] (_1: closure0) =
+  function inv_closure0 [@inline:trivial] (_1: closure0) : bool =
     let {c0'0 = x0; c1'0 = x1; c2'0 = x2} = _1 in inv_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T x0
   
-  meta "rewrite_def" predicate inv_closure0
+  meta "rewrite_def" function inv_closure0
   
   let closure0 [@coma:extspec] (self: closure0) (inner_inv'0: MutBorrow.t t_SpinLockInv_T) (return (x: ())) =
   {[@stop_split] [@expl:closure0 requires] ([@stop_split] [@expl:closure 'self' type invariant] inv_closure0 self)
@@ -1264,7 +1270,7 @@ module M_impl_SpinLockGuard_T__unlock (* SpinLockGuard<'a, T> *)
   
   type t_FnGhostWrapper_closure0 = { f0'3: closure0 }
   
-  predicate inv_FnGhostWrapper_closure0 (_1: t_FnGhostWrapper_closure0)
+  function inv_FnGhostWrapper_closure0 (_1: t_FnGhostWrapper_closure0) : bool
   
   axiom inv_axiom'2 [@rewrite]:
     forall _1: t_FnGhostWrapper_closure0 [inv_FnGhostWrapper_closure0 _1]. inv_FnGhostWrapper_closure0 _1
@@ -1278,13 +1284,13 @@ module M_impl_SpinLockGuard_T__unlock (* SpinLockGuard<'a, T> *)
       /\ ([@stop_split] [@expl:__new ensures] result.f0'3 = f)}
       (! return {result}) ]
   
-  predicate contains_Namespace [@inline:trivial] (self: Set.set t_Namespace) (e: t_Namespace) = Set.mem e self
+  function contains_Namespace [@inline:trivial] (self: Set.set t_Namespace) (e: t_Namespace) : bool = Set.mem e self
   
-  meta "rewrite_def" predicate contains_Namespace
+  meta "rewrite_def" function contains_Namespace
   
   function namespaces (self: t_Tokens) : Set.set t_Namespace
   
-  predicate contains (self: t_Tokens) (namespace: t_Namespace) = contains_Namespace (namespaces self) namespace
+  function contains (self: t_Tokens) (namespace: t_Namespace) : bool = contains_Namespace (namespaces self) namespace
   
   function namespace_SpinLockInv_T (self: t_AtomicInvariant_SpinLockInv_T) : t_Namespace
   
@@ -1334,7 +1340,7 @@ module M_impl_SpinLockGuard_T__unlock (* SpinLockGuard<'a, T> *)
   
   meta "rewrite_def" function val_PCell_T
   
-  predicate protocol_SpinLockInv_T (self: t_SpinLockInv_T) =
+  function protocol_SpinLockInv_T (self: t_SpinLockInv_T) : bool =
     (forall t: int, view: t_SyncView. lookup_Int (val_AtomicBool self.perm_atomic'0) t
           = Some'3 { f0'2 = false; f1'2 = view }
         -> Some'0 t = self.ts'0 \/ lookup_Int (val_AtomicBool self.perm_atomic'0) (t + 1) <> None'3)
@@ -1347,25 +1353,25 @@ module M_impl_SpinLockGuard_T__unlock (* SpinLockGuard<'a, T> *)
       | _ -> false
       end
   
-  predicate precondition_closure0 (self: closure0) (args: MutBorrow.t t_SpinLockInv_T) =
+  function precondition_closure0 (self: closure0) (args: MutBorrow.t t_SpinLockInv_T) : bool =
     let inner_inv'0 = args in closure0'pre self inner_inv'0
   
-  meta "rewrite_def" predicate precondition_closure0
+  meta "rewrite_def" function precondition_closure0
   
-  predicate precondition_FnGhostWrapper_closure0 (self: t_FnGhostWrapper_closure0) (args: MutBorrow.t t_SpinLockInv_T) =
-    precondition_closure0 self.f0'3 args
+  function precondition_FnGhostWrapper_closure0 (self: t_FnGhostWrapper_closure0) (args: MutBorrow.t t_SpinLockInv_T) : bool
+   = precondition_closure0 self.f0'3 args
   
-  meta "rewrite_def" predicate precondition_FnGhostWrapper_closure0
+  meta "rewrite_def" function precondition_FnGhostWrapper_closure0
   
-  predicate postcondition_once_closure0 (self: closure0) (args: MutBorrow.t t_SpinLockInv_T) (result: ()) =
+  function postcondition_once_closure0 (self: closure0) (args: MutBorrow.t t_SpinLockInv_T) (result: ()) : bool =
     let inner_inv'0 = args in closure0'post'return self inner_inv'0 result
   
-  meta "rewrite_def" predicate postcondition_once_closure0
+  meta "rewrite_def" function postcondition_once_closure0
   
-  predicate postcondition_once_FnGhostWrapper_closure0 (self: t_FnGhostWrapper_closure0) (args: MutBorrow.t t_SpinLockInv_T) (result: ()) =
-    postcondition_once_closure0 self.f0'3 args result
+  function postcondition_once_FnGhostWrapper_closure0 (self: t_FnGhostWrapper_closure0) (args: MutBorrow.t t_SpinLockInv_T) (result: ()) : bool
+   = postcondition_once_closure0 self.f0'3 args result
   
-  meta "rewrite_def" predicate postcondition_once_FnGhostWrapper_closure0
+  meta "rewrite_def" function postcondition_once_FnGhostWrapper_closure0
   
   let open_SpinLockInv_T (self: t_AtomicInvariant_SpinLockInv_T) (tokens: t_Tokens) (f: t_FnGhostWrapper_closure0)
     (return (x: ())) =
@@ -1385,10 +1391,10 @@ module M_impl_SpinLockGuard_T__unlock (* SpinLockGuard<'a, T> *)
         /\ inv_refmut_SpinLockInv_T t /\ postcondition_once_FnGhostWrapper_closure0 f t result}
       (! return {result}) ]
   
-  predicate resolve_refmut_Committer_AtomicBool_bool_unit_Release [@inline:trivial] (_1: MutBorrow.t t_Committer_AtomicBool_bool_unit_Release) =
-    _1.final = _1.current
+  function resolve_refmut_Committer_AtomicBool_bool_unit_Release [@inline:trivial] (_1: MutBorrow.t t_Committer_AtomicBool_bool_unit_Release) : bool
+   = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Committer_AtomicBool_bool_unit_Release
+  meta "rewrite_def" function resolve_refmut_Committer_AtomicBool_bool_unit_Release
   
   function lft (self: t_LifetimeToken) : t_Lifetime
   
@@ -1396,9 +1402,9 @@ module M_impl_SpinLockGuard_T__unlock (* SpinLockGuard<'a, T> *)
   
   function frac (self: t_LifetimeToken) : t_PositiveReal
   
-  predicate gt_log_Real [@inline:trivial] (self: Real.real) (other: Real.real) = Real.(<) other self
+  function gt_log_Real [@inline:trivial] (self: Real.real) (other: Real.real) : bool = Real.(<) other self
   
-  meta "rewrite_def" predicate gt_log_Real
+  meta "rewrite_def" function gt_log_Real
   
   function to_real (self: t_PositiveReal) : Real.real
   
@@ -1421,44 +1427,43 @@ module M_impl_SpinLockGuard_T__unlock (* SpinLockGuard<'a, T> *)
   
   meta "rewrite_def" function fin_Ghost_EndBorrow_Perm_PCell_T
   
-  predicate invariant_SpinLock_T (self: t_SpinLock_T) =
-    (public_SpinLockInv_T'0 self.inner_inv).f0'5
+  function invariant_SpinLock_T (self: t_SpinLock_T) : bool = (public_SpinLockInv_T'0 self.inner_inv).f0'5
       = { f0'4 = self.data; f1'4 = self.atomic; f2'4 = lft self.lft_tok; f3'4 = self.inv }
     /\ frac self.lft_tok = from_int 1
     /\ lft_Perm_PCell_T'0 self.end' = lft self.lft_tok
     /\ ward_PCell_T (fin_Ghost_EndBorrow_Perm_PCell_T self.end') = self.data
     /\ namespace_SpinLockInv_T self.inner_inv = Namespace_SPIN_LOCK 0
   
-  predicate inv_AtomicBool (_1: t_AtomicBool)
+  function inv_AtomicBool (_1: t_AtomicBool) : bool
   
-  predicate inv_LifetimeToken (_1: t_LifetimeToken)
+  function inv_LifetimeToken (_1: t_LifetimeToken) : bool
   
-  predicate invariant_Ghost_LifetimeToken [@inline:trivial] (self: t_LifetimeToken) = inv_LifetimeToken self
+  function invariant_Ghost_LifetimeToken [@inline:trivial] (self: t_LifetimeToken) : bool = inv_LifetimeToken self
   
-  meta "rewrite_def" predicate invariant_Ghost_LifetimeToken
+  meta "rewrite_def" function invariant_Ghost_LifetimeToken
   
-  predicate inv_Ghost_LifetimeToken [@inline:trivial] (_1: t_LifetimeToken) = invariant_Ghost_LifetimeToken _1
+  function inv_Ghost_LifetimeToken [@inline:trivial] (_1: t_LifetimeToken) : bool = invariant_Ghost_LifetimeToken _1
   
-  meta "rewrite_def" predicate inv_Ghost_LifetimeToken
+  meta "rewrite_def" function inv_Ghost_LifetimeToken
   
-  predicate inv_SpinLock_T (_1: t_SpinLock_T)
+  function inv_SpinLock_T (_1: t_SpinLock_T) : bool
   
   axiom inv_axiom'3 [@rewrite]: forall _1: t_SpinLock_T [inv_SpinLock_T _1]. inv_SpinLock_T _1
       = (invariant_SpinLock_T _1 /\ inv_AtomicBool _1.atomic /\ inv_Ghost_LifetimeToken _1.lft_tok)
   
-  predicate invariant_ref_SpinLock_T [@inline:trivial] (self: t_SpinLock_T) = inv_SpinLock_T self
+  function invariant_ref_SpinLock_T [@inline:trivial] (self: t_SpinLock_T) : bool = inv_SpinLock_T self
   
-  meta "rewrite_def" predicate invariant_ref_SpinLock_T
+  meta "rewrite_def" function invariant_ref_SpinLock_T
   
-  predicate inv_ref_SpinLock_T [@inline:trivial] (_1: t_SpinLock_T) = invariant_ref_SpinLock_T _1
+  function inv_ref_SpinLock_T [@inline:trivial] (_1: t_SpinLock_T) : bool = invariant_ref_SpinLock_T _1
   
-  meta "rewrite_def" predicate inv_ref_SpinLock_T
+  meta "rewrite_def" function inv_ref_SpinLock_T
   
-  predicate inv_closure2 [@inline:trivial] (_1: closure2) =
+  function inv_closure2 [@inline:trivial] (_1: closure2) : bool =
     let {c0 = x0; c1 = x1; c2 = x2; c3 = x3} = _1 in inv_ref_SpinLock_T x0
     /\ inv_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T x1
   
-  meta "rewrite_def" predicate inv_closure2
+  meta "rewrite_def" function inv_closure2
   
   let closure2 [@coma:extspec] (self: closure2) (c: MutBorrow.t t_Committer_AtomicBool_bool_unit_Release)
     (return (x: ())) = {[@stop_split] [@expl:closure 'self' type invariant] inv_closure2 self}
@@ -1497,7 +1502,7 @@ module M_impl_SpinLockGuard_T__unlock (* SpinLockGuard<'a, T> *)
   
   type t_FnGhostWrapper_closure2 = { f0'7: closure2 }
   
-  predicate inv_FnGhostWrapper_closure2 (_1: t_FnGhostWrapper_closure2)
+  function inv_FnGhostWrapper_closure2 (_1: t_FnGhostWrapper_closure2) : bool
   
   axiom inv_axiom'4 [@rewrite]:
     forall _1: t_FnGhostWrapper_closure2 [inv_FnGhostWrapper_closure2 _1]. inv_FnGhostWrapper_closure2 _1
@@ -1511,15 +1516,15 @@ module M_impl_SpinLockGuard_T__unlock (* SpinLockGuard<'a, T> *)
       /\ ([@stop_split] [@expl:__new ensures] result.f0'7 = f)}
       (! return {result}) ]
   
-  predicate invariant_Ghost_FnGhostWrapper_closure2 [@inline:trivial] (self: t_FnGhostWrapper_closure2) =
+  function invariant_Ghost_FnGhostWrapper_closure2 [@inline:trivial] (self: t_FnGhostWrapper_closure2) : bool =
     inv_FnGhostWrapper_closure2 self
   
-  meta "rewrite_def" predicate invariant_Ghost_FnGhostWrapper_closure2
+  meta "rewrite_def" function invariant_Ghost_FnGhostWrapper_closure2
   
-  predicate inv_Ghost_FnGhostWrapper_closure2 [@inline:trivial] (_1: t_FnGhostWrapper_closure2) =
+  function inv_Ghost_FnGhostWrapper_closure2 [@inline:trivial] (_1: t_FnGhostWrapper_closure2) : bool =
     invariant_Ghost_FnGhostWrapper_closure2 _1
   
-  meta "rewrite_def" predicate inv_Ghost_FnGhostWrapper_closure2
+  meta "rewrite_def" function inv_Ghost_FnGhostWrapper_closure2
   
   let new_FnGhostWrapper_closure2 (x: t_FnGhostWrapper_closure2) (return (x'0: t_FnGhostWrapper_closure2)) =
   {[@stop_split] [@expl:new 'x' type invariant] inv_FnGhostWrapper_closure2 x}
@@ -1529,33 +1534,33 @@ module M_impl_SpinLockGuard_T__unlock (* SpinLockGuard<'a, T> *)
       /\ ([@stop_split] [@expl:new ensures] result = x)}
       (! return {result}) ]
   
-  predicate invariant_ref_AtomicBool [@inline:trivial] (self: t_AtomicBool) = inv_AtomicBool self
+  function invariant_ref_AtomicBool [@inline:trivial] (self: t_AtomicBool) : bool = inv_AtomicBool self
   
-  meta "rewrite_def" predicate invariant_ref_AtomicBool
+  meta "rewrite_def" function invariant_ref_AtomicBool
   
-  predicate inv_ref_AtomicBool [@inline:trivial] (_1: t_AtomicBool) = invariant_ref_AtomicBool _1
+  function inv_ref_AtomicBool [@inline:trivial] (_1: t_AtomicBool) : bool = invariant_ref_AtomicBool _1
   
-  meta "rewrite_def" predicate inv_ref_AtomicBool
+  meta "rewrite_def" function inv_ref_AtomicBool
   
-  predicate precondition_closure2 (self: closure2) (args: MutBorrow.t t_Committer_AtomicBool_bool_unit_Release) =
+  function precondition_closure2 (self: closure2) (args: MutBorrow.t t_Committer_AtomicBool_bool_unit_Release) : bool =
     let c = args in closure2'pre self c
   
-  meta "rewrite_def" predicate precondition_closure2
+  meta "rewrite_def" function precondition_closure2
   
-  predicate precondition_FnGhostWrapper_closure2 (self: t_FnGhostWrapper_closure2) (args: MutBorrow.t t_Committer_AtomicBool_bool_unit_Release) =
-    precondition_closure2 self.f0'7 args
+  function precondition_FnGhostWrapper_closure2 (self: t_FnGhostWrapper_closure2) (args: MutBorrow.t t_Committer_AtomicBool_bool_unit_Release) : bool
+   = precondition_closure2 self.f0'7 args
   
-  meta "rewrite_def" predicate precondition_FnGhostWrapper_closure2
+  meta "rewrite_def" function precondition_FnGhostWrapper_closure2
   
-  predicate postcondition_once_closure2 (self: closure2) (args: MutBorrow.t t_Committer_AtomicBool_bool_unit_Release) (result: ()) =
-    let c = args in closure2'post'return self c result
+  function postcondition_once_closure2 (self: closure2) (args: MutBorrow.t t_Committer_AtomicBool_bool_unit_Release) (result: ()) : bool
+   = let c = args in closure2'post'return self c result
   
-  meta "rewrite_def" predicate postcondition_once_closure2
+  meta "rewrite_def" function postcondition_once_closure2
   
-  predicate postcondition_once_FnGhostWrapper_closure2 (self: t_FnGhostWrapper_closure2) (args: MutBorrow.t t_Committer_AtomicBool_bool_unit_Release) (result: ()) =
-    postcondition_once_closure2 self.f0'7 args result
+  function postcondition_once_FnGhostWrapper_closure2 (self: t_FnGhostWrapper_closure2) (args: MutBorrow.t t_Committer_AtomicBool_bool_unit_Release) (result: ()) : bool
+   = postcondition_once_closure2 self.f0'7 args result
   
-  meta "rewrite_def" predicate postcondition_once_FnGhostWrapper_closure2
+  meta "rewrite_def" function postcondition_once_FnGhostWrapper_closure2
   
   let store_FnGhostWrapper_closure2 (self: t_AtomicBool) (val': bool) (f: t_FnGhostWrapper_closure2) (return (x: ())) =
   {[@stop_split] [@expl:store_FnGhostWrapper_closure2 requires] ([@stop_split] [@expl:store 'self' type invariant] inv_ref_AtomicBool self)
@@ -1572,14 +1577,14 @@ module M_impl_SpinLockGuard_T__unlock (* SpinLockGuard<'a, T> *)
         /\ val_store_AtomicBool c.current = val' /\ postcondition_once_FnGhostWrapper_closure2 f c ()}
       (! return {result}) ]
   
-  predicate invariant_SpinLockGuard_T (self: t_SpinLockGuard_T) =
-    guard_FullBorrow_Perm_PCell_T self.perm'1 = self.lock'1.data
+  function invariant_SpinLockGuard_T (self: t_SpinLockGuard_T) : bool = guard_FullBorrow_Perm_PCell_T self.perm'1
+      = self.lock'1.data
     /\ lft_Perm_PCell_T self.perm'1.inner = lft self.lock'1.lft_tok
     /\ val_Option_Excl_unit self.excl'1 <> None'1
     /\ id_Option_Excl_unit self.excl'1 = (public_SpinLockInv_T'0 self.lock'1.inner_inv).f1'5
     /\ self.inv'1 = self.lock'1.inv
   
-  predicate inv_SpinLockGuard_T (_1: t_SpinLockGuard_T)
+  function inv_SpinLockGuard_T (_1: t_SpinLockGuard_T) : bool
   
   axiom inv_axiom'5 [@rewrite]: forall _1: t_SpinLockGuard_T [inv_SpinLockGuard_T _1]. inv_SpinLockGuard_T _1
       = (invariant_SpinLockGuard_T _1
@@ -1622,7 +1627,7 @@ module M_impl_SpinLock_T__into_inner (* SpinLock<T> *)
   
   type t_AtomicBool
   
-  predicate inv_AtomicBool (_1: t_AtomicBool)
+  function inv_AtomicBool (_1: t_AtomicBool) : bool
   
   type t_PCell_T
   
@@ -1642,17 +1647,17 @@ module M_impl_SpinLock_T__into_inner (* SpinLock<T> *)
     inner_inv: t_AtomicInvariant_SpinLockInv_T;
     inv: Map.map t_T bool }
   
-  predicate resolve_AtomicBool (_1: t_AtomicBool)
+  function resolve_AtomicBool (_1: t_AtomicBool) : bool
   
-  predicate inv_LifetimeToken (_1: t_LifetimeToken)
+  function inv_LifetimeToken (_1: t_LifetimeToken) : bool
   
-  predicate invariant_Ghost_LifetimeToken [@inline:trivial] (self: t_LifetimeToken) = inv_LifetimeToken self
+  function invariant_Ghost_LifetimeToken [@inline:trivial] (self: t_LifetimeToken) : bool = inv_LifetimeToken self
   
-  meta "rewrite_def" predicate invariant_Ghost_LifetimeToken
+  meta "rewrite_def" function invariant_Ghost_LifetimeToken
   
-  predicate inv_Ghost_LifetimeToken [@inline:trivial] (_1: t_LifetimeToken) = invariant_Ghost_LifetimeToken _1
+  function inv_Ghost_LifetimeToken [@inline:trivial] (_1: t_LifetimeToken) : bool = invariant_Ghost_LifetimeToken _1
   
-  meta "rewrite_def" predicate inv_Ghost_LifetimeToken
+  meta "rewrite_def" function inv_Ghost_LifetimeToken
   
   let into_inner_LifetimeToken (self: t_LifetimeToken) (return (x: t_LifetimeToken)) =
   {[@stop_split] [@expl:into_inner 'self' type invariant] inv_Ghost_LifetimeToken self}
@@ -1668,9 +1673,9 @@ module M_impl_SpinLock_T__into_inner (* SpinLock<T> *)
   
   function frac (self: t_LifetimeToken) : t_PositiveReal
   
-  predicate gt_log_Real [@inline:trivial] (self: Real.real) (other: Real.real) = Real.(<) other self
+  function gt_log_Real [@inline:trivial] (self: Real.real) (other: Real.real) : bool = Real.(<) other self
   
-  meta "rewrite_def" predicate gt_log_Real
+  meta "rewrite_def" function gt_log_Real
   
   function to_real (self: t_PositiveReal) : Real.real
   
@@ -1684,7 +1689,7 @@ module M_impl_SpinLock_T__into_inner (* SpinLock<T> *)
   
   meta "rewrite_def" function from_int
   
-  predicate inv_LifetimeDead (_1: t_LifetimeDead)
+  function inv_LifetimeDead (_1: t_LifetimeDead) : bool
   
   type t_Lifetime
   
@@ -1723,7 +1728,7 @@ module M_impl_SpinLock_T__into_inner (* SpinLock<T> *)
   
   function ward_PCell_T (self: t_Perm_PCell_T) : t_PCell_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
   function val_unsized_PCell_T (self: t_Perm_PCell_T) : t_T
   
@@ -1760,15 +1765,14 @@ module M_impl_SpinLock_T__into_inner (* SpinLock<T> *)
   
   function namespace_SpinLockInv_T (self: t_AtomicInvariant_SpinLockInv_T) : t_Namespace
   
-  predicate invariant_SpinLock_T (self: t_SpinLock_T) =
-    (public_SpinLockInv_T self.inner_inv).f0'0
+  function invariant_SpinLock_T (self: t_SpinLock_T) : bool = (public_SpinLockInv_T self.inner_inv).f0'0
       = { f0 = self.data; f1 = self.atomic; f2 = lft'0 self.lft_tok; f3 = self.inv }
     /\ frac self.lft_tok = from_int 1
     /\ lft_Perm_PCell_T self.end' = lft'0 self.lft_tok
     /\ ward_PCell_T (fin_Ghost_EndBorrow_Perm_PCell_T self.end') = self.data
     /\ namespace_SpinLockInv_T self.inner_inv = Namespace_SPIN_LOCK 0
   
-  predicate inv_SpinLock_T (_1: t_SpinLock_T)
+  function inv_SpinLock_T (_1: t_SpinLock_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_SpinLock_T [inv_SpinLock_T _1]. inv_SpinLock_T _1
       = (invariant_SpinLock_T _1 /\ inv_AtomicBool _1.atomic /\ inv_Ghost_LifetimeToken _1.lft_tok)
@@ -1828,32 +1832,32 @@ module M_impl_SpinLock_T__lock (* SpinLock<T> *)
   
   function ward_PCell_T (self: t_Perm_PCell_T) : t_PCell_T
   
-  predicate guards_ref_PCell_T [@inline:trivial] (self: t_PCell_T) (c: t_Perm_PCell_T) = ward_PCell_T c = self
+  function guards_ref_PCell_T [@inline:trivial] (self: t_PCell_T) (c: t_Perm_PCell_T) : bool = ward_PCell_T c = self
   
-  meta "rewrite_def" predicate guards_ref_PCell_T
+  meta "rewrite_def" function guards_ref_PCell_T
   
   function cur_Perm_PCell_T (self: t_FullBorrow_Perm_PCell_T) : t_Perm_PCell_T
   
   function fin_FullBorrow_Perm_PCell_T (self: t_FullBorrow_Perm_PCell_T) : t_Perm_PCell_T
   
-  predicate guards_PCell_T [@inline:trivial] (self: t_PCell_T) (initial: t_FullBorrow_Perm_PCell_T) (current': t_FullBorrow_Perm_PCell_T) =
-    guards_ref_PCell_T self (cur_Perm_PCell_T current')
+  function guards_PCell_T [@inline:trivial] (self: t_PCell_T) (initial: t_FullBorrow_Perm_PCell_T) (current': t_FullBorrow_Perm_PCell_T) : bool
+   = guards_ref_PCell_T self (cur_Perm_PCell_T current')
     /\ fin_FullBorrow_Perm_PCell_T initial = fin_FullBorrow_Perm_PCell_T current'
   
-  meta "rewrite_def" predicate guards_PCell_T
+  meta "rewrite_def" function guards_PCell_T
   
-  predicate invariant_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    guards_PCell_T self._guard self._initial self.inner
+  function invariant_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = guards_PCell_T self._guard self._initial self.inner
   
-  meta "rewrite_def" predicate invariant_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function invariant_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
-  predicate inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T (_1: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T)
+  function inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T (_1: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
   
   axiom inv_axiom [@rewrite]:
     forall _1: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T [inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1]. inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
       = invariant_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
   
-  predicate inv_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T (_1: t_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T)
+  function inv_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T (_1: t_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
   
   axiom inv_axiom'0 [@rewrite]:
     forall _1: t_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T [inv_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1]. inv_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
@@ -1862,15 +1866,15 @@ module M_impl_SpinLock_T__lock (* SpinLock<T> *)
         | Some f0 -> inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T f0
         end
   
-  predicate invariant_Ghost_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: t_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    inv_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T self
+  function invariant_Ghost_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: t_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = inv_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function invariant_Ghost_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
-  predicate inv_Ghost_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: t_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    invariant_Ghost_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
+  function inv_Ghost_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: t_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = invariant_Ghost_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function inv_Ghost_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
   let new_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T (x: t_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T)
     (return (x'0: t_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T)) =
@@ -1900,10 +1904,10 @@ module M_impl_SpinLock_T__lock (* SpinLock<T> *)
     | Ok (MutBorrow.t t_Committer_AtomicBool_bool_Acquire_Relaxed)
     | Err t_Committer_AtomicBool_bool_Relaxed_unit
   
-  predicate resolve_refmut_Committer_AtomicBool_bool_Acquire_Relaxed [@inline:trivial] (_1: MutBorrow.t t_Committer_AtomicBool_bool_Acquire_Relaxed) =
-    _1.final = _1.current
+  function resolve_refmut_Committer_AtomicBool_bool_Acquire_Relaxed [@inline:trivial] (_1: MutBorrow.t t_Committer_AtomicBool_bool_Acquire_Relaxed) : bool
+   = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Committer_AtomicBool_bool_Acquire_Relaxed
+  meta "rewrite_def" function resolve_refmut_Committer_AtomicBool_bool_Acquire_Relaxed
   
   type t_AtomicBool
   
@@ -1951,9 +1955,9 @@ module M_impl_SpinLock_T__lock (* SpinLock<T> *)
   
   function frac (self: t_LifetimeToken) : t_PositiveReal
   
-  predicate gt_log_Real [@inline:trivial] (self: Real.real) (other: Real.real) = Real.(<) other self
+  function gt_log_Real [@inline:trivial] (self: Real.real) (other: Real.real) : bool = Real.(<) other self
   
-  meta "rewrite_def" predicate gt_log_Real
+  meta "rewrite_def" function gt_log_Real
   
   function to_real (self: t_PositiveReal) : Real.real
   
@@ -1978,68 +1982,67 @@ module M_impl_SpinLock_T__lock (* SpinLock<T> *)
   
   function namespace_SpinLockInv_T (self: t_AtomicInvariant_SpinLockInv_T) : t_Namespace
   
-  predicate invariant_SpinLock_T (self: t_SpinLock_T) =
-    (public_SpinLockInv_T self.inner_inv).f0'0
+  function invariant_SpinLock_T (self: t_SpinLock_T) : bool = (public_SpinLockInv_T self.inner_inv).f0'0
       = { f0 = self.data; f1 = self.atomic; f2 = lft self.lft_tok; f3 = self.inv }
     /\ frac self.lft_tok = from_int 1
     /\ lft_Perm_PCell_T self.end' = lft self.lft_tok
     /\ ward_PCell_T (fin_Ghost_EndBorrow_Perm_PCell_T self.end') = self.data
     /\ namespace_SpinLockInv_T self.inner_inv = Namespace_SPIN_LOCK 0
   
-  predicate inv_AtomicBool (_1: t_AtomicBool)
+  function inv_AtomicBool (_1: t_AtomicBool) : bool
   
-  predicate inv_LifetimeToken (_1: t_LifetimeToken)
+  function inv_LifetimeToken (_1: t_LifetimeToken) : bool
   
-  predicate invariant_Ghost_LifetimeToken [@inline:trivial] (self: t_LifetimeToken) = inv_LifetimeToken self
+  function invariant_Ghost_LifetimeToken [@inline:trivial] (self: t_LifetimeToken) : bool = inv_LifetimeToken self
   
-  meta "rewrite_def" predicate invariant_Ghost_LifetimeToken
+  meta "rewrite_def" function invariant_Ghost_LifetimeToken
   
-  predicate inv_Ghost_LifetimeToken [@inline:trivial] (_1: t_LifetimeToken) = invariant_Ghost_LifetimeToken _1
+  function inv_Ghost_LifetimeToken [@inline:trivial] (_1: t_LifetimeToken) : bool = invariant_Ghost_LifetimeToken _1
   
-  meta "rewrite_def" predicate inv_Ghost_LifetimeToken
+  meta "rewrite_def" function inv_Ghost_LifetimeToken
   
-  predicate inv_SpinLock_T (_1: t_SpinLock_T)
+  function inv_SpinLock_T (_1: t_SpinLock_T) : bool
   
   axiom inv_axiom'1 [@rewrite]: forall _1: t_SpinLock_T [inv_SpinLock_T _1]. inv_SpinLock_T _1
       = (invariant_SpinLock_T _1 /\ inv_AtomicBool _1.atomic /\ inv_Ghost_LifetimeToken _1.lft_tok)
   
-  predicate invariant_ref_SpinLock_T [@inline:trivial] (self: t_SpinLock_T) = inv_SpinLock_T self
+  function invariant_ref_SpinLock_T [@inline:trivial] (self: t_SpinLock_T) : bool = inv_SpinLock_T self
   
-  meta "rewrite_def" predicate invariant_ref_SpinLock_T
+  meta "rewrite_def" function invariant_ref_SpinLock_T
   
-  predicate inv_ref_SpinLock_T [@inline:trivial] (_1: t_SpinLock_T) = invariant_ref_SpinLock_T _1
+  function inv_ref_SpinLock_T [@inline:trivial] (_1: t_SpinLock_T) : bool = invariant_ref_SpinLock_T _1
   
-  meta "rewrite_def" predicate inv_ref_SpinLock_T
+  meta "rewrite_def" function inv_ref_SpinLock_T
   
-  predicate invariant_refmut_Ghost_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: MutBorrow.t t_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    inv_Ghost_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T self.current
+  function invariant_refmut_Ghost_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: MutBorrow.t t_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = inv_Ghost_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T self.current
     /\ inv_Ghost_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Ghost_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function invariant_refmut_Ghost_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
-  predicate inv_refmut_Ghost_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: MutBorrow.t t_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    invariant_refmut_Ghost_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
+  function inv_refmut_Ghost_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: MutBorrow.t t_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = invariant_refmut_Ghost_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Ghost_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function inv_refmut_Ghost_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
-  predicate inv_closure5 [@inline:trivial] (_1: closure5) =
+  function inv_closure5 [@inline:trivial] (_1: closure5) : bool =
     let {c0 = x0; c1 = x1; c2 = x2; c3 = x3} = _1 in inv_ref_SpinLock_T x0
     /\ inv_refmut_Ghost_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T x2
   
-  meta "rewrite_def" predicate inv_closure5
+  meta "rewrite_def" function inv_closure5
   
-  predicate invariant_refmut_closure5 [@inline:trivial] (self: MutBorrow.t closure5) =
-    inv_closure5 self.current /\ inv_closure5 self.final
+  function invariant_refmut_closure5 [@inline:trivial] (self: MutBorrow.t closure5) : bool = inv_closure5 self.current
+    /\ inv_closure5 self.final
   
-  meta "rewrite_def" predicate invariant_refmut_closure5
+  meta "rewrite_def" function invariant_refmut_closure5
   
-  predicate inv_refmut_closure5 [@inline:trivial] (_1: MutBorrow.t closure5) = invariant_refmut_closure5 _1
+  function inv_refmut_closure5 [@inline:trivial] (_1: MutBorrow.t closure5) : bool = invariant_refmut_closure5 _1
   
-  meta "rewrite_def" predicate inv_refmut_closure5
+  meta "rewrite_def" function inv_refmut_closure5
   
-  predicate resolve_refmut_closure5 [@inline:trivial] (_1: MutBorrow.t closure5) = _1.final = _1.current
+  function resolve_refmut_closure5 [@inline:trivial] (_1: MutBorrow.t closure5) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_closure5
+  meta "rewrite_def" function resolve_refmut_closure5
   
   let elim_Ok (_x: t_Result_refmut_Committer_AtomicBool_bool_Acquire_Relaxed_ref_Committer_AtomicBool_bool_Relaxed_unit)
     (return (f0'1: MutBorrow.t t_Committer_AtomicBool_bool_Acquire_Relaxed)) = any
@@ -2095,18 +2098,18 @@ module M_impl_SpinLock_T__lock (* SpinLock<T> *)
     c1'0: MutBorrow.t t_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T;
     c2'0: MutBorrow.t t_Option_Resource_Option_Excl_unit }
   
-  predicate shot_store_AtomicBool (self: t_Committer_AtomicBool_bool_Acquire_Relaxed)
+  function shot_store_AtomicBool (self: t_Committer_AtomicBool_bool_Acquire_Relaxed) : bool
   
   function ward_AtomicBool (self: t_Committer_AtomicBool_bool_Acquire_Relaxed) : t_AtomicBool
   
   function ward_AtomicBool'0 (self: t_Perm_AtomicBool) : t_AtomicBool
   
-  predicate lt_log_SyncView (self: t_SyncView) (_2: t_SyncView)
+  function lt_log_SyncView (self: t_SyncView) (_2: t_SyncView) : bool
   
-  predicate le_log_SyncView [@inline:trivial] (self: t_SyncView) (other: t_SyncView) =
-    lt_log_SyncView self other \/ self = other
+  function le_log_SyncView [@inline:trivial] (self: t_SyncView) (other: t_SyncView) : bool = lt_log_SyncView self other
+    \/ self = other
   
-  meta "rewrite_def" predicate le_log_SyncView
+  meta "rewrite_def" function le_log_SyncView
   
   function le_lt_log_SyncView (self: t_SyncView) (other: t_SyncView) : ()
   
@@ -2152,7 +2155,7 @@ module M_impl_SpinLock_T__lock (* SpinLock<T> *)
   
   meta "rewrite_def" function val_AtomicBool
   
-  predicate val_load_AtomicBool (self: t_Committer_AtomicBool_bool_Acquire_Relaxed)
+  function val_load_AtomicBool (self: t_Committer_AtomicBool_bool_Acquire_Relaxed) : bool
   
   let shoot_load_AtomicBool (self: t_Committer_AtomicBool_bool_Acquire_Relaxed) (own: t_Perm_AtomicBool)
     (sync_view: MutBorrow.t t_SyncView) (return (x: ())) =
@@ -2171,9 +2174,9 @@ module M_impl_SpinLock_T__lock (* SpinLock<T> *)
         end)}
       (! return {result}) ]
   
-  predicate resolve_refmut_SyncView [@inline:trivial] (_1: MutBorrow.t t_SyncView) = _1.final = _1.current
+  function resolve_refmut_SyncView [@inline:trivial] (_1: MutBorrow.t t_SyncView) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_SyncView
+  meta "rewrite_def" function resolve_refmut_SyncView
   
   type t_ReleaseSyncView
   
@@ -2182,26 +2185,27 @@ module M_impl_SpinLock_T__lock (* SpinLock<T> *)
   let deref_Ghost_ReleaseSyncView (self: t_ReleaseSyncView) (return (x: t_ReleaseSyncView)) = any
     [ return (result: t_ReleaseSyncView) -> {[@stop_split] [@expl:deref ensures] result = self} (! return {result}) ]
   
-  predicate val_store_AtomicBool (self: t_Committer_AtomicBool_bool_Acquire_Relaxed)
+  function val_store_AtomicBool (self: t_Committer_AtomicBool_bool_Acquire_Relaxed) : bool
   
-  predicate hist_inv_AtomicBool [@inline:trivial] (self: t_Committer_AtomicBool_bool_Acquire_Relaxed) (other: t_Committer_AtomicBool_bool_Acquire_Relaxed) =
-    ward_AtomicBool self = ward_AtomicBool other
+  function hist_inv_AtomicBool [@inline:trivial] (self: t_Committer_AtomicBool_bool_Acquire_Relaxed) (other: t_Committer_AtomicBool_bool_Acquire_Relaxed) : bool
+   = ward_AtomicBool self = ward_AtomicBool other
     /\ val_load_AtomicBool self = val_load_AtomicBool other
     /\ val_store_AtomicBool self = val_store_AtomicBool other /\ timestamp_AtomicBool self = timestamp_AtomicBool other
   
-  meta "rewrite_def" predicate hist_inv_AtomicBool
+  meta "rewrite_def" function hist_inv_AtomicBool
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function len_Int (self: t_FMap_Int_tup2_bool_SyncView) : int
   
   axiom len_Int_spec: forall self: t_FMap_Int_tup2_bool_SyncView [len_Int self]. ge_log_Int (len_Int self) 0
   
-  predicate contains_Int [@inline:trivial] (self: t_FMap_Int_tup2_bool_SyncView) (k: int) = lookup_Int self k <> None'3
+  function contains_Int [@inline:trivial] (self: t_FMap_Int_tup2_bool_SyncView) (k: int) : bool = lookup_Int self k
+    <> None'3
   
-  meta "rewrite_def" predicate contains_Int
+  meta "rewrite_def" function contains_Int
   
   function add_Int (self: t_FMap_Int_tup2_bool_SyncView) (k: int) (v: tup2_bool_SyncView) : t_FMap_Int_tup2_bool_SyncView
   
@@ -2238,13 +2242,14 @@ module M_impl_SpinLock_T__lock (* SpinLock<T> *)
       + 1) { f0'1 = val_store_AtomicBool self.current; f1'1 = view_ReleaseSyncView rel_view })}
       (! return {result}) ]
   
-  predicate resolve_refmut_Perm_AtomicBool [@inline:trivial] (_1: MutBorrow.t t_Perm_AtomicBool) = _1.final = _1.current
+  function resolve_refmut_Perm_AtomicBool [@inline:trivial] (_1: MutBorrow.t t_Perm_AtomicBool) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Perm_AtomicBool
+  meta "rewrite_def" function resolve_refmut_Perm_AtomicBool
   
-  predicate inv_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T (_1: t_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T)
+  function inv_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T (_1: t_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
   
-  predicate inv_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T (_1: t_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T)
+  function inv_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T (_1: t_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
   
   axiom inv_axiom'2 [@rewrite]:
     forall _1: t_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T [inv_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1]. inv_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
@@ -2253,16 +2258,16 @@ module M_impl_SpinLock_T__lock (* SpinLock<T> *)
         | Some'1 f0'2 -> inv_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T f0'2
         end
   
-  predicate invariant_refmut_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: MutBorrow.t t_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    inv_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T self.current
+  function invariant_refmut_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: MutBorrow.t t_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = inv_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T self.current
     /\ inv_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function invariant_refmut_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
-  predicate inv_refmut_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: MutBorrow.t t_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    invariant_refmut_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
+  function inv_refmut_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: MutBorrow.t t_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = invariant_refmut_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function inv_refmut_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
   let take_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T
     (self: MutBorrow.t t_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T)
@@ -2299,16 +2304,16 @@ module M_impl_SpinLock_T__lock (* SpinLock<T> *)
       /\ ([@stop_split] [@expl:sync ensures] result = val_Guarded_FullBorrow_Perm_PCell_T_PCell_T self)}
       (! return {result}) ]
   
-  predicate invariant_refmut_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: MutBorrow.t t_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    inv_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T self.current
+  function invariant_refmut_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: MutBorrow.t t_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = inv_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T self.current
     /\ inv_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function invariant_refmut_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
-  predicate inv_refmut_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: MutBorrow.t t_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    invariant_refmut_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
+  function inv_refmut_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: MutBorrow.t t_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = invariant_refmut_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function inv_refmut_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
   let deref_mut_Ghost_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T
     (self: MutBorrow.t t_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T)
@@ -2320,22 +2325,22 @@ module M_impl_SpinLock_T__lock (* SpinLock<T> *)
       /\ ([@stop_split] [@expl:deref_mut ensures] result = self)}
       (! return {result}) ]
   
-  predicate resolve_FullBorrow_Perm_PCell_T (self: t_FullBorrow_Perm_PCell_T) =
-    cur_Perm_PCell_T self = fin_FullBorrow_Perm_PCell_T self
+  function resolve_FullBorrow_Perm_PCell_T (self: t_FullBorrow_Perm_PCell_T) : bool = cur_Perm_PCell_T self
+    = fin_FullBorrow_Perm_PCell_T self
   
-  predicate resolve_FullBorrow_Perm_PCell_T'0 (_1: t_FullBorrow_Perm_PCell_T)
+  function resolve_FullBorrow_Perm_PCell_T'0 (_1: t_FullBorrow_Perm_PCell_T) : bool
   
   axiom resolve_axiom [@rewrite]:
     forall _1: t_FullBorrow_Perm_PCell_T [resolve_FullBorrow_Perm_PCell_T'0 _1]. resolve_FullBorrow_Perm_PCell_T'0 _1
       = resolve_FullBorrow_Perm_PCell_T _1
   
-  predicate resolve_Guarded_FullBorrow_Perm_PCell_T_PCell_T (_1: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T)
+  function resolve_Guarded_FullBorrow_Perm_PCell_T_PCell_T (_1: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
   
   axiom resolve_axiom'0 [@rewrite]:
     forall _1: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T [resolve_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1]. resolve_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
       = resolve_FullBorrow_Perm_PCell_T'0 _1.inner
   
-  predicate resolve_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T (_1: t_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T)
+  function resolve_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T (_1: t_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
   
   axiom resolve_axiom'1 [@rewrite]:
     forall _1: t_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T [resolve_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1]. resolve_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
@@ -2344,10 +2349,10 @@ module M_impl_SpinLock_T__lock (* SpinLock<T> *)
         | Some x0 -> resolve_Guarded_FullBorrow_Perm_PCell_T_PCell_T x0
         end
   
-  predicate resolve_refmut_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: MutBorrow.t t_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    _1.final = _1.current
+  function resolve_refmut_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: MutBorrow.t t_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function resolve_refmut_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
   type t_Excl_unit = { f0'2: () }
   
@@ -2381,7 +2386,7 @@ module M_impl_SpinLock_T__lock (* SpinLock<T> *)
   axiom commutative_Option_Excl_unit_spec: forall a: t_Option_Excl_unit, b: t_Option_Excl_unit. op_Option_Excl_unit a b
       = op_Option_Excl_unit b a
   
-  predicate incl_Excl_unit (self: t_Excl_unit) (other: t_Excl_unit) = false
+  function incl_Excl_unit (self: t_Excl_unit) (other: t_Excl_unit) : bool = false
   
   axiom incl_Excl_unit_spec:
     forall self: t_Excl_unit, other: t_Excl_unit [incl_Excl_unit self other]. incl_Excl_unit self other
@@ -2409,18 +2414,18 @@ module M_impl_SpinLock_T__lock (* SpinLock<T> *)
   axiom incl_op_Excl_unit_spec: forall self: t_Excl_unit, other: t_Excl_unit, comb: t_Excl_unit. op_Excl_unit self other
         = Some'4 comb -> incl_Excl_unit self comb
   
-  predicate eq_Excl_unit [@inline:trivial] (self: t_Excl_unit) (other: t_Excl_unit) = self = other
+  function eq_Excl_unit [@inline:trivial] (self: t_Excl_unit) (other: t_Excl_unit) : bool = self = other
   
-  meta "rewrite_def" predicate eq_Excl_unit
+  meta "rewrite_def" function eq_Excl_unit
   
   axiom eq_Excl_unit_spec:
     forall self: t_Excl_unit, other: t_Excl_unit [eq_Excl_unit self other]. eq_Excl_unit self other = (self = other)
   
-  predicate incl_eq_Excl_unit (self: t_Excl_unit) (other: t_Excl_unit) =
-    eq_Excl_unit self other \/ incl_Excl_unit self other
+  function incl_eq_Excl_unit (self: t_Excl_unit) (other: t_Excl_unit) : bool = eq_Excl_unit self other
+    \/ incl_Excl_unit self other
   
-  predicate incl_Option_Excl_unit (self: t_Option_Excl_unit) (other: t_Option_Excl_unit) =
-    match { f0'3 = self; f1'3 = other } with
+  function incl_Option_Excl_unit (self: t_Option_Excl_unit) (other: t_Option_Excl_unit) : bool = match { f0'3 = self;
+                                                                                                         f1'3 = other } with
       | {f0'3 = None'4} -> true
       | {f1'3 = None'4} -> false
       | {f0'3 = Some'4 x; f1'3 = Some'4 y} -> incl_eq_Excl_unit x y
@@ -2454,22 +2459,22 @@ module M_impl_SpinLock_T__lock (* SpinLock<T> *)
     forall self: t_Option_Excl_unit, other: t_Option_Excl_unit, comb: t_Option_Excl_unit. op_Option_Excl_unit self other
         = Some'5 comb -> incl_Option_Excl_unit self comb
   
-  predicate eq_Option_Excl_unit [@inline:trivial] (self: t_Option_Excl_unit) (other: t_Option_Excl_unit) =
+  function eq_Option_Excl_unit [@inline:trivial] (self: t_Option_Excl_unit) (other: t_Option_Excl_unit) : bool =
     match { f0'3 = self; f1'3 = other } with
       | {f0'3 = Some'4 s; f1'3 = Some'4 o} -> eq_Excl_unit s o
       | {f0'3 = None'4; f1'3 = None'4} -> true
       | _ -> false
       end
   
-  meta "rewrite_def" predicate eq_Option_Excl_unit
+  meta "rewrite_def" function eq_Option_Excl_unit
   
   axiom eq_Option_Excl_unit_spec: forall self: t_Option_Excl_unit, other: t_Option_Excl_unit [self
       = other]. eq_Option_Excl_unit self other = (self = other)
   
-  predicate incl_eq_Option_Excl_unit (self: t_Option_Excl_unit) (other: t_Option_Excl_unit) =
+  function incl_eq_Option_Excl_unit (self: t_Option_Excl_unit) (other: t_Option_Excl_unit) : bool =
     eq_Option_Excl_unit self other \/ incl_Option_Excl_unit self other
   
-  predicate incl_eq_op_Option_Excl_unit (a: t_Option_Excl_unit) (b: t_Option_Excl_unit) (x: t_Option_Excl_unit) =
+  function incl_eq_op_Option_Excl_unit (a: t_Option_Excl_unit) (b: t_Option_Excl_unit) (x: t_Option_Excl_unit) : bool =
     match op_Option_Excl_unit a b with
       | None'5 -> false
       | Some'5 ab -> incl_eq_Option_Excl_unit ab x
@@ -2502,50 +2507,51 @@ module M_impl_SpinLock_T__lock (* SpinLock<T> *)
       = self}
       (! return {result}) ]
   
-  predicate resolve_refmut_Option_Resource_Option_Excl_unit [@inline:trivial] (_1: MutBorrow.t t_Option_Resource_Option_Excl_unit) =
-    _1.final = _1.current
+  function resolve_refmut_Option_Resource_Option_Excl_unit [@inline:trivial] (_1: MutBorrow.t t_Option_Resource_Option_Excl_unit) : bool
+   = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Option_Resource_Option_Excl_unit
+  meta "rewrite_def" function resolve_refmut_Option_Resource_Option_Excl_unit
   
-  predicate inv_closure0 [@inline:trivial] (_1: closure0) =
+  function inv_closure0 [@inline:trivial] (_1: closure0) : bool =
     let {c0'0 = x0; c1'0 = x1; c2'0 = x2} = _1 in inv_refmut_Ghost_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T x1
   
-  meta "rewrite_def" predicate inv_closure0
+  meta "rewrite_def" function inv_closure0
   
-  predicate invariant_refmut_closure0 [@inline:trivial] (self: MutBorrow.t closure0) =
-    inv_closure0 self.current /\ inv_closure0 self.final
+  function invariant_refmut_closure0 [@inline:trivial] (self: MutBorrow.t closure0) : bool = inv_closure0 self.current
+    /\ inv_closure0 self.final
   
-  meta "rewrite_def" predicate invariant_refmut_closure0
+  meta "rewrite_def" function invariant_refmut_closure0
   
-  predicate inv_refmut_closure0 [@inline:trivial] (_1: MutBorrow.t closure0) = invariant_refmut_closure0 _1
+  function inv_refmut_closure0 [@inline:trivial] (_1: MutBorrow.t closure0) : bool = invariant_refmut_closure0 _1
   
-  meta "rewrite_def" predicate inv_refmut_closure0
+  meta "rewrite_def" function inv_refmut_closure0
   
-  predicate resolve_refmut_closure0 [@inline:trivial] (_1: MutBorrow.t closure0) = _1.final = _1.current
+  function resolve_refmut_closure0 [@inline:trivial] (_1: MutBorrow.t closure0) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_closure0
+  meta "rewrite_def" function resolve_refmut_closure0
   
-  predicate inv_SpinLockInv_T (_1: t_SpinLockInv_T)
+  function inv_SpinLockInv_T (_1: t_SpinLockInv_T) : bool
   
   axiom inv_axiom'3 [@rewrite]: forall _1: t_SpinLockInv_T [inv_SpinLockInv_T _1]. inv_SpinLockInv_T _1
       = inv_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1.perm'0
   
-  predicate invariant_refmut_SpinLockInv_T [@inline:trivial] (self: MutBorrow.t t_SpinLockInv_T) =
+  function invariant_refmut_SpinLockInv_T [@inline:trivial] (self: MutBorrow.t t_SpinLockInv_T) : bool =
     inv_SpinLockInv_T self.current /\ inv_SpinLockInv_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_SpinLockInv_T
+  meta "rewrite_def" function invariant_refmut_SpinLockInv_T
   
-  predicate inv_refmut_SpinLockInv_T [@inline:trivial] (_1: MutBorrow.t t_SpinLockInv_T) =
+  function inv_refmut_SpinLockInv_T [@inline:trivial] (_1: MutBorrow.t t_SpinLockInv_T) : bool =
     invariant_refmut_SpinLockInv_T _1
   
-  meta "rewrite_def" predicate inv_refmut_SpinLockInv_T
+  meta "rewrite_def" function inv_refmut_SpinLockInv_T
   
-  predicate resolve_refmut_SpinLockInv_T [@inline:trivial] (_1: MutBorrow.t t_SpinLockInv_T) = _1.final = _1.current
+  function resolve_refmut_SpinLockInv_T [@inline:trivial] (_1: MutBorrow.t t_SpinLockInv_T) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_SpinLockInv_T
+  meta "rewrite_def" function resolve_refmut_SpinLockInv_T
   
-  predicate hist_inv_closure0 (self: closure0) (result_state: closure0) =
-    result_state.c0'0.final = self.c0'0.final
+  function hist_inv_closure0 (self: closure0) (result_state: closure0) : bool = result_state.c0'0.final
+      = self.c0'0.final
     /\ result_state.c1'0.final = self.c1'0.final /\ result_state.c2'0.final = self.c2'0.final
   
   let closure0 [@coma:extspec] (self: MutBorrow.t closure0) (inner_inv'0: MutBorrow.t t_SpinLockInv_T)
@@ -2689,7 +2695,7 @@ module M_impl_SpinLock_T__lock (* SpinLock<T> *)
   
   type t_FnGhostWrapper_closure0 = { f0'4: closure0 }
   
-  predicate inv_FnGhostWrapper_closure0 (_1: t_FnGhostWrapper_closure0)
+  function inv_FnGhostWrapper_closure0 (_1: t_FnGhostWrapper_closure0) : bool
   
   axiom inv_axiom'4 [@rewrite]:
     forall _1: t_FnGhostWrapper_closure0 [inv_FnGhostWrapper_closure0 _1]. inv_FnGhostWrapper_closure0 _1
@@ -2703,13 +2709,13 @@ module M_impl_SpinLock_T__lock (* SpinLock<T> *)
       /\ ([@stop_split] [@expl:__new ensures] result.f0'4 = f)}
       (! return {result}) ]
   
-  predicate contains_Namespace [@inline:trivial] (self: Set.set t_Namespace) (e: t_Namespace) = Set.mem e self
+  function contains_Namespace [@inline:trivial] (self: Set.set t_Namespace) (e: t_Namespace) : bool = Set.mem e self
   
-  meta "rewrite_def" predicate contains_Namespace
+  meta "rewrite_def" function contains_Namespace
   
   function namespaces (self: t_Tokens) : Set.set t_Namespace
   
-  predicate contains (self: t_Tokens) (namespace: t_Namespace) = contains_Namespace (namespaces self) namespace
+  function contains (self: t_Tokens) (namespace: t_Namespace) : bool = contains_Namespace (namespaces self) namespace
   
   function public_SpinLockInv_T'0 (self: t_SpinLockInv_T) : tup2_tup4_PCell_T_AtomicBool_Lifetime_Mapping_T_bool_Id =
     { f0'0 = { f0 = self.cell'0; f1 = ward_AtomicBool'0 self.perm_atomic'0; f2 = self.lft'0; f3 = self.inv'0 };
@@ -2745,7 +2751,7 @@ module M_impl_SpinLock_T__lock (* SpinLock<T> *)
   
   meta "rewrite_def" function val_PCell_T
   
-  predicate protocol_SpinLockInv_T (self: t_SpinLockInv_T) =
+  function protocol_SpinLockInv_T (self: t_SpinLockInv_T) : bool =
     (forall t: int, view: t_SyncView. lookup_Int (val_AtomicBool self.perm_atomic'0) t
           = Some'3 { f0'1 = false; f1'1 = view }
         -> Some'2 t = self.ts'0 \/ lookup_Int (val_AtomicBool self.perm_atomic'0) (t + 1) <> None'3)
@@ -2758,50 +2764,50 @@ module M_impl_SpinLock_T__lock (* SpinLock<T> *)
       | _ -> false
       end
   
-  predicate precondition_closure0 (self: closure0) (args: MutBorrow.t t_SpinLockInv_T) =
+  function precondition_closure0 (self: closure0) (args: MutBorrow.t t_SpinLockInv_T) : bool =
     let inner_inv'0 = args in forall bor_self: MutBorrow.t closure0. bor_self.current = self
         /\ inv_closure0 bor_self.final -> closure0'pre bor_self inner_inv'0
   
-  meta "rewrite_def" predicate precondition_closure0
+  meta "rewrite_def" function precondition_closure0
   
-  predicate precondition_FnGhostWrapper_closure0 (self: t_FnGhostWrapper_closure0) (args: MutBorrow.t t_SpinLockInv_T) =
-    precondition_closure0 self.f0'4 args
+  function precondition_FnGhostWrapper_closure0 (self: t_FnGhostWrapper_closure0) (args: MutBorrow.t t_SpinLockInv_T) : bool
+   = precondition_closure0 self.f0'4 args
   
-  meta "rewrite_def" predicate precondition_FnGhostWrapper_closure0
+  meta "rewrite_def" function precondition_FnGhostWrapper_closure0
   
-  predicate resolve_refmut_Ghost_Option_Resource_Option_Excl_unit [@inline:trivial] (_1: MutBorrow.t t_Option_Resource_Option_Excl_unit) =
-    _1.final = _1.current
+  function resolve_refmut_Ghost_Option_Resource_Option_Excl_unit [@inline:trivial] (_1: MutBorrow.t t_Option_Resource_Option_Excl_unit) : bool
+   = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Ghost_Option_Resource_Option_Excl_unit
+  meta "rewrite_def" function resolve_refmut_Ghost_Option_Resource_Option_Excl_unit
   
-  predicate resolve_refmut_Ghost_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: MutBorrow.t t_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    _1.final = _1.current
+  function resolve_refmut_Ghost_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: MutBorrow.t t_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Ghost_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function resolve_refmut_Ghost_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
-  predicate resolve_refmut_refmut_Committer_AtomicBool_bool_Acquire_Relaxed [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_Committer_AtomicBool_bool_Acquire_Relaxed)) =
-    _1.final = _1.current
+  function resolve_refmut_refmut_Committer_AtomicBool_bool_Acquire_Relaxed [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_Committer_AtomicBool_bool_Acquire_Relaxed)) : bool
+   = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_refmut_Committer_AtomicBool_bool_Acquire_Relaxed
+  meta "rewrite_def" function resolve_refmut_refmut_Committer_AtomicBool_bool_Acquire_Relaxed
   
-  predicate resolve_closure0 [@inline:trivial] (_1: closure0) =
+  function resolve_closure0 [@inline:trivial] (_1: closure0) : bool =
     resolve_refmut_Ghost_Option_Resource_Option_Excl_unit _1.c2'0
     /\ resolve_refmut_Ghost_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1.c1'0
     /\ resolve_refmut_refmut_Committer_AtomicBool_bool_Acquire_Relaxed _1.c0'0
   
-  meta "rewrite_def" predicate resolve_closure0
+  meta "rewrite_def" function resolve_closure0
   
-  predicate postcondition_once_closure0 (self: closure0) (args: MutBorrow.t t_SpinLockInv_T) (result: ()) =
+  function postcondition_once_closure0 (self: closure0) (args: MutBorrow.t t_SpinLockInv_T) (result: ()) : bool =
     let inner_inv'0 = args in exists e: closure0. (exists bor_self: MutBorrow.t closure0. bor_self.current = self
           /\ bor_self.final = e /\ closure0'post'return bor_self inner_inv'0 result /\ hist_inv_closure0 self e)
       /\ resolve_closure0 e
   
-  meta "rewrite_def" predicate postcondition_once_closure0
+  meta "rewrite_def" function postcondition_once_closure0
   
-  predicate postcondition_once_FnGhostWrapper_closure0 (self: t_FnGhostWrapper_closure0) (args: MutBorrow.t t_SpinLockInv_T) (result: ()) =
-    postcondition_once_closure0 self.f0'4 args result
+  function postcondition_once_FnGhostWrapper_closure0 (self: t_FnGhostWrapper_closure0) (args: MutBorrow.t t_SpinLockInv_T) (result: ()) : bool
+   = postcondition_once_closure0 self.f0'4 args result
   
-  meta "rewrite_def" predicate postcondition_once_FnGhostWrapper_closure0
+  meta "rewrite_def" function postcondition_once_FnGhostWrapper_closure0
   
   let open_SpinLockInv_T (self: t_AtomicInvariant_SpinLockInv_T) (tokens: t_Tokens) (f: t_FnGhostWrapper_closure0)
     (return (x: ())) =
@@ -2821,12 +2827,11 @@ module M_impl_SpinLock_T__lock (* SpinLock<T> *)
         /\ inv_refmut_SpinLockInv_T t /\ postcondition_once_FnGhostWrapper_closure0 f t result}
       (! return {result}) ]
   
-  predicate resolve_refmut_Tokens [@inline:trivial] (_1: MutBorrow.t t_Tokens) = _1.final = _1.current
+  function resolve_refmut_Tokens [@inline:trivial] (_1: MutBorrow.t t_Tokens) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Tokens
+  meta "rewrite_def" function resolve_refmut_Tokens
   
-  predicate hist_inv_closure5 (self: closure5) (result_state: closure5) =
-    result_state.c0 = self.c0
+  function hist_inv_closure5 (self: closure5) (result_state: closure5) : bool = result_state.c0 = self.c0
     /\ result_state.c1.final = self.c1.final
     /\ result_state.c2.final = self.c2.final /\ result_state.c3.final = self.c3.final
   
@@ -2906,7 +2911,7 @@ module M_impl_SpinLock_T__lock (* SpinLock<T> *)
   
   type t_FnGhostWrapper_closure5 = { f0'6: closure5 }
   
-  predicate inv_FnGhostWrapper_closure5 (_1: t_FnGhostWrapper_closure5)
+  function inv_FnGhostWrapper_closure5 (_1: t_FnGhostWrapper_closure5) : bool
   
   axiom inv_axiom'5 [@rewrite]:
     forall _1: t_FnGhostWrapper_closure5 [inv_FnGhostWrapper_closure5 _1]. inv_FnGhostWrapper_closure5 _1
@@ -2920,15 +2925,15 @@ module M_impl_SpinLock_T__lock (* SpinLock<T> *)
       /\ ([@stop_split] [@expl:__new ensures] result.f0'6 = f)}
       (! return {result}) ]
   
-  predicate invariant_Ghost_FnGhostWrapper_closure5 [@inline:trivial] (self: t_FnGhostWrapper_closure5) =
+  function invariant_Ghost_FnGhostWrapper_closure5 [@inline:trivial] (self: t_FnGhostWrapper_closure5) : bool =
     inv_FnGhostWrapper_closure5 self
   
-  meta "rewrite_def" predicate invariant_Ghost_FnGhostWrapper_closure5
+  meta "rewrite_def" function invariant_Ghost_FnGhostWrapper_closure5
   
-  predicate inv_Ghost_FnGhostWrapper_closure5 [@inline:trivial] (_1: t_FnGhostWrapper_closure5) =
+  function inv_Ghost_FnGhostWrapper_closure5 [@inline:trivial] (_1: t_FnGhostWrapper_closure5) : bool =
     invariant_Ghost_FnGhostWrapper_closure5 _1
   
-  meta "rewrite_def" predicate inv_Ghost_FnGhostWrapper_closure5
+  meta "rewrite_def" function inv_Ghost_FnGhostWrapper_closure5
   
   let new_FnGhostWrapper_closure5 (x: t_FnGhostWrapper_closure5) (return (x'0: t_FnGhostWrapper_closure5)) =
   {[@stop_split] [@expl:new 'x' type invariant] inv_FnGhostWrapper_closure5 x}
@@ -2940,56 +2945,56 @@ module M_impl_SpinLock_T__lock (* SpinLock<T> *)
   
   type t_Result_bool_bool = Ok'0 bool | Err'0 bool
   
-  predicate invariant_ref_AtomicBool [@inline:trivial] (self: t_AtomicBool) = inv_AtomicBool self
+  function invariant_ref_AtomicBool [@inline:trivial] (self: t_AtomicBool) : bool = inv_AtomicBool self
   
-  meta "rewrite_def" predicate invariant_ref_AtomicBool
+  meta "rewrite_def" function invariant_ref_AtomicBool
   
-  predicate inv_ref_AtomicBool [@inline:trivial] (_1: t_AtomicBool) = invariant_ref_AtomicBool _1
+  function inv_ref_AtomicBool [@inline:trivial] (_1: t_AtomicBool) : bool = invariant_ref_AtomicBool _1
   
-  meta "rewrite_def" predicate inv_ref_AtomicBool
+  meta "rewrite_def" function inv_ref_AtomicBool
   
-  predicate deep_model_bool [@inline:trivial] (self: bool) = self
+  function deep_model_bool [@inline:trivial] (self: bool) : bool = self
   
-  meta "rewrite_def" predicate deep_model_bool
+  meta "rewrite_def" function deep_model_bool
   
-  predicate precondition_closure5 (self: closure5) (args: t_Result_refmut_Committer_AtomicBool_bool_Acquire_Relaxed_ref_Committer_AtomicBool_bool_Relaxed_unit) =
-    let c = args in forall bor_self: MutBorrow.t closure5. bor_self.current = self /\ inv_closure5 bor_self.final
+  function precondition_closure5 (self: closure5) (args: t_Result_refmut_Committer_AtomicBool_bool_Acquire_Relaxed_ref_Committer_AtomicBool_bool_Relaxed_unit) : bool
+   = let c = args in forall bor_self: MutBorrow.t closure5. bor_self.current = self /\ inv_closure5 bor_self.final
       -> closure5'pre bor_self c
   
-  meta "rewrite_def" predicate precondition_closure5
+  meta "rewrite_def" function precondition_closure5
   
-  predicate precondition_FnGhostWrapper_closure5 (self: t_FnGhostWrapper_closure5) (args: t_Result_refmut_Committer_AtomicBool_bool_Acquire_Relaxed_ref_Committer_AtomicBool_bool_Relaxed_unit) =
-    precondition_closure5 self.f0'6 args
+  function precondition_FnGhostWrapper_closure5 (self: t_FnGhostWrapper_closure5) (args: t_Result_refmut_Committer_AtomicBool_bool_Acquire_Relaxed_ref_Committer_AtomicBool_bool_Relaxed_unit) : bool
+   = precondition_closure5 self.f0'6 args
   
-  meta "rewrite_def" predicate precondition_FnGhostWrapper_closure5
+  meta "rewrite_def" function precondition_FnGhostWrapper_closure5
   
-  predicate resolve_refmut_Ghost_Tokens [@inline:trivial] (_1: MutBorrow.t t_Tokens) = _1.final = _1.current
+  function resolve_refmut_Ghost_Tokens [@inline:trivial] (_1: MutBorrow.t t_Tokens) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Ghost_Tokens
+  meta "rewrite_def" function resolve_refmut_Ghost_Tokens
   
-  predicate resolve_closure5 [@inline:trivial] (_1: closure5) =
+  function resolve_closure5 [@inline:trivial] (_1: closure5) : bool =
     resolve_refmut_Ghost_Option_Resource_Option_Excl_unit _1.c3
     /\ resolve_refmut_Ghost_Option_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1.c2 /\ resolve_refmut_Ghost_Tokens _1.c1
   
-  meta "rewrite_def" predicate resolve_closure5
+  meta "rewrite_def" function resolve_closure5
   
-  predicate postcondition_once_closure5 (self: closure5) (args: t_Result_refmut_Committer_AtomicBool_bool_Acquire_Relaxed_ref_Committer_AtomicBool_bool_Relaxed_unit) (result: ()) =
-    let c = args in exists e: closure5. (exists bor_self: MutBorrow.t closure5. bor_self.current = self
+  function postcondition_once_closure5 (self: closure5) (args: t_Result_refmut_Committer_AtomicBool_bool_Acquire_Relaxed_ref_Committer_AtomicBool_bool_Relaxed_unit) (result: ()) : bool
+   = let c = args in exists e: closure5. (exists bor_self: MutBorrow.t closure5. bor_self.current = self
           /\ bor_self.final = e /\ closure5'post'return bor_self c result /\ hist_inv_closure5 self e)
       /\ resolve_closure5 e
   
-  meta "rewrite_def" predicate postcondition_once_closure5
+  meta "rewrite_def" function postcondition_once_closure5
   
-  predicate postcondition_once_FnGhostWrapper_closure5 (self: t_FnGhostWrapper_closure5) (args: t_Result_refmut_Committer_AtomicBool_bool_Acquire_Relaxed_ref_Committer_AtomicBool_bool_Relaxed_unit) (result: ()) =
-    postcondition_once_closure5 self.f0'6 args result
+  function postcondition_once_FnGhostWrapper_closure5 (self: t_FnGhostWrapper_closure5) (args: t_Result_refmut_Committer_AtomicBool_bool_Acquire_Relaxed_ref_Committer_AtomicBool_bool_Relaxed_unit) (result: ()) : bool
+   = postcondition_once_closure5 self.f0'6 args result
   
-  meta "rewrite_def" predicate postcondition_once_FnGhostWrapper_closure5
+  meta "rewrite_def" function postcondition_once_FnGhostWrapper_closure5
   
-  predicate shot_store_AtomicBool'0 (self: t_Committer_AtomicBool_bool_Relaxed_unit)
+  function shot_store_AtomicBool'0 (self: t_Committer_AtomicBool_bool_Relaxed_unit) : bool
   
   function ward_AtomicBool'1 (self: t_Committer_AtomicBool_bool_Relaxed_unit) : t_AtomicBool
   
-  predicate val_load_AtomicBool'0 (self: t_Committer_AtomicBool_bool_Relaxed_unit)
+  function val_load_AtomicBool'0 (self: t_Committer_AtomicBool_bool_Relaxed_unit) : bool
   
   let compare_exchange_weak_FnGhostWrapper_closure5 (self: t_AtomicBool) (current': bool) (new'2: bool)
     (f: t_FnGhostWrapper_closure5) (return (x: t_Result_bool_bool)) =
@@ -3034,15 +3039,15 @@ module M_impl_SpinLock_T__lock (* SpinLock<T> *)
       /\ ([@stop_split] [@expl:unwrap ensures] Some result = self)}
       (! return {result}) ]
   
-  predicate invariant_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T self
+  function invariant_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function invariant_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
-  predicate inv_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    invariant_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
+  function inv_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = invariant_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function inv_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
   let new_Guarded_FullBorrow_Perm_PCell_T_PCell_T (x: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T)
     (return (x'0: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T)) =
@@ -3074,14 +3079,14 @@ module M_impl_SpinLock_T__lock (* SpinLock<T> *)
     excl'1: t_Resource_Option_Excl_unit;
     inv'1: Map.map t_T bool }
   
-  predicate invariant_SpinLockGuard_T (self: t_SpinLockGuard_T) =
-    guard_FullBorrow_Perm_PCell_T self.perm'1 = self.lock'1.data
+  function invariant_SpinLockGuard_T (self: t_SpinLockGuard_T) : bool = guard_FullBorrow_Perm_PCell_T self.perm'1
+      = self.lock'1.data
     /\ lft_Perm_PCell_T'0 self.perm'1.inner = lft self.lock'1.lft_tok
     /\ val_Option_Excl_unit self.excl'1 <> None'4
     /\ id_Option_Excl_unit self.excl'1 = (public_SpinLockInv_T self.lock'1.inner_inv).f1'0
     /\ self.inv'1 = self.lock'1.inv
   
-  predicate inv_SpinLockGuard_T (_1: t_SpinLockGuard_T)
+  function inv_SpinLockGuard_T (_1: t_SpinLockGuard_T) : bool
   
   axiom inv_axiom'6 [@rewrite]: forall _1: t_SpinLockGuard_T [inv_SpinLockGuard_T _1]. inv_SpinLockGuard_T _1
       = (invariant_SpinLockGuard_T _1
@@ -3184,7 +3189,7 @@ module M_impl_SpinLock_T__new (* SpinLock<T> *)
   
   type tup2_PCell_T_Ghost_Perm_PCell_T = { f0: t_PCell_T; f1: t_Perm_PCell_T }
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
   function ward_PCell_T (self: t_Perm_PCell_T) : t_PCell_T
   
@@ -3204,15 +3209,15 @@ module M_impl_SpinLock_T__new (* SpinLock<T> *)
   
   type t_LifetimeToken
   
-  predicate inv_LifetimeToken (_1: t_LifetimeToken)
+  function inv_LifetimeToken (_1: t_LifetimeToken) : bool
   
   type t_PositiveReal
   
   function frac (self: t_LifetimeToken) : t_PositiveReal
   
-  predicate gt_log_Real [@inline:trivial] (self: Real.real) (other: Real.real) = Real.(<) other self
+  function gt_log_Real [@inline:trivial] (self: Real.real) (other: Real.real) : bool = Real.(<) other self
   
-  meta "rewrite_def" predicate gt_log_Real
+  meta "rewrite_def" function gt_log_Real
   
   function to_real (self: t_PositiveReal) : Real.real
   
@@ -3232,13 +3237,13 @@ module M_impl_SpinLock_T__new (* SpinLock<T> *)
       /\ ([@stop_split] [@expl:new ensures] frac result = from_int 1)}
       (! return {result}) ]
   
-  predicate invariant_Ghost_LifetimeToken [@inline:trivial] (self: t_LifetimeToken) = inv_LifetimeToken self
+  function invariant_Ghost_LifetimeToken [@inline:trivial] (self: t_LifetimeToken) : bool = inv_LifetimeToken self
   
-  meta "rewrite_def" predicate invariant_Ghost_LifetimeToken
+  meta "rewrite_def" function invariant_Ghost_LifetimeToken
   
-  predicate inv_Ghost_LifetimeToken [@inline:trivial] (_1: t_LifetimeToken) = invariant_Ghost_LifetimeToken _1
+  function inv_Ghost_LifetimeToken [@inline:trivial] (_1: t_LifetimeToken) : bool = invariant_Ghost_LifetimeToken _1
   
-  meta "rewrite_def" predicate inv_Ghost_LifetimeToken
+  meta "rewrite_def" function inv_Ghost_LifetimeToken
   
   let new_LifetimeToken (x: t_LifetimeToken) (return (x'0: t_LifetimeToken)) =
   {[@stop_split] [@expl:new 'x' type invariant] inv_LifetimeToken x}
@@ -3300,22 +3305,22 @@ module M_impl_SpinLock_T__new (* SpinLock<T> *)
     _guard: t_PCell_T;
     _initial: t_FullBorrow_Perm_PCell_T }
   
-  predicate guards_ref_PCell_T [@inline:trivial] (self: t_PCell_T) (c: t_Perm_PCell_T) = ward_PCell_T c = self
+  function guards_ref_PCell_T [@inline:trivial] (self: t_PCell_T) (c: t_Perm_PCell_T) : bool = ward_PCell_T c = self
   
-  meta "rewrite_def" predicate guards_ref_PCell_T
+  meta "rewrite_def" function guards_ref_PCell_T
   
-  predicate guards_PCell_T [@inline:trivial] (self: t_PCell_T) (initial: t_FullBorrow_Perm_PCell_T) (current': t_FullBorrow_Perm_PCell_T) =
-    guards_ref_PCell_T self (cur_Perm_PCell_T current')
+  function guards_PCell_T [@inline:trivial] (self: t_PCell_T) (initial: t_FullBorrow_Perm_PCell_T) (current': t_FullBorrow_Perm_PCell_T) : bool
+   = guards_ref_PCell_T self (cur_Perm_PCell_T current')
     /\ fin_FullBorrow_Perm_PCell_T initial = fin_FullBorrow_Perm_PCell_T current'
   
-  meta "rewrite_def" predicate guards_PCell_T
+  meta "rewrite_def" function guards_PCell_T
   
-  predicate invariant_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    guards_PCell_T self._guard self._initial self.inner
+  function invariant_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = guards_PCell_T self._guard self._initial self.inner
   
-  meta "rewrite_def" predicate invariant_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function invariant_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
-  predicate inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T (_1: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T)
+  function inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T (_1: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
   
   axiom inv_axiom [@rewrite]:
     forall _1: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T [inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1]. inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
@@ -3337,15 +3342,15 @@ module M_impl_SpinLock_T__new (* SpinLock<T> *)
       /\ ([@stop_split] [@expl:add_guard ensures #2] guards_ref_PCell_T guard (fin_FullBorrow_Perm_PCell_T self))}
       (! return {result}) ]
   
-  predicate invariant_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T self
+  function invariant_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = inv_Guarded_FullBorrow_Perm_PCell_T_PCell_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function invariant_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
-  predicate inv_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    invariant_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
+  function inv_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = invariant_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function inv_Ghost_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
   let new_Guarded_FullBorrow_Perm_PCell_T_PCell_T (x: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T)
     (return (x'0: t_Guarded_FullBorrow_Perm_PCell_T_PCell_T)) =
@@ -3364,22 +3369,22 @@ module M_impl_SpinLock_T__new (* SpinLock<T> *)
     f0'1: t_SyncView;
     f1'1: t_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T }
   
-  predicate inv_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T (_1: t_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T)
+  function inv_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T (_1: t_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
   
-  predicate inv_tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    inv_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1.f1'1
+  function inv_tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = inv_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1.f1'1
   
-  meta "rewrite_def" predicate inv_tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function inv_tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
-  predicate invariant_Ghost_tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    inv_tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T self
+  function invariant_Ghost_tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = inv_tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function invariant_Ghost_tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
-  predicate inv_Ghost_tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    invariant_Ghost_tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
+  function inv_Ghost_tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = invariant_Ghost_tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function inv_Ghost_tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
   function view_Guarded_FullBorrow_Perm_PCell_T_PCell_T (self: t_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : t_SyncView
   
@@ -3399,20 +3404,20 @@ module M_impl_SpinLock_T__new (* SpinLock<T> *)
     f0'2: t_SyncView;
     f1'2: t_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T }
   
-  predicate invariant_Ghost_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: t_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    inv_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T self
+  function invariant_Ghost_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (self: t_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = inv_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function invariant_Ghost_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
-  predicate inv_Ghost_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: t_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    invariant_Ghost_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
+  function inv_Ghost_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: t_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = invariant_Ghost_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function inv_Ghost_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
-  predicate inv_tup2_Ghost_SyncView_Ghost_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: tup2_Ghost_SyncView_Ghost_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T) =
-    inv_Ghost_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1.f1'2
+  function inv_tup2_Ghost_SyncView_Ghost_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T [@inline:trivial] (_1: tup2_Ghost_SyncView_Ghost_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
+   = inv_Ghost_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1.f1'2
   
-  meta "rewrite_def" predicate inv_tup2_Ghost_SyncView_Ghost_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T
+  meta "rewrite_def" function inv_tup2_Ghost_SyncView_Ghost_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T
   
   let split_SyncView (self: tup2_SyncView_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T)
     (return (x: tup2_Ghost_SyncView_Ghost_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T)) =
@@ -3428,9 +3433,9 @@ module M_impl_SpinLock_T__new (* SpinLock<T> *)
     [ return (result: MutBorrow.t t_SyncView) -> {[@stop_split] [@expl:deref_mut ensures] result = self}
       (! return {result}) ]
   
-  predicate resolve_refmut_SyncView [@inline:trivial] (_1: MutBorrow.t t_SyncView) = _1.final = _1.current
+  function resolve_refmut_SyncView [@inline:trivial] (_1: MutBorrow.t t_SyncView) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_SyncView
+  meta "rewrite_def" function resolve_refmut_SyncView
   
   let new_refmut_SyncView (x: MutBorrow.t t_SyncView) (return (x'0: MutBorrow.t t_SyncView)) = any
     [ return (result: MutBorrow.t t_SyncView) -> {[@stop_split] [@expl:new ensures] result = x} (! return {result}) ]
@@ -3441,12 +3446,12 @@ module M_impl_SpinLock_T__new (* SpinLock<T> *)
   
   type tup2_AtomicBool_Ghost_Perm_AtomicBool = { f0'3: t_AtomicBool; f1'3: t_Perm_AtomicBool }
   
-  predicate inv_AtomicBool (_1: t_AtomicBool)
+  function inv_AtomicBool (_1: t_AtomicBool) : bool
   
-  predicate inv_tup2_AtomicBool_Ghost_Perm_AtomicBool [@inline:trivial] (_1: tup2_AtomicBool_Ghost_Perm_AtomicBool) =
-    inv_AtomicBool _1.f0'3
+  function inv_tup2_AtomicBool_Ghost_Perm_AtomicBool [@inline:trivial] (_1: tup2_AtomicBool_Ghost_Perm_AtomicBool) : bool
+   = inv_AtomicBool _1.f0'3
   
-  meta "rewrite_def" predicate inv_tup2_AtomicBool_Ghost_Perm_AtomicBool
+  meta "rewrite_def" function inv_tup2_AtomicBool_Ghost_Perm_AtomicBool
   
   type t_FMap_Int_tup2_bool_SyncView
   
@@ -3463,9 +3468,9 @@ module M_impl_SpinLock_T__new (* SpinLock<T> *)
   
   function to_mapping_Int (self: t_FMap_Int_tup2_bool_SyncView) : Map.map int t_Option_tup2_bool_SyncView
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function len_Int (self: t_FMap_Int_tup2_bool_SyncView) : int
   
@@ -3476,9 +3481,10 @@ module M_impl_SpinLock_T__new (* SpinLock<T> *)
   
   meta "rewrite_def" function lookup_Int
   
-  predicate contains_Int [@inline:trivial] (self: t_FMap_Int_tup2_bool_SyncView) (k: int) = lookup_Int self k <> None
+  function contains_Int [@inline:trivial] (self: t_FMap_Int_tup2_bool_SyncView) (k: int) : bool = lookup_Int self k
+    <> None
   
-  meta "rewrite_def" predicate contains_Int
+  meta "rewrite_def" function contains_Int
   
   function add_Int (self: t_FMap_Int_tup2_bool_SyncView) (k: int) (v: tup2_bool_SyncView) : t_FMap_Int_tup2_bool_SyncView
   
@@ -3498,12 +3504,12 @@ module M_impl_SpinLock_T__new (* SpinLock<T> *)
   
   function singleton_Int (k: int) (v: tup2_bool_SyncView) : t_FMap_Int_tup2_bool_SyncView = add_Int empty_Int k v
   
-  predicate lt_log_SyncView (self: t_SyncView) (_2: t_SyncView)
+  function lt_log_SyncView (self: t_SyncView) (_2: t_SyncView) : bool
   
-  predicate le_log_SyncView [@inline:trivial] (self: t_SyncView) (other: t_SyncView) =
-    lt_log_SyncView self other \/ self = other
+  function le_log_SyncView [@inline:trivial] (self: t_SyncView) (other: t_SyncView) : bool = lt_log_SyncView self other
+    \/ self = other
   
-  meta "rewrite_def" predicate le_log_SyncView
+  meta "rewrite_def" function le_log_SyncView
   
   function le_lt_log_SyncView (self: t_SyncView) (other: t_SyncView) : ()
   
@@ -3583,9 +3589,9 @@ module M_impl_SpinLock_T__new (* SpinLock<T> *)
     [ return (result: t_Resource_Option_Excl_unit) -> {[@stop_split] [@expl:into_inner ensures] result = self}
       (! return {result}) ]
   
-  predicate inv_Int [@inline:trivial] (_1: int) = true
+  function inv_Int [@inline:trivial] (_1: int) : bool = true
   
-  meta "rewrite_def" predicate inv_Int
+  meta "rewrite_def" function inv_Int
   
   let into_ghost_Int (self: int) (return (x: int)) = {[@stop_split] [@expl:into_ghost requires] inv_Int self}
     any [ return (result: int) -> {[@stop_split] [@expl:into_ghost ensures] result = self} (! return {result}) ]
@@ -3604,7 +3610,7 @@ module M_impl_SpinLock_T__new (* SpinLock<T> *)
     ts'0: t_Option_Int;
     inv'0: Map.map t_T bool }
   
-  predicate inv_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T (_1: t_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T)
+  function inv_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T (_1: t_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T) : bool
   
   axiom inv_axiom'0 [@rewrite]:
     forall _1: t_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T [inv_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1]. inv_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1
@@ -3613,18 +3619,18 @@ module M_impl_SpinLock_T__new (* SpinLock<T> *)
         | Some'0 f0'6 -> inv_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T f0'6
         end
   
-  predicate inv_SpinLockInv_T (_1: t_SpinLockInv_T)
+  function inv_SpinLockInv_T (_1: t_SpinLockInv_T) : bool
   
   axiom inv_axiom'1 [@rewrite]: forall _1: t_SpinLockInv_T [inv_SpinLockInv_T _1]. inv_SpinLockInv_T _1
       = inv_Option_AtView_Guarded_FullBorrow_Perm_PCell_T_PCell_T _1.perm'0
   
-  predicate invariant_Ghost_SpinLockInv_T [@inline:trivial] (self: t_SpinLockInv_T) = inv_SpinLockInv_T self
+  function invariant_Ghost_SpinLockInv_T [@inline:trivial] (self: t_SpinLockInv_T) : bool = inv_SpinLockInv_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_SpinLockInv_T
+  meta "rewrite_def" function invariant_Ghost_SpinLockInv_T
   
-  predicate inv_Ghost_SpinLockInv_T [@inline:trivial] (_1: t_SpinLockInv_T) = invariant_Ghost_SpinLockInv_T _1
+  function inv_Ghost_SpinLockInv_T [@inline:trivial] (_1: t_SpinLockInv_T) : bool = invariant_Ghost_SpinLockInv_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_SpinLockInv_T
+  meta "rewrite_def" function inv_Ghost_SpinLockInv_T
   
   let new_SpinLockInv_T (x: t_SpinLockInv_T) (return (x'0: t_SpinLockInv_T)) =
   {[@stop_split] [@expl:new 'x' type invariant] inv_SpinLockInv_T x}
@@ -3653,7 +3659,7 @@ module M_impl_SpinLock_T__new (* SpinLock<T> *)
   
   meta "rewrite_def" function index_FMap_Int_tup2_bool_SyncView
   
-  predicate protocol_SpinLockInv_T (self: t_SpinLockInv_T) =
+  function protocol_SpinLockInv_T (self: t_SpinLockInv_T) : bool =
     (forall t: int, view: t_SyncView. lookup_Int (val_AtomicBool self.perm_atomic'0) t
           = Some { f0'4 = false; f1'4 = view }
         -> Some'2 t = self.ts'0 \/ lookup_Int (val_AtomicBool self.perm_atomic'0) (t + 1) <> None)
@@ -3707,15 +3713,14 @@ module M_impl_SpinLock_T__new (* SpinLock<T> *)
     inner_inv: t_AtomicInvariant_SpinLockInv_T;
     inv: Map.map t_T bool }
   
-  predicate invariant_SpinLock_T (self: t_SpinLock_T) =
-    (public_SpinLockInv_T self.inner_inv).f0'8
+  function invariant_SpinLock_T (self: t_SpinLock_T) : bool = (public_SpinLockInv_T self.inner_inv).f0'8
       = { f0'7 = self.data; f1'7 = self.atomic; f2'7 = lft self.lft_tok; f3'7 = self.inv }
     /\ frac self.lft_tok = from_int 1
     /\ lft_Perm_PCell_T'0 self.end' = lft self.lft_tok
     /\ ward_PCell_T (fin_Ghost_EndBorrow_Perm_PCell_T self.end') = self.data
     /\ namespace_SpinLockInv_T self.inner_inv = Namespace_SPIN_LOCK 0
   
-  predicate inv_SpinLock_T (_1: t_SpinLock_T)
+  function inv_SpinLock_T (_1: t_SpinLock_T) : bool
   
   axiom inv_axiom'2 [@rewrite]: forall _1: t_SpinLock_T [inv_SpinLock_T _1]. inv_SpinLock_T _1
       = (invariant_SpinLock_T _1 /\ inv_AtomicBool _1.atomic /\ inv_Ghost_LifetimeToken _1.lft_tok)

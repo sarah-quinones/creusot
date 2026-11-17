@@ -2,13 +2,13 @@
 
 type t_JoinHandle_T
 
-predicate inv_JoinHandle_T (_1: t_JoinHandle_T)
+function inv_JoinHandle_T (_1: t_JoinHandle_T) : bool
 
 type t_T
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate valid_result_JoinHandle_T (self: t_JoinHandle_T) (_x: t_T)
+function valid_result_JoinHandle_T (self: t_JoinHandle_T) (_x: t_T) : bool
 
 meta "compute_max_steps" 1000000
 

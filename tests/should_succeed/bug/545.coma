@@ -2,9 +2,9 @@ module M_negative_is_negative
   use creusot.prelude.Any
   use int.Int
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   meta "compute_max_steps" 1000000
   

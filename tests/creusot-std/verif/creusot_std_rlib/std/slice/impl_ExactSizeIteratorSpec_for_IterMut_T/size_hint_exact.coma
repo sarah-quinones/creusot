@@ -19,21 +19,21 @@ axiom view_IterMut_T_spec:
   forall self: t_IterMut_T [view_IterMut_T self]. Seq.length (Slice64.view (view_IterMut_T self).final)
     = Seq.length (Slice64.view (view_IterMut_T self).current)
 
-predicate postcondition_size_hint (self: ()) (args: t_IterMut_T) (result: tup2_usize_Option_usize) =
+function postcondition_size_hint (self: ()) (args: t_IterMut_T) (result: tup2_usize_Option_usize) : bool =
   let self'0 = args in UInt64.t'int result.f0 = Seq.length (Slice64.view (view_IterMut_T self'0).current)
   /\ result.f1 = Some (result.f0)
 
-meta "rewrite_def" predicate postcondition_size_hint
+meta "rewrite_def" function postcondition_size_hint
 
-predicate inv_IterMut_T (_1: t_IterMut_T)
+function inv_IterMut_T (_1: t_IterMut_T) : bool
 
-predicate invariant_ref_IterMut_T [@inline:trivial] (self: t_IterMut_T) = inv_IterMut_T self
+function invariant_ref_IterMut_T [@inline:trivial] (self: t_IterMut_T) : bool = inv_IterMut_T self
 
-meta "rewrite_def" predicate invariant_ref_IterMut_T
+meta "rewrite_def" function invariant_ref_IterMut_T
 
-predicate inv_ref_IterMut_T [@inline:trivial] (_1: t_IterMut_T) = invariant_ref_IterMut_T _1
+function inv_ref_IterMut_T [@inline:trivial] (_1: t_IterMut_T) : bool = invariant_ref_IterMut_T _1
 
-meta "rewrite_def" predicate inv_ref_IterMut_T
+meta "rewrite_def" function inv_ref_IterMut_T
 
 let size_hint_IterMut_T (self: t_IterMut_T) (return (x: tup2_usize_Option_usize)) =
 {[@stop_split] [@expl:size_hint 'self' type invariant] inv_ref_IterMut_T self}

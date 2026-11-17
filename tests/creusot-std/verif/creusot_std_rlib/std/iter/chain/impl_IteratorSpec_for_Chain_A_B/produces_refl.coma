@@ -13,7 +13,7 @@ type t_Option_A = None | Some t_A
 
 function iter_a_Chain_A_B (self: t_Chain_A_B) : t_Option_A
 
-predicate produces_A (self: t_A) (visited: Seq.seq t_Item) (o: t_A)
+function produces_A (self: t_A) (visited: Seq.seq t_Item) (o: t_A) : bool
 
 function produces_trans_A (a: t_A) (ab: Seq.seq t_Item) (b: t_A) (bc: Seq.seq t_Item) (c: t_A) : ()
 
@@ -24,9 +24,9 @@ function produces_refl_A (self: t_A) : ()
 
 axiom produces_refl_A_spec: forall self: t_A. produces_A self (Seq.empty: Seq.seq t_Item) self
 
-predicate completed_A (self: MutBorrow.t t_A)
+function completed_A (self: MutBorrow.t t_A) : bool
 
-predicate resolve_A (_1: t_A)
+function resolve_A (_1: t_A) : bool
 
 type t_B
 
@@ -36,7 +36,7 @@ function iter_b_Chain_A_B (self: t_Chain_A_B) : t_Option_B
 
 type tup2_Option_B_Option_B = { f0: t_Option_B; f1: t_Option_B }
 
-predicate produces_B (self: t_B) (visited: Seq.seq t_Item) (o: t_B)
+function produces_B (self: t_B) (visited: Seq.seq t_Item) (o: t_B) : bool
 
 function produces_trans_B (a: t_B) (ab: Seq.seq t_Item) (b: t_B) (bc: Seq.seq t_Item) (c: t_B) : ()
 
@@ -47,8 +47,8 @@ function produces_refl_B (self: t_B) : ()
 
 axiom produces_refl_B_spec: forall self: t_B. produces_B self (Seq.empty: Seq.seq t_Item) self
 
-predicate chain_produces_inner_A (x: t_Chain_A_B) (visited_a: Seq.seq t_Item) (visited_b: Seq.seq t_Item) (y: t_Chain_A_B) =
-  match iter_a_Chain_A_B x with
+function chain_produces_inner_A (x: t_Chain_A_B) (visited_a: Seq.seq t_Item) (visited_b: Seq.seq t_Item) (y: t_Chain_A_B) : bool
+ = match iter_a_Chain_A_B x with
       | None -> iter_a_Chain_A_B y = None /\ visited_a = (Seq.empty: Seq.seq t_Item)
       | Some xa -> match iter_a_Chain_A_B y with
         | None -> exists ya: MutBorrow.t t_A. produces_A xa visited_a ya.current /\ completed_A ya /\ resolve_A ya.final
@@ -64,11 +64,11 @@ predicate chain_produces_inner_A (x: t_Chain_A_B) (visited_a: Seq.seq t_Item) (v
       end
     end
 
-predicate produces_Chain_A_B [@inline:trivial] (self: t_Chain_A_B) (visited: Seq.seq t_Item) (o: t_Chain_A_B) =
+function produces_Chain_A_B [@inline:trivial] (self: t_Chain_A_B) (visited: Seq.seq t_Item) (o: t_Chain_A_B) : bool =
   exists visited_a: Seq.seq t_Item, visited_b: Seq.seq t_Item. visited = Seq.(++) visited_a visited_b
     /\ chain_produces_inner_A self visited_a visited_b o
 
-meta "rewrite_def" predicate produces_Chain_A_B
+meta "rewrite_def" function produces_Chain_A_B
 
 meta "compute_max_steps" 1000000
 

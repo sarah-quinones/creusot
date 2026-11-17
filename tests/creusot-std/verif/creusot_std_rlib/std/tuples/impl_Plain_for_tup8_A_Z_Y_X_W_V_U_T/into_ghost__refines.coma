@@ -18,36 +18,36 @@ type t_T
 
 type tup8_A_Z_Y_X_W_V_U_T = { f0: t_A; f1: t_Z; f2: t_Y; f3: t_X; f4: t_W; f5: t_V; f6: t_U; f7: t_T }
 
-predicate inv_A (_1: t_A)
+function inv_A (_1: t_A) : bool
 
-predicate inv_Z (_1: t_Z)
+function inv_Z (_1: t_Z) : bool
 
-predicate inv_Y (_1: t_Y)
+function inv_Y (_1: t_Y) : bool
 
-predicate inv_X (_1: t_X)
+function inv_X (_1: t_X) : bool
 
-predicate inv_W (_1: t_W)
+function inv_W (_1: t_W) : bool
 
-predicate inv_V (_1: t_V)
+function inv_V (_1: t_V) : bool
 
-predicate inv_U (_1: t_U)
+function inv_U (_1: t_U) : bool
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate inv_tup8_A_Z_Y_X_W_V_U_T [@inline:trivial] (_1: tup8_A_Z_Y_X_W_V_U_T) =
-  inv_A _1.f0 /\ inv_Z _1.f1 /\ inv_Y _1.f2 /\ inv_X _1.f3 /\ inv_W _1.f4 /\ inv_V _1.f5 /\ inv_U _1.f6 /\ inv_T _1.f7
+function inv_tup8_A_Z_Y_X_W_V_U_T [@inline:trivial] (_1: tup8_A_Z_Y_X_W_V_U_T) : bool = inv_A _1.f0
+  /\ inv_Z _1.f1 /\ inv_Y _1.f2 /\ inv_X _1.f3 /\ inv_W _1.f4 /\ inv_V _1.f5 /\ inv_U _1.f6 /\ inv_T _1.f7
 
-meta "rewrite_def" predicate inv_tup8_A_Z_Y_X_W_V_U_T
+meta "rewrite_def" function inv_tup8_A_Z_Y_X_W_V_U_T
 
-predicate invariant_Ghost_tup8_A_Z_Y_X_W_V_U_T [@inline:trivial] (self: tup8_A_Z_Y_X_W_V_U_T) =
+function invariant_Ghost_tup8_A_Z_Y_X_W_V_U_T [@inline:trivial] (self: tup8_A_Z_Y_X_W_V_U_T) : bool =
   inv_tup8_A_Z_Y_X_W_V_U_T self
 
-meta "rewrite_def" predicate invariant_Ghost_tup8_A_Z_Y_X_W_V_U_T
+meta "rewrite_def" function invariant_Ghost_tup8_A_Z_Y_X_W_V_U_T
 
-predicate inv_Ghost_tup8_A_Z_Y_X_W_V_U_T [@inline:trivial] (_1: tup8_A_Z_Y_X_W_V_U_T) =
+function inv_Ghost_tup8_A_Z_Y_X_W_V_U_T [@inline:trivial] (_1: tup8_A_Z_Y_X_W_V_U_T) : bool =
   invariant_Ghost_tup8_A_Z_Y_X_W_V_U_T _1
 
-meta "rewrite_def" predicate inv_Ghost_tup8_A_Z_Y_X_W_V_U_T
+meta "rewrite_def" function inv_Ghost_tup8_A_Z_Y_X_W_V_U_T
 
 meta "compute_max_steps" 1000000
 

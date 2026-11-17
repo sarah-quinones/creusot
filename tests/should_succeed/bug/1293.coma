@@ -11,24 +11,24 @@ module M_id
   
   type t_A
   
-  predicate inv_A (_1: t_A)
+  function inv_A (_1: t_A) : bool
   
-  predicate invariant_ref_A [@inline:trivial] (self: t_A) = inv_A self
+  function invariant_ref_A [@inline:trivial] (self: t_A) : bool = inv_A self
   
-  meta "rewrite_def" predicate invariant_ref_A
+  meta "rewrite_def" function invariant_ref_A
   
-  predicate inv_ref_A [@inline:trivial] (_1: t_A) = invariant_ref_A _1
+  function inv_ref_A [@inline:trivial] (_1: t_A) : bool = invariant_ref_A _1
   
-  meta "rewrite_def" predicate inv_ref_A
+  meta "rewrite_def" function inv_ref_A
   
-  predicate invariant_Seq_A [@inline:trivial] (self: Seq.seq t_A) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_A (Seq.get self i)
+  function invariant_Seq_A [@inline:trivial] (self: Seq.seq t_A) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+      -> inv_ref_A (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_A
+  meta "rewrite_def" function invariant_Seq_A
   
-  predicate inv_Seq_A [@inline:trivial] (_1: Seq.seq t_A) = invariant_Seq_A _1
+  function inv_Seq_A [@inline:trivial] (_1: Seq.seq t_A) : bool = invariant_Seq_A _1
   
-  meta "rewrite_def" predicate inv_Seq_A
+  meta "rewrite_def" function inv_Seq_A
   
   constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
   
@@ -37,13 +37,13 @@ module M_id
   axiom view_Vec_A_Global_spec:
     forall self: t_Vec_A_Global [view_Vec_A_Global self]. Seq.length (view_Vec_A_Global self) <= UInt64.t'int const_MAX
   
-  predicate invariant_Vec_A_Global (self: t_Vec_A_Global) = inv_Seq_A (view_Vec_A_Global self)
+  function invariant_Vec_A_Global (self: t_Vec_A_Global) : bool = inv_Seq_A (view_Vec_A_Global self)
   
-  predicate inv_Vec_A_Global (_1: t_Vec_A_Global)
+  function inv_Vec_A_Global (_1: t_Vec_A_Global) : bool
   
   axiom inv_axiom: forall _1: t_Vec_A_Global [inv_Vec_A_Global _1]. inv_Vec_A_Global _1 -> invariant_Vec_A_Global _1
   
-  predicate inv_IntoIter_A_Global (_1: t_IntoIter_A_Global)
+  function inv_IntoIter_A_Global (_1: t_IntoIter_A_Global) : bool
   
   function view_IntoIter_A_Global (self: t_IntoIter_A_Global) : Seq.seq t_A
   
@@ -55,10 +55,10 @@ module M_id
       /\ ([@stop_split] [@expl:into_iter ensures] view_Vec_A_Global self = view_IntoIter_A_Global result)}
       (! return {result}) ]
   
-  predicate precondition_into_iter (self: ()) (args: t_IntoIter_A_Global) =
+  function precondition_into_iter (self: ()) (args: t_IntoIter_A_Global) : bool =
     let self'0 = args in inv_IntoIter_A_Global self'0
   
-  meta "rewrite_def" predicate precondition_into_iter
+  meta "rewrite_def" function precondition_into_iter
   
   let into_iter_IntoIter_A_Global (self: t_IntoIter_A_Global) (return (x: t_IntoIter_A_Global)) =
   {[@stop_split] [@expl:into_iter 'self' type invariant] inv_IntoIter_A_Global self}
@@ -68,13 +68,13 @@ module M_id
       /\ ([@stop_split] [@expl:into_iter ensures] result = self)}
       (! return {result}) ]
   
-  predicate postcondition_into_iter (self: ()) (args: t_IntoIter_A_Global) (result: t_IntoIter_A_Global) =
+  function postcondition_into_iter (self: ()) (args: t_IntoIter_A_Global) (result: t_IntoIter_A_Global) : bool =
     let self'0 = args in inv_IntoIter_A_Global result /\ result = self'0
   
-  meta "rewrite_def" predicate postcondition_into_iter
+  meta "rewrite_def" function postcondition_into_iter
   
-  predicate produces_IntoIter_A_Global (self: t_IntoIter_A_Global) (visited: Seq.seq t_A) (rhs: t_IntoIter_A_Global) =
-    view_IntoIter_A_Global self = Seq.(++) visited (view_IntoIter_A_Global rhs)
+  function produces_IntoIter_A_Global (self: t_IntoIter_A_Global) (visited: Seq.seq t_A) (rhs: t_IntoIter_A_Global) : bool
+   = view_IntoIter_A_Global self = Seq.(++) visited (view_IntoIter_A_Global rhs)
   
   function produces_trans_IntoIter_A_Global (a: t_IntoIter_A_Global) (ab: Seq.seq t_A) (b: t_IntoIter_A_Global) (bc: Seq.seq t_A) (c: t_IntoIter_A_Global) : ()
   
@@ -87,23 +87,22 @@ module M_id
   axiom produces_refl_IntoIter_A_Global_spec:
     forall self: t_IntoIter_A_Global. produces_IntoIter_A_Global self (Seq.empty: Seq.seq t_A) self
   
-  predicate resolve_refmut_IntoIter_A_Global [@inline:trivial] (_1: MutBorrow.t t_IntoIter_A_Global) =
-    _1.final = _1.current
+  function resolve_refmut_IntoIter_A_Global [@inline:trivial] (_1: MutBorrow.t t_IntoIter_A_Global) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_IntoIter_A_Global
+  meta "rewrite_def" function resolve_refmut_IntoIter_A_Global
   
-  predicate completed_IntoIter_A_Global (self: MutBorrow.t t_IntoIter_A_Global) =
+  function completed_IntoIter_A_Global (self: MutBorrow.t t_IntoIter_A_Global) : bool =
     resolve_refmut_IntoIter_A_Global self /\ view_IntoIter_A_Global self.current = (Seq.empty: Seq.seq t_A)
   
-  predicate resolve_A (_1: t_A)
+  function resolve_A (_1: t_A) : bool
   
-  predicate resolve_IntoIter_A_Global [@inline:trivial] (self: t_IntoIter_A_Global) =
-    forall i: int. 0 <= i /\ i < Seq.length (view_IntoIter_A_Global self)
-      -> resolve_A (Seq.get (view_IntoIter_A_Global self) i)
+  function resolve_IntoIter_A_Global [@inline:trivial] (self: t_IntoIter_A_Global) : bool = forall i: int. 0 <= i
+        /\ i < Seq.length (view_IntoIter_A_Global self) -> resolve_A (Seq.get (view_IntoIter_A_Global self) i)
   
-  meta "rewrite_def" predicate resolve_IntoIter_A_Global
+  meta "rewrite_def" function resolve_IntoIter_A_Global
   
-  predicate resolve_IntoIter_A_Global'0 (_1: t_IntoIter_A_Global)
+  function resolve_IntoIter_A_Global'0 (_1: t_IntoIter_A_Global) : bool
   
   axiom resolve_axiom: forall _1: t_IntoIter_A_Global [resolve_IntoIter_A_Global'0 _1]. resolve_IntoIter_A_Global'0 _1
       -> resolve_IntoIter_A_Global _1

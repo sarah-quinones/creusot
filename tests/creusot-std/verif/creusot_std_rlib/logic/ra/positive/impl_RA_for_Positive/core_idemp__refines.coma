@@ -9,9 +9,10 @@ type t_Option_Positive = None | Some t_Positive
 
 function core_Positive (self: t_Positive) : t_Option_Positive = None
 
-predicate index_Mapping_Positive_bool [@inline:trivial] (self: Map.map t_Positive bool) (a: t_Positive) = Map.get self a
+function index_Mapping_Positive_bool [@inline:trivial] (self: Map.map t_Positive bool) (a: t_Positive) : bool =
+  Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_Positive_bool
+meta "rewrite_def" function index_Mapping_Positive_bool
 
 function such_that_Positive (p: Map.map t_Positive bool) : t_Positive
 
@@ -26,9 +27,9 @@ function unwrap_Option_Positive (self: t_Option_Positive) : t_Positive = match s
     | None -> any_Positive
     end
 
-predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
 
-meta "rewrite_def" predicate gt_log_Int
+meta "rewrite_def" function gt_log_Int
 
 function to_int (self: t_Positive) : int
 

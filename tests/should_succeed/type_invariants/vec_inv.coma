@@ -10,38 +10,38 @@ module M_vec
   
   type t_SumTo10 = { a: Int32.t; b: Int32.t }
   
-  predicate invariant_SumTo10 (self: t_SumTo10) = Int32.to_int self.a + Int32.to_int self.b = 10
+  function invariant_SumTo10 (self: t_SumTo10) : bool = Int32.to_int self.a + Int32.to_int self.b = 10
   
-  predicate inv_SumTo10 (_1: t_SumTo10)
+  function inv_SumTo10 (_1: t_SumTo10) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_SumTo10 [inv_SumTo10 _1]. inv_SumTo10 _1 = invariant_SumTo10 _1
   
-  predicate invariant_refmut_SumTo10 [@inline:trivial] (self: MutBorrow.t t_SumTo10) =
-    inv_SumTo10 self.current /\ inv_SumTo10 self.final
+  function invariant_refmut_SumTo10 [@inline:trivial] (self: MutBorrow.t t_SumTo10) : bool = inv_SumTo10 self.current
+    /\ inv_SumTo10 self.final
   
-  meta "rewrite_def" predicate invariant_refmut_SumTo10
+  meta "rewrite_def" function invariant_refmut_SumTo10
   
-  predicate inv_refmut_SumTo10 [@inline:trivial] (_1: MutBorrow.t t_SumTo10) = invariant_refmut_SumTo10 _1
+  function inv_refmut_SumTo10 [@inline:trivial] (_1: MutBorrow.t t_SumTo10) : bool = invariant_refmut_SumTo10 _1
   
-  meta "rewrite_def" predicate inv_refmut_SumTo10
+  meta "rewrite_def" function inv_refmut_SumTo10
   
-  predicate invariant_ref_refmut_SumTo10 [@inline:trivial] (self: MutBorrow.t t_SumTo10) = inv_refmut_SumTo10 self
+  function invariant_ref_refmut_SumTo10 [@inline:trivial] (self: MutBorrow.t t_SumTo10) : bool = inv_refmut_SumTo10 self
   
-  meta "rewrite_def" predicate invariant_ref_refmut_SumTo10
+  meta "rewrite_def" function invariant_ref_refmut_SumTo10
   
-  predicate inv_ref_refmut_SumTo10 [@inline:trivial] (_1: MutBorrow.t t_SumTo10) = invariant_ref_refmut_SumTo10 _1
+  function inv_ref_refmut_SumTo10 [@inline:trivial] (_1: MutBorrow.t t_SumTo10) : bool = invariant_ref_refmut_SumTo10 _1
   
-  meta "rewrite_def" predicate inv_ref_refmut_SumTo10
+  meta "rewrite_def" function inv_ref_refmut_SumTo10
   
-  predicate invariant_Seq_refmut_SumTo10 [@inline:trivial] (self: Seq.seq (MutBorrow.t t_SumTo10)) =
+  function invariant_Seq_refmut_SumTo10 [@inline:trivial] (self: Seq.seq (MutBorrow.t t_SumTo10)) : bool =
     forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_refmut_SumTo10 (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_refmut_SumTo10
+  meta "rewrite_def" function invariant_Seq_refmut_SumTo10
   
-  predicate inv_Seq_refmut_SumTo10 [@inline:trivial] (_1: Seq.seq (MutBorrow.t t_SumTo10)) =
+  function inv_Seq_refmut_SumTo10 [@inline:trivial] (_1: Seq.seq (MutBorrow.t t_SumTo10)) : bool =
     invariant_Seq_refmut_SumTo10 _1
   
-  meta "rewrite_def" predicate inv_Seq_refmut_SumTo10
+  meta "rewrite_def" function inv_Seq_refmut_SumTo10
   
   constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
   
@@ -51,39 +51,39 @@ module M_vec
     forall self: t_Vec_refmut_SumTo10_Global [view_Vec_refmut_SumTo10_Global self]. Seq.length (view_Vec_refmut_SumTo10_Global self)
       <= UInt64.t'int const_MAX
   
-  predicate invariant_Vec_refmut_SumTo10_Global (self: t_Vec_refmut_SumTo10_Global) =
+  function invariant_Vec_refmut_SumTo10_Global (self: t_Vec_refmut_SumTo10_Global) : bool =
     inv_Seq_refmut_SumTo10 (view_Vec_refmut_SumTo10_Global self)
   
-  predicate inv_Vec_refmut_SumTo10_Global (_1: t_Vec_refmut_SumTo10_Global)
+  function inv_Vec_refmut_SumTo10_Global (_1: t_Vec_refmut_SumTo10_Global) : bool
   
   axiom inv_axiom'0:
     forall _1: t_Vec_refmut_SumTo10_Global [inv_Vec_refmut_SumTo10_Global _1]. inv_Vec_refmut_SumTo10_Global _1
       -> invariant_Vec_refmut_SumTo10_Global _1
   
-  predicate resolve_refmut_SumTo10 [@inline:trivial] (_1: MutBorrow.t t_SumTo10) = _1.final = _1.current
+  function resolve_refmut_SumTo10 [@inline:trivial] (_1: MutBorrow.t t_SumTo10) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_SumTo10
+  meta "rewrite_def" function resolve_refmut_SumTo10
   
   function index_Vec_refmut_SumTo10_Global [@inline:trivial] (self: t_Vec_refmut_SumTo10_Global) (ix: int) : MutBorrow.t t_SumTo10
    = Seq.get (view_Vec_refmut_SumTo10_Global self) ix
   
   meta "rewrite_def" function index_Vec_refmut_SumTo10_Global
   
-  predicate resolve_Vec_refmut_SumTo10_Global [@inline:trivial] (self: t_Vec_refmut_SumTo10_Global) =
+  function resolve_Vec_refmut_SumTo10_Global [@inline:trivial] (self: t_Vec_refmut_SumTo10_Global) : bool =
     forall i: int. 0 <= i /\ i < Seq.length (view_Vec_refmut_SumTo10_Global self)
       -> resolve_refmut_SumTo10 (index_Vec_refmut_SumTo10_Global self i)
   
-  meta "rewrite_def" predicate resolve_Vec_refmut_SumTo10_Global
+  meta "rewrite_def" function resolve_Vec_refmut_SumTo10_Global
   
-  predicate resolve_Vec_refmut_SumTo10_Global'0 (_1: t_Vec_refmut_SumTo10_Global)
+  function resolve_Vec_refmut_SumTo10_Global'0 (_1: t_Vec_refmut_SumTo10_Global) : bool
   
   axiom resolve_axiom:
     forall _1: t_Vec_refmut_SumTo10_Global [resolve_Vec_refmut_SumTo10_Global'0 _1]. resolve_Vec_refmut_SumTo10_Global'0 _1
       -> resolve_Vec_refmut_SumTo10_Global _1
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   meta "compute_max_steps" 1000000
   

@@ -23,22 +23,21 @@ module M_gnome_sort
       = Seq.length (view_Vec_i32_Global self)}
       (! return {result}) ]
   
-  predicate permutation_of_i32 (self: Seq.seq Int32.t) (other: Seq.seq Int32.t) =
+  function permutation_of_i32 (self: Seq.seq Int32.t) (other: Seq.seq Int32.t) : bool =
     Permut.permut self other 0 (Seq.length self)
   
-  predicate is_sorted (elems: Seq.seq Int32.t) (start: int) (end': int) =
-    forall i: int, j: int. start <= i /\ i < j /\ j < end'
-      -> Int32.to_int (Seq.get elems i) <= Int32.to_int (Seq.get elems j)
+  function is_sorted (elems: Seq.seq Int32.t) (start: int) (end': int) : bool = forall i: int, j: int. start <= i
+        /\ i < j /\ j < end' -> Int32.to_int (Seq.get elems i) <= Int32.to_int (Seq.get elems j)
   
-  predicate in_bounds_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq Int32.t) =
-    UInt64.t'int self < Seq.length seq
+  function in_bounds_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq Int32.t) : bool = UInt64.t'int self
+    < Seq.length seq
   
-  meta "rewrite_def" predicate in_bounds_usize
+  meta "rewrite_def" function in_bounds_usize
   
-  predicate has_value_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq Int32.t) (out: Int32.t) =
+  function has_value_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq Int32.t) (out: Int32.t) : bool =
     Seq.get seq (UInt64.t'int self) = out
   
-  meta "rewrite_def" predicate has_value_usize
+  meta "rewrite_def" function has_value_usize
   
   let index_Vec_i32_Global (self: t_Vec_i32_Global) (index: UInt64.t) (return (x: Int32.t)) =
   {[@stop_split] [@expl:index requires] in_bounds_usize index (view_Vec_i32_Global self)}
@@ -66,13 +65,15 @@ module M_gnome_sort
     {[@stop_split] [@expl:swap ensures] Permut.exchange (Slice64.view self.final) (Slice64.view self.current) (UInt64.t'int a) (UInt64.t'int b)}
       (! return {result}) ]
   
-  predicate resolve_refmut_slice_i32 [@inline:trivial] (_1: MutBorrow.t (Slice64.slice Int32.t)) = _1.final = _1.current
+  function resolve_refmut_slice_i32 [@inline:trivial] (_1: MutBorrow.t (Slice64.slice Int32.t)) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_slice_i32
+  meta "rewrite_def" function resolve_refmut_slice_i32
   
-  predicate resolve_refmut_Vec_i32_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_i32_Global) = _1.final = _1.current
+  function resolve_refmut_Vec_i32_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_i32_Global) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Vec_i32_Global
+  meta "rewrite_def" function resolve_refmut_Vec_i32_Global
   
   meta "compute_max_steps" 1000000
   
@@ -155,23 +156,22 @@ module M_is_sorted
       = Seq.length (view_Vec_i32_Global self)}
       (! return {result}) ]
   
-  predicate is_sorted (elems: Seq.seq Int32.t) (start: int) (end': int) =
-    forall i: int, j: int. start <= i /\ i < j /\ j < end'
-      -> Int32.to_int (Seq.get elems i) <= Int32.to_int (Seq.get elems j)
+  function is_sorted (elems: Seq.seq Int32.t) (start: int) (end': int) : bool = forall i: int, j: int. start <= i
+        /\ i < j /\ j < end' -> Int32.to_int (Seq.get elems i) <= Int32.to_int (Seq.get elems j)
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
-  predicate in_bounds_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq Int32.t) =
-    UInt64.t'int self < Seq.length seq
+  function in_bounds_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq Int32.t) : bool = UInt64.t'int self
+    < Seq.length seq
   
-  meta "rewrite_def" predicate in_bounds_usize
+  meta "rewrite_def" function in_bounds_usize
   
-  predicate has_value_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq Int32.t) (out: Int32.t) =
+  function has_value_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq Int32.t) (out: Int32.t) : bool =
     Seq.get seq (UInt64.t'int self) = out
   
-  meta "rewrite_def" predicate has_value_usize
+  meta "rewrite_def" function has_value_usize
   
   let index_Vec_i32_Global (self: t_Vec_i32_Global) (index: UInt64.t) (return (x: Int32.t)) =
   {[@stop_split] [@expl:index requires] in_bounds_usize index (view_Vec_i32_Global self)}

@@ -4,9 +4,9 @@ type namespace_other
 
 type t_Namespace = Other namespace_other
 
-predicate inv_Namespace [@inline:trivial] (_1: t_Namespace) = true
+function inv_Namespace [@inline:trivial] (_1: t_Namespace) : bool = true
 
-meta "rewrite_def" predicate inv_Namespace
+meta "rewrite_def" function inv_Namespace
 
 meta "compute_max_steps" 1000000
 

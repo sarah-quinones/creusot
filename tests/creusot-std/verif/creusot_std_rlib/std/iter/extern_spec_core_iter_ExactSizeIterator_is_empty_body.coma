@@ -6,17 +6,17 @@ use int.Int
 
 type t_Self_
 
-predicate inv_Self_ (_1: t_Self_)
+function inv_Self_ (_1: t_Self_) : bool
 
-predicate invariant_ref_Self_ [@inline:trivial] (self: t_Self_) = inv_Self_ self
+function invariant_ref_Self_ [@inline:trivial] (self: t_Self_) : bool = inv_Self_ self
 
-meta "rewrite_def" predicate invariant_ref_Self_
+meta "rewrite_def" function invariant_ref_Self_
 
-predicate inv_ref_Self_ [@inline:trivial] (_1: t_Self_) = invariant_ref_Self_ _1
+function inv_ref_Self_ [@inline:trivial] (_1: t_Self_) : bool = invariant_ref_Self_ _1
 
-meta "rewrite_def" predicate inv_ref_Self_
+meta "rewrite_def" function inv_ref_Self_
 
-predicate precondition_len (self: ()) (args: t_Self_)
+function precondition_len (self: ()) (args: t_Self_) : bool
 
 axiom precondition_fndef: forall args: t_Self_ [precondition_len () args]. (let self = args in inv_ref_Self_ self)
     -> precondition_len () args
@@ -27,7 +27,7 @@ type tup2_usize_Option_usize = { f0: UInt64.t; f1: t_Option_usize }
 
 type t_Item
 
-predicate produces_Self_ (self: t_Self_) (visited: Seq.seq t_Item) (o: t_Self_)
+function produces_Self_ (self: t_Self_) (visited: Seq.seq t_Item) (o: t_Self_) : bool
 
 function produces_trans_Self_ (a: t_Self_) (ab: Seq.seq t_Item) (b: t_Self_) (bc: Seq.seq t_Item) (c: t_Self_) : ()
 
@@ -39,9 +39,9 @@ function produces_refl_Self_ (self: t_Self_) : ()
 
 axiom produces_refl_Self__spec: forall self: t_Self_. produces_Self_ self (Seq.empty: Seq.seq t_Item) self
 
-predicate completed_Self_ (self: MutBorrow.t t_Self_)
+function completed_Self_ (self: MutBorrow.t t_Self_) : bool
 
-predicate postcondition_size_hint (self: ()) (args: t_Self_) (result: tup2_usize_Option_usize)
+function postcondition_size_hint (self: ()) (args: t_Self_) (result: tup2_usize_Option_usize) : bool
 
 axiom postcondition_fndef:
   forall args: t_Self_, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -52,16 +52,16 @@ axiom postcondition_fndef:
       | None -> true
       end)
 
-predicate precondition_size_hint (self: ()) (args: t_Self_)
+function precondition_size_hint (self: ()) (args: t_Self_) : bool
 
 axiom precondition_fndef'0:
   forall args: t_Self_ [precondition_size_hint () args]. (let self = args in inv_ref_Self_ self)
     -> precondition_size_hint () args
 
-predicate postcondition_once_size_hint (self: ()) (args: t_Self_) (result: tup2_usize_Option_usize) =
+function postcondition_once_size_hint (self: ()) (args: t_Self_) (result: tup2_usize_Option_usize) : bool =
   postcondition_size_hint self args result
 
-meta "rewrite_def" predicate postcondition_once_size_hint
+meta "rewrite_def" function postcondition_once_size_hint
 
 let size_hint_Self_ (self: t_Self_) (return (x: tup2_usize_Option_usize)) =
 {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -70,15 +70,16 @@ let size_hint_Self_ (self: t_Self_) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint ensures] postcondition_once_size_hint () self result}
     (! return {result}) ]
 
-predicate postcondition_len (self: ()) (args: t_Self_) (result: UInt64.t)
+function postcondition_len (self: ()) (args: t_Self_) (result: UInt64.t) : bool
 
 axiom postcondition_fndef'0:
   forall args: t_Self_, result: UInt64.t [postcondition_len () args result]. postcondition_len () args result
     -> (let self = args in postcondition_size_hint () self { f0 = result; f1 = Some result })
 
-predicate postcondition_once_len (self: ()) (args: t_Self_) (result: UInt64.t) = postcondition_len self args result
+function postcondition_once_len (self: ()) (args: t_Self_) (result: UInt64.t) : bool =
+  postcondition_len self args result
 
-meta "rewrite_def" predicate postcondition_once_len
+meta "rewrite_def" function postcondition_once_len
 
 let len_Self_ (self: t_Self_) (return (x: UInt64.t)) = {[@stop_split] [@expl:len requires] precondition_len () self}
   any

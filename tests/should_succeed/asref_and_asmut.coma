@@ -11,9 +11,10 @@ module M_get_len_of_mut_slice
     [ return (result: MutBorrow.t (Slice64.slice UInt8.t)) -> {[@stop_split] [@expl:as_mut ensures] result = self}
       (! return {result}) ]
   
-  predicate resolve_refmut_slice_u8 [@inline:trivial] (_1: MutBorrow.t (Slice64.slice UInt8.t)) = _1.final = _1.current
+  function resolve_refmut_slice_u8 [@inline:trivial] (_1: MutBorrow.t (Slice64.slice UInt8.t)) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_slice_u8
+  meta "rewrite_def" function resolve_refmut_slice_u8
   
   let len_u8 (self: Slice64.slice UInt8.t) (return (x: UInt64.t)) = any
     [ return (result: UInt64.t) -> {[@stop_split] [@expl:len ensures] Seq.length (Slice64.view self)
@@ -50,19 +51,19 @@ module M_get_len_of_mut_slice_with_ref_mut
   use seq.Seq
   use creusot.prelude.Any
   
-  predicate precondition_as_mut (self: ()) (args: MutBorrow.t (Slice64.slice UInt8.t)) = let self'0 = args in true
+  function precondition_as_mut (self: ()) (args: MutBorrow.t (Slice64.slice UInt8.t)) : bool = let self'0 = args in true
   
-  meta "rewrite_def" predicate precondition_as_mut
+  meta "rewrite_def" function precondition_as_mut
   
   let as_mut_slice_u8 (self: MutBorrow.t (Slice64.slice UInt8.t)) (return (x: MutBorrow.t (Slice64.slice UInt8.t))) =
   any
     [ return (result: MutBorrow.t (Slice64.slice UInt8.t)) -> {[@stop_split] [@expl:as_mut ensures] result = self}
       (! return {result}) ]
   
-  predicate postcondition_as_mut (self: ()) (args: MutBorrow.t (Slice64.slice UInt8.t)) (result: MutBorrow.t (Slice64.slice UInt8.t)) =
-    let self'0 = args in result = self'0
+  function postcondition_as_mut (self: ()) (args: MutBorrow.t (Slice64.slice UInt8.t)) (result: MutBorrow.t (Slice64.slice UInt8.t)) : bool
+   = let self'0 = args in result = self'0
   
-  meta "rewrite_def" predicate postcondition_as_mut
+  meta "rewrite_def" function postcondition_as_mut
   
   let as_mut_refmut_slice_u8 (self: MutBorrow.t (MutBorrow.t (Slice64.slice UInt8.t)))
     (return (x: MutBorrow.t (Slice64.slice UInt8.t))) =
@@ -76,19 +77,20 @@ module M_get_len_of_mut_slice_with_ref_mut
         /\ s.final = self.final.current /\ postcondition_as_mut () s result)}
       (! return {result}) ]
   
-  predicate resolve_refmut_slice_u8 [@inline:trivial] (_1: MutBorrow.t (Slice64.slice UInt8.t)) = _1.final = _1.current
+  function resolve_refmut_slice_u8 [@inline:trivial] (_1: MutBorrow.t (Slice64.slice UInt8.t)) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_slice_u8
+  meta "rewrite_def" function resolve_refmut_slice_u8
   
   let len_u8 (self: Slice64.slice UInt8.t) (return (x: UInt64.t)) = any
     [ return (result: UInt64.t) -> {[@stop_split] [@expl:len ensures] Seq.length (Slice64.view self)
       = UInt64.t'int result}
       (! return {result}) ]
   
-  predicate resolve_refmut_refmut_slice_u8 [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t (Slice64.slice UInt8.t))) =
-    _1.final = _1.current
+  function resolve_refmut_refmut_slice_u8 [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t (Slice64.slice UInt8.t))) : bool
+   = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_refmut_slice_u8
+  meta "rewrite_def" function resolve_refmut_refmut_slice_u8
   
   meta "compute_max_steps" 1000000
   
@@ -123,23 +125,23 @@ module M_get_len_of_slice
   use seq.Seq
   use creusot.prelude.Any
   
-  predicate precondition_as_ref (self: ()) (args: Slice64.slice UInt8.t) = let self'0 = args in true
+  function precondition_as_ref (self: ()) (args: Slice64.slice UInt8.t) : bool = let self'0 = args in true
   
-  meta "rewrite_def" predicate precondition_as_ref
+  meta "rewrite_def" function precondition_as_ref
   
-  predicate precondition_as_ref'0 (self: ()) (args: Slice64.slice UInt8.t) =
+  function precondition_as_ref'0 (self: ()) (args: Slice64.slice UInt8.t) : bool =
     let self'0 = args in precondition_as_ref () self'0
   
-  meta "rewrite_def" predicate precondition_as_ref'0
+  meta "rewrite_def" function precondition_as_ref'0
   
   let as_ref_slice_u8 (self: Slice64.slice UInt8.t) (return (x: Slice64.slice UInt8.t)) = any
     [ return (result: Slice64.slice UInt8.t) -> {[@stop_split] [@expl:as_ref ensures] result = self}
       (! return {result}) ]
   
-  predicate postcondition_as_ref (self: ()) (args: Slice64.slice UInt8.t) (result: Slice64.slice UInt8.t) =
+  function postcondition_as_ref (self: ()) (args: Slice64.slice UInt8.t) (result: Slice64.slice UInt8.t) : bool =
     let self'0 = args in result = self'0
   
-  meta "rewrite_def" predicate postcondition_as_ref
+  meta "rewrite_def" function postcondition_as_ref
   
   let as_ref_ref_slice_u8 (self: Slice64.slice UInt8.t) (return (x: Slice64.slice UInt8.t)) =
   {[@stop_split] [@expl:as_ref requires] precondition_as_ref () self}
@@ -148,10 +150,10 @@ module M_get_len_of_slice
     {[@stop_split] [@expl:as_ref ensures] postcondition_as_ref () self result}
       (! return {result}) ]
   
-  predicate postcondition_as_ref'0 (self: ()) (args: Slice64.slice UInt8.t) (result: Slice64.slice UInt8.t) =
+  function postcondition_as_ref'0 (self: ()) (args: Slice64.slice UInt8.t) (result: Slice64.slice UInt8.t) : bool =
     let self'0 = args in postcondition_as_ref () self'0 result
   
-  meta "rewrite_def" predicate postcondition_as_ref'0
+  meta "rewrite_def" function postcondition_as_ref'0
   
   let get_len_through_as_ref_ref_slice_u8 (bytes: Slice64.slice UInt8.t) (return (x: UInt64.t)) =
   {[@stop_split] [@expl:get_len_through_as_ref requires] precondition_as_ref'0 () bytes}
@@ -182,33 +184,33 @@ module M_get_len_through_as_ref
   
   type t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate resolve_T (_1: t_T)
+  function resolve_T (_1: t_T) : bool
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate precondition_as_ref (self: ()) (args: t_T)
+  function precondition_as_ref (self: ()) (args: t_T) : bool
   
   axiom precondition_fndef: forall args: t_T [precondition_as_ref () args]. (let self = args in inv_ref_T self)
       -> precondition_as_ref () args
   
-  predicate postcondition_as_ref (self: ()) (args: t_T) (result: Slice64.slice UInt8.t)
+  function postcondition_as_ref (self: ()) (args: t_T) (result: Slice64.slice UInt8.t) : bool
   
   axiom postcondition_fndef:
     forall args: t_T, result: Slice64.slice UInt8.t [postcondition_as_ref () args result]. postcondition_as_ref () args result
       -> (let self = args in true)
   
-  predicate postcondition_once_as_ref (self: ()) (args: t_T) (result: Slice64.slice UInt8.t) =
+  function postcondition_once_as_ref (self: ()) (args: t_T) (result: Slice64.slice UInt8.t) : bool =
     postcondition_as_ref self args result
   
-  meta "rewrite_def" predicate postcondition_once_as_ref
+  meta "rewrite_def" function postcondition_once_as_ref
   
   let as_ref_T (self: t_T) (return (x: Slice64.slice UInt8.t)) =
   {[@stop_split] [@expl:as_ref requires] precondition_as_ref () self}

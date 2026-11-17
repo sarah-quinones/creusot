@@ -17,7 +17,7 @@ function map_Option_T (self: t_Option_T) (f: Map.map t_T t_Option_T) : t_Option_
 
 function op_T (self: t_T) (other: t_T) : t_Option_T
 
-predicate incl_T (self: t_T) (other: t_T)
+function incl_T (self: t_T) (other: t_T) : bool
 
 axiom incl_T_spec: forall self: t_T, other: t_T [incl_T self other]. incl_T self other
     = (exists factor: t_T. op_T self factor = Some other)
@@ -69,9 +69,9 @@ function core_total_Option_T (self: t_Option_T) : t_Option_T = match self with
 axiom core_total_Option_T_spec: forall self: t_Option_T [core_total_Option_T self]. core_Option_T self
     = Some'0 (core_total_Option_T self)
 
-predicate index_Mapping_T_bool [@inline:trivial] (self: Map.map t_T bool) (a: t_T) = Map.get self a
+function index_Mapping_T_bool [@inline:trivial] (self: Map.map t_T bool) (a: t_T) : bool = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_T_bool
+meta "rewrite_def" function index_Mapping_T_bool
 
 function such_that_T (p: Map.map t_T bool) : t_T
 

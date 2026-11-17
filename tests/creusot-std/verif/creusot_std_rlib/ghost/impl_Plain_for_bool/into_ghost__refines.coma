@@ -1,8 +1,8 @@
 (* <bool as ghost::Plain> *)
 
-predicate inv_bool [@inline:trivial] (_1: bool) = true
+function inv_bool [@inline:trivial] (_1: bool) : bool = true
 
-meta "rewrite_def" predicate inv_bool
+meta "rewrite_def" function inv_bool
 
 meta "compute_max_steps" 1000000
 

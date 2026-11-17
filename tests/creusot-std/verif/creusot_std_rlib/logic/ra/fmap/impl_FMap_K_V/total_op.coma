@@ -19,7 +19,7 @@ function map_Option_V (self: t_Option_V) (f: Map.map t_V t_Option_V) : t_Option_
 
 function op_V (self: t_V) (other: t_V) : t_Option_V
 
-predicate incl_V (self: t_V) (other: t_V)
+function incl_V (self: t_V) (other: t_V) : bool
 
 axiom incl_V_spec: forall self: t_V, other: t_V [incl_V self other]. incl_V self other
     = (exists factor: t_V. op_V self factor = Some other)
@@ -66,9 +66,9 @@ meta "rewrite_def" function lookup_K
 
 type tup2_V_V = { f0'0: t_V; f1'0: t_V }
 
-predicate index_Mapping_V_bool [@inline:trivial] (self: Map.map t_V bool) (a: t_V) = Map.get self a
+function index_Mapping_V_bool [@inline:trivial] (self: Map.map t_V bool) (a: t_V) : bool = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_V_bool
+meta "rewrite_def" function index_Mapping_V_bool
 
 function such_that_V (p: Map.map t_V bool) : t_V
 

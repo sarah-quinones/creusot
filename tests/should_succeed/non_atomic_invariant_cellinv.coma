@@ -26,13 +26,13 @@ module M_impl_CellInv_T__read (* CellInv<T> *)
   
   type t_PCellNAInv_T = { f0: t_Perm_PCell_T }
   
-  predicate contains_Namespace [@inline:trivial] (self: Set.set t_Namespace) (e: t_Namespace) = Set.mem e self
+  function contains_Namespace [@inline:trivial] (self: Set.set t_Namespace) (e: t_Namespace) : bool = Set.mem e self
   
-  meta "rewrite_def" predicate contains_Namespace
+  meta "rewrite_def" function contains_Namespace
   
   function namespaces (self: t_Tokens) : Set.set t_Namespace
   
-  predicate contains (self: t_Tokens) (namespace: t_Namespace) = contains_Namespace (namespaces self) namespace
+  function contains (self: t_Tokens) (namespace: t_Namespace) : bool = contains_Namespace (namespaces self) namespace
   
   function namespace_PCellNAInv_T (self: t_NonAtomicInvariant_PCellNAInv_T) : t_Namespace
   
@@ -42,7 +42,7 @@ module M_impl_CellInv_T__read (* CellInv<T> *)
   
   function public_PCellNAInv_T'0 (self: t_NonAtomicInvariant_PCellNAInv_T) : t_PCell_T
   
-  predicate protocol_PCellNAInv_T (self: t_PCellNAInv_T) = true
+  function protocol_PCellNAInv_T (self: t_PCellNAInv_T) : bool = true
   
   let open_const_PCellNAInv_T (self: t_NonAtomicInvariant_PCellNAInv_T) (tokens: t_Tokens)
     (return (x: t_PCellNAInv_T)) =
@@ -58,15 +58,15 @@ module M_impl_CellInv_T__read (* CellInv<T> *)
   
   type t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
   function val_unsized_PCell_T (self: t_Perm_PCell_T) : t_T
   
@@ -78,20 +78,21 @@ module M_impl_CellInv_T__read (* CellInv<T> *)
       /\ ([@stop_split] [@expl:borrow ensures] result = val_unsized_PCell_T perm)}
       (! return {result}) ]
   
-  predicate invariant_CellInv_T (self: t_CellInv_T) =
-    namespace_PCellNAInv_T self.permission = Namespace_PERMCELL 0 /\ public_PCellNAInv_T'0 self.permission = self.data
+  function invariant_CellInv_T (self: t_CellInv_T) : bool = namespace_PCellNAInv_T self.permission
+      = Namespace_PERMCELL 0
+    /\ public_PCellNAInv_T'0 self.permission = self.data
   
-  predicate inv_CellInv_T (_1: t_CellInv_T)
+  function inv_CellInv_T (_1: t_CellInv_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_CellInv_T [inv_CellInv_T _1]. inv_CellInv_T _1 = invariant_CellInv_T _1
   
-  predicate invariant_ref_CellInv_T [@inline:trivial] (self: t_CellInv_T) = inv_CellInv_T self
+  function invariant_ref_CellInv_T [@inline:trivial] (self: t_CellInv_T) : bool = inv_CellInv_T self
   
-  meta "rewrite_def" predicate invariant_ref_CellInv_T
+  meta "rewrite_def" function invariant_ref_CellInv_T
   
-  predicate inv_ref_CellInv_T [@inline:trivial] (_1: t_CellInv_T) = invariant_ref_CellInv_T _1
+  function inv_ref_CellInv_T [@inline:trivial] (_1: t_CellInv_T) : bool = invariant_ref_CellInv_T _1
   
-  meta "rewrite_def" predicate inv_ref_CellInv_T
+  meta "rewrite_def" function inv_ref_CellInv_T
   
   meta "compute_max_steps" 1000000
   
@@ -158,13 +159,13 @@ module M_impl_CellInv_T__write (* CellInv<T> *)
     _guard: t_OpenGuard_PCellNAInv_T;
     _initial: MutBorrow.t t_PCellNAInv_T }
   
-  predicate contains_Namespace [@inline:trivial] (self: Set.set t_Namespace) (e: t_Namespace) = Set.mem e self
+  function contains_Namespace [@inline:trivial] (self: Set.set t_Namespace) (e: t_Namespace) : bool = Set.mem e self
   
-  meta "rewrite_def" predicate contains_Namespace
+  meta "rewrite_def" function contains_Namespace
   
   function namespaces (self: t_Tokens) : Set.set t_Namespace
   
-  predicate contains (self: t_Tokens) (namespace: t_Namespace) = contains_Namespace (namespaces self) namespace
+  function contains (self: t_Tokens) (namespace: t_Namespace) : bool = contains_Namespace (namespaces self) namespace
   
   function namespace_PCellNAInv_T (self: t_NonAtomicInvariant_PCellNAInv_T) : t_Namespace
   
@@ -172,24 +173,24 @@ module M_impl_CellInv_T__write (* CellInv<T> *)
   
   function public_PCellNAInv_T (self: t_PCellNAInv_T) : t_PCell_T = ward_PCell_T self.f0
   
-  predicate protocol_PCellNAInv_T (self: t_PCellNAInv_T) = true
+  function protocol_PCellNAInv_T (self: t_PCellNAInv_T) : bool = true
   
-  predicate guards_ref_OpenGuard_PCellNAInv_T [@inline:trivial] (self: t_OpenGuard_PCellNAInv_T) (b: t_PCellNAInv_T) =
-    public_PCellNAInv_T b = self.f0'0 /\ protocol_PCellNAInv_T b
+  function guards_ref_OpenGuard_PCellNAInv_T [@inline:trivial] (self: t_OpenGuard_PCellNAInv_T) (b: t_PCellNAInv_T) : bool
+   = public_PCellNAInv_T b = self.f0'0 /\ protocol_PCellNAInv_T b
   
-  meta "rewrite_def" predicate guards_ref_OpenGuard_PCellNAInv_T
+  meta "rewrite_def" function guards_ref_OpenGuard_PCellNAInv_T
   
-  predicate guards_OpenGuard_PCellNAInv_T [@inline:trivial] (self: t_OpenGuard_PCellNAInv_T) (initial: MutBorrow.t t_PCellNAInv_T) (current': MutBorrow.t t_PCellNAInv_T) =
-    guards_ref_OpenGuard_PCellNAInv_T self current'.current /\ initial.final = current'.final
+  function guards_OpenGuard_PCellNAInv_T [@inline:trivial] (self: t_OpenGuard_PCellNAInv_T) (initial: MutBorrow.t t_PCellNAInv_T) (current': MutBorrow.t t_PCellNAInv_T) : bool
+   = guards_ref_OpenGuard_PCellNAInv_T self current'.current /\ initial.final = current'.final
   
-  meta "rewrite_def" predicate guards_OpenGuard_PCellNAInv_T
+  meta "rewrite_def" function guards_OpenGuard_PCellNAInv_T
   
-  predicate invariant_Guarded_refmut_PCellNAInv_T_OpenGuard_PCellNAInv_T [@inline:trivial] (self: t_Guarded_refmut_PCellNAInv_T_OpenGuard_PCellNAInv_T) =
-    guards_OpenGuard_PCellNAInv_T self._guard self._initial self.inner
+  function invariant_Guarded_refmut_PCellNAInv_T_OpenGuard_PCellNAInv_T [@inline:trivial] (self: t_Guarded_refmut_PCellNAInv_T_OpenGuard_PCellNAInv_T) : bool
+   = guards_OpenGuard_PCellNAInv_T self._guard self._initial self.inner
   
-  meta "rewrite_def" predicate invariant_Guarded_refmut_PCellNAInv_T_OpenGuard_PCellNAInv_T
+  meta "rewrite_def" function invariant_Guarded_refmut_PCellNAInv_T_OpenGuard_PCellNAInv_T
   
-  predicate inv_Guarded_refmut_PCellNAInv_T_OpenGuard_PCellNAInv_T (_1: t_Guarded_refmut_PCellNAInv_T_OpenGuard_PCellNAInv_T)
+  function inv_Guarded_refmut_PCellNAInv_T_OpenGuard_PCellNAInv_T (_1: t_Guarded_refmut_PCellNAInv_T_OpenGuard_PCellNAInv_T) : bool
   
   axiom inv_axiom [@rewrite]:
     forall _1: t_Guarded_refmut_PCellNAInv_T_OpenGuard_PCellNAInv_T [inv_Guarded_refmut_PCellNAInv_T_OpenGuard_PCellNAInv_T _1]. inv_Guarded_refmut_PCellNAInv_T_OpenGuard_PCellNAInv_T _1
@@ -217,15 +218,15 @@ module M_impl_CellInv_T__write (* CellInv<T> *)
   
   type t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) = inv_T self.current /\ inv_T self.final
+  function invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) : bool = inv_T self.current /\ inv_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_T
+  meta "rewrite_def" function invariant_refmut_T
   
-  predicate inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = invariant_refmut_T _1
+  function inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = invariant_refmut_T _1
   
-  meta "rewrite_def" predicate inv_refmut_T
+  meta "rewrite_def" function inv_refmut_T
   
   function fin_Ghost_refmut_Perm_PCell_T [@inline:trivial] (self: MutBorrow.t t_Perm_PCell_T) : t_Perm_PCell_T =
     self.final
@@ -245,36 +246,37 @@ module M_impl_CellInv_T__write (* CellInv<T> *)
       = val_unsized_PCell_T (fin_Ghost_refmut_Perm_PCell_T perm))}
       (! return {result}) ]
   
-  predicate resolve_T (_1: t_T)
+  function resolve_T (_1: t_T) : bool
   
-  predicate resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = _1.final = _1.current
+  function resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_T
+  meta "rewrite_def" function resolve_refmut_T
   
-  predicate resolve_refmut_PCellNAInv_T [@inline:trivial] (_1: MutBorrow.t t_PCellNAInv_T) = _1.final = _1.current
+  function resolve_refmut_PCellNAInv_T [@inline:trivial] (_1: MutBorrow.t t_PCellNAInv_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_PCellNAInv_T
+  meta "rewrite_def" function resolve_refmut_PCellNAInv_T
   
-  predicate resolve_Guarded_refmut_PCellNAInv_T_OpenGuard_PCellNAInv_T (_1: t_Guarded_refmut_PCellNAInv_T_OpenGuard_PCellNAInv_T)
+  function resolve_Guarded_refmut_PCellNAInv_T_OpenGuard_PCellNAInv_T (_1: t_Guarded_refmut_PCellNAInv_T_OpenGuard_PCellNAInv_T) : bool
   
   axiom resolve_axiom [@rewrite]:
     forall _1: t_Guarded_refmut_PCellNAInv_T_OpenGuard_PCellNAInv_T [resolve_Guarded_refmut_PCellNAInv_T_OpenGuard_PCellNAInv_T _1]. resolve_Guarded_refmut_PCellNAInv_T_OpenGuard_PCellNAInv_T _1
       = resolve_refmut_PCellNAInv_T _1.inner
   
-  predicate invariant_CellInv_T (self: t_CellInv_T) =
-    namespace_PCellNAInv_T self.permission = Namespace_PERMCELL 0 /\ public_PCellNAInv_T'0 self.permission = self.data
+  function invariant_CellInv_T (self: t_CellInv_T) : bool = namespace_PCellNAInv_T self.permission
+      = Namespace_PERMCELL 0
+    /\ public_PCellNAInv_T'0 self.permission = self.data
   
-  predicate inv_CellInv_T (_1: t_CellInv_T)
+  function inv_CellInv_T (_1: t_CellInv_T) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_CellInv_T [inv_CellInv_T _1]. inv_CellInv_T _1 = invariant_CellInv_T _1
   
-  predicate invariant_ref_CellInv_T [@inline:trivial] (self: t_CellInv_T) = inv_CellInv_T self
+  function invariant_ref_CellInv_T [@inline:trivial] (self: t_CellInv_T) : bool = inv_CellInv_T self
   
-  meta "rewrite_def" predicate invariant_ref_CellInv_T
+  meta "rewrite_def" function invariant_ref_CellInv_T
   
-  predicate inv_ref_CellInv_T [@inline:trivial] (_1: t_CellInv_T) = invariant_ref_CellInv_T _1
+  function inv_ref_CellInv_T [@inline:trivial] (_1: t_CellInv_T) : bool = invariant_ref_CellInv_T _1
   
-  meta "rewrite_def" predicate inv_ref_CellInv_T
+  meta "rewrite_def" function inv_ref_CellInv_T
   
   meta "compute_max_steps" 1000000
   

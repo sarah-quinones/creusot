@@ -17,21 +17,21 @@ type t_T
 
 function view_Iter_T (self: t_Iter_T) : Slice64.slice t_T
 
-predicate postcondition_size_hint (self: ()) (args: t_Iter_T) (result: tup2_usize_Option_usize) =
+function postcondition_size_hint (self: ()) (args: t_Iter_T) (result: tup2_usize_Option_usize) : bool =
   let self'0 = args in UInt64.t'int result.f0 = Seq.length (Slice64.view (view_Iter_T self'0))
   /\ result.f1 = Some (result.f0)
 
-meta "rewrite_def" predicate postcondition_size_hint
+meta "rewrite_def" function postcondition_size_hint
 
-predicate inv_Iter_T (_1: t_Iter_T)
+function inv_Iter_T (_1: t_Iter_T) : bool
 
-predicate invariant_ref_Iter_T [@inline:trivial] (self: t_Iter_T) = inv_Iter_T self
+function invariant_ref_Iter_T [@inline:trivial] (self: t_Iter_T) : bool = inv_Iter_T self
 
-meta "rewrite_def" predicate invariant_ref_Iter_T
+meta "rewrite_def" function invariant_ref_Iter_T
 
-predicate inv_ref_Iter_T [@inline:trivial] (_1: t_Iter_T) = invariant_ref_Iter_T _1
+function inv_ref_Iter_T [@inline:trivial] (_1: t_Iter_T) : bool = invariant_ref_Iter_T _1
 
-meta "rewrite_def" predicate inv_ref_Iter_T
+meta "rewrite_def" function inv_ref_Iter_T
 
 let size_hint_Iter_T (self: t_Iter_T) (return (x: tup2_usize_Option_usize)) =
 {[@stop_split] [@expl:size_hint 'self' type invariant] inv_ref_Iter_T self}
@@ -55,10 +55,10 @@ axiom to_ref_seq_slice_T_spec:
 axiom to_ref_seq_slice_T_spec'0: forall self: Slice64.slice t_T [to_ref_seq_slice_T self]. forall i: int. 0 <= i
         /\ i < Seq.length (to_ref_seq_slice_T self) -> Seq.get (to_ref_seq_slice_T self) i = index_slice_T self i
 
-predicate produces_back_Iter_T (self: t_Iter_T) (visited: Seq.seq t_T) (o: t_Iter_T) =
+function produces_back_Iter_T (self: t_Iter_T) (visited: Seq.seq t_T) (o: t_Iter_T) : bool =
   to_ref_seq_slice_T (view_Iter_T self) = Seq.(++) (to_ref_seq_slice_T (view_Iter_T o)) (Reverse.reverse visited)
 
-predicate produces_Iter_T (self: t_Iter_T) (visited: Seq.seq t_T) (tl: t_Iter_T) =
+function produces_Iter_T (self: t_Iter_T) (visited: Seq.seq t_T) (tl: t_Iter_T) : bool =
   to_ref_seq_slice_T (view_Iter_T self) = Seq.(++) visited (to_ref_seq_slice_T (view_Iter_T tl))
 
 function produces_trans_Iter_T (a: t_Iter_T) (ab: Seq.seq t_T) (b: t_Iter_T) (bc: Seq.seq t_T) (c: t_Iter_T) : () = ()
@@ -71,14 +71,14 @@ function produces_refl_Iter_T (self: t_Iter_T) : () = ()
 
 axiom produces_refl_Iter_T_spec: forall self: t_Iter_T. produces_Iter_T self (Seq.empty: Seq.seq t_T) self
 
-predicate resolve_refmut_Iter_T [@inline:trivial] (_1: MutBorrow.t t_Iter_T) = _1.final = _1.current
+function resolve_refmut_Iter_T [@inline:trivial] (_1: MutBorrow.t t_Iter_T) : bool = _1.final = _1.current
 
-meta "rewrite_def" predicate resolve_refmut_Iter_T
+meta "rewrite_def" function resolve_refmut_Iter_T
 
-predicate completed_Iter_T (self: MutBorrow.t t_Iter_T) =
-  resolve_refmut_Iter_T self /\ Slice64.view (view_Iter_T self.current) = (Seq.empty: Seq.seq t_T)
+function completed_Iter_T (self: MutBorrow.t t_Iter_T) : bool = resolve_refmut_Iter_T self
+  /\ Slice64.view (view_Iter_T self.current) = (Seq.empty: Seq.seq t_T)
 
-predicate completed_back_Iter_T (self: MutBorrow.t t_Iter_T) = completed_Iter_T self
+function completed_back_Iter_T (self: MutBorrow.t t_Iter_T) : bool = completed_Iter_T self
 
 meta "compute_max_steps" 1000000
 

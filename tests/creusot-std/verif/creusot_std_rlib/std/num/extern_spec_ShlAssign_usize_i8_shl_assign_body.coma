@@ -4,9 +4,9 @@ use creusot.prelude.MutBorrow
 use creusot.prelude.Any
 use creusot.int.UInt32
 
-predicate resolve_refmut_i8 [@inline:trivial] (_1: MutBorrow.t Int8.t) = _1.final = _1.current
+function resolve_refmut_i8 [@inline:trivial] (_1: MutBorrow.t Int8.t) : bool = _1.final = _1.current
 
-meta "rewrite_def" predicate resolve_refmut_i8
+meta "rewrite_def" function resolve_refmut_i8
 
 constant const_BITS: UInt32.t = (8: UInt32.t)
 

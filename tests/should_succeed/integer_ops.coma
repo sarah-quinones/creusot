@@ -3,9 +3,9 @@ module M_i128__test_add
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int128.t = (-170141183460469231731687303715884105728: Int128.t)
   
@@ -30,9 +30,9 @@ module M_i128__test_add_bw
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int128BW.t = (170141183460469231731687303715884105728: Int128BW.t)
   
@@ -60,9 +60,9 @@ module M_i128__test_div
   use int.ComputerDivision
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int128.t = (-170141183460469231731687303715884105728: Int128.t)
   
@@ -108,9 +108,9 @@ module M_i128__test_div_bw
   use int.ComputerDivision
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int128BW.t = (170141183460469231731687303715884105728: Int128BW.t)
   
@@ -300,9 +300,9 @@ module M_i128__test_mul
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int128.t = (-170141183460469231731687303715884105728: Int128.t)
   
@@ -327,9 +327,9 @@ module M_i128__test_mul_bw
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int128BW.t = (170141183460469231731687303715884105728: Int128BW.t)
   
@@ -455,9 +455,9 @@ module M_i128__test_sub
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int128.t = (-170141183460469231731687303715884105728: Int128.t)
   
@@ -482,9 +482,9 @@ module M_i128__test_sub_bw
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int128BW.t = (170141183460469231731687303715884105728: Int128BW.t)
   
@@ -510,9 +510,9 @@ module M_i16__test_add
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int16.t = (-32768: Int16.t)
   
@@ -537,9 +537,9 @@ module M_i16__test_add_bw
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int16BW.t = (32768: Int16BW.t)
   
@@ -567,9 +567,9 @@ module M_i16__test_div
   use int.ComputerDivision
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int16.t = (-32768: Int16.t)
   
@@ -615,9 +615,9 @@ module M_i16__test_div_bw
   use int.ComputerDivision
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int16BW.t = (32768: Int16BW.t)
   
@@ -806,9 +806,9 @@ module M_i16__test_mul
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int16.t = (-32768: Int16.t)
   
@@ -833,9 +833,9 @@ module M_i16__test_mul_bw
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int16BW.t = (32768: Int16BW.t)
   
@@ -961,9 +961,9 @@ module M_i16__test_sub
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int16.t = (-32768: Int16.t)
   
@@ -988,9 +988,9 @@ module M_i16__test_sub_bw
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int16BW.t = (32768: Int16BW.t)
   
@@ -1016,9 +1016,9 @@ module M_i32__test_add
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int32.t = (-2147483648: Int32.t)
   
@@ -1043,9 +1043,9 @@ module M_i32__test_add_bw
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int32BW.t = (2147483648: Int32BW.t)
   
@@ -1073,9 +1073,9 @@ module M_i32__test_div
   use int.ComputerDivision
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int32.t = (-2147483648: Int32.t)
   
@@ -1121,9 +1121,9 @@ module M_i32__test_div_bw
   use int.ComputerDivision
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int32BW.t = (2147483648: Int32BW.t)
   
@@ -1312,9 +1312,9 @@ module M_i32__test_mul
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int32.t = (-2147483648: Int32.t)
   
@@ -1339,9 +1339,9 @@ module M_i32__test_mul_bw
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int32BW.t = (2147483648: Int32BW.t)
   
@@ -1463,9 +1463,9 @@ module M_i32__test_sub
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int32.t = (-2147483648: Int32.t)
   
@@ -1490,9 +1490,9 @@ module M_i32__test_sub_bw
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int32BW.t = (2147483648: Int32BW.t)
   
@@ -1518,9 +1518,9 @@ module M_i64__test_add
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int64.t = (-9223372036854775808: Int64.t)
   
@@ -1545,9 +1545,9 @@ module M_i64__test_add_bw
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int64BW.t = (9223372036854775808: Int64BW.t)
   
@@ -1575,9 +1575,9 @@ module M_i64__test_div
   use int.ComputerDivision
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int64.t = (-9223372036854775808: Int64.t)
   
@@ -1623,9 +1623,9 @@ module M_i64__test_div_bw
   use int.ComputerDivision
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int64BW.t = (9223372036854775808: Int64BW.t)
   
@@ -1814,9 +1814,9 @@ module M_i64__test_mul
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int64.t = (-9223372036854775808: Int64.t)
   
@@ -1841,9 +1841,9 @@ module M_i64__test_mul_bw
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int64BW.t = (9223372036854775808: Int64BW.t)
   
@@ -1969,9 +1969,9 @@ module M_i64__test_sub
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int64.t = (-9223372036854775808: Int64.t)
   
@@ -1996,9 +1996,9 @@ module M_i64__test_sub_bw
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int64BW.t = (9223372036854775808: Int64BW.t)
   
@@ -2024,9 +2024,9 @@ module M_i8__test_add
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int8.t = (-128: Int8.t)
   
@@ -2051,9 +2051,9 @@ module M_i8__test_add_bw
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int8BW.t = (128: Int8BW.t)
   
@@ -2080,9 +2080,9 @@ module M_i8__test_div
   use int.ComputerDivision
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int8.t = (-128: Int8.t)
   
@@ -2128,9 +2128,9 @@ module M_i8__test_div_bw
   use int.ComputerDivision
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int8BW.t = (128: Int8BW.t)
   
@@ -2318,9 +2318,9 @@ module M_i8__test_mul
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int8.t = (-128: Int8.t)
   
@@ -2345,9 +2345,9 @@ module M_i8__test_mul_bw
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int8BW.t = (128: Int8BW.t)
   
@@ -2371,9 +2371,9 @@ module M_i8__test_neg
   use creusot.int.Int8
   use creusot.prelude.Any
   
-  predicate gt_log_i8 [@inline:trivial] (self: Int8.t) (other: Int8.t) = Int8.lt other self
+  function gt_log_i8 [@inline:trivial] (self: Int8.t) (other: Int8.t) : bool = Int8.lt other self
   
-  meta "rewrite_def" predicate gt_log_i8
+  meta "rewrite_def" function gt_log_i8
   
   constant const_MIN: Int8.t = (-128: Int8.t)
   
@@ -2391,9 +2391,9 @@ module M_i8__test_neg_bw
   use creusot.int.Int8BW
   use creusot.prelude.Any
   
-  predicate gt_log_i8 [@inline:trivial] (self: Int8BW.t) (other: Int8BW.t) = Int8BW.lt other self
+  function gt_log_i8 [@inline:trivial] (self: Int8BW.t) (other: Int8BW.t) : bool = Int8BW.lt other self
   
-  meta "rewrite_def" predicate gt_log_i8
+  meta "rewrite_def" function gt_log_i8
   
   constant const_MIN: Int8BW.t = (128: Int8BW.t)
   
@@ -2510,9 +2510,9 @@ module M_i8__test_sub
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int8.t = (-128: Int8.t)
   
@@ -2537,9 +2537,9 @@ module M_i8__test_sub_bw
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int8BW.t = (128: Int8BW.t)
   
@@ -2564,9 +2564,9 @@ module M_isize__test_add
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int64.t = (-9223372036854775808: Int64.t)
   
@@ -2591,9 +2591,9 @@ module M_isize__test_add_bw
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int64BW.t = (9223372036854775808: Int64BW.t)
   
@@ -2621,9 +2621,9 @@ module M_isize__test_div
   use int.ComputerDivision
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int64.t = (-9223372036854775808: Int64.t)
   
@@ -2669,9 +2669,9 @@ module M_isize__test_div_bw
   use int.ComputerDivision
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int64BW.t = (9223372036854775808: Int64BW.t)
   
@@ -2860,9 +2860,9 @@ module M_isize__test_mul
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int64.t = (-9223372036854775808: Int64.t)
   
@@ -2887,9 +2887,9 @@ module M_isize__test_mul_bw
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int64BW.t = (9223372036854775808: Int64BW.t)
   
@@ -3015,9 +3015,9 @@ module M_isize__test_sub
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int64.t = (-9223372036854775808: Int64.t)
   
@@ -3042,9 +3042,9 @@ module M_isize__test_sub_bw
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int64BW.t = (9223372036854775808: Int64BW.t)
   
@@ -4921,9 +4921,9 @@ module M_u128__test_add
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt128.t = (0: UInt128.t)
   
@@ -4948,9 +4948,9 @@ module M_u128__test_add_bw
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt128BW.t = (0: UInt128BW.t)
   
@@ -4977,9 +4977,9 @@ module M_u128__test_div
   use int.ComputerDivision
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt128.t = (0: UInt128.t)
   
@@ -5015,9 +5015,9 @@ module M_u128__test_div_bw
   use int.ComputerDivision
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt128BW.t = (0: UInt128BW.t)
   
@@ -5199,9 +5199,9 @@ module M_u128__test_mul
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt128.t = (0: UInt128.t)
   
@@ -5226,9 +5226,9 @@ module M_u128__test_mul_bw
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt128BW.t = (0: UInt128BW.t)
   
@@ -5354,9 +5354,9 @@ module M_u128__test_sub
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt128.t = (0: UInt128.t)
   
@@ -5381,9 +5381,9 @@ module M_u128__test_sub_bw
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt128BW.t = (0: UInt128BW.t)
   
@@ -5409,9 +5409,9 @@ module M_u16__test_add
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt16.t = (0: UInt16.t)
   
@@ -5436,9 +5436,9 @@ module M_u16__test_add_bw
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt16BW.t = (0: UInt16BW.t)
   
@@ -5465,9 +5465,9 @@ module M_u16__test_div
   use int.ComputerDivision
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt16.t = (0: UInt16.t)
   
@@ -5503,9 +5503,9 @@ module M_u16__test_div_bw
   use int.ComputerDivision
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt16BW.t = (0: UInt16BW.t)
   
@@ -5686,9 +5686,9 @@ module M_u16__test_mul
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt16.t = (0: UInt16.t)
   
@@ -5713,9 +5713,9 @@ module M_u16__test_mul_bw
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt16BW.t = (0: UInt16BW.t)
   
@@ -5841,9 +5841,9 @@ module M_u16__test_sub
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt16.t = (0: UInt16.t)
   
@@ -5868,9 +5868,9 @@ module M_u16__test_sub_bw
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt16BW.t = (0: UInt16BW.t)
   
@@ -5896,9 +5896,9 @@ module M_u32__test_add
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt32.t = (0: UInt32.t)
   
@@ -5923,9 +5923,9 @@ module M_u32__test_add_bw
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt32BW.t = (0: UInt32BW.t)
   
@@ -5952,9 +5952,9 @@ module M_u32__test_div
   use int.ComputerDivision
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt32.t = (0: UInt32.t)
   
@@ -5990,9 +5990,9 @@ module M_u32__test_div_bw
   use int.ComputerDivision
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt32BW.t = (0: UInt32BW.t)
   
@@ -6173,9 +6173,9 @@ module M_u32__test_mul
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt32.t = (0: UInt32.t)
   
@@ -6200,9 +6200,9 @@ module M_u32__test_mul_bw
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt32BW.t = (0: UInt32BW.t)
   
@@ -6328,9 +6328,9 @@ module M_u32__test_sub
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt32.t = (0: UInt32.t)
   
@@ -6355,9 +6355,9 @@ module M_u32__test_sub_bw
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt32BW.t = (0: UInt32BW.t)
   
@@ -6383,9 +6383,9 @@ module M_u64__test_add
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt64.t = (0: UInt64.t)
   
@@ -6410,9 +6410,9 @@ module M_u64__test_add_bw
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt64BW.t = (0: UInt64BW.t)
   
@@ -6439,9 +6439,9 @@ module M_u64__test_div
   use int.ComputerDivision
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt64.t = (0: UInt64.t)
   
@@ -6477,9 +6477,9 @@ module M_u64__test_div_bw
   use int.ComputerDivision
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt64BW.t = (0: UInt64BW.t)
   
@@ -6660,9 +6660,9 @@ module M_u64__test_mul
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt64.t = (0: UInt64.t)
   
@@ -6687,9 +6687,9 @@ module M_u64__test_mul_bw
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt64BW.t = (0: UInt64BW.t)
   
@@ -6815,9 +6815,9 @@ module M_u64__test_sub
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt64.t = (0: UInt64.t)
   
@@ -6842,9 +6842,9 @@ module M_u64__test_sub_bw
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt64BW.t = (0: UInt64BW.t)
   
@@ -6870,9 +6870,9 @@ module M_u8__test_add
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt8.t = (0: UInt8.t)
   
@@ -6897,9 +6897,9 @@ module M_u8__test_add_bw
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt8BW.t = (0: UInt8BW.t)
   
@@ -6925,9 +6925,9 @@ module M_u8__test_div
   use int.ComputerDivision
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt8.t = (0: UInt8.t)
   
@@ -6963,9 +6963,9 @@ module M_u8__test_div_bw
   use int.ComputerDivision
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt8BW.t = (0: UInt8BW.t)
   
@@ -7145,9 +7145,9 @@ module M_u8__test_mul
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt8.t = (0: UInt8.t)
   
@@ -7172,9 +7172,9 @@ module M_u8__test_mul_bw
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt8BW.t = (0: UInt8BW.t)
   
@@ -7275,9 +7275,9 @@ module M_u8__test_sub
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt8.t = (0: UInt8.t)
   
@@ -7302,9 +7302,9 @@ module M_u8__test_sub_bw
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt8BW.t = (0: UInt8BW.t)
   
@@ -7415,9 +7415,9 @@ module M_usize__test_add
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt64.t = (0: UInt64.t)
   
@@ -7442,9 +7442,9 @@ module M_usize__test_add_bw
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt64BW.t = (0: UInt64BW.t)
   
@@ -7471,9 +7471,9 @@ module M_usize__test_div
   use int.ComputerDivision
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt64.t = (0: UInt64.t)
   
@@ -7509,9 +7509,9 @@ module M_usize__test_div_bw
   use int.ComputerDivision
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt64BW.t = (0: UInt64BW.t)
   
@@ -7692,9 +7692,9 @@ module M_usize__test_mul
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt64.t = (0: UInt64.t)
   
@@ -7719,9 +7719,9 @@ module M_usize__test_mul_bw
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt64BW.t = (0: UInt64BW.t)
   
@@ -7847,9 +7847,9 @@ module M_usize__test_sub
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt64.t = (0: UInt64.t)
   
@@ -7874,9 +7874,9 @@ module M_usize__test_sub_bw
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt64BW.t = (0: UInt64BW.t)
   

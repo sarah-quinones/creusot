@@ -5,9 +5,9 @@ module M_fraction_1
   
   type t_PositiveReal
   
-  predicate gt_log_Real [@inline:trivial] (self: Real.real) (other: Real.real) = Real.(<) other self
+  function gt_log_Real [@inline:trivial] (self: Real.real) (other: Real.real) : bool = Real.(<) other self
   
-  meta "rewrite_def" predicate gt_log_Real
+  meta "rewrite_def" function gt_log_Real
   
   function to_real (self: t_PositiveReal) : Real.real
   
@@ -29,7 +29,7 @@ module M_fraction_1
   
   function fraction (i: int) (n: int) : t_PositiveReal = div_PositiveReal (from_int i) (from_int (n + 1))
   
-  predicate ext_eq (self: t_PositiveReal) (other: t_PositiveReal) = to_real self = to_real other
+  function ext_eq (self: t_PositiveReal) (other: t_PositiveReal) : bool = to_real self = to_real other
   
   axiom ext_eq_spec: forall self: t_PositiveReal, other: t_PositiveReal [self = other]. ext_eq self other
       = (self = other)
@@ -49,15 +49,15 @@ module M_fraction_add
   use real.FromInt
   use int.Int
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   type t_PositiveReal
   
-  predicate gt_log_Real [@inline:trivial] (self: Real.real) (other: Real.real) = Real.(<) other self
+  function gt_log_Real [@inline:trivial] (self: Real.real) (other: Real.real) : bool = Real.(<) other self
   
-  meta "rewrite_def" predicate gt_log_Real
+  meta "rewrite_def" function gt_log_Real
   
   function to_real (self: t_PositiveReal) : Real.real
   
@@ -85,7 +85,7 @@ module M_fraction_add
   
   function fraction (i: int) (n: int) : t_PositiveReal = div_PositiveReal (from_int i) (from_int (n + 1))
   
-  predicate ext_eq (self: t_PositiveReal) (other: t_PositiveReal) = to_real self = to_real other
+  function ext_eq (self: t_PositiveReal) (other: t_PositiveReal) : bool = to_real self = to_real other
   
   axiom ext_eq_spec: forall self: t_PositiveReal, other: t_PositiveReal [self = other]. ext_eq self other
       = (self = other)
@@ -129,12 +129,12 @@ module M_parallel_add
   
   type tup2_AtomicI32_Ghost_Perm_AtomicI32 = { f0: t_AtomicI32; f1: t_Perm_AtomicI32 }
   
-  predicate inv_AtomicI32 (_1: t_AtomicI32)
+  function inv_AtomicI32 (_1: t_AtomicI32) : bool
   
-  predicate inv_tup2_AtomicI32_Ghost_Perm_AtomicI32 [@inline:trivial] (_1: tup2_AtomicI32_Ghost_Perm_AtomicI32) =
+  function inv_tup2_AtomicI32_Ghost_Perm_AtomicI32 [@inline:trivial] (_1: tup2_AtomicI32_Ghost_Perm_AtomicI32) : bool =
     inv_AtomicI32 _1.f0
   
-  meta "rewrite_def" predicate inv_tup2_AtomicI32_Ghost_Perm_AtomicI32
+  meta "rewrite_def" function inv_tup2_AtomicI32_Ghost_Perm_AtomicI32
   
   function val_unsized_AtomicI32 (self: t_Perm_AtomicI32) : Int32.t
   
@@ -153,9 +153,9 @@ module M_parallel_add
   
   type t_PositiveReal
   
-  predicate gt_log_Real [@inline:trivial] (self: Real.real) (other: Real.real) = Real.(<) other self
+  function gt_log_Real [@inline:trivial] (self: Real.real) (other: Real.real) : bool = Real.(<) other self
   
-  meta "rewrite_def" predicate gt_log_Real
+  meta "rewrite_def" function gt_log_Real
   
   function to_real (self: t_PositiveReal) : Real.real
   
@@ -181,9 +181,9 @@ module M_parallel_add
   
   axiom fraction_1_spec: forall n: int. fraction (n + 1) n = from_int 1
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   function add_PositiveReal (self: t_PositiveReal) (other: t_PositiveReal) : t_PositiveReal
   
@@ -200,23 +200,23 @@ module M_parallel_add
   
   type t_Authority_Option_tup2_PositiveReal_Int
   
-  predicate invariant_Authority_Option_tup2_PositiveReal_Int (self: t_Authority_Option_tup2_PositiveReal_Int)
+  function invariant_Authority_Option_tup2_PositiveReal_Int (self: t_Authority_Option_tup2_PositiveReal_Int) : bool
   
-  predicate inv_Authority_Option_tup2_PositiveReal_Int (_1: t_Authority_Option_tup2_PositiveReal_Int)
+  function inv_Authority_Option_tup2_PositiveReal_Int (_1: t_Authority_Option_tup2_PositiveReal_Int) : bool
   
   axiom inv_axiom:
     forall _1: t_Authority_Option_tup2_PositiveReal_Int [inv_Authority_Option_tup2_PositiveReal_Int _1]. inv_Authority_Option_tup2_PositiveReal_Int _1
       -> invariant_Authority_Option_tup2_PositiveReal_Int _1
   
-  predicate invariant_Ghost_Authority_Option_tup2_PositiveReal_Int [@inline:trivial] (self: t_Authority_Option_tup2_PositiveReal_Int) =
-    inv_Authority_Option_tup2_PositiveReal_Int self
+  function invariant_Ghost_Authority_Option_tup2_PositiveReal_Int [@inline:trivial] (self: t_Authority_Option_tup2_PositiveReal_Int) : bool
+   = inv_Authority_Option_tup2_PositiveReal_Int self
   
-  meta "rewrite_def" predicate invariant_Ghost_Authority_Option_tup2_PositiveReal_Int
+  meta "rewrite_def" function invariant_Ghost_Authority_Option_tup2_PositiveReal_Int
   
-  predicate inv_Ghost_Authority_Option_tup2_PositiveReal_Int [@inline:trivial] (_1: t_Authority_Option_tup2_PositiveReal_Int) =
-    invariant_Ghost_Authority_Option_tup2_PositiveReal_Int _1
+  function inv_Ghost_Authority_Option_tup2_PositiveReal_Int [@inline:trivial] (_1: t_Authority_Option_tup2_PositiveReal_Int) : bool
+   = invariant_Ghost_Authority_Option_tup2_PositiveReal_Int _1
   
-  meta "rewrite_def" predicate inv_Ghost_Authority_Option_tup2_PositiveReal_Int
+  meta "rewrite_def" function inv_Ghost_Authority_Option_tup2_PositiveReal_Int
   
   type tup2_PositiveReal_Int = { f0'1: t_PositiveReal; f1'1: int }
   
@@ -298,25 +298,25 @@ module M_parallel_add
       = unit_Option_tup2_PositiveReal_Int)}
       (! return {result}) ]
   
-  predicate invariant_ref_Ghost_Authority_Option_tup2_PositiveReal_Int [@inline:trivial] (self: t_Authority_Option_tup2_PositiveReal_Int) =
-    inv_Ghost_Authority_Option_tup2_PositiveReal_Int self
+  function invariant_ref_Ghost_Authority_Option_tup2_PositiveReal_Int [@inline:trivial] (self: t_Authority_Option_tup2_PositiveReal_Int) : bool
+   = inv_Ghost_Authority_Option_tup2_PositiveReal_Int self
   
-  meta "rewrite_def" predicate invariant_ref_Ghost_Authority_Option_tup2_PositiveReal_Int
+  meta "rewrite_def" function invariant_ref_Ghost_Authority_Option_tup2_PositiveReal_Int
   
-  predicate inv_ref_Ghost_Authority_Option_tup2_PositiveReal_Int [@inline:trivial] (_1: t_Authority_Option_tup2_PositiveReal_Int) =
-    invariant_ref_Ghost_Authority_Option_tup2_PositiveReal_Int _1
+  function inv_ref_Ghost_Authority_Option_tup2_PositiveReal_Int [@inline:trivial] (_1: t_Authority_Option_tup2_PositiveReal_Int) : bool
+   = invariant_ref_Ghost_Authority_Option_tup2_PositiveReal_Int _1
   
-  meta "rewrite_def" predicate inv_ref_Ghost_Authority_Option_tup2_PositiveReal_Int
+  meta "rewrite_def" function inv_ref_Ghost_Authority_Option_tup2_PositiveReal_Int
   
-  predicate invariant_ref_Authority_Option_tup2_PositiveReal_Int [@inline:trivial] (self: t_Authority_Option_tup2_PositiveReal_Int) =
-    inv_Authority_Option_tup2_PositiveReal_Int self
+  function invariant_ref_Authority_Option_tup2_PositiveReal_Int [@inline:trivial] (self: t_Authority_Option_tup2_PositiveReal_Int) : bool
+   = inv_Authority_Option_tup2_PositiveReal_Int self
   
-  meta "rewrite_def" predicate invariant_ref_Authority_Option_tup2_PositiveReal_Int
+  meta "rewrite_def" function invariant_ref_Authority_Option_tup2_PositiveReal_Int
   
-  predicate inv_ref_Authority_Option_tup2_PositiveReal_Int [@inline:trivial] (_1: t_Authority_Option_tup2_PositiveReal_Int) =
-    invariant_ref_Authority_Option_tup2_PositiveReal_Int _1
+  function inv_ref_Authority_Option_tup2_PositiveReal_Int [@inline:trivial] (_1: t_Authority_Option_tup2_PositiveReal_Int) : bool
+   = invariant_ref_Authority_Option_tup2_PositiveReal_Int _1
   
-  meta "rewrite_def" predicate inv_ref_Authority_Option_tup2_PositiveReal_Int
+  meta "rewrite_def" function inv_ref_Authority_Option_tup2_PositiveReal_Int
   
   let deref_Ghost_Authority_Option_tup2_PositiveReal_Int (self: t_Authority_Option_tup2_PositiveReal_Int)
     (return (x: t_Authority_Option_tup2_PositiveReal_Int)) =
@@ -339,7 +339,7 @@ module M_parallel_add
   
   type t_Fragment_Option_tup2_PositiveReal_Int
   
-  predicate inv_Fragment_Option_tup2_PositiveReal_Int (_1: t_Fragment_Option_tup2_PositiveReal_Int)
+  function inv_Fragment_Option_tup2_PositiveReal_Int (_1: t_Fragment_Option_tup2_PositiveReal_Int) : bool
   
   function view_Fragment_Option_tup2_PositiveReal_Int (self: t_Fragment_Option_tup2_PositiveReal_Int) : t_Option_tup2_PositiveReal_Int
   
@@ -353,15 +353,15 @@ module M_parallel_add
       /\ id_Option_tup2_PositiveReal_Int'1 result = id)}
       (! return {result}) ]
   
-  predicate invariant_Ghost_Fragment_Option_tup2_PositiveReal_Int [@inline:trivial] (self: t_Fragment_Option_tup2_PositiveReal_Int) =
-    inv_Fragment_Option_tup2_PositiveReal_Int self
+  function invariant_Ghost_Fragment_Option_tup2_PositiveReal_Int [@inline:trivial] (self: t_Fragment_Option_tup2_PositiveReal_Int) : bool
+   = inv_Fragment_Option_tup2_PositiveReal_Int self
   
-  meta "rewrite_def" predicate invariant_Ghost_Fragment_Option_tup2_PositiveReal_Int
+  meta "rewrite_def" function invariant_Ghost_Fragment_Option_tup2_PositiveReal_Int
   
-  predicate inv_Ghost_Fragment_Option_tup2_PositiveReal_Int [@inline:trivial] (_1: t_Fragment_Option_tup2_PositiveReal_Int) =
-    invariant_Ghost_Fragment_Option_tup2_PositiveReal_Int _1
+  function inv_Ghost_Fragment_Option_tup2_PositiveReal_Int [@inline:trivial] (_1: t_Fragment_Option_tup2_PositiveReal_Int) : bool
+   = invariant_Ghost_Fragment_Option_tup2_PositiveReal_Int _1
   
-  meta "rewrite_def" predicate inv_Ghost_Fragment_Option_tup2_PositiveReal_Int
+  meta "rewrite_def" function inv_Ghost_Fragment_Option_tup2_PositiveReal_Int
   
   let new_Fragment_Option_tup2_PositiveReal_Int (x: t_Fragment_Option_tup2_PositiveReal_Int)
     (return (x'0: t_Fragment_Option_tup2_PositiveReal_Int)) =
@@ -372,26 +372,26 @@ module M_parallel_add
       /\ ([@stop_split] [@expl:new ensures] result = x)}
       (! return {result}) ]
   
-  predicate invariant_refmut_Ghost_Authority_Option_tup2_PositiveReal_Int [@inline:trivial] (self: MutBorrow.t t_Authority_Option_tup2_PositiveReal_Int) =
-    inv_Ghost_Authority_Option_tup2_PositiveReal_Int self.current
+  function invariant_refmut_Ghost_Authority_Option_tup2_PositiveReal_Int [@inline:trivial] (self: MutBorrow.t t_Authority_Option_tup2_PositiveReal_Int) : bool
+   = inv_Ghost_Authority_Option_tup2_PositiveReal_Int self.current
     /\ inv_Ghost_Authority_Option_tup2_PositiveReal_Int self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Ghost_Authority_Option_tup2_PositiveReal_Int
+  meta "rewrite_def" function invariant_refmut_Ghost_Authority_Option_tup2_PositiveReal_Int
   
-  predicate inv_refmut_Ghost_Authority_Option_tup2_PositiveReal_Int [@inline:trivial] (_1: MutBorrow.t t_Authority_Option_tup2_PositiveReal_Int) =
-    invariant_refmut_Ghost_Authority_Option_tup2_PositiveReal_Int _1
+  function inv_refmut_Ghost_Authority_Option_tup2_PositiveReal_Int [@inline:trivial] (_1: MutBorrow.t t_Authority_Option_tup2_PositiveReal_Int) : bool
+   = invariant_refmut_Ghost_Authority_Option_tup2_PositiveReal_Int _1
   
-  meta "rewrite_def" predicate inv_refmut_Ghost_Authority_Option_tup2_PositiveReal_Int
+  meta "rewrite_def" function inv_refmut_Ghost_Authority_Option_tup2_PositiveReal_Int
   
-  predicate invariant_refmut_Authority_Option_tup2_PositiveReal_Int [@inline:trivial] (self: MutBorrow.t t_Authority_Option_tup2_PositiveReal_Int) =
-    inv_Authority_Option_tup2_PositiveReal_Int self.current /\ inv_Authority_Option_tup2_PositiveReal_Int self.final
+  function invariant_refmut_Authority_Option_tup2_PositiveReal_Int [@inline:trivial] (self: MutBorrow.t t_Authority_Option_tup2_PositiveReal_Int) : bool
+   = inv_Authority_Option_tup2_PositiveReal_Int self.current /\ inv_Authority_Option_tup2_PositiveReal_Int self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Authority_Option_tup2_PositiveReal_Int
+  meta "rewrite_def" function invariant_refmut_Authority_Option_tup2_PositiveReal_Int
   
-  predicate inv_refmut_Authority_Option_tup2_PositiveReal_Int [@inline:trivial] (_1: MutBorrow.t t_Authority_Option_tup2_PositiveReal_Int) =
-    invariant_refmut_Authority_Option_tup2_PositiveReal_Int _1
+  function inv_refmut_Authority_Option_tup2_PositiveReal_Int [@inline:trivial] (_1: MutBorrow.t t_Authority_Option_tup2_PositiveReal_Int) : bool
+   = invariant_refmut_Authority_Option_tup2_PositiveReal_Int _1
   
-  meta "rewrite_def" predicate inv_refmut_Authority_Option_tup2_PositiveReal_Int
+  meta "rewrite_def" function inv_refmut_Authority_Option_tup2_PositiveReal_Int
   
   let deref_mut_Ghost_Authority_Option_tup2_PositiveReal_Int
     (self: MutBorrow.t t_Authority_Option_tup2_PositiveReal_Int)
@@ -403,26 +403,26 @@ module M_parallel_add
       /\ ([@stop_split] [@expl:deref_mut ensures] result = self)}
       (! return {result}) ]
   
-  predicate invariant_refmut_Ghost_Fragment_Option_tup2_PositiveReal_Int [@inline:trivial] (self: MutBorrow.t t_Fragment_Option_tup2_PositiveReal_Int) =
-    inv_Ghost_Fragment_Option_tup2_PositiveReal_Int self.current
+  function invariant_refmut_Ghost_Fragment_Option_tup2_PositiveReal_Int [@inline:trivial] (self: MutBorrow.t t_Fragment_Option_tup2_PositiveReal_Int) : bool
+   = inv_Ghost_Fragment_Option_tup2_PositiveReal_Int self.current
     /\ inv_Ghost_Fragment_Option_tup2_PositiveReal_Int self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Ghost_Fragment_Option_tup2_PositiveReal_Int
+  meta "rewrite_def" function invariant_refmut_Ghost_Fragment_Option_tup2_PositiveReal_Int
   
-  predicate inv_refmut_Ghost_Fragment_Option_tup2_PositiveReal_Int [@inline:trivial] (_1: MutBorrow.t t_Fragment_Option_tup2_PositiveReal_Int) =
-    invariant_refmut_Ghost_Fragment_Option_tup2_PositiveReal_Int _1
+  function inv_refmut_Ghost_Fragment_Option_tup2_PositiveReal_Int [@inline:trivial] (_1: MutBorrow.t t_Fragment_Option_tup2_PositiveReal_Int) : bool
+   = invariant_refmut_Ghost_Fragment_Option_tup2_PositiveReal_Int _1
   
-  meta "rewrite_def" predicate inv_refmut_Ghost_Fragment_Option_tup2_PositiveReal_Int
+  meta "rewrite_def" function inv_refmut_Ghost_Fragment_Option_tup2_PositiveReal_Int
   
-  predicate invariant_refmut_Fragment_Option_tup2_PositiveReal_Int [@inline:trivial] (self: MutBorrow.t t_Fragment_Option_tup2_PositiveReal_Int) =
-    inv_Fragment_Option_tup2_PositiveReal_Int self.current /\ inv_Fragment_Option_tup2_PositiveReal_Int self.final
+  function invariant_refmut_Fragment_Option_tup2_PositiveReal_Int [@inline:trivial] (self: MutBorrow.t t_Fragment_Option_tup2_PositiveReal_Int) : bool
+   = inv_Fragment_Option_tup2_PositiveReal_Int self.current /\ inv_Fragment_Option_tup2_PositiveReal_Int self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Fragment_Option_tup2_PositiveReal_Int
+  meta "rewrite_def" function invariant_refmut_Fragment_Option_tup2_PositiveReal_Int
   
-  predicate inv_refmut_Fragment_Option_tup2_PositiveReal_Int [@inline:trivial] (_1: MutBorrow.t t_Fragment_Option_tup2_PositiveReal_Int) =
-    invariant_refmut_Fragment_Option_tup2_PositiveReal_Int _1
+  function inv_refmut_Fragment_Option_tup2_PositiveReal_Int [@inline:trivial] (_1: MutBorrow.t t_Fragment_Option_tup2_PositiveReal_Int) : bool
+   = invariant_refmut_Fragment_Option_tup2_PositiveReal_Int _1
   
-  meta "rewrite_def" predicate inv_refmut_Fragment_Option_tup2_PositiveReal_Int
+  meta "rewrite_def" function inv_refmut_Fragment_Option_tup2_PositiveReal_Int
   
   let deref_mut_Ghost_Fragment_Option_tup2_PositiveReal_Int (self: MutBorrow.t t_Fragment_Option_tup2_PositiveReal_Int)
     (return (x: MutBorrow.t t_Fragment_Option_tup2_PositiveReal_Int)) =
@@ -458,26 +458,26 @@ module M_parallel_add
     forall a: t_Option_Option_tup2_PositiveReal_Int, b: t_Option_Option_tup2_PositiveReal_Int. op_Option_Option_tup2_PositiveReal_Int a b
       = op_Option_Option_tup2_PositiveReal_Int b a
   
-  predicate premise_Snapshot_tup2_Option_tup2_PositiveReal_Int_Option_tup2_PositiveReal_Int [@inline:trivial] (self: tup2_Option_tup2_PositiveReal_Int_Option_tup2_PositiveReal_Int) (from_auth: t_Option_tup2_PositiveReal_Int) (from_frag: t_Option_tup2_PositiveReal_Int) =
-    forall f: t_Option_Option_tup2_PositiveReal_Int. op_Option_Option_tup2_PositiveReal_Int (Some'0 from_frag) f
+  function premise_Snapshot_tup2_Option_tup2_PositiveReal_Int_Option_tup2_PositiveReal_Int [@inline:trivial] (self: tup2_Option_tup2_PositiveReal_Int_Option_tup2_PositiveReal_Int) (from_auth: t_Option_tup2_PositiveReal_Int) (from_frag: t_Option_tup2_PositiveReal_Int) : bool
+   = forall f: t_Option_Option_tup2_PositiveReal_Int. op_Option_Option_tup2_PositiveReal_Int (Some'0 from_frag) f
         = Some'3 (Some'0 from_auth)
       -> op_Option_Option_tup2_PositiveReal_Int (Some'0 (self.f1'2)) f = Some'3 (Some'0 (self.f0'2))
   
-  meta "rewrite_def" predicate premise_Snapshot_tup2_Option_tup2_PositiveReal_Int_Option_tup2_PositiveReal_Int
+  meta "rewrite_def" function premise_Snapshot_tup2_Option_tup2_PositiveReal_Int_Option_tup2_PositiveReal_Int
   
-  predicate incl_PositiveReal (self: t_PositiveReal) (other: t_PositiveReal) =
+  function incl_PositiveReal (self: t_PositiveReal) (other: t_PositiveReal) : bool =
     let r = Real.(<) (to_real self) (to_real other) in r
   
   axiom incl_PositiveReal_spec:
     forall self: t_PositiveReal, other: t_PositiveReal [incl_PositiveReal self other]. incl_PositiveReal self other
       = (exists factor: t_PositiveReal. op_PositiveReal self factor = Some'1 other)
   
-  predicate incl_Int (self: int) (other: int) = true
+  function incl_Int (self: int) (other: int) : bool = true
   
   axiom incl_Int_spec: forall self: int, other: int [incl_Int self other]. incl_Int self other
       = (exists factor: int. op_Int self factor = Some'2 other)
   
-  predicate incl_tup2_PositiveReal_Int (self: tup2_PositiveReal_Int) (other: tup2_PositiveReal_Int) =
+  function incl_tup2_PositiveReal_Int (self: tup2_PositiveReal_Int) (other: tup2_PositiveReal_Int) : bool =
     incl_PositiveReal self.f0'1 other.f0'1 /\ incl_Int self.f1'1 other.f1'1
   
   axiom incl_tup2_PositiveReal_Int_spec:
@@ -509,14 +509,14 @@ module M_parallel_add
     forall self: tup2_PositiveReal_Int, other: tup2_PositiveReal_Int, comb: tup2_PositiveReal_Int. op_tup2_PositiveReal_Int self other
         = Some comb -> incl_tup2_PositiveReal_Int self comb
   
-  predicate ext_eq (self: t_PositiveReal) (other: t_PositiveReal) = to_real self = to_real other
+  function ext_eq (self: t_PositiveReal) (other: t_PositiveReal) : bool = to_real self = to_real other
   
   axiom ext_eq_spec: forall self: t_PositiveReal, other: t_PositiveReal [self = other]. ext_eq self other
       = (self = other)
   
-  predicate eq_PositiveReal [@inline:trivial] (self: t_PositiveReal) (other: t_PositiveReal) = ext_eq self other
+  function eq_PositiveReal [@inline:trivial] (self: t_PositiveReal) (other: t_PositiveReal) : bool = ext_eq self other
   
-  meta "rewrite_def" predicate eq_PositiveReal
+  meta "rewrite_def" function eq_PositiveReal
   
   axiom eq_PositiveReal_spec: forall self: t_PositiveReal, other: t_PositiveReal [self
       = other]. eq_PositiveReal self other = (self = other)
@@ -539,25 +539,25 @@ module M_parallel_add
   
   axiom incl_op_Int_spec: forall self: int, other: int, comb: int. op_Int self other = Some'2 comb -> incl_Int self comb
   
-  predicate eq_Int [@inline:trivial] (self: int) (other: int) = self = other
+  function eq_Int [@inline:trivial] (self: int) (other: int) : bool = self = other
   
-  meta "rewrite_def" predicate eq_Int
+  meta "rewrite_def" function eq_Int
   
   axiom eq_Int_spec: forall self: int, other: int [eq_Int self other]. eq_Int self other = (self = other)
   
-  predicate eq_tup2_PositiveReal_Int [@inline:trivial] (self: tup2_PositiveReal_Int) (other: tup2_PositiveReal_Int) =
-    eq_PositiveReal self.f0'1 other.f0'1 /\ eq_Int self.f1'1 other.f1'1
+  function eq_tup2_PositiveReal_Int [@inline:trivial] (self: tup2_PositiveReal_Int) (other: tup2_PositiveReal_Int) : bool
+   = eq_PositiveReal self.f0'1 other.f0'1 /\ eq_Int self.f1'1 other.f1'1
   
-  meta "rewrite_def" predicate eq_tup2_PositiveReal_Int
+  meta "rewrite_def" function eq_tup2_PositiveReal_Int
   
   axiom eq_tup2_PositiveReal_Int_spec: forall self: tup2_PositiveReal_Int, other: tup2_PositiveReal_Int [self
       = other]. eq_tup2_PositiveReal_Int self other = (self = other)
   
-  predicate incl_eq_tup2_PositiveReal_Int (self: tup2_PositiveReal_Int) (other: tup2_PositiveReal_Int) =
+  function incl_eq_tup2_PositiveReal_Int (self: tup2_PositiveReal_Int) (other: tup2_PositiveReal_Int) : bool =
     eq_tup2_PositiveReal_Int self other \/ incl_tup2_PositiveReal_Int self other
   
-  predicate incl_Option_tup2_PositiveReal_Int (self: t_Option_tup2_PositiveReal_Int) (other: t_Option_tup2_PositiveReal_Int) =
-    match { f0'2 = self; f1'2 = other } with
+  function incl_Option_tup2_PositiveReal_Int (self: t_Option_tup2_PositiveReal_Int) (other: t_Option_tup2_PositiveReal_Int) : bool
+   = match { f0'2 = self; f1'2 = other } with
       | {f0'2 = None} -> true
       | {f1'2 = None} -> false
       | {f0'2 = Some x; f1'2 = Some y} -> incl_eq_tup2_PositiveReal_Int x y
@@ -593,20 +593,20 @@ module M_parallel_add
       = (update_Snapshot_tup2_Option_tup2_PositiveReal_Int_Option_tup2_PositiveReal_Int upd (view_Authority_Option_tup2_PositiveReal_Int self.current) (view_Fragment_Option_tup2_PositiveReal_Int frag.current)).f1'2)}
       (! return {result}) ]
   
-  predicate resolve_refmut_Ghost_Fragment_Option_tup2_PositiveReal_Int [@inline:trivial] (_1: MutBorrow.t t_Fragment_Option_tup2_PositiveReal_Int) =
-    _1.final = _1.current
+  function resolve_refmut_Ghost_Fragment_Option_tup2_PositiveReal_Int [@inline:trivial] (_1: MutBorrow.t t_Fragment_Option_tup2_PositiveReal_Int) : bool
+   = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Ghost_Fragment_Option_tup2_PositiveReal_Int
+  meta "rewrite_def" function resolve_refmut_Ghost_Fragment_Option_tup2_PositiveReal_Int
   
-  predicate resolve_refmut_Fragment_Option_tup2_PositiveReal_Int [@inline:trivial] (_1: MutBorrow.t t_Fragment_Option_tup2_PositiveReal_Int) =
-    _1.final = _1.current
+  function resolve_refmut_Fragment_Option_tup2_PositiveReal_Int [@inline:trivial] (_1: MutBorrow.t t_Fragment_Option_tup2_PositiveReal_Int) : bool
+   = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Fragment_Option_tup2_PositiveReal_Int
+  meta "rewrite_def" function resolve_refmut_Fragment_Option_tup2_PositiveReal_Int
   
-  predicate resolve_refmut_Authority_Option_tup2_PositiveReal_Int [@inline:trivial] (_1: MutBorrow.t t_Authority_Option_tup2_PositiveReal_Int) =
-    _1.final = _1.current
+  function resolve_refmut_Authority_Option_tup2_PositiveReal_Int [@inline:trivial] (_1: MutBorrow.t t_Authority_Option_tup2_PositiveReal_Int) : bool
+   = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Authority_Option_tup2_PositiveReal_Int
+  meta "rewrite_def" function resolve_refmut_Authority_Option_tup2_PositiveReal_Int
   
   let new_unit (x: ()) (return (x'0: ())) = any
     [ return (result: ()) -> {[@stop_split] [@expl:new ensures] result = x} (! return {result}) ]
@@ -626,21 +626,21 @@ module M_parallel_add
   
   type t_ParallelAddAtomicInv = { own: t_Perm_AtomicI32; auth: t_Authority_Option_tup2_PositiveReal_Int }
   
-  predicate inv_ParallelAddAtomicInv (_1: t_ParallelAddAtomicInv)
+  function inv_ParallelAddAtomicInv (_1: t_ParallelAddAtomicInv) : bool
   
   axiom inv_axiom'0 [@rewrite]:
     forall _1: t_ParallelAddAtomicInv [inv_ParallelAddAtomicInv _1]. inv_ParallelAddAtomicInv _1
       = inv_Authority_Option_tup2_PositiveReal_Int _1.auth
   
-  predicate invariant_Ghost_ParallelAddAtomicInv [@inline:trivial] (self: t_ParallelAddAtomicInv) =
+  function invariant_Ghost_ParallelAddAtomicInv [@inline:trivial] (self: t_ParallelAddAtomicInv) : bool =
     inv_ParallelAddAtomicInv self
   
-  meta "rewrite_def" predicate invariant_Ghost_ParallelAddAtomicInv
+  meta "rewrite_def" function invariant_Ghost_ParallelAddAtomicInv
   
-  predicate inv_Ghost_ParallelAddAtomicInv [@inline:trivial] (_1: t_ParallelAddAtomicInv) =
+  function inv_Ghost_ParallelAddAtomicInv [@inline:trivial] (_1: t_ParallelAddAtomicInv) : bool =
     invariant_Ghost_ParallelAddAtomicInv _1
   
-  meta "rewrite_def" predicate inv_Ghost_ParallelAddAtomicInv
+  meta "rewrite_def" function inv_Ghost_ParallelAddAtomicInv
   
   let new_ParallelAddAtomicInv (x: t_ParallelAddAtomicInv) (return (x'0: t_ParallelAddAtomicInv)) =
   {[@stop_split] [@expl:new 'x' type invariant] inv_ParallelAddAtomicInv x}
@@ -652,11 +652,11 @@ module M_parallel_add
   
   type t_AtomicInvariantSC_ParallelAddAtomicInv
   
-  predicate protocol_ParallelAddAtomicInv [@inline:trivial] (self: t_ParallelAddAtomicInv) =
+  function protocol_ParallelAddAtomicInv [@inline:trivial] (self: t_ParallelAddAtomicInv) : bool =
     exists k: int. view_Authority_Option_tup2_PositiveReal_Int self.auth
       = Some { f0'1 = from_int 1; f1'1 = k * Pow2int.pow2 32 + Int32.to_int (val_AtomicI32 self.own) }
   
-  meta "rewrite_def" predicate protocol_ParallelAddAtomicInv
+  meta "rewrite_def" function protocol_ParallelAddAtomicInv
   
   type tup2_AtomicI32_Id = { f0'5: t_AtomicI32; f1'5: t_Id }
   
@@ -695,28 +695,28 @@ module M_parallel_add
   
   type t_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int
   
-  predicate inv_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int (_1: t_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int)
+  function inv_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int (_1: t_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int) : bool
   
-  predicate invariant_ref_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int [@inline:trivial] (self: t_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int) =
-    inv_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int self
+  function invariant_ref_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int [@inline:trivial] (self: t_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int) : bool
+   = inv_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int self
   
-  meta "rewrite_def" predicate invariant_ref_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int
+  meta "rewrite_def" function invariant_ref_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int
   
-  predicate inv_ref_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int [@inline:trivial] (_1: t_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int) =
-    invariant_ref_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int _1
+  function inv_ref_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int [@inline:trivial] (_1: t_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int) : bool
+   = invariant_ref_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int _1
   
-  meta "rewrite_def" predicate inv_ref_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int
+  meta "rewrite_def" function inv_ref_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int
   
-  predicate invariant_Seq_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int [@inline:trivial] (self: Seq.seq t_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int) =
-    forall i: int. 0 <= i /\ i < Seq.length self
+  function invariant_Seq_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int [@inline:trivial] (self: Seq.seq t_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int) : bool
+   = forall i: int. 0 <= i /\ i < Seq.length self
       -> inv_ref_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int
+  meta "rewrite_def" function invariant_Seq_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int
   
-  predicate inv_Seq_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int [@inline:trivial] (_1: Seq.seq t_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int) =
-    invariant_Seq_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int _1
+  function inv_Seq_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int [@inline:trivial] (_1: Seq.seq t_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int) : bool
+   = invariant_Seq_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int _1
   
-  meta "rewrite_def" predicate inv_Seq_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int
+  meta "rewrite_def" function inv_Seq_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int
   
   constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
   
@@ -726,10 +726,11 @@ module M_parallel_add
     forall self: t_Vec_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global [view_Vec_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global self]. Seq.length (view_Vec_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global self)
       <= UInt64.t'int const_MAX
   
-  predicate invariant_Vec_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global (self: t_Vec_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global) =
+  function invariant_Vec_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global (self: t_Vec_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global) : bool
+   =
     inv_Seq_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int (view_Vec_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global self)
   
-  predicate inv_Vec_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global (_1: t_Vec_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global)
+  function inv_Vec_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global (_1: t_Vec_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global) : bool
   
   axiom inv_axiom'1:
     forall _1: t_Vec_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global [inv_Vec_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global _1]. inv_Vec_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global _1
@@ -754,8 +755,8 @@ module M_parallel_add
   
   meta "rewrite_def" function deep_model_i32
   
-  predicate produces_Range_i32 (self: t_Range_i32) (visited: Seq.seq Int32.t) (o: t_Range_i32) =
-    self.end' = o.end'
+  function produces_Range_i32 (self: t_Range_i32) (visited: Seq.seq Int32.t) (o: t_Range_i32) : bool = self.end'
+      = o.end'
     /\ deep_model_i32 self.start <= deep_model_i32 o.start
     /\ (gt_log_Int (Seq.length visited) 0 -> deep_model_i32 o.start <= deep_model_i32 o.end')
     /\ Seq.length visited = deep_model_i32 o.start - deep_model_i32 self.start
@@ -773,16 +774,16 @@ module M_parallel_add
   axiom produces_refl_Range_i32_spec:
     forall self: t_Range_i32. produces_Range_i32 self (Seq.empty: Seq.seq Int32.t) self
   
-  predicate resolve_refmut_Range_i32 [@inline:trivial] (_1: MutBorrow.t t_Range_i32) = _1.final = _1.current
+  function resolve_refmut_Range_i32 [@inline:trivial] (_1: MutBorrow.t t_Range_i32) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Range_i32
+  meta "rewrite_def" function resolve_refmut_Range_i32
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate completed_Range_i32 (self: MutBorrow.t t_Range_i32) =
-    resolve_refmut_Range_i32 self /\ ge_log_Int (deep_model_i32 self.current.start) (deep_model_i32 self.current.end')
+  function completed_Range_i32 (self: MutBorrow.t t_Range_i32) : bool = resolve_refmut_Range_i32 self
+    /\ ge_log_Int (deep_model_i32 self.current.start) (deep_model_i32 self.current.end')
   
   let next_Range_i32 (self: MutBorrow.t t_Range_i32) (return (x: t_Option_i32)) = any
     [ return (result: t_Option_i32) -> {[@stop_split] [@expl:next ensures] match result with
@@ -791,38 +792,38 @@ module M_parallel_add
         end}
       (! return {result}) ]
   
-  predicate valid_result_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int (self: t_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int) (_x: t_Fragment_Option_tup2_PositiveReal_Int)
+  function valid_result_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int (self: t_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int) (_x: t_Fragment_Option_tup2_PositiveReal_Int) : bool
   
-  predicate inv_Seq_i32 [@inline:trivial] (_1: Seq.seq Int32.t) = true
+  function inv_Seq_i32 [@inline:trivial] (_1: Seq.seq Int32.t) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_i32
+  meta "rewrite_def" function inv_Seq_i32
   
-  predicate invariant_ref_AtomicI32 [@inline:trivial] (self: t_AtomicI32) = inv_AtomicI32 self
+  function invariant_ref_AtomicI32 [@inline:trivial] (self: t_AtomicI32) : bool = inv_AtomicI32 self
   
-  meta "rewrite_def" predicate invariant_ref_AtomicI32
+  meta "rewrite_def" function invariant_ref_AtomicI32
   
-  predicate inv_ref_AtomicI32 [@inline:trivial] (_1: t_AtomicI32) = invariant_ref_AtomicI32 _1
+  function inv_ref_AtomicI32 [@inline:trivial] (_1: t_AtomicI32) : bool = invariant_ref_AtomicI32 _1
   
-  meta "rewrite_def" predicate inv_ref_AtomicI32
+  meta "rewrite_def" function inv_ref_AtomicI32
   
-  predicate inv_closure0 [@inline:trivial] (_1: closure0) =
+  function inv_closure0 [@inline:trivial] (_1: closure0) : bool =
     let {c0 = x0; c1 = x1; c2 = x2; c3 = x3} = _1 in inv_ref_AtomicI32 x1
     /\ inv_refmut_Ghost_Fragment_Option_tup2_PositiveReal_Int x3
   
-  meta "rewrite_def" predicate inv_closure0
+  meta "rewrite_def" function inv_closure0
   
   type t_Scope
   
-  predicate inv_Scope (_1: t_Scope)
+  function inv_Scope (_1: t_Scope) : bool
   
-  predicate invariant_refmut_Scope [@inline:trivial] (self: MutBorrow.t t_Scope) =
-    inv_Scope self.current /\ inv_Scope self.final
+  function invariant_refmut_Scope [@inline:trivial] (self: MutBorrow.t t_Scope) : bool = inv_Scope self.current
+    /\ inv_Scope self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Scope
+  meta "rewrite_def" function invariant_refmut_Scope
   
-  predicate inv_refmut_Scope [@inline:trivial] (_1: MutBorrow.t t_Scope) = invariant_refmut_Scope _1
+  function inv_refmut_Scope [@inline:trivial] (_1: MutBorrow.t t_Scope) : bool = invariant_refmut_Scope _1
   
-  meta "rewrite_def" predicate inv_refmut_Scope
+  meta "rewrite_def" function inv_refmut_Scope
   
   let elim_Some (_x: t_Option_i32) (return (f0'6: Int32.t)) = any
     [ _k (f0'6: Int32.t) -> {Some'4 f0'6 = _x} (! return {f0'6})
@@ -858,24 +859,24 @@ module M_parallel_add
     forall self: t_Option_tup2_PositiveReal_Int, other: t_Option_tup2_PositiveReal_Int, comb: t_Option_tup2_PositiveReal_Int. op_Option_tup2_PositiveReal_Int self other
         = Some'0 comb -> incl_Option_tup2_PositiveReal_Int self comb
   
-  predicate eq_Option_tup2_PositiveReal_Int [@inline:trivial] (self: t_Option_tup2_PositiveReal_Int) (other: t_Option_tup2_PositiveReal_Int) =
-    match { f0'2 = self; f1'2 = other } with
+  function eq_Option_tup2_PositiveReal_Int [@inline:trivial] (self: t_Option_tup2_PositiveReal_Int) (other: t_Option_tup2_PositiveReal_Int) : bool
+   = match { f0'2 = self; f1'2 = other } with
       | {f0'2 = Some s; f1'2 = Some o} -> eq_tup2_PositiveReal_Int s o
       | {f0'2 = None; f1'2 = None} -> true
       | _ -> false
       end
   
-  meta "rewrite_def" predicate eq_Option_tup2_PositiveReal_Int
+  meta "rewrite_def" function eq_Option_tup2_PositiveReal_Int
   
   axiom eq_Option_tup2_PositiveReal_Int_spec:
     forall self: t_Option_tup2_PositiveReal_Int, other: t_Option_tup2_PositiveReal_Int [self
       = other]. eq_Option_tup2_PositiveReal_Int self other = (self = other)
   
-  predicate incl_eq_Option_tup2_PositiveReal_Int (self: t_Option_tup2_PositiveReal_Int) (other: t_Option_tup2_PositiveReal_Int) =
-    eq_Option_tup2_PositiveReal_Int self other \/ incl_Option_tup2_PositiveReal_Int self other
+  function incl_eq_Option_tup2_PositiveReal_Int (self: t_Option_tup2_PositiveReal_Int) (other: t_Option_tup2_PositiveReal_Int) : bool
+   = eq_Option_tup2_PositiveReal_Int self other \/ incl_Option_tup2_PositiveReal_Int self other
   
-  predicate incl_eq_op_Option_tup2_PositiveReal_Int (a: t_Option_tup2_PositiveReal_Int) (b: t_Option_tup2_PositiveReal_Int) (x: t_Option_tup2_PositiveReal_Int) =
-    match op_Option_tup2_PositiveReal_Int a b with
+  function incl_eq_op_Option_tup2_PositiveReal_Int (a: t_Option_tup2_PositiveReal_Int) (b: t_Option_tup2_PositiveReal_Int) (x: t_Option_tup2_PositiveReal_Int) : bool
+   = match op_Option_tup2_PositiveReal_Int a b with
       | None'0 -> false
       | Some'0 ab -> incl_eq_Option_tup2_PositiveReal_Int ab x
       end
@@ -932,26 +933,26 @@ module M_parallel_add
   
   type t_OptionLocalUpdate_tup2_unit_Int = { f0'7: tup2_unit_Int }
   
-  predicate premise_unit [@inline:trivial] (self: ()) (_2: t_PositiveReal) (_3: t_PositiveReal) = true
+  function premise_unit [@inline:trivial] (self: ()) (_2: t_PositiveReal) (_3: t_PositiveReal) : bool = true
   
-  meta "rewrite_def" predicate premise_unit
+  meta "rewrite_def" function premise_unit
   
-  predicate premise_Int [@inline:trivial] (self: int) (_2: int) (_3: int) = true
+  function premise_Int [@inline:trivial] (self: int) (_2: int) (_3: int) : bool = true
   
-  meta "rewrite_def" predicate premise_Int
+  meta "rewrite_def" function premise_Int
   
-  predicate premise_tup2_unit_Int [@inline:trivial] (self: tup2_unit_Int) (from_auth: tup2_PositiveReal_Int) (from_frag: tup2_PositiveReal_Int) =
-    premise_unit self.f0'6 from_auth.f0'1 from_frag.f0'1 /\ premise_Int self.f1'6 from_auth.f1'1 from_frag.f1'1
+  function premise_tup2_unit_Int [@inline:trivial] (self: tup2_unit_Int) (from_auth: tup2_PositiveReal_Int) (from_frag: tup2_PositiveReal_Int) : bool
+   = premise_unit self.f0'6 from_auth.f0'1 from_frag.f0'1 /\ premise_Int self.f1'6 from_auth.f1'1 from_frag.f1'1
   
-  meta "rewrite_def" predicate premise_tup2_unit_Int
+  meta "rewrite_def" function premise_tup2_unit_Int
   
-  predicate premise_OptionLocalUpdate_tup2_unit_Int [@inline:trivial] (self: t_OptionLocalUpdate_tup2_unit_Int) (from_auth: t_Option_tup2_PositiveReal_Int) (from_frag: t_Option_tup2_PositiveReal_Int) =
-    match { f0'2 = from_auth; f1'2 = from_frag } with
+  function premise_OptionLocalUpdate_tup2_unit_Int [@inline:trivial] (self: t_OptionLocalUpdate_tup2_unit_Int) (from_auth: t_Option_tup2_PositiveReal_Int) (from_frag: t_Option_tup2_PositiveReal_Int) : bool
+   = match { f0'2 = from_auth; f1'2 = from_frag } with
       | {f0'2 = Some from_auth'0; f1'2 = Some from_frag'0} -> premise_tup2_unit_Int self.f0'7 from_auth'0 from_frag'0
       | _ -> false
       end
   
-  meta "rewrite_def" predicate premise_OptionLocalUpdate_tup2_unit_Int
+  meta "rewrite_def" function premise_OptionLocalUpdate_tup2_unit_Int
   
   type tup2_tup2_PositiveReal_Int_tup2_PositiveReal_Int = { f0'8: tup2_PositiveReal_Int; f1'8: tup2_PositiveReal_Int }
   
@@ -1008,7 +1009,7 @@ module M_parallel_add
       = (update_OptionLocalUpdate_tup2_unit_Int upd (view_Authority_Option_tup2_PositiveReal_Int self.current) (view_Fragment_Option_tup2_PositiveReal_Int frag.current)).f1'2)}
       (! return {result}) ]
   
-  predicate shot_store_AtomicI32 (self: t_Committer_AtomicI32_i32_SeqCst_SeqCst)
+  function shot_store_AtomicI32 (self: t_Committer_AtomicI32_i32_SeqCst_SeqCst) : bool
   
   function ward_AtomicI32'0 (self: t_Committer_AtomicI32_i32_SeqCst_SeqCst) : t_AtomicI32
   
@@ -1025,12 +1026,12 @@ module M_parallel_add
   
   function timestamp_AtomicI32 (self: t_Committer_AtomicI32_i32_SeqCst_SeqCst) : int
   
-  predicate hist_inv_AtomicI32 [@inline:trivial] (self: t_Committer_AtomicI32_i32_SeqCst_SeqCst) (other: t_Committer_AtomicI32_i32_SeqCst_SeqCst) =
-    ward_AtomicI32'0 self = ward_AtomicI32'0 other
+  function hist_inv_AtomicI32 [@inline:trivial] (self: t_Committer_AtomicI32_i32_SeqCst_SeqCst) (other: t_Committer_AtomicI32_i32_SeqCst_SeqCst) : bool
+   = ward_AtomicI32'0 self = ward_AtomicI32'0 other
     /\ val_load_AtomicI32 self = val_load_AtomicI32 other
     /\ val_store_AtomicI32 self = val_store_AtomicI32 other /\ timestamp_AtomicI32 self = timestamp_AtomicI32 other
   
-  meta "rewrite_def" predicate hist_inv_AtomicI32
+  meta "rewrite_def" function hist_inv_AtomicI32
   
   let shoot_store_AtomicI32 (self: MutBorrow.t t_Committer_AtomicI32_i32_SeqCst_SeqCst)
     (own'0: MutBorrow.t t_Perm_AtomicI32) (return (x: ())) =
@@ -1044,45 +1045,47 @@ module M_parallel_add
       /\ ([@stop_split] [@expl:shoot_store ensures #3] val_AtomicI32 own'0.final = val_store_AtomicI32 self.current)}
       (! return {result}) ]
   
-  predicate resolve_refmut_Perm_AtomicI32 [@inline:trivial] (_1: MutBorrow.t t_Perm_AtomicI32) = _1.final = _1.current
+  function resolve_refmut_Perm_AtomicI32 [@inline:trivial] (_1: MutBorrow.t t_Perm_AtomicI32) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Perm_AtomicI32
+  meta "rewrite_def" function resolve_refmut_Perm_AtomicI32
   
-  predicate invariant_refmut_ParallelAddAtomicInv [@inline:trivial] (self: MutBorrow.t t_ParallelAddAtomicInv) =
+  function invariant_refmut_ParallelAddAtomicInv [@inline:trivial] (self: MutBorrow.t t_ParallelAddAtomicInv) : bool =
     inv_ParallelAddAtomicInv self.current /\ inv_ParallelAddAtomicInv self.final
   
-  meta "rewrite_def" predicate invariant_refmut_ParallelAddAtomicInv
+  meta "rewrite_def" function invariant_refmut_ParallelAddAtomicInv
   
-  predicate inv_refmut_ParallelAddAtomicInv [@inline:trivial] (_1: MutBorrow.t t_ParallelAddAtomicInv) =
+  function inv_refmut_ParallelAddAtomicInv [@inline:trivial] (_1: MutBorrow.t t_ParallelAddAtomicInv) : bool =
     invariant_refmut_ParallelAddAtomicInv _1
   
-  meta "rewrite_def" predicate inv_refmut_ParallelAddAtomicInv
+  meta "rewrite_def" function inv_refmut_ParallelAddAtomicInv
   
-  predicate resolve_refmut_ParallelAddAtomicInv [@inline:trivial] (_1: MutBorrow.t t_ParallelAddAtomicInv) =
+  function resolve_refmut_ParallelAddAtomicInv [@inline:trivial] (_1: MutBorrow.t t_ParallelAddAtomicInv) : bool =
     _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_ParallelAddAtomicInv
+  meta "rewrite_def" function resolve_refmut_ParallelAddAtomicInv
   
-  predicate inv_closure0'0 [@inline:trivial] (_1: closure0'2) =
+  function inv_closure0'0 [@inline:trivial] (_1: closure0'2) : bool =
     let {c0'2 = x0; c1'2 = x1} = _1 in inv_refmut_Ghost_Fragment_Option_tup2_PositiveReal_Int x0
   
-  meta "rewrite_def" predicate inv_closure0'0
+  meta "rewrite_def" function inv_closure0'0
   
-  predicate invariant_refmut_closure0 [@inline:trivial] (self: MutBorrow.t closure0'2) =
+  function invariant_refmut_closure0 [@inline:trivial] (self: MutBorrow.t closure0'2) : bool =
     inv_closure0'0 self.current /\ inv_closure0'0 self.final
   
-  meta "rewrite_def" predicate invariant_refmut_closure0
+  meta "rewrite_def" function invariant_refmut_closure0
   
-  predicate inv_refmut_closure0 [@inline:trivial] (_1: MutBorrow.t closure0'2) = invariant_refmut_closure0 _1
+  function inv_refmut_closure0 [@inline:trivial] (_1: MutBorrow.t closure0'2) : bool = invariant_refmut_closure0 _1
   
-  meta "rewrite_def" predicate inv_refmut_closure0
+  meta "rewrite_def" function inv_refmut_closure0
   
-  predicate resolve_refmut_closure0 [@inline:trivial] (_1: MutBorrow.t closure0'2) = _1.final = _1.current
+  function resolve_refmut_closure0 [@inline:trivial] (_1: MutBorrow.t closure0'2) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_closure0
+  meta "rewrite_def" function resolve_refmut_closure0
   
-  predicate hist_inv_closure0 (self: closure0'2) (result_state: closure0'2) =
-    result_state.c0'2.final = self.c0'2.final /\ result_state.c1'2.final = self.c1'2.final
+  function hist_inv_closure0 (self: closure0'2) (result_state: closure0'2) : bool = result_state.c0'2.final
+      = self.c0'2.final
+    /\ result_state.c1'2.final = self.c1'2.final
   
   let closure0 [@coma:extspec] (self: MutBorrow.t closure0'2) (inv: MutBorrow.t t_ParallelAddAtomicInv)
     (return (x: ())) =
@@ -1174,7 +1177,7 @@ module M_parallel_add
   
   type t_FnGhostWrapper_closure0 = { f0'11: closure0'2 }
   
-  predicate inv_FnGhostWrapper_closure0 (_1: t_FnGhostWrapper_closure0)
+  function inv_FnGhostWrapper_closure0 (_1: t_FnGhostWrapper_closure0) : bool
   
   axiom inv_axiom'2 [@rewrite]:
     forall _1: t_FnGhostWrapper_closure0 [inv_FnGhostWrapper_closure0 _1]. inv_FnGhostWrapper_closure0 _1
@@ -1188,47 +1191,47 @@ module M_parallel_add
       /\ ([@stop_split] [@expl:__new ensures] result.f0'11 = f)}
       (! return {result}) ]
   
-  predicate contains_Namespace [@inline:trivial] (self: Set.set t_Namespace) (e: t_Namespace) = Set.mem e self
+  function contains_Namespace [@inline:trivial] (self: Set.set t_Namespace) (e: t_Namespace) : bool = Set.mem e self
   
-  meta "rewrite_def" predicate contains_Namespace
+  meta "rewrite_def" function contains_Namespace
   
   function namespaces (self: t_Tokens) : Set.set t_Namespace
   
-  predicate contains (self: t_Tokens) (namespace: t_Namespace) = contains_Namespace (namespaces self) namespace
+  function contains (self: t_Tokens) (namespace: t_Namespace) : bool = contains_Namespace (namespaces self) namespace
   
-  predicate precondition_closure0 (self: closure0'2) (args: MutBorrow.t t_ParallelAddAtomicInv) =
+  function precondition_closure0 (self: closure0'2) (args: MutBorrow.t t_ParallelAddAtomicInv) : bool =
     let inv = args in forall bor_self: MutBorrow.t closure0'2. bor_self.current = self /\ inv_closure0'0 bor_self.final
       -> closure0'pre bor_self inv
   
-  meta "rewrite_def" predicate precondition_closure0
+  meta "rewrite_def" function precondition_closure0
   
-  predicate precondition_FnGhostWrapper_closure0 (self: t_FnGhostWrapper_closure0) (args: MutBorrow.t t_ParallelAddAtomicInv) =
-    precondition_closure0 self.f0'11 args
+  function precondition_FnGhostWrapper_closure0 (self: t_FnGhostWrapper_closure0) (args: MutBorrow.t t_ParallelAddAtomicInv) : bool
+   = precondition_closure0 self.f0'11 args
   
-  meta "rewrite_def" predicate precondition_FnGhostWrapper_closure0
+  meta "rewrite_def" function precondition_FnGhostWrapper_closure0
   
-  predicate resolve_refmut_Committer_AtomicI32_i32_SeqCst_SeqCst [@inline:trivial] (_1: MutBorrow.t t_Committer_AtomicI32_i32_SeqCst_SeqCst) =
-    _1.final = _1.current
+  function resolve_refmut_Committer_AtomicI32_i32_SeqCst_SeqCst [@inline:trivial] (_1: MutBorrow.t t_Committer_AtomicI32_i32_SeqCst_SeqCst) : bool
+   = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Committer_AtomicI32_i32_SeqCst_SeqCst
+  meta "rewrite_def" function resolve_refmut_Committer_AtomicI32_i32_SeqCst_SeqCst
   
-  predicate resolve_closure0 [@inline:trivial] (_1: closure0'2) =
+  function resolve_closure0 [@inline:trivial] (_1: closure0'2) : bool =
     resolve_refmut_Committer_AtomicI32_i32_SeqCst_SeqCst _1.c1'2
     /\ resolve_refmut_Ghost_Fragment_Option_tup2_PositiveReal_Int _1.c0'2
   
-  meta "rewrite_def" predicate resolve_closure0
+  meta "rewrite_def" function resolve_closure0
   
-  predicate postcondition_once_closure0 (self: closure0'2) (args: MutBorrow.t t_ParallelAddAtomicInv) (result: ()) =
-    let inv = args in exists e: closure0'2. (exists bor_self: MutBorrow.t closure0'2. bor_self.current = self
+  function postcondition_once_closure0 (self: closure0'2) (args: MutBorrow.t t_ParallelAddAtomicInv) (result: ()) : bool
+   = let inv = args in exists e: closure0'2. (exists bor_self: MutBorrow.t closure0'2. bor_self.current = self
           /\ bor_self.final = e /\ closure0'post'return bor_self inv result /\ hist_inv_closure0 self e)
       /\ resolve_closure0 e
   
-  meta "rewrite_def" predicate postcondition_once_closure0
+  meta "rewrite_def" function postcondition_once_closure0
   
-  predicate postcondition_once_FnGhostWrapper_closure0 (self: t_FnGhostWrapper_closure0) (args: MutBorrow.t t_ParallelAddAtomicInv) (result: ()) =
-    postcondition_once_closure0 self.f0'11 args result
+  function postcondition_once_FnGhostWrapper_closure0 (self: t_FnGhostWrapper_closure0) (args: MutBorrow.t t_ParallelAddAtomicInv) (result: ()) : bool
+   = postcondition_once_closure0 self.f0'11 args result
   
-  meta "rewrite_def" predicate postcondition_once_FnGhostWrapper_closure0
+  meta "rewrite_def" function postcondition_once_FnGhostWrapper_closure0
   
   let open_ParallelAddAtomicInv (self: t_AtomicInvariantSC_ParallelAddAtomicInv) (tokens: t_Tokens)
     (f: t_FnGhostWrapper_closure0) (return (x: ())) =
@@ -1249,10 +1252,10 @@ module M_parallel_add
         /\ inv_refmut_ParallelAddAtomicInv t /\ postcondition_once_FnGhostWrapper_closure0 f t result}
       (! return {result}) ]
   
-  predicate inv_closure0'1 [@inline:trivial] (_1: closure0'1) =
+  function inv_closure0'1 [@inline:trivial] (_1: closure0'1) : bool =
     let {c0'1 = x0; c1'1 = x1; c2'1 = x2} = _1 in inv_refmut_Ghost_Fragment_Option_tup2_PositiveReal_Int x2
   
-  meta "rewrite_def" predicate inv_closure0'1
+  meta "rewrite_def" function inv_closure0'1
   
   let closure0'0 [@coma:extspec] (self: closure0'1) (c: MutBorrow.t t_Committer_AtomicI32_i32_SeqCst_SeqCst)
     (return (x: ())) = {[@stop_split] [@expl:closure 'self' type invariant] inv_closure0'1 self}
@@ -1303,7 +1306,7 @@ module M_parallel_add
   
   type t_FnGhostWrapper_closure0'0 = { f0'12: closure0'1 }
   
-  predicate inv_FnGhostWrapper_closure0'0 (_1: t_FnGhostWrapper_closure0'0)
+  function inv_FnGhostWrapper_closure0'0 (_1: t_FnGhostWrapper_closure0'0) : bool
   
   axiom inv_axiom'3 [@rewrite]:
     forall _1: t_FnGhostWrapper_closure0'0 [inv_FnGhostWrapper_closure0'0 _1]. inv_FnGhostWrapper_closure0'0 _1
@@ -1317,15 +1320,15 @@ module M_parallel_add
       /\ ([@stop_split] [@expl:__new ensures] result.f0'12 = f)}
       (! return {result}) ]
   
-  predicate invariant_Ghost_FnGhostWrapper_closure0 [@inline:trivial] (self: t_FnGhostWrapper_closure0'0) =
+  function invariant_Ghost_FnGhostWrapper_closure0 [@inline:trivial] (self: t_FnGhostWrapper_closure0'0) : bool =
     inv_FnGhostWrapper_closure0'0 self
   
-  meta "rewrite_def" predicate invariant_Ghost_FnGhostWrapper_closure0
+  meta "rewrite_def" function invariant_Ghost_FnGhostWrapper_closure0
   
-  predicate inv_Ghost_FnGhostWrapper_closure0 [@inline:trivial] (_1: t_FnGhostWrapper_closure0'0) =
+  function inv_Ghost_FnGhostWrapper_closure0 [@inline:trivial] (_1: t_FnGhostWrapper_closure0'0) : bool =
     invariant_Ghost_FnGhostWrapper_closure0 _1
   
-  meta "rewrite_def" predicate inv_Ghost_FnGhostWrapper_closure0
+  meta "rewrite_def" function inv_Ghost_FnGhostWrapper_closure0
   
   let new_FnGhostWrapper_closure0 (x: t_FnGhostWrapper_closure0'0) (return (x'0: t_FnGhostWrapper_closure0'0)) =
   {[@stop_split] [@expl:new 'x' type invariant] inv_FnGhostWrapper_closure0'0 x}
@@ -1335,25 +1338,25 @@ module M_parallel_add
       /\ ([@stop_split] [@expl:new ensures] result = x)}
       (! return {result}) ]
   
-  predicate precondition_closure0'0 (self: closure0'1) (args: MutBorrow.t t_Committer_AtomicI32_i32_SeqCst_SeqCst) =
-    let c = args in closure0'0'pre self c
+  function precondition_closure0'0 (self: closure0'1) (args: MutBorrow.t t_Committer_AtomicI32_i32_SeqCst_SeqCst) : bool
+   = let c = args in closure0'0'pre self c
   
-  meta "rewrite_def" predicate precondition_closure0'0
+  meta "rewrite_def" function precondition_closure0'0
   
-  predicate precondition_FnGhostWrapper_closure0'0 (self: t_FnGhostWrapper_closure0'0) (args: MutBorrow.t t_Committer_AtomicI32_i32_SeqCst_SeqCst) =
-    precondition_closure0'0 self.f0'12 args
+  function precondition_FnGhostWrapper_closure0'0 (self: t_FnGhostWrapper_closure0'0) (args: MutBorrow.t t_Committer_AtomicI32_i32_SeqCst_SeqCst) : bool
+   = precondition_closure0'0 self.f0'12 args
   
-  meta "rewrite_def" predicate precondition_FnGhostWrapper_closure0'0
+  meta "rewrite_def" function precondition_FnGhostWrapper_closure0'0
   
-  predicate postcondition_once_closure0'0 (self: closure0'1) (args: MutBorrow.t t_Committer_AtomicI32_i32_SeqCst_SeqCst) (result: ()) =
-    let c = args in closure0'0'post'return self c result
+  function postcondition_once_closure0'0 (self: closure0'1) (args: MutBorrow.t t_Committer_AtomicI32_i32_SeqCst_SeqCst) (result: ()) : bool
+   = let c = args in closure0'0'post'return self c result
   
-  meta "rewrite_def" predicate postcondition_once_closure0'0
+  meta "rewrite_def" function postcondition_once_closure0'0
   
-  predicate postcondition_once_FnGhostWrapper_closure0'0 (self: t_FnGhostWrapper_closure0'0) (args: MutBorrow.t t_Committer_AtomicI32_i32_SeqCst_SeqCst) (result: ()) =
-    postcondition_once_closure0'0 self.f0'12 args result
+  function postcondition_once_FnGhostWrapper_closure0'0 (self: t_FnGhostWrapper_closure0'0) (args: MutBorrow.t t_Committer_AtomicI32_i32_SeqCst_SeqCst) (result: ()) : bool
+   = postcondition_once_closure0'0 self.f0'12 args result
   
-  meta "rewrite_def" predicate postcondition_once_FnGhostWrapper_closure0'0
+  meta "rewrite_def" function postcondition_once_FnGhostWrapper_closure0'0
   
   let fetch_add_FnGhostWrapper_closure0 (self: t_AtomicI32) (val': Int32.t) (f: t_FnGhostWrapper_closure0'0)
     (return (x: Int32.t)) =
@@ -1372,11 +1375,11 @@ module M_parallel_add
         /\ val_load_AtomicI32 c.current = result /\ postcondition_once_FnGhostWrapper_closure0'0 f c ()}
       (! return {result}) ]
   
-  predicate inv_closure0'2 [@inline:trivial] (_1: closure0'0) =
+  function inv_closure0'2 [@inline:trivial] (_1: closure0'0) : bool =
     let {c0'0 = x0; c1'0 = x1; c2'0 = x2; c3'0 = x3} = _1 in inv_ref_AtomicI32 x0
     /\ inv_Ghost_Fragment_Option_tup2_PositiveReal_Int x2
   
-  meta "rewrite_def" predicate inv_closure0'2
+  meta "rewrite_def" function inv_closure0'2
   
   let closure0'1 [@coma:extspec] (self: closure0'0) (tokens: t_Tokens)
     (return (x: t_Fragment_Option_tup2_PositiveReal_Int)) =
@@ -1417,15 +1420,15 @@ module M_parallel_add
   
   meta "rewrite_def" predicate closure0'1'post'return
   
-  predicate precondition_closure0'1 (self: closure0'0) (args: t_Tokens) =
+  function precondition_closure0'1 (self: closure0'0) (args: t_Tokens) : bool =
     let tokens = args in closure0'1'pre self tokens
   
-  meta "rewrite_def" predicate precondition_closure0'1
+  meta "rewrite_def" function precondition_closure0'1
   
-  predicate postcondition_once_closure0'1 (self: closure0'0) (args: t_Tokens) (result: t_Fragment_Option_tup2_PositiveReal_Int) =
-    let tokens = args in closure0'1'post'return self tokens result
+  function postcondition_once_closure0'1 (self: closure0'0) (args: t_Tokens) (result: t_Fragment_Option_tup2_PositiveReal_Int) : bool
+   = let tokens = args in closure0'1'post'return self tokens result
   
-  meta "rewrite_def" predicate postcondition_once_closure0'1
+  meta "rewrite_def" function postcondition_once_closure0'1
   
   let spawn_closure0 (self: MutBorrow.t t_Scope) (f: closure0'0)
     (return (x: t_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int)) =
@@ -1441,16 +1444,16 @@ module M_parallel_add
           -> postcondition_once_closure0'1 f t r))}
       (! return {result}) ]
   
-  predicate invariant_refmut_Vec_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global [@inline:trivial] (self: MutBorrow.t t_Vec_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global) =
-    inv_Vec_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global self.current
+  function invariant_refmut_Vec_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global [@inline:trivial] (self: MutBorrow.t t_Vec_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global) : bool
+   = inv_Vec_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global self.current
     /\ inv_Vec_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Vec_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global
+  meta "rewrite_def" function invariant_refmut_Vec_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global
   
-  predicate inv_refmut_Vec_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global) =
-    invariant_refmut_Vec_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global _1
+  function inv_refmut_Vec_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global) : bool
+   = invariant_refmut_Vec_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global _1
   
-  meta "rewrite_def" predicate inv_refmut_Vec_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global
+  meta "rewrite_def" function inv_refmut_Vec_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global
   
   let push_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int
     (self: MutBorrow.t t_Vec_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global)
@@ -1463,13 +1466,13 @@ module M_parallel_add
       = Seq.snoc (view_Vec_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global self.current) value}
       (! return {result}) ]
   
-  predicate resolve_refmut_Scope [@inline:trivial] (_1: MutBorrow.t t_Scope) = _1.final = _1.current
+  function resolve_refmut_Scope [@inline:trivial] (_1: MutBorrow.t t_Scope) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Scope
+  meta "rewrite_def" function resolve_refmut_Scope
   
   type t_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global
   
-  predicate inv_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global (_1: t_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global)
+  function inv_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global (_1: t_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global) : bool
   
   function view_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global (self: t_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global) : Seq.seq t_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int
   
@@ -1488,18 +1491,18 @@ module M_parallel_add
     | None'5
     | Some'5 t_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int
   
-  predicate invariant_refmut_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global [@inline:trivial] (self: MutBorrow.t t_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global) =
-    inv_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global self.current
+  function invariant_refmut_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global [@inline:trivial] (self: MutBorrow.t t_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global) : bool
+   = inv_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global self.current
     /\ inv_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global self.final
   
-  meta "rewrite_def" predicate invariant_refmut_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global
+  meta "rewrite_def" function invariant_refmut_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global
   
-  predicate inv_refmut_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global [@inline:trivial] (_1: MutBorrow.t t_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global) =
-    invariant_refmut_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global _1
+  function inv_refmut_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global [@inline:trivial] (_1: MutBorrow.t t_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global) : bool
+   = invariant_refmut_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global _1
   
-  meta "rewrite_def" predicate inv_refmut_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global
+  meta "rewrite_def" function inv_refmut_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global
   
-  predicate inv_Option_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int (_1: t_Option_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int)
+  function inv_Option_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int (_1: t_Option_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int) : bool
   
   axiom inv_axiom'4 [@rewrite]:
     forall _1: t_Option_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int [inv_Option_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int _1]. inv_Option_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int _1
@@ -1508,8 +1511,8 @@ module M_parallel_add
         | Some'5 f0'13 -> inv_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int f0'13
         end
   
-  predicate produces_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global (self: t_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global) (visited: Seq.seq t_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int) (rhs: t_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global) =
-    view_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global self
+  function produces_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global (self: t_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global) (visited: Seq.seq t_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int) (rhs: t_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global) : bool
+   = view_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global self
     = Seq.(++) visited (view_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global rhs)
   
   function produces_trans_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global (a: t_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global) (ab: Seq.seq t_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int) (b: t_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global) (bc: Seq.seq t_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int) (c: t_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global) : ()
@@ -1524,13 +1527,13 @@ module M_parallel_add
   axiom produces_refl_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global_spec:
     forall self: t_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global. produces_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global self (Seq.empty: Seq.seq t_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int) self
   
-  predicate resolve_refmut_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global [@inline:trivial] (_1: MutBorrow.t t_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global) =
-    _1.final = _1.current
+  function resolve_refmut_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global [@inline:trivial] (_1: MutBorrow.t t_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global) : bool
+   = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global
+  meta "rewrite_def" function resolve_refmut_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global
   
-  predicate completed_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global (self: MutBorrow.t t_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global) =
-    resolve_refmut_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global self
+  function completed_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global (self: MutBorrow.t t_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global) : bool
+   = resolve_refmut_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global self
     /\ view_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global self.current
     = (Seq.empty: Seq.seq t_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int)
   
@@ -1595,9 +1598,9 @@ module M_parallel_add
       = op_Option_tup2_PositiveReal_Int (view_Fragment_Option_tup2_PositiveReal_Int self.current) (view_Fragment_Option_tup2_PositiveReal_Int other))}
       (! return {result}) ]
   
-  predicate resolve_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int (_1: t_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int)
+  function resolve_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int (_1: t_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int) : bool
   
-  predicate resolve_Option_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int (_1: t_Option_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int)
+  function resolve_Option_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int (_1: t_Option_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int) : bool
   
   axiom resolve_axiom [@rewrite]:
     forall _1: t_Option_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int [resolve_Option_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int _1]. resolve_Option_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int _1
@@ -1606,23 +1609,23 @@ module M_parallel_add
         | Some'5 x0 -> resolve_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int x0
         end
   
-  predicate resolve_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global [@inline:trivial] (self: t_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global) =
-    forall i: int. 0 <= i
+  function resolve_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global [@inline:trivial] (self: t_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global) : bool
+   = forall i: int. 0 <= i
         /\ i < Seq.length (view_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global self)
       -> resolve_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int (Seq.get (view_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global self) i)
   
-  meta "rewrite_def" predicate resolve_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global
+  meta "rewrite_def" function resolve_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global
   
-  predicate resolve_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global'0 (_1: t_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global)
+  function resolve_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global'0 (_1: t_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global) : bool
   
   axiom resolve_axiom'0:
     forall _1: t_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global [resolve_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global'0 _1]. resolve_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global'0 _1
       -> resolve_IntoIter_ScopedJoinHandle_Ghost_Fragment_Option_tup2_PositiveReal_Int_Global _1
   
-  predicate resolve_closure0'0 [@inline:trivial] (_1: closure0) =
+  function resolve_closure0'0 [@inline:trivial] (_1: closure0) : bool =
     resolve_refmut_Ghost_Fragment_Option_tup2_PositiveReal_Int _1.c3
   
-  meta "rewrite_def" predicate resolve_closure0'0
+  meta "rewrite_def" function resolve_closure0'0
   
   let closure0'2 [@coma:extspec] (self: closure0) (s: MutBorrow.t t_Scope) (return (x: ())) =
   {[@stop_split] [@expl:closure0 requires] ([@stop_split] [@expl:closure 'self' type invariant] inv_closure0 self)
@@ -1889,14 +1892,15 @@ module M_parallel_add
   
   meta "rewrite_def" predicate closure0'2'post'return
   
-  predicate precondition_closure0'2 (self: closure0) (args: MutBorrow.t t_Scope) = let s = args in closure0'2'pre self s
+  function precondition_closure0'2 (self: closure0) (args: MutBorrow.t t_Scope) : bool =
+    let s = args in closure0'2'pre self s
   
-  meta "rewrite_def" predicate precondition_closure0'2
+  meta "rewrite_def" function precondition_closure0'2
   
-  predicate postcondition_once_closure0'2 (self: closure0) (args: MutBorrow.t t_Scope) (result: ()) =
+  function postcondition_once_closure0'2 (self: closure0) (args: MutBorrow.t t_Scope) (result: ()) : bool =
     let s = args in closure0'2'post'return self s result
   
-  meta "rewrite_def" predicate postcondition_once_closure0'2
+  meta "rewrite_def" function postcondition_once_closure0'2
   
   let scope_closure0 (f: closure0) (return (x: ())) =
   {[@stop_split] [@expl:scope_closure0 requires] ([@stop_split] [@expl:scope 'f' type invariant] inv_closure0 f)
@@ -1922,39 +1926,39 @@ module M_parallel_add
       /\ protocol_ParallelAddAtomicInv result)}
       (! return {result}) ]
   
-  predicate resolve_Authority_Option_tup2_PositiveReal_Int (_1: t_Authority_Option_tup2_PositiveReal_Int)
+  function resolve_Authority_Option_tup2_PositiveReal_Int (_1: t_Authority_Option_tup2_PositiveReal_Int) : bool
   
-  predicate resolve_Fragment_Option_tup2_PositiveReal_Int (_1: t_Fragment_Option_tup2_PositiveReal_Int)
+  function resolve_Fragment_Option_tup2_PositiveReal_Int (_1: t_Fragment_Option_tup2_PositiveReal_Int) : bool
   
-  predicate resolve_Ghost_Fragment_Option_tup2_PositiveReal_Int [@inline:trivial] (self: t_Fragment_Option_tup2_PositiveReal_Int) =
-    resolve_Fragment_Option_tup2_PositiveReal_Int self
+  function resolve_Ghost_Fragment_Option_tup2_PositiveReal_Int [@inline:trivial] (self: t_Fragment_Option_tup2_PositiveReal_Int) : bool
+   = resolve_Fragment_Option_tup2_PositiveReal_Int self
   
-  meta "rewrite_def" predicate resolve_Ghost_Fragment_Option_tup2_PositiveReal_Int
+  meta "rewrite_def" function resolve_Ghost_Fragment_Option_tup2_PositiveReal_Int
   
-  predicate resolve_Ghost_Fragment_Option_tup2_PositiveReal_Int'0 [@inline:trivial] (_1: t_Fragment_Option_tup2_PositiveReal_Int) =
-    resolve_Ghost_Fragment_Option_tup2_PositiveReal_Int _1
+  function resolve_Ghost_Fragment_Option_tup2_PositiveReal_Int'0 [@inline:trivial] (_1: t_Fragment_Option_tup2_PositiveReal_Int) : bool
+   = resolve_Ghost_Fragment_Option_tup2_PositiveReal_Int _1
   
-  meta "rewrite_def" predicate resolve_Ghost_Fragment_Option_tup2_PositiveReal_Int'0
+  meta "rewrite_def" function resolve_Ghost_Fragment_Option_tup2_PositiveReal_Int'0
   
-  predicate invariant_ref_Ghost_Fragment_Option_tup2_PositiveReal_Int [@inline:trivial] (self: t_Fragment_Option_tup2_PositiveReal_Int) =
-    inv_Ghost_Fragment_Option_tup2_PositiveReal_Int self
+  function invariant_ref_Ghost_Fragment_Option_tup2_PositiveReal_Int [@inline:trivial] (self: t_Fragment_Option_tup2_PositiveReal_Int) : bool
+   = inv_Ghost_Fragment_Option_tup2_PositiveReal_Int self
   
-  meta "rewrite_def" predicate invariant_ref_Ghost_Fragment_Option_tup2_PositiveReal_Int
+  meta "rewrite_def" function invariant_ref_Ghost_Fragment_Option_tup2_PositiveReal_Int
   
-  predicate inv_ref_Ghost_Fragment_Option_tup2_PositiveReal_Int [@inline:trivial] (_1: t_Fragment_Option_tup2_PositiveReal_Int) =
-    invariant_ref_Ghost_Fragment_Option_tup2_PositiveReal_Int _1
+  function inv_ref_Ghost_Fragment_Option_tup2_PositiveReal_Int [@inline:trivial] (_1: t_Fragment_Option_tup2_PositiveReal_Int) : bool
+   = invariant_ref_Ghost_Fragment_Option_tup2_PositiveReal_Int _1
   
-  meta "rewrite_def" predicate inv_ref_Ghost_Fragment_Option_tup2_PositiveReal_Int
+  meta "rewrite_def" function inv_ref_Ghost_Fragment_Option_tup2_PositiveReal_Int
   
-  predicate invariant_ref_Fragment_Option_tup2_PositiveReal_Int [@inline:trivial] (self: t_Fragment_Option_tup2_PositiveReal_Int) =
-    inv_Fragment_Option_tup2_PositiveReal_Int self
+  function invariant_ref_Fragment_Option_tup2_PositiveReal_Int [@inline:trivial] (self: t_Fragment_Option_tup2_PositiveReal_Int) : bool
+   = inv_Fragment_Option_tup2_PositiveReal_Int self
   
-  meta "rewrite_def" predicate invariant_ref_Fragment_Option_tup2_PositiveReal_Int
+  meta "rewrite_def" function invariant_ref_Fragment_Option_tup2_PositiveReal_Int
   
-  predicate inv_ref_Fragment_Option_tup2_PositiveReal_Int [@inline:trivial] (_1: t_Fragment_Option_tup2_PositiveReal_Int) =
-    invariant_ref_Fragment_Option_tup2_PositiveReal_Int _1
+  function inv_ref_Fragment_Option_tup2_PositiveReal_Int [@inline:trivial] (_1: t_Fragment_Option_tup2_PositiveReal_Int) : bool
+   = invariant_ref_Fragment_Option_tup2_PositiveReal_Int _1
   
-  meta "rewrite_def" predicate inv_ref_Fragment_Option_tup2_PositiveReal_Int
+  meta "rewrite_def" function inv_ref_Fragment_Option_tup2_PositiveReal_Int
   
   let deref_Ghost_Fragment_Option_tup2_PositiveReal_Int (self: t_Fragment_Option_tup2_PositiveReal_Int)
     (return (x: t_Fragment_Option_tup2_PositiveReal_Int)) =

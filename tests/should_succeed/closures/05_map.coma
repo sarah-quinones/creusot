@@ -8,29 +8,29 @@ module M_impl_FakeIterator_for_Map_I_F__next (* <Map<I, F> as FakeIterator> *)
   
   type t_Map_I_F = { iter: t_I; func: t_F }
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
   type t_A
   
   type t_Option_A = None | Some t_A
   
-  predicate invariant_refmut_I [@inline:trivial] (self: MutBorrow.t t_I) = inv_I self.current /\ inv_I self.final
+  function invariant_refmut_I [@inline:trivial] (self: MutBorrow.t t_I) : bool = inv_I self.current /\ inv_I self.final
   
-  meta "rewrite_def" predicate invariant_refmut_I
+  meta "rewrite_def" function invariant_refmut_I
   
-  predicate inv_refmut_I [@inline:trivial] (_1: MutBorrow.t t_I) = invariant_refmut_I _1
+  function inv_refmut_I [@inline:trivial] (_1: MutBorrow.t t_I) : bool = invariant_refmut_I _1
   
-  meta "rewrite_def" predicate inv_refmut_I
+  meta "rewrite_def" function inv_refmut_I
   
-  predicate precondition_next (self: ()) (args: MutBorrow.t t_I)
+  function precondition_next (self: ()) (args: MutBorrow.t t_I) : bool
   
   axiom precondition_fndef:
     forall args: MutBorrow.t t_I [precondition_next () args]. (let self = args in inv_refmut_I self)
       -> precondition_next () args
   
-  predicate inv_A (_1: t_A)
+  function inv_A (_1: t_A) : bool
   
-  predicate inv_Option_A (_1: t_Option_A)
+  function inv_Option_A (_1: t_Option_A) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Option_A [inv_Option_A _1]. inv_Option_A _1
       = match _1 with
@@ -38,16 +38,16 @@ module M_impl_FakeIterator_for_Map_I_F__next (* <Map<I, F> as FakeIterator> *)
         | Some f0 -> inv_A f0
         end
   
-  predicate postcondition_next (self: ()) (args: MutBorrow.t t_I) (result: t_Option_A)
+  function postcondition_next (self: ()) (args: MutBorrow.t t_I) (result: t_Option_A) : bool
   
   axiom postcondition_fndef:
     forall args: MutBorrow.t t_I, result: t_Option_A [postcondition_next () args result]. postcondition_next () args result
       -> (let self = args in inv_Option_A result)
   
-  predicate postcondition_once_next (self: ()) (args: MutBorrow.t t_I) (result: t_Option_A) =
+  function postcondition_once_next (self: ()) (args: MutBorrow.t t_I) (result: t_Option_A) : bool =
     postcondition_next self args result
   
-  meta "rewrite_def" predicate postcondition_once_next
+  meta "rewrite_def" function postcondition_once_next
   
   let next_I (self: MutBorrow.t t_I) (return (x: t_Option_A)) =
   {[@stop_split] [@expl:next requires] precondition_next () self}
@@ -63,48 +63,48 @@ module M_impl_FakeIterator_for_Map_I_F__next (* <Map<I, F> as FakeIterator> *)
         end}
       any) ]
   
-  predicate inv_F (_1: t_F)
+  function inv_F (_1: t_F) : bool
   
-  predicate inv_Map_I_F (_1: t_Map_I_F)
+  function inv_Map_I_F (_1: t_Map_I_F) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Map_I_F [inv_Map_I_F _1]. inv_Map_I_F _1 = (inv_I _1.iter /\ inv_F _1.func)
   
-  predicate invariant_refmut_Map_I_F [@inline:trivial] (self: MutBorrow.t t_Map_I_F) =
-    inv_Map_I_F self.current /\ inv_Map_I_F self.final
+  function invariant_refmut_Map_I_F [@inline:trivial] (self: MutBorrow.t t_Map_I_F) : bool = inv_Map_I_F self.current
+    /\ inv_Map_I_F self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Map_I_F
+  meta "rewrite_def" function invariant_refmut_Map_I_F
   
-  predicate inv_refmut_Map_I_F [@inline:trivial] (_1: MutBorrow.t t_Map_I_F) = invariant_refmut_Map_I_F _1
+  function inv_refmut_Map_I_F [@inline:trivial] (_1: MutBorrow.t t_Map_I_F) : bool = invariant_refmut_Map_I_F _1
   
-  meta "rewrite_def" predicate inv_refmut_Map_I_F
+  meta "rewrite_def" function inv_refmut_Map_I_F
   
-  predicate resolve_refmut_Map_I_F [@inline:trivial] (_1: MutBorrow.t t_Map_I_F) = _1.final = _1.current
+  function resolve_refmut_Map_I_F [@inline:trivial] (_1: MutBorrow.t t_Map_I_F) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Map_I_F
+  meta "rewrite_def" function resolve_refmut_Map_I_F
   
   type t_B
   
-  predicate invariant_ref_F [@inline:trivial] (self: t_F) = inv_F self
+  function invariant_ref_F [@inline:trivial] (self: t_F) : bool = inv_F self
   
-  meta "rewrite_def" predicate invariant_ref_F
+  meta "rewrite_def" function invariant_ref_F
   
-  predicate inv_ref_F [@inline:trivial] (_1: t_F) = invariant_ref_F _1
+  function inv_ref_F [@inline:trivial] (_1: t_F) : bool = invariant_ref_F _1
   
-  meta "rewrite_def" predicate inv_ref_F
+  meta "rewrite_def" function inv_ref_F
   
-  predicate inv_tup1_A [@inline:trivial] (_1: t_A) = inv_A _1
+  function inv_tup1_A [@inline:trivial] (_1: t_A) : bool = inv_A _1
   
-  meta "rewrite_def" predicate inv_tup1_A
+  meta "rewrite_def" function inv_tup1_A
   
-  predicate precondition_F (self: t_F) (args: t_A)
+  function precondition_F (self: t_F) (args: t_A) : bool
   
-  predicate inv_B (_1: t_B)
+  function inv_B (_1: t_B) : bool
   
-  predicate postcondition_once_F (self: t_F) (args: t_A) (result: t_B)
+  function postcondition_once_F (self: t_F) (args: t_A) (result: t_B) : bool
   
-  predicate resolve_F (_1: t_F)
+  function resolve_F (_1: t_F) : bool
   
-  predicate postcondition_mut_F (self: t_F) (args: t_A) (result_state: t_F) (result: t_B)
+  function postcondition_mut_F (self: t_F) (args: t_A) (result_state: t_F) (result: t_B) : bool
   
   function fn_mut_once_F (self: t_F) (args: t_A) (res: t_B) : ()
   
@@ -112,7 +112,7 @@ module M_impl_FakeIterator_for_Map_I_F__next (* <Map<I, F> as FakeIterator> *)
     forall self: t_F, args: t_A, res: t_B [postcondition_once_F self args res]. postcondition_once_F self args res
       = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
   
-  predicate hist_inv_F (self: t_F) (result_state: t_F)
+  function hist_inv_F (self: t_F) (result_state: t_F) : bool
   
   function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
   
@@ -135,7 +135,7 @@ module M_impl_FakeIterator_for_Map_I_F__next (* <Map<I, F> as FakeIterator> *)
   axiom fn_hist_inv_F_spec: forall self: t_F, res_state: t_F [hist_inv_F self res_state]. hist_inv_F self res_state
       = (self = res_state)
   
-  predicate postcondition_F (self: t_F) (args: t_A) (result: t_B)
+  function postcondition_F (self: t_F) (args: t_A) (result: t_B) : bool
   
   function fn_once_F (self: t_F) (args: t_A) (res: t_B) : ()
   
@@ -161,9 +161,9 @@ module M_impl_FakeIterator_for_Map_I_F__next (* <Map<I, F> as FakeIterator> *)
   
   type t_Option_B = None'0 | Some'0 t_B
   
-  predicate resolve_A (_1: t_A)
+  function resolve_A (_1: t_A) : bool
   
-  predicate resolve_Option_A (_1: t_Option_A)
+  function resolve_Option_A (_1: t_Option_A) : bool
   
   axiom resolve_axiom [@rewrite]: forall _1: t_Option_A [resolve_Option_A _1]. resolve_Option_A _1
       = match _1 with
@@ -171,7 +171,7 @@ module M_impl_FakeIterator_for_Map_I_F__next (* <Map<I, F> as FakeIterator> *)
         | Some x0 -> resolve_A x0
         end
   
-  predicate inv_Option_B (_1: t_Option_B)
+  function inv_Option_B (_1: t_Option_B) : bool
   
   axiom inv_axiom'1 [@rewrite]: forall _1: t_Option_B [inv_Option_B _1]. inv_Option_B _1
       = match _1 with
@@ -228,30 +228,30 @@ module M_impl_FakeIterator_for_Map_I_F__next__refines (* <Map<I, F> as FakeItera
   
   type t_Map_I_F = { iter: t_I; func: t_F }
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate inv_F (_1: t_F)
+  function inv_F (_1: t_F) : bool
   
-  predicate inv_Map_I_F (_1: t_Map_I_F)
+  function inv_Map_I_F (_1: t_Map_I_F) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Map_I_F [inv_Map_I_F _1]. inv_Map_I_F _1 = (inv_I _1.iter /\ inv_F _1.func)
   
-  predicate invariant_refmut_Map_I_F [@inline:trivial] (self: MutBorrow.t t_Map_I_F) =
-    inv_Map_I_F self.current /\ inv_Map_I_F self.final
+  function invariant_refmut_Map_I_F [@inline:trivial] (self: MutBorrow.t t_Map_I_F) : bool = inv_Map_I_F self.current
+    /\ inv_Map_I_F self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Map_I_F
+  meta "rewrite_def" function invariant_refmut_Map_I_F
   
-  predicate inv_refmut_Map_I_F [@inline:trivial] (_1: MutBorrow.t t_Map_I_F) = invariant_refmut_Map_I_F _1
+  function inv_refmut_Map_I_F [@inline:trivial] (_1: MutBorrow.t t_Map_I_F) : bool = invariant_refmut_Map_I_F _1
   
-  meta "rewrite_def" predicate inv_refmut_Map_I_F
+  meta "rewrite_def" function inv_refmut_Map_I_F
   
   type t_B
   
   type t_Option_B = None | Some t_B
   
-  predicate inv_B (_1: t_B)
+  function inv_B (_1: t_B) : bool
   
-  predicate inv_Option_B (_1: t_Option_B)
+  function inv_Option_B (_1: t_Option_B) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Option_B [inv_Option_B _1]. inv_Option_B _1
       = match _1 with

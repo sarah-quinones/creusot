@@ -12,28 +12,28 @@ type t_T
 
 type tup5_X_W_V_U_T = { f0: t_X; f1: t_W; f2: t_V; f3: t_U; f4: t_T }
 
-predicate inv_X (_1: t_X)
+function inv_X (_1: t_X) : bool
 
-predicate inv_W (_1: t_W)
+function inv_W (_1: t_W) : bool
 
-predicate inv_V (_1: t_V)
+function inv_V (_1: t_V) : bool
 
-predicate inv_U (_1: t_U)
+function inv_U (_1: t_U) : bool
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate inv_tup5_X_W_V_U_T [@inline:trivial] (_1: tup5_X_W_V_U_T) =
-  inv_X _1.f0 /\ inv_W _1.f1 /\ inv_V _1.f2 /\ inv_U _1.f3 /\ inv_T _1.f4
+function inv_tup5_X_W_V_U_T [@inline:trivial] (_1: tup5_X_W_V_U_T) : bool = inv_X _1.f0
+  /\ inv_W _1.f1 /\ inv_V _1.f2 /\ inv_U _1.f3 /\ inv_T _1.f4
 
-meta "rewrite_def" predicate inv_tup5_X_W_V_U_T
+meta "rewrite_def" function inv_tup5_X_W_V_U_T
 
-predicate invariant_Ghost_tup5_X_W_V_U_T [@inline:trivial] (self: tup5_X_W_V_U_T) = inv_tup5_X_W_V_U_T self
+function invariant_Ghost_tup5_X_W_V_U_T [@inline:trivial] (self: tup5_X_W_V_U_T) : bool = inv_tup5_X_W_V_U_T self
 
-meta "rewrite_def" predicate invariant_Ghost_tup5_X_W_V_U_T
+meta "rewrite_def" function invariant_Ghost_tup5_X_W_V_U_T
 
-predicate inv_Ghost_tup5_X_W_V_U_T [@inline:trivial] (_1: tup5_X_W_V_U_T) = invariant_Ghost_tup5_X_W_V_U_T _1
+function inv_Ghost_tup5_X_W_V_U_T [@inline:trivial] (_1: tup5_X_W_V_U_T) : bool = invariant_Ghost_tup5_X_W_V_U_T _1
 
-meta "rewrite_def" predicate inv_Ghost_tup5_X_W_V_U_T
+meta "rewrite_def" function inv_Ghost_tup5_X_W_V_U_T
 
 meta "compute_max_steps" 1000000
 

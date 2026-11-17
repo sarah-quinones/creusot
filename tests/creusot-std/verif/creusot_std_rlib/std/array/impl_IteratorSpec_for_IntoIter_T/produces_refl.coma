@@ -8,8 +8,8 @@ type t_T
 
 function view_IntoIter_T (self: t_IntoIter_T) : Seq.seq t_T
 
-predicate produces_IntoIter_T (self: t_IntoIter_T) (visited: Seq.seq t_T) (o: t_IntoIter_T) =
-  view_IntoIter_T self = Seq.(++) visited (view_IntoIter_T o)
+function produces_IntoIter_T (self: t_IntoIter_T) (visited: Seq.seq t_T) (o: t_IntoIter_T) : bool = view_IntoIter_T self
+  = Seq.(++) visited (view_IntoIter_T o)
 
 function concat_empty_T (self: Seq.seq t_T) : ()
 

@@ -20,9 +20,9 @@ module M_assertion
   
   type t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate resolve_T (_1: t_T)
+  function resolve_T (_1: t_T) : bool
   
   meta "compute_max_steps" 1000000
   

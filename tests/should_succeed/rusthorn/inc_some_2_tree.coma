@@ -4,9 +4,9 @@ module M_impl_Tree__lemma_sum_nonneg (* Tree *)
   
   type t_Tree = Node t_Tree UInt32.t t_Tree | Leaf
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function sum (self: t_Tree) : int = match self with
       | Node tl a tr -> sum tl + UInt32.t'int a + sum tr
@@ -45,9 +45,9 @@ module M_impl_Tree__sum_x (* Tree *)
         end}
       any) ]
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function sum (self: t_Tree) : int = match self with
       | Node tl a tr -> sum tl + UInt32.t'int a + sum tr
@@ -104,9 +104,9 @@ module M_impl_Tree__take_some_rest (* Tree *)
   
   type t_Tree = Node t_Tree UInt32.t t_Tree | Leaf
   
-  predicate resolve_refmut_Tree [@inline:trivial] (_1: MutBorrow.t t_Tree) = _1.final = _1.current
+  function resolve_refmut_Tree [@inline:trivial] (_1: MutBorrow.t t_Tree) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Tree
+  meta "rewrite_def" function resolve_refmut_Tree
   
   let elim_Node (_x: t_Tree) (return (f0: t_Tree) (f1: UInt32.t) (f2: t_Tree)) = any
     [ _k (f0: t_Tree) (f1: UInt32.t) (f2: t_Tree) -> {Node f0 f1 f2 = _x} (! return {f0} {f1} {f2})
@@ -116,9 +116,9 @@ module M_impl_Tree__take_some_rest (* Tree *)
         end}
       any) ]
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function sum (self: t_Tree) : int = match self with
       | Node tl a tr -> sum tl + UInt32.t'int a + sum tr
@@ -134,15 +134,15 @@ module M_impl_Tree__take_some_rest (* Tree *)
   
   let random (return (x: bool)) = any [ return (result: bool) -> (! return {result}) ]
   
-  predicate resolve_refmut_Box_Tree_Global [@inline:trivial] (_1: MutBorrow.t t_Tree) = _1.final = _1.current
+  function resolve_refmut_Box_Tree_Global [@inline:trivial] (_1: MutBorrow.t t_Tree) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Box_Tree_Global
+  meta "rewrite_def" function resolve_refmut_Box_Tree_Global
   
   type tup2_refmut_u32_refmut_Tree = { f0: MutBorrow.t UInt32.t; f1: MutBorrow.t t_Tree }
   
-  predicate resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) = _1.final = _1.current
+  function resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_u32
+  meta "rewrite_def" function resolve_refmut_u32
   
   let take_some_rest (self: MutBorrow.t t_Tree) (return (x: tup2_refmut_u32_refmut_Tree)) = any
     [ return (result: tup2_refmut_u32_refmut_Tree) ->
@@ -279,13 +279,13 @@ module M_inc_some_2_tree
       /\ ([@stop_split] [@expl:take_some_rest ensures #2] sum result.f1.current <= sum self.current)}
       (! return {result}) ]
   
-  predicate resolve_refmut_Tree [@inline:trivial] (_1: MutBorrow.t t_Tree) = _1.final = _1.current
+  function resolve_refmut_Tree [@inline:trivial] (_1: MutBorrow.t t_Tree) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Tree
+  meta "rewrite_def" function resolve_refmut_Tree
   
-  predicate resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) = _1.final = _1.current
+  function resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_u32
+  meta "rewrite_def" function resolve_refmut_u32
   
   meta "compute_max_steps" 1000000
   

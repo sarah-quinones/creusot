@@ -4,9 +4,9 @@ module M_and_or_xor
   
   type t_Option_i32 = None | Some Int32.t
   
-  predicate resolve_Option_i32 [@inline:trivial] (_1: t_Option_i32) = true
+  function resolve_Option_i32 [@inline:trivial] (_1: t_Option_i32) : bool = true
   
-  meta "rewrite_def" predicate resolve_Option_i32
+  meta "rewrite_def" function resolve_Option_i32
   
   let and_i32 (self: t_Option_i32) (optb: t_Option_i32) (return (x: t_Option_i32)) = any
     [ return (result: t_Option_i32) -> {[@stop_split] [@expl:and_i32 ensures] ([@stop_split] [@expl:and ensures #0] self
@@ -44,9 +44,9 @@ module M_and_or_xor
   
   type tup2_Option_i32_Option_i32 = { f0: t_Option_i32; f1: t_Option_i32 }
   
-  predicate resolve_i32 [@inline:trivial] (_1: Int32.t) = true
+  function resolve_i32 [@inline:trivial] (_1: Int32.t) : bool = true
   
-  meta "rewrite_def" predicate resolve_i32
+  meta "rewrite_def" function resolve_i32
   
   let xor_i32 (self: t_Option_i32) (optb: t_Option_i32) (return (x: t_Option_i32)) = any
     [ return (result: t_Option_i32) -> {[@stop_split] [@expl:xor ensures] match { f0 = self; f1 = optb } with
@@ -245,18 +245,18 @@ module M_and_then
   
   meta "rewrite_def" predicate closure0'post'return
   
-  predicate precondition_closure0 (self: ()) (args: Int32.t) = let _0 = args in closure0'pre self _0
+  function precondition_closure0 (self: ()) (args: Int32.t) : bool = let _0 = args in closure0'pre self _0
   
-  meta "rewrite_def" predicate precondition_closure0
+  meta "rewrite_def" function precondition_closure0
   
-  predicate resolve_closure0 [@inline:trivial] (_1: ()) = true
+  function resolve_closure0 [@inline:trivial] (_1: ()) : bool = true
   
-  meta "rewrite_def" predicate resolve_closure0
+  meta "rewrite_def" function resolve_closure0
   
-  predicate postcondition_once_closure0 (self: ()) (args: Int32.t) (result: t_Option_i32) =
+  function postcondition_once_closure0 (self: ()) (args: Int32.t) (result: t_Option_i32) : bool =
     let _0 = args in closure0'post'return self _0 result
   
-  meta "rewrite_def" predicate postcondition_once_closure0
+  meta "rewrite_def" function postcondition_once_closure0
   
   let and_then_i32 (self: t_Option_i32) (f: ()) (return (x: t_Option_i32)) =
   {[@stop_split] [@expl:and_then requires] match self with
@@ -310,19 +310,19 @@ module M_and_then
       \/ Int32.to_int x <> 1 /\ result = None}
       (! return {result}) ]
   
-  predicate precondition_closure1 (self: ()) (args: Int32.t) = let x = args in true
+  function precondition_closure1 (self: ()) (args: Int32.t) : bool = let x = args in true
   
-  meta "rewrite_def" predicate precondition_closure1
+  meta "rewrite_def" function precondition_closure1
   
-  predicate resolve_closure1 [@inline:trivial] (_1: ()) = true
+  function resolve_closure1 [@inline:trivial] (_1: ()) : bool = true
   
-  meta "rewrite_def" predicate resolve_closure1
+  meta "rewrite_def" function resolve_closure1
   
-  predicate postcondition_once_closure1 (self: ()) (args: Int32.t) (result: t_Option_i32) =
+  function postcondition_once_closure1 (self: ()) (args: Int32.t) (result: t_Option_i32) : bool =
     let x = args in Int32.to_int x = 1 /\ (exists y: Int32.t. result = Some y /\ Int32.to_int y = Int32.to_int x + 1)
     \/ Int32.to_int x <> 1 /\ result = None
   
-  meta "rewrite_def" predicate postcondition_once_closure1
+  meta "rewrite_def" function postcondition_once_closure1
   
   let and_then_i32'0 (self: t_Option_i32) (f: ()) (return (x: t_Option_i32)) =
   {[@stop_split] [@expl:and_then requires] match self with
@@ -409,11 +409,11 @@ module M_as_mut
         /\ self.current = Some (r.current) /\ self.final = Some (r.final)))}
       (! return {result}) ]
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
-  predicate resolve_Option_refmut_i32 (_1: t_Option_refmut_i32)
+  function resolve_Option_refmut_i32 (_1: t_Option_refmut_i32) : bool
   
   axiom resolve_axiom [@rewrite]:
     forall _1: t_Option_refmut_i32 [resolve_Option_refmut_i32 _1]. resolve_Option_refmut_i32 _1
@@ -588,9 +588,10 @@ module M_copied_cloned
   
   type tup2_Option_ref_i32_Option_i32 = { f0: t_Option_ref_i32; f1: t_Option_i32 }
   
-  predicate postcondition_clone (self: ()) (args: Int32.t) (result: Int32.t) = let self'0 = args in result = self'0
+  function postcondition_clone (self: ()) (args: Int32.t) (result: Int32.t) : bool = let self'0 = args in result
+    = self'0
   
-  meta "rewrite_def" predicate postcondition_clone
+  meta "rewrite_def" function postcondition_clone
   
   let clone_i32 (self: Int32.t) (return (x: Int32.t)) = any
     [ return (result: Int32.t) -> {[@stop_split] [@expl:clone ensures] result = self} (! return {result}) ]
@@ -730,22 +731,22 @@ module M_filter
   
   meta "rewrite_def" predicate closure0'post'return
   
-  predicate precondition_closure0 (self: ()) (args: Int32.t) = let _0 = args in closure0'pre self _0
+  function precondition_closure0 (self: ()) (args: Int32.t) : bool = let _0 = args in closure0'pre self _0
   
-  meta "rewrite_def" predicate precondition_closure0
+  meta "rewrite_def" function precondition_closure0
   
-  predicate resolve_closure0 [@inline:trivial] (_1: ()) = true
+  function resolve_closure0 [@inline:trivial] (_1: ()) : bool = true
   
-  meta "rewrite_def" predicate resolve_closure0
+  meta "rewrite_def" function resolve_closure0
   
-  predicate postcondition_once_closure0 (self: ()) (args: Int32.t) (result: bool) =
+  function postcondition_once_closure0 (self: ()) (args: Int32.t) (result: bool) : bool =
     let _0 = args in closure0'post'return self _0 result
   
-  meta "rewrite_def" predicate postcondition_once_closure0
+  meta "rewrite_def" function postcondition_once_closure0
   
-  predicate resolve_i32 [@inline:trivial] (_1: Int32.t) = true
+  function resolve_i32 [@inline:trivial] (_1: Int32.t) : bool = true
   
-  meta "rewrite_def" predicate resolve_i32
+  meta "rewrite_def" function resolve_i32
   
   let filter_i32 (self: t_Option_i32) (predicate': ()) (return (x: t_Option_i32)) =
   {[@stop_split] [@expl:filter requires] match self with
@@ -792,18 +793,18 @@ module M_filter
   
   meta "rewrite_def" predicate closure1'post'return
   
-  predicate precondition_closure1 (self: ()) (args: Int32.t) = let x = args in closure1'pre self x
+  function precondition_closure1 (self: ()) (args: Int32.t) : bool = let x = args in closure1'pre self x
   
-  meta "rewrite_def" predicate precondition_closure1
+  meta "rewrite_def" function precondition_closure1
   
-  predicate resolve_closure1 [@inline:trivial] (_1: ()) = true
+  function resolve_closure1 [@inline:trivial] (_1: ()) : bool = true
   
-  meta "rewrite_def" predicate resolve_closure1
+  meta "rewrite_def" function resolve_closure1
   
-  predicate postcondition_once_closure1 (self: ()) (args: Int32.t) (result: bool) =
+  function postcondition_once_closure1 (self: ()) (args: Int32.t) (result: bool) : bool =
     let x = args in closure1'post'return self x result
   
-  meta "rewrite_def" predicate postcondition_once_closure1
+  meta "rewrite_def" function postcondition_once_closure1
   
   let filter_i32'0 (self: t_Option_i32) (predicate': ()) (return (x: t_Option_i32)) =
   {[@stop_split] [@expl:filter requires] match self with
@@ -828,18 +829,18 @@ module M_filter
   
   meta "rewrite_def" predicate closure2'post'return
   
-  predicate precondition_closure2 (self: ()) (args: Int32.t) = let x = args in closure2'pre self x
+  function precondition_closure2 (self: ()) (args: Int32.t) : bool = let x = args in closure2'pre self x
   
-  meta "rewrite_def" predicate precondition_closure2
+  meta "rewrite_def" function precondition_closure2
   
-  predicate resolve_closure2 [@inline:trivial] (_1: ()) = true
+  function resolve_closure2 [@inline:trivial] (_1: ()) : bool = true
   
-  meta "rewrite_def" predicate resolve_closure2
+  meta "rewrite_def" function resolve_closure2
   
-  predicate postcondition_once_closure2 (self: ()) (args: Int32.t) (result: bool) =
+  function postcondition_once_closure2 (self: ()) (args: Int32.t) (result: bool) : bool =
     let x = args in closure2'post'return self x result
   
-  meta "rewrite_def" predicate postcondition_once_closure2
+  meta "rewrite_def" function postcondition_once_closure2
   
   let filter_i32'1 (self: t_Option_i32) (predicate': ()) (return (x: t_Option_i32)) =
   {[@stop_split] [@expl:filter requires] match self with
@@ -979,9 +980,9 @@ module M_get_or_insert
   
   type t_Option_i32 = None | Some Int32.t
   
-  predicate resolve_i32 [@inline:trivial] (_1: Int32.t) = true
+  function resolve_i32 [@inline:trivial] (_1: Int32.t) : bool = true
   
-  meta "rewrite_def" predicate resolve_i32
+  meta "rewrite_def" function resolve_i32
   
   let get_or_insert_i32 (self: MutBorrow.t t_Option_i32) (value: Int32.t) (return (x: MutBorrow.t Int32.t)) = any
     [ return (result: MutBorrow.t Int32.t) -> {[@stop_split] [@expl:get_or_insert ensures] match self.current with
@@ -990,9 +991,9 @@ module M_get_or_insert
         end}
       (! return {result}) ]
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
   type t_Option_Int = None'0 | Some'0 int
   
@@ -1024,13 +1025,13 @@ module M_get_or_insert
   
   meta "rewrite_def" predicate closure0'post'return
   
-  predicate precondition_closure0 (self: ()) (args: ()) = closure0'pre self
+  function precondition_closure0 (self: ()) (args: ()) : bool = closure0'pre self
   
-  meta "rewrite_def" predicate precondition_closure0
+  meta "rewrite_def" function precondition_closure0
   
-  predicate postcondition_once_closure0 (self: ()) (args: ()) (result: Int32.t) = closure0'post'return self result
+  function postcondition_once_closure0 (self: ()) (args: ()) (result: Int32.t) : bool = closure0'post'return self result
   
-  meta "rewrite_def" predicate postcondition_once_closure0
+  meta "rewrite_def" function postcondition_once_closure0
   
   let get_or_insert_with_i32 (self: MutBorrow.t t_Option_i32) (f: ()) (return (x: MutBorrow.t Int32.t)) =
   {[@stop_split] [@expl:get_or_insert_with requires] self.current = None -> precondition_closure0 f ()}
@@ -1048,13 +1049,13 @@ module M_get_or_insert
   
   meta "rewrite_def" predicate closure1'post'return
   
-  predicate precondition_closure1 (self: ()) (args: ()) = closure1'pre self
+  function precondition_closure1 (self: ()) (args: ()) : bool = closure1'pre self
   
-  meta "rewrite_def" predicate precondition_closure1
+  meta "rewrite_def" function precondition_closure1
   
-  predicate postcondition_once_closure1 (self: ()) (args: ()) (result: Int32.t) = closure1'post'return self result
+  function postcondition_once_closure1 (self: ()) (args: ()) (result: Int32.t) : bool = closure1'post'return self result
   
-  meta "rewrite_def" predicate postcondition_once_closure1
+  meta "rewrite_def" function postcondition_once_closure1
   
   let get_or_insert_with_i32'0 (self: MutBorrow.t t_Option_i32) (f: ()) (return (x: MutBorrow.t Int32.t)) =
   {[@stop_split] [@expl:get_or_insert_with requires] self.current = None -> precondition_closure1 f ()}
@@ -1186,9 +1187,9 @@ module M_insert
   
   type t_Option_i32 = None | Some Int32.t
   
-  predicate resolve_i32 [@inline:trivial] (_1: Int32.t) = true
+  function resolve_i32 [@inline:trivial] (_1: Int32.t) : bool = true
   
-  meta "rewrite_def" predicate resolve_i32
+  meta "rewrite_def" function resolve_i32
   
   let insert_i32 (self: MutBorrow.t t_Option_i32) (value: Int32.t) (return (x: MutBorrow.t Int32.t)) = any
     [ return (result: MutBorrow.t Int32.t) ->
@@ -1199,9 +1200,9 @@ module M_insert
       /\ ([@stop_split] [@expl:insert ensures #1] result.current = value /\ self.final = Some (result.final))}
       (! return {result}) ]
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
   type t_Option_Int = None'0 | Some'0 int
   
@@ -1296,18 +1297,18 @@ module M_inspect
   
   meta "rewrite_def" predicate closure0'post'return
   
-  predicate precondition_closure0 (self: ()) (args: Int32.t) = let _0 = args in closure0'pre self _0
+  function precondition_closure0 (self: ()) (args: Int32.t) : bool = let _0 = args in closure0'pre self _0
   
-  meta "rewrite_def" predicate precondition_closure0
+  meta "rewrite_def" function precondition_closure0
   
-  predicate resolve_closure0 [@inline:trivial] (_1: ()) = true
+  function resolve_closure0 [@inline:trivial] (_1: ()) : bool = true
   
-  meta "rewrite_def" predicate resolve_closure0
+  meta "rewrite_def" function resolve_closure0
   
-  predicate postcondition_once_closure0 (self: ()) (args: Int32.t) (result: ()) =
+  function postcondition_once_closure0 (self: ()) (args: Int32.t) (result: ()) : bool =
     let _0 = args in closure0'post'return self _0 result
   
-  meta "rewrite_def" predicate postcondition_once_closure0
+  meta "rewrite_def" function postcondition_once_closure0
   
   let inspect_i32 (self: t_Option_i32) (f: ()) (return (x: t_Option_i32)) =
   {[@stop_split] [@expl:inspect requires] match self with
@@ -1352,18 +1353,18 @@ module M_inspect
   
   meta "rewrite_def" predicate closure1'post'return
   
-  predicate precondition_closure1 (self: ()) (args: Int32.t) = let _0 = args in closure1'pre self _0
+  function precondition_closure1 (self: ()) (args: Int32.t) : bool = let _0 = args in closure1'pre self _0
   
-  meta "rewrite_def" predicate precondition_closure1
+  meta "rewrite_def" function precondition_closure1
   
-  predicate resolve_closure1 [@inline:trivial] (_1: ()) = true
+  function resolve_closure1 [@inline:trivial] (_1: ()) : bool = true
   
-  meta "rewrite_def" predicate resolve_closure1
+  meta "rewrite_def" function resolve_closure1
   
-  predicate postcondition_once_closure1 (self: ()) (args: Int32.t) (result: ()) =
+  function postcondition_once_closure1 (self: ()) (args: Int32.t) (result: ()) : bool =
     let _0 = args in closure1'post'return self _0 result
   
-  meta "rewrite_def" predicate postcondition_once_closure1
+  meta "rewrite_def" function postcondition_once_closure1
   
   let inspect_i32'0 (self: t_Option_i32) (f: ()) (return (x: t_Option_i32)) =
   {[@stop_split] [@expl:inspect requires] match self with
@@ -1434,18 +1435,18 @@ module M_is_some_and
   
   meta "rewrite_def" predicate closure0'post'return
   
-  predicate precondition_closure0 (self: ()) (args: Int32.t) = let x = args in closure0'pre self x
+  function precondition_closure0 (self: ()) (args: Int32.t) : bool = let x = args in closure0'pre self x
   
-  meta "rewrite_def" predicate precondition_closure0
+  meta "rewrite_def" function precondition_closure0
   
-  predicate resolve_closure0 [@inline:trivial] (_1: ()) = true
+  function resolve_closure0 [@inline:trivial] (_1: ()) : bool = true
   
-  meta "rewrite_def" predicate resolve_closure0
+  meta "rewrite_def" function resolve_closure0
   
-  predicate postcondition_once_closure0 (self: ()) (args: Int32.t) (result: bool) =
+  function postcondition_once_closure0 (self: ()) (args: Int32.t) (result: bool) : bool =
     let x = args in closure0'post'return self x result
   
-  meta "rewrite_def" predicate postcondition_once_closure0
+  meta "rewrite_def" function postcondition_once_closure0
   
   let is_some_and_i32 (self: t_Option_i32) (f: ()) (return (x: bool)) =
   {[@stop_split] [@expl:is_some_and requires] match self with
@@ -1467,18 +1468,18 @@ module M_is_some_and
   
   meta "rewrite_def" predicate closure1'post'return
   
-  predicate precondition_closure1 (self: ()) (args: Int32.t) = let x = args in closure1'pre self x
+  function precondition_closure1 (self: ()) (args: Int32.t) : bool = let x = args in closure1'pre self x
   
-  meta "rewrite_def" predicate precondition_closure1
+  meta "rewrite_def" function precondition_closure1
   
-  predicate resolve_closure1 [@inline:trivial] (_1: ()) = true
+  function resolve_closure1 [@inline:trivial] (_1: ()) : bool = true
   
-  meta "rewrite_def" predicate resolve_closure1
+  meta "rewrite_def" function resolve_closure1
   
-  predicate postcondition_once_closure1 (self: ()) (args: Int32.t) (result: bool) =
+  function postcondition_once_closure1 (self: ()) (args: Int32.t) (result: bool) : bool =
     let x = args in closure1'post'return self x result
   
-  meta "rewrite_def" predicate postcondition_once_closure1
+  meta "rewrite_def" function postcondition_once_closure1
   
   let is_some_and_i32'0 (self: t_Option_i32) (f: ()) (return (x: bool)) =
   {[@stop_split] [@expl:is_some_and requires] match self with
@@ -1500,18 +1501,18 @@ module M_is_some_and
   
   meta "rewrite_def" predicate closure2'post'return
   
-  predicate precondition_closure2 (self: ()) (args: Int32.t) = let _0 = args in closure2'pre self _0
+  function precondition_closure2 (self: ()) (args: Int32.t) : bool = let _0 = args in closure2'pre self _0
   
-  meta "rewrite_def" predicate precondition_closure2
+  meta "rewrite_def" function precondition_closure2
   
-  predicate resolve_closure2 [@inline:trivial] (_1: ()) = true
+  function resolve_closure2 [@inline:trivial] (_1: ()) : bool = true
   
-  meta "rewrite_def" predicate resolve_closure2
+  meta "rewrite_def" function resolve_closure2
   
-  predicate postcondition_once_closure2 (self: ()) (args: Int32.t) (result: bool) =
+  function postcondition_once_closure2 (self: ()) (args: Int32.t) (result: bool) : bool =
     let _0 = args in closure2'post'return self _0 result
   
-  meta "rewrite_def" predicate postcondition_once_closure2
+  meta "rewrite_def" function postcondition_once_closure2
   
   let is_some_and_i32'1 (self: t_Option_i32) (f: ()) (return (x: bool)) =
   {[@stop_split] [@expl:is_some_and requires] match self with
@@ -1617,18 +1618,18 @@ module M_map
   
   type t_Option_unit = None'0 | Some'0 ()
   
-  predicate precondition_closure0 (self: ()) (args: Int32.t) = let _0 = args in closure0'pre self _0
+  function precondition_closure0 (self: ()) (args: Int32.t) : bool = let _0 = args in closure0'pre self _0
   
-  meta "rewrite_def" predicate precondition_closure0
+  meta "rewrite_def" function precondition_closure0
   
-  predicate resolve_closure0 [@inline:trivial] (_1: ()) = true
+  function resolve_closure0 [@inline:trivial] (_1: ()) : bool = true
   
-  meta "rewrite_def" predicate resolve_closure0
+  meta "rewrite_def" function resolve_closure0
   
-  predicate postcondition_once_closure0 (self: ()) (args: Int32.t) (result: ()) =
+  function postcondition_once_closure0 (self: ()) (args: Int32.t) (result: ()) : bool =
     let _0 = args in closure0'post'return self _0 result
   
-  meta "rewrite_def" predicate postcondition_once_closure0
+  meta "rewrite_def" function postcondition_once_closure0
   
   let map_i32 (self: t_Option_i32) (f: ()) (return (x: t_Option_unit)) =
   {[@stop_split] [@expl:map requires] match self with
@@ -1671,18 +1672,18 @@ module M_map
   
   meta "rewrite_def" predicate closure1'post'return
   
-  predicate precondition_closure1 (self: ()) (args: Int32.t) = let _0 = args in closure1'pre self _0
+  function precondition_closure1 (self: ()) (args: Int32.t) : bool = let _0 = args in closure1'pre self _0
   
-  meta "rewrite_def" predicate precondition_closure1
+  meta "rewrite_def" function precondition_closure1
   
-  predicate resolve_closure1 [@inline:trivial] (_1: ()) = true
+  function resolve_closure1 [@inline:trivial] (_1: ()) : bool = true
   
-  meta "rewrite_def" predicate resolve_closure1
+  meta "rewrite_def" function resolve_closure1
   
-  predicate postcondition_once_closure1 (self: ()) (args: Int32.t) (result: Int32.t) =
+  function postcondition_once_closure1 (self: ()) (args: Int32.t) (result: Int32.t) : bool =
     let _0 = args in closure1'post'return self _0 result
   
-  meta "rewrite_def" predicate postcondition_once_closure1
+  meta "rewrite_def" function postcondition_once_closure1
   
   let map_i32'0 (self: t_Option_i32) (f: ()) (return (x: t_Option_i32)) =
   {[@stop_split] [@expl:map requires] match self with
@@ -1726,18 +1727,18 @@ module M_map
   
   meta "rewrite_def" predicate closure2'post'return
   
-  predicate precondition_closure2 (self: ()) (args: Int32.t) = let x = args in closure2'pre self x
+  function precondition_closure2 (self: ()) (args: Int32.t) : bool = let x = args in closure2'pre self x
   
-  meta "rewrite_def" predicate precondition_closure2
+  meta "rewrite_def" function precondition_closure2
   
-  predicate resolve_closure2 [@inline:trivial] (_1: ()) = true
+  function resolve_closure2 [@inline:trivial] (_1: ()) : bool = true
   
-  meta "rewrite_def" predicate resolve_closure2
+  meta "rewrite_def" function resolve_closure2
   
-  predicate postcondition_once_closure2 (self: ()) (args: Int32.t) (result: Int32.t) =
+  function postcondition_once_closure2 (self: ()) (args: Int32.t) (result: Int32.t) : bool =
     let x = args in closure2'post'return self x result
   
-  meta "rewrite_def" predicate postcondition_once_closure2
+  meta "rewrite_def" function postcondition_once_closure2
   
   let map_i32'1 (self: t_Option_i32) (f: ()) (return (x: t_Option_i32)) =
   {[@stop_split] [@expl:map requires] match self with
@@ -1820,18 +1821,18 @@ module M_map_or
   
   meta "rewrite_def" predicate closure0'post'return
   
-  predicate precondition_closure0 (self: ()) (args: Int32.t) = let _0 = args in closure0'pre self _0
+  function precondition_closure0 (self: ()) (args: Int32.t) : bool = let _0 = args in closure0'pre self _0
   
-  meta "rewrite_def" predicate precondition_closure0
+  meta "rewrite_def" function precondition_closure0
   
-  predicate resolve_closure0 [@inline:trivial] (_1: ()) = true
+  function resolve_closure0 [@inline:trivial] (_1: ()) : bool = true
   
-  meta "rewrite_def" predicate resolve_closure0
+  meta "rewrite_def" function resolve_closure0
   
-  predicate postcondition_once_closure0 (self: ()) (args: Int32.t) (result: Int32.t) =
+  function postcondition_once_closure0 (self: ()) (args: Int32.t) (result: Int32.t) : bool =
     let _0 = args in closure0'post'return self _0 result
   
-  meta "rewrite_def" predicate postcondition_once_closure0
+  meta "rewrite_def" function postcondition_once_closure0
   
   let map_or_i32 (self: t_Option_i32) (default: Int32.t) (f: ()) (return (x: Int32.t)) =
   {[@stop_split] [@expl:map_or requires] match self with
@@ -1853,18 +1854,18 @@ module M_map_or
   
   meta "rewrite_def" predicate closure1'post'return
   
-  predicate precondition_closure1 (self: ()) (args: Int32.t) = let _0 = args in closure1'pre self _0
+  function precondition_closure1 (self: ()) (args: Int32.t) : bool = let _0 = args in closure1'pre self _0
   
-  meta "rewrite_def" predicate precondition_closure1
+  meta "rewrite_def" function precondition_closure1
   
-  predicate resolve_closure1 [@inline:trivial] (_1: ()) = true
+  function resolve_closure1 [@inline:trivial] (_1: ()) : bool = true
   
-  meta "rewrite_def" predicate resolve_closure1
+  meta "rewrite_def" function resolve_closure1
   
-  predicate postcondition_once_closure1 (self: ()) (args: Int32.t) (result: Int32.t) =
+  function postcondition_once_closure1 (self: ()) (args: Int32.t) (result: Int32.t) : bool =
     let _0 = args in closure1'post'return self _0 result
   
-  meta "rewrite_def" predicate postcondition_once_closure1
+  meta "rewrite_def" function postcondition_once_closure1
   
   let map_or_i32'0 (self: t_Option_i32) (default: Int32.t) (f: ()) (return (x: Int32.t)) =
   {[@stop_split] [@expl:map_or requires] match self with
@@ -1886,18 +1887,18 @@ module M_map_or
   
   meta "rewrite_def" predicate closure2'post'return
   
-  predicate precondition_closure2 (self: ()) (args: Int32.t) = let x = args in closure2'pre self x
+  function precondition_closure2 (self: ()) (args: Int32.t) : bool = let x = args in closure2'pre self x
   
-  meta "rewrite_def" predicate precondition_closure2
+  meta "rewrite_def" function precondition_closure2
   
-  predicate resolve_closure2 [@inline:trivial] (_1: ()) = true
+  function resolve_closure2 [@inline:trivial] (_1: ()) : bool = true
   
-  meta "rewrite_def" predicate resolve_closure2
+  meta "rewrite_def" function resolve_closure2
   
-  predicate postcondition_once_closure2 (self: ()) (args: Int32.t) (result: Int32.t) =
+  function postcondition_once_closure2 (self: ()) (args: Int32.t) (result: Int32.t) : bool =
     let x = args in closure2'post'return self x result
   
-  meta "rewrite_def" predicate postcondition_once_closure2
+  meta "rewrite_def" function postcondition_once_closure2
   
   let map_or_i32'1 (self: t_Option_i32) (default: Int32.t) (f: ()) (return (x: Int32.t)) =
   {[@stop_split] [@expl:map_or requires] match self with
@@ -1926,30 +1927,30 @@ module M_map_or
   
   meta "rewrite_def" predicate closure4'post'return
   
-  predicate precondition_closure3 (self: ()) (args: ()) = closure3'pre self
+  function precondition_closure3 (self: ()) (args: ()) : bool = closure3'pre self
   
-  meta "rewrite_def" predicate precondition_closure3
+  meta "rewrite_def" function precondition_closure3
   
-  predicate precondition_closure4 (self: ()) (args: Int32.t) = let _0 = args in closure4'pre self _0
+  function precondition_closure4 (self: ()) (args: Int32.t) : bool = let _0 = args in closure4'pre self _0
   
-  meta "rewrite_def" predicate precondition_closure4
+  meta "rewrite_def" function precondition_closure4
   
-  predicate resolve_closure4 [@inline:trivial] (_1: ()) = true
+  function resolve_closure4 [@inline:trivial] (_1: ()) : bool = true
   
-  meta "rewrite_def" predicate resolve_closure4
+  meta "rewrite_def" function resolve_closure4
   
-  predicate postcondition_once_closure3 (self: ()) (args: ()) (result: Int32.t) = closure3'post'return self result
+  function postcondition_once_closure3 (self: ()) (args: ()) (result: Int32.t) : bool = closure3'post'return self result
   
-  meta "rewrite_def" predicate postcondition_once_closure3
+  meta "rewrite_def" function postcondition_once_closure3
   
-  predicate resolve_closure3 [@inline:trivial] (_1: ()) = true
+  function resolve_closure3 [@inline:trivial] (_1: ()) : bool = true
   
-  meta "rewrite_def" predicate resolve_closure3
+  meta "rewrite_def" function resolve_closure3
   
-  predicate postcondition_once_closure4 (self: ()) (args: Int32.t) (result: Int32.t) =
+  function postcondition_once_closure4 (self: ()) (args: Int32.t) (result: Int32.t) : bool =
     let _0 = args in closure4'post'return self _0 result
   
-  meta "rewrite_def" predicate postcondition_once_closure4
+  meta "rewrite_def" function postcondition_once_closure4
   
   let map_or_else_i32 (self: t_Option_i32) (default: ()) (f: ()) (return (x: Int32.t)) =
   {[@stop_split] [@expl:map_or_else requires] match self with
@@ -1978,30 +1979,30 @@ module M_map_or
   
   meta "rewrite_def" predicate closure6'post'return
   
-  predicate precondition_closure5 (self: ()) (args: ()) = closure5'pre self
+  function precondition_closure5 (self: ()) (args: ()) : bool = closure5'pre self
   
-  meta "rewrite_def" predicate precondition_closure5
+  meta "rewrite_def" function precondition_closure5
   
-  predicate precondition_closure6 (self: ()) (args: Int32.t) = let x = args in closure6'pre self x
+  function precondition_closure6 (self: ()) (args: Int32.t) : bool = let x = args in closure6'pre self x
   
-  meta "rewrite_def" predicate precondition_closure6
+  meta "rewrite_def" function precondition_closure6
   
-  predicate resolve_closure6 [@inline:trivial] (_1: ()) = true
+  function resolve_closure6 [@inline:trivial] (_1: ()) : bool = true
   
-  meta "rewrite_def" predicate resolve_closure6
+  meta "rewrite_def" function resolve_closure6
   
-  predicate postcondition_once_closure5 (self: ()) (args: ()) (result: Int32.t) = closure5'post'return self result
+  function postcondition_once_closure5 (self: ()) (args: ()) (result: Int32.t) : bool = closure5'post'return self result
   
-  meta "rewrite_def" predicate postcondition_once_closure5
+  meta "rewrite_def" function postcondition_once_closure5
   
-  predicate resolve_closure5 [@inline:trivial] (_1: ()) = true
+  function resolve_closure5 [@inline:trivial] (_1: ()) : bool = true
   
-  meta "rewrite_def" predicate resolve_closure5
+  meta "rewrite_def" function resolve_closure5
   
-  predicate postcondition_once_closure6 (self: ()) (args: Int32.t) (result: Int32.t) =
+  function postcondition_once_closure6 (self: ()) (args: Int32.t) (result: Int32.t) : bool =
     let x = args in closure6'post'return self x result
   
-  meta "rewrite_def" predicate postcondition_once_closure6
+  meta "rewrite_def" function postcondition_once_closure6
   
   let map_or_else_i32'0 (self: t_Option_i32) (default: ()) (f: ()) (return (x: Int32.t)) =
   {[@stop_split] [@expl:map_or_else requires] match self with
@@ -2084,9 +2085,9 @@ module M_ok_or
   
   type t_Result_i32_bool = Ok Int32.t | Err bool
   
-  predicate resolve_bool [@inline:trivial] (_1: bool) = true
+  function resolve_bool [@inline:trivial] (_1: bool) : bool = true
   
-  meta "rewrite_def" predicate resolve_bool
+  meta "rewrite_def" function resolve_bool
   
   let ok_or_i32 (self: t_Option_i32) (err: bool) (return (x: t_Result_i32_bool)) = any
     [ return (result: t_Result_i32_bool) -> {[@stop_split] [@expl:ok_or ensures] match self with
@@ -2103,17 +2104,17 @@ module M_ok_or
   
   meta "rewrite_def" predicate closure0'post'return
   
-  predicate precondition_closure0 (self: ()) (args: ()) = closure0'pre self
+  function precondition_closure0 (self: ()) (args: ()) : bool = closure0'pre self
   
-  meta "rewrite_def" predicate precondition_closure0
+  meta "rewrite_def" function precondition_closure0
   
-  predicate postcondition_once_closure0 (self: ()) (args: ()) (result: bool) = closure0'post'return self result
+  function postcondition_once_closure0 (self: ()) (args: ()) (result: bool) : bool = closure0'post'return self result
   
-  meta "rewrite_def" predicate postcondition_once_closure0
+  meta "rewrite_def" function postcondition_once_closure0
   
-  predicate resolve_closure0 [@inline:trivial] (_1: ()) = true
+  function resolve_closure0 [@inline:trivial] (_1: ()) : bool = true
   
-  meta "rewrite_def" predicate resolve_closure0
+  meta "rewrite_def" function resolve_closure0
   
   let ok_or_else_i32 (self: t_Option_i32) (err: ()) (return (x: t_Result_i32_bool)) =
   {[@stop_split] [@expl:ok_or_else requires] self = None -> precondition_closure0 err ()}
@@ -2132,17 +2133,17 @@ module M_ok_or
   
   meta "rewrite_def" predicate closure1'post'return
   
-  predicate precondition_closure1 (self: ()) (args: ()) = closure1'pre self
+  function precondition_closure1 (self: ()) (args: ()) : bool = closure1'pre self
   
-  meta "rewrite_def" predicate precondition_closure1
+  meta "rewrite_def" function precondition_closure1
   
-  predicate postcondition_once_closure1 (self: ()) (args: ()) (result: bool) = closure1'post'return self result
+  function postcondition_once_closure1 (self: ()) (args: ()) (result: bool) : bool = closure1'post'return self result
   
-  meta "rewrite_def" predicate postcondition_once_closure1
+  meta "rewrite_def" function postcondition_once_closure1
   
-  predicate resolve_closure1 [@inline:trivial] (_1: ()) = true
+  function resolve_closure1 [@inline:trivial] (_1: ()) : bool = true
   
-  meta "rewrite_def" predicate resolve_closure1
+  meta "rewrite_def" function resolve_closure1
   
   let ok_or_else_i32'0 (self: t_Option_i32) (err: ()) (return (x: t_Result_i32_bool)) =
   {[@stop_split] [@expl:ok_or_else requires] self = None -> precondition_closure1 err ()}
@@ -2196,17 +2197,18 @@ module M_or_else
   
   meta "rewrite_def" predicate closure0'post'return
   
-  predicate precondition_closure0 (self: ()) (args: ()) = closure0'pre self
+  function precondition_closure0 (self: ()) (args: ()) : bool = closure0'pre self
   
-  meta "rewrite_def" predicate precondition_closure0
+  meta "rewrite_def" function precondition_closure0
   
-  predicate postcondition_once_closure0 (self: ()) (args: ()) (result: t_Option_i32) = closure0'post'return self result
+  function postcondition_once_closure0 (self: ()) (args: ()) (result: t_Option_i32) : bool =
+    closure0'post'return self result
   
-  meta "rewrite_def" predicate postcondition_once_closure0
+  meta "rewrite_def" function postcondition_once_closure0
   
-  predicate resolve_closure0 [@inline:trivial] (_1: ()) = true
+  function resolve_closure0 [@inline:trivial] (_1: ()) : bool = true
   
-  meta "rewrite_def" predicate resolve_closure0
+  meta "rewrite_def" function resolve_closure0
   
   let or_else_i32 (self: t_Option_i32) (f: ()) (return (x: t_Option_i32)) = {[@stop_split] [@expl:or_else requires] self
       = None -> precondition_closure0 f ()}
@@ -2247,17 +2249,18 @@ module M_or_else
   
   meta "rewrite_def" predicate closure1'post'return
   
-  predicate precondition_closure1 (self: ()) (args: ()) = closure1'pre self
+  function precondition_closure1 (self: ()) (args: ()) : bool = closure1'pre self
   
-  meta "rewrite_def" predicate precondition_closure1
+  meta "rewrite_def" function precondition_closure1
   
-  predicate postcondition_once_closure1 (self: ()) (args: ()) (result: t_Option_i32) = closure1'post'return self result
+  function postcondition_once_closure1 (self: ()) (args: ()) (result: t_Option_i32) : bool =
+    closure1'post'return self result
   
-  meta "rewrite_def" predicate postcondition_once_closure1
+  meta "rewrite_def" function postcondition_once_closure1
   
-  predicate resolve_closure1 [@inline:trivial] (_1: ()) = true
+  function resolve_closure1 [@inline:trivial] (_1: ()) : bool = true
   
-  meta "rewrite_def" predicate resolve_closure1
+  meta "rewrite_def" function resolve_closure1
   
   let or_else_i32'0 (self: t_Option_i32) (f: ()) (return (x: t_Option_i32)) =
   {[@stop_split] [@expl:or_else requires] self = None -> precondition_closure1 f ()}
@@ -2275,17 +2278,18 @@ module M_or_else
   
   meta "rewrite_def" predicate closure2'post'return
   
-  predicate precondition_closure2 (self: ()) (args: ()) = closure2'pre self
+  function precondition_closure2 (self: ()) (args: ()) : bool = closure2'pre self
   
-  meta "rewrite_def" predicate precondition_closure2
+  meta "rewrite_def" function precondition_closure2
   
-  predicate postcondition_once_closure2 (self: ()) (args: ()) (result: t_Option_i32) = closure2'post'return self result
+  function postcondition_once_closure2 (self: ()) (args: ()) (result: t_Option_i32) : bool =
+    closure2'post'return self result
   
-  meta "rewrite_def" predicate postcondition_once_closure2
+  meta "rewrite_def" function postcondition_once_closure2
   
-  predicate resolve_closure2 [@inline:trivial] (_1: ()) = true
+  function resolve_closure2 [@inline:trivial] (_1: ()) : bool = true
   
-  meta "rewrite_def" predicate resolve_closure2
+  meta "rewrite_def" function resolve_closure2
   
   let or_else_i32'1 (self: t_Option_i32) (f: ()) (return (x: t_Option_i32)) =
   {[@stop_split] [@expl:or_else requires] self = None -> precondition_closure2 f ()}
@@ -2444,9 +2448,9 @@ module M_resolve
   
   type t_Option_refmut_i32 = None | Some (MutBorrow.t Int32.t)
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
   let closure1 [@coma:extspec] (self: ()) (_0: MutBorrow.t Int32.t) (return (x: bool)) = bb0
     [ bb0 = s0 [ s0 = -{resolve_refmut_i32 _0}- s1 | s1 = [ &_ret <- true ] s2 | s2 = return {_ret} ] ]
@@ -2456,18 +2460,18 @@ module M_resolve
   
   meta "rewrite_def" predicate closure1'post'return
   
-  predicate precondition_closure1 (self: ()) (args: MutBorrow.t Int32.t) = let _0 = args in closure1'pre self _0
+  function precondition_closure1 (self: ()) (args: MutBorrow.t Int32.t) : bool = let _0 = args in closure1'pre self _0
   
-  meta "rewrite_def" predicate precondition_closure1
+  meta "rewrite_def" function precondition_closure1
   
-  predicate resolve_closure1 [@inline:trivial] (_1: ()) = true
+  function resolve_closure1 [@inline:trivial] (_1: ()) : bool = true
   
-  meta "rewrite_def" predicate resolve_closure1
+  meta "rewrite_def" function resolve_closure1
   
-  predicate postcondition_once_closure1 (self: ()) (args: MutBorrow.t Int32.t) (result: bool) =
+  function postcondition_once_closure1 (self: ()) (args: MutBorrow.t Int32.t) (result: bool) : bool =
     let _0 = args in closure1'post'return self _0 result
   
-  meta "rewrite_def" predicate postcondition_once_closure1
+  meta "rewrite_def" function postcondition_once_closure1
   
   let is_some_and_refmut_i32 (self: t_Option_refmut_i32) (f: ()) (return (x: bool)) =
   {[@stop_split] [@expl:is_some_and requires] match self with
@@ -2483,11 +2487,11 @@ module M_resolve
   
   type t_Option_i32 = None'0 | Some'0 Int32.t
   
-  predicate resolve_Option_i32 [@inline:trivial] (_1: t_Option_i32) = true
+  function resolve_Option_i32 [@inline:trivial] (_1: t_Option_i32) : bool = true
   
-  meta "rewrite_def" predicate resolve_Option_i32
+  meta "rewrite_def" function resolve_Option_i32
   
-  predicate resolve_Option_refmut_i32 (_1: t_Option_refmut_i32)
+  function resolve_Option_refmut_i32 (_1: t_Option_refmut_i32) : bool
   
   axiom resolve_axiom [@rewrite]:
     forall _1: t_Option_refmut_i32 [resolve_Option_refmut_i32 _1]. resolve_Option_refmut_i32 _1
@@ -2517,18 +2521,18 @@ module M_resolve
   
   meta "rewrite_def" predicate closure0'post'return
   
-  predicate precondition_closure0 (self: ()) (args: MutBorrow.t Int32.t) = let _0 = args in closure0'pre self _0
+  function precondition_closure0 (self: ()) (args: MutBorrow.t Int32.t) : bool = let _0 = args in closure0'pre self _0
   
-  meta "rewrite_def" predicate precondition_closure0
+  meta "rewrite_def" function precondition_closure0
   
-  predicate resolve_closure0 [@inline:trivial] (_1: ()) = true
+  function resolve_closure0 [@inline:trivial] (_1: ()) : bool = true
   
-  meta "rewrite_def" predicate resolve_closure0
+  meta "rewrite_def" function resolve_closure0
   
-  predicate postcondition_once_closure0 (self: ()) (args: MutBorrow.t Int32.t) (result: bool) =
+  function postcondition_once_closure0 (self: ()) (args: MutBorrow.t Int32.t) (result: bool) : bool =
     let _0 = args in closure0'post'return self _0 result
   
-  meta "rewrite_def" predicate postcondition_once_closure0
+  meta "rewrite_def" function postcondition_once_closure0
   
   let filter_refmut_i32 (self: t_Option_refmut_i32) (predicate': ()) (return (x: t_Option_refmut_i32)) =
   {[@stop_split] [@expl:filter requires] match self with
@@ -2566,9 +2570,10 @@ module M_resolve
       /\ ([@stop_split] [@expl:insert ensures #1] result.current = value /\ self.final = Some (result.final))}
       (! return {result}) ]
   
-  predicate resolve_refmut_refmut_i32 [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t Int32.t)) = _1.final = _1.current
+  function resolve_refmut_refmut_i32 [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t Int32.t)) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_refmut_i32
+  meta "rewrite_def" function resolve_refmut_refmut_i32
   
   let get_or_insert_refmut_i32 (self: MutBorrow.t t_Option_refmut_i32) (value: MutBorrow.t Int32.t)
     (return (x: MutBorrow.t (MutBorrow.t Int32.t))) = any
@@ -2594,11 +2599,11 @@ module M_resolve
         end}
       (! return {result}) ]
   
-  predicate resolve_tup2_refmut_i32_i32 [@inline:trivial] (_1: tup2_refmut_i32_i32) = resolve_refmut_i32 _1.f0'0
+  function resolve_tup2_refmut_i32_i32 [@inline:trivial] (_1: tup2_refmut_i32_i32) : bool = resolve_refmut_i32 _1.f0'0
   
-  meta "rewrite_def" predicate resolve_tup2_refmut_i32_i32
+  meta "rewrite_def" function resolve_tup2_refmut_i32_i32
   
-  predicate resolve_Option_tup2_refmut_i32_i32 (_1: t_Option_tup2_refmut_i32_i32)
+  function resolve_Option_tup2_refmut_i32_i32 (_1: t_Option_tup2_refmut_i32_i32) : bool
   
   axiom resolve_axiom'0 [@rewrite]:
     forall _1: t_Option_tup2_refmut_i32_i32 [resolve_Option_tup2_refmut_i32_i32 _1]. resolve_Option_tup2_refmut_i32_i32 _1
@@ -2614,9 +2619,10 @@ module M_resolve
         end}
       (! return {result}) ]
   
-  predicate postcondition_clone (self: ()) (args: Int32.t) (result: Int32.t) = let self'0 = args in result = self'0
+  function postcondition_clone (self: ()) (args: Int32.t) (result: Int32.t) : bool = let self'0 = args in result
+    = self'0
   
-  meta "rewrite_def" predicate postcondition_clone
+  meta "rewrite_def" function postcondition_clone
   
   let clone_i32 (self: Int32.t) (return (x: Int32.t)) = any
     [ return (result: Int32.t) -> {[@stop_split] [@expl:clone ensures] result = self} (! return {result}) ]
@@ -2913,9 +2919,9 @@ module M_take_if
   
   type t_Option_i32 = None | Some Int32.t
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
   let closure0 [@coma:extspec] (self: ()) (_0: MutBorrow.t Int32.t) (return (x: bool)) = bb0
     [ bb0 = s0 [ s0 = -{resolve_refmut_i32 _0}- s1 | s1 = {false} any ] ] [ & _0: MutBorrow.t Int32.t = _0 ]
@@ -2925,18 +2931,18 @@ module M_take_if
   
   meta "rewrite_def" predicate closure0'post'return
   
-  predicate inv_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = true
+  function inv_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = true
   
-  meta "rewrite_def" predicate inv_refmut_i32
+  meta "rewrite_def" function inv_refmut_i32
   
-  predicate precondition_closure0 (self: ()) (args: MutBorrow.t Int32.t) = let _0 = args in closure0'pre self _0
+  function precondition_closure0 (self: ()) (args: MutBorrow.t Int32.t) : bool = let _0 = args in closure0'pre self _0
   
-  meta "rewrite_def" predicate precondition_closure0
+  meta "rewrite_def" function precondition_closure0
   
-  predicate postcondition_once_closure0 (self: ()) (args: MutBorrow.t Int32.t) (result: bool) =
+  function postcondition_once_closure0 (self: ()) (args: MutBorrow.t Int32.t) (result: bool) : bool =
     let _0 = args in closure0'post'return self _0 result
   
-  meta "rewrite_def" predicate postcondition_once_closure0
+  meta "rewrite_def" function postcondition_once_closure0
   
   let take_if_i32 (self: MutBorrow.t t_Option_i32) (predicate': ()) (return (x: t_Option_i32)) =
   {[@stop_split] [@expl:take_if requires] match self.current with
@@ -2988,14 +2994,14 @@ module M_take_if
   
   meta "rewrite_def" predicate closure1'post'return
   
-  predicate precondition_closure1 (self: ()) (args: MutBorrow.t Int32.t) = let x = args in closure1'pre self x
+  function precondition_closure1 (self: ()) (args: MutBorrow.t Int32.t) : bool = let x = args in closure1'pre self x
   
-  meta "rewrite_def" predicate precondition_closure1
+  meta "rewrite_def" function precondition_closure1
   
-  predicate postcondition_once_closure1 (self: ()) (args: MutBorrow.t Int32.t) (result: bool) =
+  function postcondition_once_closure1 (self: ()) (args: MutBorrow.t Int32.t) (result: bool) : bool =
     let x = args in closure1'post'return self x result
   
-  meta "rewrite_def" predicate postcondition_once_closure1
+  meta "rewrite_def" function postcondition_once_closure1
   
   let take_if_i32'0 (self: MutBorrow.t t_Option_i32) (predicate': ()) (return (x: t_Option_i32)) =
   {[@stop_split] [@expl:take_if requires] match self.current with
@@ -3030,14 +3036,14 @@ module M_take_if
   
   meta "rewrite_def" predicate closure2'post'return
   
-  predicate precondition_closure2 (self: ()) (args: MutBorrow.t Int32.t) = let x = args in closure2'pre self x
+  function precondition_closure2 (self: ()) (args: MutBorrow.t Int32.t) : bool = let x = args in closure2'pre self x
   
-  meta "rewrite_def" predicate precondition_closure2
+  meta "rewrite_def" function precondition_closure2
   
-  predicate postcondition_once_closure2 (self: ()) (args: MutBorrow.t Int32.t) (result: bool) =
+  function postcondition_once_closure2 (self: ()) (args: MutBorrow.t Int32.t) (result: bool) : bool =
     let x = args in closure2'post'return self x result
   
-  meta "rewrite_def" predicate postcondition_once_closure2
+  meta "rewrite_def" function postcondition_once_closure2
   
   let take_if_i32'1 (self: MutBorrow.t t_Option_i32) (predicate': ()) (return (x: t_Option_i32)) =
   {[@stop_split] [@expl:take_if requires] match self.current with
@@ -3263,9 +3269,9 @@ module M_unwrap
     <> None}
     any [ return (result: Int32.t) -> {[@stop_split] [@expl:expect ensures] Some result = self} (! return {result}) ]
   
-  predicate resolve_i32 [@inline:trivial] (_1: Int32.t) = true
+  function resolve_i32 [@inline:trivial] (_1: Int32.t) : bool = true
   
-  meta "rewrite_def" predicate resolve_i32
+  meta "rewrite_def" function resolve_i32
   
   let unwrap_or_i32 (self: t_Option_i32) (default: Int32.t) (return (x: Int32.t)) = any
     [ return (result: Int32.t) ->
@@ -3274,9 +3280,9 @@ module M_unwrap
       /\ ([@stop_split] [@expl:unwrap_or ensures #1] self = None \/ self = Some result /\ resolve_i32 default)}
       (! return {result}) ]
   
-  predicate postcondition_default (self: ()) (args: ()) (result: Int32.t) = let () = args in result = (0: Int32.t)
+  function postcondition_default (self: ()) (args: ()) (result: Int32.t) : bool = let () = args in result = (0: Int32.t)
   
-  meta "rewrite_def" predicate postcondition_default
+  meta "rewrite_def" function postcondition_default
   
   let default_i32 (return (x: Int32.t)) = any
     [ return (result: Int32.t) -> {[@stop_split] [@expl:default ensures] result = (0: Int32.t)} (! return {result}) ]
@@ -3295,17 +3301,17 @@ module M_unwrap
   
   meta "rewrite_def" predicate closure0'post'return
   
-  predicate precondition_closure0 (self: ()) (args: ()) = closure0'pre self
+  function precondition_closure0 (self: ()) (args: ()) : bool = closure0'pre self
   
-  meta "rewrite_def" predicate precondition_closure0
+  meta "rewrite_def" function precondition_closure0
   
-  predicate postcondition_once_closure0 (self: ()) (args: ()) (result: Int32.t) = closure0'post'return self result
+  function postcondition_once_closure0 (self: ()) (args: ()) (result: Int32.t) : bool = closure0'post'return self result
   
-  meta "rewrite_def" predicate postcondition_once_closure0
+  meta "rewrite_def" function postcondition_once_closure0
   
-  predicate resolve_closure0 [@inline:trivial] (_1: ()) = true
+  function resolve_closure0 [@inline:trivial] (_1: ()) : bool = true
   
-  meta "rewrite_def" predicate resolve_closure0
+  meta "rewrite_def" function resolve_closure0
   
   let unwrap_or_else_i32 (self: t_Option_i32) (f: ()) (return (x: Int32.t)) =
   {[@stop_split] [@expl:unwrap_or_else requires] self = None -> precondition_closure0 f ()}
@@ -3324,17 +3330,17 @@ module M_unwrap
   
   meta "rewrite_def" predicate closure1'post'return
   
-  predicate precondition_closure1 (self: ()) (args: ()) = closure1'pre self
+  function precondition_closure1 (self: ()) (args: ()) : bool = closure1'pre self
   
-  meta "rewrite_def" predicate precondition_closure1
+  meta "rewrite_def" function precondition_closure1
   
-  predicate postcondition_once_closure1 (self: ()) (args: ()) (result: Int32.t) = closure1'post'return self result
+  function postcondition_once_closure1 (self: ()) (args: ()) (result: Int32.t) : bool = closure1'post'return self result
   
-  meta "rewrite_def" predicate postcondition_once_closure1
+  meta "rewrite_def" function postcondition_once_closure1
   
-  predicate resolve_closure1 [@inline:trivial] (_1: ()) = true
+  function resolve_closure1 [@inline:trivial] (_1: ()) : bool = true
   
-  meta "rewrite_def" predicate resolve_closure1
+  meta "rewrite_def" function resolve_closure1
   
   let unwrap_or_else_i32'0 (self: t_Option_i32) (f: ()) (return (x: Int32.t)) =
   {[@stop_split] [@expl:unwrap_or_else requires] self = None -> precondition_closure1 f ()}
@@ -3446,13 +3452,13 @@ module M_zip_unzip
   
   type tup2_Option_i32_Option_bool = { f0'0: t_Option_i32; f1'0: t_Option_bool }
   
-  predicate resolve_Option_bool [@inline:trivial] (_1: t_Option_bool) = true
+  function resolve_Option_bool [@inline:trivial] (_1: t_Option_bool) : bool = true
   
-  meta "rewrite_def" predicate resolve_Option_bool
+  meta "rewrite_def" function resolve_Option_bool
   
-  predicate resolve_Option_i32 [@inline:trivial] (_1: t_Option_i32) = true
+  function resolve_Option_i32 [@inline:trivial] (_1: t_Option_i32) : bool = true
   
-  meta "rewrite_def" predicate resolve_Option_i32
+  meta "rewrite_def" function resolve_Option_i32
   
   let zip_i32 (self: t_Option_i32) (other: t_Option_bool) (return (x: t_Option_tup2_i32_bool)) = any
     [ return (result: t_Option_tup2_i32_bool) -> {[@stop_split] [@expl:zip ensures] match { f0'0 = self;
@@ -3471,9 +3477,9 @@ module M_zip_unzip
   
   meta "rewrite_def" function deep_model_i32
   
-  predicate deep_model_bool [@inline:trivial] (self: bool) = self
+  function deep_model_bool [@inline:trivial] (self: bool) : bool = self
   
-  meta "rewrite_def" predicate deep_model_bool
+  meta "rewrite_def" function deep_model_bool
   
   function deep_model_tup2_i32_bool [@inline:trivial] (self: tup2_i32_bool) : tup2_Int_bool =
     { f0'1 = deep_model_i32 self.f0; f1'1 = deep_model_bool self.f1 }

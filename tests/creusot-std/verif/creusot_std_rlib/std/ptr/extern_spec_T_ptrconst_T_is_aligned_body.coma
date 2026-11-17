@@ -19,7 +19,7 @@ axiom align_of_T_spec'0: ComputerDivision.mod size_of_T (UInt64.t'int align_of_T
 let align_of_T'0 (return (x: UInt64.t)) = any
   [ return (result: UInt64.t) -> {[@stop_split] [@expl:align_of ensures] result = align_of_T} (! return {result}) ]
 
-predicate is_aligned_to_ptr_T (self: Opaque.ptr) (align: UInt64.t) =
+function is_aligned_to_ptr_T (self: Opaque.ptr) (align: UInt64.t) : bool =
   UInt64.bw_and (Ptr.addr_logic_u64 self) (UInt64.sub align (1: UInt64.t)) = (0: UInt64.t)
 
 let is_aligned_to_T (self: Opaque.ptr) (align: UInt64.t) (return (x: bool)) =
@@ -29,13 +29,13 @@ let is_aligned_to_T (self: Opaque.ptr) (align: UInt64.t) (return (x: bool)) =
   [ return (result: bool) -> {[@stop_split] [@expl:is_aligned_to ensures] result = is_aligned_to_ptr_T self align}
     (! return {result}) ]
 
-predicate is_aligned_T [@inline:trivial] (ptr: Opaque.ptr) = is_aligned_to_ptr_T ptr align_of_T
+function is_aligned_T [@inline:trivial] (ptr: Opaque.ptr) : bool = is_aligned_to_ptr_T ptr align_of_T
 
-meta "rewrite_def" predicate is_aligned_T
+meta "rewrite_def" function is_aligned_T
 
-predicate is_aligned_ptr_T [@inline:trivial] (self: Opaque.ptr) = is_aligned_T self
+function is_aligned_ptr_T [@inline:trivial] (self: Opaque.ptr) : bool = is_aligned_T self
 
-meta "rewrite_def" predicate is_aligned_ptr_T
+meta "rewrite_def" function is_aligned_ptr_T
 
 meta "compute_max_steps" 1000000
 

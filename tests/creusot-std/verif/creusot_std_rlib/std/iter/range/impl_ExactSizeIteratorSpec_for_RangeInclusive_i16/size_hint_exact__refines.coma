@@ -18,7 +18,7 @@ function start_log_RangeInclusive_i16 (self: t_RangeInclusive_i16) : Int16.t
 
 function end_log_RangeInclusive_i16 (self: t_RangeInclusive_i16) : Int16.t
 
-predicate is_empty_log_RangeInclusive_i16 (self: t_RangeInclusive_i16)
+function is_empty_log_RangeInclusive_i16 (self: t_RangeInclusive_i16) : bool
 
 axiom is_empty_log_RangeInclusive_i16_spec:
   forall self: t_RangeInclusive_i16 [is_empty_log_RangeInclusive_i16 self]. not is_empty_log_RangeInclusive_i16 self
@@ -36,26 +36,28 @@ axiom range_inclusive_len_i16_spec:
 
 constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
 
-predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
 
-meta "rewrite_def" predicate gt_log_Int
+meta "rewrite_def" function gt_log_Int
 
-predicate postcondition_size_hint (self: ()) (args: t_RangeInclusive_i16) (result: tup2_usize_Option_usize) =
+function postcondition_size_hint (self: ()) (args: t_RangeInclusive_i16) (result: tup2_usize_Option_usize) : bool =
   let self'0 = args in (let s = range_inclusive_len_i16 self'0 in s <= UInt64.t'int const_MAX
     -> UInt64.t'int result.f0 = s /\ result.f1 = Some (result.f0))
   /\ (gt_log_Int (range_inclusive_len_i16 self'0) (UInt64.t'int const_MAX) -> result = { f0 = const_MAX; f1 = None })
 
-meta "rewrite_def" predicate postcondition_size_hint
+meta "rewrite_def" function postcondition_size_hint
 
-predicate inv_RangeInclusive_i16 (_1: t_RangeInclusive_i16)
+function inv_RangeInclusive_i16 (_1: t_RangeInclusive_i16) : bool
 
-predicate invariant_ref_RangeInclusive_i16 [@inline:trivial] (self: t_RangeInclusive_i16) = inv_RangeInclusive_i16 self
+function invariant_ref_RangeInclusive_i16 [@inline:trivial] (self: t_RangeInclusive_i16) : bool =
+  inv_RangeInclusive_i16 self
 
-meta "rewrite_def" predicate invariant_ref_RangeInclusive_i16
+meta "rewrite_def" function invariant_ref_RangeInclusive_i16
 
-predicate inv_ref_RangeInclusive_i16 [@inline:trivial] (_1: t_RangeInclusive_i16) = invariant_ref_RangeInclusive_i16 _1
+function inv_ref_RangeInclusive_i16 [@inline:trivial] (_1: t_RangeInclusive_i16) : bool =
+  invariant_ref_RangeInclusive_i16 _1
 
-meta "rewrite_def" predicate inv_ref_RangeInclusive_i16
+meta "rewrite_def" function inv_ref_RangeInclusive_i16
 
 let size_hint_RangeInclusive_i16 (self: t_RangeInclusive_i16) (return (x: tup2_usize_Option_usize)) =
 {[@stop_split] [@expl:size_hint 'self' type invariant] inv_ref_RangeInclusive_i16 self}

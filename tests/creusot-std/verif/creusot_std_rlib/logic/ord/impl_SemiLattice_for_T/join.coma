@@ -2,9 +2,9 @@
 
 type t_T
 
-predicate lt_log_T (self: t_T) (other: t_T)
+function lt_log_T (self: t_T) (other: t_T) : bool
 
-predicate le_log_T (self: t_T) (other: t_T)
+function le_log_T (self: t_T) (other: t_T) : bool
 
 function le_lt_log_T (self: t_T) (other: t_T) : ()
 

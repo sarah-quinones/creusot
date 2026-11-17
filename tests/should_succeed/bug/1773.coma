@@ -19,16 +19,16 @@ module M_impl_Tr_for_S__g (* <S as Tr<45>> *)
       = UInt64.t'int result}
       (! return {result}) ]
   
-  predicate inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) = true
+  function inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_usize
+  meta "rewrite_def" function inv_Seq_usize
   
-  predicate invariant_array_usize_45 (self: Slice64.array UInt64.t) =
-    inv_Seq_usize (Slice64.view self) /\ Seq.length (Slice64.view self) = UInt64.t'int (45: UInt64.t)
+  function invariant_array_usize_45 (self: Slice64.array UInt64.t) : bool = inv_Seq_usize (Slice64.view self)
+    /\ Seq.length (Slice64.view self) = UInt64.t'int (45: UInt64.t)
   
-  predicate inv_array_usize_45 [@inline:trivial] (_1: Slice64.array UInt64.t) = invariant_array_usize_45 _1
+  function inv_array_usize_45 [@inline:trivial] (_1: Slice64.array UInt64.t) : bool = invariant_array_usize_45 _1
   
-  meta "rewrite_def" predicate inv_array_usize_45
+  meta "rewrite_def" function inv_array_usize_45
   
   meta "compute_max_steps" 1000000
   
@@ -46,16 +46,16 @@ module M_impl_Tr_for_S__g__refines (* <S as Tr<45>> *)
   use creusot.int.UInt64
   use seq.Seq
   
-  predicate inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) = true
+  function inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_usize
+  meta "rewrite_def" function inv_Seq_usize
   
-  predicate invariant_array_usize_45 (self: Slice64.array UInt64.t) =
-    inv_Seq_usize (Slice64.view self) /\ Seq.length (Slice64.view self) = UInt64.t'int (45: UInt64.t)
+  function invariant_array_usize_45 (self: Slice64.array UInt64.t) : bool = inv_Seq_usize (Slice64.view self)
+    /\ Seq.length (Slice64.view self) = UInt64.t'int (45: UInt64.t)
   
-  predicate inv_array_usize_45 [@inline:trivial] (_1: Slice64.array UInt64.t) = invariant_array_usize_45 _1
+  function inv_array_usize_45 [@inline:trivial] (_1: Slice64.array UInt64.t) : bool = invariant_array_usize_45 _1
   
-  meta "rewrite_def" predicate inv_array_usize_45
+  meta "rewrite_def" function inv_array_usize_45
   
   meta "compute_max_steps" 1000000
   

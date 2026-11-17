@@ -3,9 +3,9 @@ use creusot.prelude.MutBorrow
 use creusot.prelude.Any
 use int.Int
 
-predicate resolve_refmut_u8 [@inline:trivial] (_1: MutBorrow.t UInt8.t) = _1.final = _1.current
+function resolve_refmut_u8 [@inline:trivial] (_1: MutBorrow.t UInt8.t) : bool = _1.final = _1.current
 
-meta "rewrite_def" predicate resolve_refmut_u8
+meta "rewrite_def" function resolve_refmut_u8
 
 constant const_MIN: UInt8.t = (0: UInt8.t)
 

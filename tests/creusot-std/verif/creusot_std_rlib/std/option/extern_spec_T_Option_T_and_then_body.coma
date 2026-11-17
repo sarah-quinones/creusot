@@ -18,19 +18,19 @@ type t_U
 
 type t_Option_U = None'0 | Some'0 t_U
 
-predicate inv_F (_1: t_F)
+function inv_F (_1: t_F) : bool
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate inv_tup1_T [@inline:trivial] (_1: t_T) = inv_T _1
+function inv_tup1_T [@inline:trivial] (_1: t_T) : bool = inv_T _1
 
-meta "rewrite_def" predicate inv_tup1_T
+meta "rewrite_def" function inv_tup1_T
 
-predicate precondition_F (self: t_F) (args: t_T)
+function precondition_F (self: t_F) (args: t_T) : bool
 
-predicate inv_U (_1: t_U)
+function inv_U (_1: t_U) : bool
 
-predicate inv_Option_U (_1: t_Option_U)
+function inv_Option_U (_1: t_Option_U) : bool
 
 axiom inv_axiom [@rewrite]: forall _1: t_Option_U [inv_Option_U _1]. inv_Option_U _1
     = match _1 with
@@ -38,7 +38,7 @@ axiom inv_axiom [@rewrite]: forall _1: t_Option_U [inv_Option_U _1]. inv_Option_
       | Some'0 f0 -> inv_U f0
       end
 
-predicate postcondition_once_F (self: t_F) (args: t_T) (result: t_Option_U)
+function postcondition_once_F (self: t_F) (args: t_T) (result: t_Option_U) : bool
 
 let call_once_F (self: t_F) (args: t_T) (return (x: t_Option_U)) =
 {[@stop_split] [@expl:call_once_F requires] ([@stop_split] [@expl:call_once 'self' type invariant] inv_F self)
@@ -50,9 +50,9 @@ let call_once_F (self: t_F) (args: t_T) (return (x: t_Option_U)) =
     /\ ([@stop_split] [@expl:call_once ensures] postcondition_once_F self args result)}
     (! return {result}) ]
 
-predicate resolve_F (_1: t_F)
+function resolve_F (_1: t_F) : bool
 
-predicate inv_Option_T (_1: t_Option_T)
+function inv_Option_T (_1: t_Option_T) : bool
 
 axiom inv_axiom'0 [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_T _1
     = match _1 with
@@ -60,9 +60,9 @@ axiom inv_axiom'0 [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Optio
       | Some f0 -> inv_T f0
       end
 
-predicate resolve_T (_1: t_T)
+function resolve_T (_1: t_T) : bool
 
-predicate resolve_Option_T (_1: t_Option_T)
+function resolve_Option_T (_1: t_Option_T) : bool
 
 axiom resolve_axiom [@rewrite]: forall _1: t_Option_T [resolve_Option_T _1]. resolve_Option_T _1
     = match _1 with

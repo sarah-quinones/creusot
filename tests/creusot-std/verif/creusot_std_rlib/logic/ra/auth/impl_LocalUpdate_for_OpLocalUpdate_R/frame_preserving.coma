@@ -10,7 +10,7 @@ type t_Option_R = None | Some t_R
 
 function op_R (self: t_R) (other: t_R) : t_Option_R
 
-predicate incl_R (self: t_R) (other: t_R)
+function incl_R (self: t_R) (other: t_R) : bool
 
 axiom incl_R_spec: forall self: t_R, other: t_R [incl_R self other]. incl_R self other
     = (exists factor: t_R. op_R self factor = Some other)
@@ -37,7 +37,8 @@ function incl_op_R (self: t_R) (other: t_R) (comb: t_R) : ()
 
 axiom incl_op_R_spec: forall self: t_R, other: t_R, comb: t_R. op_R self other = Some comb -> incl_R self comb
 
-predicate premise_OpLocalUpdate_R (self: t_OpLocalUpdate_R) (from_auth: t_R) (_3: t_R) = op_R from_auth self.f0 <> None
+function premise_OpLocalUpdate_R (self: t_OpLocalUpdate_R) (from_auth: t_R) (_3: t_R) : bool = op_R from_auth self.f0
+  <> None
 
 type t_Option_Option_R = None'0 | Some'0 t_Option_R
 
@@ -61,9 +62,9 @@ axiom commutative_Option_R_spec: forall a: t_Option_R, b: t_Option_R. op_Option_
 
 type tup2_R_R = { f0'1: t_R; f1'1: t_R }
 
-predicate index_Mapping_R_bool [@inline:trivial] (self: Map.map t_R bool) (a: t_R) = Map.get self a
+function index_Mapping_R_bool [@inline:trivial] (self: Map.map t_R bool) (a: t_R) : bool = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_R_bool
+meta "rewrite_def" function index_Mapping_R_bool
 
 function such_that_R (p: Map.map t_R bool) : t_R
 

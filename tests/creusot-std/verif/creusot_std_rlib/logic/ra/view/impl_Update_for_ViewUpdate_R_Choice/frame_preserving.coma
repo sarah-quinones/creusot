@@ -10,13 +10,13 @@ type t_Option_Auth = None | Some t_Auth
 
 type t_Frag
 
-predicate rel_R (a: t_Option_Auth) (f: t_Frag)
+function rel_R (a: t_Option_Auth) (f: t_Frag) : bool
 
 type t_Option_Frag = None'0 | Some'0 t_Frag
 
 function op_Frag (self: t_Frag) (other: t_Frag) : t_Option_Frag
 
-predicate incl_Frag (self: t_Frag) (other: t_Frag)
+function incl_Frag (self: t_Frag) (other: t_Frag) : bool
 
 axiom incl_Frag_spec: forall self: t_Frag, other: t_Frag [incl_Frag self other]. incl_Frag self other
     = (exists factor: t_Frag. op_Frag self factor = Some'0 other)
@@ -84,7 +84,7 @@ type t_View_R = { f0'1: t_Subset_ViewInner_R }
 
 type t_ViewInner_R = { auth: t_Option_Auth; frag: t_Frag }
 
-predicate invariant_ViewInner_R (self: t_ViewInner_R) = rel_R self.auth self.frag
+function invariant_ViewInner_R (self: t_ViewInner_R) : bool = rel_R self.auth self.frag
 
 function inner_ViewInner_R (self: t_Subset_ViewInner_R) : t_ViewInner_R
 
@@ -102,7 +102,7 @@ function frag_R (self: t_View_R) : t_Frag = (inner_ViewInner_R self.f0'1).frag
 
 axiom frag_R_spec: forall self: t_View_R [frag_R self]. rel_R (auth_R self) (frag_R self)
 
-predicate premise_ViewUpdate_R_Choice [@inline:trivial] (self: t_ViewUpdate_R_Choice) (from: t_View_R) =
+function premise_ViewUpdate_R_Choice [@inline:trivial] (self: t_ViewUpdate_R_Choice) (from: t_View_R) : bool =
   auth_R from <> None
   /\ (forall ch: t_Choice. rel_R (Some ((index_Mapping_Choice_tup2_Auth_Frag self.f0'0 ch).f0)) (index_Mapping_Choice_tup2_Auth_Frag self.f0'0 ch).f1)
   /\ (forall frame: t_Frag. rel_R (auth_R from) frame
@@ -115,7 +115,7 @@ predicate premise_ViewUpdate_R_Choice [@inline:trivial] (self: t_ViewUpdate_R_Ch
         | None'0 -> false
         end))
 
-meta "rewrite_def" predicate premise_ViewUpdate_R_Choice
+meta "rewrite_def" function premise_ViewUpdate_R_Choice
 
 type t_Option_View_R = None'1 | Some'1 t_View_R
 
@@ -155,9 +155,9 @@ function update_ViewUpdate_R_Choice [@inline:trivial] (self: t_ViewUpdate_R_Choi
 
 meta "rewrite_def" function update_ViewUpdate_R_Choice
 
-predicate index_Mapping_Choice_bool [@inline:trivial] (self: Map.map t_Choice bool) (a: t_Choice) = Map.get self a
+function index_Mapping_Choice_bool [@inline:trivial] (self: Map.map t_Choice bool) (a: t_Choice) : bool = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_Choice_bool
+meta "rewrite_def" function index_Mapping_Choice_bool
 
 function such_that_Choice (p: Map.map t_Choice bool) : t_Choice
 

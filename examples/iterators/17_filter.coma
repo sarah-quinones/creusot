@@ -7,17 +7,17 @@ module M_common__trait_ExactSizeIterator__is_empty
   
   type t_Self
   
-  predicate inv_Self (_1: t_Self)
+  function inv_Self (_1: t_Self) : bool
   
-  predicate invariant_ref_Self [@inline:trivial] (self: t_Self) = inv_Self self
+  function invariant_ref_Self [@inline:trivial] (self: t_Self) : bool = inv_Self self
   
-  meta "rewrite_def" predicate invariant_ref_Self
+  meta "rewrite_def" function invariant_ref_Self
   
-  predicate inv_ref_Self [@inline:trivial] (_1: t_Self) = invariant_ref_Self _1
+  function inv_ref_Self [@inline:trivial] (_1: t_Self) : bool = invariant_ref_Self _1
   
-  meta "rewrite_def" predicate inv_ref_Self
+  meta "rewrite_def" function inv_ref_Self
   
-  predicate precondition_len (self: ()) (args: t_Self)
+  function precondition_len (self: ()) (args: t_Self) : bool
   
   axiom precondition_fndef: forall args: t_Self [precondition_len () args]. (let self = args in inv_ref_Self self)
       -> precondition_len () args
@@ -28,7 +28,7 @@ module M_common__trait_ExactSizeIterator__is_empty
   
   type t_Item
   
-  predicate produces_Self (self: t_Self) (visited: Seq.seq t_Item) (o: t_Self)
+  function produces_Self (self: t_Self) (visited: Seq.seq t_Item) (o: t_Self) : bool
   
   function produces_trans_Self (a: t_Self) (ab: Seq.seq t_Item) (b: t_Self) (bc: Seq.seq t_Item) (c: t_Self) : ()
   
@@ -40,9 +40,9 @@ module M_common__trait_ExactSizeIterator__is_empty
   
   axiom produces_refl_Self_spec: forall self: t_Self. produces_Self self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_Self (self: MutBorrow.t t_Self)
+  function completed_Self (self: MutBorrow.t t_Self) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_Self, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -53,16 +53,16 @@ module M_common__trait_ExactSizeIterator__is_empty
         | None -> true
         end)
   
-  predicate precondition_size_hint (self: ()) (args: t_Self)
+  function precondition_size_hint (self: ()) (args: t_Self) : bool
   
   axiom precondition_fndef'0:
     forall args: t_Self [precondition_size_hint () args]. (let self = args in inv_ref_Self self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_Self (self: t_Self) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -71,15 +71,16 @@ module M_common__trait_ExactSizeIterator__is_empty
     {[@stop_split] [@expl:size_hint ensures] postcondition_once_size_hint () self result}
       (! return {result}) ]
   
-  predicate postcondition_len (self: ()) (args: t_Self) (result: UInt64.t)
+  function postcondition_len (self: ()) (args: t_Self) (result: UInt64.t) : bool
   
   axiom postcondition_fndef'0:
     forall args: t_Self, result: UInt64.t [postcondition_len () args result]. postcondition_len () args result
       -> (let self = args in postcondition_size_hint () self { f0 = result; f1 = Some result })
   
-  predicate postcondition_once_len (self: ()) (args: t_Self) (result: UInt64.t) = postcondition_len self args result
+  function postcondition_once_len (self: ()) (args: t_Self) (result: UInt64.t) : bool =
+    postcondition_len self args result
   
-  meta "rewrite_def" predicate postcondition_once_len
+  meta "rewrite_def" function postcondition_once_len
   
   let len_Self (self: t_Self) (return (x: UInt64.t)) = {[@stop_split] [@expl:len requires] precondition_len () self}
     any
@@ -117,7 +118,7 @@ module M_common__trait_ExactSizeIterator__len
   
   type t_Item
   
-  predicate produces_Self (self: t_Self) (visited: Seq.seq t_Item) (o: t_Self)
+  function produces_Self (self: t_Self) (visited: Seq.seq t_Item) (o: t_Self) : bool
   
   function produces_trans_Self (a: t_Self) (ab: Seq.seq t_Item) (b: t_Self) (bc: Seq.seq t_Item) (c: t_Self) : ()
   
@@ -129,9 +130,9 @@ module M_common__trait_ExactSizeIterator__len
   
   axiom produces_refl_Self_spec: forall self: t_Self. produces_Self self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_Self (self: MutBorrow.t t_Self)
+  function completed_Self (self: MutBorrow.t t_Self) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_Self, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -142,25 +143,25 @@ module M_common__trait_ExactSizeIterator__len
         | None -> true
         end)
   
-  predicate inv_Self (_1: t_Self)
+  function inv_Self (_1: t_Self) : bool
   
-  predicate invariant_ref_Self [@inline:trivial] (self: t_Self) = inv_Self self
+  function invariant_ref_Self [@inline:trivial] (self: t_Self) : bool = inv_Self self
   
-  meta "rewrite_def" predicate invariant_ref_Self
+  meta "rewrite_def" function invariant_ref_Self
   
-  predicate inv_ref_Self [@inline:trivial] (_1: t_Self) = invariant_ref_Self _1
+  function inv_ref_Self [@inline:trivial] (_1: t_Self) : bool = invariant_ref_Self _1
   
-  meta "rewrite_def" predicate inv_ref_Self
+  meta "rewrite_def" function inv_ref_Self
   
-  predicate precondition_size_hint (self: ()) (args: t_Self)
+  function precondition_size_hint (self: ()) (args: t_Self) : bool
   
   axiom precondition_fndef: forall args: t_Self [precondition_size_hint () args]. (let self = args in inv_ref_Self self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_Self (self: t_Self) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -250,13 +251,13 @@ module M_filter
   
   type t_Filter_I_P = { iter: t_I; func: t_P }
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate inv_P (_1: t_P)
+  function inv_P (_1: t_P) : bool
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -267,11 +268,11 @@ module M_filter
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate postcondition_once_P (self: t_P) (args: t_Item) (result: bool)
+  function postcondition_once_P (self: t_P) (args: t_Item) (result: bool) : bool
   
-  predicate resolve_P (_1: t_P)
+  function resolve_P (_1: t_P) : bool
   
-  predicate postcondition_mut_P (self: t_P) (args: t_Item) (result_state: t_P) (result: bool)
+  function postcondition_mut_P (self: t_P) (args: t_Item) (result_state: t_P) (result: bool) : bool
   
   function fn_mut_once_P (self: t_P) (args: t_Item) (res: bool) : ()
   
@@ -279,7 +280,7 @@ module M_filter
     forall self: t_P, args: t_Item, res: bool [postcondition_once_P self args res]. postcondition_once_P self args res
       = (exists res_state: t_P. postcondition_mut_P self args res_state res /\ resolve_P res_state)
   
-  predicate hist_inv_P (self: t_P) (result_state: t_P)
+  function hist_inv_P (self: t_P) (result_state: t_P) : bool
   
   function hist_inv_trans_P (self: t_P) (b: t_P) (c: t_P) : ()
   
@@ -297,30 +298,30 @@ module M_filter
     forall self: t_P, args: t_Item, res_state: t_P, res: bool [postcondition_mut_P self args res_state res | hist_inv_P self res_state]. postcondition_mut_P self args res_state res
       -> hist_inv_P self res_state
   
-  predicate immutable_ref_Item (_1: t_P) = forall f: t_P, g: t_P. hist_inv_P f g -> f = g
+  function immutable_ref_Item (_1: t_P) : bool = forall f: t_P, g: t_P. hist_inv_P f g -> f = g
   
-  predicate inv_Item (_1: t_Item)
+  function inv_Item (_1: t_Item) : bool
   
-  predicate invariant_ref_Item [@inline:trivial] (self: t_Item) = inv_Item self
+  function invariant_ref_Item [@inline:trivial] (self: t_Item) : bool = inv_Item self
   
-  meta "rewrite_def" predicate invariant_ref_Item
+  meta "rewrite_def" function invariant_ref_Item
   
-  predicate inv_ref_Item [@inline:trivial] (_1: t_Item) = invariant_ref_Item _1
+  function inv_ref_Item [@inline:trivial] (_1: t_Item) : bool = invariant_ref_Item _1
   
-  meta "rewrite_def" predicate inv_ref_Item
+  meta "rewrite_def" function inv_ref_Item
   
-  predicate precondition_P (self: t_P) (args: t_Item)
+  function precondition_P (self: t_P) (args: t_Item) : bool
   
-  predicate no_precondition_ref_Item (_1: t_P) =
-    forall f: t_P, i: t_Item. inv_P f /\ inv_ref_Item i -> precondition_P f i
+  function no_precondition_ref_Item (_1: t_P) : bool = forall f: t_P, i: t_Item. inv_P f /\ inv_ref_Item i
+      -> precondition_P f i
   
-  predicate precise_ref_Item (_1: t_P) =
-    forall f1: t_P, f2: t_P, i: t_Item. not (postcondition_mut_P f1 i f2 true /\ postcondition_mut_P f1 i f2 false)
+  function precise_ref_Item (_1: t_P) : bool = forall f1: t_P, f2: t_P, i: t_Item. not (postcondition_mut_P f1 i f2 true
+      /\ postcondition_mut_P f1 i f2 false)
   
-  predicate invariant_Filter_I_P (self: t_Filter_I_P) =
-    no_precondition_ref_Item self.func /\ immutable_ref_Item self.func /\ precise_ref_Item self.func
+  function invariant_Filter_I_P (self: t_Filter_I_P) : bool = no_precondition_ref_Item self.func
+    /\ immutable_ref_Item self.func /\ precise_ref_Item self.func
   
-  predicate inv_Filter_I_P (_1: t_Filter_I_P)
+  function inv_Filter_I_P (_1: t_Filter_I_P) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Filter_I_P [inv_Filter_I_P _1]. inv_Filter_I_P _1
       = (invariant_Filter_I_P _1 /\ inv_I _1.iter /\ inv_P _1.func)
@@ -354,7 +355,7 @@ module M_impl_Iterator_for_Filter_I_F__next (* <Filter<I, F> as common::Iterator
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -369,27 +370,27 @@ module M_impl_Iterator_for_Filter_I_F__next (* <Filter<I, F> as common::Iterator
   
   type t_Filter_I_F = { iter: t_I; func: t_F }
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
   type t_Option_Item = None | Some t_Item
   
-  predicate invariant_refmut_I [@inline:trivial] (self: MutBorrow.t t_I) = inv_I self.current /\ inv_I self.final
+  function invariant_refmut_I [@inline:trivial] (self: MutBorrow.t t_I) : bool = inv_I self.current /\ inv_I self.final
   
-  meta "rewrite_def" predicate invariant_refmut_I
+  meta "rewrite_def" function invariant_refmut_I
   
-  predicate inv_refmut_I [@inline:trivial] (_1: MutBorrow.t t_I) = invariant_refmut_I _1
+  function inv_refmut_I [@inline:trivial] (_1: MutBorrow.t t_I) : bool = invariant_refmut_I _1
   
-  meta "rewrite_def" predicate inv_refmut_I
+  meta "rewrite_def" function inv_refmut_I
   
-  predicate precondition_next (self: ()) (args: MutBorrow.t t_I)
+  function precondition_next (self: ()) (args: MutBorrow.t t_I) : bool
   
   axiom precondition_fndef:
     forall args: MutBorrow.t t_I [precondition_next () args]. (let self = args in inv_refmut_I self)
       -> precondition_next () args
   
-  predicate inv_Item (_1: t_Item)
+  function inv_Item (_1: t_Item) : bool
   
-  predicate inv_Option_Item (_1: t_Option_Item)
+  function inv_Option_Item (_1: t_Option_Item) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Option_Item [inv_Option_Item _1]. inv_Option_Item _1
       = match _1 with
@@ -397,9 +398,9 @@ module M_impl_Iterator_for_Filter_I_F__next (* <Filter<I, F> as common::Iterator
         | Some f0 -> inv_Item f0
         end
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate postcondition_next (self: ()) (args: MutBorrow.t t_I) (result: t_Option_Item)
+  function postcondition_next (self: ()) (args: MutBorrow.t t_I) (result: t_Option_Item) : bool
   
   axiom postcondition_fndef:
     forall args: MutBorrow.t t_I, result: t_Option_Item [postcondition_next () args result]. postcondition_next () args result
@@ -409,10 +410,10 @@ module M_impl_Iterator_for_Filter_I_F__next (* <Filter<I, F> as common::Iterator
         | Some v -> produces_I self.current (Seq.singleton v) self.final
         end)
   
-  predicate postcondition_once_next (self: ()) (args: MutBorrow.t t_I) (result: t_Option_Item) =
+  function postcondition_once_next (self: ()) (args: MutBorrow.t t_I) (result: t_Option_Item) : bool =
     postcondition_next self args result
   
-  meta "rewrite_def" predicate postcondition_once_next
+  meta "rewrite_def" function postcondition_once_next
   
   let next_I (self: MutBorrow.t t_I) (return (x: t_Option_Item)) =
   {[@stop_split] [@expl:next requires] precondition_next () self}
@@ -420,11 +421,11 @@ module M_impl_Iterator_for_Filter_I_F__next (* <Filter<I, F> as common::Iterator
     [ return (result: t_Option_Item) -> {[@stop_split] [@expl:next ensures] postcondition_once_next () self result}
       (! return {result}) ]
   
-  predicate postcondition_once_F (self: t_F) (args: t_Item) (result: bool)
+  function postcondition_once_F (self: t_F) (args: t_Item) (result: bool) : bool
   
-  predicate resolve_F (_1: t_F)
+  function resolve_F (_1: t_F) : bool
   
-  predicate postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: bool)
+  function postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: bool) : bool
   
   function fn_mut_once_F (self: t_F) (args: t_Item) (res: bool) : ()
   
@@ -432,7 +433,7 @@ module M_impl_Iterator_for_Filter_I_F__next (* <Filter<I, F> as common::Iterator
     forall self: t_F, args: t_Item, res: bool [postcondition_once_F self args res]. postcondition_once_F self args res
       = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
   
-  predicate hist_inv_F (self: t_F) (result_state: t_F)
+  function hist_inv_F (self: t_F) (result_state: t_F) : bool
   
   function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
   
@@ -450,7 +451,7 @@ module M_impl_Iterator_for_Filter_I_F__next (* <Filter<I, F> as common::Iterator
     forall self: t_F, args: t_Item, res_state: t_F, res: bool [postcondition_mut_F self args res_state res | hist_inv_F self res_state]. postcondition_mut_F self args res_state res
       -> hist_inv_F self res_state
   
-  predicate inv_F (_1: t_F)
+  function inv_F (_1: t_F) : bool
   
   let elim_Some (_x: t_Option_Item) (return (f0: t_Item)) = any
     [ _k (f0: t_Item) -> {Some f0 = _x} (! return {f0})
@@ -460,27 +461,27 @@ module M_impl_Iterator_for_Filter_I_F__next (* <Filter<I, F> as common::Iterator
         end}
       any) ]
   
-  predicate invariant_refmut_F [@inline:trivial] (self: MutBorrow.t t_F) = inv_F self.current /\ inv_F self.final
+  function invariant_refmut_F [@inline:trivial] (self: MutBorrow.t t_F) : bool = inv_F self.current /\ inv_F self.final
   
-  meta "rewrite_def" predicate invariant_refmut_F
+  meta "rewrite_def" function invariant_refmut_F
   
-  predicate inv_refmut_F [@inline:trivial] (_1: MutBorrow.t t_F) = invariant_refmut_F _1
+  function inv_refmut_F [@inline:trivial] (_1: MutBorrow.t t_F) : bool = invariant_refmut_F _1
   
-  meta "rewrite_def" predicate inv_refmut_F
+  meta "rewrite_def" function inv_refmut_F
   
-  predicate invariant_ref_Item [@inline:trivial] (self: t_Item) = inv_Item self
+  function invariant_ref_Item [@inline:trivial] (self: t_Item) : bool = inv_Item self
   
-  meta "rewrite_def" predicate invariant_ref_Item
+  meta "rewrite_def" function invariant_ref_Item
   
-  predicate inv_ref_Item [@inline:trivial] (_1: t_Item) = invariant_ref_Item _1
+  function inv_ref_Item [@inline:trivial] (_1: t_Item) : bool = invariant_ref_Item _1
   
-  meta "rewrite_def" predicate inv_ref_Item
+  meta "rewrite_def" function inv_ref_Item
   
-  predicate inv_tup1_ref_Item [@inline:trivial] (_1: t_Item) = inv_ref_Item _1
+  function inv_tup1_ref_Item [@inline:trivial] (_1: t_Item) : bool = inv_ref_Item _1
   
-  meta "rewrite_def" predicate inv_tup1_ref_Item
+  meta "rewrite_def" function inv_tup1_ref_Item
   
-  predicate precondition_F (self: t_F) (args: t_Item)
+  function precondition_F (self: t_F) (args: t_Item) : bool
   
   let call_mut_F (self: MutBorrow.t t_F) (args: t_Item) (return (x: bool)) =
   {[@stop_split] [@expl:call_mut_F requires] ([@stop_split] [@expl:call_mut 'self' type invariant] inv_refmut_F self)
@@ -491,45 +492,46 @@ module M_impl_Iterator_for_Filter_I_F__next (* <Filter<I, F> as common::Iterator
     {[@stop_split] [@expl:call_mut ensures] postcondition_mut_F self.current args self.final result}
       (! return {result}) ]
   
-  predicate resolve_Item (_1: t_Item)
+  function resolve_Item (_1: t_Item) : bool
   
-  predicate no_precondition_ref_Item (_1: t_F) =
-    forall f: t_F, i: t_Item. inv_F f /\ inv_ref_Item i -> precondition_F f i
+  function no_precondition_ref_Item (_1: t_F) : bool = forall f: t_F, i: t_Item. inv_F f /\ inv_ref_Item i
+      -> precondition_F f i
   
-  predicate immutable_ref_Item (_1: t_F) = forall f: t_F, g: t_F. hist_inv_F f g -> f = g
+  function immutable_ref_Item (_1: t_F) : bool = forall f: t_F, g: t_F. hist_inv_F f g -> f = g
   
-  predicate precise_ref_Item (_1: t_F) =
-    forall f1: t_F, f2: t_F, i: t_Item. not (postcondition_mut_F f1 i f2 true /\ postcondition_mut_F f1 i f2 false)
+  function precise_ref_Item (_1: t_F) : bool = forall f1: t_F, f2: t_F, i: t_Item. not (postcondition_mut_F f1 i f2 true
+      /\ postcondition_mut_F f1 i f2 false)
   
-  predicate invariant_Filter_I_F (self: t_Filter_I_F) =
-    no_precondition_ref_Item self.func /\ immutable_ref_Item self.func /\ precise_ref_Item self.func
+  function invariant_Filter_I_F (self: t_Filter_I_F) : bool = no_precondition_ref_Item self.func
+    /\ immutable_ref_Item self.func /\ precise_ref_Item self.func
   
-  predicate inv_Filter_I_F (_1: t_Filter_I_F)
+  function inv_Filter_I_F (_1: t_Filter_I_F) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Filter_I_F [inv_Filter_I_F _1]. inv_Filter_I_F _1
       = (invariant_Filter_I_F _1 /\ inv_I _1.iter /\ inv_F _1.func)
   
-  predicate invariant_refmut_Filter_I_F [@inline:trivial] (self: MutBorrow.t t_Filter_I_F) =
+  function invariant_refmut_Filter_I_F [@inline:trivial] (self: MutBorrow.t t_Filter_I_F) : bool =
     inv_Filter_I_F self.current /\ inv_Filter_I_F self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Filter_I_F
+  meta "rewrite_def" function invariant_refmut_Filter_I_F
   
-  predicate inv_refmut_Filter_I_F [@inline:trivial] (_1: MutBorrow.t t_Filter_I_F) = invariant_refmut_Filter_I_F _1
+  function inv_refmut_Filter_I_F [@inline:trivial] (_1: MutBorrow.t t_Filter_I_F) : bool =
+    invariant_refmut_Filter_I_F _1
   
-  meta "rewrite_def" predicate inv_refmut_Filter_I_F
+  meta "rewrite_def" function inv_refmut_Filter_I_F
   
-  predicate resolve_refmut_Filter_I_F [@inline:trivial] (_1: MutBorrow.t t_Filter_I_F) = _1.final = _1.current
+  function resolve_refmut_Filter_I_F [@inline:trivial] (_1: MutBorrow.t t_Filter_I_F) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Filter_I_F
+  meta "rewrite_def" function resolve_refmut_Filter_I_F
   
-  predicate completed_Filter_I_F (self: MutBorrow.t t_Filter_I_F) =
+  function completed_Filter_I_F (self: MutBorrow.t t_Filter_I_F) : bool =
     (exists s: Seq.seq t_Item, e: MutBorrow.t t_I. produces_I self.current.iter s e.current
         /\ completed_I e
         /\ (forall i: int. 0 <= i /\ i < Seq.length s
           -> postcondition_mut_F self.current.func (Seq.get s i) self.final.func false))
     /\ self.current.func = self.final.func
   
-  predicate produces_Filter_I_F (self: t_Filter_I_F) (visited: Seq.seq t_Item) (succ: t_Filter_I_F) =
+  function produces_Filter_I_F (self: t_Filter_I_F) (visited: Seq.seq t_Item) (succ: t_Filter_I_F) : bool =
     invariant_Filter_I_F self
     -> hist_inv_F self.func succ.func
     /\ (exists s: Seq.seq t_Item, f: Map.map int int. produces_I self.iter s succ.iter
@@ -638,11 +640,11 @@ module M_impl_Iterator_for_Filter_I_F__next__refines (* <Filter<I, F> as common:
   
   type t_Filter_I_F = { iter: t_I; func: t_F }
   
-  predicate inv_F (_1: t_F)
+  function inv_F (_1: t_F) : bool
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -653,26 +655,26 @@ module M_impl_Iterator_for_Filter_I_F__next__refines (* <Filter<I, F> as common:
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate inv_Item (_1: t_Item)
+  function inv_Item (_1: t_Item) : bool
   
-  predicate invariant_ref_Item [@inline:trivial] (self: t_Item) = inv_Item self
+  function invariant_ref_Item [@inline:trivial] (self: t_Item) : bool = inv_Item self
   
-  meta "rewrite_def" predicate invariant_ref_Item
+  meta "rewrite_def" function invariant_ref_Item
   
-  predicate inv_ref_Item [@inline:trivial] (_1: t_Item) = invariant_ref_Item _1
+  function inv_ref_Item [@inline:trivial] (_1: t_Item) : bool = invariant_ref_Item _1
   
-  meta "rewrite_def" predicate inv_ref_Item
+  meta "rewrite_def" function inv_ref_Item
   
-  predicate precondition_F (self: t_F) (args: t_Item)
+  function precondition_F (self: t_F) (args: t_Item) : bool
   
-  predicate no_precondition_ref_Item (_1: t_F) =
-    forall f: t_F, i: t_Item. inv_F f /\ inv_ref_Item i -> precondition_F f i
+  function no_precondition_ref_Item (_1: t_F) : bool = forall f: t_F, i: t_Item. inv_F f /\ inv_ref_Item i
+      -> precondition_F f i
   
-  predicate postcondition_once_F (self: t_F) (args: t_Item) (result: bool)
+  function postcondition_once_F (self: t_F) (args: t_Item) (result: bool) : bool
   
-  predicate resolve_F (_1: t_F)
+  function resolve_F (_1: t_F) : bool
   
-  predicate postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: bool)
+  function postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: bool) : bool
   
   function fn_mut_once_F (self: t_F) (args: t_Item) (res: bool) : ()
   
@@ -680,7 +682,7 @@ module M_impl_Iterator_for_Filter_I_F__next__refines (* <Filter<I, F> as common:
     forall self: t_F, args: t_Item, res: bool [postcondition_once_F self args res]. postcondition_once_F self args res
       = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
   
-  predicate hist_inv_F (self: t_F) (result_state: t_F)
+  function hist_inv_F (self: t_F) (result_state: t_F) : bool
   
   function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
   
@@ -698,33 +700,34 @@ module M_impl_Iterator_for_Filter_I_F__next__refines (* <Filter<I, F> as common:
     forall self: t_F, args: t_Item, res_state: t_F, res: bool [postcondition_mut_F self args res_state res | hist_inv_F self res_state]. postcondition_mut_F self args res_state res
       -> hist_inv_F self res_state
   
-  predicate immutable_ref_Item (_1: t_F) = forall f: t_F, g: t_F. hist_inv_F f g -> f = g
+  function immutable_ref_Item (_1: t_F) : bool = forall f: t_F, g: t_F. hist_inv_F f g -> f = g
   
-  predicate precise_ref_Item (_1: t_F) =
-    forall f1: t_F, f2: t_F, i: t_Item. not (postcondition_mut_F f1 i f2 true /\ postcondition_mut_F f1 i f2 false)
+  function precise_ref_Item (_1: t_F) : bool = forall f1: t_F, f2: t_F, i: t_Item. not (postcondition_mut_F f1 i f2 true
+      /\ postcondition_mut_F f1 i f2 false)
   
-  predicate invariant_Filter_I_F (self: t_Filter_I_F) =
-    no_precondition_ref_Item self.func /\ immutable_ref_Item self.func /\ precise_ref_Item self.func
+  function invariant_Filter_I_F (self: t_Filter_I_F) : bool = no_precondition_ref_Item self.func
+    /\ immutable_ref_Item self.func /\ precise_ref_Item self.func
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate inv_Filter_I_F (_1: t_Filter_I_F)
+  function inv_Filter_I_F (_1: t_Filter_I_F) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Filter_I_F [inv_Filter_I_F _1]. inv_Filter_I_F _1
       = (invariant_Filter_I_F _1 /\ inv_I _1.iter /\ inv_F _1.func)
   
-  predicate invariant_refmut_Filter_I_F [@inline:trivial] (self: MutBorrow.t t_Filter_I_F) =
+  function invariant_refmut_Filter_I_F [@inline:trivial] (self: MutBorrow.t t_Filter_I_F) : bool =
     inv_Filter_I_F self.current /\ inv_Filter_I_F self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Filter_I_F
+  meta "rewrite_def" function invariant_refmut_Filter_I_F
   
-  predicate inv_refmut_Filter_I_F [@inline:trivial] (_1: MutBorrow.t t_Filter_I_F) = invariant_refmut_Filter_I_F _1
+  function inv_refmut_Filter_I_F [@inline:trivial] (_1: MutBorrow.t t_Filter_I_F) : bool =
+    invariant_refmut_Filter_I_F _1
   
-  meta "rewrite_def" predicate inv_refmut_Filter_I_F
+  meta "rewrite_def" function inv_refmut_Filter_I_F
   
   type t_Option_Item = None | Some t_Item
   
-  predicate inv_Option_Item (_1: t_Option_Item)
+  function inv_Option_Item (_1: t_Option_Item) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Option_Item [inv_Option_Item _1]. inv_Option_Item _1
       = match _1 with
@@ -732,16 +735,16 @@ module M_impl_Iterator_for_Filter_I_F__next__refines (* <Filter<I, F> as common:
         | Some f0 -> inv_Item f0
         end
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate completed_Filter_I_F (self: MutBorrow.t t_Filter_I_F) =
+  function completed_Filter_I_F (self: MutBorrow.t t_Filter_I_F) : bool =
     (exists s: Seq.seq t_Item, e: MutBorrow.t t_I. produces_I self.current.iter s e.current
         /\ completed_I e
         /\ (forall i: int. 0 <= i /\ i < Seq.length s
           -> postcondition_mut_F self.current.func (Seq.get s i) self.final.func false))
     /\ self.current.func = self.final.func
   
-  predicate produces_Filter_I_F (self: t_Filter_I_F) (visited: Seq.seq t_Item) (succ: t_Filter_I_F) =
+  function produces_Filter_I_F (self: t_Filter_I_F) (visited: Seq.seq t_Item) (succ: t_Filter_I_F) : bool =
     invariant_Filter_I_F self
     -> hist_inv_F self.func succ.func
     /\ (exists s: Seq.seq t_Item, f: Map.map int int. produces_I self.iter s succ.iter
@@ -782,7 +785,7 @@ module M_impl_Iterator_for_Filter_I_F__produces_refl (* <Filter<I, F> as common:
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -793,28 +796,28 @@ module M_impl_Iterator_for_Filter_I_F__produces_refl (* <Filter<I, F> as common:
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate inv_F (_1: t_F)
+  function inv_F (_1: t_F) : bool
   
-  predicate inv_Item (_1: t_Item)
+  function inv_Item (_1: t_Item) : bool
   
-  predicate invariant_ref_Item [@inline:trivial] (self: t_Item) = inv_Item self
+  function invariant_ref_Item [@inline:trivial] (self: t_Item) : bool = inv_Item self
   
-  meta "rewrite_def" predicate invariant_ref_Item
+  meta "rewrite_def" function invariant_ref_Item
   
-  predicate inv_ref_Item [@inline:trivial] (_1: t_Item) = invariant_ref_Item _1
+  function inv_ref_Item [@inline:trivial] (_1: t_Item) : bool = invariant_ref_Item _1
   
-  meta "rewrite_def" predicate inv_ref_Item
+  meta "rewrite_def" function inv_ref_Item
   
-  predicate precondition_F (self: t_F) (args: t_Item)
+  function precondition_F (self: t_F) (args: t_Item) : bool
   
-  predicate no_precondition_ref_Item (_1: t_F) =
-    forall f: t_F, i: t_Item. inv_F f /\ inv_ref_Item i -> precondition_F f i
+  function no_precondition_ref_Item (_1: t_F) : bool = forall f: t_F, i: t_Item. inv_F f /\ inv_ref_Item i
+      -> precondition_F f i
   
-  predicate postcondition_once_F (self: t_F) (args: t_Item) (result: bool)
+  function postcondition_once_F (self: t_F) (args: t_Item) (result: bool) : bool
   
-  predicate resolve_F (_1: t_F)
+  function resolve_F (_1: t_F) : bool
   
-  predicate postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: bool)
+  function postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: bool) : bool
   
   function fn_mut_once_F (self: t_F) (args: t_Item) (res: bool) : ()
   
@@ -822,7 +825,7 @@ module M_impl_Iterator_for_Filter_I_F__produces_refl (* <Filter<I, F> as common:
     forall self: t_F, args: t_Item, res: bool [postcondition_once_F self args res]. postcondition_once_F self args res
       = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
   
-  predicate hist_inv_F (self: t_F) (result_state: t_F)
+  function hist_inv_F (self: t_F) (result_state: t_F) : bool
   
   function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
   
@@ -840,15 +843,15 @@ module M_impl_Iterator_for_Filter_I_F__produces_refl (* <Filter<I, F> as common:
     forall self: t_F, args: t_Item, res_state: t_F, res: bool [postcondition_mut_F self args res_state res | hist_inv_F self res_state]. postcondition_mut_F self args res_state res
       -> hist_inv_F self res_state
   
-  predicate immutable_ref_Item (_1: t_F) = forall f: t_F, g: t_F. hist_inv_F f g -> f = g
+  function immutable_ref_Item (_1: t_F) : bool = forall f: t_F, g: t_F. hist_inv_F f g -> f = g
   
-  predicate precise_ref_Item (_1: t_F) =
-    forall f1: t_F, f2: t_F, i: t_Item. not (postcondition_mut_F f1 i f2 true /\ postcondition_mut_F f1 i f2 false)
+  function precise_ref_Item (_1: t_F) : bool = forall f1: t_F, f2: t_F, i: t_Item. not (postcondition_mut_F f1 i f2 true
+      /\ postcondition_mut_F f1 i f2 false)
   
-  predicate invariant_Filter_I_F (self: t_Filter_I_F) =
-    no_precondition_ref_Item self.func /\ immutable_ref_Item self.func /\ precise_ref_Item self.func
+  function invariant_Filter_I_F (self: t_Filter_I_F) : bool = no_precondition_ref_Item self.func
+    /\ immutable_ref_Item self.func /\ precise_ref_Item self.func
   
-  predicate produces_Filter_I_F (self: t_Filter_I_F) (visited: Seq.seq t_Item) (succ: t_Filter_I_F) =
+  function produces_Filter_I_F (self: t_Filter_I_F) (visited: Seq.seq t_Item) (succ: t_Filter_I_F) : bool =
     invariant_Filter_I_F self
     -> hist_inv_F self.func succ.func
     /\ (exists s: Seq.seq t_Item, f: Map.map int int. produces_I self.iter s succ.iter
@@ -883,7 +886,7 @@ module M_impl_Iterator_for_Filter_I_F__produces_refl__refines (* <Filter<I, F> a
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -894,28 +897,28 @@ module M_impl_Iterator_for_Filter_I_F__produces_refl__refines (* <Filter<I, F> a
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate inv_F (_1: t_F)
+  function inv_F (_1: t_F) : bool
   
-  predicate inv_Item (_1: t_Item)
+  function inv_Item (_1: t_Item) : bool
   
-  predicate invariant_ref_Item [@inline:trivial] (self: t_Item) = inv_Item self
+  function invariant_ref_Item [@inline:trivial] (self: t_Item) : bool = inv_Item self
   
-  meta "rewrite_def" predicate invariant_ref_Item
+  meta "rewrite_def" function invariant_ref_Item
   
-  predicate inv_ref_Item [@inline:trivial] (_1: t_Item) = invariant_ref_Item _1
+  function inv_ref_Item [@inline:trivial] (_1: t_Item) : bool = invariant_ref_Item _1
   
-  meta "rewrite_def" predicate inv_ref_Item
+  meta "rewrite_def" function inv_ref_Item
   
-  predicate precondition_F (self: t_F) (args: t_Item)
+  function precondition_F (self: t_F) (args: t_Item) : bool
   
-  predicate no_precondition_ref_Item (_1: t_F) =
-    forall f: t_F, i: t_Item. inv_F f /\ inv_ref_Item i -> precondition_F f i
+  function no_precondition_ref_Item (_1: t_F) : bool = forall f: t_F, i: t_Item. inv_F f /\ inv_ref_Item i
+      -> precondition_F f i
   
-  predicate postcondition_once_F (self: t_F) (args: t_Item) (result: bool)
+  function postcondition_once_F (self: t_F) (args: t_Item) (result: bool) : bool
   
-  predicate resolve_F (_1: t_F)
+  function resolve_F (_1: t_F) : bool
   
-  predicate postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: bool)
+  function postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: bool) : bool
   
   function fn_mut_once_F (self: t_F) (args: t_Item) (res: bool) : ()
   
@@ -923,7 +926,7 @@ module M_impl_Iterator_for_Filter_I_F__produces_refl__refines (* <Filter<I, F> a
     forall self: t_F, args: t_Item, res: bool [postcondition_once_F self args res]. postcondition_once_F self args res
       = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
   
-  predicate hist_inv_F (self: t_F) (result_state: t_F)
+  function hist_inv_F (self: t_F) (result_state: t_F) : bool
   
   function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
   
@@ -941,15 +944,15 @@ module M_impl_Iterator_for_Filter_I_F__produces_refl__refines (* <Filter<I, F> a
     forall self: t_F, args: t_Item, res_state: t_F, res: bool [postcondition_mut_F self args res_state res | hist_inv_F self res_state]. postcondition_mut_F self args res_state res
       -> hist_inv_F self res_state
   
-  predicate immutable_ref_Item (_1: t_F) = forall f: t_F, g: t_F. hist_inv_F f g -> f = g
+  function immutable_ref_Item (_1: t_F) : bool = forall f: t_F, g: t_F. hist_inv_F f g -> f = g
   
-  predicate precise_ref_Item (_1: t_F) =
-    forall f1: t_F, f2: t_F, i: t_Item. not (postcondition_mut_F f1 i f2 true /\ postcondition_mut_F f1 i f2 false)
+  function precise_ref_Item (_1: t_F) : bool = forall f1: t_F, f2: t_F, i: t_Item. not (postcondition_mut_F f1 i f2 true
+      /\ postcondition_mut_F f1 i f2 false)
   
-  predicate invariant_Filter_I_F (self: t_Filter_I_F) =
-    no_precondition_ref_Item self.func /\ immutable_ref_Item self.func /\ precise_ref_Item self.func
+  function invariant_Filter_I_F (self: t_Filter_I_F) : bool = no_precondition_ref_Item self.func
+    /\ immutable_ref_Item self.func /\ precise_ref_Item self.func
   
-  predicate produces_Filter_I_F (self: t_Filter_I_F) (visited: Seq.seq t_Item) (succ: t_Filter_I_F) =
+  function produces_Filter_I_F (self: t_Filter_I_F) (visited: Seq.seq t_Item) (succ: t_Filter_I_F) : bool =
     invariant_Filter_I_F self
     -> hist_inv_F self.func succ.func
     /\ (exists s: Seq.seq t_Item, f: Map.map int int. produces_I self.iter s succ.iter
@@ -980,7 +983,7 @@ module M_impl_Iterator_for_Filter_I_F__produces_trans (* <Filter<I, F> as common
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -991,28 +994,28 @@ module M_impl_Iterator_for_Filter_I_F__produces_trans (* <Filter<I, F> as common
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate inv_F (_1: t_F)
+  function inv_F (_1: t_F) : bool
   
-  predicate inv_Item (_1: t_Item)
+  function inv_Item (_1: t_Item) : bool
   
-  predicate invariant_ref_Item [@inline:trivial] (self: t_Item) = inv_Item self
+  function invariant_ref_Item [@inline:trivial] (self: t_Item) : bool = inv_Item self
   
-  meta "rewrite_def" predicate invariant_ref_Item
+  meta "rewrite_def" function invariant_ref_Item
   
-  predicate inv_ref_Item [@inline:trivial] (_1: t_Item) = invariant_ref_Item _1
+  function inv_ref_Item [@inline:trivial] (_1: t_Item) : bool = invariant_ref_Item _1
   
-  meta "rewrite_def" predicate inv_ref_Item
+  meta "rewrite_def" function inv_ref_Item
   
-  predicate precondition_F (self: t_F) (args: t_Item)
+  function precondition_F (self: t_F) (args: t_Item) : bool
   
-  predicate no_precondition_ref_Item (_1: t_F) =
-    forall f: t_F, i: t_Item. inv_F f /\ inv_ref_Item i -> precondition_F f i
+  function no_precondition_ref_Item (_1: t_F) : bool = forall f: t_F, i: t_Item. inv_F f /\ inv_ref_Item i
+      -> precondition_F f i
   
-  predicate postcondition_once_F (self: t_F) (args: t_Item) (result: bool)
+  function postcondition_once_F (self: t_F) (args: t_Item) (result: bool) : bool
   
-  predicate resolve_F (_1: t_F)
+  function resolve_F (_1: t_F) : bool
   
-  predicate postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: bool)
+  function postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: bool) : bool
   
   function fn_mut_once_F (self: t_F) (args: t_Item) (res: bool) : ()
   
@@ -1020,7 +1023,7 @@ module M_impl_Iterator_for_Filter_I_F__produces_trans (* <Filter<I, F> as common
     forall self: t_F, args: t_Item, res: bool [postcondition_once_F self args res]. postcondition_once_F self args res
       = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
   
-  predicate hist_inv_F (self: t_F) (result_state: t_F)
+  function hist_inv_F (self: t_F) (result_state: t_F) : bool
   
   function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
   
@@ -1038,15 +1041,15 @@ module M_impl_Iterator_for_Filter_I_F__produces_trans (* <Filter<I, F> as common
     forall self: t_F, args: t_Item, res_state: t_F, res: bool [postcondition_mut_F self args res_state res | hist_inv_F self res_state]. postcondition_mut_F self args res_state res
       -> hist_inv_F self res_state
   
-  predicate immutable_ref_Item (_1: t_F) = forall f: t_F, g: t_F. hist_inv_F f g -> f = g
+  function immutable_ref_Item (_1: t_F) : bool = forall f: t_F, g: t_F. hist_inv_F f g -> f = g
   
-  predicate precise_ref_Item (_1: t_F) =
-    forall f1: t_F, f2: t_F, i: t_Item. not (postcondition_mut_F f1 i f2 true /\ postcondition_mut_F f1 i f2 false)
+  function precise_ref_Item (_1: t_F) : bool = forall f1: t_F, f2: t_F, i: t_Item. not (postcondition_mut_F f1 i f2 true
+      /\ postcondition_mut_F f1 i f2 false)
   
-  predicate invariant_Filter_I_F (self: t_Filter_I_F) =
-    no_precondition_ref_Item self.func /\ immutable_ref_Item self.func /\ precise_ref_Item self.func
+  function invariant_Filter_I_F (self: t_Filter_I_F) : bool = no_precondition_ref_Item self.func
+    /\ immutable_ref_Item self.func /\ precise_ref_Item self.func
   
-  predicate produces_Filter_I_F (self: t_Filter_I_F) (visited: Seq.seq t_Item) (succ: t_Filter_I_F) =
+  function produces_Filter_I_F (self: t_Filter_I_F) (visited: Seq.seq t_Item) (succ: t_Filter_I_F) : bool =
     invariant_Filter_I_F self
     -> hist_inv_F self.func succ.func
     /\ (exists s: Seq.seq t_Item, f: Map.map int int. produces_I self.iter s succ.iter
@@ -1090,7 +1093,7 @@ module M_impl_Iterator_for_Filter_I_F__produces_trans__refines (* <Filter<I, F> 
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -1101,28 +1104,28 @@ module M_impl_Iterator_for_Filter_I_F__produces_trans__refines (* <Filter<I, F> 
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate inv_F (_1: t_F)
+  function inv_F (_1: t_F) : bool
   
-  predicate inv_Item (_1: t_Item)
+  function inv_Item (_1: t_Item) : bool
   
-  predicate invariant_ref_Item [@inline:trivial] (self: t_Item) = inv_Item self
+  function invariant_ref_Item [@inline:trivial] (self: t_Item) : bool = inv_Item self
   
-  meta "rewrite_def" predicate invariant_ref_Item
+  meta "rewrite_def" function invariant_ref_Item
   
-  predicate inv_ref_Item [@inline:trivial] (_1: t_Item) = invariant_ref_Item _1
+  function inv_ref_Item [@inline:trivial] (_1: t_Item) : bool = invariant_ref_Item _1
   
-  meta "rewrite_def" predicate inv_ref_Item
+  meta "rewrite_def" function inv_ref_Item
   
-  predicate precondition_F (self: t_F) (args: t_Item)
+  function precondition_F (self: t_F) (args: t_Item) : bool
   
-  predicate no_precondition_ref_Item (_1: t_F) =
-    forall f: t_F, i: t_Item. inv_F f /\ inv_ref_Item i -> precondition_F f i
+  function no_precondition_ref_Item (_1: t_F) : bool = forall f: t_F, i: t_Item. inv_F f /\ inv_ref_Item i
+      -> precondition_F f i
   
-  predicate postcondition_once_F (self: t_F) (args: t_Item) (result: bool)
+  function postcondition_once_F (self: t_F) (args: t_Item) (result: bool) : bool
   
-  predicate resolve_F (_1: t_F)
+  function resolve_F (_1: t_F) : bool
   
-  predicate postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: bool)
+  function postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: bool) : bool
   
   function fn_mut_once_F (self: t_F) (args: t_Item) (res: bool) : ()
   
@@ -1130,7 +1133,7 @@ module M_impl_Iterator_for_Filter_I_F__produces_trans__refines (* <Filter<I, F> 
     forall self: t_F, args: t_Item, res: bool [postcondition_once_F self args res]. postcondition_once_F self args res
       = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
   
-  predicate hist_inv_F (self: t_F) (result_state: t_F)
+  function hist_inv_F (self: t_F) (result_state: t_F) : bool
   
   function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
   
@@ -1148,15 +1151,15 @@ module M_impl_Iterator_for_Filter_I_F__produces_trans__refines (* <Filter<I, F> 
     forall self: t_F, args: t_Item, res_state: t_F, res: bool [postcondition_mut_F self args res_state res | hist_inv_F self res_state]. postcondition_mut_F self args res_state res
       -> hist_inv_F self res_state
   
-  predicate immutable_ref_Item (_1: t_F) = forall f: t_F, g: t_F. hist_inv_F f g -> f = g
+  function immutable_ref_Item (_1: t_F) : bool = forall f: t_F, g: t_F. hist_inv_F f g -> f = g
   
-  predicate precise_ref_Item (_1: t_F) =
-    forall f1: t_F, f2: t_F, i: t_Item. not (postcondition_mut_F f1 i f2 true /\ postcondition_mut_F f1 i f2 false)
+  function precise_ref_Item (_1: t_F) : bool = forall f1: t_F, f2: t_F, i: t_Item. not (postcondition_mut_F f1 i f2 true
+      /\ postcondition_mut_F f1 i f2 false)
   
-  predicate invariant_Filter_I_F (self: t_Filter_I_F) =
-    no_precondition_ref_Item self.func /\ immutable_ref_Item self.func /\ precise_ref_Item self.func
+  function invariant_Filter_I_F (self: t_Filter_I_F) : bool = no_precondition_ref_Item self.func
+    /\ immutable_ref_Item self.func /\ precise_ref_Item self.func
   
-  predicate produces_Filter_I_F (self: t_Filter_I_F) (visited: Seq.seq t_Item) (succ: t_Filter_I_F) =
+  function produces_Filter_I_F (self: t_Filter_I_F) (visited: Seq.seq t_Item) (succ: t_Filter_I_F) : bool =
     invariant_Filter_I_F self
     -> hist_inv_F self.func succ.func
     /\ (exists s: Seq.seq t_Item, f: Map.map int int. produces_I self.iter s succ.iter
@@ -1194,7 +1197,7 @@ module M_impl_Iterator_for_Filter_I_F__size_hint (* <Filter<I, F> as common::Ite
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -1209,24 +1212,24 @@ module M_impl_Iterator_for_Filter_I_F__size_hint (* <Filter<I, F> as common::Ite
   
   type tup2_usize_Option_usize = { f0: UInt64.t; f1: t_Option_usize }
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate invariant_ref_I [@inline:trivial] (self: t_I) = inv_I self
+  function invariant_ref_I [@inline:trivial] (self: t_I) : bool = inv_I self
   
-  meta "rewrite_def" predicate invariant_ref_I
+  meta "rewrite_def" function invariant_ref_I
   
-  predicate inv_ref_I [@inline:trivial] (_1: t_I) = invariant_ref_I _1
+  function inv_ref_I [@inline:trivial] (_1: t_I) : bool = invariant_ref_I _1
   
-  meta "rewrite_def" predicate inv_ref_I
+  meta "rewrite_def" function inv_ref_I
   
-  predicate precondition_size_hint (self: ()) (args: t_I)
+  function precondition_size_hint (self: ()) (args: t_I) : bool
   
   axiom precondition_fndef: forall args: t_I [precondition_size_hint () args]. (let self = args in inv_ref_I self)
       -> precondition_size_hint () args
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_I, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -1237,10 +1240,10 @@ module M_impl_Iterator_for_Filter_I_F__size_hint (* <Filter<I, F> as common::Ite
         | None -> true
         end)
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_I (self: t_I) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -1249,9 +1252,9 @@ module M_impl_Iterator_for_Filter_I_F__size_hint (* <Filter<I, F> as common::Ite
     {[@stop_split] [@expl:size_hint ensures] postcondition_once_size_hint () self result}
       (! return {result}) ]
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   function monotone_mapping_le (f: Map.map int int) (n: int) : ()
   
@@ -1264,28 +1267,28 @@ module M_impl_Iterator_for_Filter_I_F__size_hint (* <Filter<I, F> as common::Ite
       -> (forall i: int. 0 <= i /\ i < n -> 0 <= Map.get f i)
       -> (forall i: int, j: int. 0 <= i /\ i < j /\ j < n -> Map.get f i < Map.get f j) -> n - 1 <= Map.get f (n - 1)
   
-  predicate inv_F (_1: t_F)
+  function inv_F (_1: t_F) : bool
   
-  predicate inv_Item (_1: t_Item)
+  function inv_Item (_1: t_Item) : bool
   
-  predicate invariant_ref_Item [@inline:trivial] (self: t_Item) = inv_Item self
+  function invariant_ref_Item [@inline:trivial] (self: t_Item) : bool = inv_Item self
   
-  meta "rewrite_def" predicate invariant_ref_Item
+  meta "rewrite_def" function invariant_ref_Item
   
-  predicate inv_ref_Item [@inline:trivial] (_1: t_Item) = invariant_ref_Item _1
+  function inv_ref_Item [@inline:trivial] (_1: t_Item) : bool = invariant_ref_Item _1
   
-  meta "rewrite_def" predicate inv_ref_Item
+  meta "rewrite_def" function inv_ref_Item
   
-  predicate precondition_F (self: t_F) (args: t_Item)
+  function precondition_F (self: t_F) (args: t_Item) : bool
   
-  predicate no_precondition_ref_Item (_1: t_F) =
-    forall f: t_F, i: t_Item. inv_F f /\ inv_ref_Item i -> precondition_F f i
+  function no_precondition_ref_Item (_1: t_F) : bool = forall f: t_F, i: t_Item. inv_F f /\ inv_ref_Item i
+      -> precondition_F f i
   
-  predicate postcondition_once_F (self: t_F) (args: t_Item) (result: bool)
+  function postcondition_once_F (self: t_F) (args: t_Item) (result: bool) : bool
   
-  predicate resolve_F (_1: t_F)
+  function resolve_F (_1: t_F) : bool
   
-  predicate postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: bool)
+  function postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: bool) : bool
   
   function fn_mut_once_F (self: t_F) (args: t_Item) (res: bool) : ()
   
@@ -1293,7 +1296,7 @@ module M_impl_Iterator_for_Filter_I_F__size_hint (* <Filter<I, F> as common::Ite
     forall self: t_F, args: t_Item, res: bool [postcondition_once_F self args res]. postcondition_once_F self args res
       = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
   
-  predicate hist_inv_F (self: t_F) (result_state: t_F)
+  function hist_inv_F (self: t_F) (result_state: t_F) : bool
   
   function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
   
@@ -1311,29 +1314,29 @@ module M_impl_Iterator_for_Filter_I_F__size_hint (* <Filter<I, F> as common::Ite
     forall self: t_F, args: t_Item, res_state: t_F, res: bool [postcondition_mut_F self args res_state res | hist_inv_F self res_state]. postcondition_mut_F self args res_state res
       -> hist_inv_F self res_state
   
-  predicate immutable_ref_Item (_1: t_F) = forall f: t_F, g: t_F. hist_inv_F f g -> f = g
+  function immutable_ref_Item (_1: t_F) : bool = forall f: t_F, g: t_F. hist_inv_F f g -> f = g
   
-  predicate precise_ref_Item (_1: t_F) =
+  function precise_ref_Item (_1: t_F) : bool =
     forall f1'0: t_F, f2: t_F, i: t_Item. not (postcondition_mut_F f1'0 i f2 true
       /\ postcondition_mut_F f1'0 i f2 false)
   
-  predicate invariant_Filter_I_F (self: t_Filter_I_F) =
-    no_precondition_ref_Item self.func /\ immutable_ref_Item self.func /\ precise_ref_Item self.func
+  function invariant_Filter_I_F (self: t_Filter_I_F) : bool = no_precondition_ref_Item self.func
+    /\ immutable_ref_Item self.func /\ precise_ref_Item self.func
   
-  predicate inv_Filter_I_F (_1: t_Filter_I_F)
+  function inv_Filter_I_F (_1: t_Filter_I_F) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Filter_I_F [inv_Filter_I_F _1]. inv_Filter_I_F _1
       = (invariant_Filter_I_F _1 /\ inv_I _1.iter /\ inv_F _1.func)
   
-  predicate invariant_ref_Filter_I_F [@inline:trivial] (self: t_Filter_I_F) = inv_Filter_I_F self
+  function invariant_ref_Filter_I_F [@inline:trivial] (self: t_Filter_I_F) : bool = inv_Filter_I_F self
   
-  meta "rewrite_def" predicate invariant_ref_Filter_I_F
+  meta "rewrite_def" function invariant_ref_Filter_I_F
   
-  predicate inv_ref_Filter_I_F [@inline:trivial] (_1: t_Filter_I_F) = invariant_ref_Filter_I_F _1
+  function inv_ref_Filter_I_F [@inline:trivial] (_1: t_Filter_I_F) : bool = invariant_ref_Filter_I_F _1
   
-  meta "rewrite_def" predicate inv_ref_Filter_I_F
+  meta "rewrite_def" function inv_ref_Filter_I_F
   
-  predicate produces_Filter_I_F (self: t_Filter_I_F) (visited: Seq.seq t_Item) (succ: t_Filter_I_F) =
+  function produces_Filter_I_F (self: t_Filter_I_F) (visited: Seq.seq t_Item) (succ: t_Filter_I_F) : bool =
     invariant_Filter_I_F self
     -> hist_inv_F self.func succ.func
     /\ (exists s: Seq.seq t_Item, f: Map.map int int. produces_I self.iter s succ.iter
@@ -1344,7 +1347,7 @@ module M_impl_Iterator_for_Filter_I_F__size_hint (* <Filter<I, F> as common::Ite
         -> (exists j: int. 0 <= j /\ j < Seq.length visited /\ Map.get f j = i)
         = postcondition_mut_F self.func (Seq.get s i) self.func true))
   
-  predicate completed_Filter_I_F (self: MutBorrow.t t_Filter_I_F) =
+  function completed_Filter_I_F (self: MutBorrow.t t_Filter_I_F) : bool =
     (exists s: Seq.seq t_Item, e: MutBorrow.t t_I. produces_I self.current.iter s e.current
         /\ completed_I e
         /\ (forall i: int. 0 <= i /\ i < Seq.length s
@@ -1392,11 +1395,11 @@ module M_impl_Iterator_for_Filter_I_F__size_hint__refines (* <Filter<I, F> as co
   
   type t_Filter_I_F = { iter: t_I; func: t_F }
   
-  predicate inv_F (_1: t_F)
+  function inv_F (_1: t_F) : bool
   
   type t_Item
   
-  predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+  function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
   
   function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
   
@@ -1407,26 +1410,26 @@ module M_impl_Iterator_for_Filter_I_F__size_hint__refines (* <Filter<I, F> as co
   
   axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
   
-  predicate inv_Item (_1: t_Item)
+  function inv_Item (_1: t_Item) : bool
   
-  predicate invariant_ref_Item [@inline:trivial] (self: t_Item) = inv_Item self
+  function invariant_ref_Item [@inline:trivial] (self: t_Item) : bool = inv_Item self
   
-  meta "rewrite_def" predicate invariant_ref_Item
+  meta "rewrite_def" function invariant_ref_Item
   
-  predicate inv_ref_Item [@inline:trivial] (_1: t_Item) = invariant_ref_Item _1
+  function inv_ref_Item [@inline:trivial] (_1: t_Item) : bool = invariant_ref_Item _1
   
-  meta "rewrite_def" predicate inv_ref_Item
+  meta "rewrite_def" function inv_ref_Item
   
-  predicate precondition_F (self: t_F) (args: t_Item)
+  function precondition_F (self: t_F) (args: t_Item) : bool
   
-  predicate no_precondition_ref_Item (_1: t_F) =
-    forall f: t_F, i: t_Item. inv_F f /\ inv_ref_Item i -> precondition_F f i
+  function no_precondition_ref_Item (_1: t_F) : bool = forall f: t_F, i: t_Item. inv_F f /\ inv_ref_Item i
+      -> precondition_F f i
   
-  predicate postcondition_once_F (self: t_F) (args: t_Item) (result: bool)
+  function postcondition_once_F (self: t_F) (args: t_Item) (result: bool) : bool
   
-  predicate resolve_F (_1: t_F)
+  function resolve_F (_1: t_F) : bool
   
-  predicate postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: bool)
+  function postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: bool) : bool
   
   function fn_mut_once_F (self: t_F) (args: t_Item) (res: bool) : ()
   
@@ -1434,7 +1437,7 @@ module M_impl_Iterator_for_Filter_I_F__size_hint__refines (* <Filter<I, F> as co
     forall self: t_F, args: t_Item, res: bool [postcondition_once_F self args res]. postcondition_once_F self args res
       = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
   
-  predicate hist_inv_F (self: t_F) (result_state: t_F)
+  function hist_inv_F (self: t_F) (result_state: t_F) : bool
   
   function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
   
@@ -1452,30 +1455,30 @@ module M_impl_Iterator_for_Filter_I_F__size_hint__refines (* <Filter<I, F> as co
     forall self: t_F, args: t_Item, res_state: t_F, res: bool [postcondition_mut_F self args res_state res | hist_inv_F self res_state]. postcondition_mut_F self args res_state res
       -> hist_inv_F self res_state
   
-  predicate immutable_ref_Item (_1: t_F) = forall f: t_F, g: t_F. hist_inv_F f g -> f = g
+  function immutable_ref_Item (_1: t_F) : bool = forall f: t_F, g: t_F. hist_inv_F f g -> f = g
   
-  predicate precise_ref_Item (_1: t_F) =
-    forall f1: t_F, f2: t_F, i: t_Item. not (postcondition_mut_F f1 i f2 true /\ postcondition_mut_F f1 i f2 false)
+  function precise_ref_Item (_1: t_F) : bool = forall f1: t_F, f2: t_F, i: t_Item. not (postcondition_mut_F f1 i f2 true
+      /\ postcondition_mut_F f1 i f2 false)
   
-  predicate invariant_Filter_I_F (self: t_Filter_I_F) =
-    no_precondition_ref_Item self.func /\ immutable_ref_Item self.func /\ precise_ref_Item self.func
+  function invariant_Filter_I_F (self: t_Filter_I_F) : bool = no_precondition_ref_Item self.func
+    /\ immutable_ref_Item self.func /\ precise_ref_Item self.func
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate inv_Filter_I_F (_1: t_Filter_I_F)
+  function inv_Filter_I_F (_1: t_Filter_I_F) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Filter_I_F [inv_Filter_I_F _1]. inv_Filter_I_F _1
       = (invariant_Filter_I_F _1 /\ inv_I _1.iter /\ inv_F _1.func)
   
-  predicate invariant_ref_Filter_I_F [@inline:trivial] (self: t_Filter_I_F) = inv_Filter_I_F self
+  function invariant_ref_Filter_I_F [@inline:trivial] (self: t_Filter_I_F) : bool = inv_Filter_I_F self
   
-  meta "rewrite_def" predicate invariant_ref_Filter_I_F
+  meta "rewrite_def" function invariant_ref_Filter_I_F
   
-  predicate inv_ref_Filter_I_F [@inline:trivial] (_1: t_Filter_I_F) = invariant_ref_Filter_I_F _1
+  function inv_ref_Filter_I_F [@inline:trivial] (_1: t_Filter_I_F) : bool = invariant_ref_Filter_I_F _1
   
-  meta "rewrite_def" predicate inv_ref_Filter_I_F
+  meta "rewrite_def" function inv_ref_Filter_I_F
   
-  predicate produces_Filter_I_F (self: t_Filter_I_F) (visited: Seq.seq t_Item) (succ: t_Filter_I_F) =
+  function produces_Filter_I_F (self: t_Filter_I_F) (visited: Seq.seq t_Item) (succ: t_Filter_I_F) : bool =
     invariant_Filter_I_F self
     -> hist_inv_F self.func succ.func
     /\ (exists s: Seq.seq t_Item, f: Map.map int int. produces_I self.iter s succ.iter
@@ -1486,9 +1489,9 @@ module M_impl_Iterator_for_Filter_I_F__size_hint__refines (* <Filter<I, F> as co
         -> (exists j: int. 0 <= j /\ j < Seq.length visited /\ Map.get f j = i)
         = postcondition_mut_F self.func (Seq.get s i) self.func true))
   
-  predicate completed_I (self: MutBorrow.t t_I)
+  function completed_I (self: MutBorrow.t t_I) : bool
   
-  predicate completed_Filter_I_F (self: MutBorrow.t t_Filter_I_F) =
+  function completed_Filter_I_F (self: MutBorrow.t t_Filter_I_F) : bool =
     (exists s: Seq.seq t_Item, e: MutBorrow.t t_I. produces_I self.current.iter s e.current
         /\ completed_I e
         /\ (forall i: int. 0 <= i /\ i < Seq.length s
@@ -1533,7 +1536,7 @@ module M_less_than
   
   type t_IntoIter_u32_Global
   
-  predicate inv_IntoIter_u32_Global (_1: t_IntoIter_u32_Global)
+  function inv_IntoIter_u32_Global (_1: t_IntoIter_u32_Global) : bool
   
   constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
   
@@ -1553,11 +1556,11 @@ module M_less_than
   
   type closure2 = { c0: UInt32.t }
   
-  predicate resolve_refmut_closure2 [@inline:trivial] (_1: MutBorrow.t closure2) = _1.final = _1.current
+  function resolve_refmut_closure2 [@inline:trivial] (_1: MutBorrow.t closure2) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_closure2
+  meta "rewrite_def" function resolve_refmut_closure2
   
-  predicate hist_inv_closure2 (self: closure2) (result_state: closure2) = result_state.c0 = self.c0
+  function hist_inv_closure2 (self: closure2) (result_state: closure2) : bool = result_state.c0 = self.c0
   
   let closure2 (self: MutBorrow.t closure2) (i: UInt32.t) (return (x: bool)) = (! bb0
     [ bb0 = s0
@@ -1576,29 +1579,29 @@ module M_less_than
   
   type t_Filter_IntoIter_u32_Global_closure2
   
-  predicate immutable_ref_u32 (_1: closure2) = forall f: closure2, g: closure2. hist_inv_closure2 f g -> f = g
+  function immutable_ref_u32 (_1: closure2) : bool = forall f: closure2, g: closure2. hist_inv_closure2 f g -> f = g
   
-  predicate inv_closure2 [@inline:trivial] (_1: closure2) = true
+  function inv_closure2 [@inline:trivial] (_1: closure2) : bool = true
   
-  meta "rewrite_def" predicate inv_closure2
+  meta "rewrite_def" function inv_closure2
   
-  predicate inv_ref_u32 [@inline:trivial] (_1: UInt32.t) = true
+  function inv_ref_u32 [@inline:trivial] (_1: UInt32.t) : bool = true
   
-  meta "rewrite_def" predicate inv_ref_u32
+  meta "rewrite_def" function inv_ref_u32
   
-  predicate precondition_closure2 (self: closure2) (args: UInt32.t) = let i = args in true
+  function precondition_closure2 (self: closure2) (args: UInt32.t) : bool = let i = args in true
   
-  meta "rewrite_def" predicate precondition_closure2
+  meta "rewrite_def" function precondition_closure2
   
-  predicate no_precondition_ref_u32 (_1: closure2) =
-    forall f: closure2, i: UInt32.t. inv_closure2 f /\ inv_ref_u32 i -> precondition_closure2 f i
+  function no_precondition_ref_u32 (_1: closure2) : bool = forall f: closure2, i: UInt32.t. inv_closure2 f
+        /\ inv_ref_u32 i -> precondition_closure2 f i
   
-  predicate postcondition_mut_closure2 (self: closure2) (args: UInt32.t) (result_state: closure2) (result: bool) =
+  function postcondition_mut_closure2 (self: closure2) (args: UInt32.t) (result_state: closure2) (result: bool) : bool =
     let i = args in result = UInt32.lt i result_state.c0 /\ hist_inv_closure2 self result_state
   
-  meta "rewrite_def" predicate postcondition_mut_closure2
+  meta "rewrite_def" function postcondition_mut_closure2
   
-  predicate precise_ref_u32 (_1: closure2) =
+  function precise_ref_u32 (_1: closure2) : bool =
     forall f1: closure2, f2: closure2, i: UInt32.t. not (postcondition_mut_closure2 f1 i f2 true
       /\ postcondition_mut_closure2 f1 i f2 false)
   
@@ -1606,20 +1609,20 @@ module M_less_than
   
   function func_Filter_IntoIter_u32_Global_closure2 (self: t_Filter_IntoIter_u32_Global_closure2) : closure2
   
-  predicate private_invariant_IntoIter_u32_Global (f: t_Filter_IntoIter_u32_Global_closure2)
+  function private_invariant_IntoIter_u32_Global (f: t_Filter_IntoIter_u32_Global_closure2) : bool
   
-  predicate invariant_Filter_IntoIter_u32_Global_closure2 [@inline:trivial] (self: t_Filter_IntoIter_u32_Global_closure2) =
-    inv_IntoIter_u32_Global (iter_Filter_IntoIter_u32_Global_closure2 self)
+  function invariant_Filter_IntoIter_u32_Global_closure2 [@inline:trivial] (self: t_Filter_IntoIter_u32_Global_closure2) : bool
+   = inv_IntoIter_u32_Global (iter_Filter_IntoIter_u32_Global_closure2 self)
     /\ inv_closure2 (func_Filter_IntoIter_u32_Global_closure2 self) /\ private_invariant_IntoIter_u32_Global self
   
-  meta "rewrite_def" predicate invariant_Filter_IntoIter_u32_Global_closure2
+  meta "rewrite_def" function invariant_Filter_IntoIter_u32_Global_closure2
   
   axiom invariant_Filter_IntoIter_u32_Global_closure2_spec:
     forall self: t_Filter_IntoIter_u32_Global_closure2 [invariant_Filter_IntoIter_u32_Global_closure2 self]. invariant_Filter_IntoIter_u32_Global_closure2 self
       -> inv_IntoIter_u32_Global (iter_Filter_IntoIter_u32_Global_closure2 self)
       /\ inv_closure2 (func_Filter_IntoIter_u32_Global_closure2 self)
   
-  predicate inv_Filter_IntoIter_u32_Global_closure2 (_1: t_Filter_IntoIter_u32_Global_closure2)
+  function inv_Filter_IntoIter_u32_Global_closure2 (_1: t_Filter_IntoIter_u32_Global_closure2) : bool
   
   axiom inv_axiom:
     forall _1: t_Filter_IntoIter_u32_Global_closure2 [inv_Filter_IntoIter_u32_Global_closure2 _1]. inv_Filter_IntoIter_u32_Global_closure2 _1
@@ -1638,15 +1641,15 @@ module M_less_than
       /\ func_Filter_IntoIter_u32_Global_closure2 result = predicate')}
       (! return {result}) ]
   
-  predicate precondition_into_iter (self: ()) (args: t_Filter_IntoIter_u32_Global_closure2) =
+  function precondition_into_iter (self: ()) (args: t_Filter_IntoIter_u32_Global_closure2) : bool =
     let self'0 = args in inv_Filter_IntoIter_u32_Global_closure2 self'0
   
-  meta "rewrite_def" predicate precondition_into_iter
+  meta "rewrite_def" function precondition_into_iter
   
-  predicate precondition_from_iter (self: ()) (args: t_Filter_IntoIter_u32_Global_closure2) =
+  function precondition_from_iter (self: ()) (args: t_Filter_IntoIter_u32_Global_closure2) : bool =
     let iter = args in inv_Filter_IntoIter_u32_Global_closure2 iter /\ precondition_into_iter () iter
   
-  meta "rewrite_def" predicate precondition_from_iter
+  meta "rewrite_def" function precondition_from_iter
   
   let into_iter_Filter_IntoIter_u32_Global_closure2 (self: t_Filter_IntoIter_u32_Global_closure2)
     (return (x: t_Filter_IntoIter_u32_Global_closure2)) =
@@ -1657,13 +1660,13 @@ module M_less_than
       /\ ([@stop_split] [@expl:into_iter ensures] result = self)}
       (! return {result}) ]
   
-  predicate postcondition_into_iter (self: ()) (args: t_Filter_IntoIter_u32_Global_closure2) (result: t_Filter_IntoIter_u32_Global_closure2) =
-    let self'0 = args in inv_Filter_IntoIter_u32_Global_closure2 result /\ result = self'0
+  function postcondition_into_iter (self: ()) (args: t_Filter_IntoIter_u32_Global_closure2) (result: t_Filter_IntoIter_u32_Global_closure2) : bool
+   = let self'0 = args in inv_Filter_IntoIter_u32_Global_closure2 result /\ result = self'0
   
-  meta "rewrite_def" predicate postcondition_into_iter
+  meta "rewrite_def" function postcondition_into_iter
   
-  predicate produces_IntoIter_u32_Global (self: t_IntoIter_u32_Global) (visited: Seq.seq UInt32.t) (rhs: t_IntoIter_u32_Global) =
-    view_IntoIter_u32_Global self = Seq.(++) visited (view_IntoIter_u32_Global rhs)
+  function produces_IntoIter_u32_Global (self: t_IntoIter_u32_Global) (visited: Seq.seq UInt32.t) (rhs: t_IntoIter_u32_Global) : bool
+   = view_IntoIter_u32_Global self = Seq.(++) visited (view_IntoIter_u32_Global rhs)
   
   function produces_trans_IntoIter_u32_Global (a: t_IntoIter_u32_Global) (ab: Seq.seq UInt32.t) (b: t_IntoIter_u32_Global) (bc: Seq.seq UInt32.t) (c: t_IntoIter_u32_Global) : ()
   
@@ -1676,8 +1679,8 @@ module M_less_than
   axiom produces_refl_IntoIter_u32_Global_spec:
     forall self: t_IntoIter_u32_Global. produces_IntoIter_u32_Global self (Seq.empty: Seq.seq UInt32.t) self
   
-  predicate produces_Filter_IntoIter_u32_Global_closure2 (self: t_Filter_IntoIter_u32_Global_closure2) (visited: Seq.seq UInt32.t) (succ: t_Filter_IntoIter_u32_Global_closure2) =
-    private_invariant_IntoIter_u32_Global self
+  function produces_Filter_IntoIter_u32_Global_closure2 (self: t_Filter_IntoIter_u32_Global_closure2) (visited: Seq.seq UInt32.t) (succ: t_Filter_IntoIter_u32_Global_closure2) : bool
+   = private_invariant_IntoIter_u32_Global self
     -> hist_inv_closure2 (func_Filter_IntoIter_u32_Global_closure2 self) (func_Filter_IntoIter_u32_Global_closure2 succ)
     /\ (exists s: Seq.seq UInt32.t, f: Map.map int int. produces_IntoIter_u32_Global (iter_Filter_IntoIter_u32_Global_closure2 self) s (iter_Filter_IntoIter_u32_Global_closure2 succ)
       /\ (forall i: int. 0 <= i /\ i < Seq.length visited -> 0 <= Map.get f i /\ Map.get f i < Seq.length s)
@@ -1699,22 +1702,23 @@ module M_less_than
   axiom produces_refl_Filter_IntoIter_u32_Global_closure2_spec:
     forall self: t_Filter_IntoIter_u32_Global_closure2. produces_Filter_IntoIter_u32_Global_closure2 self (Seq.empty: Seq.seq UInt32.t) self
   
-  predicate resolve_refmut_IntoIter_u32_Global [@inline:trivial] (_1: MutBorrow.t t_IntoIter_u32_Global) =
+  function resolve_refmut_IntoIter_u32_Global [@inline:trivial] (_1: MutBorrow.t t_IntoIter_u32_Global) : bool =
     _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_IntoIter_u32_Global
+  meta "rewrite_def" function resolve_refmut_IntoIter_u32_Global
   
-  predicate completed_IntoIter_u32_Global (self: MutBorrow.t t_IntoIter_u32_Global) =
+  function completed_IntoIter_u32_Global (self: MutBorrow.t t_IntoIter_u32_Global) : bool =
     resolve_refmut_IntoIter_u32_Global self /\ view_IntoIter_u32_Global self.current = (Seq.empty: Seq.seq UInt32.t)
   
-  predicate completed_Filter_IntoIter_u32_Global_closure2 (self: MutBorrow.t t_Filter_IntoIter_u32_Global_closure2) =
+  function completed_Filter_IntoIter_u32_Global_closure2 (self: MutBorrow.t t_Filter_IntoIter_u32_Global_closure2) : bool
+   =
     (exists s: Seq.seq UInt32.t, e: MutBorrow.t t_IntoIter_u32_Global. produces_IntoIter_u32_Global (iter_Filter_IntoIter_u32_Global_closure2 self.current) s e.current
         /\ completed_IntoIter_u32_Global e
         /\ (forall i: int. 0 <= i /\ i < Seq.length s
           -> postcondition_mut_closure2 (func_Filter_IntoIter_u32_Global_closure2 self.current) (Seq.get s i) (func_Filter_IntoIter_u32_Global_closure2 self.final) false))
     /\ func_Filter_IntoIter_u32_Global_closure2 self.current = func_Filter_IntoIter_u32_Global_closure2 self.final
   
-  predicate resolve_Filter_IntoIter_u32_Global_closure2 (_1: t_Filter_IntoIter_u32_Global_closure2)
+  function resolve_Filter_IntoIter_u32_Global_closure2 (_1: t_Filter_IntoIter_u32_Global_closure2) : bool
   
   let from_iter_Vec_u32_Global (iter: t_Filter_IntoIter_u32_Global_closure2) (return (x: t_Vec_u32_Global)) =
   {[@stop_split] [@expl:from_iter_Vec_u32_Global requires] ([@stop_split] [@expl:from_iter 'iter' type invariant] inv_Filter_IntoIter_u32_Global_closure2 iter)
@@ -1727,12 +1731,13 @@ module M_less_than
         /\ resolve_Filter_IntoIter_u32_Global_closure2 done'.final}
       (! return {result}) ]
   
-  predicate postcondition_from_iter (self: ()) (args: t_Filter_IntoIter_u32_Global_closure2) (result: t_Vec_u32_Global) =
+  function postcondition_from_iter (self: ()) (args: t_Filter_IntoIter_u32_Global_closure2) (result: t_Vec_u32_Global) : bool
+   =
     let iter = args in exists into_iter: t_Filter_IntoIter_u32_Global_closure2, done': MutBorrow.t t_Filter_IntoIter_u32_Global_closure2. postcondition_into_iter () iter into_iter
       /\ produces_Filter_IntoIter_u32_Global_closure2 into_iter (view_Vec_u32_Global result) done'.current
       /\ completed_Filter_IntoIter_u32_Global_closure2 done' /\ resolve_Filter_IntoIter_u32_Global_closure2 done'.final
   
-  meta "rewrite_def" predicate postcondition_from_iter
+  meta "rewrite_def" function postcondition_from_iter
   
   let collect_Filter_IntoIter_u32_Global_closure2 (self: t_Filter_IntoIter_u32_Global_closure2)
     (return (x: t_Vec_u32_Global)) =
@@ -1748,8 +1753,8 @@ module M_less_than
   
   meta "rewrite_def" function index_Vec_u32_Global
   
-  predicate contains_u32 (self: Seq.seq UInt32.t) (x: UInt32.t) =
-    exists i: int. 0 <= i /\ i < Seq.length self /\ Seq.get self i = x
+  function contains_u32 (self: Seq.seq UInt32.t) (x: UInt32.t) : bool = exists i: int. 0 <= i
+      /\ i < Seq.length self /\ Seq.get self i = x
   
   meta "compute_max_steps" 1000000
   
@@ -1780,18 +1785,18 @@ module M_monotone_mapping_le
   use map.Map
   use int.Int
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate well_founded_relation_Int [@inline:trivial] (self: int) (other: int) =
-    ge_log_Int self 0 /\ gt_log_Int self other
+  function well_founded_relation_Int [@inline:trivial] (self: int) (other: int) : bool = ge_log_Int self 0
+    /\ gt_log_Int self other
   
-  meta "rewrite_def" predicate well_founded_relation_Int
+  meta "rewrite_def" function well_founded_relation_Int
   
   meta "compute_max_steps" 1000000
   

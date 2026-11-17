@@ -25,12 +25,12 @@ module M_insertion_sort
   
   meta "rewrite_def" function deep_model_usize
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
-  predicate produces_Range_usize (self: t_Range_usize) (visited: Seq.seq UInt64.t) (o: t_Range_usize) =
-    self.end' = o.end'
+  function produces_Range_usize (self: t_Range_usize) (visited: Seq.seq UInt64.t) (o: t_Range_usize) : bool = self.end'
+      = o.end'
     /\ deep_model_usize self.start <= deep_model_usize o.start
     /\ (gt_log_Int (Seq.length visited) 0 -> deep_model_usize o.start <= deep_model_usize o.end')
     /\ Seq.length visited = deep_model_usize o.start - deep_model_usize self.start
@@ -48,16 +48,15 @@ module M_insertion_sort
   axiom produces_refl_Range_usize_spec:
     forall self: t_Range_usize. produces_Range_usize self (Seq.empty: Seq.seq UInt64.t) self
   
-  predicate resolve_refmut_Range_usize [@inline:trivial] (_1: MutBorrow.t t_Range_usize) = _1.final = _1.current
+  function resolve_refmut_Range_usize [@inline:trivial] (_1: MutBorrow.t t_Range_usize) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Range_usize
+  meta "rewrite_def" function resolve_refmut_Range_usize
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate completed_Range_usize (self: MutBorrow.t t_Range_usize) =
-    resolve_refmut_Range_usize self
+  function completed_Range_usize (self: MutBorrow.t t_Range_usize) : bool = resolve_refmut_Range_usize self
     /\ ge_log_Int (deep_model_usize self.current.start) (deep_model_usize self.current.end')
   
   let next_Range_usize (self: MutBorrow.t t_Range_usize) (return (x: t_Option_usize)) = any
@@ -67,15 +66,15 @@ module M_insertion_sort
         end}
       (! return {result}) ]
   
-  predicate permutation_of_i32 (self: Seq.seq Int32.t) (other: Seq.seq Int32.t) =
+  function permutation_of_i32 (self: Seq.seq Int32.t) (other: Seq.seq Int32.t) : bool =
     Permut.permut self other 0 (Seq.length self)
   
-  predicate sorted_range_i32 (s: Seq.seq Int32.t) (l: int) (u: int) =
-    forall i: int, j: int. l <= i /\ i < j /\ j < u -> Int32.le (Seq.get s i) (Seq.get s j)
+  function sorted_range_i32 (s: Seq.seq Int32.t) (l: int) (u: int) : bool = forall i: int, j: int. l <= i
+        /\ i < j /\ j < u -> Int32.le (Seq.get s i) (Seq.get s j)
   
-  predicate inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) = true
+  function inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_usize
+  meta "rewrite_def" function inv_Seq_usize
   
   let elim_Some (_x: t_Option_usize) (return (f0: UInt64.t)) = any
     [ _k (f0: UInt64.t) -> {Some f0 = _x} (! return {f0})
@@ -104,11 +103,12 @@ module M_insertion_sort
     {[@stop_split] [@expl:swap ensures] Permut.exchange (Slice64.view self.final) (Slice64.view self.current) (UInt64.t'int a) (UInt64.t'int b)}
       (! return {result}) ]
   
-  predicate resolve_refmut_slice_i32 [@inline:trivial] (_1: MutBorrow.t (Slice64.slice Int32.t)) = _1.final = _1.current
+  function resolve_refmut_slice_i32 [@inline:trivial] (_1: MutBorrow.t (Slice64.slice Int32.t)) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_slice_i32
+  meta "rewrite_def" function resolve_refmut_slice_i32
   
-  predicate sorted_i32 (s: Seq.seq Int32.t) = sorted_range_i32 s 0 (Seq.length s)
+  function sorted_i32 (s: Seq.seq Int32.t) : bool = sorted_range_i32 s 0 (Seq.length s)
   
   meta "compute_max_steps" 1000000
   

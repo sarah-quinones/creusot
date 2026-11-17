@@ -13,13 +13,13 @@ module M_nested_closure
   
   type closure0'0 = { c0'0: bool }
   
-  predicate precondition_closure0 (self: closure0) (args: ()) = closure0'pre self
+  function precondition_closure0 (self: closure0) (args: ()) : bool = closure0'pre self
   
-  meta "rewrite_def" predicate precondition_closure0
+  meta "rewrite_def" function precondition_closure0
   
-  predicate postcondition_closure0 (self: closure0) (args: ()) (result: bool) = closure0'post'return self result
+  function postcondition_closure0 (self: closure0) (args: ()) (result: bool) : bool = closure0'post'return self result
   
-  meta "rewrite_def" predicate postcondition_closure0
+  meta "rewrite_def" function postcondition_closure0
   
   let call_closure0 (self: closure0) (args: ()) (return (x: bool)) =
   {[@stop_split] [@expl:call requires] precondition_closure0 self args}
@@ -41,13 +41,14 @@ module M_nested_closure
   
   meta "rewrite_def" predicate closure0'0'post'return
   
-  predicate precondition_closure0'0 (self: closure0'0) (args: ()) = closure0'0'pre self
+  function precondition_closure0'0 (self: closure0'0) (args: ()) : bool = closure0'0'pre self
   
-  meta "rewrite_def" predicate precondition_closure0'0
+  meta "rewrite_def" function precondition_closure0'0
   
-  predicate postcondition_closure0'0 (self: closure0'0) (args: ()) (result: bool) = closure0'0'post'return self result
+  function postcondition_closure0'0 (self: closure0'0) (args: ()) (result: bool) : bool =
+    closure0'0'post'return self result
   
-  meta "rewrite_def" predicate postcondition_closure0'0
+  meta "rewrite_def" function postcondition_closure0'0
   
   let call_closure0'0 (self: closure0'0) (args: ()) (return (x: bool)) =
   {[@stop_split] [@expl:call requires] precondition_closure0'0 self args}

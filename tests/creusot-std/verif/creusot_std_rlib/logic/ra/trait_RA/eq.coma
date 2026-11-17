@@ -8,6 +8,6 @@ constant self : t_Self
 
 constant other : t_Self
 
-predicate eq_Self (self: t_Self) (other: t_Self)
+function eq_Self (self: t_Self) (other: t_Self) : bool
 
 goal vc_eq_Self: [@stop_split] [@expl:eq ensures] (self = other) = (self = other)

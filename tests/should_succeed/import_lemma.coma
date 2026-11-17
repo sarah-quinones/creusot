@@ -1,7 +1,7 @@
 module M_direct__all_good
   function gen_key (seed: int) : int
   
-  predicate is_secure (pkey: int)
+  function is_secure (pkey: int) : bool
   
   function lemma_all_good (seed: int) : ()
   
@@ -20,7 +20,7 @@ end
 module M_law__all_good
   function gen_key (seed: int) : int
   
-  predicate is_secure (pkey: int)
+  function is_secure (pkey: int) : bool
   
   function lemma_all_good (seed: int) : ()
   
@@ -45,7 +45,7 @@ end
 module M_private__lemma_all_good
   function gen_key (seed: int) : int = let _ = seed in 4
   
-  predicate is_secure (pkey: int) = let _ = pkey in true
+  function is_secure (pkey: int) : bool = let _ = pkey in true
   
   meta "compute_max_steps" 1000000
   
@@ -60,7 +60,7 @@ end
 module M_trait_Axiom__lemma_all_good
   function gen_key (seed: int) : int
   
-  predicate is_secure (pkey: int)
+  function is_secure (pkey: int) : bool
   
   function lemma_all_good (seed: int) : ()
   

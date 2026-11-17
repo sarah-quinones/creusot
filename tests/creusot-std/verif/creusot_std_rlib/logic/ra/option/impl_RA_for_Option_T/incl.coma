@@ -17,7 +17,7 @@ function map_Option_T (self: t_Option_T) (f: Map.map t_T t_Option_T) : t_Option_
 
 function op_T (self: t_T) (other: t_T) : t_Option_T
 
-predicate incl_T (self: t_T) (other: t_T)
+function incl_T (self: t_T) (other: t_T) : bool
 
 axiom incl_T_spec: forall self: t_T, other: t_T [incl_T self other]. incl_T self other
     = (exists factor: t_T. op_T self factor = Some other)
@@ -50,11 +50,11 @@ function op_Option_T (self: t_Option_T) (other: t_Option_T) : t_Option_Option_T 
     | {f0 = Some x; f1 = Some y} -> map_Option_T (op_T x y) (fun (z: t_T) -> Some z)
     end
 
-predicate eq_T (self: t_T) (other: t_T)
+function eq_T (self: t_T) (other: t_T) : bool
 
 axiom eq_T_spec: forall self: t_T, other: t_T [eq_T self other]. eq_T self other = (self = other)
 
-predicate incl_eq_T (self: t_T) (other: t_T) = eq_T self other \/ incl_T self other
+function incl_eq_T (self: t_T) (other: t_T) : bool = eq_T self other \/ incl_T self other
 
 meta "compute_max_steps" 1000000
 
@@ -64,7 +64,7 @@ constant self : t_Option_T
 
 constant other : t_Option_T
 
-predicate incl_Option_T (self: t_Option_T) (other: t_Option_T)
+function incl_Option_T (self: t_Option_T) (other: t_Option_T) : bool
 
 goal vc_incl_Option_T: match { f0 = self; f1 = other } with
     | {f0 = None} -> [@stop_split] [@expl:incl ensures] true

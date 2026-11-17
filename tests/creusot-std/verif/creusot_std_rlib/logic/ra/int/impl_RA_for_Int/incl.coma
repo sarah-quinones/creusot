@@ -16,6 +16,6 @@ constant self : int
 
 constant other : int
 
-predicate incl_Int (self: int) (other: int)
+function incl_Int (self: int) (other: int) : bool
 
 goal vc_incl_Int: [@stop_split] [@expl:incl ensures] true = (exists factor: int. op_Int self factor = Some other)

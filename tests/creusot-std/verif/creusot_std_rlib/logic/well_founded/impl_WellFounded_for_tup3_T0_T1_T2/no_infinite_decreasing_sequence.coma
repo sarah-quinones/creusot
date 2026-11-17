@@ -11,22 +11,22 @@ type t_T2
 
 type tup3_T0_T1_T2 = { f0: t_T0; f1: t_T1; f2: t_T2 }
 
-predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
 
-meta "rewrite_def" predicate ge_log_Int
+meta "rewrite_def" function ge_log_Int
 
-predicate well_founded_relation_T0 (self: t_T0) (other: t_T0)
+function well_founded_relation_T0 (self: t_T0) (other: t_T0) : bool
 
-predicate well_founded_relation_T1 (self: t_T1) (other: t_T1)
+function well_founded_relation_T1 (self: t_T1) (other: t_T1) : bool
 
-predicate well_founded_relation_T2 (self: t_T2) (other: t_T2)
+function well_founded_relation_T2 (self: t_T2) (other: t_T2) : bool
 
-predicate well_founded_relation_tup3_T0_T1_T2 [@inline:trivial] (self: tup3_T0_T1_T2) (other: tup3_T0_T1_T2) =
+function well_founded_relation_tup3_T0_T1_T2 [@inline:trivial] (self: tup3_T0_T1_T2) (other: tup3_T0_T1_T2) : bool =
   well_founded_relation_T0 self.f0 other.f0
   \/ self.f0 = other.f0 /\ well_founded_relation_T1 self.f1 other.f1
   \/ self.f0 = other.f0 /\ self.f1 = other.f1 /\ well_founded_relation_T2 self.f2 other.f2
 
-meta "rewrite_def" predicate well_founded_relation_tup3_T0_T1_T2
+meta "rewrite_def" function well_founded_relation_tup3_T0_T1_T2
 
 function index_Mapping_Int_tup3_T0_T1_T2 [@inline:trivial] (self: Map.map int tup3_T0_T1_T2) (a: int) : tup3_T0_T1_T2 =
   Map.get self a
@@ -35,9 +35,9 @@ meta "rewrite_def" function index_Mapping_Int_tup3_T0_T1_T2
 
 type t_Option_Int = None | Some int
 
-predicate index_Mapping_Int_bool [@inline:trivial] (self: Map.map int bool) (a: int) = Map.get self a
+function index_Mapping_Int_bool [@inline:trivial] (self: Map.map int bool) (a: int) : bool = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_Int_bool
+meta "rewrite_def" function index_Mapping_Int_bool
 
 function such_that_Int (p: Map.map int bool) : int
 
@@ -63,17 +63,17 @@ function tuple_to_pair_tup3_T0_T1_T2 (self: tup3_T0_T1_T2) : tup2_T0_tup2_T1_T2 
                                                                                     f1'1 = { f0'0 = self.f1;
                                                                                              f1'0 = self.f2 } }
 
-predicate well_founded_relation_tup2_T1_T2 [@inline:trivial] (self: tup2_T1_T2) (other: tup2_T1_T2) =
+function well_founded_relation_tup2_T1_T2 [@inline:trivial] (self: tup2_T1_T2) (other: tup2_T1_T2) : bool =
   well_founded_relation_T1 self.f0'0 other.f0'0
   \/ self.f0'0 = other.f0'0 /\ well_founded_relation_T2 self.f1'0 other.f1'0
 
-meta "rewrite_def" predicate well_founded_relation_tup2_T1_T2
+meta "rewrite_def" function well_founded_relation_tup2_T1_T2
 
-predicate well_founded_relation_tup2_T0_tup2_T1_T2 [@inline:trivial] (self: tup2_T0_tup2_T1_T2) (other: tup2_T0_tup2_T1_T2) =
-  well_founded_relation_T0 self.f0'1 other.f0'1
+function well_founded_relation_tup2_T0_tup2_T1_T2 [@inline:trivial] (self: tup2_T0_tup2_T1_T2) (other: tup2_T0_tup2_T1_T2) : bool
+ = well_founded_relation_T0 self.f0'1 other.f0'1
   \/ self.f0'1 = other.f0'1 /\ well_founded_relation_tup2_T1_T2 self.f1'1 other.f1'1
 
-meta "rewrite_def" predicate well_founded_relation_tup2_T0_tup2_T1_T2
+meta "rewrite_def" function well_founded_relation_tup2_T0_tup2_T1_T2
 
 function index_Mapping_Int_tup2_T0_tup2_T1_T2 [@inline:trivial] (self: Map.map int tup2_T0_tup2_T1_T2) (a: int) : tup2_T0_tup2_T1_T2
  = Map.get self a
@@ -134,9 +134,9 @@ axiom extract_nth_T0_spec'0: forall s: Map.map int tup2_T0_tup2_T1_T2, i: int [e
     -> (let prev = extract_nth_T0 s (i - 1) in prev < extract_nth_T0 s i
     /\ well_founded_relation_T0 (index_Mapping_Int_tup2_T0_tup2_T1_T2 s prev).f0'1 (index_Mapping_Int_tup2_T0_tup2_T1_T2 s (extract_nth_T0 s i)).f0'1)
 
-predicate index_Mapping_T0_bool [@inline:trivial] (self: Map.map t_T0 bool) (a: t_T0) = Map.get self a
+function index_Mapping_T0_bool [@inline:trivial] (self: Map.map t_T0 bool) (a: t_T0) : bool = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_T0_bool
+meta "rewrite_def" function index_Mapping_T0_bool
 
 function such_that_T0 (p: Map.map t_T0 bool) : t_T0
 

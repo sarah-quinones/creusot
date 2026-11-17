@@ -9,11 +9,11 @@ type t_PositiveReal = { f0: t_Subset_PositiveRealInner }
 
 type t_PositiveRealInner = { f0'0: Real.real }
 
-predicate gt_log_Real [@inline:trivial] (self: Real.real) (other: Real.real) = Real.(<) other self
+function gt_log_Real [@inline:trivial] (self: Real.real) (other: Real.real) : bool = Real.(<) other self
 
-meta "rewrite_def" predicate gt_log_Real
+meta "rewrite_def" function gt_log_Real
 
-predicate invariant_PositiveRealInner (self: t_PositiveRealInner) = gt_log_Real self.f0'0 (FromInt.from_int 0)
+function invariant_PositiveRealInner (self: t_PositiveRealInner) : bool = gt_log_Real self.f0'0 (FromInt.from_int 0)
 
 function inner_PositiveRealInner (self: t_Subset_PositiveRealInner) : t_PositiveRealInner
 
@@ -38,7 +38,7 @@ constant self : t_PositiveReal
 
 constant other : t_PositiveReal
 
-predicate ext_eq (self: t_PositiveReal) (other: t_PositiveReal)
+function ext_eq (self: t_PositiveReal) (other: t_PositiveReal) : bool
 
 goal vc_ext_eq: forall local. local = ()
     -> ([@stop_split] [@expl:to_real ensures] gt_log_Real (to_real self) (FromInt.from_int 0))

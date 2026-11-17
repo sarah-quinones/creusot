@@ -18,14 +18,14 @@ type t_Choice'0
 
 type tup2_Choice_Choice = { f0'1: t_Choice; f1'1: t_Choice'0 }
 
-predicate premise_T1 (self: t_T1) (from: t_R1)
+function premise_T1 (self: t_T1) (from: t_R1) : bool
 
-predicate premise_T2 (self: t_T2) (from: t_R2)
+function premise_T2 (self: t_T2) (from: t_R2) : bool
 
-predicate premise_tup2_T1_T2 [@inline:trivial] (self: tup2_T1_T2) (from: tup2_R1_R2) =
+function premise_tup2_T1_T2 [@inline:trivial] (self: tup2_T1_T2) (from: tup2_R1_R2) : bool =
   premise_T1 self.f0 from.f0'0 /\ premise_T2 self.f1 from.f1'0
 
-meta "rewrite_def" predicate premise_tup2_T1_T2
+meta "rewrite_def" function premise_tup2_T1_T2
 
 meta "compute_max_steps" 1000000
 

@@ -2,9 +2,9 @@
 
 use creusot.int.Int64
 
-predicate inv_i64 [@inline:trivial] (_1: Int64.t) = true
+function inv_i64 [@inline:trivial] (_1: Int64.t) : bool = true
 
-meta "rewrite_def" predicate inv_i64
+meta "rewrite_def" function inv_i64
 
 meta "compute_max_steps" 1000000
 

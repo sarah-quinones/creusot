@@ -6,7 +6,7 @@ type t_Option_Self = None | Some t_Self
 
 function op_Self (self: t_Self) (other: t_Self) : t_Option_Self
 
-predicate incl_Self (self: t_Self) (other: t_Self)
+function incl_Self (self: t_Self) (other: t_Self) : bool
 
 axiom incl_Self_spec: forall self: t_Self, other: t_Self [incl_Self self other]. incl_Self self other
     = (exists factor: t_Self. op_Self self factor = Some other)

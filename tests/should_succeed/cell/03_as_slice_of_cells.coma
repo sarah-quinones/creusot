@@ -12,16 +12,16 @@ module M_splits_up
   
   type t_PredCell_u32
   
-  predicate index_Mapping_slice_u32_bool [@inline:trivial] (self: Map.map (Slice64.slice UInt32.t) bool) (a: Slice64.slice UInt32.t) =
-    Map.get self a
+  function index_Mapping_slice_u32_bool [@inline:trivial] (self: Map.map (Slice64.slice UInt32.t) bool) (a: Slice64.slice UInt32.t) : bool
+   = Map.get self a
   
-  meta "rewrite_def" predicate index_Mapping_slice_u32_bool
+  meta "rewrite_def" function index_Mapping_slice_u32_bool
   
   function view_PredCell_slice_u32 (self: t_PredCell_slice_u32) : Map.map (Slice64.slice UInt32.t) bool
   
-  predicate index_Mapping_u32_bool [@inline:trivial] (self: Map.map UInt32.t bool) (a: UInt32.t) = Map.get self a
+  function index_Mapping_u32_bool [@inline:trivial] (self: Map.map UInt32.t bool) (a: UInt32.t) : bool = Map.get self a
   
-  meta "rewrite_def" predicate index_Mapping_u32_bool
+  meta "rewrite_def" function index_Mapping_u32_bool
   
   function index_slice_u32 [@inline:trivial] (self: Slice64.slice UInt32.t) (ix: int) : UInt32.t =
     Seq.get (Slice64.view self) ix

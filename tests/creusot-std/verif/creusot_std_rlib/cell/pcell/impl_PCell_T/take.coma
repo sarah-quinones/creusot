@@ -5,22 +5,22 @@ use creusot.prelude.Any
 
 type t_T
 
-predicate precondition_default (self: ()) (args: ())
+function precondition_default (self: ()) (args: ()) : bool
 
 axiom precondition_fndef: forall args: () [precondition_default () args]. (let () = args in true)
     -> precondition_default () args
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate postcondition_default (self: ()) (args: ()) (result: t_T)
+function postcondition_default (self: ()) (args: ()) (result: t_T) : bool
 
 axiom postcondition_fndef:
   forall args: (), result: t_T [postcondition_default () args result]. postcondition_default () args result
     -> (let () = args in inv_T result)
 
-predicate postcondition_once_default (self: ()) (args: ()) (result: t_T) = postcondition_default self args result
+function postcondition_once_default (self: ()) (args: ()) (result: t_T) : bool = postcondition_default self args result
 
-meta "rewrite_def" predicate postcondition_once_default
+meta "rewrite_def" function postcondition_once_default
 
 let default_T (return (x: t_T)) = {[@stop_split] [@expl:default requires] precondition_default () ()}
   any

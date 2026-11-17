@@ -35,28 +35,28 @@ module M_knapsack01_dyn
   
   type t_Item_Name = { name: t_Name; weight: UInt64.t; value: UInt64.t }
   
-  predicate inv_Name (_1: t_Name)
+  function inv_Name (_1: t_Name) : bool
   
-  predicate inv_Item_Name (_1: t_Item_Name)
+  function inv_Item_Name (_1: t_Item_Name) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Item_Name [inv_Item_Name _1]. inv_Item_Name _1 = inv_Name _1.name
   
-  predicate invariant_ref_Item_Name [@inline:trivial] (self: t_Item_Name) = inv_Item_Name self
+  function invariant_ref_Item_Name [@inline:trivial] (self: t_Item_Name) : bool = inv_Item_Name self
   
-  meta "rewrite_def" predicate invariant_ref_Item_Name
+  meta "rewrite_def" function invariant_ref_Item_Name
   
-  predicate inv_ref_Item_Name [@inline:trivial] (_1: t_Item_Name) = invariant_ref_Item_Name _1
+  function inv_ref_Item_Name [@inline:trivial] (_1: t_Item_Name) : bool = invariant_ref_Item_Name _1
   
-  meta "rewrite_def" predicate inv_ref_Item_Name
+  meta "rewrite_def" function inv_ref_Item_Name
   
-  predicate invariant_Seq_Item_Name [@inline:trivial] (self: Seq.seq t_Item_Name) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_Item_Name (Seq.get self i)
+  function invariant_Seq_Item_Name [@inline:trivial] (self: Seq.seq t_Item_Name) : bool = forall i: int. 0 <= i
+        /\ i < Seq.length self -> inv_ref_Item_Name (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_Item_Name
+  meta "rewrite_def" function invariant_Seq_Item_Name
   
-  predicate inv_Seq_Item_Name [@inline:trivial] (_1: Seq.seq t_Item_Name) = invariant_Seq_Item_Name _1
+  function inv_Seq_Item_Name [@inline:trivial] (_1: Seq.seq t_Item_Name) : bool = invariant_Seq_Item_Name _1
   
-  meta "rewrite_def" predicate inv_Seq_Item_Name
+  meta "rewrite_def" function inv_Seq_Item_Name
   
   function view_Vec_Item_Name_Global (self: t_Vec_Item_Name_Global) : Seq.seq t_Item_Name
   
@@ -64,23 +64,23 @@ module M_knapsack01_dyn
     forall self: t_Vec_Item_Name_Global [view_Vec_Item_Name_Global self]. Seq.length (view_Vec_Item_Name_Global self)
       <= UInt64.t'int const_MAX
   
-  predicate invariant_Vec_Item_Name_Global (self: t_Vec_Item_Name_Global) =
+  function invariant_Vec_Item_Name_Global (self: t_Vec_Item_Name_Global) : bool =
     inv_Seq_Item_Name (view_Vec_Item_Name_Global self)
   
-  predicate inv_Vec_Item_Name_Global (_1: t_Vec_Item_Name_Global)
+  function inv_Vec_Item_Name_Global (_1: t_Vec_Item_Name_Global) : bool
   
   axiom inv_axiom'0: forall _1: t_Vec_Item_Name_Global [inv_Vec_Item_Name_Global _1]. inv_Vec_Item_Name_Global _1
       -> invariant_Vec_Item_Name_Global _1
   
-  predicate invariant_ref_Vec_Item_Name_Global [@inline:trivial] (self: t_Vec_Item_Name_Global) =
+  function invariant_ref_Vec_Item_Name_Global [@inline:trivial] (self: t_Vec_Item_Name_Global) : bool =
     inv_Vec_Item_Name_Global self
   
-  meta "rewrite_def" predicate invariant_ref_Vec_Item_Name_Global
+  meta "rewrite_def" function invariant_ref_Vec_Item_Name_Global
   
-  predicate inv_ref_Vec_Item_Name_Global [@inline:trivial] (_1: t_Vec_Item_Name_Global) =
+  function inv_ref_Vec_Item_Name_Global [@inline:trivial] (_1: t_Vec_Item_Name_Global) : bool =
     invariant_ref_Vec_Item_Name_Global _1
   
-  meta "rewrite_def" predicate inv_ref_Vec_Item_Name_Global
+  meta "rewrite_def" function inv_ref_Vec_Item_Name_Global
   
   let len_Item_Name (self: t_Vec_Item_Name_Global) (return (x: UInt64.t)) =
   {[@stop_split] [@expl:len 'self' type invariant] inv_ref_Vec_Item_Name_Global self}
@@ -111,13 +111,13 @@ module M_knapsack01_dyn
         -> index_Vec_Vec_usize_Global_Global result i = elem)}
       (! return {result}) ]
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   function m_Name (items: Seq.seq t_Item_Name) (i: int) (w: int) : int
   
@@ -139,15 +139,15 @@ module M_knapsack01_dyn
   axiom m_Name_spec: forall items: Seq.seq t_Item_Name, i: int, w: int [m_Name items i w]. 0 <= i
         /\ i <= Seq.length items -> 0 <= w -> ge_log_Int (m_Name items i w) 0
   
-  predicate in_bounds_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq t_Item_Name) =
-    UInt64.t'int self < Seq.length seq
+  function in_bounds_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq t_Item_Name) : bool = UInt64.t'int self
+    < Seq.length seq
   
-  meta "rewrite_def" predicate in_bounds_usize
+  meta "rewrite_def" function in_bounds_usize
   
-  predicate has_value_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq t_Item_Name) (out: t_Item_Name) =
+  function has_value_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq t_Item_Name) (out: t_Item_Name) : bool =
     Seq.get seq (UInt64.t'int self) = out
   
-  meta "rewrite_def" predicate has_value_usize
+  meta "rewrite_def" function has_value_usize
   
   let index_Vec_Item_Name_Global (self: t_Vec_Item_Name_Global) (index: UInt64.t) (return (x: t_Item_Name)) =
   {[@stop_split] [@expl:index_Vec_Item_Name_Global requires] ([@stop_split] [@expl:index 'self' type invariant] inv_ref_Vec_Item_Name_Global self)
@@ -158,15 +158,15 @@ module M_knapsack01_dyn
       /\ ([@stop_split] [@expl:index ensures] has_value_usize index (view_Vec_Item_Name_Global self) result)}
       (! return {result}) ]
   
-  predicate in_bounds_usize'0 [@inline:trivial] (self: UInt64.t) (seq: Seq.seq t_Vec_usize_Global) =
+  function in_bounds_usize'0 [@inline:trivial] (self: UInt64.t) (seq: Seq.seq t_Vec_usize_Global) : bool =
     UInt64.t'int self < Seq.length seq
   
-  meta "rewrite_def" predicate in_bounds_usize'0
+  meta "rewrite_def" function in_bounds_usize'0
   
-  predicate has_value_usize'0 [@inline:trivial] (self: UInt64.t) (seq: Seq.seq t_Vec_usize_Global) (out: t_Vec_usize_Global) =
-    Seq.get seq (UInt64.t'int self) = out
+  function has_value_usize'0 [@inline:trivial] (self: UInt64.t) (seq: Seq.seq t_Vec_usize_Global) (out: t_Vec_usize_Global) : bool
+   = Seq.get seq (UInt64.t'int self) = out
   
-  meta "rewrite_def" predicate has_value_usize'0
+  meta "rewrite_def" function has_value_usize'0
   
   let index_Vec_Vec_usize_Global_Global'0 (self: t_Vec_Vec_usize_Global_Global) (index: UInt64.t)
     (return (x: t_Vec_usize_Global)) =
@@ -176,15 +176,15 @@ module M_knapsack01_dyn
     {[@stop_split] [@expl:index ensures] has_value_usize'0 index (view_Vec_Vec_usize_Global_Global self) result}
       (! return {result}) ]
   
-  predicate in_bounds_usize'1 [@inline:trivial] (self: UInt64.t) (seq: Seq.seq UInt64.t) =
-    UInt64.t'int self < Seq.length seq
+  function in_bounds_usize'1 [@inline:trivial] (self: UInt64.t) (seq: Seq.seq UInt64.t) : bool = UInt64.t'int self
+    < Seq.length seq
   
-  meta "rewrite_def" predicate in_bounds_usize'1
+  meta "rewrite_def" function in_bounds_usize'1
   
-  predicate has_value_usize'1 [@inline:trivial] (self: UInt64.t) (seq: Seq.seq UInt64.t) (out: UInt64.t) =
+  function has_value_usize'1 [@inline:trivial] (self: UInt64.t) (seq: Seq.seq UInt64.t) (out: UInt64.t) : bool =
     Seq.get seq (UInt64.t'int self) = out
   
-  meta "rewrite_def" predicate has_value_usize'1
+  meta "rewrite_def" function has_value_usize'1
   
   let index_Vec_usize_Global'0 (self: t_Vec_usize_Global) (index: UInt64.t) (return (x: UInt64.t)) =
   {[@stop_split] [@expl:index requires] in_bounds_usize'1 index (view_Vec_usize_Global self)}
@@ -198,10 +198,10 @@ module M_knapsack01_dyn
       = MinMax.max (UInt64.t'int a) (UInt64.t'int b)}
       (! return {result}) ]
   
-  predicate resolve_elswhere_usize [@inline:trivial] (self: UInt64.t) (old': Seq.seq t_Vec_usize_Global) (fin: Seq.seq t_Vec_usize_Global) =
-    forall i: int. 0 <= i /\ i <> UInt64.t'int self /\ i < Seq.length old' -> Seq.get old' i = Seq.get fin i
+  function resolve_elswhere_usize [@inline:trivial] (self: UInt64.t) (old': Seq.seq t_Vec_usize_Global) (fin: Seq.seq t_Vec_usize_Global) : bool
+   = forall i: int. 0 <= i /\ i <> UInt64.t'int self /\ i < Seq.length old' -> Seq.get old' i = Seq.get fin i
   
-  meta "rewrite_def" predicate resolve_elswhere_usize
+  meta "rewrite_def" function resolve_elswhere_usize
   
   let index_mut_Vec_Vec_usize_Global_Global (self: MutBorrow.t t_Vec_Vec_usize_Global_Global) (index: UInt64.t)
     (return (x: MutBorrow.t t_Vec_usize_Global)) =
@@ -215,10 +215,10 @@ module M_knapsack01_dyn
       = Seq.length (view_Vec_Vec_usize_Global_Global self.current))}
       (! return {result}) ]
   
-  predicate resolve_elswhere_usize'0 [@inline:trivial] (self: UInt64.t) (old': Seq.seq UInt64.t) (fin: Seq.seq UInt64.t) =
-    forall i: int. 0 <= i /\ i <> UInt64.t'int self /\ i < Seq.length old' -> Seq.get old' i = Seq.get fin i
+  function resolve_elswhere_usize'0 [@inline:trivial] (self: UInt64.t) (old': Seq.seq UInt64.t) (fin: Seq.seq UInt64.t) : bool
+   = forall i: int. 0 <= i /\ i <> UInt64.t'int self /\ i < Seq.length old' -> Seq.get old' i = Seq.get fin i
   
-  meta "rewrite_def" predicate resolve_elswhere_usize'0
+  meta "rewrite_def" function resolve_elswhere_usize'0
   
   let index_mut_Vec_usize_Global (self: MutBorrow.t t_Vec_usize_Global) (index: UInt64.t)
     (return (x: MutBorrow.t UInt64.t)) =
@@ -232,33 +232,33 @@ module M_knapsack01_dyn
       = Seq.length (view_Vec_usize_Global self.current))}
       (! return {result}) ]
   
-  predicate resolve_refmut_usize [@inline:trivial] (_1: MutBorrow.t UInt64.t) = _1.final = _1.current
+  function resolve_refmut_usize [@inline:trivial] (_1: MutBorrow.t UInt64.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_usize
+  meta "rewrite_def" function resolve_refmut_usize
   
-  predicate resolve_refmut_Vec_usize_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_usize_Global) =
-    _1.final = _1.current
+  function resolve_refmut_Vec_usize_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_usize_Global) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Vec_usize_Global
+  meta "rewrite_def" function resolve_refmut_Vec_usize_Global
   
   type t_Vec_ref_Item_Name_Global
   
-  predicate invariant_ref_ref_Item_Name [@inline:trivial] (self: t_Item_Name) = inv_ref_Item_Name self
+  function invariant_ref_ref_Item_Name [@inline:trivial] (self: t_Item_Name) : bool = inv_ref_Item_Name self
   
-  meta "rewrite_def" predicate invariant_ref_ref_Item_Name
+  meta "rewrite_def" function invariant_ref_ref_Item_Name
   
-  predicate inv_ref_ref_Item_Name [@inline:trivial] (_1: t_Item_Name) = invariant_ref_ref_Item_Name _1
+  function inv_ref_ref_Item_Name [@inline:trivial] (_1: t_Item_Name) : bool = invariant_ref_ref_Item_Name _1
   
-  meta "rewrite_def" predicate inv_ref_ref_Item_Name
+  meta "rewrite_def" function inv_ref_ref_Item_Name
   
-  predicate invariant_Seq_ref_Item_Name [@inline:trivial] (self: Seq.seq t_Item_Name) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_ref_Item_Name (Seq.get self i)
+  function invariant_Seq_ref_Item_Name [@inline:trivial] (self: Seq.seq t_Item_Name) : bool = forall i: int. 0 <= i
+        /\ i < Seq.length self -> inv_ref_ref_Item_Name (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_ref_Item_Name
+  meta "rewrite_def" function invariant_Seq_ref_Item_Name
   
-  predicate inv_Seq_ref_Item_Name [@inline:trivial] (_1: Seq.seq t_Item_Name) = invariant_Seq_ref_Item_Name _1
+  function inv_Seq_ref_Item_Name [@inline:trivial] (_1: Seq.seq t_Item_Name) : bool = invariant_Seq_ref_Item_Name _1
   
-  meta "rewrite_def" predicate inv_Seq_ref_Item_Name
+  meta "rewrite_def" function inv_Seq_ref_Item_Name
   
   function view_Vec_ref_Item_Name_Global (self: t_Vec_ref_Item_Name_Global) : Seq.seq t_Item_Name
   
@@ -266,10 +266,10 @@ module M_knapsack01_dyn
     forall self: t_Vec_ref_Item_Name_Global [view_Vec_ref_Item_Name_Global self]. Seq.length (view_Vec_ref_Item_Name_Global self)
       <= UInt64.t'int const_MAX
   
-  predicate invariant_Vec_ref_Item_Name_Global (self: t_Vec_ref_Item_Name_Global) =
+  function invariant_Vec_ref_Item_Name_Global (self: t_Vec_ref_Item_Name_Global) : bool =
     inv_Seq_ref_Item_Name (view_Vec_ref_Item_Name_Global self)
   
-  predicate inv_Vec_ref_Item_Name_Global (_1: t_Vec_ref_Item_Name_Global)
+  function inv_Vec_ref_Item_Name_Global (_1: t_Vec_ref_Item_Name_Global) : bool
   
   axiom inv_axiom'1:
     forall _1: t_Vec_ref_Item_Name_Global [inv_Vec_ref_Item_Name_Global _1]. inv_Vec_ref_Item_Name_Global _1
@@ -281,15 +281,15 @@ module M_knapsack01_dyn
       /\ ([@stop_split] [@expl:with_capacity ensures] Seq.length (view_Vec_ref_Item_Name_Global result) = 0)}
       (! return {result}) ]
   
-  predicate invariant_refmut_Vec_ref_Item_Name_Global [@inline:trivial] (self: MutBorrow.t t_Vec_ref_Item_Name_Global) =
-    inv_Vec_ref_Item_Name_Global self.current /\ inv_Vec_ref_Item_Name_Global self.final
+  function invariant_refmut_Vec_ref_Item_Name_Global [@inline:trivial] (self: MutBorrow.t t_Vec_ref_Item_Name_Global) : bool
+   = inv_Vec_ref_Item_Name_Global self.current /\ inv_Vec_ref_Item_Name_Global self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Vec_ref_Item_Name_Global
+  meta "rewrite_def" function invariant_refmut_Vec_ref_Item_Name_Global
   
-  predicate inv_refmut_Vec_ref_Item_Name_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_ref_Item_Name_Global) =
+  function inv_refmut_Vec_ref_Item_Name_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_ref_Item_Name_Global) : bool =
     invariant_refmut_Vec_ref_Item_Name_Global _1
   
-  meta "rewrite_def" predicate inv_refmut_Vec_ref_Item_Name_Global
+  meta "rewrite_def" function inv_refmut_Vec_ref_Item_Name_Global
   
   let push_ref_Item_Name (self: MutBorrow.t t_Vec_ref_Item_Name_Global) (value'0: t_Item_Name) (return (x: ())) =
   {[@stop_split] [@expl:push_ref_Item_Name requires] ([@stop_split] [@expl:push 'self' type invariant] inv_refmut_Vec_ref_Item_Name_Global self)
@@ -504,18 +504,18 @@ module M_m
   
   type t_Item_Name = { name: t_Name; weight: UInt64.t; value: UInt64.t }
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
-  predicate well_founded_relation_Int [@inline:trivial] (self: int) (other: int) =
-    ge_log_Int self 0 /\ gt_log_Int self other
+  function well_founded_relation_Int [@inline:trivial] (self: int) (other: int) : bool = ge_log_Int self 0
+    /\ gt_log_Int self other
   
-  meta "rewrite_def" predicate well_founded_relation_Int
+  meta "rewrite_def" function well_founded_relation_Int
   
   meta "compute_max_steps" 1000000
   

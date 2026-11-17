@@ -28,10 +28,10 @@ module M_impl_Board__available (* Board *)
   
   type t_Vec_usize_Global
   
-  predicate in_bounds_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq t_Vec_usize_Global) =
+  function in_bounds_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq t_Vec_usize_Global) : bool =
     UInt64.t'int self < Seq.length seq
   
-  meta "rewrite_def" predicate in_bounds_usize
+  meta "rewrite_def" function in_bounds_usize
   
   constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
   
@@ -41,10 +41,10 @@ module M_impl_Board__available (* Board *)
     forall self: t_Vec_Vec_usize_Global_Global [view_Vec_Vec_usize_Global_Global self]. Seq.length (view_Vec_Vec_usize_Global_Global self)
       <= UInt64.t'int const_MAX
   
-  predicate has_value_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq t_Vec_usize_Global) (out: t_Vec_usize_Global) =
-    Seq.get seq (UInt64.t'int self) = out
+  function has_value_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq t_Vec_usize_Global) (out: t_Vec_usize_Global) : bool
+   = Seq.get seq (UInt64.t'int self) = out
   
-  meta "rewrite_def" predicate has_value_usize
+  meta "rewrite_def" function has_value_usize
   
   let index_Vec_Vec_usize_Global_Global (self: t_Vec_Vec_usize_Global_Global) (index: UInt64.t)
     (return (x'0: t_Vec_usize_Global)) =
@@ -54,10 +54,10 @@ module M_impl_Board__available (* Board *)
     {[@stop_split] [@expl:index ensures] has_value_usize index (view_Vec_Vec_usize_Global_Global self) result}
       (! return {result}) ]
   
-  predicate in_bounds_usize'0 [@inline:trivial] (self: UInt64.t) (seq: Seq.seq UInt64.t) =
-    UInt64.t'int self < Seq.length seq
+  function in_bounds_usize'0 [@inline:trivial] (self: UInt64.t) (seq: Seq.seq UInt64.t) : bool = UInt64.t'int self
+    < Seq.length seq
   
-  meta "rewrite_def" predicate in_bounds_usize'0
+  meta "rewrite_def" function in_bounds_usize'0
   
   function view_Vec_usize_Global (self: t_Vec_usize_Global) : Seq.seq UInt64.t
   
@@ -65,10 +65,10 @@ module M_impl_Board__available (* Board *)
     forall self: t_Vec_usize_Global [view_Vec_usize_Global self]. Seq.length (view_Vec_usize_Global self)
       <= UInt64.t'int const_MAX
   
-  predicate has_value_usize'0 [@inline:trivial] (self: UInt64.t) (seq: Seq.seq UInt64.t) (out: UInt64.t) =
+  function has_value_usize'0 [@inline:trivial] (self: UInt64.t) (seq: Seq.seq UInt64.t) (out: UInt64.t) : bool =
     Seq.get seq (UInt64.t'int self) = out
   
-  meta "rewrite_def" predicate has_value_usize'0
+  meta "rewrite_def" function has_value_usize'0
   
   let index_Vec_usize_Global (self: t_Vec_usize_Global) (index: UInt64.t) (return (x'0: UInt64.t)) =
   {[@stop_split] [@expl:index requires] in_bounds_usize'0 index (view_Vec_usize_Global self)}
@@ -82,14 +82,12 @@ module M_impl_Board__available (* Board *)
   
   meta "rewrite_def" function index_Vec_Vec_usize_Global_Global'0
   
-  predicate wf (self: t_Board) =
-    UInt64.t'int self.size <= 1000
+  function wf (self: t_Board) : bool = UInt64.t'int self.size <= 1000
     /\ Seq.length (view_Vec_Vec_usize_Global_Global self.field) = UInt64.t'int self.size
     /\ (forall i: int. 0 <= i /\ i < UInt64.t'int self.size
       -> Seq.length (view_Vec_usize_Global (index_Vec_Vec_usize_Global_Global'0 self.field i)) = UInt64.t'int self.size)
   
-  predicate in_bounds (self: t_Board) (p: t_Point) =
-    0 <= Int64.to_int p.x
+  function in_bounds (self: t_Board) (p: t_Point) : bool = 0 <= Int64.to_int p.x
     /\ Int64.to_int p.x < UInt64.t'int self.size /\ 0 <= Int64.to_int p.y /\ Int64.to_int p.y < UInt64.t'int self.size
   
   meta "compute_max_steps" 1000000
@@ -173,7 +171,7 @@ module M_impl_Board__count_degree (* Board *)
   
   type t_IntoIter_tup2_isize_isize_Global
   
-  predicate inv_IntoIter_tup2_isize_isize_Global (_1: t_IntoIter_tup2_isize_isize_Global)
+  function inv_IntoIter_tup2_isize_isize_Global (_1: t_IntoIter_tup2_isize_isize_Global) : bool
   
   function view_IntoIter_tup2_isize_isize_Global (self: t_IntoIter_tup2_isize_isize_Global) : Seq.seq tup2_isize_isize
   
@@ -187,18 +185,18 @@ module M_impl_Board__count_degree (* Board *)
   
   type t_Option_tup2_isize_isize = None | Some tup2_isize_isize
   
-  predicate invariant_refmut_IntoIter_tup2_isize_isize_Global [@inline:trivial] (self: MutBorrow.t t_IntoIter_tup2_isize_isize_Global) =
-    inv_IntoIter_tup2_isize_isize_Global self.current /\ inv_IntoIter_tup2_isize_isize_Global self.final
+  function invariant_refmut_IntoIter_tup2_isize_isize_Global [@inline:trivial] (self: MutBorrow.t t_IntoIter_tup2_isize_isize_Global) : bool
+   = inv_IntoIter_tup2_isize_isize_Global self.current /\ inv_IntoIter_tup2_isize_isize_Global self.final
   
-  meta "rewrite_def" predicate invariant_refmut_IntoIter_tup2_isize_isize_Global
+  meta "rewrite_def" function invariant_refmut_IntoIter_tup2_isize_isize_Global
   
-  predicate inv_refmut_IntoIter_tup2_isize_isize_Global [@inline:trivial] (_1: MutBorrow.t t_IntoIter_tup2_isize_isize_Global) =
-    invariant_refmut_IntoIter_tup2_isize_isize_Global _1
+  function inv_refmut_IntoIter_tup2_isize_isize_Global [@inline:trivial] (_1: MutBorrow.t t_IntoIter_tup2_isize_isize_Global) : bool
+   = invariant_refmut_IntoIter_tup2_isize_isize_Global _1
   
-  meta "rewrite_def" predicate inv_refmut_IntoIter_tup2_isize_isize_Global
+  meta "rewrite_def" function inv_refmut_IntoIter_tup2_isize_isize_Global
   
-  predicate produces_IntoIter_tup2_isize_isize_Global (self: t_IntoIter_tup2_isize_isize_Global) (visited: Seq.seq tup2_isize_isize) (rhs: t_IntoIter_tup2_isize_isize_Global) =
-    view_IntoIter_tup2_isize_isize_Global self = Seq.(++) visited (view_IntoIter_tup2_isize_isize_Global rhs)
+  function produces_IntoIter_tup2_isize_isize_Global (self: t_IntoIter_tup2_isize_isize_Global) (visited: Seq.seq tup2_isize_isize) (rhs: t_IntoIter_tup2_isize_isize_Global) : bool
+   = view_IntoIter_tup2_isize_isize_Global self = Seq.(++) visited (view_IntoIter_tup2_isize_isize_Global rhs)
   
   function produces_trans_IntoIter_tup2_isize_isize_Global (a: t_IntoIter_tup2_isize_isize_Global) (ab: Seq.seq tup2_isize_isize) (b: t_IntoIter_tup2_isize_isize_Global) (bc: Seq.seq tup2_isize_isize) (c: t_IntoIter_tup2_isize_isize_Global) : ()
   
@@ -212,12 +210,12 @@ module M_impl_Board__count_degree (* Board *)
   axiom produces_refl_IntoIter_tup2_isize_isize_Global_spec:
     forall self: t_IntoIter_tup2_isize_isize_Global. produces_IntoIter_tup2_isize_isize_Global self (Seq.empty: Seq.seq tup2_isize_isize) self
   
-  predicate resolve_refmut_IntoIter_tup2_isize_isize_Global [@inline:trivial] (_1: MutBorrow.t t_IntoIter_tup2_isize_isize_Global) =
-    _1.final = _1.current
+  function resolve_refmut_IntoIter_tup2_isize_isize_Global [@inline:trivial] (_1: MutBorrow.t t_IntoIter_tup2_isize_isize_Global) : bool
+   = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_IntoIter_tup2_isize_isize_Global
+  meta "rewrite_def" function resolve_refmut_IntoIter_tup2_isize_isize_Global
   
-  predicate completed_IntoIter_tup2_isize_isize_Global (self: MutBorrow.t t_IntoIter_tup2_isize_isize_Global) =
+  function completed_IntoIter_tup2_isize_isize_Global (self: MutBorrow.t t_IntoIter_tup2_isize_isize_Global) : bool =
     resolve_refmut_IntoIter_tup2_isize_isize_Global self
     /\ view_IntoIter_tup2_isize_isize_Global self.current = (Seq.empty: Seq.seq tup2_isize_isize)
   
@@ -231,9 +229,9 @@ module M_impl_Board__count_degree (* Board *)
         end}
       (! return {result}) ]
   
-  predicate inv_Seq_tup2_isize_isize [@inline:trivial] (_1: Seq.seq tup2_isize_isize) = true
+  function inv_Seq_tup2_isize_isize [@inline:trivial] (_1: Seq.seq tup2_isize_isize) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_tup2_isize_isize
+  meta "rewrite_def" function inv_Seq_tup2_isize_isize
   
   let elim_Some (_x: t_Option_tup2_isize_isize) (return (f0'0: tup2_isize_isize)) = any
     [ _k (f0'0: tup2_isize_isize) -> {Some f0'0 = _x} (! return {f0'0})
@@ -281,14 +279,12 @@ module M_impl_Board__count_degree (* Board *)
   
   meta "rewrite_def" function index_Vec_Vec_usize_Global_Global
   
-  predicate wf (self: t_Board) =
-    UInt64.t'int self.size <= 1000
+  function wf (self: t_Board) : bool = UInt64.t'int self.size <= 1000
     /\ Seq.length (view_Vec_Vec_usize_Global_Global self.field) = UInt64.t'int self.size
     /\ (forall i: int. 0 <= i /\ i < UInt64.t'int self.size
       -> Seq.length (view_Vec_usize_Global (index_Vec_Vec_usize_Global_Global self.field i)) = UInt64.t'int self.size)
   
-  predicate in_bounds (self: t_Board) (p: t_Point) =
-    0 <= Int64.to_int p.x
+  function in_bounds (self: t_Board) (p: t_Point) : bool = 0 <= Int64.to_int p.x
     /\ Int64.to_int p.x < UInt64.t'int self.size /\ 0 <= Int64.to_int p.y /\ Int64.to_int p.y < UInt64.t'int self.size
   
   let available (self: t_Board) (p: t_Point) (return (x'0: bool)) = {[@stop_split] [@expl:available requires] wf self}
@@ -296,17 +292,17 @@ module M_impl_Board__count_degree (* Board *)
     [ return (result: bool) -> {[@stop_split] [@expl:available ensures] result -> in_bounds self p}
       (! return {result}) ]
   
-  predicate resolve_tup2_isize_isize [@inline:trivial] (_1: tup2_isize_isize) = true
+  function resolve_tup2_isize_isize [@inline:trivial] (_1: tup2_isize_isize) : bool = true
   
-  meta "rewrite_def" predicate resolve_tup2_isize_isize
+  meta "rewrite_def" function resolve_tup2_isize_isize
   
-  predicate resolve_IntoIter_tup2_isize_isize_Global [@inline:trivial] (self: t_IntoIter_tup2_isize_isize_Global) =
-    forall i: int. 0 <= i /\ i < Seq.length (view_IntoIter_tup2_isize_isize_Global self)
+  function resolve_IntoIter_tup2_isize_isize_Global [@inline:trivial] (self: t_IntoIter_tup2_isize_isize_Global) : bool
+   = forall i: int. 0 <= i /\ i < Seq.length (view_IntoIter_tup2_isize_isize_Global self)
       -> resolve_tup2_isize_isize (Seq.get (view_IntoIter_tup2_isize_isize_Global self) i)
   
-  meta "rewrite_def" predicate resolve_IntoIter_tup2_isize_isize_Global
+  meta "rewrite_def" function resolve_IntoIter_tup2_isize_isize_Global
   
-  predicate resolve_IntoIter_tup2_isize_isize_Global'0 (_1: t_IntoIter_tup2_isize_isize_Global)
+  function resolve_IntoIter_tup2_isize_isize_Global'0 (_1: t_IntoIter_tup2_isize_isize_Global) : bool
   
   axiom resolve_axiom:
     forall _1: t_IntoIter_tup2_isize_isize_Global [resolve_IntoIter_tup2_isize_isize_Global'0 _1]. resolve_IntoIter_tup2_isize_isize_Global'0 _1
@@ -395,9 +391,9 @@ module M_impl_Board__new (* Board *)
   
   type closure3 = { c0: UInt64.t }
   
-  predicate resolve_refmut_closure3 [@inline:trivial] (_1: MutBorrow.t closure3) = _1.final = _1.current
+  function resolve_refmut_closure3 [@inline:trivial] (_1: MutBorrow.t closure3) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_closure3
+  meta "rewrite_def" function resolve_refmut_closure3
   
   type t_Vec_usize_Global
   
@@ -422,7 +418,7 @@ module M_impl_Board__new (* Board *)
         -> index_Vec_usize_Global result i = elem)}
       (! return {result}) ]
   
-  predicate hist_inv_closure3 (self: closure3) (result_state: closure3) = result_state.c0 = self.c0
+  function hist_inv_closure3 (self: closure3) (result_state: closure3) : bool = result_state.c0 = self.c0
   
   let closure3 (self: MutBorrow.t closure3) (_0: UInt64.t) (_1: Seq.seq UInt64.t) (return (x: t_Vec_usize_Global)) =
   (! bb0
@@ -444,12 +440,12 @@ module M_impl_Board__new (* Board *)
   
   meta "rewrite_def" function deep_model_usize
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
-  predicate produces_Range_usize (self: t_Range_usize) (visited: Seq.seq UInt64.t) (o: t_Range_usize) =
-    self.end' = o.end'
+  function produces_Range_usize (self: t_Range_usize) (visited: Seq.seq UInt64.t) (o: t_Range_usize) : bool = self.end'
+      = o.end'
     /\ deep_model_usize self.start <= deep_model_usize o.start
     /\ (gt_log_Int (Seq.length visited) 0 -> deep_model_usize o.start <= deep_model_usize o.end')
     /\ Seq.length visited = deep_model_usize o.start - deep_model_usize self.start
@@ -480,78 +476,75 @@ module M_impl_Board__new (* Board *)
   
   type t_MapInv_Range_usize_closure3 = { iter: t_Range_usize; func: closure3; produced: Seq.seq UInt64.t }
   
-  predicate inv_usize [@inline:trivial] (_1: UInt64.t) = true
+  function inv_usize [@inline:trivial] (_1: UInt64.t) : bool = true
   
-  meta "rewrite_def" predicate inv_usize
+  meta "rewrite_def" function inv_usize
   
   type tup2_usize_Snapshot_Seq_usize = { f0: UInt64.t; f1: Seq.seq UInt64.t }
   
-  predicate precondition_closure3 (self: closure3) (args: tup2_usize_Snapshot_Seq_usize) =
+  function precondition_closure3 (self: closure3) (args: tup2_usize_Snapshot_Seq_usize) : bool =
     let {f0 = _0; f1 = _1} = args in true
   
-  meta "rewrite_def" predicate precondition_closure3
+  meta "rewrite_def" function precondition_closure3
   
-  predicate resolve_refmut_Range_usize [@inline:trivial] (_1: MutBorrow.t t_Range_usize) = _1.final = _1.current
+  function resolve_refmut_Range_usize [@inline:trivial] (_1: MutBorrow.t t_Range_usize) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Range_usize
+  meta "rewrite_def" function resolve_refmut_Range_usize
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate completed_Range_usize (self: MutBorrow.t t_Range_usize) =
-    resolve_refmut_Range_usize self
+  function completed_Range_usize (self: MutBorrow.t t_Range_usize) : bool = resolve_refmut_Range_usize self
     /\ ge_log_Int (deep_model_usize self.current.start) (deep_model_usize self.current.end')
   
-  predicate next_precondition_Range_usize [@inline:trivial] (iter'0: t_Range_usize) (func'0: closure3) (produced'0: Seq.seq UInt64.t) =
-    forall e: UInt64.t, i: t_Range_usize. inv_usize e /\ produces_Range_usize iter'0 (Seq.singleton e) i
+  function next_precondition_Range_usize [@inline:trivial] (iter'0: t_Range_usize) (func'0: closure3) (produced'0: Seq.seq UInt64.t) : bool
+   = forall e: UInt64.t, i: t_Range_usize. inv_usize e /\ produces_Range_usize iter'0 (Seq.singleton e) i
       -> precondition_closure3 func'0 { f0 = e; f1 = produced'0 }
   
-  meta "rewrite_def" predicate next_precondition_Range_usize
+  meta "rewrite_def" function next_precondition_Range_usize
   
-  predicate inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) = true
+  function inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_usize
+  meta "rewrite_def" function inv_Seq_usize
   
-  predicate inv_refmut_closure3 [@inline:trivial] (_1: MutBorrow.t closure3) = true
+  function inv_refmut_closure3 [@inline:trivial] (_1: MutBorrow.t closure3) : bool = true
   
-  meta "rewrite_def" predicate inv_refmut_closure3
+  meta "rewrite_def" function inv_refmut_closure3
   
-  predicate postcondition_mut_closure3 (self: closure3) (args: tup2_usize_Snapshot_Seq_usize) (result_state: closure3) (result: t_Vec_usize_Global) =
-    let {f0 = _0; f1 = _1} = args in Seq.length (view_Vec_usize_Global result) = UInt64.t'int result_state.c0
+  function postcondition_mut_closure3 (self: closure3) (args: tup2_usize_Snapshot_Seq_usize) (result_state: closure3) (result: t_Vec_usize_Global) : bool
+   = let {f0 = _0; f1 = _1} = args in Seq.length (view_Vec_usize_Global result) = UInt64.t'int result_state.c0
     /\ hist_inv_closure3 self result_state
   
-  meta "rewrite_def" predicate postcondition_mut_closure3
+  meta "rewrite_def" function postcondition_mut_closure3
   
-  predicate preservation_Range_usize [@inline:trivial] (iter'0: t_Range_usize) (func'0: closure3) =
+  function preservation_Range_usize [@inline:trivial] (iter'0: t_Range_usize) (func'0: closure3) : bool =
     forall s: Seq.seq UInt64.t, e1: UInt64.t, e2: UInt64.t, f: MutBorrow.t closure3, b: t_Vec_usize_Global, i: t_Range_usize. hist_inv_closure3 func'0 f.current
       -> inv_Seq_usize s /\ inv_usize e1 /\ inv_usize e2 /\ inv_refmut_closure3 f
       -> produces_Range_usize iter'0 (Seq.snoc (Seq.snoc s e1) e2) i
       -> postcondition_mut_closure3 f.current { f0 = e1; f1 = s } f.final b
       -> precondition_closure3 f.final { f0 = e2; f1 = Seq.snoc s e1 }
   
-  meta "rewrite_def" predicate preservation_Range_usize
+  meta "rewrite_def" function preservation_Range_usize
   
-  predicate reinitialize_Range_usize [@inline:trivial] =
-    forall iter'0: MutBorrow.t t_Range_usize, func'0: closure3. completed_Range_usize iter'0
-      -> next_precondition_Range_usize iter'0.final func'0 (Seq.empty: Seq.seq UInt64.t)
-      /\ preservation_Range_usize iter'0.final func'0
+  constant reinitialize_Range_usize: bool = forall iter'0: MutBorrow.t t_Range_usize, func'0: closure3. completed_Range_usize iter'0
+    -> next_precondition_Range_usize iter'0.final func'0 (Seq.empty: Seq.seq UInt64.t)
+    /\ preservation_Range_usize iter'0.final func'0
   
-  meta "rewrite_def" predicate reinitialize_Range_usize
+  meta "rewrite_def" constant reinitialize_Range_usize
   
-  predicate preservation_inv_Range_usize (iter'0: t_Range_usize) (func'0: closure3) (produced'0: Seq.seq UInt64.t)
+  function preservation_inv_Range_usize (iter'0: t_Range_usize) (func'0: closure3) (produced'0: Seq.seq UInt64.t) : bool
   
   axiom preservation_inv_Range_usize_spec:
     forall iter'0: t_Range_usize, func'0: closure3, produced'0: Seq.seq UInt64.t [preservation_inv_Range_usize iter'0 func'0 produced'0]. produced'0
         = (Seq.empty: Seq.seq UInt64.t)
       -> preservation_inv_Range_usize iter'0 func'0 produced'0 = preservation_Range_usize iter'0 func'0
   
-  predicate invariant_MapInv_Range_usize_closure3 (self: t_MapInv_Range_usize_closure3) =
-    reinitialize_Range_usize
+  function invariant_MapInv_Range_usize_closure3 (self: t_MapInv_Range_usize_closure3) : bool = reinitialize_Range_usize
     /\ preservation_inv_Range_usize self.iter self.func self.produced
     /\ next_precondition_Range_usize self.iter self.func self.produced
   
-  predicate inv_MapInv_Range_usize_closure3 (_1: t_MapInv_Range_usize_closure3)
+  function inv_MapInv_Range_usize_closure3 (_1: t_MapInv_Range_usize_closure3) : bool
   
   axiom inv_axiom [@rewrite]:
     forall _1: t_MapInv_Range_usize_closure3 [inv_MapInv_Range_usize_closure3 _1]. inv_MapInv_Range_usize_closure3 _1
@@ -571,15 +564,15 @@ module M_impl_Board__new (* Board *)
   
   type t_Vec_Vec_usize_Global_Global
   
-  predicate precondition_into_iter (self: ()) (args: t_MapInv_Range_usize_closure3) =
+  function precondition_into_iter (self: ()) (args: t_MapInv_Range_usize_closure3) : bool =
     let self'0 = args in inv_MapInv_Range_usize_closure3 self'0
   
-  meta "rewrite_def" predicate precondition_into_iter
+  meta "rewrite_def" function precondition_into_iter
   
-  predicate precondition_from_iter (self: ()) (args: t_MapInv_Range_usize_closure3) =
+  function precondition_from_iter (self: ()) (args: t_MapInv_Range_usize_closure3) : bool =
     let iter'0 = args in inv_MapInv_Range_usize_closure3 iter'0 /\ precondition_into_iter () iter'0
   
-  meta "rewrite_def" predicate precondition_from_iter
+  meta "rewrite_def" function precondition_from_iter
   
   let into_iter_MapInv_Range_usize_closure3 (self: t_MapInv_Range_usize_closure3)
     (return (x: t_MapInv_Range_usize_closure3)) =
@@ -590,13 +583,13 @@ module M_impl_Board__new (* Board *)
       /\ ([@stop_split] [@expl:into_iter ensures] result = self)}
       (! return {result}) ]
   
-  predicate postcondition_into_iter (self: ()) (args: t_MapInv_Range_usize_closure3) (result: t_MapInv_Range_usize_closure3) =
-    let self'0 = args in inv_MapInv_Range_usize_closure3 result /\ result = self'0
+  function postcondition_into_iter (self: ()) (args: t_MapInv_Range_usize_closure3) (result: t_MapInv_Range_usize_closure3) : bool
+   = let self'0 = args in inv_MapInv_Range_usize_closure3 result /\ result = self'0
   
-  meta "rewrite_def" predicate postcondition_into_iter
+  meta "rewrite_def" function postcondition_into_iter
   
-  predicate produces_MapInv_Range_usize_closure3 [@inline:trivial] (self: t_MapInv_Range_usize_closure3) (visited: Seq.seq t_Vec_usize_Global) (succ: t_MapInv_Range_usize_closure3) =
-    hist_inv_closure3 self.func succ.func
+  function produces_MapInv_Range_usize_closure3 [@inline:trivial] (self: t_MapInv_Range_usize_closure3) (visited: Seq.seq t_Vec_usize_Global) (succ: t_MapInv_Range_usize_closure3) : bool
+   = hist_inv_closure3 self.func succ.func
     /\ (exists fs: Seq.seq (MutBorrow.t closure3). Seq.length fs = Seq.length visited
       /\ (exists s: Seq.seq UInt64.t. Seq.length s = Seq.length visited
         /\ produces_Range_usize self.iter s succ.iter
@@ -612,7 +605,7 @@ module M_impl_Board__new (* Board *)
           /\ postcondition_mut_closure3 (Seq.get fs i).current { f0 = Seq.get s i;
                                                                  f1 = Seq.(++) self.produced (Seq.([..]) s 0 i) } (Seq.get fs i).final (Seq.get visited i))))
   
-  meta "rewrite_def" predicate produces_MapInv_Range_usize_closure3
+  meta "rewrite_def" function produces_MapInv_Range_usize_closure3
   
   function produces_trans_MapInv_Range_usize_closure3 (a: t_MapInv_Range_usize_closure3) (ab: Seq.seq t_Vec_usize_Global) (b: t_MapInv_Range_usize_closure3) (bc: Seq.seq t_Vec_usize_Global) (c: t_MapInv_Range_usize_closure3) : ()
   
@@ -631,14 +624,14 @@ module M_impl_Board__new (* Board *)
     forall self: t_Vec_Vec_usize_Global_Global [view_Vec_Vec_usize_Global_Global self]. Seq.length (view_Vec_Vec_usize_Global_Global self)
       <= UInt64.t'int const_MAX
   
-  predicate completed_MapInv_Range_usize_closure3 (self: MutBorrow.t t_MapInv_Range_usize_closure3) =
+  function completed_MapInv_Range_usize_closure3 (self: MutBorrow.t t_MapInv_Range_usize_closure3) : bool =
     self.final.produced = (Seq.empty: Seq.seq UInt64.t)
     /\ completed_Range_usize (MutBorrow.borrow_logic self.current.iter self.final.iter (MutBorrow.inherit_id (MutBorrow.get_id self) 0))
     /\ self.current.func = self.final.func
   
-  predicate resolve_MapInv_Range_usize_closure3 [@inline:trivial] (_1: t_MapInv_Range_usize_closure3) = true
+  function resolve_MapInv_Range_usize_closure3 [@inline:trivial] (_1: t_MapInv_Range_usize_closure3) : bool = true
   
-  meta "rewrite_def" predicate resolve_MapInv_Range_usize_closure3
+  meta "rewrite_def" function resolve_MapInv_Range_usize_closure3
   
   let from_iter_Vec_Vec_usize_Global_Global (iter'0: t_MapInv_Range_usize_closure3)
     (return (x: t_Vec_Vec_usize_Global_Global)) =
@@ -651,12 +644,13 @@ module M_impl_Board__new (* Board *)
         /\ completed_MapInv_Range_usize_closure3 done' /\ resolve_MapInv_Range_usize_closure3 done'.final}
       (! return {result}) ]
   
-  predicate postcondition_from_iter (self: ()) (args: t_MapInv_Range_usize_closure3) (result: t_Vec_Vec_usize_Global_Global) =
+  function postcondition_from_iter (self: ()) (args: t_MapInv_Range_usize_closure3) (result: t_Vec_Vec_usize_Global_Global) : bool
+   =
     let iter'0 = args in exists into_iter: t_MapInv_Range_usize_closure3, done': MutBorrow.t t_MapInv_Range_usize_closure3. postcondition_into_iter () iter'0 into_iter
       /\ produces_MapInv_Range_usize_closure3 into_iter (view_Vec_Vec_usize_Global_Global result) done'.current
       /\ completed_MapInv_Range_usize_closure3 done' /\ resolve_MapInv_Range_usize_closure3 done'.final
   
-  meta "rewrite_def" predicate postcondition_from_iter
+  meta "rewrite_def" function postcondition_from_iter
   
   let collect_MapInv_Range_usize_closure3 (self: t_MapInv_Range_usize_closure3)
     (return (x: t_Vec_Vec_usize_Global_Global)) =
@@ -674,8 +668,7 @@ module M_impl_Board__new (* Board *)
   
   meta "rewrite_def" function index_Vec_Vec_usize_Global_Global
   
-  predicate wf (self: t_Board) =
-    UInt64.t'int self.size <= 1000
+  function wf (self: t_Board) : bool = UInt64.t'int self.size <= 1000
     /\ Seq.length (view_Vec_Vec_usize_Global_Global self.field) = UInt64.t'int self.size
     /\ (forall i: int. 0 <= i /\ i < UInt64.t'int self.size
       -> Seq.length (view_Vec_usize_Global (index_Vec_Vec_usize_Global_Global self.field i)) = UInt64.t'int self.size)
@@ -720,10 +713,10 @@ module M_impl_Board__set (* Board *)
   
   type t_Vec_usize_Global
   
-  predicate in_bounds_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq t_Vec_usize_Global) =
+  function in_bounds_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq t_Vec_usize_Global) : bool =
     UInt64.t'int self < Seq.length seq
   
-  meta "rewrite_def" predicate in_bounds_usize
+  meta "rewrite_def" function in_bounds_usize
   
   constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
   
@@ -733,15 +726,15 @@ module M_impl_Board__set (* Board *)
     forall self: t_Vec_Vec_usize_Global_Global [view_Vec_Vec_usize_Global_Global self]. Seq.length (view_Vec_Vec_usize_Global_Global self)
       <= UInt64.t'int const_MAX
   
-  predicate has_value_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq t_Vec_usize_Global) (out: t_Vec_usize_Global) =
-    Seq.get seq (UInt64.t'int self) = out
+  function has_value_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq t_Vec_usize_Global) (out: t_Vec_usize_Global) : bool
+   = Seq.get seq (UInt64.t'int self) = out
   
-  meta "rewrite_def" predicate has_value_usize
+  meta "rewrite_def" function has_value_usize
   
-  predicate resolve_elswhere_usize [@inline:trivial] (self: UInt64.t) (old': Seq.seq t_Vec_usize_Global) (fin: Seq.seq t_Vec_usize_Global) =
-    forall i: int. 0 <= i /\ i <> UInt64.t'int self /\ i < Seq.length old' -> Seq.get old' i = Seq.get fin i
+  function resolve_elswhere_usize [@inline:trivial] (self: UInt64.t) (old': Seq.seq t_Vec_usize_Global) (fin: Seq.seq t_Vec_usize_Global) : bool
+   = forall i: int. 0 <= i /\ i <> UInt64.t'int self /\ i < Seq.length old' -> Seq.get old' i = Seq.get fin i
   
-  meta "rewrite_def" predicate resolve_elswhere_usize
+  meta "rewrite_def" function resolve_elswhere_usize
   
   let index_mut_Vec_Vec_usize_Global_Global (self: MutBorrow.t t_Vec_Vec_usize_Global_Global) (index: UInt64.t)
     (return (x'0: MutBorrow.t t_Vec_usize_Global)) =
@@ -755,10 +748,10 @@ module M_impl_Board__set (* Board *)
       = Seq.length (view_Vec_Vec_usize_Global_Global self.current))}
       (! return {result}) ]
   
-  predicate in_bounds_usize'0 [@inline:trivial] (self: UInt64.t) (seq: Seq.seq UInt64.t) =
-    UInt64.t'int self < Seq.length seq
+  function in_bounds_usize'0 [@inline:trivial] (self: UInt64.t) (seq: Seq.seq UInt64.t) : bool = UInt64.t'int self
+    < Seq.length seq
   
-  meta "rewrite_def" predicate in_bounds_usize'0
+  meta "rewrite_def" function in_bounds_usize'0
   
   function view_Vec_usize_Global (self: t_Vec_usize_Global) : Seq.seq UInt64.t
   
@@ -766,15 +759,15 @@ module M_impl_Board__set (* Board *)
     forall self: t_Vec_usize_Global [view_Vec_usize_Global self]. Seq.length (view_Vec_usize_Global self)
       <= UInt64.t'int const_MAX
   
-  predicate has_value_usize'0 [@inline:trivial] (self: UInt64.t) (seq: Seq.seq UInt64.t) (out: UInt64.t) =
+  function has_value_usize'0 [@inline:trivial] (self: UInt64.t) (seq: Seq.seq UInt64.t) (out: UInt64.t) : bool =
     Seq.get seq (UInt64.t'int self) = out
   
-  meta "rewrite_def" predicate has_value_usize'0
+  meta "rewrite_def" function has_value_usize'0
   
-  predicate resolve_elswhere_usize'0 [@inline:trivial] (self: UInt64.t) (old': Seq.seq UInt64.t) (fin: Seq.seq UInt64.t) =
-    forall i: int. 0 <= i /\ i <> UInt64.t'int self /\ i < Seq.length old' -> Seq.get old' i = Seq.get fin i
+  function resolve_elswhere_usize'0 [@inline:trivial] (self: UInt64.t) (old': Seq.seq UInt64.t) (fin: Seq.seq UInt64.t) : bool
+   = forall i: int. 0 <= i /\ i <> UInt64.t'int self /\ i < Seq.length old' -> Seq.get old' i = Seq.get fin i
   
-  meta "rewrite_def" predicate resolve_elswhere_usize'0
+  meta "rewrite_def" function resolve_elswhere_usize'0
   
   let index_mut_Vec_usize_Global (self: MutBorrow.t t_Vec_usize_Global) (index: UInt64.t)
     (return (x'0: MutBorrow.t UInt64.t)) =
@@ -788,32 +781,30 @@ module M_impl_Board__set (* Board *)
       = Seq.length (view_Vec_usize_Global self.current))}
       (! return {result}) ]
   
-  predicate resolve_refmut_usize [@inline:trivial] (_1: MutBorrow.t UInt64.t) = _1.final = _1.current
+  function resolve_refmut_usize [@inline:trivial] (_1: MutBorrow.t UInt64.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_usize
+  meta "rewrite_def" function resolve_refmut_usize
   
-  predicate resolve_refmut_Vec_usize_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_usize_Global) =
-    _1.final = _1.current
+  function resolve_refmut_Vec_usize_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_usize_Global) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Vec_usize_Global
+  meta "rewrite_def" function resolve_refmut_Vec_usize_Global
   
-  predicate resolve_refmut_Board [@inline:trivial] (_1: MutBorrow.t t_Board) = _1.final = _1.current
+  function resolve_refmut_Board [@inline:trivial] (_1: MutBorrow.t t_Board) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Board
+  meta "rewrite_def" function resolve_refmut_Board
   
   function index_Vec_Vec_usize_Global_Global [@inline:trivial] (self: t_Vec_Vec_usize_Global_Global) (ix: int) : t_Vec_usize_Global
    = Seq.get (view_Vec_Vec_usize_Global_Global self) ix
   
   meta "rewrite_def" function index_Vec_Vec_usize_Global_Global
   
-  predicate wf (self: t_Board) =
-    UInt64.t'int self.size <= 1000
+  function wf (self: t_Board) : bool = UInt64.t'int self.size <= 1000
     /\ Seq.length (view_Vec_Vec_usize_Global_Global self.field) = UInt64.t'int self.size
     /\ (forall i: int. 0 <= i /\ i < UInt64.t'int self.size
       -> Seq.length (view_Vec_usize_Global (index_Vec_Vec_usize_Global_Global self.field i)) = UInt64.t'int self.size)
   
-  predicate in_bounds (self: t_Board) (p: t_Point) =
-    0 <= Int64.to_int p.x
+  function in_bounds (self: t_Board) (p: t_Point) : bool = 0 <= Int64.to_int p.x
     /\ Int64.to_int p.x < UInt64.t'int self.size /\ 0 <= Int64.to_int p.y /\ Int64.to_int p.y < UInt64.t'int self.size
   
   meta "compute_max_steps" 1000000
@@ -865,9 +856,10 @@ module M_impl_Clone_for_Point__clone (* <Point as std::clone::Clone> *)
   let clone_isize (self: Int64.t) (return (x'0: Int64.t)) = any
     [ return (result: Int64.t) -> {[@stop_split] [@expl:clone ensures] result = self} (! return {result}) ]
   
-  predicate postcondition_clone (self: ()) (args: Int64.t) (result: Int64.t) = let self'0 = args in result = self'0
+  function postcondition_clone (self: ()) (args: Int64.t) (result: Int64.t) : bool = let self'0 = args in result
+    = self'0
   
-  meta "rewrite_def" predicate postcondition_clone
+  meta "rewrite_def" function postcondition_clone
   
   meta "compute_max_steps" 1000000
   
@@ -960,8 +952,7 @@ module M_knights_tour
   
   meta "rewrite_def" function index_Vec_Vec_usize_Global_Global
   
-  predicate wf (self: t_Board) =
-    UInt64.t'int self.size <= 1000
+  function wf (self: t_Board) : bool = UInt64.t'int self.size <= 1000
     /\ Seq.length (view_Vec_Vec_usize_Global_Global self.field) = UInt64.t'int self.size
     /\ (forall i: int. 0 <= i /\ i < UInt64.t'int self.size
       -> Seq.length (view_Vec_usize_Global (index_Vec_Vec_usize_Global_Global self.field i)) = UInt64.t'int self.size)
@@ -975,8 +966,7 @@ module M_knights_tour
   
   type t_Point = { x: Int64.t; y: Int64.t }
   
-  predicate in_bounds (self: t_Board) (p: t_Point) =
-    0 <= Int64.to_int p.x
+  function in_bounds (self: t_Board) (p: t_Point) : bool = 0 <= Int64.to_int p.x
     /\ Int64.to_int p.x < UInt64.t'int self.size /\ 0 <= Int64.to_int p.y /\ Int64.to_int p.y < UInt64.t'int self.size
   
   let set (self: MutBorrow.t t_Board) (p: t_Point) (v: UInt64.t) (return (x'0: ())) =
@@ -1003,12 +993,12 @@ module M_knights_tour
   
   meta "rewrite_def" function deep_model_usize
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
-  predicate produces_Range_usize (self: t_Range_usize) (visited: Seq.seq UInt64.t) (o: t_Range_usize) =
-    self.end' = o.end'
+  function produces_Range_usize (self: t_Range_usize) (visited: Seq.seq UInt64.t) (o: t_Range_usize) : bool = self.end'
+      = o.end'
     /\ deep_model_usize self.start <= deep_model_usize o.start
     /\ (gt_log_Int (Seq.length visited) 0 -> deep_model_usize o.start <= deep_model_usize o.end')
     /\ Seq.length visited = deep_model_usize o.start - deep_model_usize self.start
@@ -1026,16 +1016,15 @@ module M_knights_tour
   axiom produces_refl_Range_usize_spec:
     forall self: t_Range_usize. produces_Range_usize self (Seq.empty: Seq.seq UInt64.t) self
   
-  predicate resolve_refmut_Range_usize [@inline:trivial] (_1: MutBorrow.t t_Range_usize) = _1.final = _1.current
+  function resolve_refmut_Range_usize [@inline:trivial] (_1: MutBorrow.t t_Range_usize) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Range_usize
+  meta "rewrite_def" function resolve_refmut_Range_usize
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate completed_Range_usize (self: MutBorrow.t t_Range_usize) =
-    resolve_refmut_Range_usize self
+  function completed_Range_usize (self: MutBorrow.t t_Range_usize) : bool = resolve_refmut_Range_usize self
     /\ ge_log_Int (deep_model_usize self.current.start) (deep_model_usize self.current.end')
   
   let next_Range_usize (self: MutBorrow.t t_Range_usize) (return (x'0: t_Option_usize)) = any
@@ -1045,9 +1034,9 @@ module M_knights_tour
         end}
       (! return {result}) ]
   
-  predicate inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) = true
+  function inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_usize
+  meta "rewrite_def" function inv_Seq_usize
   
   let elim_Some (_x: t_Option_usize) (return (f0: UInt64.t)) = any
     [ _k (f0: UInt64.t) -> {Some f0 = _x} (! return {f0})
@@ -1100,7 +1089,7 @@ module M_knights_tour
   
   type t_IntoIter_tup2_isize_isize_Global
   
-  predicate inv_IntoIter_tup2_isize_isize_Global (_1: t_IntoIter_tup2_isize_isize_Global)
+  function inv_IntoIter_tup2_isize_isize_Global (_1: t_IntoIter_tup2_isize_isize_Global) : bool
   
   function view_IntoIter_tup2_isize_isize_Global (self: t_IntoIter_tup2_isize_isize_Global) : Seq.seq tup2_isize_isize
   
@@ -1114,18 +1103,18 @@ module M_knights_tour
   
   type t_Option_tup2_isize_isize = None'0 | Some'0 tup2_isize_isize
   
-  predicate invariant_refmut_IntoIter_tup2_isize_isize_Global [@inline:trivial] (self: MutBorrow.t t_IntoIter_tup2_isize_isize_Global) =
-    inv_IntoIter_tup2_isize_isize_Global self.current /\ inv_IntoIter_tup2_isize_isize_Global self.final
+  function invariant_refmut_IntoIter_tup2_isize_isize_Global [@inline:trivial] (self: MutBorrow.t t_IntoIter_tup2_isize_isize_Global) : bool
+   = inv_IntoIter_tup2_isize_isize_Global self.current /\ inv_IntoIter_tup2_isize_isize_Global self.final
   
-  meta "rewrite_def" predicate invariant_refmut_IntoIter_tup2_isize_isize_Global
+  meta "rewrite_def" function invariant_refmut_IntoIter_tup2_isize_isize_Global
   
-  predicate inv_refmut_IntoIter_tup2_isize_isize_Global [@inline:trivial] (_1: MutBorrow.t t_IntoIter_tup2_isize_isize_Global) =
-    invariant_refmut_IntoIter_tup2_isize_isize_Global _1
+  function inv_refmut_IntoIter_tup2_isize_isize_Global [@inline:trivial] (_1: MutBorrow.t t_IntoIter_tup2_isize_isize_Global) : bool
+   = invariant_refmut_IntoIter_tup2_isize_isize_Global _1
   
-  meta "rewrite_def" predicate inv_refmut_IntoIter_tup2_isize_isize_Global
+  meta "rewrite_def" function inv_refmut_IntoIter_tup2_isize_isize_Global
   
-  predicate produces_IntoIter_tup2_isize_isize_Global (self: t_IntoIter_tup2_isize_isize_Global) (visited: Seq.seq tup2_isize_isize) (rhs: t_IntoIter_tup2_isize_isize_Global) =
-    view_IntoIter_tup2_isize_isize_Global self = Seq.(++) visited (view_IntoIter_tup2_isize_isize_Global rhs)
+  function produces_IntoIter_tup2_isize_isize_Global (self: t_IntoIter_tup2_isize_isize_Global) (visited: Seq.seq tup2_isize_isize) (rhs: t_IntoIter_tup2_isize_isize_Global) : bool
+   = view_IntoIter_tup2_isize_isize_Global self = Seq.(++) visited (view_IntoIter_tup2_isize_isize_Global rhs)
   
   function produces_trans_IntoIter_tup2_isize_isize_Global (a: t_IntoIter_tup2_isize_isize_Global) (ab: Seq.seq tup2_isize_isize) (b: t_IntoIter_tup2_isize_isize_Global) (bc: Seq.seq tup2_isize_isize) (c: t_IntoIter_tup2_isize_isize_Global) : ()
   
@@ -1139,12 +1128,12 @@ module M_knights_tour
   axiom produces_refl_IntoIter_tup2_isize_isize_Global_spec:
     forall self: t_IntoIter_tup2_isize_isize_Global. produces_IntoIter_tup2_isize_isize_Global self (Seq.empty: Seq.seq tup2_isize_isize) self
   
-  predicate resolve_refmut_IntoIter_tup2_isize_isize_Global [@inline:trivial] (_1: MutBorrow.t t_IntoIter_tup2_isize_isize_Global) =
-    _1.final = _1.current
+  function resolve_refmut_IntoIter_tup2_isize_isize_Global [@inline:trivial] (_1: MutBorrow.t t_IntoIter_tup2_isize_isize_Global) : bool
+   = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_IntoIter_tup2_isize_isize_Global
+  meta "rewrite_def" function resolve_refmut_IntoIter_tup2_isize_isize_Global
   
-  predicate completed_IntoIter_tup2_isize_isize_Global (self: MutBorrow.t t_IntoIter_tup2_isize_isize_Global) =
+  function completed_IntoIter_tup2_isize_isize_Global (self: MutBorrow.t t_IntoIter_tup2_isize_isize_Global) : bool =
     resolve_refmut_IntoIter_tup2_isize_isize_Global self
     /\ view_IntoIter_tup2_isize_isize_Global self.current = (Seq.empty: Seq.seq tup2_isize_isize)
   
@@ -1163,9 +1152,9 @@ module M_knights_tour
   
   meta "rewrite_def" function index_Vec_tup2_usize_Point_Global
   
-  predicate inv_Seq_tup2_isize_isize [@inline:trivial] (_1: Seq.seq tup2_isize_isize) = true
+  function inv_Seq_tup2_isize_isize [@inline:trivial] (_1: Seq.seq tup2_isize_isize) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_tup2_isize_isize
+  meta "rewrite_def" function inv_Seq_tup2_isize_isize
   
   let elim_Some'0 (_x: t_Option_tup2_isize_isize) (return (f0'1: tup2_isize_isize)) = any
     [ _k (f0'1: tup2_isize_isize) -> {Some'0 f0'1 = _x} (! return {f0'1})
@@ -1204,17 +1193,17 @@ module M_knights_tour
       = Seq.snoc (view_Vec_tup2_usize_Point_Global self.current) value}
       (! return {result}) ]
   
-  predicate resolve_tup2_isize_isize [@inline:trivial] (_1: tup2_isize_isize) = true
+  function resolve_tup2_isize_isize [@inline:trivial] (_1: tup2_isize_isize) : bool = true
   
-  meta "rewrite_def" predicate resolve_tup2_isize_isize
+  meta "rewrite_def" function resolve_tup2_isize_isize
   
-  predicate resolve_IntoIter_tup2_isize_isize_Global [@inline:trivial] (self: t_IntoIter_tup2_isize_isize_Global) =
-    forall i: int. 0 <= i /\ i < Seq.length (view_IntoIter_tup2_isize_isize_Global self)
+  function resolve_IntoIter_tup2_isize_isize_Global [@inline:trivial] (self: t_IntoIter_tup2_isize_isize_Global) : bool
+   = forall i: int. 0 <= i /\ i < Seq.length (view_IntoIter_tup2_isize_isize_Global self)
       -> resolve_tup2_isize_isize (Seq.get (view_IntoIter_tup2_isize_isize_Global self) i)
   
-  meta "rewrite_def" predicate resolve_IntoIter_tup2_isize_isize_Global
+  meta "rewrite_def" function resolve_IntoIter_tup2_isize_isize_Global
   
-  predicate resolve_IntoIter_tup2_isize_isize_Global'0 (_1: t_IntoIter_tup2_isize_isize_Global)
+  function resolve_IntoIter_tup2_isize_isize_Global'0 (_1: t_IntoIter_tup2_isize_isize_Global) : bool
   
   axiom resolve_axiom:
     forall _1: t_IntoIter_tup2_isize_isize_Global [resolve_IntoIter_tup2_isize_isize_Global'0 _1]. resolve_IntoIter_tup2_isize_isize_Global'0 _1
@@ -1424,7 +1413,7 @@ module M_min
   
   type t_Iter_tup2_usize_Point
   
-  predicate inv_Iter_tup2_usize_Point (_1: t_Iter_tup2_usize_Point)
+  function inv_Iter_tup2_usize_Point (_1: t_Iter_tup2_usize_Point) : bool
   
   constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
   
@@ -1444,15 +1433,15 @@ module M_min
       = Slice64.view (view_Iter_tup2_usize_Point result))}
       (! return {result}) ]
   
-  predicate invariant_refmut_Iter_tup2_usize_Point [@inline:trivial] (self: MutBorrow.t t_Iter_tup2_usize_Point) =
+  function invariant_refmut_Iter_tup2_usize_Point [@inline:trivial] (self: MutBorrow.t t_Iter_tup2_usize_Point) : bool =
     inv_Iter_tup2_usize_Point self.current /\ inv_Iter_tup2_usize_Point self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Iter_tup2_usize_Point
+  meta "rewrite_def" function invariant_refmut_Iter_tup2_usize_Point
   
-  predicate inv_refmut_Iter_tup2_usize_Point [@inline:trivial] (_1: MutBorrow.t t_Iter_tup2_usize_Point) =
+  function inv_refmut_Iter_tup2_usize_Point [@inline:trivial] (_1: MutBorrow.t t_Iter_tup2_usize_Point) : bool =
     invariant_refmut_Iter_tup2_usize_Point _1
   
-  meta "rewrite_def" predicate inv_refmut_Iter_tup2_usize_Point
+  meta "rewrite_def" function inv_refmut_Iter_tup2_usize_Point
   
   function index_slice_tup2_usize_Point [@inline:trivial] (self: Slice64.slice tup2_usize_Point) (ix: int) : tup2_usize_Point
    = Seq.get (Slice64.view self) ix
@@ -1470,8 +1459,8 @@ module M_min
           /\ i < Seq.length (to_ref_seq_slice_tup2_usize_Point self)
         -> Seq.get (to_ref_seq_slice_tup2_usize_Point self) i = index_slice_tup2_usize_Point self i
   
-  predicate produces_Iter_tup2_usize_Point (self: t_Iter_tup2_usize_Point) (visited: Seq.seq tup2_usize_Point) (tl: t_Iter_tup2_usize_Point) =
-    to_ref_seq_slice_tup2_usize_Point (view_Iter_tup2_usize_Point self)
+  function produces_Iter_tup2_usize_Point (self: t_Iter_tup2_usize_Point) (visited: Seq.seq tup2_usize_Point) (tl: t_Iter_tup2_usize_Point) : bool
+   = to_ref_seq_slice_tup2_usize_Point (view_Iter_tup2_usize_Point self)
     = Seq.(++) visited (to_ref_seq_slice_tup2_usize_Point (view_Iter_tup2_usize_Point tl))
   
   function produces_trans_Iter_tup2_usize_Point (a: t_Iter_tup2_usize_Point) (ab: Seq.seq tup2_usize_Point) (b: t_Iter_tup2_usize_Point) (bc: Seq.seq tup2_usize_Point) (c: t_Iter_tup2_usize_Point) : ()
@@ -1485,12 +1474,12 @@ module M_min
   axiom produces_refl_Iter_tup2_usize_Point_spec:
     forall self: t_Iter_tup2_usize_Point. produces_Iter_tup2_usize_Point self (Seq.empty: Seq.seq tup2_usize_Point) self
   
-  predicate resolve_refmut_Iter_tup2_usize_Point [@inline:trivial] (_1: MutBorrow.t t_Iter_tup2_usize_Point) =
+  function resolve_refmut_Iter_tup2_usize_Point [@inline:trivial] (_1: MutBorrow.t t_Iter_tup2_usize_Point) : bool =
     _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Iter_tup2_usize_Point
+  meta "rewrite_def" function resolve_refmut_Iter_tup2_usize_Point
   
-  predicate completed_Iter_tup2_usize_Point (self: MutBorrow.t t_Iter_tup2_usize_Point) =
+  function completed_Iter_tup2_usize_Point (self: MutBorrow.t t_Iter_tup2_usize_Point) : bool =
     resolve_refmut_Iter_tup2_usize_Point self
     /\ Slice64.view (view_Iter_tup2_usize_Point self.current) = (Seq.empty: Seq.seq tup2_usize_Point)
   
@@ -1509,9 +1498,9 @@ module M_min
   
   meta "rewrite_def" function index_Vec_tup2_usize_Point_Global
   
-  predicate inv_Seq_ref_tup2_usize_Point [@inline:trivial] (_1: Seq.seq tup2_usize_Point) = true
+  function inv_Seq_ref_tup2_usize_Point [@inline:trivial] (_1: Seq.seq tup2_usize_Point) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_ref_tup2_usize_Point
+  meta "rewrite_def" function inv_Seq_ref_tup2_usize_Point
   
   let elim_Some (_x: t_Option_ref_tup2_usize_Point) (return (f0'0: tup2_usize_Point)) = any
     [ _k (f0'0: tup2_usize_Point) -> {Some f0'0 = _x} (! return {f0'0})
@@ -1521,7 +1510,7 @@ module M_min
         end}
       any) ]
   
-  predicate resolve_Iter_tup2_usize_Point (_1: t_Iter_tup2_usize_Point)
+  function resolve_Iter_tup2_usize_Point (_1: t_Iter_tup2_usize_Point) : bool
   
   meta "compute_max_steps" 1000000
   

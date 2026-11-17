@@ -4,9 +4,9 @@ type t_T
 
 type t_Option_T = None | Some t_T
 
-predicate index_Mapping_T_bool [@inline:trivial] (self: Map.map t_T bool) (a: t_T) = Map.get self a
+function index_Mapping_T_bool [@inline:trivial] (self: Map.map t_T bool) (a: t_T) : bool = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_T_bool
+meta "rewrite_def" function index_Mapping_T_bool
 
 function such_that_T (p: Map.map t_T bool) : t_T
 

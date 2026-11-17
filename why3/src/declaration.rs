@@ -31,7 +31,6 @@ pub enum Decl {
     LogicDecl(LogicDecl),
     LogicDefn(LogicDefn),
     TyDecl(TyDecl),
-    PredDecl(Predicate),
     UseDecls(Box<[Use]>),
     Axiom(Axiom),
     Goal(Goal),
@@ -50,13 +49,8 @@ impl Decl {
         }
     }
 
-    pub fn predicate(mut sig: Signature, body: Option<Exp>) -> Self {
-        sig.retty = None;
-
-        match body {
-            Some(body) => Decl::PredDecl(Predicate { sig, body }),
-            None => Decl::LogicDecl(LogicDecl { kind: Some(DeclKind::Predicate), sig }),
-        }
+    pub fn predicate(sig: Signature, body: Option<Exp>) -> Self {
+        Self::function(sig, body)
     }
 }
 
@@ -94,13 +88,13 @@ pub enum Attribute {
 pub struct Signature {
     pub name: Ident,
     pub attrs: Vec<Attribute>,
-    pub retty: Option<Type>,
+    pub retty: Type,
     pub args: Box<[(Ident, Type)]>,
 }
 
 impl Signature {
     pub fn constant(name: Ident, ty: Type) -> Self {
-        Self { name, attrs: vec![], retty: Some(ty), args: [].into() }
+        Self { name, attrs: vec![], retty: ty, args: [].into() }
     }
 }
 
@@ -198,7 +192,6 @@ pub struct Goal {
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 pub enum DeclKind {
     Function,
-    Predicate,
     Constant,
 }
 

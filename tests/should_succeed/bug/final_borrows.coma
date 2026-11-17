@@ -4,29 +4,29 @@ module M_borrow_in_box
   
   type t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) = inv_T self.current /\ inv_T self.final
+  function invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) : bool = inv_T self.current /\ inv_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_T
+  meta "rewrite_def" function invariant_refmut_T
   
-  predicate inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = invariant_refmut_T _1
+  function inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = invariant_refmut_T _1
   
-  meta "rewrite_def" predicate inv_refmut_T
+  meta "rewrite_def" function inv_refmut_T
   
-  predicate resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = _1.final = _1.current
+  function resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_T
+  meta "rewrite_def" function resolve_refmut_T
   
-  predicate invariant_Box_refmut_T_Global (self: MutBorrow.t t_T) = inv_refmut_T self
+  function invariant_Box_refmut_T_Global (self: MutBorrow.t t_T) : bool = inv_refmut_T self
   
-  predicate inv_Box_refmut_T_Global [@inline:trivial] (_1: MutBorrow.t t_T) = invariant_Box_refmut_T_Global _1
+  function inv_Box_refmut_T_Global [@inline:trivial] (_1: MutBorrow.t t_T) : bool = invariant_Box_refmut_T_Global _1
   
-  meta "rewrite_def" predicate inv_Box_refmut_T_Global
+  meta "rewrite_def" function inv_Box_refmut_T_Global
   
-  predicate resolve_Box_refmut_T_Global [@inline:trivial] (_1: MutBorrow.t t_T) = resolve_refmut_T _1
+  function resolve_Box_refmut_T_Global [@inline:trivial] (_1: MutBorrow.t t_T) : bool = resolve_refmut_T _1
   
-  meta "rewrite_def" predicate resolve_Box_refmut_T_Global
+  meta "rewrite_def" function resolve_Box_refmut_T_Global
   
   meta "compute_max_steps" 1000000
   
@@ -71,18 +71,18 @@ module M_borrow_in_box_tuple_1
   
   type tup2_i32_refmut_i32 = { f0: Int32.t; f1: MutBorrow.t Int32.t }
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
-  predicate resolve_tup2_i32_refmut_i32 [@inline:trivial] (_1: tup2_i32_refmut_i32) = resolve_refmut_i32 _1.f1
+  function resolve_tup2_i32_refmut_i32 [@inline:trivial] (_1: tup2_i32_refmut_i32) : bool = resolve_refmut_i32 _1.f1
   
-  meta "rewrite_def" predicate resolve_tup2_i32_refmut_i32
+  meta "rewrite_def" function resolve_tup2_i32_refmut_i32
   
-  predicate resolve_Box_tup2_i32_refmut_i32_Global [@inline:trivial] (_1: tup2_i32_refmut_i32) =
+  function resolve_Box_tup2_i32_refmut_i32_Global [@inline:trivial] (_1: tup2_i32_refmut_i32) : bool =
     resolve_tup2_i32_refmut_i32 _1
   
-  meta "rewrite_def" predicate resolve_Box_tup2_i32_refmut_i32_Global
+  meta "rewrite_def" function resolve_Box_tup2_i32_refmut_i32_Global
   
   meta "compute_max_steps" 1000000
   
@@ -116,18 +116,18 @@ module M_borrow_in_box_tuple_2
   
   type tup2_i32_Box_refmut_i32_Global = { f0: Int32.t; f1: MutBorrow.t Int32.t }
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
-  predicate resolve_Box_refmut_i32_Global [@inline:trivial] (_1: MutBorrow.t Int32.t) = resolve_refmut_i32 _1
+  function resolve_Box_refmut_i32_Global [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = resolve_refmut_i32 _1
   
-  meta "rewrite_def" predicate resolve_Box_refmut_i32_Global
+  meta "rewrite_def" function resolve_Box_refmut_i32_Global
   
-  predicate resolve_tup2_i32_Box_refmut_i32_Global [@inline:trivial] (_1: tup2_i32_Box_refmut_i32_Global) =
+  function resolve_tup2_i32_Box_refmut_i32_Global [@inline:trivial] (_1: tup2_i32_Box_refmut_i32_Global) : bool =
     resolve_Box_refmut_i32_Global _1.f1
   
-  meta "rewrite_def" predicate resolve_tup2_i32_Box_refmut_i32_Global
+  meta "rewrite_def" function resolve_tup2_i32_Box_refmut_i32_Global
   
   meta "compute_max_steps" 1000000
   
@@ -159,13 +159,13 @@ module M_box_deref
   
   type t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_Box_T_Global (self: t_T) = inv_T self
+  function invariant_Box_T_Global (self: t_T) : bool = inv_T self
   
-  predicate inv_Box_T_Global [@inline:trivial] (_1: t_T) = invariant_Box_T_Global _1
+  function inv_Box_T_Global [@inline:trivial] (_1: t_T) : bool = invariant_Box_T_Global _1
   
-  meta "rewrite_def" predicate inv_Box_T_Global
+  meta "rewrite_def" function inv_Box_T_Global
   
   meta "compute_max_steps" 1000000
   
@@ -185,31 +185,31 @@ module M_box_reborrow_direct
   
   type t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) = inv_T self.current /\ inv_T self.final
+  function invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) : bool = inv_T self.current /\ inv_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_T
+  meta "rewrite_def" function invariant_refmut_T
   
-  predicate inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = invariant_refmut_T _1
+  function inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = invariant_refmut_T _1
   
-  meta "rewrite_def" predicate inv_refmut_T
+  meta "rewrite_def" function inv_refmut_T
   
-  predicate resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = _1.final = _1.current
+  function resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_T
+  meta "rewrite_def" function resolve_refmut_T
   
-  predicate invariant_Box_T_Global (self: t_T) = inv_T self
+  function invariant_Box_T_Global (self: t_T) : bool = inv_T self
   
-  predicate inv_Box_T_Global [@inline:trivial] (_1: t_T) = invariant_Box_T_Global _1
+  function inv_Box_T_Global [@inline:trivial] (_1: t_T) : bool = invariant_Box_T_Global _1
   
-  meta "rewrite_def" predicate inv_Box_T_Global
+  meta "rewrite_def" function inv_Box_T_Global
   
-  predicate resolve_T (_1: t_T)
+  function resolve_T (_1: t_T) : bool
   
-  predicate resolve_Box_T_Global [@inline:trivial] (_1: t_T) = resolve_T _1
+  function resolve_Box_T_Global [@inline:trivial] (_1: t_T) : bool = resolve_T _1
   
-  meta "rewrite_def" predicate resolve_Box_T_Global
+  meta "rewrite_def" function resolve_Box_T_Global
   
   meta "compute_max_steps" 1000000
   
@@ -246,14 +246,14 @@ module M_box_reborrow_in_struct
   
   type tup2_i32_refmut_Box_i32_Global = { f0: Int32.t; f1: MutBorrow.t Int32.t }
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
-  predicate resolve_refmut_tup2_i32_refmut_Box_i32_Global [@inline:trivial] (_1: MutBorrow.t tup2_i32_refmut_Box_i32_Global) =
-    _1.final = _1.current
+  function resolve_refmut_tup2_i32_refmut_Box_i32_Global [@inline:trivial] (_1: MutBorrow.t tup2_i32_refmut_Box_i32_Global) : bool
+   = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_tup2_i32_refmut_Box_i32_Global
+  meta "rewrite_def" function resolve_refmut_tup2_i32_refmut_Box_i32_Global
   
   meta "compute_max_steps" 1000000
   
@@ -287,38 +287,38 @@ module M_box_reborrow_indirect
   
   type t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) = inv_T self.current /\ inv_T self.final
+  function invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) : bool = inv_T self.current /\ inv_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_T
+  meta "rewrite_def" function invariant_refmut_T
   
-  predicate inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = invariant_refmut_T _1
+  function inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = invariant_refmut_T _1
   
-  meta "rewrite_def" predicate inv_refmut_T
+  meta "rewrite_def" function inv_refmut_T
   
-  predicate resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = _1.final = _1.current
+  function resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_T
+  meta "rewrite_def" function resolve_refmut_T
   
-  predicate invariant_Box_T_Global (self: t_T) = inv_T self
+  function invariant_Box_T_Global (self: t_T) : bool = inv_T self
   
-  predicate inv_Box_T_Global [@inline:trivial] (_1: t_T) = invariant_Box_T_Global _1
+  function inv_Box_T_Global [@inline:trivial] (_1: t_T) : bool = invariant_Box_T_Global _1
   
-  meta "rewrite_def" predicate inv_Box_T_Global
+  meta "rewrite_def" function inv_Box_T_Global
   
-  predicate invariant_refmut_Box_T_Global [@inline:trivial] (self: MutBorrow.t t_T) =
+  function invariant_refmut_Box_T_Global [@inline:trivial] (self: MutBorrow.t t_T) : bool =
     inv_Box_T_Global self.current /\ inv_Box_T_Global self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Box_T_Global
+  meta "rewrite_def" function invariant_refmut_Box_T_Global
   
-  predicate inv_refmut_Box_T_Global [@inline:trivial] (_1: MutBorrow.t t_T) = invariant_refmut_Box_T_Global _1
+  function inv_refmut_Box_T_Global [@inline:trivial] (_1: MutBorrow.t t_T) : bool = invariant_refmut_Box_T_Global _1
   
-  meta "rewrite_def" predicate inv_refmut_Box_T_Global
+  meta "rewrite_def" function inv_refmut_Box_T_Global
   
-  predicate resolve_refmut_Box_T_Global [@inline:trivial] (_1: MutBorrow.t t_T) = _1.final = _1.current
+  function resolve_refmut_Box_T_Global [@inline:trivial] (_1: MutBorrow.t t_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Box_T_Global
+  meta "rewrite_def" function resolve_refmut_Box_T_Global
   
   meta "compute_max_steps" 1000000
   
@@ -358,9 +358,9 @@ module M_branching
   use creusot.prelude.MutBorrow
   use creusot.prelude.Any
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
   meta "compute_max_steps" 1000000
   
@@ -415,43 +415,43 @@ module M_disjoint_fields
   
   type tup2_T_T = { f0: t_T; f1: t_T }
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
   type tup2_refmut_T_refmut_T = { f0'0: MutBorrow.t t_T; f1'0: MutBorrow.t t_T }
   
-  predicate invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) = inv_T self.current /\ inv_T self.final
+  function invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) : bool = inv_T self.current /\ inv_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_T
+  meta "rewrite_def" function invariant_refmut_T
   
-  predicate inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = invariant_refmut_T _1
+  function inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = invariant_refmut_T _1
   
-  meta "rewrite_def" predicate inv_refmut_T
+  meta "rewrite_def" function inv_refmut_T
   
-  predicate resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = _1.final = _1.current
+  function resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_T
+  meta "rewrite_def" function resolve_refmut_T
   
-  predicate inv_tup2_T_T [@inline:trivial] (_1: tup2_T_T) = inv_T _1.f0 /\ inv_T _1.f1
+  function inv_tup2_T_T [@inline:trivial] (_1: tup2_T_T) : bool = inv_T _1.f0 /\ inv_T _1.f1
   
-  meta "rewrite_def" predicate inv_tup2_T_T
+  meta "rewrite_def" function inv_tup2_T_T
   
-  predicate invariant_refmut_tup2_T_T [@inline:trivial] (self: MutBorrow.t tup2_T_T) =
-    inv_tup2_T_T self.current /\ inv_tup2_T_T self.final
+  function invariant_refmut_tup2_T_T [@inline:trivial] (self: MutBorrow.t tup2_T_T) : bool = inv_tup2_T_T self.current
+    /\ inv_tup2_T_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_tup2_T_T
+  meta "rewrite_def" function invariant_refmut_tup2_T_T
   
-  predicate inv_refmut_tup2_T_T [@inline:trivial] (_1: MutBorrow.t tup2_T_T) = invariant_refmut_tup2_T_T _1
+  function inv_refmut_tup2_T_T [@inline:trivial] (_1: MutBorrow.t tup2_T_T) : bool = invariant_refmut_tup2_T_T _1
   
-  meta "rewrite_def" predicate inv_refmut_tup2_T_T
+  meta "rewrite_def" function inv_refmut_tup2_T_T
   
-  predicate resolve_refmut_tup2_T_T [@inline:trivial] (_1: MutBorrow.t tup2_T_T) = _1.final = _1.current
+  function resolve_refmut_tup2_T_T [@inline:trivial] (_1: MutBorrow.t tup2_T_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_tup2_T_T
+  meta "rewrite_def" function resolve_refmut_tup2_T_T
   
-  predicate inv_tup2_refmut_T_refmut_T [@inline:trivial] (_1: tup2_refmut_T_refmut_T) =
-    inv_refmut_T _1.f0'0 /\ inv_refmut_T _1.f1'0
+  function inv_tup2_refmut_T_refmut_T [@inline:trivial] (_1: tup2_refmut_T_refmut_T) : bool = inv_refmut_T _1.f0'0
+    /\ inv_refmut_T _1.f1'0
   
-  meta "rewrite_def" predicate inv_tup2_refmut_T_refmut_T
+  meta "rewrite_def" function inv_tup2_refmut_T_refmut_T
   
   meta "compute_max_steps" 1000000
   
@@ -511,57 +511,58 @@ module M_index_mut_array
   
   type t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) = inv_T self.current /\ inv_T self.final
+  function invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) : bool = inv_T self.current /\ inv_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_T
+  meta "rewrite_def" function invariant_refmut_T
   
-  predicate inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = invariant_refmut_T _1
+  function inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = invariant_refmut_T _1
   
-  meta "rewrite_def" predicate inv_refmut_T
+  meta "rewrite_def" function inv_refmut_T
   
-  predicate resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = _1.final = _1.current
+  function resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_T
+  meta "rewrite_def" function resolve_refmut_T
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_T (Seq.get self i)
+  function invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+      -> inv_ref_T (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_T
+  meta "rewrite_def" function invariant_Seq_T
   
-  predicate inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Seq_T _1
+  function inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Seq_T
+  meta "rewrite_def" function inv_Seq_T
   
-  predicate invariant_array_T_31 (self: Slice64.array t_T) =
-    inv_Seq_T (Slice64.view self) /\ Seq.length (Slice64.view self) = UInt64.t'int (31: UInt64.t)
+  function invariant_array_T_31 (self: Slice64.array t_T) : bool = inv_Seq_T (Slice64.view self)
+    /\ Seq.length (Slice64.view self) = UInt64.t'int (31: UInt64.t)
   
-  predicate inv_array_T_31 [@inline:trivial] (_1: Slice64.array t_T) = invariant_array_T_31 _1
+  function inv_array_T_31 [@inline:trivial] (_1: Slice64.array t_T) : bool = invariant_array_T_31 _1
   
-  meta "rewrite_def" predicate inv_array_T_31
+  meta "rewrite_def" function inv_array_T_31
   
-  predicate invariant_refmut_array_T_31 [@inline:trivial] (self: MutBorrow.t (Slice64.array t_T)) =
+  function invariant_refmut_array_T_31 [@inline:trivial] (self: MutBorrow.t (Slice64.array t_T)) : bool =
     inv_array_T_31 self.current /\ inv_array_T_31 self.final
   
-  meta "rewrite_def" predicate invariant_refmut_array_T_31
+  meta "rewrite_def" function invariant_refmut_array_T_31
   
-  predicate inv_refmut_array_T_31 [@inline:trivial] (_1: MutBorrow.t (Slice64.array t_T)) =
+  function inv_refmut_array_T_31 [@inline:trivial] (_1: MutBorrow.t (Slice64.array t_T)) : bool =
     invariant_refmut_array_T_31 _1
   
-  meta "rewrite_def" predicate inv_refmut_array_T_31
+  meta "rewrite_def" function inv_refmut_array_T_31
   
-  predicate resolve_refmut_array_T_31 [@inline:trivial] (_1: MutBorrow.t (Slice64.array t_T)) = _1.final = _1.current
+  function resolve_refmut_array_T_31 [@inline:trivial] (_1: MutBorrow.t (Slice64.array t_T)) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_array_T_31
+  meta "rewrite_def" function resolve_refmut_array_T_31
   
   function index_array_T_31 [@inline:trivial] (self: Slice64.array t_T) (ix: UInt64.t) : t_T =
     Seq.get (Slice64.view self) (UInt64.t'int ix)
@@ -625,55 +626,56 @@ module M_index_mut_slice
   
   type t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) = inv_T self.current /\ inv_T self.final
+  function invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) : bool = inv_T self.current /\ inv_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_T
+  meta "rewrite_def" function invariant_refmut_T
   
-  predicate inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = invariant_refmut_T _1
+  function inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = invariant_refmut_T _1
   
-  meta "rewrite_def" predicate inv_refmut_T
+  meta "rewrite_def" function inv_refmut_T
   
-  predicate resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = _1.final = _1.current
+  function resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_T
+  meta "rewrite_def" function resolve_refmut_T
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_T (Seq.get self i)
+  function invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+      -> inv_ref_T (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_T
+  meta "rewrite_def" function invariant_Seq_T
   
-  predicate inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Seq_T _1
+  function inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Seq_T
+  meta "rewrite_def" function inv_Seq_T
   
-  predicate invariant_slice_T (self: Slice64.slice t_T) = inv_Seq_T (Slice64.view self)
+  function invariant_slice_T (self: Slice64.slice t_T) : bool = inv_Seq_T (Slice64.view self)
   
-  predicate inv_slice_T [@inline:trivial] (_1: Slice64.slice t_T) = invariant_slice_T _1
+  function inv_slice_T [@inline:trivial] (_1: Slice64.slice t_T) : bool = invariant_slice_T _1
   
-  meta "rewrite_def" predicate inv_slice_T
+  meta "rewrite_def" function inv_slice_T
   
-  predicate invariant_refmut_slice_T [@inline:trivial] (self: MutBorrow.t (Slice64.slice t_T)) =
+  function invariant_refmut_slice_T [@inline:trivial] (self: MutBorrow.t (Slice64.slice t_T)) : bool =
     inv_slice_T self.current /\ inv_slice_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_slice_T
+  meta "rewrite_def" function invariant_refmut_slice_T
   
-  predicate inv_refmut_slice_T [@inline:trivial] (_1: MutBorrow.t (Slice64.slice t_T)) = invariant_refmut_slice_T _1
+  function inv_refmut_slice_T [@inline:trivial] (_1: MutBorrow.t (Slice64.slice t_T)) : bool =
+    invariant_refmut_slice_T _1
   
-  meta "rewrite_def" predicate inv_refmut_slice_T
+  meta "rewrite_def" function inv_refmut_slice_T
   
-  predicate resolve_refmut_slice_T [@inline:trivial] (_1: MutBorrow.t (Slice64.slice t_T)) = _1.final = _1.current
+  function resolve_refmut_slice_T [@inline:trivial] (_1: MutBorrow.t (Slice64.slice t_T)) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_slice_T
+  meta "rewrite_def" function resolve_refmut_slice_T
   
   function index_slice_T [@inline:trivial] (self: Slice64.slice t_T) (ix: int) : t_T = Seq.get (Slice64.view self) ix
   
@@ -740,9 +742,9 @@ module M_inspect_no_gen
   
   type t_Option_T = None | Some t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_Option_T (_1: t_Option_T)
+  function inv_Option_T (_1: t_Option_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_T _1
       = match _1 with
@@ -750,18 +752,18 @@ module M_inspect_no_gen
         | Some f0 -> inv_T f0
         end
   
-  predicate invariant_refmut_Option_T [@inline:trivial] (self: MutBorrow.t t_Option_T) =
-    inv_Option_T self.current /\ inv_Option_T self.final
+  function invariant_refmut_Option_T [@inline:trivial] (self: MutBorrow.t t_Option_T) : bool = inv_Option_T self.current
+    /\ inv_Option_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Option_T
+  meta "rewrite_def" function invariant_refmut_Option_T
   
-  predicate inv_refmut_Option_T [@inline:trivial] (_1: MutBorrow.t t_Option_T) = invariant_refmut_Option_T _1
+  function inv_refmut_Option_T [@inline:trivial] (_1: MutBorrow.t t_Option_T) : bool = invariant_refmut_Option_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Option_T
+  meta "rewrite_def" function inv_refmut_Option_T
   
-  predicate resolve_refmut_Option_T [@inline:trivial] (_1: MutBorrow.t t_Option_T) = _1.final = _1.current
+  function resolve_refmut_Option_T [@inline:trivial] (_1: MutBorrow.t t_Option_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Option_T
+  meta "rewrite_def" function resolve_refmut_Option_T
   
   meta "compute_max_steps" 1000000
   
@@ -801,54 +803,55 @@ module M_nested_fields
   
   type tup2_tup2_T_T_T = { f0'0: tup2_T_T; f1'0: t_T }
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_tup2_T_T [@inline:trivial] (_1: tup2_T_T) = inv_T _1.f0 /\ inv_T _1.f1
+  function inv_tup2_T_T [@inline:trivial] (_1: tup2_T_T) : bool = inv_T _1.f0 /\ inv_T _1.f1
   
-  meta "rewrite_def" predicate inv_tup2_T_T
+  meta "rewrite_def" function inv_tup2_T_T
   
-  predicate invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) = inv_T self.current /\ inv_T self.final
+  function invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) : bool = inv_T self.current /\ inv_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_T
+  meta "rewrite_def" function invariant_refmut_T
   
-  predicate inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = invariant_refmut_T _1
+  function inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = invariant_refmut_T _1
   
-  meta "rewrite_def" predicate inv_refmut_T
+  meta "rewrite_def" function inv_refmut_T
   
-  predicate resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = _1.final = _1.current
+  function resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_T
+  meta "rewrite_def" function resolve_refmut_T
   
-  predicate invariant_refmut_tup2_T_T [@inline:trivial] (self: MutBorrow.t tup2_T_T) =
-    inv_tup2_T_T self.current /\ inv_tup2_T_T self.final
+  function invariant_refmut_tup2_T_T [@inline:trivial] (self: MutBorrow.t tup2_T_T) : bool = inv_tup2_T_T self.current
+    /\ inv_tup2_T_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_tup2_T_T
+  meta "rewrite_def" function invariant_refmut_tup2_T_T
   
-  predicate inv_refmut_tup2_T_T [@inline:trivial] (_1: MutBorrow.t tup2_T_T) = invariant_refmut_tup2_T_T _1
+  function inv_refmut_tup2_T_T [@inline:trivial] (_1: MutBorrow.t tup2_T_T) : bool = invariant_refmut_tup2_T_T _1
   
-  meta "rewrite_def" predicate inv_refmut_tup2_T_T
+  meta "rewrite_def" function inv_refmut_tup2_T_T
   
-  predicate resolve_refmut_tup2_T_T [@inline:trivial] (_1: MutBorrow.t tup2_T_T) = _1.final = _1.current
+  function resolve_refmut_tup2_T_T [@inline:trivial] (_1: MutBorrow.t tup2_T_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_tup2_T_T
+  meta "rewrite_def" function resolve_refmut_tup2_T_T
   
-  predicate inv_tup2_tup2_T_T_T [@inline:trivial] (_1: tup2_tup2_T_T_T) = inv_tup2_T_T _1.f0'0 /\ inv_T _1.f1'0
+  function inv_tup2_tup2_T_T_T [@inline:trivial] (_1: tup2_tup2_T_T_T) : bool = inv_tup2_T_T _1.f0'0 /\ inv_T _1.f1'0
   
-  meta "rewrite_def" predicate inv_tup2_tup2_T_T_T
+  meta "rewrite_def" function inv_tup2_tup2_T_T_T
   
-  predicate invariant_refmut_tup2_tup2_T_T_T [@inline:trivial] (self: MutBorrow.t tup2_tup2_T_T_T) =
+  function invariant_refmut_tup2_tup2_T_T_T [@inline:trivial] (self: MutBorrow.t tup2_tup2_T_T_T) : bool =
     inv_tup2_tup2_T_T_T self.current /\ inv_tup2_tup2_T_T_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_tup2_tup2_T_T_T
+  meta "rewrite_def" function invariant_refmut_tup2_tup2_T_T_T
   
-  predicate inv_refmut_tup2_tup2_T_T_T [@inline:trivial] (_1: MutBorrow.t tup2_tup2_T_T_T) =
+  function inv_refmut_tup2_tup2_T_T_T [@inline:trivial] (_1: MutBorrow.t tup2_tup2_T_T_T) : bool =
     invariant_refmut_tup2_tup2_T_T_T _1
   
-  meta "rewrite_def" predicate inv_refmut_tup2_tup2_T_T_T
+  meta "rewrite_def" function inv_refmut_tup2_tup2_T_T_T
   
-  predicate resolve_refmut_tup2_tup2_T_T_T [@inline:trivial] (_1: MutBorrow.t tup2_tup2_T_T_T) = _1.final = _1.current
+  function resolve_refmut_tup2_tup2_T_T_T [@inline:trivial] (_1: MutBorrow.t tup2_tup2_T_T_T) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_tup2_tup2_T_T_T
+  meta "rewrite_def" function resolve_refmut_tup2_tup2_T_T_T
   
   meta "compute_max_steps" 1000000
   
@@ -904,9 +907,9 @@ module M_not_final_borrow_works
   let set_7 (r: MutBorrow.t Int32.t) (return (x: ())) = any
     [ return (result: ()) -> {[@stop_split] [@expl:set_7 ensures] Int32.to_int r.final = 7} (! return {result}) ]
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
   meta "compute_max_steps" 1000000
   
@@ -946,9 +949,9 @@ module M_place_mention_no_gen
   
   type t_Option_T = None | Some t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_Option_T (_1: t_Option_T)
+  function inv_Option_T (_1: t_Option_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_T _1
       = match _1 with
@@ -956,18 +959,18 @@ module M_place_mention_no_gen
         | Some f0 -> inv_T f0
         end
   
-  predicate invariant_refmut_Option_T [@inline:trivial] (self: MutBorrow.t t_Option_T) =
-    inv_Option_T self.current /\ inv_Option_T self.final
+  function invariant_refmut_Option_T [@inline:trivial] (self: MutBorrow.t t_Option_T) : bool = inv_Option_T self.current
+    /\ inv_Option_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Option_T
+  meta "rewrite_def" function invariant_refmut_Option_T
   
-  predicate inv_refmut_Option_T [@inline:trivial] (_1: MutBorrow.t t_Option_T) = invariant_refmut_Option_T _1
+  function inv_refmut_Option_T [@inline:trivial] (_1: MutBorrow.t t_Option_T) : bool = invariant_refmut_Option_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Option_T
+  meta "rewrite_def" function inv_refmut_Option_T
   
-  predicate resolve_refmut_Option_T [@inline:trivial] (_1: MutBorrow.t t_Option_T) = _1.final = _1.current
+  function resolve_refmut_Option_T [@inline:trivial] (_1: MutBorrow.t t_Option_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Option_T
+  meta "rewrite_def" function resolve_refmut_Option_T
   
   meta "compute_max_steps" 1000000
   
@@ -1001,48 +1004,48 @@ module M_really_nested_fields
   
   type tup2_refmut_tup2_T_T_T = { f0'0: MutBorrow.t tup2_T_T; f1'0: t_T }
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) = inv_T self.current /\ inv_T self.final
+  function invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) : bool = inv_T self.current /\ inv_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_T
+  meta "rewrite_def" function invariant_refmut_T
   
-  predicate inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = invariant_refmut_T _1
+  function inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = invariant_refmut_T _1
   
-  meta "rewrite_def" predicate inv_refmut_T
+  meta "rewrite_def" function inv_refmut_T
   
-  predicate resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = _1.final = _1.current
+  function resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_T
+  meta "rewrite_def" function resolve_refmut_T
   
-  predicate inv_tup2_T_T [@inline:trivial] (_1: tup2_T_T) = inv_T _1.f0 /\ inv_T _1.f1
+  function inv_tup2_T_T [@inline:trivial] (_1: tup2_T_T) : bool = inv_T _1.f0 /\ inv_T _1.f1
   
-  meta "rewrite_def" predicate inv_tup2_T_T
+  meta "rewrite_def" function inv_tup2_T_T
   
-  predicate invariant_refmut_tup2_T_T [@inline:trivial] (self: MutBorrow.t tup2_T_T) =
-    inv_tup2_T_T self.current /\ inv_tup2_T_T self.final
+  function invariant_refmut_tup2_T_T [@inline:trivial] (self: MutBorrow.t tup2_T_T) : bool = inv_tup2_T_T self.current
+    /\ inv_tup2_T_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_tup2_T_T
+  meta "rewrite_def" function invariant_refmut_tup2_T_T
   
-  predicate inv_refmut_tup2_T_T [@inline:trivial] (_1: MutBorrow.t tup2_T_T) = invariant_refmut_tup2_T_T _1
+  function inv_refmut_tup2_T_T [@inline:trivial] (_1: MutBorrow.t tup2_T_T) : bool = invariant_refmut_tup2_T_T _1
   
-  meta "rewrite_def" predicate inv_refmut_tup2_T_T
+  meta "rewrite_def" function inv_refmut_tup2_T_T
   
-  predicate inv_tup2_refmut_tup2_T_T_T [@inline:trivial] (_1: tup2_refmut_tup2_T_T_T) =
+  function inv_tup2_refmut_tup2_T_T_T [@inline:trivial] (_1: tup2_refmut_tup2_T_T_T) : bool =
     inv_refmut_tup2_T_T _1.f0'0 /\ inv_T _1.f1'0
   
-  meta "rewrite_def" predicate inv_tup2_refmut_tup2_T_T_T
+  meta "rewrite_def" function inv_tup2_refmut_tup2_T_T_T
   
-  predicate resolve_refmut_tup2_T_T [@inline:trivial] (_1: MutBorrow.t tup2_T_T) = _1.final = _1.current
+  function resolve_refmut_tup2_T_T [@inline:trivial] (_1: MutBorrow.t tup2_T_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_tup2_T_T
+  meta "rewrite_def" function resolve_refmut_tup2_T_T
   
-  predicate resolve_T (_1: t_T)
+  function resolve_T (_1: t_T) : bool
   
-  predicate resolve_tup2_refmut_tup2_T_T_T [@inline:trivial] (_1: tup2_refmut_tup2_T_T_T) =
+  function resolve_tup2_refmut_tup2_T_T_T [@inline:trivial] (_1: tup2_refmut_tup2_T_T_T) : bool =
     resolve_refmut_tup2_T_T _1.f0'0 /\ resolve_T _1.f1'0
   
-  meta "rewrite_def" predicate resolve_tup2_refmut_tup2_T_T_T
+  meta "rewrite_def" function resolve_tup2_refmut_tup2_T_T_T
   
   meta "compute_max_steps" 1000000
   
@@ -1090,9 +1093,9 @@ module M_rebor_in_pair
   
   type tup2_refmut_i32_i32 = { f0: MutBorrow.t Int32.t; f1: Int32.t }
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
   meta "compute_max_steps" 1000000
   
@@ -1138,36 +1141,36 @@ module M_reborrow_field
   
   type tup2_T_T = { f0: t_T; f1: t_T }
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) = inv_T self.current /\ inv_T self.final
+  function invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) : bool = inv_T self.current /\ inv_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_T
+  meta "rewrite_def" function invariant_refmut_T
   
-  predicate inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = invariant_refmut_T _1
+  function inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = invariant_refmut_T _1
   
-  meta "rewrite_def" predicate inv_refmut_T
+  meta "rewrite_def" function inv_refmut_T
   
-  predicate resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = _1.final = _1.current
+  function resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_T
+  meta "rewrite_def" function resolve_refmut_T
   
-  predicate inv_tup2_T_T [@inline:trivial] (_1: tup2_T_T) = inv_T _1.f0 /\ inv_T _1.f1
+  function inv_tup2_T_T [@inline:trivial] (_1: tup2_T_T) : bool = inv_T _1.f0 /\ inv_T _1.f1
   
-  meta "rewrite_def" predicate inv_tup2_T_T
+  meta "rewrite_def" function inv_tup2_T_T
   
-  predicate invariant_refmut_tup2_T_T [@inline:trivial] (self: MutBorrow.t tup2_T_T) =
-    inv_tup2_T_T self.current /\ inv_tup2_T_T self.final
+  function invariant_refmut_tup2_T_T [@inline:trivial] (self: MutBorrow.t tup2_T_T) : bool = inv_tup2_T_T self.current
+    /\ inv_tup2_T_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_tup2_T_T
+  meta "rewrite_def" function invariant_refmut_tup2_T_T
   
-  predicate inv_refmut_tup2_T_T [@inline:trivial] (_1: MutBorrow.t tup2_T_T) = invariant_refmut_tup2_T_T _1
+  function inv_refmut_tup2_T_T [@inline:trivial] (_1: MutBorrow.t tup2_T_T) : bool = invariant_refmut_tup2_T_T _1
   
-  meta "rewrite_def" predicate inv_refmut_tup2_T_T
+  meta "rewrite_def" function inv_refmut_tup2_T_T
   
-  predicate resolve_refmut_tup2_T_T [@inline:trivial] (_1: MutBorrow.t tup2_T_T) = _1.final = _1.current
+  function resolve_refmut_tup2_T_T [@inline:trivial] (_1: MutBorrow.t tup2_T_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_tup2_T_T
+  meta "rewrite_def" function resolve_refmut_tup2_T_T
   
   meta "compute_max_steps" 1000000
   
@@ -1213,19 +1216,19 @@ module M_reborrow_id
   
   type t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) = inv_T self.current /\ inv_T self.final
+  function invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) : bool = inv_T self.current /\ inv_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_T
+  meta "rewrite_def" function invariant_refmut_T
   
-  predicate inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = invariant_refmut_T _1
+  function inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = invariant_refmut_T _1
   
-  meta "rewrite_def" predicate inv_refmut_T
+  meta "rewrite_def" function inv_refmut_T
   
-  predicate resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = _1.final = _1.current
+  function resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_T
+  meta "rewrite_def" function resolve_refmut_T
   
   meta "compute_max_steps" 1000000
   
@@ -1260,38 +1263,38 @@ module M_reborrow_in_box
   
   type t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) = inv_T self.current /\ inv_T self.final
+  function invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) : bool = inv_T self.current /\ inv_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_T
+  meta "rewrite_def" function invariant_refmut_T
   
-  predicate inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = invariant_refmut_T _1
+  function inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = invariant_refmut_T _1
   
-  meta "rewrite_def" predicate inv_refmut_T
+  meta "rewrite_def" function inv_refmut_T
   
-  predicate resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = _1.final = _1.current
+  function resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_T
+  meta "rewrite_def" function resolve_refmut_T
   
-  predicate invariant_Box_T_Global (self: t_T) = inv_T self
+  function invariant_Box_T_Global (self: t_T) : bool = inv_T self
   
-  predicate inv_Box_T_Global [@inline:trivial] (_1: t_T) = invariant_Box_T_Global _1
+  function inv_Box_T_Global [@inline:trivial] (_1: t_T) : bool = invariant_Box_T_Global _1
   
-  meta "rewrite_def" predicate inv_Box_T_Global
+  meta "rewrite_def" function inv_Box_T_Global
   
-  predicate invariant_refmut_Box_T_Global [@inline:trivial] (self: MutBorrow.t t_T) =
+  function invariant_refmut_Box_T_Global [@inline:trivial] (self: MutBorrow.t t_T) : bool =
     inv_Box_T_Global self.current /\ inv_Box_T_Global self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Box_T_Global
+  meta "rewrite_def" function invariant_refmut_Box_T_Global
   
-  predicate inv_refmut_Box_T_Global [@inline:trivial] (_1: MutBorrow.t t_T) = invariant_refmut_Box_T_Global _1
+  function inv_refmut_Box_T_Global [@inline:trivial] (_1: MutBorrow.t t_T) : bool = invariant_refmut_Box_T_Global _1
   
-  meta "rewrite_def" predicate inv_refmut_Box_T_Global
+  meta "rewrite_def" function inv_refmut_Box_T_Global
   
-  predicate resolve_refmut_Box_T_Global [@inline:trivial] (_1: MutBorrow.t t_T) = _1.final = _1.current
+  function resolve_refmut_Box_T_Global [@inline:trivial] (_1: MutBorrow.t t_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Box_T_Global
+  meta "rewrite_def" function resolve_refmut_Box_T_Global
   
   meta "compute_max_steps" 1000000
   
@@ -1336,19 +1339,19 @@ module M_select
   
   type t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) = inv_T self.current /\ inv_T self.final
+  function invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) : bool = inv_T self.current /\ inv_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_T
+  meta "rewrite_def" function invariant_refmut_T
   
-  predicate inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = invariant_refmut_T _1
+  function inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = invariant_refmut_T _1
   
-  meta "rewrite_def" predicate inv_refmut_T
+  meta "rewrite_def" function inv_refmut_T
   
-  predicate resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = _1.final = _1.current
+  function resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_T
+  meta "rewrite_def" function resolve_refmut_T
   
   meta "compute_max_steps" 1000000
   
@@ -1422,9 +1425,9 @@ module M_select_field
   
   type tup2_Option_T_T = { f0: t_Option_T; f1: t_T }
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_Option_T (_1: t_Option_T)
+  function inv_Option_T (_1: t_Option_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_T _1
       = match _1 with
@@ -1440,48 +1443,49 @@ module M_select_field
         end}
       any) ]
   
-  predicate invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) = inv_T self.current /\ inv_T self.final
+  function invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) : bool = inv_T self.current /\ inv_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_T
+  meta "rewrite_def" function invariant_refmut_T
   
-  predicate inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = invariant_refmut_T _1
+  function inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = invariant_refmut_T _1
   
-  meta "rewrite_def" predicate inv_refmut_T
+  meta "rewrite_def" function inv_refmut_T
   
-  predicate resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = _1.final = _1.current
+  function resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_T
+  meta "rewrite_def" function resolve_refmut_T
   
-  predicate invariant_refmut_Option_T [@inline:trivial] (self: MutBorrow.t t_Option_T) =
-    inv_Option_T self.current /\ inv_Option_T self.final
+  function invariant_refmut_Option_T [@inline:trivial] (self: MutBorrow.t t_Option_T) : bool = inv_Option_T self.current
+    /\ inv_Option_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Option_T
+  meta "rewrite_def" function invariant_refmut_Option_T
   
-  predicate inv_refmut_Option_T [@inline:trivial] (_1: MutBorrow.t t_Option_T) = invariant_refmut_Option_T _1
+  function inv_refmut_Option_T [@inline:trivial] (_1: MutBorrow.t t_Option_T) : bool = invariant_refmut_Option_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Option_T
+  meta "rewrite_def" function inv_refmut_Option_T
   
-  predicate resolve_refmut_Option_T [@inline:trivial] (_1: MutBorrow.t t_Option_T) = _1.final = _1.current
+  function resolve_refmut_Option_T [@inline:trivial] (_1: MutBorrow.t t_Option_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Option_T
+  meta "rewrite_def" function resolve_refmut_Option_T
   
-  predicate inv_tup2_Option_T_T [@inline:trivial] (_1: tup2_Option_T_T) = inv_Option_T _1.f0 /\ inv_T _1.f1
+  function inv_tup2_Option_T_T [@inline:trivial] (_1: tup2_Option_T_T) : bool = inv_Option_T _1.f0 /\ inv_T _1.f1
   
-  meta "rewrite_def" predicate inv_tup2_Option_T_T
+  meta "rewrite_def" function inv_tup2_Option_T_T
   
-  predicate invariant_refmut_tup2_Option_T_T [@inline:trivial] (self: MutBorrow.t tup2_Option_T_T) =
+  function invariant_refmut_tup2_Option_T_T [@inline:trivial] (self: MutBorrow.t tup2_Option_T_T) : bool =
     inv_tup2_Option_T_T self.current /\ inv_tup2_Option_T_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_tup2_Option_T_T
+  meta "rewrite_def" function invariant_refmut_tup2_Option_T_T
   
-  predicate inv_refmut_tup2_Option_T_T [@inline:trivial] (_1: MutBorrow.t tup2_Option_T_T) =
+  function inv_refmut_tup2_Option_T_T [@inline:trivial] (_1: MutBorrow.t tup2_Option_T_T) : bool =
     invariant_refmut_tup2_Option_T_T _1
   
-  meta "rewrite_def" predicate inv_refmut_tup2_Option_T_T
+  meta "rewrite_def" function inv_refmut_tup2_Option_T_T
   
-  predicate resolve_refmut_tup2_Option_T_T [@inline:trivial] (_1: MutBorrow.t tup2_Option_T_T) = _1.final = _1.current
+  function resolve_refmut_tup2_Option_T_T [@inline:trivial] (_1: MutBorrow.t tup2_Option_T_T) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_tup2_Option_T_T
+  meta "rewrite_def" function resolve_refmut_tup2_Option_T_T
   
   meta "compute_max_steps" 1000000
   
@@ -1552,9 +1556,9 @@ module M_set_7
   use creusot.prelude.MutBorrow
   use creusot.prelude.Any
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
   meta "compute_max_steps" 1000000
   
@@ -1573,9 +1577,9 @@ module M_shallow_borrow_no_gen
   
   type t_Option_i32 = None | Some Int32.t
   
-  predicate resolve_refmut_Option_i32 [@inline:trivial] (_1: MutBorrow.t t_Option_i32) = _1.final = _1.current
+  function resolve_refmut_Option_i32 [@inline:trivial] (_1: MutBorrow.t t_Option_i32) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Option_i32
+  meta "rewrite_def" function resolve_refmut_Option_i32
   
   let elim_Some (_x: t_Option_i32) (return (f0: Int32.t)) = any
     [ _k (f0: Int32.t) -> {Some f0 = _x} (! return {f0})
@@ -1617,19 +1621,19 @@ module M_shared_borrow_no_gen
   
   type t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) = inv_T self.current /\ inv_T self.final
+  function invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) : bool = inv_T self.current /\ inv_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_T
+  meta "rewrite_def" function invariant_refmut_T
   
-  predicate inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = invariant_refmut_T _1
+  function inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = invariant_refmut_T _1
   
-  meta "rewrite_def" predicate inv_refmut_T
+  meta "rewrite_def" function inv_refmut_T
   
-  predicate resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = _1.final = _1.current
+  function resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_T
+  meta "rewrite_def" function resolve_refmut_T
   
   meta "compute_max_steps" 1000000
   
@@ -1659,32 +1663,33 @@ module M_unnesting_non_extensional
   
   type t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) = inv_T self.current /\ inv_T self.final
+  function invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) : bool = inv_T self.current /\ inv_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_T
+  meta "rewrite_def" function invariant_refmut_T
   
-  predicate inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = invariant_refmut_T _1
+  function inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = invariant_refmut_T _1
   
-  meta "rewrite_def" predicate inv_refmut_T
+  meta "rewrite_def" function inv_refmut_T
   
-  predicate resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = _1.final = _1.current
+  function resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_T
+  meta "rewrite_def" function resolve_refmut_T
   
-  predicate invariant_refmut_refmut_T [@inline:trivial] (self: MutBorrow.t (MutBorrow.t t_T)) =
+  function invariant_refmut_refmut_T [@inline:trivial] (self: MutBorrow.t (MutBorrow.t t_T)) : bool =
     inv_refmut_T self.current /\ inv_refmut_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_refmut_T
+  meta "rewrite_def" function invariant_refmut_refmut_T
   
-  predicate inv_refmut_refmut_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_T)) = invariant_refmut_refmut_T _1
+  function inv_refmut_refmut_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_T)) : bool =
+    invariant_refmut_refmut_T _1
   
-  meta "rewrite_def" predicate inv_refmut_refmut_T
+  meta "rewrite_def" function inv_refmut_refmut_T
   
-  predicate resolve_refmut_refmut_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_T)) = _1.final = _1.current
+  function resolve_refmut_refmut_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_T)) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_refmut_T
+  meta "rewrite_def" function resolve_refmut_refmut_T
   
   meta "compute_max_steps" 1000000
   
@@ -1730,34 +1735,35 @@ module M_write_inner_borrow
   
   type t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) = inv_T self.current /\ inv_T self.final
+  function invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) : bool = inv_T self.current /\ inv_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_T
+  meta "rewrite_def" function invariant_refmut_T
   
-  predicate inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = invariant_refmut_T _1
+  function inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = invariant_refmut_T _1
   
-  meta "rewrite_def" predicate inv_refmut_T
+  meta "rewrite_def" function inv_refmut_T
   
-  predicate resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = _1.final = _1.current
+  function resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_T
+  meta "rewrite_def" function resolve_refmut_T
   
-  predicate resolve_T (_1: t_T)
+  function resolve_T (_1: t_T) : bool
   
-  predicate invariant_refmut_refmut_T [@inline:trivial] (self: MutBorrow.t (MutBorrow.t t_T)) =
+  function invariant_refmut_refmut_T [@inline:trivial] (self: MutBorrow.t (MutBorrow.t t_T)) : bool =
     inv_refmut_T self.current /\ inv_refmut_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_refmut_T
+  meta "rewrite_def" function invariant_refmut_refmut_T
   
-  predicate inv_refmut_refmut_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_T)) = invariant_refmut_refmut_T _1
+  function inv_refmut_refmut_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_T)) : bool =
+    invariant_refmut_refmut_T _1
   
-  meta "rewrite_def" predicate inv_refmut_refmut_T
+  meta "rewrite_def" function inv_refmut_refmut_T
   
-  predicate resolve_refmut_refmut_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_T)) = _1.final = _1.current
+  function resolve_refmut_refmut_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_T)) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_refmut_T
+  meta "rewrite_def" function resolve_refmut_refmut_T
   
   meta "compute_max_steps" 1000000
   

@@ -21,7 +21,7 @@ function ward_T (self: t_PtrLive_T) : Opaque.ptr
 
 constant const_MAX'0: UInt64.t = (18446744073709551615: UInt64.t)
 
-predicate is_aligned_to_ptr_T (self: Opaque.ptr) (align: UInt64.t) =
+function is_aligned_to_ptr_T (self: Opaque.ptr) (align: UInt64.t) : bool =
   UInt64.bw_and (Ptr.addr_logic_u64 self) (UInt64.sub align (1: UInt64.t)) = (0: UInt64.t)
 
 constant align_of_T : UInt64.t
@@ -31,30 +31,30 @@ axiom align_of_T_spec: (0: UInt64.t) <> align_of_T
 
 axiom align_of_T_spec'0: ComputerDivision.mod size_of_T (UInt64.t'int align_of_T) = 0
 
-predicate is_aligned_T [@inline:trivial] (ptr: Opaque.ptr) = is_aligned_to_ptr_T ptr align_of_T
+function is_aligned_T [@inline:trivial] (ptr: Opaque.ptr) : bool = is_aligned_to_ptr_T ptr align_of_T
 
-meta "rewrite_def" predicate is_aligned_T
+meta "rewrite_def" function is_aligned_T
 
-predicate is_aligned_ptr_T [@inline:trivial] (self: Opaque.ptr) = is_aligned_T self
+function is_aligned_ptr_T [@inline:trivial] (self: Opaque.ptr) : bool = is_aligned_T self
 
-meta "rewrite_def" predicate is_aligned_ptr_T
+meta "rewrite_def" function is_aligned_ptr_T
 
-predicate invariant_PtrLive_T (self: t_PtrLive_T) =
-  UInt64.t'int (len_T self) * size_of_T <= Int64.to_int const_MAX
+function invariant_PtrLive_T (self: t_PtrLive_T) : bool = UInt64.t'int (len_T self) * size_of_T
+    <= Int64.to_int const_MAX
   /\ UInt64.t'int (Ptr.addr_logic_u64 (ward_T self)) + UInt64.t'int (len_T self) * size_of_T <= UInt64.t'int const_MAX'0
   /\ is_aligned_ptr_T (ward_T self)
 
-predicate inv_PtrLive_T (_1: t_PtrLive_T)
+function inv_PtrLive_T (_1: t_PtrLive_T) : bool
 
 axiom inv_axiom [@rewrite]: forall _1: t_PtrLive_T [inv_PtrLive_T _1]. inv_PtrLive_T _1 = invariant_PtrLive_T _1
 
-predicate invariant_ref_PtrLive_T [@inline:trivial] (self: t_PtrLive_T) = inv_PtrLive_T self
+function invariant_ref_PtrLive_T [@inline:trivial] (self: t_PtrLive_T) : bool = inv_PtrLive_T self
 
-meta "rewrite_def" predicate invariant_ref_PtrLive_T
+meta "rewrite_def" function invariant_ref_PtrLive_T
 
-predicate inv_ref_PtrLive_T [@inline:trivial] (_1: t_PtrLive_T) = invariant_ref_PtrLive_T _1
+function inv_ref_PtrLive_T [@inline:trivial] (_1: t_PtrLive_T) : bool = invariant_ref_PtrLive_T _1
 
-meta "rewrite_def" predicate inv_ref_PtrLive_T
+meta "rewrite_def" function inv_ref_PtrLive_T
 
 meta "compute_max_steps" 1000000
 

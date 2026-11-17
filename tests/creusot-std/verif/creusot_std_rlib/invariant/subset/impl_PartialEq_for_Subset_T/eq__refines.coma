@@ -8,7 +8,7 @@ type t_T
 
 function deep_model_T (self: t_T) : t_DeepModelTy
 
-predicate invariant_T (self: t_T)
+function invariant_T (self: t_T) : bool
 
 function inner_T (self: t_Subset_T) : t_T
 

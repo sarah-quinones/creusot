@@ -6,9 +6,9 @@ type t_F
 
 type t_FnGhostWrapper_F = { f0: t_F }
 
-predicate inv_F (_1: t_F)
+function inv_F (_1: t_F) : bool
 
-predicate inv_FnGhostWrapper_F (_1: t_FnGhostWrapper_F)
+function inv_FnGhostWrapper_F (_1: t_FnGhostWrapper_F) : bool
 
 axiom inv_axiom [@rewrite]: forall _1: t_FnGhostWrapper_F [inv_FnGhostWrapper_F _1]. inv_FnGhostWrapper_F _1
     = inv_F _1.f0

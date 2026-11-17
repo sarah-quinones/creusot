@@ -2,15 +2,15 @@ module M_f
   use creusot.prelude.Any
   use creusot.int.UInt32
   
-  predicate gt_log_u32 [@inline:trivial] (self: UInt32.t) (other: UInt32.t) = UInt32.lt other self
+  function gt_log_u32 [@inline:trivial] (self: UInt32.t) (other: UInt32.t) : bool = UInt32.lt other self
   
-  meta "rewrite_def" predicate gt_log_u32
+  meta "rewrite_def" function gt_log_u32
   
-  predicate a (x: UInt32.t) = gt_log_u32 x (0: UInt32.t)
+  function a (x: UInt32.t) : bool = gt_log_u32 x (0: UInt32.t)
   
-  predicate b (x: UInt32.t) = gt_log_u32 x (10: UInt32.t) /\ a x
+  function b (x: UInt32.t) : bool = gt_log_u32 x (10: UInt32.t) /\ a x
   
-  predicate c (x: UInt32.t) = UInt32.lt x (50: UInt32.t) /\ b x
+  function c (x: UInt32.t) : bool = UInt32.lt x (50: UInt32.t) /\ b x
   
   meta "compute_max_steps" 1000000
   

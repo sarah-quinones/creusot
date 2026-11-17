@@ -2,9 +2,9 @@
 
 use creusot.int.Int128
 
-predicate inv_i128 [@inline:trivial] (_1: Int128.t) = true
+function inv_i128 [@inline:trivial] (_1: Int128.t) : bool = true
 
-meta "rewrite_def" predicate inv_i128
+meta "rewrite_def" function inv_i128
 
 meta "compute_max_steps" 1000000
 

@@ -13,7 +13,7 @@ type tup2_Item_Item = { f0: t_Item; f1: t_Item'0 }
 
 type t_A
 
-predicate produces_A (self: t_A) (visited: Seq.seq t_Item) (o: t_A)
+function produces_A (self: t_A) (visited: Seq.seq t_Item) (o: t_A) : bool
 
 function produces_trans_A (a: t_A) (ab: Seq.seq t_Item) (b: t_A) (bc: Seq.seq t_Item) (c: t_A) : ()
 
@@ -28,7 +28,7 @@ function iter_a_Zip_A_B (self: t_Zip_A_B) : t_A
 
 type t_B
 
-predicate produces_B (self: t_B) (visited: Seq.seq t_Item'0) (o: t_B)
+function produces_B (self: t_B) (visited: Seq.seq t_Item'0) (o: t_B) : bool
 
 function produces_trans_B (a: t_B) (ab: Seq.seq t_Item'0) (b: t_B) (bc: Seq.seq t_Item'0) (c: t_B) : ()
 
@@ -42,7 +42,7 @@ axiom produces_refl_B_spec: forall self: t_B. produces_B self (Seq.empty: Seq.se
 
 function iter_b_Zip_A_B (self: t_Zip_A_B) : t_B
 
-predicate produces_Zip_A_B (self: t_Zip_A_B) (visited: Seq.seq tup2_Item_Item) (o: t_Zip_A_B) =
+function produces_Zip_A_B (self: t_Zip_A_B) (visited: Seq.seq tup2_Item_Item) (o: t_Zip_A_B) : bool =
   exists p1: Seq.seq t_Item, p2: Seq.seq t_Item'0. Seq.length p1 = Seq.length p2
     /\ Seq.length p2 = Seq.length visited
     /\ (forall i: int. 0 <= i /\ i < Seq.length visited -> Seq.get visited i = { f0 = Seq.get p1 i; f1 = Seq.get p2 i })

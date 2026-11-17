@@ -17,11 +17,11 @@ module M_copy_out_of_sum
   
   type t_Result_refmut_u32_refmut_u32 = Ok (MutBorrow.t UInt32.t) | Err (MutBorrow.t UInt32.t)
   
-  predicate resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) = _1.final = _1.current
+  function resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_u32
+  meta "rewrite_def" function resolve_refmut_u32
   
-  predicate resolve_Result_refmut_u32_refmut_u32 (_1: t_Result_refmut_u32_refmut_u32)
+  function resolve_Result_refmut_u32_refmut_u32 (_1: t_Result_refmut_u32_refmut_u32) : bool
   
   axiom resolve_axiom [@rewrite]:
     forall _1: t_Result_refmut_u32_refmut_u32 [resolve_Result_refmut_u32_refmut_u32 _1]. resolve_Result_refmut_u32_refmut_u32 _1
@@ -112,13 +112,13 @@ module M_write_into_sum
         end}
       any) ]
   
-  predicate resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) = _1.final = _1.current
+  function resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_u32
+  meta "rewrite_def" function resolve_refmut_u32
   
-  predicate resolve_refmut_Option_u32 [@inline:trivial] (_1: MutBorrow.t t_Option_u32) = _1.final = _1.current
+  function resolve_refmut_Option_u32 [@inline:trivial] (_1: MutBorrow.t t_Option_u32) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Option_u32
+  meta "rewrite_def" function resolve_refmut_Option_u32
   
   meta "compute_max_steps" 1000000
   

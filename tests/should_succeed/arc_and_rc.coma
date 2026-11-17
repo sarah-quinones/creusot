@@ -7,7 +7,7 @@ module M_arc
   
   type t_Arc_i32_Global
   
-  predicate inv_Arc_i32_Global (_1: t_Arc_i32_Global)
+  function inv_Arc_i32_Global (_1: t_Arc_i32_Global) : bool
   
   function deref_Arc_i32_Global (self: t_Arc_i32_Global) : Int32.t
   
@@ -17,13 +17,13 @@ module M_arc
       /\ ([@stop_split] [@expl:new ensures] deref_Arc_i32_Global result = data)}
       (! return {result}) ]
   
-  predicate invariant_ref_Arc_i32_Global [@inline:trivial] (self: t_Arc_i32_Global) = inv_Arc_i32_Global self
+  function invariant_ref_Arc_i32_Global [@inline:trivial] (self: t_Arc_i32_Global) : bool = inv_Arc_i32_Global self
   
-  meta "rewrite_def" predicate invariant_ref_Arc_i32_Global
+  meta "rewrite_def" function invariant_ref_Arc_i32_Global
   
-  predicate inv_ref_Arc_i32_Global [@inline:trivial] (_1: t_Arc_i32_Global) = invariant_ref_Arc_i32_Global _1
+  function inv_ref_Arc_i32_Global [@inline:trivial] (_1: t_Arc_i32_Global) : bool = invariant_ref_Arc_i32_Global _1
   
-  meta "rewrite_def" predicate inv_ref_Arc_i32_Global
+  meta "rewrite_def" function inv_ref_Arc_i32_Global
   
   let as_ref_Arc_i32_Global (self: t_Arc_i32_Global) (return (x: Int32.t)) =
   {[@stop_split] [@expl:as_ref 'self' type invariant] inv_ref_Arc_i32_Global self}
@@ -39,7 +39,7 @@ module M_arc
       /\ ([@stop_split] [@expl:clone ensures] result = self)}
       (! return {result}) ]
   
-  predicate resolve_Arc_i32_Global (_1: t_Arc_i32_Global)
+  function resolve_Arc_i32_Global (_1: t_Arc_i32_Global) : bool
   
   type t_PtrDeepModel__private
   
@@ -109,7 +109,7 @@ module M_rc
   
   type t_Rc_i32_Global
   
-  predicate inv_Rc_i32_Global (_1: t_Rc_i32_Global)
+  function inv_Rc_i32_Global (_1: t_Rc_i32_Global) : bool
   
   function deref_Rc_i32_Global (self: t_Rc_i32_Global) : Int32.t
   
@@ -119,13 +119,13 @@ module M_rc
       /\ ([@stop_split] [@expl:new ensures] deref_Rc_i32_Global result = value)}
       (! return {result}) ]
   
-  predicate invariant_ref_Rc_i32_Global [@inline:trivial] (self: t_Rc_i32_Global) = inv_Rc_i32_Global self
+  function invariant_ref_Rc_i32_Global [@inline:trivial] (self: t_Rc_i32_Global) : bool = inv_Rc_i32_Global self
   
-  meta "rewrite_def" predicate invariant_ref_Rc_i32_Global
+  meta "rewrite_def" function invariant_ref_Rc_i32_Global
   
-  predicate inv_ref_Rc_i32_Global [@inline:trivial] (_1: t_Rc_i32_Global) = invariant_ref_Rc_i32_Global _1
+  function inv_ref_Rc_i32_Global [@inline:trivial] (_1: t_Rc_i32_Global) : bool = invariant_ref_Rc_i32_Global _1
   
-  meta "rewrite_def" predicate inv_ref_Rc_i32_Global
+  meta "rewrite_def" function inv_ref_Rc_i32_Global
   
   let as_ref_Rc_i32_Global (self: t_Rc_i32_Global) (return (x: Int32.t)) =
   {[@stop_split] [@expl:as_ref 'self' type invariant] inv_ref_Rc_i32_Global self}
@@ -141,7 +141,7 @@ module M_rc
       /\ ([@stop_split] [@expl:clone ensures] result = self)}
       (! return {result}) ]
   
-  predicate resolve_Rc_i32_Global (_1: t_Rc_i32_Global)
+  function resolve_Rc_i32_Global (_1: t_Rc_i32_Global) : bool
   
   function as_ptr_Rc_i32_Global (self: t_Rc_i32_Global) : Opaque.ptr
   

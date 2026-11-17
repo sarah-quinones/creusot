@@ -69,13 +69,13 @@ module M_rose
   
   type t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
   type t_Vec_Rose_T_Global
   
   type t_Rose_T = { f0: t_T; f1: t_Vec_Rose_T_Global }
   
-  predicate resolve_T (_1: t_T)
+  function resolve_T (_1: t_T) : bool
   
   type t_IntoIter_Rose_T_Global
   
@@ -87,36 +87,36 @@ module M_rose
     forall self: t_Vec_Rose_T_Global [view_Vec_Rose_T_Global self]. Seq.length (view_Vec_Rose_T_Global self)
       <= UInt64.t'int const_MAX
   
-  predicate inv_Rose_T (_1: t_Rose_T)
+  function inv_Rose_T (_1: t_Rose_T) : bool
   
-  predicate inv_Vec_Rose_T_Global (_1: t_Vec_Rose_T_Global)
+  function inv_Vec_Rose_T_Global (_1: t_Vec_Rose_T_Global) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Rose_T [inv_Rose_T _1]. inv_Rose_T _1
       = (inv_T _1.f0 /\ inv_Vec_Rose_T_Global _1.f1)
   
-  predicate invariant_ref_Rose_T [@inline:trivial] (self: t_Rose_T) = inv_Rose_T self
+  function invariant_ref_Rose_T [@inline:trivial] (self: t_Rose_T) : bool = inv_Rose_T self
   
-  meta "rewrite_def" predicate invariant_ref_Rose_T
+  meta "rewrite_def" function invariant_ref_Rose_T
   
-  predicate inv_ref_Rose_T [@inline:trivial] (_1: t_Rose_T) = invariant_ref_Rose_T _1
+  function inv_ref_Rose_T [@inline:trivial] (_1: t_Rose_T) : bool = invariant_ref_Rose_T _1
   
-  meta "rewrite_def" predicate inv_ref_Rose_T
+  meta "rewrite_def" function inv_ref_Rose_T
   
-  predicate invariant_Seq_Rose_T [@inline:trivial] (self: Seq.seq t_Rose_T) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_Rose_T (Seq.get self i)
+  function invariant_Seq_Rose_T [@inline:trivial] (self: Seq.seq t_Rose_T) : bool = forall i: int. 0 <= i
+        /\ i < Seq.length self -> inv_ref_Rose_T (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_Rose_T
+  meta "rewrite_def" function invariant_Seq_Rose_T
   
-  predicate inv_Seq_Rose_T [@inline:trivial] (_1: Seq.seq t_Rose_T) = invariant_Seq_Rose_T _1
+  function inv_Seq_Rose_T [@inline:trivial] (_1: Seq.seq t_Rose_T) : bool = invariant_Seq_Rose_T _1
   
-  meta "rewrite_def" predicate inv_Seq_Rose_T
+  meta "rewrite_def" function inv_Seq_Rose_T
   
-  predicate invariant_Vec_Rose_T_Global (self: t_Vec_Rose_T_Global) = inv_Seq_Rose_T (view_Vec_Rose_T_Global self)
+  function invariant_Vec_Rose_T_Global (self: t_Vec_Rose_T_Global) : bool = inv_Seq_Rose_T (view_Vec_Rose_T_Global self)
   
   axiom inv_axiom'0: forall _1: t_Vec_Rose_T_Global [inv_Vec_Rose_T_Global _1]. inv_Vec_Rose_T_Global _1
       -> invariant_Vec_Rose_T_Global _1
   
-  predicate inv_IntoIter_Rose_T_Global (_1: t_IntoIter_Rose_T_Global)
+  function inv_IntoIter_Rose_T_Global (_1: t_IntoIter_Rose_T_Global) : bool
   
   function view_IntoIter_Rose_T_Global (self: t_IntoIter_Rose_T_Global) : Seq.seq t_Rose_T
   
@@ -130,17 +130,17 @@ module M_rose
   
   type t_Option_Rose_T = None | Some t_Rose_T
   
-  predicate invariant_refmut_IntoIter_Rose_T_Global [@inline:trivial] (self: MutBorrow.t t_IntoIter_Rose_T_Global) =
-    inv_IntoIter_Rose_T_Global self.current /\ inv_IntoIter_Rose_T_Global self.final
+  function invariant_refmut_IntoIter_Rose_T_Global [@inline:trivial] (self: MutBorrow.t t_IntoIter_Rose_T_Global) : bool
+   = inv_IntoIter_Rose_T_Global self.current /\ inv_IntoIter_Rose_T_Global self.final
   
-  meta "rewrite_def" predicate invariant_refmut_IntoIter_Rose_T_Global
+  meta "rewrite_def" function invariant_refmut_IntoIter_Rose_T_Global
   
-  predicate inv_refmut_IntoIter_Rose_T_Global [@inline:trivial] (_1: MutBorrow.t t_IntoIter_Rose_T_Global) =
+  function inv_refmut_IntoIter_Rose_T_Global [@inline:trivial] (_1: MutBorrow.t t_IntoIter_Rose_T_Global) : bool =
     invariant_refmut_IntoIter_Rose_T_Global _1
   
-  meta "rewrite_def" predicate inv_refmut_IntoIter_Rose_T_Global
+  meta "rewrite_def" function inv_refmut_IntoIter_Rose_T_Global
   
-  predicate inv_Option_Rose_T (_1: t_Option_Rose_T)
+  function inv_Option_Rose_T (_1: t_Option_Rose_T) : bool
   
   axiom inv_axiom'1 [@rewrite]: forall _1: t_Option_Rose_T [inv_Option_Rose_T _1]. inv_Option_Rose_T _1
       = match _1 with
@@ -148,8 +148,8 @@ module M_rose
         | Some f0'0 -> inv_Rose_T f0'0
         end
   
-  predicate produces_IntoIter_Rose_T_Global (self: t_IntoIter_Rose_T_Global) (visited: Seq.seq t_Rose_T) (rhs: t_IntoIter_Rose_T_Global) =
-    view_IntoIter_Rose_T_Global self = Seq.(++) visited (view_IntoIter_Rose_T_Global rhs)
+  function produces_IntoIter_Rose_T_Global (self: t_IntoIter_Rose_T_Global) (visited: Seq.seq t_Rose_T) (rhs: t_IntoIter_Rose_T_Global) : bool
+   = view_IntoIter_Rose_T_Global self = Seq.(++) visited (view_IntoIter_Rose_T_Global rhs)
   
   function produces_trans_IntoIter_Rose_T_Global (a: t_IntoIter_Rose_T_Global) (ab: Seq.seq t_Rose_T) (b: t_IntoIter_Rose_T_Global) (bc: Seq.seq t_Rose_T) (c: t_IntoIter_Rose_T_Global) : ()
   
@@ -162,12 +162,12 @@ module M_rose
   axiom produces_refl_IntoIter_Rose_T_Global_spec:
     forall self: t_IntoIter_Rose_T_Global. produces_IntoIter_Rose_T_Global self (Seq.empty: Seq.seq t_Rose_T) self
   
-  predicate resolve_refmut_IntoIter_Rose_T_Global [@inline:trivial] (_1: MutBorrow.t t_IntoIter_Rose_T_Global) =
+  function resolve_refmut_IntoIter_Rose_T_Global [@inline:trivial] (_1: MutBorrow.t t_IntoIter_Rose_T_Global) : bool =
     _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_IntoIter_Rose_T_Global
+  meta "rewrite_def" function resolve_refmut_IntoIter_Rose_T_Global
   
-  predicate completed_IntoIter_Rose_T_Global (self: MutBorrow.t t_IntoIter_Rose_T_Global) =
+  function completed_IntoIter_Rose_T_Global (self: MutBorrow.t t_IntoIter_Rose_T_Global) : bool =
     resolve_refmut_IntoIter_Rose_T_Global self
     /\ view_IntoIter_Rose_T_Global self.current = (Seq.empty: Seq.seq t_Rose_T)
   
@@ -199,15 +199,14 @@ module M_rose
   
   meta "rewrite_def" function index_Vec_Rose_T_Global
   
-  predicate resolve_Rose_T (_1: t_Rose_T)
+  function resolve_Rose_T (_1: t_Rose_T) : bool
   
-  predicate resolve_Vec_Rose_T_Global [@inline:trivial] (self: t_Vec_Rose_T_Global) =
-    forall i: int. 0 <= i /\ i < Seq.length (view_Vec_Rose_T_Global self)
-      -> resolve_Rose_T (index_Vec_Rose_T_Global self i)
+  function resolve_Vec_Rose_T_Global [@inline:trivial] (self: t_Vec_Rose_T_Global) : bool = forall i: int. 0 <= i
+        /\ i < Seq.length (view_Vec_Rose_T_Global self) -> resolve_Rose_T (index_Vec_Rose_T_Global self i)
   
-  meta "rewrite_def" predicate resolve_Vec_Rose_T_Global
+  meta "rewrite_def" function resolve_Vec_Rose_T_Global
   
-  predicate resolve_Vec_Rose_T_Global'0 (_1: t_Vec_Rose_T_Global)
+  function resolve_Vec_Rose_T_Global'0 (_1: t_Vec_Rose_T_Global) : bool
   
   axiom resolve_axiom: forall _1: t_Vec_Rose_T_Global [resolve_Vec_Rose_T_Global'0 _1]. resolve_Vec_Rose_T_Global'0 _1
       -> resolve_Vec_Rose_T_Global _1
@@ -215,7 +214,7 @@ module M_rose
   axiom resolve_axiom'0 [@rewrite]: forall _1: t_Rose_T [resolve_Rose_T _1]. resolve_Rose_T _1
       = (resolve_T _1.f0 /\ resolve_Vec_Rose_T_Global'0 _1.f1)
   
-  predicate resolve_Option_Rose_T (_1: t_Option_Rose_T)
+  function resolve_Option_Rose_T (_1: t_Option_Rose_T) : bool
   
   axiom resolve_axiom'1 [@rewrite]: forall _1: t_Option_Rose_T [resolve_Option_Rose_T _1]. resolve_Option_Rose_T _1
       = match _1 with
@@ -223,13 +222,14 @@ module M_rose
         | Some x0 -> resolve_Rose_T x0
         end
   
-  predicate resolve_IntoIter_Rose_T_Global [@inline:trivial] (self: t_IntoIter_Rose_T_Global) =
-    forall i: int. 0 <= i /\ i < Seq.length (view_IntoIter_Rose_T_Global self)
+  function resolve_IntoIter_Rose_T_Global [@inline:trivial] (self: t_IntoIter_Rose_T_Global) : bool = forall i: int. 0
+          <= i
+        /\ i < Seq.length (view_IntoIter_Rose_T_Global self)
       -> resolve_Rose_T (Seq.get (view_IntoIter_Rose_T_Global self) i)
   
-  meta "rewrite_def" predicate resolve_IntoIter_Rose_T_Global
+  meta "rewrite_def" function resolve_IntoIter_Rose_T_Global
   
-  predicate resolve_IntoIter_Rose_T_Global'0 (_1: t_IntoIter_Rose_T_Global)
+  function resolve_IntoIter_Rose_T_Global'0 (_1: t_IntoIter_Rose_T_Global) : bool
   
   axiom resolve_axiom'2:
     forall _1: t_IntoIter_Rose_T_Global [resolve_IntoIter_Rose_T_Global'0 _1]. resolve_IntoIter_Rose_T_Global'0 _1

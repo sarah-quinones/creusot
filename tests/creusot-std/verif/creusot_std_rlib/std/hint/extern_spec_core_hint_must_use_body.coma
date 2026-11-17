@@ -2,7 +2,7 @@ use creusot.prelude.Any
 
 type t_T
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
 meta "compute_max_steps" 1000000
 

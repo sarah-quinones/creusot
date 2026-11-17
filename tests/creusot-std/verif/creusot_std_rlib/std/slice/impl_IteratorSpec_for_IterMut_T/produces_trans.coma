@@ -31,7 +31,7 @@ axiom view_IterMut_T_spec:
   forall self: t_IterMut_T [view_IterMut_T self]. Seq.length (Slice64.view (view_IterMut_T self).final)
     = Seq.length (Slice64.view (view_IterMut_T self).current)
 
-predicate produces_IterMut_T (self: t_IterMut_T) (visited: Seq.seq (MutBorrow.t t_T)) (tl: t_IterMut_T) =
+function produces_IterMut_T (self: t_IterMut_T) (visited: Seq.seq (MutBorrow.t t_T)) (tl: t_IterMut_T) : bool =
   to_mut_seq_slice_T (view_IterMut_T self) = Seq.(++) visited (to_mut_seq_slice_T (view_IterMut_T tl))
 
 function concat_assoc_refmut_T (self: Seq.seq (MutBorrow.t t_T)) (other1: Seq.seq (MutBorrow.t t_T)) (other2: Seq.seq (MutBorrow.t t_T)) : ()

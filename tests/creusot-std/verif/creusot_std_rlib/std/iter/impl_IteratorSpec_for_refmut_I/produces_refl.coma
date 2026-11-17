@@ -7,7 +7,7 @@ type t_I
 
 type t_Item
 
-predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
 
 function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
 
@@ -18,7 +18,7 @@ function produces_refl_I (self: t_I) : ()
 
 axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
 
-predicate produces_refmut_I (self: MutBorrow.t t_I) (visited: Seq.seq t_Item) (o: MutBorrow.t t_I) =
+function produces_refmut_I (self: MutBorrow.t t_I) (visited: Seq.seq t_Item) (o: MutBorrow.t t_I) : bool =
   produces_I self.current visited o.current /\ self.final = o.final
 
 meta "compute_max_steps" 1000000

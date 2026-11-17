@@ -5,11 +5,11 @@ module M_test_instant
   
   type t_Instant
   
-  predicate inv_Instant (_1: t_Instant)
+  function inv_Instant (_1: t_Instant) : bool
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function view_Instant (self: t_Instant) : int
   
@@ -23,7 +23,7 @@ module M_test_instant
   
   type t_Duration
   
-  predicate inv_Duration (_1: t_Duration)
+  function inv_Duration (_1: t_Duration) : bool
   
   function secs_to_nanos (secs: int) : int = secs * 1000000000
   
@@ -40,13 +40,13 @@ module M_test_instant
       /\ ([@stop_split] [@expl:from_secs ensures] view_Duration result = secs_to_nanos (UInt64.t'int secs))}
       (! return {result}) ]
   
-  predicate invariant_ref_Instant [@inline:trivial] (self: t_Instant) = inv_Instant self
+  function invariant_ref_Instant [@inline:trivial] (self: t_Instant) : bool = inv_Instant self
   
-  meta "rewrite_def" predicate invariant_ref_Instant
+  meta "rewrite_def" function invariant_ref_Instant
   
-  predicate inv_ref_Instant [@inline:trivial] (_1: t_Instant) = invariant_ref_Instant _1
+  function inv_ref_Instant [@inline:trivial] (_1: t_Instant) : bool = invariant_ref_Instant _1
   
-  meta "rewrite_def" predicate inv_ref_Instant
+  meta "rewrite_def" function inv_ref_Instant
   
   let elapsed (self: t_Instant) (return (x: t_Duration)) =
   {[@stop_split] [@expl:elapsed 'self' type invariant] inv_ref_Instant self}
@@ -56,13 +56,13 @@ module M_test_instant
       /\ ([@stop_split] [@expl:elapsed ensures] ge_log_Int (view_Duration result) 0)}
       (! return {result}) ]
   
-  predicate invariant_ref_Duration [@inline:trivial] (self: t_Duration) = inv_Duration self
+  function invariant_ref_Duration [@inline:trivial] (self: t_Duration) : bool = inv_Duration self
   
-  meta "rewrite_def" predicate invariant_ref_Duration
+  meta "rewrite_def" function invariant_ref_Duration
   
-  predicate inv_ref_Duration [@inline:trivial] (_1: t_Duration) = invariant_ref_Duration _1
+  function inv_ref_Duration [@inline:trivial] (_1: t_Duration) : bool = invariant_ref_Duration _1
   
-  meta "rewrite_def" predicate inv_ref_Duration
+  meta "rewrite_def" function inv_ref_Duration
   
   function deep_model_Duration [@inline:trivial] (self: t_Duration) : int = view_Duration self
   
@@ -82,7 +82,7 @@ module M_test_instant
   
   type t_Option_Instant = None | Some t_Instant
   
-  predicate inv_Option_Instant (_1: t_Option_Instant)
+  function inv_Option_Instant (_1: t_Option_Instant) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Option_Instant [inv_Option_Instant _1]. inv_Option_Instant _1
       = match _1 with
@@ -103,12 +103,11 @@ module M_test_instant
   
   meta "rewrite_def" function deep_model_Option_Instant
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
-  predicate le_log_Option_Int (self: t_Option_Int) (o: t_Option_Int) =
-    match self with
+  function le_log_Option_Int (self: t_Option_Int) (o: t_Option_Int) : bool = match self with
       | None'0 -> true
       | Some'0 s -> match o with
         | None'0 -> false
@@ -116,8 +115,7 @@ module M_test_instant
         end
       end
   
-  predicate lt_log_Option_Int (self: t_Option_Int) (o: t_Option_Int) =
-    match o with
+  function lt_log_Option_Int (self: t_Option_Int) (o: t_Option_Int) : bool = match o with
       | None'0 -> false
       | Some'0 o'0 -> match self with
         | None'0 -> true
@@ -151,13 +149,13 @@ module M_test_instant
       -> lt_log_Option_Int (Some'0 (view_Instant self)) (deep_model_Option_Instant result))}
       (! return {result}) ]
   
-  predicate invariant_ref_Option_Instant [@inline:trivial] (self: t_Option_Instant) = inv_Option_Instant self
+  function invariant_ref_Option_Instant [@inline:trivial] (self: t_Option_Instant) : bool = inv_Option_Instant self
   
-  meta "rewrite_def" predicate invariant_ref_Option_Instant
+  meta "rewrite_def" function invariant_ref_Option_Instant
   
-  predicate inv_ref_Option_Instant [@inline:trivial] (_1: t_Option_Instant) = invariant_ref_Option_Instant _1
+  function inv_ref_Option_Instant [@inline:trivial] (_1: t_Option_Instant) : bool = invariant_ref_Option_Instant _1
   
-  meta "rewrite_def" predicate inv_ref_Option_Instant
+  meta "rewrite_def" function inv_ref_Option_Instant
   
   function deep_model_ref_Option_Instant [@inline:trivial] (self: t_Option_Instant) : t_Option_Int =
     deep_model_Option_Instant self
@@ -180,10 +178,10 @@ module M_test_instant
         end}
       any) ]
   
-  predicate gt_log_Option_Int [@inline:trivial] (self: t_Option_Int) (other: t_Option_Int) =
+  function gt_log_Option_Int [@inline:trivial] (self: t_Option_Int) (other: t_Option_Int) : bool =
     lt_log_Option_Int other self
   
-  meta "rewrite_def" predicate gt_log_Option_Int
+  meta "rewrite_def" function gt_log_Option_Int
   
   let checked_sub (self: t_Instant) (duration: t_Duration) (return (x: t_Option_Instant)) =
   {[@stop_split] [@expl:checked_sub requires] ([@stop_split] [@expl:checked_sub 'self' type invariant] inv_ref_Instant self)
@@ -238,7 +236,7 @@ module M_test_instant
   
   type t_Option_Duration = None'1 | Some'1 t_Duration
   
-  predicate inv_Option_Duration (_1: t_Option_Duration)
+  function inv_Option_Duration (_1: t_Option_Duration) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Option_Duration [inv_Option_Duration _1]. inv_Option_Duration _1
       = match _1 with
@@ -258,13 +256,13 @@ module M_test_instant
       -> result = None'1)}
       (! return {result}) ]
   
-  predicate invariant_ref_Option_Duration [@inline:trivial] (self: t_Option_Duration) = inv_Option_Duration self
+  function invariant_ref_Option_Duration [@inline:trivial] (self: t_Option_Duration) : bool = inv_Option_Duration self
   
-  meta "rewrite_def" predicate invariant_ref_Option_Duration
+  meta "rewrite_def" function invariant_ref_Option_Duration
   
-  predicate inv_ref_Option_Duration [@inline:trivial] (_1: t_Option_Duration) = invariant_ref_Option_Duration _1
+  function inv_ref_Option_Duration [@inline:trivial] (_1: t_Option_Duration) : bool = invariant_ref_Option_Duration _1
   
-  meta "rewrite_def" predicate inv_ref_Option_Duration
+  meta "rewrite_def" function inv_ref_Option_Duration
   
   let is_some_Duration (self: t_Option_Duration) (return (x: bool)) =
   {[@stop_split] [@expl:is_some 'self' type invariant] inv_ref_Option_Duration self}

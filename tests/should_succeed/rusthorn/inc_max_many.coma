@@ -3,9 +3,9 @@ module M_inc_max_many
   use creusot.int.UInt32
   use creusot.prelude.Any
   
-  predicate ge_log_u32 [@inline:trivial] (self: UInt32.t) (other: UInt32.t) = UInt32.le other self
+  function ge_log_u32 [@inline:trivial] (self: UInt32.t) (other: UInt32.t) : bool = UInt32.le other self
   
-  meta "rewrite_def" predicate ge_log_u32
+  meta "rewrite_def" function ge_log_u32
   
   let take_max (ma: MutBorrow.t UInt32.t) (mb: MutBorrow.t UInt32.t) (return (x: MutBorrow.t UInt32.t)) = any
     [ return (result: MutBorrow.t UInt32.t) ->
@@ -16,9 +16,9 @@ module M_inc_max_many
       }
       (! return {result}) ]
   
-  predicate resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) = _1.final = _1.current
+  function resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_u32
+  meta "rewrite_def" function resolve_refmut_u32
   
   meta "compute_max_steps" 1000000
   
@@ -70,13 +70,13 @@ module M_take_max
   use creusot.prelude.MutBorrow
   use creusot.prelude.Any
   
-  predicate resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) = _1.final = _1.current
+  function resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_u32
+  meta "rewrite_def" function resolve_refmut_u32
   
-  predicate ge_log_u32 [@inline:trivial] (self: UInt32.t) (other: UInt32.t) = UInt32.le other self
+  function ge_log_u32 [@inline:trivial] (self: UInt32.t) (other: UInt32.t) : bool = UInt32.le other self
   
-  meta "rewrite_def" predicate ge_log_u32
+  meta "rewrite_def" function ge_log_u32
   
   meta "compute_max_steps" 1000000
   

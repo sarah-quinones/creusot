@@ -18,17 +18,17 @@ module M_implementation__impl_Clone_for_PersistentArray_T__clone (* <implementat
     frag: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T;
     inv: t_NonAtomicInvariant_PA_T }
   
-  predicate inv_Rc_PCell_Inner_T_Global (_1: t_Rc_PCell_Inner_T_Global)
+  function inv_Rc_PCell_Inner_T_Global (_1: t_Rc_PCell_Inner_T_Global) : bool
   
-  predicate invariant_ref_Rc_PCell_Inner_T_Global [@inline:trivial] (self: t_Rc_PCell_Inner_T_Global) =
+  function invariant_ref_Rc_PCell_Inner_T_Global [@inline:trivial] (self: t_Rc_PCell_Inner_T_Global) : bool =
     inv_Rc_PCell_Inner_T_Global self
   
-  meta "rewrite_def" predicate invariant_ref_Rc_PCell_Inner_T_Global
+  meta "rewrite_def" function invariant_ref_Rc_PCell_Inner_T_Global
   
-  predicate inv_ref_Rc_PCell_Inner_T_Global [@inline:trivial] (_1: t_Rc_PCell_Inner_T_Global) =
+  function inv_ref_Rc_PCell_Inner_T_Global [@inline:trivial] (_1: t_Rc_PCell_Inner_T_Global) : bool =
     invariant_ref_Rc_PCell_Inner_T_Global _1
   
-  meta "rewrite_def" predicate inv_ref_Rc_PCell_Inner_T_Global
+  meta "rewrite_def" function inv_ref_Rc_PCell_Inner_T_Global
   
   let clone_Rc_PCell_Inner_T_Global (self: t_Rc_PCell_Inner_T_Global) (return (x: t_Rc_PCell_Inner_T_Global)) =
   {[@stop_split] [@expl:clone 'self' type invariant] inv_ref_Rc_PCell_Inner_T_Global self}
@@ -38,37 +38,37 @@ module M_implementation__impl_Clone_for_PersistentArray_T__clone (* <implementat
       /\ ([@stop_split] [@expl:clone ensures] result = self)}
       (! return {result}) ]
   
-  predicate inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T)
+  function inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
   
-  predicate invariant_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self
+  function invariant_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function invariant_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    invariant_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1
+  function inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = invariant_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate invariant_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self
+  function invariant_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self
   
-  meta "rewrite_def" predicate invariant_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function invariant_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate inv_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    invariant_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1
+  function inv_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = invariant_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1
   
-  meta "rewrite_def" predicate inv_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function inv_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate invariant_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self
+  function invariant_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self
   
-  meta "rewrite_def" predicate invariant_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function invariant_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate inv_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    invariant_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1
+  function inv_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = invariant_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1
   
-  meta "rewrite_def" predicate inv_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function inv_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
   let deref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T (self: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T)
     (return (x: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T)) =
@@ -214,52 +214,54 @@ module M_implementation__impl_Clone_for_PersistentArray_T__clone (* <implementat
   
   function namespace_PA_T (self: t_NonAtomicInvariant_PA_T) : t_Namespace
   
-  predicate invariant_PersistentArray_T (self: t_PersistentArray_T) =
-    id_FMap_PCell_Inner_T_Ag_Seq_T self.frag = public_PA_T self.inv
+  function invariant_PersistentArray_T (self: t_PersistentArray_T) : bool = id_FMap_PCell_Inner_T_Ag_Seq_T self.frag
+      = public_PA_T self.inv
     /\ lookup_PCell_Inner_T (view_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self.frag) (deref_Rc_PCell_Inner_T_Global self.permcell)
       <> None'0
     /\ namespace_PA_T self.inv = Namespace_PARRAY 0
   
-  predicate resolve_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) = true
+  function resolve_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) : bool = true
   
-  meta "rewrite_def" predicate resolve_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function resolve_NonAtomicInvariant_PA_T
   
-  predicate inv_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) = true
+  function inv_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) : bool = true
   
-  meta "rewrite_def" predicate inv_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function inv_NonAtomicInvariant_PA_T
   
-  predicate invariant_GhostShared_NonAtomicInvariant_PA_T (self: t_NonAtomicInvariant_PA_T) =
+  function invariant_GhostShared_NonAtomicInvariant_PA_T (self: t_NonAtomicInvariant_PA_T) : bool =
     resolve_NonAtomicInvariant_PA_T self /\ inv_NonAtomicInvariant_PA_T self
   
-  predicate inv_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) =
+  function inv_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) : bool =
     invariant_GhostShared_NonAtomicInvariant_PA_T _1
   
-  meta "rewrite_def" predicate inv_GhostShared_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function inv_GhostShared_NonAtomicInvariant_PA_T
   
-  predicate invariant_Ghost_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (self: t_NonAtomicInvariant_PA_T) =
-    inv_GhostShared_NonAtomicInvariant_PA_T self
+  function invariant_Ghost_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (self: t_NonAtomicInvariant_PA_T) : bool
+   = inv_GhostShared_NonAtomicInvariant_PA_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_GhostShared_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function invariant_Ghost_GhostShared_NonAtomicInvariant_PA_T
   
-  predicate inv_Ghost_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) =
+  function inv_Ghost_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) : bool =
     invariant_Ghost_GhostShared_NonAtomicInvariant_PA_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_GhostShared_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function inv_Ghost_GhostShared_NonAtomicInvariant_PA_T
   
-  predicate inv_PersistentArray_T (_1: t_PersistentArray_T)
+  function inv_PersistentArray_T (_1: t_PersistentArray_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_PersistentArray_T [inv_PersistentArray_T _1]. inv_PersistentArray_T _1
       = (invariant_PersistentArray_T _1
       /\ inv_Rc_PCell_Inner_T_Global _1.permcell
       /\ inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1.frag /\ inv_Ghost_GhostShared_NonAtomicInvariant_PA_T _1.inv)
   
-  predicate invariant_ref_PersistentArray_T [@inline:trivial] (self: t_PersistentArray_T) = inv_PersistentArray_T self
+  function invariant_ref_PersistentArray_T [@inline:trivial] (self: t_PersistentArray_T) : bool =
+    inv_PersistentArray_T self
   
-  meta "rewrite_def" predicate invariant_ref_PersistentArray_T
+  meta "rewrite_def" function invariant_ref_PersistentArray_T
   
-  predicate inv_ref_PersistentArray_T [@inline:trivial] (_1: t_PersistentArray_T) = invariant_ref_PersistentArray_T _1
+  function inv_ref_PersistentArray_T [@inline:trivial] (_1: t_PersistentArray_T) : bool =
+    invariant_ref_PersistentArray_T _1
   
-  meta "rewrite_def" predicate inv_ref_PersistentArray_T
+  meta "rewrite_def" function inv_ref_PersistentArray_T
   
   constant any_Ag_Seq_T : t_Ag_Seq_T
   
@@ -349,66 +351,68 @@ module M_implementation__impl_Clone_for_PersistentArray_T__clone__refines (* <im
   
   function namespace_PA_T (self: t_NonAtomicInvariant_PA_T) : t_Namespace
   
-  predicate invariant_PersistentArray_T (self: t_PersistentArray_T) =
-    id_FMap_PCell_Inner_T_Ag_Seq_T self.frag = public_PA_T self.inv
+  function invariant_PersistentArray_T (self: t_PersistentArray_T) : bool = id_FMap_PCell_Inner_T_Ag_Seq_T self.frag
+      = public_PA_T self.inv
     /\ lookup_PCell_Inner_T (view_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self.frag) (deref_Rc_PCell_Inner_T_Global self.permcell)
       <> None
     /\ namespace_PA_T self.inv = Namespace_PARRAY 0
   
-  predicate inv_Rc_PCell_Inner_T_Global (_1: t_Rc_PCell_Inner_T_Global)
+  function inv_Rc_PCell_Inner_T_Global (_1: t_Rc_PCell_Inner_T_Global) : bool
   
-  predicate inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T)
+  function inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
   
-  predicate invariant_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self
+  function invariant_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function invariant_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    invariant_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1
+  function inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = invariant_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate resolve_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) = true
+  function resolve_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) : bool = true
   
-  meta "rewrite_def" predicate resolve_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function resolve_NonAtomicInvariant_PA_T
   
-  predicate inv_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) = true
+  function inv_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) : bool = true
   
-  meta "rewrite_def" predicate inv_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function inv_NonAtomicInvariant_PA_T
   
-  predicate invariant_GhostShared_NonAtomicInvariant_PA_T (self: t_NonAtomicInvariant_PA_T) =
+  function invariant_GhostShared_NonAtomicInvariant_PA_T (self: t_NonAtomicInvariant_PA_T) : bool =
     resolve_NonAtomicInvariant_PA_T self /\ inv_NonAtomicInvariant_PA_T self
   
-  predicate inv_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) =
+  function inv_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) : bool =
     invariant_GhostShared_NonAtomicInvariant_PA_T _1
   
-  meta "rewrite_def" predicate inv_GhostShared_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function inv_GhostShared_NonAtomicInvariant_PA_T
   
-  predicate invariant_Ghost_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (self: t_NonAtomicInvariant_PA_T) =
-    inv_GhostShared_NonAtomicInvariant_PA_T self
+  function invariant_Ghost_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (self: t_NonAtomicInvariant_PA_T) : bool
+   = inv_GhostShared_NonAtomicInvariant_PA_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_GhostShared_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function invariant_Ghost_GhostShared_NonAtomicInvariant_PA_T
   
-  predicate inv_Ghost_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) =
+  function inv_Ghost_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) : bool =
     invariant_Ghost_GhostShared_NonAtomicInvariant_PA_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_GhostShared_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function inv_Ghost_GhostShared_NonAtomicInvariant_PA_T
   
-  predicate inv_PersistentArray_T (_1: t_PersistentArray_T)
+  function inv_PersistentArray_T (_1: t_PersistentArray_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_PersistentArray_T [inv_PersistentArray_T _1]. inv_PersistentArray_T _1
       = (invariant_PersistentArray_T _1
       /\ inv_Rc_PCell_Inner_T_Global _1.permcell
       /\ inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1.frag /\ inv_Ghost_GhostShared_NonAtomicInvariant_PA_T _1.inv)
   
-  predicate invariant_ref_PersistentArray_T [@inline:trivial] (self: t_PersistentArray_T) = inv_PersistentArray_T self
+  function invariant_ref_PersistentArray_T [@inline:trivial] (self: t_PersistentArray_T) : bool =
+    inv_PersistentArray_T self
   
-  meta "rewrite_def" predicate invariant_ref_PersistentArray_T
+  meta "rewrite_def" function invariant_ref_PersistentArray_T
   
-  predicate inv_ref_PersistentArray_T [@inline:trivial] (_1: t_PersistentArray_T) = invariant_ref_PersistentArray_T _1
+  function inv_ref_PersistentArray_T [@inline:trivial] (_1: t_PersistentArray_T) : bool =
+    invariant_ref_PersistentArray_T _1
   
-  meta "rewrite_def" predicate inv_ref_PersistentArray_T
+  meta "rewrite_def" function inv_ref_PersistentArray_T
   
   constant any_Ag_Seq_T : t_Ag_Seq_T
   
@@ -456,51 +460,51 @@ module M_implementation__impl_PersistentArray_T__get (* implementation::Persiste
     frag: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T;
     inv: t_NonAtomicInvariant_PA_T }
   
-  predicate resolve_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) = true
+  function resolve_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) : bool = true
   
-  meta "rewrite_def" predicate resolve_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function resolve_NonAtomicInvariant_PA_T
   
-  predicate inv_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) = true
+  function inv_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) : bool = true
   
-  meta "rewrite_def" predicate inv_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function inv_NonAtomicInvariant_PA_T
   
-  predicate invariant_GhostShared_NonAtomicInvariant_PA_T (self: t_NonAtomicInvariant_PA_T) =
+  function invariant_GhostShared_NonAtomicInvariant_PA_T (self: t_NonAtomicInvariant_PA_T) : bool =
     resolve_NonAtomicInvariant_PA_T self /\ inv_NonAtomicInvariant_PA_T self
   
-  predicate inv_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) =
+  function inv_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) : bool =
     invariant_GhostShared_NonAtomicInvariant_PA_T _1
   
-  meta "rewrite_def" predicate inv_GhostShared_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function inv_GhostShared_NonAtomicInvariant_PA_T
   
-  predicate invariant_Ghost_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (self: t_NonAtomicInvariant_PA_T) =
-    inv_GhostShared_NonAtomicInvariant_PA_T self
+  function invariant_Ghost_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (self: t_NonAtomicInvariant_PA_T) : bool
+   = inv_GhostShared_NonAtomicInvariant_PA_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_GhostShared_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function invariant_Ghost_GhostShared_NonAtomicInvariant_PA_T
   
-  predicate inv_Ghost_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) =
+  function inv_Ghost_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) : bool =
     invariant_Ghost_GhostShared_NonAtomicInvariant_PA_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_GhostShared_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function inv_Ghost_GhostShared_NonAtomicInvariant_PA_T
   
-  predicate invariant_ref_Ghost_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (self: t_NonAtomicInvariant_PA_T) =
-    inv_Ghost_GhostShared_NonAtomicInvariant_PA_T self
+  function invariant_ref_Ghost_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (self: t_NonAtomicInvariant_PA_T) : bool
+   = inv_Ghost_GhostShared_NonAtomicInvariant_PA_T self
   
-  meta "rewrite_def" predicate invariant_ref_Ghost_GhostShared_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function invariant_ref_Ghost_GhostShared_NonAtomicInvariant_PA_T
   
-  predicate inv_ref_Ghost_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) =
+  function inv_ref_Ghost_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) : bool =
     invariant_ref_Ghost_GhostShared_NonAtomicInvariant_PA_T _1
   
-  meta "rewrite_def" predicate inv_ref_Ghost_GhostShared_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function inv_ref_Ghost_GhostShared_NonAtomicInvariant_PA_T
   
-  predicate invariant_ref_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (self: t_NonAtomicInvariant_PA_T) =
-    inv_GhostShared_NonAtomicInvariant_PA_T self
+  function invariant_ref_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (self: t_NonAtomicInvariant_PA_T) : bool
+   = inv_GhostShared_NonAtomicInvariant_PA_T self
   
-  meta "rewrite_def" predicate invariant_ref_GhostShared_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function invariant_ref_GhostShared_NonAtomicInvariant_PA_T
   
-  predicate inv_ref_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) =
+  function inv_ref_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) : bool =
     invariant_ref_GhostShared_NonAtomicInvariant_PA_T _1
   
-  meta "rewrite_def" predicate inv_ref_GhostShared_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function inv_ref_GhostShared_NonAtomicInvariant_PA_T
   
   let deref_Ghost_GhostShared_NonAtomicInvariant_PA_T (self: t_NonAtomicInvariant_PA_T)
     (return (x: t_NonAtomicInvariant_PA_T)) =
@@ -543,13 +547,13 @@ module M_implementation__impl_PersistentArray_T__get (* implementation::Persiste
     _guard: t_OpenGuard_PA_T;
     _initial: MutBorrow.t t_PA_T }
   
-  predicate contains_Namespace [@inline:trivial] (self: Set.set t_Namespace) (e: t_Namespace) = Set.mem e self
+  function contains_Namespace [@inline:trivial] (self: Set.set t_Namespace) (e: t_Namespace) : bool = Set.mem e self
   
-  meta "rewrite_def" predicate contains_Namespace
+  meta "rewrite_def" function contains_Namespace
   
   function namespaces (self: t_Tokens) : Set.set t_Namespace
   
-  predicate contains (self: t_Tokens) (namespace: t_Namespace) = contains_Namespace (namespaces self) namespace
+  function contains (self: t_Tokens) (namespace: t_Namespace) : bool = contains_Namespace (namespaces self) namespace
   
   function namespace_PA_T (self: t_NonAtomicInvariant_PA_T) : t_Namespace
   
@@ -572,10 +576,10 @@ module M_implementation__impl_PersistentArray_T__get (* implementation::Persiste
   
   meta "rewrite_def" function lookup_PCell_Inner_T
   
-  predicate contains_PCell_Inner_T [@inline:trivial] (self: t_FMap_PCell_Inner_T_Ag_Seq_T) (k: t_PCell_Inner_T) =
+  function contains_PCell_Inner_T [@inline:trivial] (self: t_FMap_PCell_Inner_T_Ag_Seq_T) (k: t_PCell_Inner_T) : bool =
     lookup_PCell_Inner_T self k <> None
   
-  meta "rewrite_def" predicate contains_PCell_Inner_T
+  meta "rewrite_def" function contains_PCell_Inner_T
   
   function view_Authority_FMap_PCell_Inner_T_Ag_Seq_T (self: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) : t_FMap_PCell_Inner_T_Ag_Seq_T
   
@@ -590,10 +594,10 @@ module M_implementation__impl_PersistentArray_T__get (* implementation::Persiste
   
   meta "rewrite_def" function lookup_Snapshot_PCell_Inner_T
   
-  predicate contains_Snapshot_PCell_Inner_T [@inline:trivial] (self: t_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T) (k: t_PCell_Inner_T) =
-    lookup_Snapshot_PCell_Inner_T self k <> None'0
+  function contains_Snapshot_PCell_Inner_T [@inline:trivial] (self: t_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T) (k: t_PCell_Inner_T) : bool
+   = lookup_Snapshot_PCell_Inner_T self k <> None'0
   
-  meta "rewrite_def" predicate contains_Snapshot_PCell_Inner_T
+  meta "rewrite_def" function contains_Snapshot_PCell_Inner_T
   
   function ward_PCell_Inner_T (self: t_Perm_PCell_Inner_T) : t_PCell_Inner_T
   
@@ -640,16 +644,16 @@ module M_implementation__impl_PersistentArray_T__get (* implementation::Persiste
   
   function deref_Rc_PCell_Inner_T_Global (self: t_Rc_PCell_Inner_T_Global) : t_PCell_Inner_T
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   function index_Mapping_PCell_Inner_T_Int [@inline:trivial] (self: Map.map t_PCell_Inner_T int) (a: t_PCell_Inner_T) : int
    = Map.get self a
   
   meta "rewrite_def" function index_Mapping_PCell_Inner_T_Int
   
-  predicate partial_invariant_T [@inline:trivial] (self: t_PA_T) =
+  function partial_invariant_T [@inline:trivial] (self: t_PA_T) : bool =
     forall pc: t_PCell_Inner_T. contains_PCell_Inner_T (view_Authority_FMap_PCell_Inner_T_Ag_Seq_T self.auth) pc
         /\ contains_Snapshot_PCell_Inner_T self.perms pc
       -> ward_PCell_Inner_T (index_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T self.perms pc) = pc
@@ -664,53 +668,53 @@ module M_implementation__impl_PersistentArray_T__get (* implementation::Persiste
         = Seq.set (index_FMap_PCell_Inner_T_Ag_Seq_T (view_Authority_FMap_PCell_Inner_T_Ag_Seq_T self.auth) (deref_Rc_PCell_Inner_T_Global next)).f0'0 (UInt64.t'int index) value
         end
   
-  meta "rewrite_def" predicate partial_invariant_T
+  meta "rewrite_def" function partial_invariant_T
   
-  predicate protocol_PA_T [@inline:trivial] (self: t_PA_T) =
-    partial_invariant_T self
+  function protocol_PA_T [@inline:trivial] (self: t_PA_T) : bool = partial_invariant_T self
     /\ (forall pc: t_PCell_Inner_T. contains_PCell_Inner_T (view_Authority_FMap_PCell_Inner_T_Ag_Seq_T self.auth) pc
       = contains_Snapshot_PCell_Inner_T self.perms pc)
   
-  meta "rewrite_def" predicate protocol_PA_T
+  meta "rewrite_def" function protocol_PA_T
   
-  predicate guards_ref_OpenGuard_PA_T [@inline:trivial] (self: t_OpenGuard_PA_T) (b: t_PA_T) =
-    public_PA_T b = self.f0 /\ protocol_PA_T b
+  function guards_ref_OpenGuard_PA_T [@inline:trivial] (self: t_OpenGuard_PA_T) (b: t_PA_T) : bool = public_PA_T b
+      = self.f0
+    /\ protocol_PA_T b
   
-  meta "rewrite_def" predicate guards_ref_OpenGuard_PA_T
+  meta "rewrite_def" function guards_ref_OpenGuard_PA_T
   
-  predicate guards_OpenGuard_PA_T [@inline:trivial] (self: t_OpenGuard_PA_T) (initial: MutBorrow.t t_PA_T) (current': MutBorrow.t t_PA_T) =
-    guards_ref_OpenGuard_PA_T self current'.current /\ initial.final = current'.final
+  function guards_OpenGuard_PA_T [@inline:trivial] (self: t_OpenGuard_PA_T) (initial: MutBorrow.t t_PA_T) (current': MutBorrow.t t_PA_T) : bool
+   = guards_ref_OpenGuard_PA_T self current'.current /\ initial.final = current'.final
   
-  meta "rewrite_def" predicate guards_OpenGuard_PA_T
+  meta "rewrite_def" function guards_OpenGuard_PA_T
   
-  predicate invariant_Guarded_refmut_PA_T_OpenGuard_PA_T [@inline:trivial] (self: t_Guarded_refmut_PA_T_OpenGuard_PA_T) =
-    guards_OpenGuard_PA_T self._guard self._initial self.inner
+  function invariant_Guarded_refmut_PA_T_OpenGuard_PA_T [@inline:trivial] (self: t_Guarded_refmut_PA_T_OpenGuard_PA_T) : bool
+   = guards_OpenGuard_PA_T self._guard self._initial self.inner
   
-  meta "rewrite_def" predicate invariant_Guarded_refmut_PA_T_OpenGuard_PA_T
+  meta "rewrite_def" function invariant_Guarded_refmut_PA_T_OpenGuard_PA_T
   
-  predicate invariant_Authority_FMap_PCell_Inner_T_Ag_Seq_T (self: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T)
+  function invariant_Authority_FMap_PCell_Inner_T_Ag_Seq_T (self: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) : bool
   
-  predicate inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T (_1: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T)
+  function inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T (_1: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) : bool
   
   axiom inv_axiom:
     forall _1: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T [inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1]. inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1
       -> invariant_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1
   
-  predicate inv_PA_T (_1: t_PA_T)
+  function inv_PA_T (_1: t_PA_T) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_PA_T [inv_PA_T _1]. inv_PA_T _1
       = inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1.auth
   
-  predicate invariant_refmut_PA_T [@inline:trivial] (self: MutBorrow.t t_PA_T) =
-    inv_PA_T self.current /\ inv_PA_T self.final
+  function invariant_refmut_PA_T [@inline:trivial] (self: MutBorrow.t t_PA_T) : bool = inv_PA_T self.current
+    /\ inv_PA_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_PA_T
+  meta "rewrite_def" function invariant_refmut_PA_T
   
-  predicate inv_refmut_PA_T [@inline:trivial] (_1: MutBorrow.t t_PA_T) = invariant_refmut_PA_T _1
+  function inv_refmut_PA_T [@inline:trivial] (_1: MutBorrow.t t_PA_T) : bool = invariant_refmut_PA_T _1
   
-  meta "rewrite_def" predicate inv_refmut_PA_T
+  meta "rewrite_def" function inv_refmut_PA_T
   
-  predicate inv_Guarded_refmut_PA_T_OpenGuard_PA_T (_1: t_Guarded_refmut_PA_T_OpenGuard_PA_T)
+  function inv_Guarded_refmut_PA_T_OpenGuard_PA_T (_1: t_Guarded_refmut_PA_T_OpenGuard_PA_T) : bool
   
   axiom inv_axiom'1 [@rewrite]:
     forall _1: t_Guarded_refmut_PA_T_OpenGuard_PA_T [inv_Guarded_refmut_PA_T_OpenGuard_PA_T _1]. inv_Guarded_refmut_PA_T_OpenGuard_PA_T _1
@@ -732,13 +736,13 @@ module M_implementation__impl_PersistentArray_T__get (* implementation::Persiste
       /\ ([@stop_split] [@expl:open ensures] (guard_refmut_PA_T result).f0 = public_PA_T'0 self)}
       (! return {result}) ]
   
-  predicate invariant_Ghost_refmut_PA_T [@inline:trivial] (self: MutBorrow.t t_PA_T) = inv_refmut_PA_T self
+  function invariant_Ghost_refmut_PA_T [@inline:trivial] (self: MutBorrow.t t_PA_T) : bool = inv_refmut_PA_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_refmut_PA_T
+  meta "rewrite_def" function invariant_Ghost_refmut_PA_T
   
-  predicate inv_Ghost_refmut_PA_T [@inline:trivial] (_1: MutBorrow.t t_PA_T) = invariant_Ghost_refmut_PA_T _1
+  function inv_Ghost_refmut_PA_T [@inline:trivial] (_1: MutBorrow.t t_PA_T) : bool = invariant_Ghost_refmut_PA_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_refmut_PA_T
+  meta "rewrite_def" function inv_Ghost_refmut_PA_T
   
   let new_refmut_PA_T (x: MutBorrow.t t_PA_T) (return (x'0: MutBorrow.t t_PA_T)) =
   {[@stop_split] [@expl:new 'x' type invariant] inv_refmut_PA_T x}
@@ -748,21 +752,23 @@ module M_implementation__impl_PersistentArray_T__get (* implementation::Persiste
       /\ ([@stop_split] [@expl:new ensures] result = x)}
       (! return {result}) ]
   
-  predicate invariant_ref_Ghost_refmut_PA_T [@inline:trivial] (self: MutBorrow.t t_PA_T) = inv_Ghost_refmut_PA_T self
+  function invariant_ref_Ghost_refmut_PA_T [@inline:trivial] (self: MutBorrow.t t_PA_T) : bool =
+    inv_Ghost_refmut_PA_T self
   
-  meta "rewrite_def" predicate invariant_ref_Ghost_refmut_PA_T
+  meta "rewrite_def" function invariant_ref_Ghost_refmut_PA_T
   
-  predicate inv_ref_Ghost_refmut_PA_T [@inline:trivial] (_1: MutBorrow.t t_PA_T) = invariant_ref_Ghost_refmut_PA_T _1
+  function inv_ref_Ghost_refmut_PA_T [@inline:trivial] (_1: MutBorrow.t t_PA_T) : bool =
+    invariant_ref_Ghost_refmut_PA_T _1
   
-  meta "rewrite_def" predicate inv_ref_Ghost_refmut_PA_T
+  meta "rewrite_def" function inv_ref_Ghost_refmut_PA_T
   
-  predicate invariant_ref_refmut_PA_T [@inline:trivial] (self: MutBorrow.t t_PA_T) = inv_refmut_PA_T self
+  function invariant_ref_refmut_PA_T [@inline:trivial] (self: MutBorrow.t t_PA_T) : bool = inv_refmut_PA_T self
   
-  meta "rewrite_def" predicate invariant_ref_refmut_PA_T
+  meta "rewrite_def" function invariant_ref_refmut_PA_T
   
-  predicate inv_ref_refmut_PA_T [@inline:trivial] (_1: MutBorrow.t t_PA_T) = invariant_ref_refmut_PA_T _1
+  function inv_ref_refmut_PA_T [@inline:trivial] (_1: MutBorrow.t t_PA_T) : bool = invariant_ref_refmut_PA_T _1
   
-  meta "rewrite_def" predicate inv_ref_refmut_PA_T
+  meta "rewrite_def" function inv_ref_refmut_PA_T
   
   let deref_Ghost_refmut_PA_T (self: MutBorrow.t t_PA_T) (return (x: MutBorrow.t t_PA_T)) =
   {[@stop_split] [@expl:deref 'self' type invariant] inv_ref_Ghost_refmut_PA_T self}
@@ -772,37 +778,37 @@ module M_implementation__impl_PersistentArray_T__get (* implementation::Persiste
       /\ ([@stop_split] [@expl:deref ensures] result = self)}
       (! return {result}) ]
   
-  predicate inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T)
+  function inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
   
-  predicate invariant_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self
+  function invariant_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function invariant_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    invariant_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1
+  function inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = invariant_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate invariant_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self
+  function invariant_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self
   
-  meta "rewrite_def" predicate invariant_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function invariant_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate inv_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    invariant_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1
+  function inv_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = invariant_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1
   
-  meta "rewrite_def" predicate inv_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function inv_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate invariant_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self
+  function invariant_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self
   
-  meta "rewrite_def" predicate invariant_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function invariant_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate inv_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    invariant_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1
+  function inv_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = invariant_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1
   
-  meta "rewrite_def" predicate inv_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function inv_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
   let deref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T (self: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T)
     (return (x: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T)) =
@@ -813,15 +819,15 @@ module M_implementation__impl_PersistentArray_T__get (* implementation::Persiste
       /\ ([@stop_split] [@expl:deref ensures] result = self)}
       (! return {result}) ]
   
-  predicate invariant_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) =
-    inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T self
+  function invariant_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T self
   
-  meta "rewrite_def" predicate invariant_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function invariant_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate inv_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) =
-    invariant_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1
+  function inv_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = invariant_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1
   
-  meta "rewrite_def" predicate inv_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function inv_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T
   
   function id_FMap_PCell_Inner_T_Ag_Seq_T'0 (self: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : t_Id
   
@@ -881,7 +887,7 @@ module M_implementation__impl_PersistentArray_T__get (* implementation::Persiste
     forall a: t_FMap_PCell_Inner_T_Ag_Seq_T, b: t_FMap_PCell_Inner_T_Ag_Seq_T. op_FMap_PCell_Inner_T_Ag_Seq_T a b
       = op_FMap_PCell_Inner_T_Ag_Seq_T b a
   
-  predicate incl_Ag_Seq_T (self: t_Ag_Seq_T) (other: t_Ag_Seq_T) = self.f0'0 = other.f0'0
+  function incl_Ag_Seq_T (self: t_Ag_Seq_T) (other: t_Ag_Seq_T) : bool = self.f0'0 = other.f0'0
   
   axiom incl_Ag_Seq_T_spec:
     forall self: t_Ag_Seq_T, other: t_Ag_Seq_T [incl_Ag_Seq_T self other]. incl_Ag_Seq_T self other
@@ -909,17 +915,18 @@ module M_implementation__impl_PersistentArray_T__get (* implementation::Persiste
   axiom incl_op_Ag_Seq_T_spec: forall self: t_Ag_Seq_T, other: t_Ag_Seq_T, comb: t_Ag_Seq_T. op_Ag_Seq_T self other
         = Some comb -> incl_Ag_Seq_T self comb
   
-  predicate eq_Ag_Seq_T [@inline:trivial] (self: t_Ag_Seq_T) (other: t_Ag_Seq_T) = self = other
+  function eq_Ag_Seq_T [@inline:trivial] (self: t_Ag_Seq_T) (other: t_Ag_Seq_T) : bool = self = other
   
-  meta "rewrite_def" predicate eq_Ag_Seq_T
+  meta "rewrite_def" function eq_Ag_Seq_T
   
   axiom eq_Ag_Seq_T_spec: forall self: t_Ag_Seq_T, other: t_Ag_Seq_T [eq_Ag_Seq_T self other]. eq_Ag_Seq_T self other
       = (self = other)
   
-  predicate incl_eq_Ag_Seq_T (self: t_Ag_Seq_T) (other: t_Ag_Seq_T) = eq_Ag_Seq_T self other \/ incl_Ag_Seq_T self other
+  function incl_eq_Ag_Seq_T (self: t_Ag_Seq_T) (other: t_Ag_Seq_T) : bool = eq_Ag_Seq_T self other
+    \/ incl_Ag_Seq_T self other
   
-  predicate incl_Option_Ag_Seq_T (self: t_Option_Ag_Seq_T) (other: t_Option_Ag_Seq_T) =
-    match { f0'1 = self; f1'1 = other } with
+  function incl_Option_Ag_Seq_T (self: t_Option_Ag_Seq_T) (other: t_Option_Ag_Seq_T) : bool = match { f0'1 = self;
+                                                                                                      f1'1 = other } with
       | {f0'1 = None} -> true
       | {f1'1 = None} -> false
       | {f0'1 = Some x; f1'1 = Some y} -> incl_eq_Ag_Seq_T x y
@@ -929,7 +936,8 @@ module M_implementation__impl_PersistentArray_T__get (* implementation::Persiste
     forall self: t_Option_Ag_Seq_T, other: t_Option_Ag_Seq_T [incl_Option_Ag_Seq_T self other]. incl_Option_Ag_Seq_T self other
       = (exists factor: t_Option_Ag_Seq_T. op_Option_Ag_Seq_T self factor = Some'2 other)
   
-  predicate incl_FMap_PCell_Inner_T_Ag_Seq_T (self: t_FMap_PCell_Inner_T_Ag_Seq_T) (other: t_FMap_PCell_Inner_T_Ag_Seq_T) =
+  function incl_FMap_PCell_Inner_T_Ag_Seq_T (self: t_FMap_PCell_Inner_T_Ag_Seq_T) (other: t_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   =
     let r = forall k: t_PCell_Inner_T. incl_Option_Ag_Seq_T (lookup_PCell_Inner_T self k) (lookup_PCell_Inner_T other k) in r
   
   axiom incl_FMap_PCell_Inner_T_Ag_Seq_T_spec:
@@ -952,25 +960,25 @@ module M_implementation__impl_PersistentArray_T__get (* implementation::Persiste
   let new_unit (x: ()) (return (x'0: ())) = any
     [ return (result: ()) -> {[@stop_split] [@expl:new ensures] result = x} (! return {result}) ]
   
-  predicate invariant_refmut_Ghost_refmut_PA_T [@inline:trivial] (self: MutBorrow.t (MutBorrow.t t_PA_T)) =
+  function invariant_refmut_Ghost_refmut_PA_T [@inline:trivial] (self: MutBorrow.t (MutBorrow.t t_PA_T)) : bool =
     inv_Ghost_refmut_PA_T self.current /\ inv_Ghost_refmut_PA_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Ghost_refmut_PA_T
+  meta "rewrite_def" function invariant_refmut_Ghost_refmut_PA_T
   
-  predicate inv_refmut_Ghost_refmut_PA_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_PA_T)) =
+  function inv_refmut_Ghost_refmut_PA_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_PA_T)) : bool =
     invariant_refmut_Ghost_refmut_PA_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Ghost_refmut_PA_T
+  meta "rewrite_def" function inv_refmut_Ghost_refmut_PA_T
   
-  predicate invariant_refmut_refmut_PA_T [@inline:trivial] (self: MutBorrow.t (MutBorrow.t t_PA_T)) =
+  function invariant_refmut_refmut_PA_T [@inline:trivial] (self: MutBorrow.t (MutBorrow.t t_PA_T)) : bool =
     inv_refmut_PA_T self.current /\ inv_refmut_PA_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_refmut_PA_T
+  meta "rewrite_def" function invariant_refmut_refmut_PA_T
   
-  predicate inv_refmut_refmut_PA_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_PA_T)) =
+  function inv_refmut_refmut_PA_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_PA_T)) : bool =
     invariant_refmut_refmut_PA_T _1
   
-  meta "rewrite_def" predicate inv_refmut_refmut_PA_T
+  meta "rewrite_def" function inv_refmut_refmut_PA_T
   
   let deref_mut_Ghost_refmut_PA_T (self: MutBorrow.t (MutBorrow.t t_PA_T))
     (return (x: MutBorrow.t (MutBorrow.t t_PA_T))) =
@@ -981,25 +989,26 @@ module M_implementation__impl_PersistentArray_T__get (* implementation::Persiste
       /\ ([@stop_split] [@expl:deref_mut ensures] result = self)}
       (! return {result}) ]
   
-  predicate resolve_refmut_refmut_PA_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_PA_T)) = _1.final = _1.current
+  function resolve_refmut_refmut_PA_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_PA_T)) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_refmut_PA_T
+  meta "rewrite_def" function resolve_refmut_refmut_PA_T
   
-  predicate resolve_refmut_PA_T [@inline:trivial] (_1: MutBorrow.t t_PA_T) = _1.final = _1.current
+  function resolve_refmut_PA_T [@inline:trivial] (_1: MutBorrow.t t_PA_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_PA_T
+  meta "rewrite_def" function resolve_refmut_PA_T
   
-  predicate inv_Rc_PCell_Inner_T_Global (_1: t_Rc_PCell_Inner_T_Global)
+  function inv_Rc_PCell_Inner_T_Global (_1: t_Rc_PCell_Inner_T_Global) : bool
   
-  predicate invariant_ref_Rc_PCell_Inner_T_Global [@inline:trivial] (self: t_Rc_PCell_Inner_T_Global) =
+  function invariant_ref_Rc_PCell_Inner_T_Global [@inline:trivial] (self: t_Rc_PCell_Inner_T_Global) : bool =
     inv_Rc_PCell_Inner_T_Global self
   
-  meta "rewrite_def" predicate invariant_ref_Rc_PCell_Inner_T_Global
+  meta "rewrite_def" function invariant_ref_Rc_PCell_Inner_T_Global
   
-  predicate inv_ref_Rc_PCell_Inner_T_Global [@inline:trivial] (_1: t_Rc_PCell_Inner_T_Global) =
+  function inv_ref_Rc_PCell_Inner_T_Global [@inline:trivial] (_1: t_Rc_PCell_Inner_T_Global) : bool =
     invariant_ref_Rc_PCell_Inner_T_Global _1
   
-  meta "rewrite_def" predicate inv_ref_Rc_PCell_Inner_T_Global
+  meta "rewrite_def" function inv_ref_Rc_PCell_Inner_T_Global
   
   function fin_Ghost_refmut_PA_T [@inline:trivial] (self: MutBorrow.t t_PA_T) : t_PA_T = self.final
   
@@ -1069,32 +1078,32 @@ module M_implementation__impl_PersistentArray_T__get (* implementation::Persiste
       = deref_Rc_PCell_Inner_T_Global self}
       (! return {result}) ]
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_T (Seq.get self i)
+  function invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+      -> inv_ref_T (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_T
+  meta "rewrite_def" function invariant_Seq_T
   
-  predicate inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Seq_T _1
+  function inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Seq_T
+  meta "rewrite_def" function inv_Seq_T
   
-  predicate invariant_Vec_T_Global (self: t_Vec_T_Global) = inv_Seq_T (view_Vec_T_Global self)
+  function invariant_Vec_T_Global (self: t_Vec_T_Global) : bool = inv_Seq_T (view_Vec_T_Global self)
   
-  predicate inv_Vec_T_Global (_1: t_Vec_T_Global)
+  function inv_Vec_T_Global (_1: t_Vec_T_Global) : bool
   
   axiom inv_axiom'2: forall _1: t_Vec_T_Global [inv_Vec_T_Global _1]. inv_Vec_T_Global _1 -> invariant_Vec_T_Global _1
   
-  predicate inv_Inner_T (_1: t_Inner_T)
+  function inv_Inner_T (_1: t_Inner_T) : bool
   
   axiom inv_axiom'3 [@rewrite]: forall _1: t_Inner_T [inv_Inner_T _1]. inv_Inner_T _1
       = match _1 with
@@ -1102,13 +1111,13 @@ module M_implementation__impl_PersistentArray_T__get (* implementation::Persiste
         | Link index value next -> inv_T value /\ inv_Rc_PCell_Inner_T_Global next
         end
   
-  predicate invariant_ref_Inner_T [@inline:trivial] (self: t_Inner_T) = inv_Inner_T self
+  function invariant_ref_Inner_T [@inline:trivial] (self: t_Inner_T) : bool = inv_Inner_T self
   
-  meta "rewrite_def" predicate invariant_ref_Inner_T
+  meta "rewrite_def" function invariant_ref_Inner_T
   
-  predicate inv_ref_Inner_T [@inline:trivial] (_1: t_Inner_T) = invariant_ref_Inner_T _1
+  function inv_ref_Inner_T [@inline:trivial] (_1: t_Inner_T) : bool = invariant_ref_Inner_T _1
   
-  meta "rewrite_def" predicate inv_ref_Inner_T
+  meta "rewrite_def" function inv_ref_Inner_T
   
   let borrow_Inner_T (self: t_PCell_Inner_T) (perm: t_Perm_PCell_Inner_T) (return (x: t_Inner_T)) =
   {[@stop_split] [@expl:borrow requires] self = ward_PCell_Inner_T perm}
@@ -1126,27 +1135,27 @@ module M_implementation__impl_PersistentArray_T__get (* implementation::Persiste
         end}
       any) ]
   
-  predicate invariant_ref_Vec_T_Global [@inline:trivial] (self: t_Vec_T_Global) = inv_Vec_T_Global self
+  function invariant_ref_Vec_T_Global [@inline:trivial] (self: t_Vec_T_Global) : bool = inv_Vec_T_Global self
   
-  meta "rewrite_def" predicate invariant_ref_Vec_T_Global
+  meta "rewrite_def" function invariant_ref_Vec_T_Global
   
-  predicate inv_ref_Vec_T_Global [@inline:trivial] (_1: t_Vec_T_Global) = invariant_ref_Vec_T_Global _1
+  function inv_ref_Vec_T_Global [@inline:trivial] (_1: t_Vec_T_Global) : bool = invariant_ref_Vec_T_Global _1
   
-  meta "rewrite_def" predicate inv_ref_Vec_T_Global
+  meta "rewrite_def" function inv_ref_Vec_T_Global
   
-  predicate invariant_slice_T (self: Slice64.slice t_T) = inv_Seq_T (Slice64.view self)
+  function invariant_slice_T (self: Slice64.slice t_T) : bool = inv_Seq_T (Slice64.view self)
   
-  predicate inv_slice_T [@inline:trivial] (_1: Slice64.slice t_T) = invariant_slice_T _1
+  function inv_slice_T [@inline:trivial] (_1: Slice64.slice t_T) : bool = invariant_slice_T _1
   
-  meta "rewrite_def" predicate inv_slice_T
+  meta "rewrite_def" function inv_slice_T
   
-  predicate invariant_ref_slice_T [@inline:trivial] (self: Slice64.slice t_T) = inv_slice_T self
+  function invariant_ref_slice_T [@inline:trivial] (self: Slice64.slice t_T) : bool = inv_slice_T self
   
-  meta "rewrite_def" predicate invariant_ref_slice_T
+  meta "rewrite_def" function invariant_ref_slice_T
   
-  predicate inv_ref_slice_T [@inline:trivial] (_1: Slice64.slice t_T) = invariant_ref_slice_T _1
+  function inv_ref_slice_T [@inline:trivial] (_1: Slice64.slice t_T) : bool = invariant_ref_slice_T _1
   
-  meta "rewrite_def" predicate inv_ref_slice_T
+  meta "rewrite_def" function inv_ref_slice_T
   
   let deref_Vec_T_Global (self: t_Vec_T_Global) (return (x: Slice64.slice t_T)) =
   {[@stop_split] [@expl:deref 'self' type invariant] inv_ref_Vec_T_Global self}
@@ -1156,14 +1165,15 @@ module M_implementation__impl_PersistentArray_T__get (* implementation::Persiste
       /\ ([@stop_split] [@expl:deref ensures] Slice64.view result = view_Vec_T_Global self)}
       (! return {result}) ]
   
-  predicate in_bounds_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq t_T) = UInt64.t'int self < Seq.length seq
+  function in_bounds_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq t_T) : bool = UInt64.t'int self
+    < Seq.length seq
   
-  meta "rewrite_def" predicate in_bounds_usize
+  meta "rewrite_def" function in_bounds_usize
   
-  predicate has_value_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq t_T) (out: t_T) =
+  function has_value_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq t_T) (out: t_T) : bool =
     Seq.get seq (UInt64.t'int self) = out
   
-  meta "rewrite_def" predicate has_value_usize
+  meta "rewrite_def" function has_value_usize
   
   let get_unchecked_T (self: Slice64.slice t_T) (index: UInt64.t) (return (x: t_T)) =
   {[@stop_split] [@expl:get_unchecked_T requires] ([@stop_split] [@expl:get_unchecked 'self' type invariant] inv_ref_slice_T self)
@@ -1174,32 +1184,34 @@ module M_implementation__impl_PersistentArray_T__get (* implementation::Persiste
       /\ ([@stop_split] [@expl:get_unchecked ensures] has_value_usize index (Slice64.view self) result)}
       (! return {result}) ]
   
-  predicate resolve_Guarded_refmut_PA_T_OpenGuard_PA_T (_1: t_Guarded_refmut_PA_T_OpenGuard_PA_T)
+  function resolve_Guarded_refmut_PA_T_OpenGuard_PA_T (_1: t_Guarded_refmut_PA_T_OpenGuard_PA_T) : bool
   
   axiom resolve_axiom [@rewrite]:
     forall _1: t_Guarded_refmut_PA_T_OpenGuard_PA_T [resolve_Guarded_refmut_PA_T_OpenGuard_PA_T _1]. resolve_Guarded_refmut_PA_T_OpenGuard_PA_T _1
       = resolve_refmut_PA_T _1.inner
   
-  predicate invariant_PersistentArray_T (self: t_PersistentArray_T) =
-    id_FMap_PCell_Inner_T_Ag_Seq_T'0 self.frag = public_PA_T'0 self.inv
+  function invariant_PersistentArray_T (self: t_PersistentArray_T) : bool = id_FMap_PCell_Inner_T_Ag_Seq_T'0 self.frag
+      = public_PA_T'0 self.inv
     /\ lookup_PCell_Inner_T (view_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self.frag) (deref_Rc_PCell_Inner_T_Global self.permcell)
       <> None
     /\ namespace_PA_T self.inv = Namespace_PARRAY 0
   
-  predicate inv_PersistentArray_T (_1: t_PersistentArray_T)
+  function inv_PersistentArray_T (_1: t_PersistentArray_T) : bool
   
   axiom inv_axiom'4 [@rewrite]: forall _1: t_PersistentArray_T [inv_PersistentArray_T _1]. inv_PersistentArray_T _1
       = (invariant_PersistentArray_T _1
       /\ inv_Rc_PCell_Inner_T_Global _1.permcell
       /\ inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1.frag /\ inv_Ghost_GhostShared_NonAtomicInvariant_PA_T _1.inv)
   
-  predicate invariant_ref_PersistentArray_T [@inline:trivial] (self: t_PersistentArray_T) = inv_PersistentArray_T self
+  function invariant_ref_PersistentArray_T [@inline:trivial] (self: t_PersistentArray_T) : bool =
+    inv_PersistentArray_T self
   
-  meta "rewrite_def" predicate invariant_ref_PersistentArray_T
+  meta "rewrite_def" function invariant_ref_PersistentArray_T
   
-  predicate inv_ref_PersistentArray_T [@inline:trivial] (_1: t_PersistentArray_T) = invariant_ref_PersistentArray_T _1
+  function inv_ref_PersistentArray_T [@inline:trivial] (_1: t_PersistentArray_T) : bool =
+    invariant_ref_PersistentArray_T _1
   
-  meta "rewrite_def" predicate inv_ref_PersistentArray_T
+  meta "rewrite_def" function inv_ref_PersistentArray_T
   
   function view_PersistentArray_T [@inline:trivial] (self: t_PersistentArray_T) : Seq.seq t_T =
     (unwrap_Option_Ag_Seq_T (lookup_PCell_Inner_T (view_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self.frag) (deref_Rc_PCell_Inner_T_Global self.permcell))).f0'0
@@ -1356,51 +1368,51 @@ module M_implementation__impl_PersistentArray_T__get_immut (* implementation::Pe
     frag: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T;
     inv: t_NonAtomicInvariant_PA_T }
   
-  predicate resolve_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) = true
+  function resolve_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) : bool = true
   
-  meta "rewrite_def" predicate resolve_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function resolve_NonAtomicInvariant_PA_T
   
-  predicate inv_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) = true
+  function inv_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) : bool = true
   
-  meta "rewrite_def" predicate inv_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function inv_NonAtomicInvariant_PA_T
   
-  predicate invariant_GhostShared_NonAtomicInvariant_PA_T (self: t_NonAtomicInvariant_PA_T) =
+  function invariant_GhostShared_NonAtomicInvariant_PA_T (self: t_NonAtomicInvariant_PA_T) : bool =
     resolve_NonAtomicInvariant_PA_T self /\ inv_NonAtomicInvariant_PA_T self
   
-  predicate inv_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) =
+  function inv_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) : bool =
     invariant_GhostShared_NonAtomicInvariant_PA_T _1
   
-  meta "rewrite_def" predicate inv_GhostShared_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function inv_GhostShared_NonAtomicInvariant_PA_T
   
-  predicate invariant_Ghost_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (self: t_NonAtomicInvariant_PA_T) =
-    inv_GhostShared_NonAtomicInvariant_PA_T self
+  function invariant_Ghost_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (self: t_NonAtomicInvariant_PA_T) : bool
+   = inv_GhostShared_NonAtomicInvariant_PA_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_GhostShared_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function invariant_Ghost_GhostShared_NonAtomicInvariant_PA_T
   
-  predicate inv_Ghost_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) =
+  function inv_Ghost_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) : bool =
     invariant_Ghost_GhostShared_NonAtomicInvariant_PA_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_GhostShared_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function inv_Ghost_GhostShared_NonAtomicInvariant_PA_T
   
-  predicate invariant_ref_Ghost_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (self: t_NonAtomicInvariant_PA_T) =
-    inv_Ghost_GhostShared_NonAtomicInvariant_PA_T self
+  function invariant_ref_Ghost_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (self: t_NonAtomicInvariant_PA_T) : bool
+   = inv_Ghost_GhostShared_NonAtomicInvariant_PA_T self
   
-  meta "rewrite_def" predicate invariant_ref_Ghost_GhostShared_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function invariant_ref_Ghost_GhostShared_NonAtomicInvariant_PA_T
   
-  predicate inv_ref_Ghost_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) =
+  function inv_ref_Ghost_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) : bool =
     invariant_ref_Ghost_GhostShared_NonAtomicInvariant_PA_T _1
   
-  meta "rewrite_def" predicate inv_ref_Ghost_GhostShared_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function inv_ref_Ghost_GhostShared_NonAtomicInvariant_PA_T
   
-  predicate invariant_ref_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (self: t_NonAtomicInvariant_PA_T) =
-    inv_GhostShared_NonAtomicInvariant_PA_T self
+  function invariant_ref_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (self: t_NonAtomicInvariant_PA_T) : bool
+   = inv_GhostShared_NonAtomicInvariant_PA_T self
   
-  meta "rewrite_def" predicate invariant_ref_GhostShared_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function invariant_ref_GhostShared_NonAtomicInvariant_PA_T
   
-  predicate inv_ref_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) =
+  function inv_ref_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) : bool =
     invariant_ref_GhostShared_NonAtomicInvariant_PA_T _1
   
-  meta "rewrite_def" predicate inv_ref_GhostShared_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function inv_ref_GhostShared_NonAtomicInvariant_PA_T
   
   let deref_Ghost_GhostShared_NonAtomicInvariant_PA_T (self: t_NonAtomicInvariant_PA_T)
     (return (x: t_NonAtomicInvariant_PA_T)) =
@@ -1434,36 +1446,36 @@ module M_implementation__impl_PersistentArray_T__get_immut (* implementation::Pe
     auth: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T;
     depth: Map.map t_PCell_Inner_T int }
   
-  predicate contains_Namespace [@inline:trivial] (self: Set.set t_Namespace) (e: t_Namespace) = Set.mem e self
+  function contains_Namespace [@inline:trivial] (self: Set.set t_Namespace) (e: t_Namespace) : bool = Set.mem e self
   
-  meta "rewrite_def" predicate contains_Namespace
+  meta "rewrite_def" function contains_Namespace
   
   function namespaces (self: t_Tokens) : Set.set t_Namespace
   
-  predicate contains (self: t_Tokens) (namespace: t_Namespace) = contains_Namespace (namespaces self) namespace
+  function contains (self: t_Tokens) (namespace: t_Namespace) : bool = contains_Namespace (namespaces self) namespace
   
   function namespace_PA_T (self: t_NonAtomicInvariant_PA_T) : t_Namespace
   
-  predicate invariant_Authority_FMap_PCell_Inner_T_Ag_Seq_T (self: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T)
+  function invariant_Authority_FMap_PCell_Inner_T_Ag_Seq_T (self: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) : bool
   
-  predicate inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T (_1: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T)
+  function inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T (_1: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) : bool
   
   axiom inv_axiom:
     forall _1: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T [inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1]. inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1
       -> invariant_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1
   
-  predicate inv_PA_T (_1: t_PA_T)
+  function inv_PA_T (_1: t_PA_T) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_PA_T [inv_PA_T _1]. inv_PA_T _1
       = inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1.auth
   
-  predicate invariant_ref_PA_T [@inline:trivial] (self: t_PA_T) = inv_PA_T self
+  function invariant_ref_PA_T [@inline:trivial] (self: t_PA_T) : bool = inv_PA_T self
   
-  meta "rewrite_def" predicate invariant_ref_PA_T
+  meta "rewrite_def" function invariant_ref_PA_T
   
-  predicate inv_ref_PA_T [@inline:trivial] (_1: t_PA_T) = invariant_ref_PA_T _1
+  function inv_ref_PA_T [@inline:trivial] (_1: t_PA_T) : bool = invariant_ref_PA_T _1
   
-  meta "rewrite_def" predicate inv_ref_PA_T
+  meta "rewrite_def" function inv_ref_PA_T
   
   type t_Id
   
@@ -1488,10 +1500,10 @@ module M_implementation__impl_PersistentArray_T__get_immut (* implementation::Pe
   
   meta "rewrite_def" function lookup_PCell_Inner_T
   
-  predicate contains_PCell_Inner_T [@inline:trivial] (self: t_FMap_PCell_Inner_T_Ag_Seq_T) (k: t_PCell_Inner_T) =
+  function contains_PCell_Inner_T [@inline:trivial] (self: t_FMap_PCell_Inner_T_Ag_Seq_T) (k: t_PCell_Inner_T) : bool =
     lookup_PCell_Inner_T self k <> None
   
-  meta "rewrite_def" predicate contains_PCell_Inner_T
+  meta "rewrite_def" function contains_PCell_Inner_T
   
   function view_Authority_FMap_PCell_Inner_T_Ag_Seq_T (self: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) : t_FMap_PCell_Inner_T_Ag_Seq_T
   
@@ -1506,10 +1518,10 @@ module M_implementation__impl_PersistentArray_T__get_immut (* implementation::Pe
   
   meta "rewrite_def" function lookup_Snapshot_PCell_Inner_T
   
-  predicate contains_Snapshot_PCell_Inner_T [@inline:trivial] (self: t_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T) (k: t_PCell_Inner_T) =
-    lookup_Snapshot_PCell_Inner_T self k <> None'0
+  function contains_Snapshot_PCell_Inner_T [@inline:trivial] (self: t_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T) (k: t_PCell_Inner_T) : bool
+   = lookup_Snapshot_PCell_Inner_T self k <> None'0
   
-  meta "rewrite_def" predicate contains_Snapshot_PCell_Inner_T
+  meta "rewrite_def" function contains_Snapshot_PCell_Inner_T
   
   function ward_PCell_Inner_T (self: t_Perm_PCell_Inner_T) : t_PCell_Inner_T
   
@@ -1556,16 +1568,16 @@ module M_implementation__impl_PersistentArray_T__get_immut (* implementation::Pe
   
   function deref_Rc_PCell_Inner_T_Global (self: t_Rc_PCell_Inner_T_Global) : t_PCell_Inner_T
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   function index_Mapping_PCell_Inner_T_Int [@inline:trivial] (self: Map.map t_PCell_Inner_T int) (a: t_PCell_Inner_T) : int
    = Map.get self a
   
   meta "rewrite_def" function index_Mapping_PCell_Inner_T_Int
   
-  predicate partial_invariant_T [@inline:trivial] (self: t_PA_T) =
+  function partial_invariant_T [@inline:trivial] (self: t_PA_T) : bool =
     forall pc: t_PCell_Inner_T. contains_PCell_Inner_T (view_Authority_FMap_PCell_Inner_T_Ag_Seq_T self.auth) pc
         /\ contains_Snapshot_PCell_Inner_T self.perms pc
       -> ward_PCell_Inner_T (index_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T self.perms pc) = pc
@@ -1580,14 +1592,13 @@ module M_implementation__impl_PersistentArray_T__get_immut (* implementation::Pe
         = Seq.set (index_FMap_PCell_Inner_T_Ag_Seq_T (view_Authority_FMap_PCell_Inner_T_Ag_Seq_T self.auth) (deref_Rc_PCell_Inner_T_Global next)).f0 (UInt64.t'int index) value
         end
   
-  meta "rewrite_def" predicate partial_invariant_T
+  meta "rewrite_def" function partial_invariant_T
   
-  predicate protocol_PA_T [@inline:trivial] (self: t_PA_T) =
-    partial_invariant_T self
+  function protocol_PA_T [@inline:trivial] (self: t_PA_T) : bool = partial_invariant_T self
     /\ (forall pc: t_PCell_Inner_T. contains_PCell_Inner_T (view_Authority_FMap_PCell_Inner_T_Ag_Seq_T self.auth) pc
       = contains_Snapshot_PCell_Inner_T self.perms pc)
   
-  meta "rewrite_def" predicate protocol_PA_T
+  meta "rewrite_def" function protocol_PA_T
   
   let open_const_PA_T (self: t_NonAtomicInvariant_PA_T) (tokens: t_Tokens) (return (x: t_PA_T)) =
   {[@stop_split] [@expl:open_const requires] contains tokens (namespace_PA_T self)}
@@ -1597,13 +1608,13 @@ module M_implementation__impl_PersistentArray_T__get_immut (* implementation::Pe
       /\ ([@stop_split] [@expl:open_const ensures] public_PA_T result = public_PA_T'0 self /\ protocol_PA_T result)}
       (! return {result}) ]
   
-  predicate invariant_Ghost_ref_PA_T [@inline:trivial] (self: t_PA_T) = inv_ref_PA_T self
+  function invariant_Ghost_ref_PA_T [@inline:trivial] (self: t_PA_T) : bool = inv_ref_PA_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_ref_PA_T
+  meta "rewrite_def" function invariant_Ghost_ref_PA_T
   
-  predicate inv_Ghost_ref_PA_T [@inline:trivial] (_1: t_PA_T) = invariant_Ghost_ref_PA_T _1
+  function inv_Ghost_ref_PA_T [@inline:trivial] (_1: t_PA_T) : bool = invariant_Ghost_ref_PA_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_ref_PA_T
+  meta "rewrite_def" function inv_Ghost_ref_PA_T
   
   let new_ref_PA_T (x: t_PA_T) (return (x'0: t_PA_T)) = {[@stop_split] [@expl:new 'x' type invariant] inv_ref_PA_T x}
     any
@@ -1612,21 +1623,21 @@ module M_implementation__impl_PersistentArray_T__get_immut (* implementation::Pe
       /\ ([@stop_split] [@expl:new ensures] result = x)}
       (! return {result}) ]
   
-  predicate invariant_ref_Ghost_ref_PA_T [@inline:trivial] (self: t_PA_T) = inv_Ghost_ref_PA_T self
+  function invariant_ref_Ghost_ref_PA_T [@inline:trivial] (self: t_PA_T) : bool = inv_Ghost_ref_PA_T self
   
-  meta "rewrite_def" predicate invariant_ref_Ghost_ref_PA_T
+  meta "rewrite_def" function invariant_ref_Ghost_ref_PA_T
   
-  predicate inv_ref_Ghost_ref_PA_T [@inline:trivial] (_1: t_PA_T) = invariant_ref_Ghost_ref_PA_T _1
+  function inv_ref_Ghost_ref_PA_T [@inline:trivial] (_1: t_PA_T) : bool = invariant_ref_Ghost_ref_PA_T _1
   
-  meta "rewrite_def" predicate inv_ref_Ghost_ref_PA_T
+  meta "rewrite_def" function inv_ref_Ghost_ref_PA_T
   
-  predicate invariant_ref_ref_PA_T [@inline:trivial] (self: t_PA_T) = inv_ref_PA_T self
+  function invariant_ref_ref_PA_T [@inline:trivial] (self: t_PA_T) : bool = inv_ref_PA_T self
   
-  meta "rewrite_def" predicate invariant_ref_ref_PA_T
+  meta "rewrite_def" function invariant_ref_ref_PA_T
   
-  predicate inv_ref_ref_PA_T [@inline:trivial] (_1: t_PA_T) = invariant_ref_ref_PA_T _1
+  function inv_ref_ref_PA_T [@inline:trivial] (_1: t_PA_T) : bool = invariant_ref_ref_PA_T _1
   
-  meta "rewrite_def" predicate inv_ref_ref_PA_T
+  meta "rewrite_def" function inv_ref_ref_PA_T
   
   let deref_Ghost_ref_PA_T (self: t_PA_T) (return (x: t_PA_T)) =
   {[@stop_split] [@expl:deref 'self' type invariant] inv_ref_Ghost_ref_PA_T self}
@@ -1636,37 +1647,37 @@ module M_implementation__impl_PersistentArray_T__get_immut (* implementation::Pe
       /\ ([@stop_split] [@expl:deref ensures] result = self)}
       (! return {result}) ]
   
-  predicate inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T)
+  function inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
   
-  predicate invariant_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self
+  function invariant_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function invariant_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    invariant_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1
+  function inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = invariant_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate invariant_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self
+  function invariant_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self
   
-  meta "rewrite_def" predicate invariant_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function invariant_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate inv_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    invariant_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1
+  function inv_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = invariant_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1
   
-  meta "rewrite_def" predicate inv_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function inv_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate invariant_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self
+  function invariant_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self
   
-  meta "rewrite_def" predicate invariant_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function invariant_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate inv_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    invariant_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1
+  function inv_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = invariant_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1
   
-  meta "rewrite_def" predicate inv_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function inv_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
   let deref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T (self: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T)
     (return (x: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T)) =
@@ -1677,15 +1688,15 @@ module M_implementation__impl_PersistentArray_T__get_immut (* implementation::Pe
       /\ ([@stop_split] [@expl:deref ensures] result = self)}
       (! return {result}) ]
   
-  predicate invariant_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) =
-    inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T self
+  function invariant_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T self
   
-  meta "rewrite_def" predicate invariant_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function invariant_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate inv_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) =
-    invariant_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1
+  function inv_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = invariant_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1
   
-  meta "rewrite_def" predicate inv_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function inv_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T
   
   function id_FMap_PCell_Inner_T_Ag_Seq_T'0 (self: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : t_Id
   
@@ -1745,7 +1756,7 @@ module M_implementation__impl_PersistentArray_T__get_immut (* implementation::Pe
     forall a: t_FMap_PCell_Inner_T_Ag_Seq_T, b: t_FMap_PCell_Inner_T_Ag_Seq_T. op_FMap_PCell_Inner_T_Ag_Seq_T a b
       = op_FMap_PCell_Inner_T_Ag_Seq_T b a
   
-  predicate incl_Ag_Seq_T (self: t_Ag_Seq_T) (other: t_Ag_Seq_T) = self.f0 = other.f0
+  function incl_Ag_Seq_T (self: t_Ag_Seq_T) (other: t_Ag_Seq_T) : bool = self.f0 = other.f0
   
   axiom incl_Ag_Seq_T_spec:
     forall self: t_Ag_Seq_T, other: t_Ag_Seq_T [incl_Ag_Seq_T self other]. incl_Ag_Seq_T self other
@@ -1773,17 +1784,18 @@ module M_implementation__impl_PersistentArray_T__get_immut (* implementation::Pe
   axiom incl_op_Ag_Seq_T_spec: forall self: t_Ag_Seq_T, other: t_Ag_Seq_T, comb: t_Ag_Seq_T. op_Ag_Seq_T self other
         = Some comb -> incl_Ag_Seq_T self comb
   
-  predicate eq_Ag_Seq_T [@inline:trivial] (self: t_Ag_Seq_T) (other: t_Ag_Seq_T) = self = other
+  function eq_Ag_Seq_T [@inline:trivial] (self: t_Ag_Seq_T) (other: t_Ag_Seq_T) : bool = self = other
   
-  meta "rewrite_def" predicate eq_Ag_Seq_T
+  meta "rewrite_def" function eq_Ag_Seq_T
   
   axiom eq_Ag_Seq_T_spec: forall self: t_Ag_Seq_T, other: t_Ag_Seq_T [eq_Ag_Seq_T self other]. eq_Ag_Seq_T self other
       = (self = other)
   
-  predicate incl_eq_Ag_Seq_T (self: t_Ag_Seq_T) (other: t_Ag_Seq_T) = eq_Ag_Seq_T self other \/ incl_Ag_Seq_T self other
+  function incl_eq_Ag_Seq_T (self: t_Ag_Seq_T) (other: t_Ag_Seq_T) : bool = eq_Ag_Seq_T self other
+    \/ incl_Ag_Seq_T self other
   
-  predicate incl_Option_Ag_Seq_T (self: t_Option_Ag_Seq_T) (other: t_Option_Ag_Seq_T) =
-    match { f0'0 = self; f1'0 = other } with
+  function incl_Option_Ag_Seq_T (self: t_Option_Ag_Seq_T) (other: t_Option_Ag_Seq_T) : bool = match { f0'0 = self;
+                                                                                                      f1'0 = other } with
       | {f0'0 = None} -> true
       | {f1'0 = None} -> false
       | {f0'0 = Some x; f1'0 = Some y} -> incl_eq_Ag_Seq_T x y
@@ -1793,7 +1805,8 @@ module M_implementation__impl_PersistentArray_T__get_immut (* implementation::Pe
     forall self: t_Option_Ag_Seq_T, other: t_Option_Ag_Seq_T [incl_Option_Ag_Seq_T self other]. incl_Option_Ag_Seq_T self other
       = (exists factor: t_Option_Ag_Seq_T. op_Option_Ag_Seq_T self factor = Some'2 other)
   
-  predicate incl_FMap_PCell_Inner_T_Ag_Seq_T (self: t_FMap_PCell_Inner_T_Ag_Seq_T) (other: t_FMap_PCell_Inner_T_Ag_Seq_T) =
+  function incl_FMap_PCell_Inner_T_Ag_Seq_T (self: t_FMap_PCell_Inner_T_Ag_Seq_T) (other: t_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   =
     let r = forall k: t_PCell_Inner_T. incl_Option_Ag_Seq_T (lookup_PCell_Inner_T self k) (lookup_PCell_Inner_T other k) in r
   
   axiom incl_FMap_PCell_Inner_T_Ag_Seq_T_spec:
@@ -1816,27 +1829,27 @@ module M_implementation__impl_PersistentArray_T__get_immut (* implementation::Pe
   let new_unit (x: ()) (return (x'0: ())) = any
     [ return (result: ()) -> {[@stop_split] [@expl:new ensures] result = x} (! return {result}) ]
   
-  predicate inv_Rc_PCell_Inner_T_Global (_1: t_Rc_PCell_Inner_T_Global)
+  function inv_Rc_PCell_Inner_T_Global (_1: t_Rc_PCell_Inner_T_Global) : bool
   
-  predicate invariant_ref_Rc_PCell_Inner_T_Global [@inline:trivial] (self: t_Rc_PCell_Inner_T_Global) =
+  function invariant_ref_Rc_PCell_Inner_T_Global [@inline:trivial] (self: t_Rc_PCell_Inner_T_Global) : bool =
     inv_Rc_PCell_Inner_T_Global self
   
-  meta "rewrite_def" predicate invariant_ref_Rc_PCell_Inner_T_Global
+  meta "rewrite_def" function invariant_ref_Rc_PCell_Inner_T_Global
   
-  predicate inv_ref_Rc_PCell_Inner_T_Global [@inline:trivial] (_1: t_Rc_PCell_Inner_T_Global) =
+  function inv_ref_Rc_PCell_Inner_T_Global [@inline:trivial] (_1: t_Rc_PCell_Inner_T_Global) : bool =
     invariant_ref_Rc_PCell_Inner_T_Global _1
   
-  meta "rewrite_def" predicate inv_ref_Rc_PCell_Inner_T_Global
+  meta "rewrite_def" function inv_ref_Rc_PCell_Inner_T_Global
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
   let get_inner_immut_T (inner: t_Rc_PCell_Inner_T_Global) (i: UInt64.t) (pa: t_PA_T) (return (x: t_T)) =
   {[@stop_split] [@expl:get_inner_immut_T requires] ([@stop_split] [@expl:get_inner_immut 'inner' type invariant] inv_ref_Rc_PCell_Inner_T_Global inner)
@@ -1852,26 +1865,28 @@ module M_implementation__impl_PersistentArray_T__get_immut (* implementation::Pe
       = Seq.get (index_FMap_PCell_Inner_T_Ag_Seq_T (view_Authority_FMap_PCell_Inner_T_Ag_Seq_T pa.auth) (deref_Rc_PCell_Inner_T_Global inner)).f0 (UInt64.t'int i))}
       (! return {result}) ]
   
-  predicate invariant_PersistentArray_T (self: t_PersistentArray_T) =
-    id_FMap_PCell_Inner_T_Ag_Seq_T'0 self.frag = public_PA_T'0 self.inv
+  function invariant_PersistentArray_T (self: t_PersistentArray_T) : bool = id_FMap_PCell_Inner_T_Ag_Seq_T'0 self.frag
+      = public_PA_T'0 self.inv
     /\ lookup_PCell_Inner_T (view_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self.frag) (deref_Rc_PCell_Inner_T_Global self.permcell)
       <> None
     /\ namespace_PA_T self.inv = Namespace_PARRAY 0
   
-  predicate inv_PersistentArray_T (_1: t_PersistentArray_T)
+  function inv_PersistentArray_T (_1: t_PersistentArray_T) : bool
   
   axiom inv_axiom'1 [@rewrite]: forall _1: t_PersistentArray_T [inv_PersistentArray_T _1]. inv_PersistentArray_T _1
       = (invariant_PersistentArray_T _1
       /\ inv_Rc_PCell_Inner_T_Global _1.permcell
       /\ inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1.frag /\ inv_Ghost_GhostShared_NonAtomicInvariant_PA_T _1.inv)
   
-  predicate invariant_ref_PersistentArray_T [@inline:trivial] (self: t_PersistentArray_T) = inv_PersistentArray_T self
+  function invariant_ref_PersistentArray_T [@inline:trivial] (self: t_PersistentArray_T) : bool =
+    inv_PersistentArray_T self
   
-  meta "rewrite_def" predicate invariant_ref_PersistentArray_T
+  meta "rewrite_def" function invariant_ref_PersistentArray_T
   
-  predicate inv_ref_PersistentArray_T [@inline:trivial] (_1: t_PersistentArray_T) = invariant_ref_PersistentArray_T _1
+  function inv_ref_PersistentArray_T [@inline:trivial] (_1: t_PersistentArray_T) : bool =
+    invariant_ref_PersistentArray_T _1
   
-  meta "rewrite_def" predicate inv_ref_PersistentArray_T
+  meta "rewrite_def" function inv_ref_PersistentArray_T
   
   function view_PersistentArray_T [@inline:trivial] (self: t_PersistentArray_T) : Seq.seq t_T =
     (unwrap_Option_Ag_Seq_T (lookup_PCell_Inner_T (view_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self.frag) (deref_Rc_PCell_Inner_T_Global self.permcell))).f0
@@ -1936,17 +1951,17 @@ module M_implementation__impl_PersistentArray_T__get_inner_immut (* implementati
   
   type t_PCell_Inner_T
   
-  predicate inv_Rc_PCell_Inner_T_Global (_1: t_Rc_PCell_Inner_T_Global)
+  function inv_Rc_PCell_Inner_T_Global (_1: t_Rc_PCell_Inner_T_Global) : bool
   
-  predicate invariant_ref_Rc_PCell_Inner_T_Global [@inline:trivial] (self: t_Rc_PCell_Inner_T_Global) =
+  function invariant_ref_Rc_PCell_Inner_T_Global [@inline:trivial] (self: t_Rc_PCell_Inner_T_Global) : bool =
     inv_Rc_PCell_Inner_T_Global self
   
-  meta "rewrite_def" predicate invariant_ref_Rc_PCell_Inner_T_Global
+  meta "rewrite_def" function invariant_ref_Rc_PCell_Inner_T_Global
   
-  predicate inv_ref_Rc_PCell_Inner_T_Global [@inline:trivial] (_1: t_Rc_PCell_Inner_T_Global) =
+  function inv_ref_Rc_PCell_Inner_T_Global [@inline:trivial] (_1: t_Rc_PCell_Inner_T_Global) : bool =
     invariant_ref_Rc_PCell_Inner_T_Global _1
   
-  meta "rewrite_def" predicate inv_ref_Rc_PCell_Inner_T_Global
+  meta "rewrite_def" function inv_ref_Rc_PCell_Inner_T_Global
   
   function deref_Rc_PCell_Inner_T_Global (self: t_Rc_PCell_Inner_T_Global) : t_PCell_Inner_T
   
@@ -1966,50 +1981,50 @@ module M_implementation__impl_PersistentArray_T__get_inner_immut (* implementati
     auth: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T;
     depth: Map.map t_PCell_Inner_T int }
   
-  predicate invariant_Authority_FMap_PCell_Inner_T_Ag_Seq_T (self: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T)
+  function invariant_Authority_FMap_PCell_Inner_T_Ag_Seq_T (self: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) : bool
   
-  predicate inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T (_1: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T)
+  function inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T (_1: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) : bool
   
   axiom inv_axiom:
     forall _1: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T [inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1]. inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1
       -> invariant_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1
   
-  predicate inv_PA_T (_1: t_PA_T)
+  function inv_PA_T (_1: t_PA_T) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_PA_T [inv_PA_T _1]. inv_PA_T _1
       = inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1.auth
   
-  predicate invariant_ref_PA_T [@inline:trivial] (self: t_PA_T) = inv_PA_T self
+  function invariant_ref_PA_T [@inline:trivial] (self: t_PA_T) : bool = inv_PA_T self
   
-  meta "rewrite_def" predicate invariant_ref_PA_T
+  meta "rewrite_def" function invariant_ref_PA_T
   
-  predicate inv_ref_PA_T [@inline:trivial] (_1: t_PA_T) = invariant_ref_PA_T _1
+  function inv_ref_PA_T [@inline:trivial] (_1: t_PA_T) : bool = invariant_ref_PA_T _1
   
-  meta "rewrite_def" predicate inv_ref_PA_T
+  meta "rewrite_def" function inv_ref_PA_T
   
-  predicate invariant_Ghost_ref_PA_T [@inline:trivial] (self: t_PA_T) = inv_ref_PA_T self
+  function invariant_Ghost_ref_PA_T [@inline:trivial] (self: t_PA_T) : bool = inv_ref_PA_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_ref_PA_T
+  meta "rewrite_def" function invariant_Ghost_ref_PA_T
   
-  predicate inv_Ghost_ref_PA_T [@inline:trivial] (_1: t_PA_T) = invariant_Ghost_ref_PA_T _1
+  function inv_Ghost_ref_PA_T [@inline:trivial] (_1: t_PA_T) : bool = invariant_Ghost_ref_PA_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_ref_PA_T
+  meta "rewrite_def" function inv_Ghost_ref_PA_T
   
-  predicate invariant_ref_Ghost_ref_PA_T [@inline:trivial] (self: t_PA_T) = inv_Ghost_ref_PA_T self
+  function invariant_ref_Ghost_ref_PA_T [@inline:trivial] (self: t_PA_T) : bool = inv_Ghost_ref_PA_T self
   
-  meta "rewrite_def" predicate invariant_ref_Ghost_ref_PA_T
+  meta "rewrite_def" function invariant_ref_Ghost_ref_PA_T
   
-  predicate inv_ref_Ghost_ref_PA_T [@inline:trivial] (_1: t_PA_T) = invariant_ref_Ghost_ref_PA_T _1
+  function inv_ref_Ghost_ref_PA_T [@inline:trivial] (_1: t_PA_T) : bool = invariant_ref_Ghost_ref_PA_T _1
   
-  meta "rewrite_def" predicate inv_ref_Ghost_ref_PA_T
+  meta "rewrite_def" function inv_ref_Ghost_ref_PA_T
   
-  predicate invariant_ref_ref_PA_T [@inline:trivial] (self: t_PA_T) = inv_ref_PA_T self
+  function invariant_ref_ref_PA_T [@inline:trivial] (self: t_PA_T) : bool = inv_ref_PA_T self
   
-  meta "rewrite_def" predicate invariant_ref_ref_PA_T
+  meta "rewrite_def" function invariant_ref_ref_PA_T
   
-  predicate inv_ref_ref_PA_T [@inline:trivial] (_1: t_PA_T) = invariant_ref_ref_PA_T _1
+  function inv_ref_ref_PA_T [@inline:trivial] (_1: t_PA_T) : bool = invariant_ref_ref_PA_T _1
   
-  meta "rewrite_def" predicate inv_ref_ref_PA_T
+  meta "rewrite_def" function inv_ref_ref_PA_T
   
   let deref_Ghost_ref_PA_T (self: t_PA_T) (return (x: t_PA_T)) =
   {[@stop_split] [@expl:deref 'self' type invariant] inv_ref_Ghost_ref_PA_T self}
@@ -2061,24 +2076,24 @@ module M_implementation__impl_PersistentArray_T__get_inner_immut (* implementati
   
   function ward_PCell_Inner_T (self: t_Perm_PCell_Inner_T) : t_PCell_Inner_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_T (Seq.get self i)
+  function invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+      -> inv_ref_T (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_T
+  meta "rewrite_def" function invariant_Seq_T
   
-  predicate inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Seq_T _1
+  function inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Seq_T
+  meta "rewrite_def" function inv_Seq_T
   
   constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
   
@@ -2087,13 +2102,13 @@ module M_implementation__impl_PersistentArray_T__get_inner_immut (* implementati
   axiom view_Vec_T_Global_spec:
     forall self: t_Vec_T_Global [view_Vec_T_Global self]. Seq.length (view_Vec_T_Global self) <= UInt64.t'int const_MAX
   
-  predicate invariant_Vec_T_Global (self: t_Vec_T_Global) = inv_Seq_T (view_Vec_T_Global self)
+  function invariant_Vec_T_Global (self: t_Vec_T_Global) : bool = inv_Seq_T (view_Vec_T_Global self)
   
-  predicate inv_Vec_T_Global (_1: t_Vec_T_Global)
+  function inv_Vec_T_Global (_1: t_Vec_T_Global) : bool
   
   axiom inv_axiom'1: forall _1: t_Vec_T_Global [inv_Vec_T_Global _1]. inv_Vec_T_Global _1 -> invariant_Vec_T_Global _1
   
-  predicate inv_Inner_T (_1: t_Inner_T)
+  function inv_Inner_T (_1: t_Inner_T) : bool
   
   axiom inv_axiom'2 [@rewrite]: forall _1: t_Inner_T [inv_Inner_T _1]. inv_Inner_T _1
       = match _1 with
@@ -2101,13 +2116,13 @@ module M_implementation__impl_PersistentArray_T__get_inner_immut (* implementati
         | Link index value next -> inv_T value /\ inv_Rc_PCell_Inner_T_Global next
         end
   
-  predicate invariant_ref_Inner_T [@inline:trivial] (self: t_Inner_T) = inv_Inner_T self
+  function invariant_ref_Inner_T [@inline:trivial] (self: t_Inner_T) : bool = inv_Inner_T self
   
-  meta "rewrite_def" predicate invariant_ref_Inner_T
+  meta "rewrite_def" function invariant_ref_Inner_T
   
-  predicate inv_ref_Inner_T [@inline:trivial] (_1: t_Inner_T) = invariant_ref_Inner_T _1
+  function inv_ref_Inner_T [@inline:trivial] (_1: t_Inner_T) : bool = invariant_ref_Inner_T _1
   
-  meta "rewrite_def" predicate inv_ref_Inner_T
+  meta "rewrite_def" function inv_ref_Inner_T
   
   function val_unsized_PCell_Inner_T (self: t_Perm_PCell_Inner_T) : t_Inner_T
   
@@ -2141,17 +2156,17 @@ module M_implementation__impl_PersistentArray_T__get_inner_immut (* implementati
   
   meta "rewrite_def" function lookup_PCell_Inner_T
   
-  predicate contains_PCell_Inner_T [@inline:trivial] (self: t_FMap_PCell_Inner_T_Ag_Seq_T) (k: t_PCell_Inner_T) =
+  function contains_PCell_Inner_T [@inline:trivial] (self: t_FMap_PCell_Inner_T_Ag_Seq_T) (k: t_PCell_Inner_T) : bool =
     lookup_PCell_Inner_T self k <> None'1
   
-  meta "rewrite_def" predicate contains_PCell_Inner_T
+  meta "rewrite_def" function contains_PCell_Inner_T
   
   function view_Authority_FMap_PCell_Inner_T_Ag_Seq_T (self: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) : t_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate contains_Snapshot_PCell_Inner_T [@inline:trivial] (self: t_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T) (k: t_PCell_Inner_T) =
-    lookup_Snapshot_PCell_Inner_T self k <> None'0
+  function contains_Snapshot_PCell_Inner_T [@inline:trivial] (self: t_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T) (k: t_PCell_Inner_T) : bool
+   = lookup_Snapshot_PCell_Inner_T self k <> None'0
   
-  meta "rewrite_def" predicate contains_Snapshot_PCell_Inner_T
+  meta "rewrite_def" function contains_Snapshot_PCell_Inner_T
   
   constant any_Perm_PCell_Inner_T : t_Perm_PCell_Inner_T
   
@@ -2181,16 +2196,16 @@ module M_implementation__impl_PersistentArray_T__get_inner_immut (* implementati
   
   meta "rewrite_def" function index_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   function index_Mapping_PCell_Inner_T_Int [@inline:trivial] (self: Map.map t_PCell_Inner_T int) (a: t_PCell_Inner_T) : int
    = Map.get self a
   
   meta "rewrite_def" function index_Mapping_PCell_Inner_T_Int
   
-  predicate partial_invariant_T [@inline:trivial] (self: t_PA_T) =
+  function partial_invariant_T [@inline:trivial] (self: t_PA_T) : bool =
     forall pc: t_PCell_Inner_T. contains_PCell_Inner_T (view_Authority_FMap_PCell_Inner_T_Ag_Seq_T self.auth) pc
         /\ contains_Snapshot_PCell_Inner_T self.perms pc
       -> ward_PCell_Inner_T (index_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T self.perms pc) = pc
@@ -2205,14 +2220,13 @@ module M_implementation__impl_PersistentArray_T__get_inner_immut (* implementati
         = Seq.set (index_FMap_PCell_Inner_T_Ag_Seq_T (view_Authority_FMap_PCell_Inner_T_Ag_Seq_T self.auth) (deref_Rc_PCell_Inner_T_Global next)).f0 (UInt64.t'int index) value
         end
   
-  meta "rewrite_def" predicate partial_invariant_T
+  meta "rewrite_def" function partial_invariant_T
   
-  predicate protocol_PA_T [@inline:trivial] (self: t_PA_T) =
-    partial_invariant_T self
+  function protocol_PA_T [@inline:trivial] (self: t_PA_T) : bool = partial_invariant_T self
     /\ (forall pc: t_PCell_Inner_T. contains_PCell_Inner_T (view_Authority_FMap_PCell_Inner_T_Ag_Seq_T self.auth) pc
       = contains_Snapshot_PCell_Inner_T self.perms pc)
   
-  meta "rewrite_def" predicate protocol_PA_T
+  meta "rewrite_def" function protocol_PA_T
   
   let get_inner_immut_T (inner: t_Rc_PCell_Inner_T_Global) (i: UInt64.t) (pa: t_PA_T) (return (x: t_T)) =
   {[@stop_split] [@expl:get_inner_immut_T requires] ([@stop_split] [@expl:get_inner_immut 'inner' type invariant] inv_ref_Rc_PCell_Inner_T_Global inner)
@@ -2236,22 +2250,23 @@ module M_implementation__impl_PersistentArray_T__get_inner_immut (* implementati
         end}
       any) ]
   
-  predicate invariant_ref_Vec_T_Global [@inline:trivial] (self: t_Vec_T_Global) = inv_Vec_T_Global self
+  function invariant_ref_Vec_T_Global [@inline:trivial] (self: t_Vec_T_Global) : bool = inv_Vec_T_Global self
   
-  meta "rewrite_def" predicate invariant_ref_Vec_T_Global
+  meta "rewrite_def" function invariant_ref_Vec_T_Global
   
-  predicate inv_ref_Vec_T_Global [@inline:trivial] (_1: t_Vec_T_Global) = invariant_ref_Vec_T_Global _1
+  function inv_ref_Vec_T_Global [@inline:trivial] (_1: t_Vec_T_Global) : bool = invariant_ref_Vec_T_Global _1
   
-  meta "rewrite_def" predicate inv_ref_Vec_T_Global
+  meta "rewrite_def" function inv_ref_Vec_T_Global
   
-  predicate in_bounds_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq t_T) = UInt64.t'int self < Seq.length seq
+  function in_bounds_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq t_T) : bool = UInt64.t'int self
+    < Seq.length seq
   
-  meta "rewrite_def" predicate in_bounds_usize
+  meta "rewrite_def" function in_bounds_usize
   
-  predicate has_value_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq t_T) (out: t_T) =
+  function has_value_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq t_T) (out: t_T) : bool =
     Seq.get seq (UInt64.t'int self) = out
   
-  meta "rewrite_def" predicate has_value_usize
+  meta "rewrite_def" function has_value_usize
   
   let index_Vec_T_Global (self: t_Vec_T_Global) (index: UInt64.t) (return (x: t_T)) =
   {[@stop_split] [@expl:index_Vec_T_Global requires] ([@stop_split] [@expl:index 'self' type invariant] inv_ref_Vec_T_Global self)
@@ -2375,34 +2390,34 @@ module M_implementation__impl_PersistentArray_T__new (* implementation::Persiste
   
   type tup2_PCell_Inner_T_Ghost_Perm_PCell_Inner_T = { f0'0: t_PCell_Inner_T; f1'0: t_Perm_PCell_Inner_T }
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_T (Seq.get self i)
+  function invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+      -> inv_ref_T (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_T
+  meta "rewrite_def" function invariant_Seq_T
   
-  predicate inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Seq_T _1
+  function inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Seq_T
+  meta "rewrite_def" function inv_Seq_T
   
-  predicate invariant_Vec_T_Global (self: t_Vec_T_Global) = inv_Seq_T (view_Vec_T_Global self)
+  function invariant_Vec_T_Global (self: t_Vec_T_Global) : bool = inv_Seq_T (view_Vec_T_Global self)
   
-  predicate inv_Vec_T_Global (_1: t_Vec_T_Global)
+  function inv_Vec_T_Global (_1: t_Vec_T_Global) : bool
   
   axiom inv_axiom: forall _1: t_Vec_T_Global [inv_Vec_T_Global _1]. inv_Vec_T_Global _1 -> invariant_Vec_T_Global _1
   
-  predicate inv_Rc_PCell_Inner_T_Global (_1: t_Rc_PCell_Inner_T_Global)
+  function inv_Rc_PCell_Inner_T_Global (_1: t_Rc_PCell_Inner_T_Global) : bool
   
-  predicate inv_Inner_T (_1: t_Inner_T)
+  function inv_Inner_T (_1: t_Inner_T) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Inner_T [inv_Inner_T _1]. inv_Inner_T _1
       = match _1 with
@@ -2429,23 +2444,23 @@ module M_implementation__impl_PersistentArray_T__new (* implementation::Persiste
   
   type t_Authority_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate invariant_Authority_FMap_PCell_Inner_T_Ag_Seq_T (self: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T)
+  function invariant_Authority_FMap_PCell_Inner_T_Ag_Seq_T (self: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) : bool
   
-  predicate inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T (_1: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T)
+  function inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T (_1: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) : bool
   
   axiom inv_axiom'1:
     forall _1: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T [inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1]. inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1
       -> invariant_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1
   
-  predicate invariant_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) =
-    inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T self
+  function invariant_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function invariant_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate inv_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) =
-    invariant_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1
+  function inv_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = invariant_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function inv_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T
   
   type t_FMap_PCell_Inner_T_Ag_Seq_T
   
@@ -2516,9 +2531,9 @@ module M_implementation__impl_PersistentArray_T__new (* implementation::Persiste
     forall a: t_FMap_PCell_Inner_T_Ag_Seq_T, b: t_FMap_PCell_Inner_T_Ag_Seq_T. op_FMap_PCell_Inner_T_Ag_Seq_T a b
       = op_FMap_PCell_Inner_T_Ag_Seq_T b a
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function len_PCell_Inner_T (self: t_FMap_PCell_Inner_T_Ag_Seq_T) : int
   
@@ -2544,25 +2559,25 @@ module M_implementation__impl_PersistentArray_T__new (* implementation::Persiste
       = unit_FMap_PCell_Inner_T_Ag_Seq_T)}
       (! return {result}) ]
   
-  predicate invariant_ref_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) =
-    inv_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T self
+  function invariant_ref_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = inv_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T self
   
-  meta "rewrite_def" predicate invariant_ref_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function invariant_ref_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate inv_ref_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) =
-    invariant_ref_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1
+  function inv_ref_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = invariant_ref_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1
   
-  meta "rewrite_def" predicate inv_ref_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function inv_ref_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate invariant_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) =
-    inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T self
+  function invariant_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T self
   
-  meta "rewrite_def" predicate invariant_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function invariant_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate inv_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) =
-    invariant_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1
+  function inv_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = invariant_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1
   
-  meta "rewrite_def" predicate inv_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function inv_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T
   
   let deref_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T (self: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T)
     (return (x: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T)) =
@@ -2585,7 +2600,7 @@ module M_implementation__impl_PersistentArray_T__new (* implementation::Persiste
   
   type t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T)
+  function inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
   
   function view_Fragment_FMap_PCell_Inner_T_Ag_Seq_T (self: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : t_FMap_PCell_Inner_T_Ag_Seq_T
   
@@ -2599,15 +2614,15 @@ module M_implementation__impl_PersistentArray_T__new (* implementation::Persiste
       /\ id_FMap_PCell_Inner_T_Ag_Seq_T'1 result = id)}
       (! return {result}) ]
   
-  predicate invariant_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self
+  function invariant_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function invariant_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    invariant_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1
+  function inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = invariant_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
   let new_Fragment_FMap_PCell_Inner_T_Ag_Seq_T (x: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T)
     (return (x'0: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T)) =
@@ -2618,26 +2633,26 @@ module M_implementation__impl_PersistentArray_T__new (* implementation::Persiste
       /\ ([@stop_split] [@expl:new ensures] result = x)}
       (! return {result}) ]
   
-  predicate invariant_refmut_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: MutBorrow.t t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) =
-    inv_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T self.current
+  function invariant_refmut_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: MutBorrow.t t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = inv_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T self.current
     /\ inv_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function invariant_refmut_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate inv_refmut_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: MutBorrow.t t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) =
-    invariant_refmut_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1
+  function inv_refmut_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: MutBorrow.t t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = invariant_refmut_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function inv_refmut_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate invariant_refmut_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: MutBorrow.t t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) =
-    inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T self.current /\ inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T self.final
+  function invariant_refmut_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: MutBorrow.t t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T self.current /\ inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Authority_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function invariant_refmut_Authority_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate inv_refmut_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: MutBorrow.t t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) =
-    invariant_refmut_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1
+  function inv_refmut_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: MutBorrow.t t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = invariant_refmut_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Authority_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function inv_refmut_Authority_FMap_PCell_Inner_T_Ag_Seq_T
   
   let deref_mut_Ghost_Authority_FMap_PCell_Inner_T_Ag_Seq_T (self: MutBorrow.t t_Authority_FMap_PCell_Inner_T_Ag_Seq_T)
     (return (x: MutBorrow.t t_Authority_FMap_PCell_Inner_T_Ag_Seq_T)) =
@@ -2648,26 +2663,26 @@ module M_implementation__impl_PersistentArray_T__new (* implementation::Persiste
       /\ ([@stop_split] [@expl:deref_mut ensures] result = self)}
       (! return {result}) ]
   
-  predicate invariant_refmut_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: MutBorrow.t t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self.current
+  function invariant_refmut_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: MutBorrow.t t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self.current
     /\ inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function invariant_refmut_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate inv_refmut_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: MutBorrow.t t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    invariant_refmut_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1
+  function inv_refmut_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: MutBorrow.t t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = invariant_refmut_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function inv_refmut_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate invariant_refmut_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: MutBorrow.t t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self.current /\ inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self.final
+  function invariant_refmut_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: MutBorrow.t t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self.current /\ inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function invariant_refmut_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate inv_refmut_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: MutBorrow.t t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    invariant_refmut_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1
+  function inv_refmut_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: MutBorrow.t t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = invariant_refmut_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function inv_refmut_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
   let deref_mut_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T (self: MutBorrow.t t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T)
     (return (x: MutBorrow.t t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T)) =
@@ -2680,12 +2695,12 @@ module M_implementation__impl_PersistentArray_T__new (* implementation::Persiste
   
   type t_FMapInsertLocalUpdate_PCell_Inner_T_Ag_Seq_T = { f0'2: t_PCell_Inner_T; f1'2: t_Ag_Seq_T }
   
-  predicate premise_FMapInsertLocalUpdate_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_FMapInsertLocalUpdate_PCell_Inner_T_Ag_Seq_T) (from_auth: t_FMap_PCell_Inner_T_Ag_Seq_T) (_3: t_FMap_PCell_Inner_T_Ag_Seq_T) =
-    lookup_PCell_Inner_T from_auth self.f0'2 = None'0
+  function premise_FMapInsertLocalUpdate_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_FMapInsertLocalUpdate_PCell_Inner_T_Ag_Seq_T) (from_auth: t_FMap_PCell_Inner_T_Ag_Seq_T) (_3: t_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = lookup_PCell_Inner_T from_auth self.f0'2 = None'0
   
-  meta "rewrite_def" predicate premise_FMapInsertLocalUpdate_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function premise_FMapInsertLocalUpdate_PCell_Inner_T_Ag_Seq_T
   
-  predicate incl_Ag_Seq_T (self: t_Ag_Seq_T) (other: t_Ag_Seq_T) = self.f0 = other.f0
+  function incl_Ag_Seq_T (self: t_Ag_Seq_T) (other: t_Ag_Seq_T) : bool = self.f0 = other.f0
   
   axiom incl_Ag_Seq_T_spec:
     forall self: t_Ag_Seq_T, other: t_Ag_Seq_T [incl_Ag_Seq_T self other]. incl_Ag_Seq_T self other
@@ -2713,17 +2728,18 @@ module M_implementation__impl_PersistentArray_T__new (* implementation::Persiste
   axiom incl_op_Ag_Seq_T_spec: forall self: t_Ag_Seq_T, other: t_Ag_Seq_T, comb: t_Ag_Seq_T. op_Ag_Seq_T self other
         = Some'0 comb -> incl_Ag_Seq_T self comb
   
-  predicate eq_Ag_Seq_T [@inline:trivial] (self: t_Ag_Seq_T) (other: t_Ag_Seq_T) = self = other
+  function eq_Ag_Seq_T [@inline:trivial] (self: t_Ag_Seq_T) (other: t_Ag_Seq_T) : bool = self = other
   
-  meta "rewrite_def" predicate eq_Ag_Seq_T
+  meta "rewrite_def" function eq_Ag_Seq_T
   
   axiom eq_Ag_Seq_T_spec: forall self: t_Ag_Seq_T, other: t_Ag_Seq_T [eq_Ag_Seq_T self other]. eq_Ag_Seq_T self other
       = (self = other)
   
-  predicate incl_eq_Ag_Seq_T (self: t_Ag_Seq_T) (other: t_Ag_Seq_T) = eq_Ag_Seq_T self other \/ incl_Ag_Seq_T self other
+  function incl_eq_Ag_Seq_T (self: t_Ag_Seq_T) (other: t_Ag_Seq_T) : bool = eq_Ag_Seq_T self other
+    \/ incl_Ag_Seq_T self other
   
-  predicate incl_Option_Ag_Seq_T (self: t_Option_Ag_Seq_T) (other: t_Option_Ag_Seq_T) =
-    match { f0'1 = self; f1'1 = other } with
+  function incl_Option_Ag_Seq_T (self: t_Option_Ag_Seq_T) (other: t_Option_Ag_Seq_T) : bool = match { f0'1 = self;
+                                                                                                      f1'1 = other } with
       | {f0'1 = None'0} -> true
       | {f1'1 = None'0} -> false
       | {f0'1 = Some'0 x; f1'1 = Some'0 y} -> incl_eq_Ag_Seq_T x y
@@ -2733,7 +2749,8 @@ module M_implementation__impl_PersistentArray_T__new (* implementation::Persiste
     forall self: t_Option_Ag_Seq_T, other: t_Option_Ag_Seq_T [incl_Option_Ag_Seq_T self other]. incl_Option_Ag_Seq_T self other
       = (exists factor: t_Option_Ag_Seq_T. op_Option_Ag_Seq_T self factor = Some'1 other)
   
-  predicate incl_FMap_PCell_Inner_T_Ag_Seq_T (self: t_FMap_PCell_Inner_T_Ag_Seq_T) (other: t_FMap_PCell_Inner_T_Ag_Seq_T) =
+  function incl_FMap_PCell_Inner_T_Ag_Seq_T (self: t_FMap_PCell_Inner_T_Ag_Seq_T) (other: t_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   =
     let r = forall k: t_PCell_Inner_T. incl_Option_Ag_Seq_T (lookup_PCell_Inner_T self k) (lookup_PCell_Inner_T other k) in r
   
   axiom incl_FMap_PCell_Inner_T_Ag_Seq_T_spec:
@@ -2744,10 +2761,10 @@ module M_implementation__impl_PersistentArray_T__new (* implementation::Persiste
     f0'3: t_FMap_PCell_Inner_T_Ag_Seq_T;
     f1'3: t_FMap_PCell_Inner_T_Ag_Seq_T }
   
-  predicate contains_PCell_Inner_T [@inline:trivial] (self: t_FMap_PCell_Inner_T_Ag_Seq_T) (k: t_PCell_Inner_T) =
+  function contains_PCell_Inner_T [@inline:trivial] (self: t_FMap_PCell_Inner_T_Ag_Seq_T) (k: t_PCell_Inner_T) : bool =
     lookup_PCell_Inner_T self k <> None'0
   
-  meta "rewrite_def" predicate contains_PCell_Inner_T
+  meta "rewrite_def" function contains_PCell_Inner_T
   
   function add_PCell_Inner_T (self: t_FMap_PCell_Inner_T_Ag_Seq_T) (k: t_PCell_Inner_T) (v: t_Ag_Seq_T) : t_FMap_PCell_Inner_T_Ag_Seq_T
   
@@ -2785,20 +2802,20 @@ module M_implementation__impl_PersistentArray_T__new (* implementation::Persiste
       = (update_FMapInsertLocalUpdate_PCell_Inner_T_Ag_Seq_T upd (view_Authority_FMap_PCell_Inner_T_Ag_Seq_T self.current) (view_Fragment_FMap_PCell_Inner_T_Ag_Seq_T frag.current)).f1'3)}
       (! return {result}) ]
   
-  predicate resolve_refmut_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: MutBorrow.t t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    _1.final = _1.current
+  function resolve_refmut_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: MutBorrow.t t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function resolve_refmut_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate resolve_refmut_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: MutBorrow.t t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    _1.final = _1.current
+  function resolve_refmut_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: MutBorrow.t t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function resolve_refmut_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate resolve_refmut_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: MutBorrow.t t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) =
-    _1.final = _1.current
+  function resolve_refmut_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: MutBorrow.t t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Authority_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function resolve_refmut_Authority_FMap_PCell_Inner_T_Ag_Seq_T
   
   let new_unit (x: ()) (return (x'0: ())) = any
     [ return (result: ()) -> {[@stop_split] [@expl:new ensures] result = x} (! return {result}) ]
@@ -2819,8 +2836,8 @@ module M_implementation__impl_PersistentArray_T__new (* implementation::Persiste
   
   meta "rewrite_def" function lookup_Snapshot_PCell_Inner_T
   
-  predicate ext_eq_Snapshot_PCell_Inner_T (self: t_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T) (other: t_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T) =
-    forall k: t_PCell_Inner_T. lookup_Snapshot_PCell_Inner_T self k = lookup_Snapshot_PCell_Inner_T other k
+  function ext_eq_Snapshot_PCell_Inner_T (self: t_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T) (other: t_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T) : bool
+   = forall k: t_PCell_Inner_T. lookup_Snapshot_PCell_Inner_T self k = lookup_Snapshot_PCell_Inner_T other k
   
   axiom ext_eq_Snapshot_PCell_Inner_T_spec:
     forall self: t_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T, other: t_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T [self
@@ -2833,7 +2850,7 @@ module M_implementation__impl_PersistentArray_T__new (* implementation::Persiste
   axiom empty_Snapshot_PCell_Inner_T_spec'0: to_mapping_Snapshot_PCell_Inner_T empty_Snapshot_PCell_Inner_T
     = Const.const (None'2)
   
-  predicate is_empty_Snapshot_PCell_Inner_T (self: t_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T) =
+  function is_empty_Snapshot_PCell_Inner_T (self: t_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T) : bool =
     ext_eq_Snapshot_PCell_Inner_T self empty_Snapshot_PCell_Inner_T
   
   axiom is_empty_Snapshot_PCell_Inner_T_spec:
@@ -2856,10 +2873,10 @@ module M_implementation__impl_PersistentArray_T__new (* implementation::Persiste
     [ return (result: t_Perm_PCell_Inner_T) -> {[@stop_split] [@expl:into_inner ensures] result = self}
       (! return {result}) ]
   
-  predicate contains_Snapshot_PCell_Inner_T [@inline:trivial] (self: t_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T) (k: t_PCell_Inner_T) =
-    lookup_Snapshot_PCell_Inner_T self k <> None'2
+  function contains_Snapshot_PCell_Inner_T [@inline:trivial] (self: t_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T) (k: t_PCell_Inner_T) : bool
+   = lookup_Snapshot_PCell_Inner_T self k <> None'2
   
-  meta "rewrite_def" predicate contains_Snapshot_PCell_Inner_T
+  meta "rewrite_def" function contains_Snapshot_PCell_Inner_T
   
   function add_Snapshot_PCell_Inner_T (self: t_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T) (k: t_PCell_Inner_T) (v: t_Perm_PCell_Inner_T) : t_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T
   
@@ -2883,10 +2900,10 @@ module M_implementation__impl_PersistentArray_T__new (* implementation::Persiste
       /\ ([@stop_split] [@expl:insert ensures #1] result = lookup_Snapshot_PCell_Inner_T self.current key)}
       (! return {result}) ]
   
-  predicate resolve_refmut_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T [@inline:trivial] (_1: MutBorrow.t t_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T) =
-    _1.final = _1.current
+  function resolve_refmut_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T [@inline:trivial] (_1: MutBorrow.t t_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T) : bool
+   = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T
+  meta "rewrite_def" function resolve_refmut_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T
   
   let into_inner_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T (self: t_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T)
     (return (x: t_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T)) = any
@@ -2908,18 +2925,18 @@ module M_implementation__impl_PersistentArray_T__new (* implementation::Persiste
     auth: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T;
     depth: Map.map t_PCell_Inner_T int }
   
-  predicate inv_PA_T (_1: t_PA_T)
+  function inv_PA_T (_1: t_PA_T) : bool
   
   axiom inv_axiom'2 [@rewrite]: forall _1: t_PA_T [inv_PA_T _1]. inv_PA_T _1
       = inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1.auth
   
-  predicate invariant_Ghost_PA_T [@inline:trivial] (self: t_PA_T) = inv_PA_T self
+  function invariant_Ghost_PA_T [@inline:trivial] (self: t_PA_T) : bool = inv_PA_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_PA_T
+  meta "rewrite_def" function invariant_Ghost_PA_T
   
-  predicate inv_Ghost_PA_T [@inline:trivial] (_1: t_PA_T) = invariant_Ghost_PA_T _1
+  function inv_Ghost_PA_T [@inline:trivial] (_1: t_PA_T) : bool = invariant_Ghost_PA_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_PA_T
+  meta "rewrite_def" function inv_Ghost_PA_T
   
   let new_PA_T (x: t_PA_T) (return (x'0: t_PA_T)) = {[@stop_split] [@expl:new 'x' type invariant] inv_PA_T x}
     any
@@ -2956,16 +2973,16 @@ module M_implementation__impl_PersistentArray_T__new (* implementation::Persiste
   
   function deref_Rc_PCell_Inner_T_Global (self: t_Rc_PCell_Inner_T_Global) : t_PCell_Inner_T
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   function index_Mapping_PCell_Inner_T_Int [@inline:trivial] (self: Map.map t_PCell_Inner_T int) (a: t_PCell_Inner_T) : int
    = Map.get self a
   
   meta "rewrite_def" function index_Mapping_PCell_Inner_T_Int
   
-  predicate partial_invariant_T [@inline:trivial] (self: t_PA_T) =
+  function partial_invariant_T [@inline:trivial] (self: t_PA_T) : bool =
     forall pc: t_PCell_Inner_T. contains_PCell_Inner_T (view_Authority_FMap_PCell_Inner_T_Ag_Seq_T self.auth) pc
         /\ contains_Snapshot_PCell_Inner_T self.perms pc
       -> ward_PCell_Inner_T (index_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T self.perms pc) = pc
@@ -2980,14 +2997,13 @@ module M_implementation__impl_PersistentArray_T__new (* implementation::Persiste
         = Seq.set (index_FMap_PCell_Inner_T_Ag_Seq_T (view_Authority_FMap_PCell_Inner_T_Ag_Seq_T self.auth) (deref_Rc_PCell_Inner_T_Global next)).f0 (UInt64.t'int index) value
         end
   
-  meta "rewrite_def" predicate partial_invariant_T
+  meta "rewrite_def" function partial_invariant_T
   
-  predicate protocol_PA_T [@inline:trivial] (self: t_PA_T) =
-    partial_invariant_T self
+  function protocol_PA_T [@inline:trivial] (self: t_PA_T) : bool = partial_invariant_T self
     /\ (forall pc: t_PCell_Inner_T. contains_PCell_Inner_T (view_Authority_FMap_PCell_Inner_T_Ag_Seq_T self.auth) pc
       = contains_Snapshot_PCell_Inner_T self.perms pc)
   
-  meta "rewrite_def" predicate protocol_PA_T
+  meta "rewrite_def" function protocol_PA_T
   
   function public_PA_T (self: t_NonAtomicInvariant_PA_T) : t_Id
   
@@ -3012,31 +3028,31 @@ module M_implementation__impl_PersistentArray_T__new (* implementation::Persiste
   let new_NonAtomicInvariant_PA_T (x: t_NonAtomicInvariant_PA_T) (return (x'0: t_NonAtomicInvariant_PA_T)) = any
     [ return (result: t_NonAtomicInvariant_PA_T) -> {[@stop_split] [@expl:new ensures] result = x} (! return {result}) ]
   
-  predicate resolve_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) = true
+  function resolve_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) : bool = true
   
-  meta "rewrite_def" predicate resolve_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function resolve_NonAtomicInvariant_PA_T
   
-  predicate inv_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) = true
+  function inv_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) : bool = true
   
-  meta "rewrite_def" predicate inv_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function inv_NonAtomicInvariant_PA_T
   
-  predicate invariant_GhostShared_NonAtomicInvariant_PA_T (self: t_NonAtomicInvariant_PA_T) =
+  function invariant_GhostShared_NonAtomicInvariant_PA_T (self: t_NonAtomicInvariant_PA_T) : bool =
     resolve_NonAtomicInvariant_PA_T self /\ inv_NonAtomicInvariant_PA_T self
   
-  predicate inv_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) =
+  function inv_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) : bool =
     invariant_GhostShared_NonAtomicInvariant_PA_T _1
   
-  meta "rewrite_def" predicate inv_GhostShared_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function inv_GhostShared_NonAtomicInvariant_PA_T
   
-  predicate invariant_Ghost_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (self: t_NonAtomicInvariant_PA_T) =
-    inv_GhostShared_NonAtomicInvariant_PA_T self
+  function invariant_Ghost_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (self: t_NonAtomicInvariant_PA_T) : bool
+   = inv_GhostShared_NonAtomicInvariant_PA_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_GhostShared_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function invariant_Ghost_GhostShared_NonAtomicInvariant_PA_T
   
-  predicate inv_Ghost_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) =
+  function inv_Ghost_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) : bool =
     invariant_Ghost_GhostShared_NonAtomicInvariant_PA_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_GhostShared_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function inv_Ghost_GhostShared_NonAtomicInvariant_PA_T
   
   let new_NonAtomicInvariant_PA_T'0 (val': t_NonAtomicInvariant_PA_T) (return (x: t_NonAtomicInvariant_PA_T)) = any
     [ return (result: t_NonAtomicInvariant_PA_T) ->
@@ -3055,13 +3071,13 @@ module M_implementation__impl_PersistentArray_T__new (* implementation::Persiste
     frag: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T;
     inv: t_NonAtomicInvariant_PA_T }
   
-  predicate invariant_PersistentArray_T (self: t_PersistentArray_T) =
-    id_FMap_PCell_Inner_T_Ag_Seq_T'1 self.frag = public_PA_T self.inv
+  function invariant_PersistentArray_T (self: t_PersistentArray_T) : bool = id_FMap_PCell_Inner_T_Ag_Seq_T'1 self.frag
+      = public_PA_T self.inv
     /\ lookup_PCell_Inner_T (view_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self.frag) (deref_Rc_PCell_Inner_T_Global self.permcell)
       <> None'0
     /\ namespace_PA_T self.inv = Namespace_PARRAY 0
   
-  predicate inv_PersistentArray_T (_1: t_PersistentArray_T)
+  function inv_PersistentArray_T (_1: t_PersistentArray_T) : bool
   
   axiom inv_axiom'3 [@rewrite]: forall _1: t_PersistentArray_T [inv_PersistentArray_T _1]. inv_PersistentArray_T _1
       = (invariant_PersistentArray_T _1
@@ -3235,55 +3251,55 @@ module M_implementation__impl_PersistentArray_T__reroot (* implementation::Persi
     auth: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T;
     depth: Map.map t_PCell_Inner_T int }
   
-  predicate invariant_Authority_FMap_PCell_Inner_T_Ag_Seq_T (self: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T)
+  function invariant_Authority_FMap_PCell_Inner_T_Ag_Seq_T (self: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) : bool
   
-  predicate inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T (_1: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T)
+  function inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T (_1: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) : bool
   
   axiom inv_axiom:
     forall _1: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T [inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1]. inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1
       -> invariant_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1
   
-  predicate inv_PA_T (_1: t_PA_T)
+  function inv_PA_T (_1: t_PA_T) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_PA_T [inv_PA_T _1]. inv_PA_T _1
       = inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1.auth
   
-  predicate invariant_refmut_PA_T [@inline:trivial] (self: MutBorrow.t t_PA_T) =
-    inv_PA_T self.current /\ inv_PA_T self.final
+  function invariant_refmut_PA_T [@inline:trivial] (self: MutBorrow.t t_PA_T) : bool = inv_PA_T self.current
+    /\ inv_PA_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_PA_T
+  meta "rewrite_def" function invariant_refmut_PA_T
   
-  predicate inv_refmut_PA_T [@inline:trivial] (_1: MutBorrow.t t_PA_T) = invariant_refmut_PA_T _1
+  function inv_refmut_PA_T [@inline:trivial] (_1: MutBorrow.t t_PA_T) : bool = invariant_refmut_PA_T _1
   
-  meta "rewrite_def" predicate inv_refmut_PA_T
+  meta "rewrite_def" function inv_refmut_PA_T
   
-  predicate invariant_Ghost_refmut_PA_T [@inline:trivial] (self: MutBorrow.t t_PA_T) = inv_refmut_PA_T self
+  function invariant_Ghost_refmut_PA_T [@inline:trivial] (self: MutBorrow.t t_PA_T) : bool = inv_refmut_PA_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_refmut_PA_T
+  meta "rewrite_def" function invariant_Ghost_refmut_PA_T
   
-  predicate inv_Ghost_refmut_PA_T [@inline:trivial] (_1: MutBorrow.t t_PA_T) = invariant_Ghost_refmut_PA_T _1
+  function inv_Ghost_refmut_PA_T [@inline:trivial] (_1: MutBorrow.t t_PA_T) : bool = invariant_Ghost_refmut_PA_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_refmut_PA_T
+  meta "rewrite_def" function inv_Ghost_refmut_PA_T
   
-  predicate invariant_refmut_Ghost_refmut_PA_T [@inline:trivial] (self: MutBorrow.t (MutBorrow.t t_PA_T)) =
+  function invariant_refmut_Ghost_refmut_PA_T [@inline:trivial] (self: MutBorrow.t (MutBorrow.t t_PA_T)) : bool =
     inv_Ghost_refmut_PA_T self.current /\ inv_Ghost_refmut_PA_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Ghost_refmut_PA_T
+  meta "rewrite_def" function invariant_refmut_Ghost_refmut_PA_T
   
-  predicate inv_refmut_Ghost_refmut_PA_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_PA_T)) =
+  function inv_refmut_Ghost_refmut_PA_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_PA_T)) : bool =
     invariant_refmut_Ghost_refmut_PA_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Ghost_refmut_PA_T
+  meta "rewrite_def" function inv_refmut_Ghost_refmut_PA_T
   
-  predicate invariant_refmut_refmut_PA_T [@inline:trivial] (self: MutBorrow.t (MutBorrow.t t_PA_T)) =
+  function invariant_refmut_refmut_PA_T [@inline:trivial] (self: MutBorrow.t (MutBorrow.t t_PA_T)) : bool =
     inv_refmut_PA_T self.current /\ inv_refmut_PA_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_refmut_PA_T
+  meta "rewrite_def" function invariant_refmut_refmut_PA_T
   
-  predicate inv_refmut_refmut_PA_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_PA_T)) =
+  function inv_refmut_refmut_PA_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_PA_T)) : bool =
     invariant_refmut_refmut_PA_T _1
   
-  meta "rewrite_def" predicate inv_refmut_refmut_PA_T
+  meta "rewrite_def" function inv_refmut_refmut_PA_T
   
   let deref_mut_Ghost_refmut_PA_T (self: MutBorrow.t (MutBorrow.t t_PA_T))
     (return (x: MutBorrow.t (MutBorrow.t t_PA_T))) =
@@ -3304,9 +3320,9 @@ module M_implementation__impl_PersistentArray_T__reroot (* implementation::Persi
   
   function to_mapping_Snapshot_PCell_Inner_T (self: t_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T) : Map.map t_PCell_Inner_T t_Option_Perm_PCell_Inner_T
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function len_Snapshot_PCell_Inner_T (self: t_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T) : int
   
@@ -3318,10 +3334,10 @@ module M_implementation__impl_PersistentArray_T__reroot (* implementation::Persi
   
   meta "rewrite_def" function lookup_Snapshot_PCell_Inner_T
   
-  predicate contains_Snapshot_PCell_Inner_T [@inline:trivial] (self: t_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T) (k: t_PCell_Inner_T) =
-    lookup_Snapshot_PCell_Inner_T self k <> None
+  function contains_Snapshot_PCell_Inner_T [@inline:trivial] (self: t_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T) (k: t_PCell_Inner_T) : bool
+   = lookup_Snapshot_PCell_Inner_T self k <> None
   
-  meta "rewrite_def" predicate contains_Snapshot_PCell_Inner_T
+  meta "rewrite_def" function contains_Snapshot_PCell_Inner_T
   
   function remove_Snapshot_PCell_Inner_T (self: t_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T) (k: t_PCell_Inner_T) : t_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T
   
@@ -3345,9 +3361,10 @@ module M_implementation__impl_PersistentArray_T__reroot (* implementation::Persi
       /\ ([@stop_split] [@expl:delete ensures #1] result = lookup_Snapshot_PCell_Inner_T self.current key)}
       (! return {result}) ]
   
-  predicate resolve_refmut_refmut_PA_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_PA_T)) = _1.final = _1.current
+  function resolve_refmut_refmut_PA_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_PA_T)) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_refmut_PA_T
+  meta "rewrite_def" function resolve_refmut_refmut_PA_T
   
   let unwrap_Perm_PCell_Inner_T (self: t_Option_Perm_PCell_Inner_T) (return (x: t_Perm_PCell_Inner_T)) =
   {[@stop_split] [@expl:unwrap requires] self <> None}
@@ -3358,17 +3375,17 @@ module M_implementation__impl_PersistentArray_T__reroot (* implementation::Persi
   let new_Perm_PCell_Inner_T (x: t_Perm_PCell_Inner_T) (return (x'0: t_Perm_PCell_Inner_T)) = any
     [ return (result: t_Perm_PCell_Inner_T) -> {[@stop_split] [@expl:new ensures] result = x} (! return {result}) ]
   
-  predicate inv_Rc_PCell_Inner_T_Global (_1: t_Rc_PCell_Inner_T_Global)
+  function inv_Rc_PCell_Inner_T_Global (_1: t_Rc_PCell_Inner_T_Global) : bool
   
-  predicate invariant_ref_Rc_PCell_Inner_T_Global [@inline:trivial] (self: t_Rc_PCell_Inner_T_Global) =
+  function invariant_ref_Rc_PCell_Inner_T_Global [@inline:trivial] (self: t_Rc_PCell_Inner_T_Global) : bool =
     inv_Rc_PCell_Inner_T_Global self
   
-  meta "rewrite_def" predicate invariant_ref_Rc_PCell_Inner_T_Global
+  meta "rewrite_def" function invariant_ref_Rc_PCell_Inner_T_Global
   
-  predicate inv_ref_Rc_PCell_Inner_T_Global [@inline:trivial] (_1: t_Rc_PCell_Inner_T_Global) =
+  function inv_ref_Rc_PCell_Inner_T_Global [@inline:trivial] (_1: t_Rc_PCell_Inner_T_Global) : bool =
     invariant_ref_Rc_PCell_Inner_T_Global _1
   
-  meta "rewrite_def" predicate inv_ref_Rc_PCell_Inner_T_Global
+  meta "rewrite_def" function inv_ref_Rc_PCell_Inner_T_Global
   
   let deref_Rc_PCell_Inner_T_Global'0 (self: t_Rc_PCell_Inner_T_Global) (return (x: t_PCell_Inner_T)) =
   {[@stop_split] [@expl:deref 'self' type invariant] inv_ref_Rc_PCell_Inner_T_Global self}
@@ -3382,15 +3399,15 @@ module M_implementation__impl_PersistentArray_T__reroot (* implementation::Persi
     [ return (result: MutBorrow.t t_Perm_PCell_Inner_T) -> {[@stop_split] [@expl:deref_mut ensures] result = self}
       (! return {result}) ]
   
-  predicate resolve_refmut_Ghost_Perm_PCell_Inner_T [@inline:trivial] (_1: MutBorrow.t t_Perm_PCell_Inner_T) =
+  function resolve_refmut_Ghost_Perm_PCell_Inner_T [@inline:trivial] (_1: MutBorrow.t t_Perm_PCell_Inner_T) : bool =
     _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Ghost_Perm_PCell_Inner_T
+  meta "rewrite_def" function resolve_refmut_Ghost_Perm_PCell_Inner_T
   
-  predicate resolve_refmut_Perm_PCell_Inner_T [@inline:trivial] (_1: MutBorrow.t t_Perm_PCell_Inner_T) =
-    _1.final = _1.current
+  function resolve_refmut_Perm_PCell_Inner_T [@inline:trivial] (_1: MutBorrow.t t_Perm_PCell_Inner_T) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Perm_PCell_Inner_T
+  meta "rewrite_def" function resolve_refmut_Perm_PCell_Inner_T
   
   let new_refmut_Perm_PCell_Inner_T (x: MutBorrow.t t_Perm_PCell_Inner_T)
     (return (x'0: MutBorrow.t t_Perm_PCell_Inner_T)) = any
@@ -3405,24 +3422,24 @@ module M_implementation__impl_PersistentArray_T__reroot (* implementation::Persi
   
   function ward_PCell_Inner_T (self: t_Perm_PCell_Inner_T) : t_PCell_Inner_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_T (Seq.get self i)
+  function invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+      -> inv_ref_T (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_T
+  meta "rewrite_def" function invariant_Seq_T
   
-  predicate inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Seq_T _1
+  function inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Seq_T
+  meta "rewrite_def" function inv_Seq_T
   
   constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
   
@@ -3431,13 +3448,13 @@ module M_implementation__impl_PersistentArray_T__reroot (* implementation::Persi
   axiom view_Vec_T_Global_spec:
     forall self: t_Vec_T_Global [view_Vec_T_Global self]. Seq.length (view_Vec_T_Global self) <= UInt64.t'int const_MAX
   
-  predicate invariant_Vec_T_Global (self: t_Vec_T_Global) = inv_Seq_T (view_Vec_T_Global self)
+  function invariant_Vec_T_Global (self: t_Vec_T_Global) : bool = inv_Seq_T (view_Vec_T_Global self)
   
-  predicate inv_Vec_T_Global (_1: t_Vec_T_Global)
+  function inv_Vec_T_Global (_1: t_Vec_T_Global) : bool
   
   axiom inv_axiom'1: forall _1: t_Vec_T_Global [inv_Vec_T_Global _1]. inv_Vec_T_Global _1 -> invariant_Vec_T_Global _1
   
-  predicate inv_Inner_T (_1: t_Inner_T)
+  function inv_Inner_T (_1: t_Inner_T) : bool
   
   axiom inv_axiom'2 [@rewrite]: forall _1: t_Inner_T [inv_Inner_T _1]. inv_Inner_T _1
       = match _1 with
@@ -3445,14 +3462,14 @@ module M_implementation__impl_PersistentArray_T__reroot (* implementation::Persi
         | Link index value next -> inv_T value /\ inv_Rc_PCell_Inner_T_Global next
         end
   
-  predicate invariant_refmut_Inner_T [@inline:trivial] (self: MutBorrow.t t_Inner_T) =
-    inv_Inner_T self.current /\ inv_Inner_T self.final
+  function invariant_refmut_Inner_T [@inline:trivial] (self: MutBorrow.t t_Inner_T) : bool = inv_Inner_T self.current
+    /\ inv_Inner_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Inner_T
+  meta "rewrite_def" function invariant_refmut_Inner_T
   
-  predicate inv_refmut_Inner_T [@inline:trivial] (_1: MutBorrow.t t_Inner_T) = invariant_refmut_Inner_T _1
+  function inv_refmut_Inner_T [@inline:trivial] (_1: MutBorrow.t t_Inner_T) : bool = invariant_refmut_Inner_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Inner_T
+  meta "rewrite_def" function inv_refmut_Inner_T
   
   function fin_Ghost_refmut_Perm_PCell_Inner_T [@inline:trivial] (self: MutBorrow.t t_Perm_PCell_Inner_T) : t_Perm_PCell_Inner_T
    = self.final
@@ -3474,9 +3491,9 @@ module M_implementation__impl_PersistentArray_T__reroot (* implementation::Persi
       = val_unsized_PCell_Inner_T (fin_Ghost_refmut_Perm_PCell_Inner_T perm))}
       (! return {result}) ]
   
-  predicate resolve_refmut_Inner_T [@inline:trivial] (_1: MutBorrow.t t_Inner_T) = _1.final = _1.current
+  function resolve_refmut_Inner_T [@inline:trivial] (_1: MutBorrow.t t_Inner_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Inner_T
+  meta "rewrite_def" function resolve_refmut_Inner_T
   
   let into_inner_Perm_PCell_Inner_T (self: t_Perm_PCell_Inner_T) (return (x: t_Perm_PCell_Inner_T)) = any
     [ return (result: t_Perm_PCell_Inner_T) -> {[@stop_split] [@expl:into_inner ensures] result = self}
@@ -3504,17 +3521,17 @@ module M_implementation__impl_PersistentArray_T__reroot (* implementation::Persi
       /\ ([@stop_split] [@expl:insert ensures #1] result = lookup_Snapshot_PCell_Inner_T self.current key)}
       (! return {result}) ]
   
-  predicate resolve_refmut_PA_T [@inline:trivial] (_1: MutBorrow.t t_PA_T) = _1.final = _1.current
+  function resolve_refmut_PA_T [@inline:trivial] (_1: MutBorrow.t t_PA_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_PA_T
+  meta "rewrite_def" function resolve_refmut_PA_T
   
-  predicate resolve_Ghost_refmut_PA_T [@inline:trivial] (self: MutBorrow.t t_PA_T) = resolve_refmut_PA_T self
+  function resolve_Ghost_refmut_PA_T [@inline:trivial] (self: MutBorrow.t t_PA_T) : bool = resolve_refmut_PA_T self
   
-  meta "rewrite_def" predicate resolve_Ghost_refmut_PA_T
+  meta "rewrite_def" function resolve_Ghost_refmut_PA_T
   
-  predicate resolve_Ghost_refmut_PA_T'0 [@inline:trivial] (_1: MutBorrow.t t_PA_T) = resolve_Ghost_refmut_PA_T _1
+  function resolve_Ghost_refmut_PA_T'0 [@inline:trivial] (_1: MutBorrow.t t_PA_T) : bool = resolve_Ghost_refmut_PA_T _1
   
-  meta "rewrite_def" predicate resolve_Ghost_refmut_PA_T'0
+  meta "rewrite_def" function resolve_Ghost_refmut_PA_T'0
   
   let new_Option_Perm_PCell_Inner_T (x: t_Option_Perm_PCell_Inner_T) (return (x'0: t_Option_Perm_PCell_Inner_T)) = any
     [ return (result: t_Option_Perm_PCell_Inner_T) -> {[@stop_split] [@expl:new ensures] result = x}
@@ -3550,10 +3567,10 @@ module M_implementation__impl_PersistentArray_T__reroot (* implementation::Persi
   
   meta "rewrite_def" function lookup_PCell_Inner_T
   
-  predicate contains_PCell_Inner_T [@inline:trivial] (self: t_FMap_PCell_Inner_T_Ag_Seq_T) (k: t_PCell_Inner_T) =
+  function contains_PCell_Inner_T [@inline:trivial] (self: t_FMap_PCell_Inner_T_Ag_Seq_T) (k: t_PCell_Inner_T) : bool =
     lookup_PCell_Inner_T self k <> None'0
   
-  meta "rewrite_def" predicate contains_PCell_Inner_T
+  meta "rewrite_def" function contains_PCell_Inner_T
   
   function view_Authority_FMap_PCell_Inner_T_Ag_Seq_T (self: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) : t_FMap_PCell_Inner_T_Ag_Seq_T
   
@@ -3585,16 +3602,16 @@ module M_implementation__impl_PersistentArray_T__reroot (* implementation::Persi
   
   meta "rewrite_def" function index_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   function index_Mapping_PCell_Inner_T_Int [@inline:trivial] (self: Map.map t_PCell_Inner_T int) (a: t_PCell_Inner_T) : int
    = Map.get self a
   
   meta "rewrite_def" function index_Mapping_PCell_Inner_T_Int
   
-  predicate partial_invariant_T [@inline:trivial] (self: t_PA_T) =
+  function partial_invariant_T [@inline:trivial] (self: t_PA_T) : bool =
     forall pc: t_PCell_Inner_T. contains_PCell_Inner_T (view_Authority_FMap_PCell_Inner_T_Ag_Seq_T self.auth) pc
         /\ contains_Snapshot_PCell_Inner_T self.perms pc
       -> ward_PCell_Inner_T (index_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T self.perms pc) = pc
@@ -3609,7 +3626,7 @@ module M_implementation__impl_PersistentArray_T__reroot (* implementation::Persi
         = Seq.set (index_FMap_PCell_Inner_T_Ag_Seq_T (view_Authority_FMap_PCell_Inner_T_Ag_Seq_T self.auth) (deref_Rc_PCell_Inner_T_Global next)).f0 (UInt64.t'int index) value
         end
   
-  meta "rewrite_def" predicate partial_invariant_T
+  meta "rewrite_def" function partial_invariant_T
   
   function fin_Ghost_refmut_PA_T [@inline:trivial] (self: MutBorrow.t t_PA_T) : t_PA_T = self.final
   
@@ -3649,15 +3666,15 @@ module M_implementation__impl_PersistentArray_T__reroot (* implementation::Persi
       /\ ([@stop_split] [@expl:clone ensures] result = self)}
       (! return {result}) ]
   
-  predicate invariant_refmut_Rc_PCell_Inner_T_Global [@inline:trivial] (self: MutBorrow.t t_Rc_PCell_Inner_T_Global) =
-    inv_Rc_PCell_Inner_T_Global self.current /\ inv_Rc_PCell_Inner_T_Global self.final
+  function invariant_refmut_Rc_PCell_Inner_T_Global [@inline:trivial] (self: MutBorrow.t t_Rc_PCell_Inner_T_Global) : bool
+   = inv_Rc_PCell_Inner_T_Global self.current /\ inv_Rc_PCell_Inner_T_Global self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Rc_PCell_Inner_T_Global
+  meta "rewrite_def" function invariant_refmut_Rc_PCell_Inner_T_Global
   
-  predicate inv_refmut_Rc_PCell_Inner_T_Global [@inline:trivial] (_1: MutBorrow.t t_Rc_PCell_Inner_T_Global) =
+  function inv_refmut_Rc_PCell_Inner_T_Global [@inline:trivial] (_1: MutBorrow.t t_Rc_PCell_Inner_T_Global) : bool =
     invariant_refmut_Rc_PCell_Inner_T_Global _1
   
-  meta "rewrite_def" predicate inv_refmut_Rc_PCell_Inner_T_Global
+  meta "rewrite_def" function inv_refmut_Rc_PCell_Inner_T_Global
   
   let replace_Rc_PCell_Inner_T_Global (dest: MutBorrow.t t_Rc_PCell_Inner_T_Global) (src: t_Rc_PCell_Inner_T_Global)
     (return (x: t_Rc_PCell_Inner_T_Global)) =
@@ -3670,10 +3687,10 @@ module M_implementation__impl_PersistentArray_T__reroot (* implementation::Persi
       /\ ([@stop_split] [@expl:replace ensures #1] result = dest.current)}
       (! return {result}) ]
   
-  predicate resolve_refmut_Rc_PCell_Inner_T_Global [@inline:trivial] (_1: MutBorrow.t t_Rc_PCell_Inner_T_Global) =
+  function resolve_refmut_Rc_PCell_Inner_T_Global [@inline:trivial] (_1: MutBorrow.t t_Rc_PCell_Inner_T_Global) : bool =
     _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Rc_PCell_Inner_T_Global
+  meta "rewrite_def" function resolve_refmut_Rc_PCell_Inner_T_Global
   
   type t_Option_refmut_Perm_PCell_Inner_T = None'1 | Some'1 (MutBorrow.t t_Perm_PCell_Inner_T)
   
@@ -3702,23 +3719,23 @@ module M_implementation__impl_PersistentArray_T__reroot (* implementation::Persi
     [ return (result: MutBorrow.t t_Perm_PCell_Inner_T) -> {[@stop_split] [@expl:unwrap ensures] Some'1 result = self}
       (! return {result}) ]
   
-  predicate resolve_Rc_PCell_Inner_T_Global (_1: t_Rc_PCell_Inner_T_Global)
+  function resolve_Rc_PCell_Inner_T_Global (_1: t_Rc_PCell_Inner_T_Global) : bool
   
-  predicate resolve_refmut_usize [@inline:trivial] (_1: MutBorrow.t UInt64.t) = _1.final = _1.current
+  function resolve_refmut_usize [@inline:trivial] (_1: MutBorrow.t UInt64.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_usize
+  meta "rewrite_def" function resolve_refmut_usize
   
-  predicate invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) = inv_T self.current /\ inv_T self.final
+  function invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) : bool = inv_T self.current /\ inv_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_T
+  meta "rewrite_def" function invariant_refmut_T
   
-  predicate inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = invariant_refmut_T _1
+  function inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = invariant_refmut_T _1
   
-  meta "rewrite_def" predicate inv_refmut_T
+  meta "rewrite_def" function inv_refmut_T
   
-  predicate resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = _1.final = _1.current
+  function resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_T
+  meta "rewrite_def" function resolve_refmut_T
   
   let elim_Direct (_x: t_Inner_T) (return (f0'0: t_Vec_T_Global)) = any
     [ _k (f0'0: t_Vec_T_Global) -> {Direct f0'0 = _x} (! return {f0'0})
@@ -3728,29 +3745,30 @@ module M_implementation__impl_PersistentArray_T__reroot (* implementation::Persi
         end}
       any) ]
   
-  predicate invariant_refmut_Vec_T_Global [@inline:trivial] (self: MutBorrow.t t_Vec_T_Global) =
+  function invariant_refmut_Vec_T_Global [@inline:trivial] (self: MutBorrow.t t_Vec_T_Global) : bool =
     inv_Vec_T_Global self.current /\ inv_Vec_T_Global self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Vec_T_Global
+  meta "rewrite_def" function invariant_refmut_Vec_T_Global
   
-  predicate inv_refmut_Vec_T_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_T_Global) =
+  function inv_refmut_Vec_T_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_T_Global) : bool =
     invariant_refmut_Vec_T_Global _1
   
-  meta "rewrite_def" predicate inv_refmut_Vec_T_Global
+  meta "rewrite_def" function inv_refmut_Vec_T_Global
   
-  predicate in_bounds_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq t_T) = UInt64.t'int self < Seq.length seq
+  function in_bounds_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq t_T) : bool = UInt64.t'int self
+    < Seq.length seq
   
-  meta "rewrite_def" predicate in_bounds_usize
+  meta "rewrite_def" function in_bounds_usize
   
-  predicate has_value_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq t_T) (out: t_T) =
+  function has_value_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq t_T) (out: t_T) : bool =
     Seq.get seq (UInt64.t'int self) = out
   
-  meta "rewrite_def" predicate has_value_usize
+  meta "rewrite_def" function has_value_usize
   
-  predicate resolve_elswhere_usize [@inline:trivial] (self: UInt64.t) (old': Seq.seq t_T) (fin: Seq.seq t_T) =
+  function resolve_elswhere_usize [@inline:trivial] (self: UInt64.t) (old': Seq.seq t_T) (fin: Seq.seq t_T) : bool =
     forall i: int. 0 <= i /\ i <> UInt64.t'int self /\ i < Seq.length old' -> Seq.get old' i = Seq.get fin i
   
-  meta "rewrite_def" predicate resolve_elswhere_usize
+  meta "rewrite_def" function resolve_elswhere_usize
   
   let index_mut_Vec_T_Global (self: MutBorrow.t t_Vec_T_Global) (index: UInt64.t) (return (x: MutBorrow.t t_T)) =
   {[@stop_split] [@expl:index_mut_Vec_T_Global requires] ([@stop_split] [@expl:index_mut 'self' type invariant] inv_refmut_Vec_T_Global self)
@@ -3774,9 +3792,9 @@ module M_implementation__impl_PersistentArray_T__reroot (* implementation::Persi
       /\ ([@stop_split] [@expl:swap ensures #1] y.final = x.current)}
       (! return {result}) ]
   
-  predicate resolve_refmut_Vec_T_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_T_Global) = _1.final = _1.current
+  function resolve_refmut_Vec_T_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_T_Global) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Vec_T_Global
+  meta "rewrite_def" function resolve_refmut_Vec_T_Global
   
   let swap_Inner_T (x: MutBorrow.t t_Inner_T) (y: MutBorrow.t t_Inner_T) (return (x'0: ())) =
   {[@stop_split] [@expl:swap_Inner_T requires] ([@stop_split] [@expl:swap 'x' type invariant] inv_refmut_Inner_T x)
@@ -4241,17 +4259,17 @@ module M_implementation__impl_PersistentArray_T__set (* implementation::Persiste
   
   meta "rewrite_def" function view_PersistentArray_T
   
-  predicate inv_Rc_PCell_Inner_T_Global (_1: t_Rc_PCell_Inner_T_Global)
+  function inv_Rc_PCell_Inner_T_Global (_1: t_Rc_PCell_Inner_T_Global) : bool
   
-  predicate invariant_ref_Rc_PCell_Inner_T_Global [@inline:trivial] (self: t_Rc_PCell_Inner_T_Global) =
+  function invariant_ref_Rc_PCell_Inner_T_Global [@inline:trivial] (self: t_Rc_PCell_Inner_T_Global) : bool =
     inv_Rc_PCell_Inner_T_Global self
   
-  meta "rewrite_def" predicate invariant_ref_Rc_PCell_Inner_T_Global
+  meta "rewrite_def" function invariant_ref_Rc_PCell_Inner_T_Global
   
-  predicate inv_ref_Rc_PCell_Inner_T_Global [@inline:trivial] (_1: t_Rc_PCell_Inner_T_Global) =
+  function inv_ref_Rc_PCell_Inner_T_Global [@inline:trivial] (_1: t_Rc_PCell_Inner_T_Global) : bool =
     invariant_ref_Rc_PCell_Inner_T_Global _1
   
-  meta "rewrite_def" predicate inv_ref_Rc_PCell_Inner_T_Global
+  meta "rewrite_def" function inv_ref_Rc_PCell_Inner_T_Global
   
   let clone_Rc_PCell_Inner_T_Global (self: t_Rc_PCell_Inner_T_Global) (return (x: t_Rc_PCell_Inner_T_Global)) =
   {[@stop_split] [@expl:clone 'self' type invariant] inv_ref_Rc_PCell_Inner_T_Global self}
@@ -4269,24 +4287,24 @@ module M_implementation__impl_PersistentArray_T__set (* implementation::Persiste
   
   type tup2_PCell_Inner_T_Ghost_Perm_PCell_Inner_T = { f0'0: t_PCell_Inner_T; f1'0: t_Perm_PCell_Inner_T }
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_T (Seq.get self i)
+  function invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+      -> inv_ref_T (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_T
+  meta "rewrite_def" function invariant_Seq_T
   
-  predicate inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Seq_T _1
+  function inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Seq_T
+  meta "rewrite_def" function inv_Seq_T
   
   constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
   
@@ -4295,13 +4313,13 @@ module M_implementation__impl_PersistentArray_T__set (* implementation::Persiste
   axiom view_Vec_T_Global_spec:
     forall self: t_Vec_T_Global [view_Vec_T_Global self]. Seq.length (view_Vec_T_Global self) <= UInt64.t'int const_MAX
   
-  predicate invariant_Vec_T_Global (self: t_Vec_T_Global) = inv_Seq_T (view_Vec_T_Global self)
+  function invariant_Vec_T_Global (self: t_Vec_T_Global) : bool = inv_Seq_T (view_Vec_T_Global self)
   
-  predicate inv_Vec_T_Global (_1: t_Vec_T_Global)
+  function inv_Vec_T_Global (_1: t_Vec_T_Global) : bool
   
   axiom inv_axiom: forall _1: t_Vec_T_Global [inv_Vec_T_Global _1]. inv_Vec_T_Global _1 -> invariant_Vec_T_Global _1
   
-  predicate inv_Inner_T (_1: t_Inner_T)
+  function inv_Inner_T (_1: t_Inner_T) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Inner_T [inv_Inner_T _1]. inv_Inner_T _1
       = match _1 with
@@ -4326,51 +4344,51 @@ module M_implementation__impl_PersistentArray_T__set (* implementation::Persiste
       /\ ([@stop_split] [@expl:new ensures #1] val_PCell_Inner_T result.f1'0 = value)}
       (! return {result}) ]
   
-  predicate resolve_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) = true
+  function resolve_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) : bool = true
   
-  meta "rewrite_def" predicate resolve_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function resolve_NonAtomicInvariant_PA_T
   
-  predicate inv_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) = true
+  function inv_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) : bool = true
   
-  meta "rewrite_def" predicate inv_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function inv_NonAtomicInvariant_PA_T
   
-  predicate invariant_GhostShared_NonAtomicInvariant_PA_T (self: t_NonAtomicInvariant_PA_T) =
+  function invariant_GhostShared_NonAtomicInvariant_PA_T (self: t_NonAtomicInvariant_PA_T) : bool =
     resolve_NonAtomicInvariant_PA_T self /\ inv_NonAtomicInvariant_PA_T self
   
-  predicate inv_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) =
+  function inv_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) : bool =
     invariant_GhostShared_NonAtomicInvariant_PA_T _1
   
-  meta "rewrite_def" predicate inv_GhostShared_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function inv_GhostShared_NonAtomicInvariant_PA_T
   
-  predicate invariant_Ghost_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (self: t_NonAtomicInvariant_PA_T) =
-    inv_GhostShared_NonAtomicInvariant_PA_T self
+  function invariant_Ghost_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (self: t_NonAtomicInvariant_PA_T) : bool
+   = inv_GhostShared_NonAtomicInvariant_PA_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_GhostShared_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function invariant_Ghost_GhostShared_NonAtomicInvariant_PA_T
   
-  predicate inv_Ghost_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) =
+  function inv_Ghost_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) : bool =
     invariant_Ghost_GhostShared_NonAtomicInvariant_PA_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_GhostShared_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function inv_Ghost_GhostShared_NonAtomicInvariant_PA_T
   
-  predicate invariant_ref_Ghost_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (self: t_NonAtomicInvariant_PA_T) =
-    inv_Ghost_GhostShared_NonAtomicInvariant_PA_T self
+  function invariant_ref_Ghost_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (self: t_NonAtomicInvariant_PA_T) : bool
+   = inv_Ghost_GhostShared_NonAtomicInvariant_PA_T self
   
-  meta "rewrite_def" predicate invariant_ref_Ghost_GhostShared_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function invariant_ref_Ghost_GhostShared_NonAtomicInvariant_PA_T
   
-  predicate inv_ref_Ghost_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) =
+  function inv_ref_Ghost_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) : bool =
     invariant_ref_Ghost_GhostShared_NonAtomicInvariant_PA_T _1
   
-  meta "rewrite_def" predicate inv_ref_Ghost_GhostShared_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function inv_ref_Ghost_GhostShared_NonAtomicInvariant_PA_T
   
-  predicate invariant_ref_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (self: t_NonAtomicInvariant_PA_T) =
-    inv_GhostShared_NonAtomicInvariant_PA_T self
+  function invariant_ref_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (self: t_NonAtomicInvariant_PA_T) : bool
+   = inv_GhostShared_NonAtomicInvariant_PA_T self
   
-  meta "rewrite_def" predicate invariant_ref_GhostShared_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function invariant_ref_GhostShared_NonAtomicInvariant_PA_T
   
-  predicate inv_ref_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) =
+  function inv_ref_GhostShared_NonAtomicInvariant_PA_T [@inline:trivial] (_1: t_NonAtomicInvariant_PA_T) : bool =
     invariant_ref_GhostShared_NonAtomicInvariant_PA_T _1
   
-  meta "rewrite_def" predicate inv_ref_GhostShared_NonAtomicInvariant_PA_T
+  meta "rewrite_def" function inv_ref_GhostShared_NonAtomicInvariant_PA_T
   
   let deref_Ghost_GhostShared_NonAtomicInvariant_PA_T (self: t_NonAtomicInvariant_PA_T)
     (return (x: t_NonAtomicInvariant_PA_T)) =
@@ -4411,13 +4429,13 @@ module M_implementation__impl_PersistentArray_T__set (* implementation::Persiste
     _guard: t_OpenGuard_PA_T;
     _initial: MutBorrow.t t_PA_T }
   
-  predicate contains_Namespace [@inline:trivial] (self: Set.set t_Namespace) (e: t_Namespace) = Set.mem e self
+  function contains_Namespace [@inline:trivial] (self: Set.set t_Namespace) (e: t_Namespace) : bool = Set.mem e self
   
-  meta "rewrite_def" predicate contains_Namespace
+  meta "rewrite_def" function contains_Namespace
   
   function namespaces (self: t_Tokens) : Set.set t_Namespace
   
-  predicate contains (self: t_Tokens) (namespace: t_Namespace) = contains_Namespace (namespaces self) namespace
+  function contains (self: t_Tokens) (namespace: t_Namespace) : bool = contains_Namespace (namespaces self) namespace
   
   function namespace_PA_T (self: t_NonAtomicInvariant_PA_T) : t_Namespace
   
@@ -4425,10 +4443,10 @@ module M_implementation__impl_PersistentArray_T__set (* implementation::Persiste
   
   function public_PA_T (self: t_PA_T) : t_Id = id_FMap_PCell_Inner_T_Ag_Seq_T self.auth
   
-  predicate contains_PCell_Inner_T [@inline:trivial] (self: t_FMap_PCell_Inner_T_Ag_Seq_T) (k: t_PCell_Inner_T) =
+  function contains_PCell_Inner_T [@inline:trivial] (self: t_FMap_PCell_Inner_T_Ag_Seq_T) (k: t_PCell_Inner_T) : bool =
     lookup_PCell_Inner_T self k <> None
   
-  meta "rewrite_def" predicate contains_PCell_Inner_T
+  meta "rewrite_def" function contains_PCell_Inner_T
   
   function view_Authority_FMap_PCell_Inner_T_Ag_Seq_T (self: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) : t_FMap_PCell_Inner_T_Ag_Seq_T
   
@@ -4441,10 +4459,10 @@ module M_implementation__impl_PersistentArray_T__set (* implementation::Persiste
   
   meta "rewrite_def" function lookup_Snapshot_PCell_Inner_T
   
-  predicate contains_Snapshot_PCell_Inner_T [@inline:trivial] (self: t_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T) (k: t_PCell_Inner_T) =
-    lookup_Snapshot_PCell_Inner_T self k <> None'0
+  function contains_Snapshot_PCell_Inner_T [@inline:trivial] (self: t_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T) (k: t_PCell_Inner_T) : bool
+   = lookup_Snapshot_PCell_Inner_T self k <> None'0
   
-  meta "rewrite_def" predicate contains_Snapshot_PCell_Inner_T
+  meta "rewrite_def" function contains_Snapshot_PCell_Inner_T
   
   constant any_Perm_PCell_Inner_T : t_Perm_PCell_Inner_T
   
@@ -4463,16 +4481,16 @@ module M_implementation__impl_PersistentArray_T__set (* implementation::Persiste
   
   meta "rewrite_def" function index_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   function index_Mapping_PCell_Inner_T_Int [@inline:trivial] (self: Map.map t_PCell_Inner_T int) (a: t_PCell_Inner_T) : int
    = Map.get self a
   
   meta "rewrite_def" function index_Mapping_PCell_Inner_T_Int
   
-  predicate partial_invariant_T [@inline:trivial] (self: t_PA_T) =
+  function partial_invariant_T [@inline:trivial] (self: t_PA_T) : bool =
     forall pc: t_PCell_Inner_T. contains_PCell_Inner_T (view_Authority_FMap_PCell_Inner_T_Ag_Seq_T self.auth) pc
         /\ contains_Snapshot_PCell_Inner_T self.perms pc
       -> ward_PCell_Inner_T (index_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T self.perms pc) = pc
@@ -4487,53 +4505,53 @@ module M_implementation__impl_PersistentArray_T__set (* implementation::Persiste
         = Seq.set (index_FMap_PCell_Inner_T_Ag_Seq_T (view_Authority_FMap_PCell_Inner_T_Ag_Seq_T self.auth) (deref_Rc_PCell_Inner_T_Global next)).f0 (UInt64.t'int index) value
         end
   
-  meta "rewrite_def" predicate partial_invariant_T
+  meta "rewrite_def" function partial_invariant_T
   
-  predicate protocol_PA_T [@inline:trivial] (self: t_PA_T) =
-    partial_invariant_T self
+  function protocol_PA_T [@inline:trivial] (self: t_PA_T) : bool = partial_invariant_T self
     /\ (forall pc: t_PCell_Inner_T. contains_PCell_Inner_T (view_Authority_FMap_PCell_Inner_T_Ag_Seq_T self.auth) pc
       = contains_Snapshot_PCell_Inner_T self.perms pc)
   
-  meta "rewrite_def" predicate protocol_PA_T
+  meta "rewrite_def" function protocol_PA_T
   
-  predicate guards_ref_OpenGuard_PA_T [@inline:trivial] (self: t_OpenGuard_PA_T) (b: t_PA_T) =
-    public_PA_T b = self.f0'1 /\ protocol_PA_T b
+  function guards_ref_OpenGuard_PA_T [@inline:trivial] (self: t_OpenGuard_PA_T) (b: t_PA_T) : bool = public_PA_T b
+      = self.f0'1
+    /\ protocol_PA_T b
   
-  meta "rewrite_def" predicate guards_ref_OpenGuard_PA_T
+  meta "rewrite_def" function guards_ref_OpenGuard_PA_T
   
-  predicate guards_OpenGuard_PA_T [@inline:trivial] (self: t_OpenGuard_PA_T) (initial: MutBorrow.t t_PA_T) (current': MutBorrow.t t_PA_T) =
-    guards_ref_OpenGuard_PA_T self current'.current /\ initial.final = current'.final
+  function guards_OpenGuard_PA_T [@inline:trivial] (self: t_OpenGuard_PA_T) (initial: MutBorrow.t t_PA_T) (current': MutBorrow.t t_PA_T) : bool
+   = guards_ref_OpenGuard_PA_T self current'.current /\ initial.final = current'.final
   
-  meta "rewrite_def" predicate guards_OpenGuard_PA_T
+  meta "rewrite_def" function guards_OpenGuard_PA_T
   
-  predicate invariant_Guarded_refmut_PA_T_OpenGuard_PA_T [@inline:trivial] (self: t_Guarded_refmut_PA_T_OpenGuard_PA_T) =
-    guards_OpenGuard_PA_T self._guard self._initial self.inner
+  function invariant_Guarded_refmut_PA_T_OpenGuard_PA_T [@inline:trivial] (self: t_Guarded_refmut_PA_T_OpenGuard_PA_T) : bool
+   = guards_OpenGuard_PA_T self._guard self._initial self.inner
   
-  meta "rewrite_def" predicate invariant_Guarded_refmut_PA_T_OpenGuard_PA_T
+  meta "rewrite_def" function invariant_Guarded_refmut_PA_T_OpenGuard_PA_T
   
-  predicate invariant_Authority_FMap_PCell_Inner_T_Ag_Seq_T (self: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T)
+  function invariant_Authority_FMap_PCell_Inner_T_Ag_Seq_T (self: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) : bool
   
-  predicate inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T (_1: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T)
+  function inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T (_1: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) : bool
   
   axiom inv_axiom'1:
     forall _1: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T [inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1]. inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1
       -> invariant_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1
   
-  predicate inv_PA_T (_1: t_PA_T)
+  function inv_PA_T (_1: t_PA_T) : bool
   
   axiom inv_axiom'2 [@rewrite]: forall _1: t_PA_T [inv_PA_T _1]. inv_PA_T _1
       = inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1.auth
   
-  predicate invariant_refmut_PA_T [@inline:trivial] (self: MutBorrow.t t_PA_T) =
-    inv_PA_T self.current /\ inv_PA_T self.final
+  function invariant_refmut_PA_T [@inline:trivial] (self: MutBorrow.t t_PA_T) : bool = inv_PA_T self.current
+    /\ inv_PA_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_PA_T
+  meta "rewrite_def" function invariant_refmut_PA_T
   
-  predicate inv_refmut_PA_T [@inline:trivial] (_1: MutBorrow.t t_PA_T) = invariant_refmut_PA_T _1
+  function inv_refmut_PA_T [@inline:trivial] (_1: MutBorrow.t t_PA_T) : bool = invariant_refmut_PA_T _1
   
-  meta "rewrite_def" predicate inv_refmut_PA_T
+  meta "rewrite_def" function inv_refmut_PA_T
   
-  predicate inv_Guarded_refmut_PA_T_OpenGuard_PA_T (_1: t_Guarded_refmut_PA_T_OpenGuard_PA_T)
+  function inv_Guarded_refmut_PA_T_OpenGuard_PA_T (_1: t_Guarded_refmut_PA_T_OpenGuard_PA_T) : bool
   
   axiom inv_axiom'3 [@rewrite]:
     forall _1: t_Guarded_refmut_PA_T_OpenGuard_PA_T [inv_Guarded_refmut_PA_T_OpenGuard_PA_T _1]. inv_Guarded_refmut_PA_T_OpenGuard_PA_T _1
@@ -4555,37 +4573,37 @@ module M_implementation__impl_PersistentArray_T__set (* implementation::Persiste
       /\ ([@stop_split] [@expl:open ensures] (guard_refmut_PA_T result).f0'1 = public_PA_T'0 self)}
       (! return {result}) ]
   
-  predicate inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T)
+  function inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
   
-  predicate invariant_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self
+  function invariant_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function invariant_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    invariant_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1
+  function inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = invariant_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate invariant_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self
+  function invariant_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self
   
-  meta "rewrite_def" predicate invariant_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function invariant_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate inv_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    invariant_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1
+  function inv_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = invariant_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1
   
-  meta "rewrite_def" predicate inv_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function inv_ref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate invariant_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self
+  function invariant_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self
   
-  meta "rewrite_def" predicate invariant_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function invariant_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate inv_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    invariant_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1
+  function inv_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = invariant_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1
   
-  meta "rewrite_def" predicate inv_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function inv_ref_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
   let deref_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T (self: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T)
     (return (x: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T)) =
@@ -4596,15 +4614,15 @@ module M_implementation__impl_PersistentArray_T__set (* implementation::Persiste
       /\ ([@stop_split] [@expl:deref ensures] result = self)}
       (! return {result}) ]
   
-  predicate invariant_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) =
-    inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T self
+  function invariant_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T self
   
-  meta "rewrite_def" predicate invariant_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function invariant_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate inv_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) =
-    invariant_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1
+  function inv_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = invariant_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1
   
-  meta "rewrite_def" predicate inv_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function inv_ref_Authority_FMap_PCell_Inner_T_Ag_Seq_T
   
   function id_FMap_PCell_Inner_T_Ag_Seq_T'0 (self: t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : t_Id
   
@@ -4664,7 +4682,7 @@ module M_implementation__impl_PersistentArray_T__set (* implementation::Persiste
     forall a: t_FMap_PCell_Inner_T_Ag_Seq_T, b: t_FMap_PCell_Inner_T_Ag_Seq_T. op_FMap_PCell_Inner_T_Ag_Seq_T a b
       = op_FMap_PCell_Inner_T_Ag_Seq_T b a
   
-  predicate incl_Ag_Seq_T (self: t_Ag_Seq_T) (other: t_Ag_Seq_T) = self.f0 = other.f0
+  function incl_Ag_Seq_T (self: t_Ag_Seq_T) (other: t_Ag_Seq_T) : bool = self.f0 = other.f0
   
   axiom incl_Ag_Seq_T_spec:
     forall self: t_Ag_Seq_T, other: t_Ag_Seq_T [incl_Ag_Seq_T self other]. incl_Ag_Seq_T self other
@@ -4692,17 +4710,18 @@ module M_implementation__impl_PersistentArray_T__set (* implementation::Persiste
   axiom incl_op_Ag_Seq_T_spec: forall self: t_Ag_Seq_T, other: t_Ag_Seq_T, comb: t_Ag_Seq_T. op_Ag_Seq_T self other
         = Some comb -> incl_Ag_Seq_T self comb
   
-  predicate eq_Ag_Seq_T [@inline:trivial] (self: t_Ag_Seq_T) (other: t_Ag_Seq_T) = self = other
+  function eq_Ag_Seq_T [@inline:trivial] (self: t_Ag_Seq_T) (other: t_Ag_Seq_T) : bool = self = other
   
-  meta "rewrite_def" predicate eq_Ag_Seq_T
+  meta "rewrite_def" function eq_Ag_Seq_T
   
   axiom eq_Ag_Seq_T_spec: forall self: t_Ag_Seq_T, other: t_Ag_Seq_T [eq_Ag_Seq_T self other]. eq_Ag_Seq_T self other
       = (self = other)
   
-  predicate incl_eq_Ag_Seq_T (self: t_Ag_Seq_T) (other: t_Ag_Seq_T) = eq_Ag_Seq_T self other \/ incl_Ag_Seq_T self other
+  function incl_eq_Ag_Seq_T (self: t_Ag_Seq_T) (other: t_Ag_Seq_T) : bool = eq_Ag_Seq_T self other
+    \/ incl_Ag_Seq_T self other
   
-  predicate incl_Option_Ag_Seq_T (self: t_Option_Ag_Seq_T) (other: t_Option_Ag_Seq_T) =
-    match { f0'2 = self; f1'2 = other } with
+  function incl_Option_Ag_Seq_T (self: t_Option_Ag_Seq_T) (other: t_Option_Ag_Seq_T) : bool = match { f0'2 = self;
+                                                                                                      f1'2 = other } with
       | {f0'2 = None} -> true
       | {f1'2 = None} -> false
       | {f0'2 = Some x; f1'2 = Some y} -> incl_eq_Ag_Seq_T x y
@@ -4712,7 +4731,8 @@ module M_implementation__impl_PersistentArray_T__set (* implementation::Persiste
     forall self: t_Option_Ag_Seq_T, other: t_Option_Ag_Seq_T [incl_Option_Ag_Seq_T self other]. incl_Option_Ag_Seq_T self other
       = (exists factor: t_Option_Ag_Seq_T. op_Option_Ag_Seq_T self factor = Some'2 other)
   
-  predicate incl_FMap_PCell_Inner_T_Ag_Seq_T (self: t_FMap_PCell_Inner_T_Ag_Seq_T) (other: t_FMap_PCell_Inner_T_Ag_Seq_T) =
+  function incl_FMap_PCell_Inner_T_Ag_Seq_T (self: t_FMap_PCell_Inner_T_Ag_Seq_T) (other: t_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   =
     let r = forall k: t_PCell_Inner_T. incl_Option_Ag_Seq_T (lookup_PCell_Inner_T self k) (lookup_PCell_Inner_T other k) in r
   
   axiom incl_FMap_PCell_Inner_T_Ag_Seq_T_spec:
@@ -4732,9 +4752,9 @@ module M_implementation__impl_PersistentArray_T__set (* implementation::Persiste
   
   type t_Option_refmut_Perm_PCell_Inner_T = None'3 | Some'3 (MutBorrow.t t_Perm_PCell_Inner_T)
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function len_Snapshot_PCell_Inner_T (self: t_FMap_Snapshot_PCell_Inner_T_Perm_PCell_Inner_T) : int
   
@@ -4760,10 +4780,10 @@ module M_implementation__impl_PersistentArray_T__set (* implementation::Persiste
       = len_Snapshot_PCell_Inner_T self.final)}
       (! return {result}) ]
   
-  predicate resolve_refmut_Perm_PCell_Inner_T [@inline:trivial] (_1: MutBorrow.t t_Perm_PCell_Inner_T) =
-    _1.final = _1.current
+  function resolve_refmut_Perm_PCell_Inner_T [@inline:trivial] (_1: MutBorrow.t t_Perm_PCell_Inner_T) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Perm_PCell_Inner_T
+  meta "rewrite_def" function resolve_refmut_Perm_PCell_Inner_T
   
   let elim_Some (_x: t_Option_refmut_Perm_PCell_Inner_T) (return (f0'3: MutBorrow.t t_Perm_PCell_Inner_T)) = any
     [ _k (f0'3: MutBorrow.t t_Perm_PCell_Inner_T) -> {Some'3 f0'3 = _x} (! return {f0'3})
@@ -4776,10 +4796,10 @@ module M_implementation__impl_PersistentArray_T__set (* implementation::Persiste
   let deref_Ghost_Perm_PCell_Inner_T (self: t_Perm_PCell_Inner_T) (return (x: t_Perm_PCell_Inner_T)) = any
     [ return (result: t_Perm_PCell_Inner_T) -> {[@stop_split] [@expl:deref ensures] result = self} (! return {result}) ]
   
-  predicate is_disjoint_PCell_Inner_T [@inline:trivial] (self: t_PCell_Inner_T) (_self_val: t_Inner_T) (other: t_PCell_Inner_T) (_other_val: t_Inner_T) =
-    self <> other
+  function is_disjoint_PCell_Inner_T [@inline:trivial] (self: t_PCell_Inner_T) (_self_val: t_Inner_T) (other: t_PCell_Inner_T) (_other_val: t_Inner_T) : bool
+   = self <> other
   
-  meta "rewrite_def" predicate is_disjoint_PCell_Inner_T
+  meta "rewrite_def" function is_disjoint_PCell_Inner_T
   
   let disjoint_lemma_PCell_Inner_T (self: MutBorrow.t t_Perm_PCell_Inner_T) (other: t_Perm_PCell_Inner_T)
     (return (x: ())) = any
@@ -4847,30 +4867,30 @@ module M_implementation__impl_PersistentArray_T__set (* implementation::Persiste
   
   type t_FMapInsertLocalUpdate_PCell_Inner_T_Ag_Seq_T = { f0'3: t_PCell_Inner_T; f1'3: t_Ag_Seq_T }
   
-  predicate invariant_refmut_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: MutBorrow.t t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) =
-    inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T self.current /\ inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T self.final
+  function invariant_refmut_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: MutBorrow.t t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T self.current /\ inv_Authority_FMap_PCell_Inner_T_Ag_Seq_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Authority_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function invariant_refmut_Authority_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate inv_refmut_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: MutBorrow.t t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) =
-    invariant_refmut_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1
+  function inv_refmut_Authority_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: MutBorrow.t t_Authority_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = invariant_refmut_Authority_FMap_PCell_Inner_T_Ag_Seq_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Authority_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function inv_refmut_Authority_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate invariant_refmut_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: MutBorrow.t t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self.current /\ inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self.final
+  function invariant_refmut_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: MutBorrow.t t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self.current /\ inv_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function invariant_refmut_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate inv_refmut_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: MutBorrow.t t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    invariant_refmut_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1
+  function inv_refmut_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: MutBorrow.t t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = invariant_refmut_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function inv_refmut_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate premise_FMapInsertLocalUpdate_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_FMapInsertLocalUpdate_PCell_Inner_T_Ag_Seq_T) (from_auth: t_FMap_PCell_Inner_T_Ag_Seq_T) (_3: t_FMap_PCell_Inner_T_Ag_Seq_T) =
-    lookup_PCell_Inner_T from_auth self.f0'3 = None
+  function premise_FMapInsertLocalUpdate_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (self: t_FMapInsertLocalUpdate_PCell_Inner_T_Ag_Seq_T) (from_auth: t_FMap_PCell_Inner_T_Ag_Seq_T) (_3: t_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = lookup_PCell_Inner_T from_auth self.f0'3 = None
   
-  meta "rewrite_def" predicate premise_FMapInsertLocalUpdate_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function premise_FMapInsertLocalUpdate_PCell_Inner_T_Ag_Seq_T
   
   type tup2_FMap_PCell_Inner_T_Ag_Seq_T_FMap_PCell_Inner_T_Ag_Seq_T = {
     f0'4: t_FMap_PCell_Inner_T_Ag_Seq_T;
@@ -4912,16 +4932,16 @@ module M_implementation__impl_PersistentArray_T__set (* implementation::Persiste
       = (update_FMapInsertLocalUpdate_PCell_Inner_T_Ag_Seq_T upd (view_Authority_FMap_PCell_Inner_T_Ag_Seq_T self.current) (view_Fragment_FMap_PCell_Inner_T_Ag_Seq_T frag'0.current)).f1'4)}
       (! return {result}) ]
   
-  predicate resolve_refmut_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: MutBorrow.t t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) =
-    _1.final = _1.current
+  function resolve_refmut_Fragment_FMap_PCell_Inner_T_Ag_Seq_T [@inline:trivial] (_1: MutBorrow.t t_Fragment_FMap_PCell_Inner_T_Ag_Seq_T) : bool
+   = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
+  meta "rewrite_def" function resolve_refmut_Fragment_FMap_PCell_Inner_T_Ag_Seq_T
   
-  predicate resolve_refmut_PA_T [@inline:trivial] (_1: MutBorrow.t t_PA_T) = _1.final = _1.current
+  function resolve_refmut_PA_T [@inline:trivial] (_1: MutBorrow.t t_PA_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_PA_T
+  meta "rewrite_def" function resolve_refmut_PA_T
   
-  predicate resolve_Guarded_refmut_PA_T_OpenGuard_PA_T (_1: t_Guarded_refmut_PA_T_OpenGuard_PA_T)
+  function resolve_Guarded_refmut_PA_T_OpenGuard_PA_T (_1: t_Guarded_refmut_PA_T_OpenGuard_PA_T) : bool
   
   axiom resolve_axiom [@rewrite]:
     forall _1: t_Guarded_refmut_PA_T_OpenGuard_PA_T [resolve_Guarded_refmut_PA_T_OpenGuard_PA_T _1]. resolve_Guarded_refmut_PA_T_OpenGuard_PA_T _1
@@ -4942,26 +4962,28 @@ module M_implementation__impl_PersistentArray_T__set (* implementation::Persiste
       /\ ([@stop_split] [@expl:new ensures] deref_Rc_PCell_Inner_T_Global result = value)}
       (! return {result}) ]
   
-  predicate invariant_PersistentArray_T (self: t_PersistentArray_T) =
-    id_FMap_PCell_Inner_T_Ag_Seq_T'0 self.frag = public_PA_T'0 self.inv
+  function invariant_PersistentArray_T (self: t_PersistentArray_T) : bool = id_FMap_PCell_Inner_T_Ag_Seq_T'0 self.frag
+      = public_PA_T'0 self.inv
     /\ lookup_PCell_Inner_T (view_Fragment_FMap_PCell_Inner_T_Ag_Seq_T self.frag) (deref_Rc_PCell_Inner_T_Global self.permcell)
       <> None
     /\ namespace_PA_T self.inv = Namespace_PARRAY 0
   
-  predicate inv_PersistentArray_T (_1: t_PersistentArray_T)
+  function inv_PersistentArray_T (_1: t_PersistentArray_T) : bool
   
   axiom inv_axiom'4 [@rewrite]: forall _1: t_PersistentArray_T [inv_PersistentArray_T _1]. inv_PersistentArray_T _1
       = (invariant_PersistentArray_T _1
       /\ inv_Rc_PCell_Inner_T_Global _1.permcell
       /\ inv_Ghost_Fragment_FMap_PCell_Inner_T_Ag_Seq_T _1.frag /\ inv_Ghost_GhostShared_NonAtomicInvariant_PA_T _1.inv)
   
-  predicate invariant_ref_PersistentArray_T [@inline:trivial] (self: t_PersistentArray_T) = inv_PersistentArray_T self
+  function invariant_ref_PersistentArray_T [@inline:trivial] (self: t_PersistentArray_T) : bool =
+    inv_PersistentArray_T self
   
-  meta "rewrite_def" predicate invariant_ref_PersistentArray_T
+  meta "rewrite_def" function invariant_ref_PersistentArray_T
   
-  predicate inv_ref_PersistentArray_T [@inline:trivial] (_1: t_PersistentArray_T) = invariant_ref_PersistentArray_T _1
+  function inv_ref_PersistentArray_T [@inline:trivial] (_1: t_PersistentArray_T) : bool =
+    invariant_ref_PersistentArray_T _1
   
-  meta "rewrite_def" predicate inv_ref_PersistentArray_T
+  meta "rewrite_def" function inv_ref_PersistentArray_T
   
   meta "compute_max_steps" 1000000
   
@@ -5153,9 +5175,9 @@ module M_testing
   
   type t_PersistentArray_i32
   
-  predicate invariant_PersistentArray_i32 (self: t_PersistentArray_i32)
+  function invariant_PersistentArray_i32 (self: t_PersistentArray_i32) : bool
   
-  predicate inv_PersistentArray_i32 (_1: t_PersistentArray_i32)
+  function inv_PersistentArray_i32 (_1: t_PersistentArray_i32) : bool
   
   axiom inv_axiom: forall _1: t_PersistentArray_i32 [inv_PersistentArray_i32 _1]. inv_PersistentArray_i32 _1
       -> invariant_PersistentArray_i32 _1
@@ -5179,30 +5201,30 @@ module M_testing
       /\ self.final = self.current}
       (! return {result}) ]
   
-  predicate resolve_refmut_Tokens [@inline:trivial] (_1: MutBorrow.t t_Tokens) = _1.final = _1.current
+  function resolve_refmut_Tokens [@inline:trivial] (_1: MutBorrow.t t_Tokens) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Tokens
+  meta "rewrite_def" function resolve_refmut_Tokens
   
   let new_Tokens (x: t_Tokens) (return (x'0: t_Tokens)) = any
     [ return (result: t_Tokens) -> {[@stop_split] [@expl:new ensures] result = x} (! return {result}) ]
   
-  predicate invariant_ref_PersistentArray_i32 [@inline:trivial] (self: t_PersistentArray_i32) =
+  function invariant_ref_PersistentArray_i32 [@inline:trivial] (self: t_PersistentArray_i32) : bool =
     inv_PersistentArray_i32 self
   
-  meta "rewrite_def" predicate invariant_ref_PersistentArray_i32
+  meta "rewrite_def" function invariant_ref_PersistentArray_i32
   
-  predicate inv_ref_PersistentArray_i32 [@inline:trivial] (_1: t_PersistentArray_i32) =
+  function inv_ref_PersistentArray_i32 [@inline:trivial] (_1: t_PersistentArray_i32) : bool =
     invariant_ref_PersistentArray_i32 _1
   
-  meta "rewrite_def" predicate inv_ref_PersistentArray_i32
+  meta "rewrite_def" function inv_ref_PersistentArray_i32
   
-  predicate contains_Namespace [@inline:trivial] (self: Set.set t_Namespace) (e: t_Namespace) = Set.mem e self
+  function contains_Namespace [@inline:trivial] (self: Set.set t_Namespace) (e: t_Namespace) : bool = Set.mem e self
   
-  meta "rewrite_def" predicate contains_Namespace
+  meta "rewrite_def" function contains_Namespace
   
   function namespaces (self: t_Tokens) : Set.set t_Namespace
   
-  predicate contains (self: t_Tokens) (namespace: t_Namespace) = contains_Namespace (namespaces self) namespace
+  function contains (self: t_Tokens) (namespace: t_Namespace) : bool = contains_Namespace (namespaces self) namespace
   
   let set_i32 (self: t_PersistentArray_i32) (index: UInt64.t) (value: Int32.t) (tokens: t_Tokens)
     (return (x: t_PersistentArray_i32)) =
@@ -5216,7 +5238,7 @@ module M_testing
       = Seq.set (view_PersistentArray_i32 self) (UInt64.t'int index) value)}
       (! return {result}) ]
   
-  predicate resolve_PersistentArray_i32 (_1: t_PersistentArray_i32)
+  function resolve_PersistentArray_i32 (_1: t_PersistentArray_i32) : bool
   
   let clone_PersistentArray_i32 (self: t_PersistentArray_i32) (return (x: t_PersistentArray_i32)) =
   {[@stop_split] [@expl:clone 'self' type invariant] inv_ref_PersistentArray_i32 self}

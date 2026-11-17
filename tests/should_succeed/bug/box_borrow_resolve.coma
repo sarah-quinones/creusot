@@ -3,13 +3,13 @@ module M_borrow_in_box
   use creusot.int.Int32
   use creusot.prelude.Any
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
-  predicate resolve_Box_refmut_i32_Global [@inline:trivial] (_1: MutBorrow.t Int32.t) = resolve_refmut_i32 _1
+  function resolve_Box_refmut_i32_Global [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = resolve_refmut_i32 _1
   
-  meta "rewrite_def" predicate resolve_Box_refmut_i32_Global
+  meta "rewrite_def" function resolve_Box_refmut_i32_Global
   
   meta "compute_max_steps" 1000000
   

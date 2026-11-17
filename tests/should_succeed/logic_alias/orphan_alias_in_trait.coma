@@ -8,7 +8,7 @@ module M_all_one
   
   type t_Iter_usize
   
-  predicate inv_Iter_usize (_1: t_Iter_usize)
+  function inv_Iter_usize (_1: t_Iter_usize) : bool
   
   function view_Iter_usize (self: t_Iter_usize) : Slice64.slice UInt64.t
   
@@ -20,14 +20,15 @@ module M_all_one
   
   type t_Option_ref_usize = None | Some UInt64.t
   
-  predicate invariant_refmut_Iter_usize [@inline:trivial] (self: MutBorrow.t t_Iter_usize) =
+  function invariant_refmut_Iter_usize [@inline:trivial] (self: MutBorrow.t t_Iter_usize) : bool =
     inv_Iter_usize self.current /\ inv_Iter_usize self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Iter_usize
+  meta "rewrite_def" function invariant_refmut_Iter_usize
   
-  predicate inv_refmut_Iter_usize [@inline:trivial] (_1: MutBorrow.t t_Iter_usize) = invariant_refmut_Iter_usize _1
+  function inv_refmut_Iter_usize [@inline:trivial] (_1: MutBorrow.t t_Iter_usize) : bool =
+    invariant_refmut_Iter_usize _1
   
-  meta "rewrite_def" predicate inv_refmut_Iter_usize
+  meta "rewrite_def" function inv_refmut_Iter_usize
   
   function index_slice_usize [@inline:trivial] (self: Slice64.slice UInt64.t) (ix: int) : UInt64.t =
     Seq.get (Slice64.view self) ix
@@ -45,7 +46,7 @@ module M_all_one
           /\ i < Seq.length (to_ref_seq_slice_usize self)
         -> Seq.get (to_ref_seq_slice_usize self) i = index_slice_usize self i
   
-  predicate produces_Iter_usize (self: t_Iter_usize) (visited: Seq.seq UInt64.t) (tl: t_Iter_usize) =
+  function produces_Iter_usize (self: t_Iter_usize) (visited: Seq.seq UInt64.t) (tl: t_Iter_usize) : bool =
     to_ref_seq_slice_usize (view_Iter_usize self) = Seq.(++) visited (to_ref_seq_slice_usize (view_Iter_usize tl))
   
   function produces_trans_Iter_usize (a: t_Iter_usize) (ab: Seq.seq UInt64.t) (b: t_Iter_usize) (bc: Seq.seq UInt64.t) (c: t_Iter_usize) : ()
@@ -59,12 +60,12 @@ module M_all_one
   axiom produces_refl_Iter_usize_spec:
     forall self: t_Iter_usize. produces_Iter_usize self (Seq.empty: Seq.seq UInt64.t) self
   
-  predicate resolve_refmut_Iter_usize [@inline:trivial] (_1: MutBorrow.t t_Iter_usize) = _1.final = _1.current
+  function resolve_refmut_Iter_usize [@inline:trivial] (_1: MutBorrow.t t_Iter_usize) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Iter_usize
+  meta "rewrite_def" function resolve_refmut_Iter_usize
   
-  predicate completed_Iter_usize (self: MutBorrow.t t_Iter_usize) =
-    resolve_refmut_Iter_usize self /\ Slice64.view (view_Iter_usize self.current) = (Seq.empty: Seq.seq UInt64.t)
+  function completed_Iter_usize (self: MutBorrow.t t_Iter_usize) : bool = resolve_refmut_Iter_usize self
+    /\ Slice64.view (view_Iter_usize self.current) = (Seq.empty: Seq.seq UInt64.t)
   
   let next_Iter_usize (self: MutBorrow.t t_Iter_usize) (return (x: t_Option_ref_usize)) =
   {[@stop_split] [@expl:next 'self' type invariant] inv_refmut_Iter_usize self}
@@ -77,9 +78,9 @@ module M_all_one
   
   constant one: UInt64.t = (1: UInt64.t)
   
-  predicate inv_Seq_ref_usize [@inline:trivial] (_1: Seq.seq UInt64.t) = true
+  function inv_Seq_ref_usize [@inline:trivial] (_1: Seq.seq UInt64.t) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_ref_usize
+  meta "rewrite_def" function inv_Seq_ref_usize
   
   let elim_Some (_x: t_Option_ref_usize) (return (f0: UInt64.t)) = any
     [ _k (f0: UInt64.t) -> {Some f0 = _x} (! return {f0})
@@ -92,7 +93,7 @@ module M_all_one
   let number_One (return (x: UInt64.t)) = any
     [ return (result: UInt64.t) -> {[@stop_split] [@expl:number ensures] result = one} (! return {result}) ]
   
-  predicate resolve_Iter_usize (_1: t_Iter_usize)
+  function resolve_Iter_usize (_1: t_Iter_usize) : bool
   
   meta "compute_max_steps" 1000000
   
@@ -170,7 +171,7 @@ module M_all_two
   
   type t_Iter_usize
   
-  predicate inv_Iter_usize (_1: t_Iter_usize)
+  function inv_Iter_usize (_1: t_Iter_usize) : bool
   
   function view_Iter_usize (self: t_Iter_usize) : Slice64.slice UInt64.t
   
@@ -182,14 +183,15 @@ module M_all_two
   
   type t_Option_ref_usize = None | Some UInt64.t
   
-  predicate invariant_refmut_Iter_usize [@inline:trivial] (self: MutBorrow.t t_Iter_usize) =
+  function invariant_refmut_Iter_usize [@inline:trivial] (self: MutBorrow.t t_Iter_usize) : bool =
     inv_Iter_usize self.current /\ inv_Iter_usize self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Iter_usize
+  meta "rewrite_def" function invariant_refmut_Iter_usize
   
-  predicate inv_refmut_Iter_usize [@inline:trivial] (_1: MutBorrow.t t_Iter_usize) = invariant_refmut_Iter_usize _1
+  function inv_refmut_Iter_usize [@inline:trivial] (_1: MutBorrow.t t_Iter_usize) : bool =
+    invariant_refmut_Iter_usize _1
   
-  meta "rewrite_def" predicate inv_refmut_Iter_usize
+  meta "rewrite_def" function inv_refmut_Iter_usize
   
   function index_slice_usize [@inline:trivial] (self: Slice64.slice UInt64.t) (ix: int) : UInt64.t =
     Seq.get (Slice64.view self) ix
@@ -207,7 +209,7 @@ module M_all_two
           /\ i < Seq.length (to_ref_seq_slice_usize self)
         -> Seq.get (to_ref_seq_slice_usize self) i = index_slice_usize self i
   
-  predicate produces_Iter_usize (self: t_Iter_usize) (visited: Seq.seq UInt64.t) (tl: t_Iter_usize) =
+  function produces_Iter_usize (self: t_Iter_usize) (visited: Seq.seq UInt64.t) (tl: t_Iter_usize) : bool =
     to_ref_seq_slice_usize (view_Iter_usize self) = Seq.(++) visited (to_ref_seq_slice_usize (view_Iter_usize tl))
   
   function produces_trans_Iter_usize (a: t_Iter_usize) (ab: Seq.seq UInt64.t) (b: t_Iter_usize) (bc: Seq.seq UInt64.t) (c: t_Iter_usize) : ()
@@ -221,12 +223,12 @@ module M_all_two
   axiom produces_refl_Iter_usize_spec:
     forall self: t_Iter_usize. produces_Iter_usize self (Seq.empty: Seq.seq UInt64.t) self
   
-  predicate resolve_refmut_Iter_usize [@inline:trivial] (_1: MutBorrow.t t_Iter_usize) = _1.final = _1.current
+  function resolve_refmut_Iter_usize [@inline:trivial] (_1: MutBorrow.t t_Iter_usize) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Iter_usize
+  meta "rewrite_def" function resolve_refmut_Iter_usize
   
-  predicate completed_Iter_usize (self: MutBorrow.t t_Iter_usize) =
-    resolve_refmut_Iter_usize self /\ Slice64.view (view_Iter_usize self.current) = (Seq.empty: Seq.seq UInt64.t)
+  function completed_Iter_usize (self: MutBorrow.t t_Iter_usize) : bool = resolve_refmut_Iter_usize self
+    /\ Slice64.view (view_Iter_usize self.current) = (Seq.empty: Seq.seq UInt64.t)
   
   let next_Iter_usize (self: MutBorrow.t t_Iter_usize) (return (x: t_Option_ref_usize)) =
   {[@stop_split] [@expl:next 'self' type invariant] inv_refmut_Iter_usize self}
@@ -239,9 +241,9 @@ module M_all_two
   
   constant two: UInt64.t = (2: UInt64.t)
   
-  predicate inv_Seq_ref_usize [@inline:trivial] (_1: Seq.seq UInt64.t) = true
+  function inv_Seq_ref_usize [@inline:trivial] (_1: Seq.seq UInt64.t) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_ref_usize
+  meta "rewrite_def" function inv_Seq_ref_usize
   
   let elim_Some (_x: t_Option_ref_usize) (return (f0: UInt64.t)) = any
     [ _k (f0: UInt64.t) -> {Some f0 = _x} (! return {f0})
@@ -254,7 +256,7 @@ module M_all_two
   let number_Two (return (x: UInt64.t)) = any
     [ return (result: UInt64.t) -> {[@stop_split] [@expl:number ensures] result = two} (! return {result}) ]
   
-  predicate resolve_Iter_usize (_1: t_Iter_usize)
+  function resolve_Iter_usize (_1: t_Iter_usize) : bool
   
   meta "compute_max_steps" 1000000
   
@@ -332,7 +334,7 @@ module M_all_zero
   
   type t_Iter_usize
   
-  predicate inv_Iter_usize (_1: t_Iter_usize)
+  function inv_Iter_usize (_1: t_Iter_usize) : bool
   
   function view_Iter_usize (self: t_Iter_usize) : Slice64.slice UInt64.t
   
@@ -344,14 +346,15 @@ module M_all_zero
   
   type t_Option_ref_usize = None | Some UInt64.t
   
-  predicate invariant_refmut_Iter_usize [@inline:trivial] (self: MutBorrow.t t_Iter_usize) =
+  function invariant_refmut_Iter_usize [@inline:trivial] (self: MutBorrow.t t_Iter_usize) : bool =
     inv_Iter_usize self.current /\ inv_Iter_usize self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Iter_usize
+  meta "rewrite_def" function invariant_refmut_Iter_usize
   
-  predicate inv_refmut_Iter_usize [@inline:trivial] (_1: MutBorrow.t t_Iter_usize) = invariant_refmut_Iter_usize _1
+  function inv_refmut_Iter_usize [@inline:trivial] (_1: MutBorrow.t t_Iter_usize) : bool =
+    invariant_refmut_Iter_usize _1
   
-  meta "rewrite_def" predicate inv_refmut_Iter_usize
+  meta "rewrite_def" function inv_refmut_Iter_usize
   
   function index_slice_usize [@inline:trivial] (self: Slice64.slice UInt64.t) (ix: int) : UInt64.t =
     Seq.get (Slice64.view self) ix
@@ -369,7 +372,7 @@ module M_all_zero
           /\ i < Seq.length (to_ref_seq_slice_usize self)
         -> Seq.get (to_ref_seq_slice_usize self) i = index_slice_usize self i
   
-  predicate produces_Iter_usize (self: t_Iter_usize) (visited: Seq.seq UInt64.t) (tl: t_Iter_usize) =
+  function produces_Iter_usize (self: t_Iter_usize) (visited: Seq.seq UInt64.t) (tl: t_Iter_usize) : bool =
     to_ref_seq_slice_usize (view_Iter_usize self) = Seq.(++) visited (to_ref_seq_slice_usize (view_Iter_usize tl))
   
   function produces_trans_Iter_usize (a: t_Iter_usize) (ab: Seq.seq UInt64.t) (b: t_Iter_usize) (bc: Seq.seq UInt64.t) (c: t_Iter_usize) : ()
@@ -383,12 +386,12 @@ module M_all_zero
   axiom produces_refl_Iter_usize_spec:
     forall self: t_Iter_usize. produces_Iter_usize self (Seq.empty: Seq.seq UInt64.t) self
   
-  predicate resolve_refmut_Iter_usize [@inline:trivial] (_1: MutBorrow.t t_Iter_usize) = _1.final = _1.current
+  function resolve_refmut_Iter_usize [@inline:trivial] (_1: MutBorrow.t t_Iter_usize) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Iter_usize
+  meta "rewrite_def" function resolve_refmut_Iter_usize
   
-  predicate completed_Iter_usize (self: MutBorrow.t t_Iter_usize) =
-    resolve_refmut_Iter_usize self /\ Slice64.view (view_Iter_usize self.current) = (Seq.empty: Seq.seq UInt64.t)
+  function completed_Iter_usize (self: MutBorrow.t t_Iter_usize) : bool = resolve_refmut_Iter_usize self
+    /\ Slice64.view (view_Iter_usize self.current) = (Seq.empty: Seq.seq UInt64.t)
   
   let next_Iter_usize (self: MutBorrow.t t_Iter_usize) (return (x: t_Option_ref_usize)) =
   {[@stop_split] [@expl:next 'self' type invariant] inv_refmut_Iter_usize self}
@@ -401,9 +404,9 @@ module M_all_zero
   
   constant zero: UInt64.t = (0: UInt64.t)
   
-  predicate inv_Seq_ref_usize [@inline:trivial] (_1: Seq.seq UInt64.t) = true
+  function inv_Seq_ref_usize [@inline:trivial] (_1: Seq.seq UInt64.t) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_ref_usize
+  meta "rewrite_def" function inv_Seq_ref_usize
   
   let elim_Some (_x: t_Option_ref_usize) (return (f0: UInt64.t)) = any
     [ _k (f0: UInt64.t) -> {Some f0 = _x} (! return {f0})
@@ -416,7 +419,7 @@ module M_all_zero
   let number_Zero (return (x: UInt64.t)) = any
     [ return (result: UInt64.t) -> {[@stop_split] [@expl:number ensures] result = zero} (! return {result}) ]
   
-  predicate resolve_Iter_usize (_1: t_Iter_usize)
+  function resolve_Iter_usize (_1: t_Iter_usize) : bool
   
   meta "compute_max_steps" 1000000
   

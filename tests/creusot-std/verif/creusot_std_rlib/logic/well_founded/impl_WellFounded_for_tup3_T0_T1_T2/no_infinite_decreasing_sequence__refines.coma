@@ -11,22 +11,22 @@ type t_T2
 
 type tup3_T0_T1_T2 = { f0: t_T0; f1: t_T1; f2: t_T2 }
 
-predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
 
-meta "rewrite_def" predicate ge_log_Int
+meta "rewrite_def" function ge_log_Int
 
-predicate well_founded_relation_T0 (self: t_T0) (other: t_T0)
+function well_founded_relation_T0 (self: t_T0) (other: t_T0) : bool
 
-predicate well_founded_relation_T1 (self: t_T1) (other: t_T1)
+function well_founded_relation_T1 (self: t_T1) (other: t_T1) : bool
 
-predicate well_founded_relation_T2 (self: t_T2) (other: t_T2)
+function well_founded_relation_T2 (self: t_T2) (other: t_T2) : bool
 
-predicate well_founded_relation_tup3_T0_T1_T2 [@inline:trivial] (self: tup3_T0_T1_T2) (other: tup3_T0_T1_T2) =
+function well_founded_relation_tup3_T0_T1_T2 [@inline:trivial] (self: tup3_T0_T1_T2) (other: tup3_T0_T1_T2) : bool =
   well_founded_relation_T0 self.f0 other.f0
   \/ self.f0 = other.f0 /\ well_founded_relation_T1 self.f1 other.f1
   \/ self.f0 = other.f0 /\ self.f1 = other.f1 /\ well_founded_relation_T2 self.f2 other.f2
 
-meta "rewrite_def" predicate well_founded_relation_tup3_T0_T1_T2
+meta "rewrite_def" function well_founded_relation_tup3_T0_T1_T2
 
 function index_Mapping_Int_tup3_T0_T1_T2 [@inline:trivial] (self: Map.map int tup3_T0_T1_T2) (a: int) : tup3_T0_T1_T2 =
   Map.get self a

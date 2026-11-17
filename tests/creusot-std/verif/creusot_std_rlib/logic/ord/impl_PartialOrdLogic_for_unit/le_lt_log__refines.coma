@@ -1,12 +1,12 @@
 (* <() as logic::ord::PartialOrdLogic> *)
 
-predicate le_log_unit [@inline:trivial] (self: ()) (_2: ()) = true
+function le_log_unit [@inline:trivial] (self: ()) (_2: ()) : bool = true
 
-meta "rewrite_def" predicate le_log_unit
+meta "rewrite_def" function le_log_unit
 
-predicate lt_log_unit [@inline:trivial] (self: ()) (_2: ()) = false
+function lt_log_unit [@inline:trivial] (self: ()) (_2: ()) : bool = false
 
-meta "rewrite_def" predicate lt_log_unit
+meta "rewrite_def" function lt_log_unit
 
 meta "compute_max_steps" 1000000
 

@@ -6,9 +6,9 @@ type t_Nat
 
 type t_Option_Nat = None | Some t_Nat
 
-predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
 
-meta "rewrite_def" predicate ge_log_Int
+meta "rewrite_def" function ge_log_Int
 
 function to_int (self: t_Nat) : int
 

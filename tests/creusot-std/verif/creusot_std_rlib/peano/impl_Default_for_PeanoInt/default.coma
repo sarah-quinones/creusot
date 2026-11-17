@@ -8,9 +8,9 @@ let default_u64 (return (x: UInt64.t)) = any
 
 type t_PeanoInt = { f0: UInt64.t }
 
-predicate postcondition_default (self: ()) (args: ()) (result: UInt64.t) = let () = args in result = (0: UInt64.t)
+function postcondition_default (self: ()) (args: ()) (result: UInt64.t) : bool = let () = args in result = (0: UInt64.t)
 
-meta "rewrite_def" predicate postcondition_default
+meta "rewrite_def" function postcondition_default
 
 meta "compute_max_steps" 1000000
 

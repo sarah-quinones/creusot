@@ -10,8 +10,9 @@ type t_Option_ref_T = None | Some t_T
 
 function view_Iter_T (self: t_Iter_T) : t_Option_ref_T
 
-predicate produces_Iter_T (self: t_Iter_T) (visited: Seq.seq t_T) (o: t_Iter_T) =
-  visited = (Seq.empty: Seq.seq t_T) /\ self = o
+function produces_Iter_T (self: t_Iter_T) (visited: Seq.seq t_T) (o: t_Iter_T) : bool = visited
+      = (Seq.empty: Seq.seq t_T)
+    /\ self = o
   \/ (exists e: t_T. view_Iter_T self = Some e /\ visited = Seq.singleton e /\ view_Iter_T o = None)
 
 function concat_empty_T (self: Seq.seq t_T) : ()

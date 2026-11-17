@@ -9,9 +9,9 @@ function core_Int [@inline:trivial] (self: int) : t_Option_Int = Some 0
 
 meta "rewrite_def" function core_Int
 
-predicate index_Mapping_Int_bool [@inline:trivial] (self: Map.map int bool) (a: int) = Map.get self a
+function index_Mapping_Int_bool [@inline:trivial] (self: Map.map int bool) (a: int) : bool = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_Int_bool
+meta "rewrite_def" function index_Mapping_Int_bool
 
 function such_that_Int (p: Map.map int bool) : int
 

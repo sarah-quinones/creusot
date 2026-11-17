@@ -2,9 +2,9 @@
 
 use creusot.prelude.Opaque
 
-predicate inv_ptr_T [@inline:trivial] (_1: Opaque.ptr) = true
+function inv_ptr_T [@inline:trivial] (_1: Opaque.ptr) : bool = true
 
-meta "rewrite_def" predicate inv_ptr_T
+meta "rewrite_def" function inv_ptr_T
 
 meta "compute_max_steps" 1000000
 

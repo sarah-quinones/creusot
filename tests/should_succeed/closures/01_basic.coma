@@ -5,11 +5,11 @@ module M_move_closure
   
   type closure0 = { c0: MutBorrow.t Int32.t }
   
-  predicate resolve_refmut_closure0 [@inline:trivial] (_1: MutBorrow.t closure0) = _1.final = _1.current
+  function resolve_refmut_closure0 [@inline:trivial] (_1: MutBorrow.t closure0) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_closure0
+  meta "rewrite_def" function resolve_refmut_closure0
   
-  predicate hist_inv_closure0 (self: closure0) (result_state: closure0) = true
+  function hist_inv_closure0 (self: closure0) (result_state: closure0) : bool = true
   
   let closure0 [@coma:extspec] (self: MutBorrow.t closure0) (return (x: ())) = bb0
     [ bb0 = s0
@@ -24,16 +24,16 @@ module M_move_closure
   
   meta "rewrite_def" predicate closure0'post'return
   
-  predicate precondition_closure0 (self: closure0) (args: ()) =
+  function precondition_closure0 (self: closure0) (args: ()) : bool =
     forall bor_self: MutBorrow.t closure0. bor_self.current = self -> closure0'pre bor_self
   
-  meta "rewrite_def" predicate precondition_closure0
+  meta "rewrite_def" function precondition_closure0
   
-  predicate postcondition_mut_closure0 (self: closure0) (args: ()) (result_state: closure0) (result: ()) =
+  function postcondition_mut_closure0 (self: closure0) (args: ()) (result_state: closure0) (result: ()) : bool =
     exists bor_self: MutBorrow.t closure0. bor_self.current = self
       /\ bor_self.final = result_state /\ closure0'post'return bor_self result /\ hist_inv_closure0 self result_state
   
-  meta "rewrite_def" predicate postcondition_mut_closure0
+  meta "rewrite_def" function postcondition_mut_closure0
   
   let call_mut_closure0 (self: MutBorrow.t closure0) (args: ()) (return (x: ())) =
   {[@stop_split] [@expl:call_mut requires] precondition_closure0 self.current args}
@@ -42,13 +42,13 @@ module M_move_closure
     {[@stop_split] [@expl:call_mut ensures] postcondition_mut_closure0 self.current args self.final result}
       (! return {result}) ]
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
-  predicate resolve_closure0 [@inline:trivial] (_1: closure0) = resolve_refmut_i32 _1.c0
+  function resolve_closure0 [@inline:trivial] (_1: closure0) : bool = resolve_refmut_i32 _1.c0
   
-  meta "rewrite_def" predicate resolve_closure0
+  meta "rewrite_def" function resolve_closure0
   
   meta "compute_max_steps" 1000000
   
@@ -89,15 +89,15 @@ module M_move_mut
   
   type closure0 = { c0: MutBorrow.t UInt32.t }
   
-  predicate resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) = _1.final = _1.current
+  function resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_u32
+  meta "rewrite_def" function resolve_refmut_u32
   
-  predicate resolve_refmut_closure0 [@inline:trivial] (_1: MutBorrow.t closure0) = _1.final = _1.current
+  function resolve_refmut_closure0 [@inline:trivial] (_1: MutBorrow.t closure0) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_closure0
+  meta "rewrite_def" function resolve_refmut_closure0
   
-  predicate hist_inv_closure0 (self: closure0) (result_state: closure0) = true
+  function hist_inv_closure0 (self: closure0) (result_state: closure0) : bool = true
   
   let closure0 [@coma:extspec] (self: MutBorrow.t closure0) (return (x: ())) = bb0
     [ bb0 = s0
@@ -124,16 +124,16 @@ module M_move_mut
   
   meta "rewrite_def" predicate closure0'post'return
   
-  predicate precondition_closure0 (self: closure0) (args: ()) =
+  function precondition_closure0 (self: closure0) (args: ()) : bool =
     forall bor_self: MutBorrow.t closure0. bor_self.current = self -> closure0'pre bor_self
   
-  meta "rewrite_def" predicate precondition_closure0
+  meta "rewrite_def" function precondition_closure0
   
-  predicate postcondition_mut_closure0 (self: closure0) (args: ()) (result_state: closure0) (result: ()) =
+  function postcondition_mut_closure0 (self: closure0) (args: ()) (result_state: closure0) (result: ()) : bool =
     exists bor_self: MutBorrow.t closure0. bor_self.current = self
       /\ bor_self.final = result_state /\ closure0'post'return bor_self result /\ hist_inv_closure0 self result_state
   
-  meta "rewrite_def" predicate postcondition_mut_closure0
+  meta "rewrite_def" function postcondition_mut_closure0
   
   let call_mut_closure0 (self: MutBorrow.t closure0) (args: ()) (return (x: ())) =
   {[@stop_split] [@expl:call_mut requires] precondition_closure0 self.current args}
@@ -142,9 +142,9 @@ module M_move_mut
     {[@stop_split] [@expl:call_mut ensures] postcondition_mut_closure0 self.current args self.final result}
       (! return {result}) ]
   
-  predicate resolve_closure0 [@inline:trivial] (_1: closure0) = resolve_refmut_u32 _1.c0
+  function resolve_closure0 [@inline:trivial] (_1: closure0) : bool = resolve_refmut_u32 _1.c0
   
-  meta "rewrite_def" predicate resolve_closure0
+  meta "rewrite_def" function resolve_closure0
   
   meta "compute_max_steps" 1000000
   
@@ -190,14 +190,15 @@ module M_multi_arg
   
   type tup2_i32_i32 = { f0: Int32.t; f1: Int32.t }
   
-  predicate precondition_closure0 (self: ()) (args: tup2_i32_i32) = let {f0 = a; f1 = b} = args in closure0'pre self a b
+  function precondition_closure0 (self: ()) (args: tup2_i32_i32) : bool =
+    let {f0 = a; f1 = b} = args in closure0'pre self a b
   
-  meta "rewrite_def" predicate precondition_closure0
+  meta "rewrite_def" function precondition_closure0
   
-  predicate postcondition_closure0 (self: ()) (args: tup2_i32_i32) (result: Int32.t) =
+  function postcondition_closure0 (self: ()) (args: tup2_i32_i32) (result: Int32.t) : bool =
     let {f0 = a; f1 = b} = args in closure0'post'return self a b result
   
-  meta "rewrite_def" predicate postcondition_closure0
+  meta "rewrite_def" function postcondition_closure0
   
   let call_closure0 (self: ()) (args: tup2_i32_i32) (return (x: Int32.t)) =
   {[@stop_split] [@expl:call requires] precondition_closure0 self args}
@@ -233,13 +234,13 @@ module M_uses_closure
   
   meta "rewrite_def" predicate closure0'post'return
   
-  predicate precondition_closure0 (self: closure0) (args: ()) = closure0'pre self
+  function precondition_closure0 (self: closure0) (args: ()) : bool = closure0'pre self
   
-  meta "rewrite_def" predicate precondition_closure0
+  meta "rewrite_def" function precondition_closure0
   
-  predicate postcondition_closure0 (self: closure0) (args: ()) (result: bool) = closure0'post'return self result
+  function postcondition_closure0 (self: closure0) (args: ()) (result: bool) : bool = closure0'post'return self result
   
-  meta "rewrite_def" predicate postcondition_closure0
+  meta "rewrite_def" function postcondition_closure0
   
   let call_closure0 (self: closure0) (args: ()) (return (x: bool)) =
   {[@stop_split] [@expl:call requires] precondition_closure0 self args}

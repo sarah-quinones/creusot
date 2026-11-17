@@ -15,63 +15,62 @@ module M_create
     idx: Slice64.array UInt64.t;
     back: Slice64.array UInt64.t }
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
   function index_array_usize_n [@inline:trivial] (self: Slice64.array UInt64.t) (ix: int) : UInt64.t =
     Seq.get (Slice64.view self) ix
   
   meta "rewrite_def" function index_array_usize_n
   
-  predicate invariant_Sparse_T (self: t_Sparse_T) =
-    UInt64.t'int self.n <= UInt64.t'int const_SIZE
+  function invariant_Sparse_T (self: t_Sparse_T) : bool = UInt64.t'int self.n <= UInt64.t'int const_SIZE
     /\ (forall i: int. 0 <= i /\ i < UInt64.t'int self.n
       -> (let j = index_array_usize_n self.back i in 0 <= UInt64.t'int j
       /\ UInt64.t'int j < UInt64.t'int const_SIZE /\ UInt64.t'int (index_array_usize_n self.idx (UInt64.t'int j)) = i))
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_T (Seq.get self i)
+  function invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+      -> inv_ref_T (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_T
+  meta "rewrite_def" function invariant_Seq_T
   
-  predicate inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Seq_T _1
+  function inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Seq_T
+  meta "rewrite_def" function inv_Seq_T
   
-  predicate invariant_array_T_n (self: Slice64.array t_T) =
-    inv_Seq_T (Slice64.view self) /\ Seq.length (Slice64.view self) = UInt64.t'int const_SIZE
+  function invariant_array_T_n (self: Slice64.array t_T) : bool = inv_Seq_T (Slice64.view self)
+    /\ Seq.length (Slice64.view self) = UInt64.t'int const_SIZE
   
-  predicate inv_array_T_n [@inline:trivial] (_1: Slice64.array t_T) = invariant_array_T_n _1
+  function inv_array_T_n [@inline:trivial] (_1: Slice64.array t_T) : bool = invariant_array_T_n _1
   
-  meta "rewrite_def" predicate inv_array_T_n
+  meta "rewrite_def" function inv_array_T_n
   
-  predicate inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) = true
+  function inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_usize
+  meta "rewrite_def" function inv_Seq_usize
   
-  predicate invariant_array_usize_n (self: Slice64.array UInt64.t) =
-    inv_Seq_usize (Slice64.view self) /\ Seq.length (Slice64.view self) = UInt64.t'int const_SIZE
+  function invariant_array_usize_n (self: Slice64.array UInt64.t) : bool = inv_Seq_usize (Slice64.view self)
+    /\ Seq.length (Slice64.view self) = UInt64.t'int const_SIZE
   
-  predicate inv_array_usize_n [@inline:trivial] (_1: Slice64.array UInt64.t) = invariant_array_usize_n _1
+  function inv_array_usize_n [@inline:trivial] (_1: Slice64.array UInt64.t) : bool = invariant_array_usize_n _1
   
-  meta "rewrite_def" predicate inv_array_usize_n
+  meta "rewrite_def" function inv_array_usize_n
   
-  predicate inv_Sparse_T (_1: t_Sparse_T)
+  function inv_Sparse_T (_1: t_Sparse_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Sparse_T [inv_Sparse_T _1]. inv_Sparse_T _1
       = (invariant_Sparse_T _1 /\ inv_array_T_n _1.values /\ inv_array_usize_n _1.idx /\ inv_array_usize_n _1.back)
   
   type t_Option_T = None | Some t_T
   
-  predicate is_elt_T (self: t_Sparse_T) (i: int) =
-    UInt64.t'int (index_array_usize_n self.idx i) < UInt64.t'int self.n
+  function is_elt_T (self: t_Sparse_T) (i: int) : bool = UInt64.t'int (index_array_usize_n self.idx i)
+      < UInt64.t'int self.n
     /\ UInt64.t'int (index_array_usize_n self.back (UInt64.t'int (index_array_usize_n self.idx i))) = i
   
   function index_array_T_n [@inline:trivial] (self: Slice64.array t_T) (ix: int) : t_T = Seq.get (Slice64.view self) ix
@@ -134,36 +133,35 @@ module M_f
   
   meta "rewrite_def" function index_array_usize_10
   
-  predicate invariant_Sparse_i32 (self: t_Sparse_i32) =
-    UInt64.t'int self.n <= UInt64.t'int (10: UInt64.t)
+  function invariant_Sparse_i32 (self: t_Sparse_i32) : bool = UInt64.t'int self.n <= UInt64.t'int (10: UInt64.t)
     /\ (forall i: int. 0 <= i /\ i < UInt64.t'int self.n
       -> (let j = index_array_usize_10 self.back i in 0 <= UInt64.t'int j
       /\ UInt64.t'int j < UInt64.t'int (10: UInt64.t)
       /\ UInt64.t'int (index_array_usize_10 self.idx (UInt64.t'int j)) = i))
   
-  predicate inv_Seq_i32 [@inline:trivial] (_1: Seq.seq Int32.t) = true
+  function inv_Seq_i32 [@inline:trivial] (_1: Seq.seq Int32.t) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_i32
+  meta "rewrite_def" function inv_Seq_i32
   
-  predicate invariant_array_i32_10 (self: Slice64.array Int32.t) =
-    inv_Seq_i32 (Slice64.view self) /\ Seq.length (Slice64.view self) = UInt64.t'int (10: UInt64.t)
+  function invariant_array_i32_10 (self: Slice64.array Int32.t) : bool = inv_Seq_i32 (Slice64.view self)
+    /\ Seq.length (Slice64.view self) = UInt64.t'int (10: UInt64.t)
   
-  predicate inv_array_i32_10 [@inline:trivial] (_1: Slice64.array Int32.t) = invariant_array_i32_10 _1
+  function inv_array_i32_10 [@inline:trivial] (_1: Slice64.array Int32.t) : bool = invariant_array_i32_10 _1
   
-  meta "rewrite_def" predicate inv_array_i32_10
+  meta "rewrite_def" function inv_array_i32_10
   
-  predicate inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) = true
+  function inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_usize
+  meta "rewrite_def" function inv_Seq_usize
   
-  predicate invariant_array_usize_10 (self: Slice64.array UInt64.t) =
-    inv_Seq_usize (Slice64.view self) /\ Seq.length (Slice64.view self) = UInt64.t'int (10: UInt64.t)
+  function invariant_array_usize_10 (self: Slice64.array UInt64.t) : bool = inv_Seq_usize (Slice64.view self)
+    /\ Seq.length (Slice64.view self) = UInt64.t'int (10: UInt64.t)
   
-  predicate inv_array_usize_10 [@inline:trivial] (_1: Slice64.array UInt64.t) = invariant_array_usize_10 _1
+  function inv_array_usize_10 [@inline:trivial] (_1: Slice64.array UInt64.t) : bool = invariant_array_usize_10 _1
   
-  meta "rewrite_def" predicate inv_array_usize_10
+  meta "rewrite_def" function inv_array_usize_10
   
-  predicate inv_Sparse_i32 (_1: t_Sparse_i32)
+  function inv_Sparse_i32 (_1: t_Sparse_i32) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Sparse_i32 [inv_Sparse_i32 _1]. inv_Sparse_i32 _1
       = (invariant_Sparse_i32 _1
@@ -171,8 +169,8 @@ module M_f
   
   type t_Option_i32 = None | Some Int32.t
   
-  predicate is_elt_i32 (self: t_Sparse_i32) (i: int) =
-    UInt64.t'int (index_array_usize_10 self.idx i) < UInt64.t'int self.n
+  function is_elt_i32 (self: t_Sparse_i32) (i: int) : bool = UInt64.t'int (index_array_usize_10 self.idx i)
+      < UInt64.t'int self.n
     /\ UInt64.t'int (index_array_usize_10 self.back (UInt64.t'int (index_array_usize_10 self.idx i))) = i
   
   function index_array_i32_10 [@inline:trivial] (self: Slice64.array Int32.t) (ix: int) : Int32.t =
@@ -208,35 +206,34 @@ module M_f
   
   meta "rewrite_def" function index_array_usize_20
   
-  predicate invariant_Sparse_i32'0 (self: t_Sparse_i32'0) =
-    UInt64.t'int self.n'0 <= UInt64.t'int (20: UInt64.t)
+  function invariant_Sparse_i32'0 (self: t_Sparse_i32'0) : bool = UInt64.t'int self.n'0 <= UInt64.t'int (20: UInt64.t)
     /\ (forall i: int. 0 <= i /\ i < UInt64.t'int self.n'0
       -> (let j = index_array_usize_20 self.back'0 i in 0 <= UInt64.t'int j
       /\ UInt64.t'int j < UInt64.t'int (20: UInt64.t)
       /\ UInt64.t'int (index_array_usize_20 self.idx'0 (UInt64.t'int j)) = i))
   
-  predicate invariant_array_i32_20 (self: Slice64.array Int32.t) =
-    inv_Seq_i32 (Slice64.view self) /\ Seq.length (Slice64.view self) = UInt64.t'int (20: UInt64.t)
+  function invariant_array_i32_20 (self: Slice64.array Int32.t) : bool = inv_Seq_i32 (Slice64.view self)
+    /\ Seq.length (Slice64.view self) = UInt64.t'int (20: UInt64.t)
   
-  predicate inv_array_i32_20 [@inline:trivial] (_1: Slice64.array Int32.t) = invariant_array_i32_20 _1
+  function inv_array_i32_20 [@inline:trivial] (_1: Slice64.array Int32.t) : bool = invariant_array_i32_20 _1
   
-  meta "rewrite_def" predicate inv_array_i32_20
+  meta "rewrite_def" function inv_array_i32_20
   
-  predicate invariant_array_usize_20 (self: Slice64.array UInt64.t) =
-    inv_Seq_usize (Slice64.view self) /\ Seq.length (Slice64.view self) = UInt64.t'int (20: UInt64.t)
+  function invariant_array_usize_20 (self: Slice64.array UInt64.t) : bool = inv_Seq_usize (Slice64.view self)
+    /\ Seq.length (Slice64.view self) = UInt64.t'int (20: UInt64.t)
   
-  predicate inv_array_usize_20 [@inline:trivial] (_1: Slice64.array UInt64.t) = invariant_array_usize_20 _1
+  function inv_array_usize_20 [@inline:trivial] (_1: Slice64.array UInt64.t) : bool = invariant_array_usize_20 _1
   
-  meta "rewrite_def" predicate inv_array_usize_20
+  meta "rewrite_def" function inv_array_usize_20
   
-  predicate inv_Sparse_i32'0 (_1: t_Sparse_i32'0)
+  function inv_Sparse_i32'0 (_1: t_Sparse_i32'0) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Sparse_i32'0 [inv_Sparse_i32'0 _1]. inv_Sparse_i32'0 _1
       = (invariant_Sparse_i32'0 _1
       /\ inv_array_i32_20 _1.values'0 /\ inv_array_usize_20 _1.idx'0 /\ inv_array_usize_20 _1.back'0)
   
-  predicate is_elt_i32'0 (self: t_Sparse_i32'0) (i: int) =
-    UInt64.t'int (index_array_usize_20 self.idx'0 i) < UInt64.t'int self.n'0
+  function is_elt_i32'0 (self: t_Sparse_i32'0) (i: int) : bool = UInt64.t'int (index_array_usize_20 self.idx'0 i)
+      < UInt64.t'int self.n'0
     /\ UInt64.t'int (index_array_usize_20 self.back'0 (UInt64.t'int (index_array_usize_20 self.idx'0 i))) = i
   
   function index_array_i32_20 [@inline:trivial] (self: Slice64.array Int32.t) (ix: int) : Int32.t =
@@ -264,13 +261,13 @@ module M_f
   
   type t_Option_ref_i32 = None'0 | Some'0 Int32.t
   
-  predicate invariant_ref_Sparse_i32 [@inline:trivial] (self: t_Sparse_i32) = inv_Sparse_i32 self
+  function invariant_ref_Sparse_i32 [@inline:trivial] (self: t_Sparse_i32) : bool = inv_Sparse_i32 self
   
-  meta "rewrite_def" predicate invariant_ref_Sparse_i32
+  meta "rewrite_def" function invariant_ref_Sparse_i32
   
-  predicate inv_ref_Sparse_i32 [@inline:trivial] (_1: t_Sparse_i32) = invariant_ref_Sparse_i32 _1
+  function inv_ref_Sparse_i32 [@inline:trivial] (_1: t_Sparse_i32) : bool = invariant_ref_Sparse_i32 _1
   
-  meta "rewrite_def" predicate inv_ref_Sparse_i32
+  meta "rewrite_def" function inv_ref_Sparse_i32
   
   let get_i32 (self: t_Sparse_i32) (i: UInt64.t) (return (x: t_Option_ref_i32)) =
   {[@stop_split] [@expl:get_i32 requires] ([@stop_split] [@expl:get 'self' type invariant] inv_ref_Sparse_i32 self)
@@ -287,13 +284,13 @@ module M_f
         end)}
       (! return {result}) ]
   
-  predicate invariant_ref_Sparse_i32'0 [@inline:trivial] (self: t_Sparse_i32'0) = inv_Sparse_i32'0 self
+  function invariant_ref_Sparse_i32'0 [@inline:trivial] (self: t_Sparse_i32'0) : bool = inv_Sparse_i32'0 self
   
-  meta "rewrite_def" predicate invariant_ref_Sparse_i32'0
+  meta "rewrite_def" function invariant_ref_Sparse_i32'0
   
-  predicate inv_ref_Sparse_i32'0 [@inline:trivial] (_1: t_Sparse_i32'0) = invariant_ref_Sparse_i32'0 _1
+  function inv_ref_Sparse_i32'0 [@inline:trivial] (_1: t_Sparse_i32'0) : bool = invariant_ref_Sparse_i32'0 _1
   
-  meta "rewrite_def" predicate inv_ref_Sparse_i32'0
+  meta "rewrite_def" function inv_ref_Sparse_i32'0
   
   let get_i32'0 (self: t_Sparse_i32'0) (i: UInt64.t) (return (x: t_Option_ref_i32)) =
   {[@stop_split] [@expl:get_i32 requires] ([@stop_split] [@expl:get 'self' type invariant] inv_ref_Sparse_i32'0 self)
@@ -310,14 +307,15 @@ module M_f
         end)}
       (! return {result}) ]
   
-  predicate invariant_refmut_Sparse_i32 [@inline:trivial] (self: MutBorrow.t t_Sparse_i32) =
+  function invariant_refmut_Sparse_i32 [@inline:trivial] (self: MutBorrow.t t_Sparse_i32) : bool =
     inv_Sparse_i32 self.current /\ inv_Sparse_i32 self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Sparse_i32
+  meta "rewrite_def" function invariant_refmut_Sparse_i32
   
-  predicate inv_refmut_Sparse_i32 [@inline:trivial] (_1: MutBorrow.t t_Sparse_i32) = invariant_refmut_Sparse_i32 _1
+  function inv_refmut_Sparse_i32 [@inline:trivial] (_1: MutBorrow.t t_Sparse_i32) : bool =
+    invariant_refmut_Sparse_i32 _1
   
-  meta "rewrite_def" predicate inv_refmut_Sparse_i32
+  meta "rewrite_def" function inv_refmut_Sparse_i32
   
   let set_i32 (self: MutBorrow.t t_Sparse_i32) (i: UInt64.t) (v: Int32.t) (return (x: ())) =
   {[@stop_split] [@expl:set_i32 requires] ([@stop_split] [@expl:set 'self' type invariant] inv_refmut_Sparse_i32 self)
@@ -330,15 +328,15 @@ module M_f
       /\ ([@stop_split] [@expl:set ensures #1] Seq.get (view_Sparse_i32 self.final) (UInt64.t'int i) = Some v)}
       (! return {result}) ]
   
-  predicate invariant_refmut_Sparse_i32'0 [@inline:trivial] (self: MutBorrow.t t_Sparse_i32'0) =
+  function invariant_refmut_Sparse_i32'0 [@inline:trivial] (self: MutBorrow.t t_Sparse_i32'0) : bool =
     inv_Sparse_i32'0 self.current /\ inv_Sparse_i32'0 self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Sparse_i32'0
+  meta "rewrite_def" function invariant_refmut_Sparse_i32'0
   
-  predicate inv_refmut_Sparse_i32'0 [@inline:trivial] (_1: MutBorrow.t t_Sparse_i32'0) =
+  function inv_refmut_Sparse_i32'0 [@inline:trivial] (_1: MutBorrow.t t_Sparse_i32'0) : bool =
     invariant_refmut_Sparse_i32'0 _1
   
-  meta "rewrite_def" predicate inv_refmut_Sparse_i32'0
+  meta "rewrite_def" function inv_refmut_Sparse_i32'0
   
   let set_i32'0 (self: MutBorrow.t t_Sparse_i32'0) (i: UInt64.t) (v: Int32.t) (return (x: ())) =
   {[@stop_split] [@expl:set_i32 requires] ([@stop_split] [@expl:set 'self' type invariant] inv_refmut_Sparse_i32'0 self)
@@ -351,22 +349,22 @@ module M_f
       /\ ([@stop_split] [@expl:set ensures #1] Seq.get (view_Sparse_i32'0 self.final) (UInt64.t'int i) = Some v)}
       (! return {result}) ]
   
-  predicate resolve_Option_i32 [@inline:trivial] (_1: t_Option_i32) = true
+  function resolve_Option_i32 [@inline:trivial] (_1: t_Option_i32) : bool = true
   
-  meta "rewrite_def" predicate resolve_Option_i32
+  meta "rewrite_def" function resolve_Option_i32
   
-  predicate resolve_Sparse_i32 (self: t_Sparse_i32) =
-    forall i: int. 0 <= i /\ i < UInt64.t'int (10: UInt64.t) -> resolve_Option_i32 (Seq.get (view_Sparse_i32 self) i)
+  function resolve_Sparse_i32 (self: t_Sparse_i32) : bool = forall i: int. 0 <= i /\ i < UInt64.t'int (10: UInt64.t)
+      -> resolve_Option_i32 (Seq.get (view_Sparse_i32 self) i)
   
-  predicate resolve_Sparse_i32'0 (_1: t_Sparse_i32)
+  function resolve_Sparse_i32'0 (_1: t_Sparse_i32) : bool
   
   axiom resolve_axiom [@rewrite]: forall _1: t_Sparse_i32 [resolve_Sparse_i32'0 _1]. resolve_Sparse_i32'0 _1
       = resolve_Sparse_i32 _1
   
-  predicate resolve_Sparse_i32'1 (self: t_Sparse_i32'0) =
-    forall i: int. 0 <= i /\ i < UInt64.t'int (20: UInt64.t) -> resolve_Option_i32 (Seq.get (view_Sparse_i32'0 self) i)
+  function resolve_Sparse_i32'1 (self: t_Sparse_i32'0) : bool = forall i: int. 0 <= i /\ i < UInt64.t'int (20: UInt64.t)
+      -> resolve_Option_i32 (Seq.get (view_Sparse_i32'0 self) i)
   
-  predicate resolve_Sparse_i32'2 (_1: t_Sparse_i32'0)
+  function resolve_Sparse_i32'2 (_1: t_Sparse_i32'0) : bool
   
   axiom resolve_axiom'0 [@rewrite]: forall _1: t_Sparse_i32'0 [resolve_Sparse_i32'2 _1]. resolve_Sparse_i32'2 _1
       = resolve_Sparse_i32'1 _1
@@ -467,70 +465,69 @@ module M_impl_Resolve_for_Sparse_T__resolve_coherence (* <Sparse<T, SIZE> as cre
   
   meta "rewrite_def" function index_array_usize_n
   
-  predicate invariant_Sparse_T (self: t_Sparse_T) =
-    UInt64.t'int self.n <= UInt64.t'int const_SIZE
+  function invariant_Sparse_T (self: t_Sparse_T) : bool = UInt64.t'int self.n <= UInt64.t'int const_SIZE
     /\ (forall i: int. 0 <= i /\ i < UInt64.t'int self.n
       -> (let j = index_array_usize_n self.back i in 0 <= UInt64.t'int j
       /\ UInt64.t'int j < UInt64.t'int const_SIZE /\ UInt64.t'int (index_array_usize_n self.idx (UInt64.t'int j)) = i))
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_T (Seq.get self i)
+  function invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+      -> inv_ref_T (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_T
+  meta "rewrite_def" function invariant_Seq_T
   
-  predicate inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Seq_T _1
+  function inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Seq_T
+  meta "rewrite_def" function inv_Seq_T
   
-  predicate invariant_array_T_n (self: Slice64.array t_T) =
-    inv_Seq_T (Slice64.view self) /\ Seq.length (Slice64.view self) = UInt64.t'int const_SIZE
+  function invariant_array_T_n (self: Slice64.array t_T) : bool = inv_Seq_T (Slice64.view self)
+    /\ Seq.length (Slice64.view self) = UInt64.t'int const_SIZE
   
-  predicate inv_array_T_n [@inline:trivial] (_1: Slice64.array t_T) = invariant_array_T_n _1
+  function inv_array_T_n [@inline:trivial] (_1: Slice64.array t_T) : bool = invariant_array_T_n _1
   
-  meta "rewrite_def" predicate inv_array_T_n
+  meta "rewrite_def" function inv_array_T_n
   
-  predicate inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) = true
+  function inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_usize
+  meta "rewrite_def" function inv_Seq_usize
   
-  predicate invariant_array_usize_n (self: Slice64.array UInt64.t) =
-    inv_Seq_usize (Slice64.view self) /\ Seq.length (Slice64.view self) = UInt64.t'int const_SIZE
+  function invariant_array_usize_n (self: Slice64.array UInt64.t) : bool = inv_Seq_usize (Slice64.view self)
+    /\ Seq.length (Slice64.view self) = UInt64.t'int const_SIZE
   
-  predicate inv_array_usize_n [@inline:trivial] (_1: Slice64.array UInt64.t) = invariant_array_usize_n _1
+  function inv_array_usize_n [@inline:trivial] (_1: Slice64.array UInt64.t) : bool = invariant_array_usize_n _1
   
-  meta "rewrite_def" predicate inv_array_usize_n
+  meta "rewrite_def" function inv_array_usize_n
   
-  predicate inv_Sparse_T (_1: t_Sparse_T)
+  function inv_Sparse_T (_1: t_Sparse_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Sparse_T [inv_Sparse_T _1]. inv_Sparse_T _1
       = (invariant_Sparse_T _1 /\ inv_array_T_n _1.values /\ inv_array_usize_n _1.idx /\ inv_array_usize_n _1.back)
   
-  predicate resolve_T (_1: t_T)
+  function resolve_T (_1: t_T) : bool
   
-  predicate resolve_array_T_n [@inline:trivial] (self: Slice64.array t_T) =
-    forall i: int. 0 <= i /\ i < UInt64.t'int const_SIZE -> resolve_T (Seq.get (Slice64.view self) i)
+  function resolve_array_T_n [@inline:trivial] (self: Slice64.array t_T) : bool = forall i: int. 0 <= i
+        /\ i < UInt64.t'int const_SIZE -> resolve_T (Seq.get (Slice64.view self) i)
   
-  meta "rewrite_def" predicate resolve_array_T_n
+  meta "rewrite_def" function resolve_array_T_n
   
-  predicate resolve_array_T_n'0 [@inline:trivial] (_1: Slice64.array t_T) = resolve_array_T_n _1
+  function resolve_array_T_n'0 [@inline:trivial] (_1: Slice64.array t_T) : bool = resolve_array_T_n _1
   
-  meta "rewrite_def" predicate resolve_array_T_n'0
+  meta "rewrite_def" function resolve_array_T_n'0
   
-  predicate structural_resolve_Sparse_T (_1: t_Sparse_T) = resolve_array_T_n'0 _1.values
+  function structural_resolve_Sparse_T (_1: t_Sparse_T) : bool = resolve_array_T_n'0 _1.values
   
   type t_Option_T = None | Some t_T
   
-  predicate resolve_Option_T (_1: t_Option_T)
+  function resolve_Option_T (_1: t_Option_T) : bool
   
   axiom resolve_axiom [@rewrite]: forall _1: t_Option_T [resolve_Option_T _1]. resolve_Option_T _1
       = match _1 with
@@ -538,8 +535,8 @@ module M_impl_Resolve_for_Sparse_T__resolve_coherence (* <Sparse<T, SIZE> as cre
         | Some x0 -> resolve_T x0
         end
   
-  predicate is_elt_T (self: t_Sparse_T) (i: int) =
-    UInt64.t'int (index_array_usize_n self.idx i) < UInt64.t'int self.n
+  function is_elt_T (self: t_Sparse_T) (i: int) : bool = UInt64.t'int (index_array_usize_n self.idx i)
+      < UInt64.t'int self.n
     /\ UInt64.t'int (index_array_usize_n self.back (UInt64.t'int (index_array_usize_n self.idx i))) = i
   
   function index_array_T_n [@inline:trivial] (self: Slice64.array t_T) (ix: int) : t_T = Seq.get (Slice64.view self) ix
@@ -556,8 +553,8 @@ module M_impl_Resolve_for_Sparse_T__resolve_coherence (* <Sparse<T, SIZE> as cre
   axiom view_Sparse_T_spec: forall self: t_Sparse_T [view_Sparse_T self]. Seq.length (view_Sparse_T self)
       = UInt64.t'int const_SIZE
   
-  predicate resolve_Sparse_T (self: t_Sparse_T) =
-    forall i: int. 0 <= i /\ i < UInt64.t'int const_SIZE -> resolve_Option_T (Seq.get (view_Sparse_T self) i)
+  function resolve_Sparse_T (self: t_Sparse_T) : bool = forall i: int. 0 <= i /\ i < UInt64.t'int const_SIZE
+      -> resolve_Option_T (Seq.get (view_Sparse_T self) i)
   
   meta "compute_max_steps" 1000000
   
@@ -591,70 +588,69 @@ module M_impl_Resolve_for_Sparse_T__resolve_coherence__refines (* <Sparse<T, SIZ
   
   meta "rewrite_def" function index_array_usize_n
   
-  predicate invariant_Sparse_T (self: t_Sparse_T) =
-    UInt64.t'int self.n <= UInt64.t'int const_SIZE
+  function invariant_Sparse_T (self: t_Sparse_T) : bool = UInt64.t'int self.n <= UInt64.t'int const_SIZE
     /\ (forall i: int. 0 <= i /\ i < UInt64.t'int self.n
       -> (let j = index_array_usize_n self.back i in 0 <= UInt64.t'int j
       /\ UInt64.t'int j < UInt64.t'int const_SIZE /\ UInt64.t'int (index_array_usize_n self.idx (UInt64.t'int j)) = i))
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_T (Seq.get self i)
+  function invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+      -> inv_ref_T (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_T
+  meta "rewrite_def" function invariant_Seq_T
   
-  predicate inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Seq_T _1
+  function inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Seq_T
+  meta "rewrite_def" function inv_Seq_T
   
-  predicate invariant_array_T_n (self: Slice64.array t_T) =
-    inv_Seq_T (Slice64.view self) /\ Seq.length (Slice64.view self) = UInt64.t'int const_SIZE
+  function invariant_array_T_n (self: Slice64.array t_T) : bool = inv_Seq_T (Slice64.view self)
+    /\ Seq.length (Slice64.view self) = UInt64.t'int const_SIZE
   
-  predicate inv_array_T_n [@inline:trivial] (_1: Slice64.array t_T) = invariant_array_T_n _1
+  function inv_array_T_n [@inline:trivial] (_1: Slice64.array t_T) : bool = invariant_array_T_n _1
   
-  meta "rewrite_def" predicate inv_array_T_n
+  meta "rewrite_def" function inv_array_T_n
   
-  predicate inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) = true
+  function inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_usize
+  meta "rewrite_def" function inv_Seq_usize
   
-  predicate invariant_array_usize_n (self: Slice64.array UInt64.t) =
-    inv_Seq_usize (Slice64.view self) /\ Seq.length (Slice64.view self) = UInt64.t'int const_SIZE
+  function invariant_array_usize_n (self: Slice64.array UInt64.t) : bool = inv_Seq_usize (Slice64.view self)
+    /\ Seq.length (Slice64.view self) = UInt64.t'int const_SIZE
   
-  predicate inv_array_usize_n [@inline:trivial] (_1: Slice64.array UInt64.t) = invariant_array_usize_n _1
+  function inv_array_usize_n [@inline:trivial] (_1: Slice64.array UInt64.t) : bool = invariant_array_usize_n _1
   
-  meta "rewrite_def" predicate inv_array_usize_n
+  meta "rewrite_def" function inv_array_usize_n
   
-  predicate inv_Sparse_T (_1: t_Sparse_T)
+  function inv_Sparse_T (_1: t_Sparse_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Sparse_T [inv_Sparse_T _1]. inv_Sparse_T _1
       = (invariant_Sparse_T _1 /\ inv_array_T_n _1.values /\ inv_array_usize_n _1.idx /\ inv_array_usize_n _1.back)
   
-  predicate resolve_T (_1: t_T)
+  function resolve_T (_1: t_T) : bool
   
-  predicate resolve_array_T_n [@inline:trivial] (self: Slice64.array t_T) =
-    forall i: int. 0 <= i /\ i < UInt64.t'int const_SIZE -> resolve_T (Seq.get (Slice64.view self) i)
+  function resolve_array_T_n [@inline:trivial] (self: Slice64.array t_T) : bool = forall i: int. 0 <= i
+        /\ i < UInt64.t'int const_SIZE -> resolve_T (Seq.get (Slice64.view self) i)
   
-  meta "rewrite_def" predicate resolve_array_T_n
+  meta "rewrite_def" function resolve_array_T_n
   
-  predicate resolve_array_T_n'0 [@inline:trivial] (_1: Slice64.array t_T) = resolve_array_T_n _1
+  function resolve_array_T_n'0 [@inline:trivial] (_1: Slice64.array t_T) : bool = resolve_array_T_n _1
   
-  meta "rewrite_def" predicate resolve_array_T_n'0
+  meta "rewrite_def" function resolve_array_T_n'0
   
-  predicate structural_resolve_Sparse_T (_1: t_Sparse_T) = resolve_array_T_n'0 _1.values
+  function structural_resolve_Sparse_T (_1: t_Sparse_T) : bool = resolve_array_T_n'0 _1.values
   
   type t_Option_T = None | Some t_T
   
-  predicate resolve_Option_T (_1: t_Option_T)
+  function resolve_Option_T (_1: t_Option_T) : bool
   
   axiom resolve_axiom [@rewrite]: forall _1: t_Option_T [resolve_Option_T _1]. resolve_Option_T _1
       = match _1 with
@@ -662,8 +658,8 @@ module M_impl_Resolve_for_Sparse_T__resolve_coherence__refines (* <Sparse<T, SIZ
         | Some x0 -> resolve_T x0
         end
   
-  predicate is_elt_T (self: t_Sparse_T) (i: int) =
-    UInt64.t'int (index_array_usize_n self.idx i) < UInt64.t'int self.n
+  function is_elt_T (self: t_Sparse_T) (i: int) : bool = UInt64.t'int (index_array_usize_n self.idx i)
+      < UInt64.t'int self.n
     /\ UInt64.t'int (index_array_usize_n self.back (UInt64.t'int (index_array_usize_n self.idx i))) = i
   
   function index_array_T_n [@inline:trivial] (self: Slice64.array t_T) (ix: int) : t_T = Seq.get (Slice64.view self) ix
@@ -680,8 +676,8 @@ module M_impl_Resolve_for_Sparse_T__resolve_coherence__refines (* <Sparse<T, SIZ
   axiom view_Sparse_T_spec: forall self: t_Sparse_T [view_Sparse_T self]. Seq.length (view_Sparse_T self)
       = UInt64.t'int const_SIZE
   
-  predicate resolve_Sparse_T (self: t_Sparse_T) =
-    forall i: int. 0 <= i /\ i < UInt64.t'int const_SIZE -> resolve_Option_T (Seq.get (view_Sparse_T self) i)
+  function resolve_Sparse_T (self: t_Sparse_T) : bool = forall i: int. 0 <= i /\ i < UInt64.t'int const_SIZE
+      -> resolve_Option_T (Seq.get (view_Sparse_T self) i)
   
   meta "compute_max_steps" 1000000
   
@@ -696,26 +692,26 @@ module M_impl_Sparse_T__bounded_fset_len (* Sparse<T, SIZE> *)
   use set.Fset
   use int.Int
   
-  predicate contains_Int [@inline:trivial] (self: Fset.fset int) (e: int) = Fset.mem e self
+  function contains_Int [@inline:trivial] (self: Fset.fset int) (e: int) : bool = Fset.mem e self
   
-  meta "rewrite_def" predicate contains_Int
+  meta "rewrite_def" function contains_Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   function remove_Int [@inline:trivial] (self: Fset.fset int) (e: int) : Fset.fset int = Fset.remove e self
   
   meta "rewrite_def" function remove_Int
   
-  predicate well_founded_relation_Int [@inline:trivial] (self: int) (other: int) =
-    ge_log_Int self 0 /\ gt_log_Int self other
+  function well_founded_relation_Int [@inline:trivial] (self: int) (other: int) : bool = ge_log_Int self 0
+    /\ gt_log_Int self other
   
-  meta "rewrite_def" predicate well_founded_relation_Int
+  meta "rewrite_def" function well_founded_relation_Int
   
   meta "compute_max_steps" 1000000
   
@@ -764,63 +760,62 @@ module M_impl_Sparse_T__get (* Sparse<T, SIZE> *)
   
   meta "rewrite_def" function index_array_usize_n
   
-  predicate invariant_Sparse_T (self: t_Sparse_T) =
-    UInt64.t'int self.n <= UInt64.t'int const_SIZE
+  function invariant_Sparse_T (self: t_Sparse_T) : bool = UInt64.t'int self.n <= UInt64.t'int const_SIZE
     /\ (forall i: int. 0 <= i /\ i < UInt64.t'int self.n
       -> (let j = index_array_usize_n self.back i in 0 <= UInt64.t'int j
       /\ UInt64.t'int j < UInt64.t'int const_SIZE /\ UInt64.t'int (index_array_usize_n self.idx (UInt64.t'int j)) = i))
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_T (Seq.get self i)
+  function invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+      -> inv_ref_T (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_T
+  meta "rewrite_def" function invariant_Seq_T
   
-  predicate inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Seq_T _1
+  function inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Seq_T
+  meta "rewrite_def" function inv_Seq_T
   
-  predicate invariant_array_T_n (self: Slice64.array t_T) =
-    inv_Seq_T (Slice64.view self) /\ Seq.length (Slice64.view self) = UInt64.t'int const_SIZE
+  function invariant_array_T_n (self: Slice64.array t_T) : bool = inv_Seq_T (Slice64.view self)
+    /\ Seq.length (Slice64.view self) = UInt64.t'int const_SIZE
   
-  predicate inv_array_T_n [@inline:trivial] (_1: Slice64.array t_T) = invariant_array_T_n _1
+  function inv_array_T_n [@inline:trivial] (_1: Slice64.array t_T) : bool = invariant_array_T_n _1
   
-  meta "rewrite_def" predicate inv_array_T_n
+  meta "rewrite_def" function inv_array_T_n
   
-  predicate inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) = true
+  function inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_usize
+  meta "rewrite_def" function inv_Seq_usize
   
-  predicate invariant_array_usize_n (self: Slice64.array UInt64.t) =
-    inv_Seq_usize (Slice64.view self) /\ Seq.length (Slice64.view self) = UInt64.t'int const_SIZE
+  function invariant_array_usize_n (self: Slice64.array UInt64.t) : bool = inv_Seq_usize (Slice64.view self)
+    /\ Seq.length (Slice64.view self) = UInt64.t'int const_SIZE
   
-  predicate inv_array_usize_n [@inline:trivial] (_1: Slice64.array UInt64.t) = invariant_array_usize_n _1
+  function inv_array_usize_n [@inline:trivial] (_1: Slice64.array UInt64.t) : bool = invariant_array_usize_n _1
   
-  meta "rewrite_def" predicate inv_array_usize_n
+  meta "rewrite_def" function inv_array_usize_n
   
-  predicate inv_Sparse_T (_1: t_Sparse_T)
+  function inv_Sparse_T (_1: t_Sparse_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Sparse_T [inv_Sparse_T _1]. inv_Sparse_T _1
       = (invariant_Sparse_T _1 /\ inv_array_T_n _1.values /\ inv_array_usize_n _1.idx /\ inv_array_usize_n _1.back)
   
-  predicate invariant_ref_Sparse_T [@inline:trivial] (self: t_Sparse_T) = inv_Sparse_T self
+  function invariant_ref_Sparse_T [@inline:trivial] (self: t_Sparse_T) : bool = inv_Sparse_T self
   
-  meta "rewrite_def" predicate invariant_ref_Sparse_T
+  meta "rewrite_def" function invariant_ref_Sparse_T
   
-  predicate inv_ref_Sparse_T [@inline:trivial] (_1: t_Sparse_T) = invariant_ref_Sparse_T _1
+  function inv_ref_Sparse_T [@inline:trivial] (_1: t_Sparse_T) : bool = invariant_ref_Sparse_T _1
   
-  meta "rewrite_def" predicate inv_ref_Sparse_T
+  meta "rewrite_def" function inv_ref_Sparse_T
   
-  predicate inv_Option_ref_T (_1: t_Option_ref_T)
+  function inv_Option_ref_T (_1: t_Option_ref_T) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Option_ref_T [inv_Option_ref_T _1]. inv_Option_ref_T _1
       = match _1 with
@@ -830,8 +825,8 @@ module M_impl_Sparse_T__get (* Sparse<T, SIZE> *)
   
   type t_Option_T = None'0 | Some'0 t_T
   
-  predicate is_elt_T (self: t_Sparse_T) (i: int) =
-    UInt64.t'int (index_array_usize_n self.idx i) < UInt64.t'int self.n
+  function is_elt_T (self: t_Sparse_T) (i: int) : bool = UInt64.t'int (index_array_usize_n self.idx i)
+      < UInt64.t'int self.n
     /\ UInt64.t'int (index_array_usize_n self.back (UInt64.t'int (index_array_usize_n self.idx i))) = i
   
   function index_array_T_n [@inline:trivial] (self: Slice64.array t_T) (ix: int) : t_T = Seq.get (Slice64.view self) ix
@@ -926,69 +921,68 @@ module M_impl_Sparse_T__lemma_permutation (* Sparse<T, SIZE> *)
   
   meta "rewrite_def" function index_array_usize_n
   
-  predicate invariant_Sparse_T (self: t_Sparse_T) =
-    UInt64.t'int self.n <= UInt64.t'int const_SIZE
+  function invariant_Sparse_T (self: t_Sparse_T) : bool = UInt64.t'int self.n <= UInt64.t'int const_SIZE
     /\ (forall i: int. 0 <= i /\ i < UInt64.t'int self.n
       -> (let j = index_array_usize_n self.back i in 0 <= UInt64.t'int j
       /\ UInt64.t'int j < UInt64.t'int const_SIZE /\ UInt64.t'int (index_array_usize_n self.idx (UInt64.t'int j)) = i))
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_T (Seq.get self i)
+  function invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+      -> inv_ref_T (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_T
+  meta "rewrite_def" function invariant_Seq_T
   
-  predicate inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Seq_T _1
+  function inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Seq_T
+  meta "rewrite_def" function inv_Seq_T
   
-  predicate invariant_array_T_n (self: Slice64.array t_T) =
-    inv_Seq_T (Slice64.view self) /\ Seq.length (Slice64.view self) = UInt64.t'int const_SIZE
+  function invariant_array_T_n (self: Slice64.array t_T) : bool = inv_Seq_T (Slice64.view self)
+    /\ Seq.length (Slice64.view self) = UInt64.t'int const_SIZE
   
-  predicate inv_array_T_n [@inline:trivial] (_1: Slice64.array t_T) = invariant_array_T_n _1
+  function inv_array_T_n [@inline:trivial] (_1: Slice64.array t_T) : bool = invariant_array_T_n _1
   
-  meta "rewrite_def" predicate inv_array_T_n
+  meta "rewrite_def" function inv_array_T_n
   
-  predicate inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) = true
+  function inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_usize
+  meta "rewrite_def" function inv_Seq_usize
   
-  predicate invariant_array_usize_n (self: Slice64.array UInt64.t) =
-    inv_Seq_usize (Slice64.view self) /\ Seq.length (Slice64.view self) = UInt64.t'int const_SIZE
+  function invariant_array_usize_n (self: Slice64.array UInt64.t) : bool = inv_Seq_usize (Slice64.view self)
+    /\ Seq.length (Slice64.view self) = UInt64.t'int const_SIZE
   
-  predicate inv_array_usize_n [@inline:trivial] (_1: Slice64.array UInt64.t) = invariant_array_usize_n _1
+  function inv_array_usize_n [@inline:trivial] (_1: Slice64.array UInt64.t) : bool = invariant_array_usize_n _1
   
-  meta "rewrite_def" predicate inv_array_usize_n
+  meta "rewrite_def" function inv_array_usize_n
   
-  predicate inv_Sparse_T (_1: t_Sparse_T)
+  function inv_Sparse_T (_1: t_Sparse_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Sparse_T [inv_Sparse_T _1]. inv_Sparse_T _1
       = (invariant_Sparse_T _1 /\ inv_array_T_n _1.values /\ inv_array_usize_n _1.idx /\ inv_array_usize_n _1.back)
   
-  predicate is_elt_T (self: t_Sparse_T) (i: int) =
-    UInt64.t'int (index_array_usize_n self.idx i) < UInt64.t'int self.n
+  function is_elt_T (self: t_Sparse_T) (i: int) : bool = UInt64.t'int (index_array_usize_n self.idx i)
+      < UInt64.t'int self.n
     /\ UInt64.t'int (index_array_usize_n self.back (UInt64.t'int (index_array_usize_n self.idx i))) = i
   
-  predicate contains_Int [@inline:trivial] (self: Fset.fset int) (e: int) = Fset.mem e self
+  function contains_Int [@inline:trivial] (self: Fset.fset int) (e: int) : bool = Fset.mem e self
   
-  meta "rewrite_def" predicate contains_Int
+  meta "rewrite_def" function contains_Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   function remove_Int [@inline:trivial] (self: Fset.fset int) (e: int) : Fset.fset int = Fset.remove e self
   
@@ -1107,65 +1101,64 @@ module M_impl_Sparse_T__lemma_permutation_aux (* Sparse<T, SIZE> *)
   
   meta "rewrite_def" function index_array_usize_n
   
-  predicate invariant_Sparse_T (self: t_Sparse_T) =
-    UInt64.t'int self.n <= UInt64.t'int const_SIZE
+  function invariant_Sparse_T (self: t_Sparse_T) : bool = UInt64.t'int self.n <= UInt64.t'int const_SIZE
     /\ (forall i: int. 0 <= i /\ i < UInt64.t'int self.n
       -> (let j = index_array_usize_n self.back i in 0 <= UInt64.t'int j
       /\ UInt64.t'int j < UInt64.t'int const_SIZE /\ UInt64.t'int (index_array_usize_n self.idx (UInt64.t'int j)) = i))
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_T (Seq.get self i)
+  function invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+      -> inv_ref_T (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_T
+  meta "rewrite_def" function invariant_Seq_T
   
-  predicate inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Seq_T _1
+  function inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Seq_T
+  meta "rewrite_def" function inv_Seq_T
   
-  predicate invariant_array_T_n (self: Slice64.array t_T) =
-    inv_Seq_T (Slice64.view self) /\ Seq.length (Slice64.view self) = UInt64.t'int const_SIZE
+  function invariant_array_T_n (self: Slice64.array t_T) : bool = inv_Seq_T (Slice64.view self)
+    /\ Seq.length (Slice64.view self) = UInt64.t'int const_SIZE
   
-  predicate inv_array_T_n [@inline:trivial] (_1: Slice64.array t_T) = invariant_array_T_n _1
+  function inv_array_T_n [@inline:trivial] (_1: Slice64.array t_T) : bool = invariant_array_T_n _1
   
-  meta "rewrite_def" predicate inv_array_T_n
+  meta "rewrite_def" function inv_array_T_n
   
-  predicate inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) = true
+  function inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_usize
+  meta "rewrite_def" function inv_Seq_usize
   
-  predicate invariant_array_usize_n (self: Slice64.array UInt64.t) =
-    inv_Seq_usize (Slice64.view self) /\ Seq.length (Slice64.view self) = UInt64.t'int const_SIZE
+  function invariant_array_usize_n (self: Slice64.array UInt64.t) : bool = inv_Seq_usize (Slice64.view self)
+    /\ Seq.length (Slice64.view self) = UInt64.t'int const_SIZE
   
-  predicate inv_array_usize_n [@inline:trivial] (_1: Slice64.array UInt64.t) = invariant_array_usize_n _1
+  function inv_array_usize_n [@inline:trivial] (_1: Slice64.array UInt64.t) : bool = invariant_array_usize_n _1
   
-  meta "rewrite_def" predicate inv_array_usize_n
+  meta "rewrite_def" function inv_array_usize_n
   
-  predicate inv_Sparse_T (_1: t_Sparse_T)
+  function inv_Sparse_T (_1: t_Sparse_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Sparse_T [inv_Sparse_T _1]. inv_Sparse_T _1
       = (invariant_Sparse_T _1 /\ inv_array_T_n _1.values /\ inv_array_usize_n _1.idx /\ inv_array_usize_n _1.back)
   
-  predicate contains_Int [@inline:trivial] (self: Fset.fset int) (e: int) = Fset.mem e self
+  function contains_Int [@inline:trivial] (self: Fset.fset int) (e: int) : bool = Fset.mem e self
   
-  meta "rewrite_def" predicate contains_Int
+  meta "rewrite_def" function contains_Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   function remove_Int [@inline:trivial] (self: Fset.fset int) (e: int) : Fset.fset int = Fset.remove e self
   
@@ -1186,10 +1179,10 @@ module M_impl_Sparse_T__lemma_permutation_aux (* Sparse<T, SIZE> *)
   
   meta "rewrite_def" function add_Int
   
-  predicate well_founded_relation_Int [@inline:trivial] (self: int) (other: int) =
-    ge_log_Int self 0 /\ gt_log_Int self other
+  function well_founded_relation_Int [@inline:trivial] (self: int) (other: int) : bool = ge_log_Int self 0
+    /\ gt_log_Int self other
   
-  meta "rewrite_def" predicate well_founded_relation_Int
+  meta "rewrite_def" function well_founded_relation_Int
   
   meta "compute_max_steps" 1000000
   
@@ -1267,7 +1260,7 @@ module M_impl_Sparse_T__set (* Sparse<T, SIZE> *)
   
   type t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
   function index_array_T_n [@inline:trivial] (self: Slice64.array t_T) (ix: UInt64.t) : t_T =
     Seq.get (Slice64.view self) (UInt64.t'int ix)
@@ -1280,87 +1273,86 @@ module M_impl_Sparse_T__set (* Sparse<T, SIZE> *)
     idx: Slice64.array UInt64.t;
     back: Slice64.array UInt64.t }
   
-  predicate resolve_T (_1: t_T)
+  function resolve_T (_1: t_T) : bool
   
   function index_array_usize_n [@inline:trivial] (self: Slice64.array UInt64.t) (ix: int) : UInt64.t =
     Seq.get (Slice64.view self) ix
   
   meta "rewrite_def" function index_array_usize_n
   
-  predicate invariant_Sparse_T (self: t_Sparse_T) =
-    UInt64.t'int self.n <= UInt64.t'int const_SIZE
+  function invariant_Sparse_T (self: t_Sparse_T) : bool = UInt64.t'int self.n <= UInt64.t'int const_SIZE
     /\ (forall i: int. 0 <= i /\ i < UInt64.t'int self.n
       -> (let j = index_array_usize_n self.back i in 0 <= UInt64.t'int j
       /\ UInt64.t'int j < UInt64.t'int const_SIZE /\ UInt64.t'int (index_array_usize_n self.idx (UInt64.t'int j)) = i))
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_T (Seq.get self i)
+  function invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+      -> inv_ref_T (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_T
+  meta "rewrite_def" function invariant_Seq_T
   
-  predicate inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Seq_T _1
+  function inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Seq_T
+  meta "rewrite_def" function inv_Seq_T
   
-  predicate invariant_array_T_n (self: Slice64.array t_T) =
-    inv_Seq_T (Slice64.view self) /\ Seq.length (Slice64.view self) = UInt64.t'int const_SIZE
+  function invariant_array_T_n (self: Slice64.array t_T) : bool = inv_Seq_T (Slice64.view self)
+    /\ Seq.length (Slice64.view self) = UInt64.t'int const_SIZE
   
-  predicate inv_array_T_n [@inline:trivial] (_1: Slice64.array t_T) = invariant_array_T_n _1
+  function inv_array_T_n [@inline:trivial] (_1: Slice64.array t_T) : bool = invariant_array_T_n _1
   
-  meta "rewrite_def" predicate inv_array_T_n
+  meta "rewrite_def" function inv_array_T_n
   
-  predicate inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) = true
+  function inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_usize
+  meta "rewrite_def" function inv_Seq_usize
   
-  predicate invariant_array_usize_n (self: Slice64.array UInt64.t) =
-    inv_Seq_usize (Slice64.view self) /\ Seq.length (Slice64.view self) = UInt64.t'int const_SIZE
+  function invariant_array_usize_n (self: Slice64.array UInt64.t) : bool = inv_Seq_usize (Slice64.view self)
+    /\ Seq.length (Slice64.view self) = UInt64.t'int const_SIZE
   
-  predicate inv_array_usize_n [@inline:trivial] (_1: Slice64.array UInt64.t) = invariant_array_usize_n _1
+  function inv_array_usize_n [@inline:trivial] (_1: Slice64.array UInt64.t) : bool = invariant_array_usize_n _1
   
-  meta "rewrite_def" predicate inv_array_usize_n
+  meta "rewrite_def" function inv_array_usize_n
   
-  predicate inv_Sparse_T (_1: t_Sparse_T)
+  function inv_Sparse_T (_1: t_Sparse_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Sparse_T [inv_Sparse_T _1]. inv_Sparse_T _1
       = (invariant_Sparse_T _1 /\ inv_array_T_n _1.values /\ inv_array_usize_n _1.idx /\ inv_array_usize_n _1.back)
   
-  predicate invariant_refmut_Sparse_T [@inline:trivial] (self: MutBorrow.t t_Sparse_T) =
-    inv_Sparse_T self.current /\ inv_Sparse_T self.final
+  function invariant_refmut_Sparse_T [@inline:trivial] (self: MutBorrow.t t_Sparse_T) : bool = inv_Sparse_T self.current
+    /\ inv_Sparse_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Sparse_T
+  meta "rewrite_def" function invariant_refmut_Sparse_T
   
-  predicate inv_refmut_Sparse_T [@inline:trivial] (_1: MutBorrow.t t_Sparse_T) = invariant_refmut_Sparse_T _1
+  function inv_refmut_Sparse_T [@inline:trivial] (_1: MutBorrow.t t_Sparse_T) : bool = invariant_refmut_Sparse_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Sparse_T
+  meta "rewrite_def" function inv_refmut_Sparse_T
   
-  predicate resolve_refmut_Sparse_T [@inline:trivial] (_1: MutBorrow.t t_Sparse_T) = _1.final = _1.current
+  function resolve_refmut_Sparse_T [@inline:trivial] (_1: MutBorrow.t t_Sparse_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Sparse_T
+  meta "rewrite_def" function resolve_refmut_Sparse_T
   
-  predicate is_elt_T (self: t_Sparse_T) (i: int) =
-    UInt64.t'int (index_array_usize_n self.idx i) < UInt64.t'int self.n
+  function is_elt_T (self: t_Sparse_T) (i: int) : bool = UInt64.t'int (index_array_usize_n self.idx i)
+      < UInt64.t'int self.n
     /\ UInt64.t'int (index_array_usize_n self.back (UInt64.t'int (index_array_usize_n self.idx i))) = i
   
-  predicate contains_Int [@inline:trivial] (self: Fset.fset int) (e: int) = Fset.mem e self
+  function contains_Int [@inline:trivial] (self: Fset.fset int) (e: int) : bool = Fset.mem e self
   
-  meta "rewrite_def" predicate contains_Int
+  meta "rewrite_def" function contains_Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   function remove_Int [@inline:trivial] (self: Fset.fset int) (e: int) : Fset.fset int = Fset.remove e self
   
@@ -1550,8 +1542,8 @@ module M_impl_View_for_Sparse_T__view (* <Sparse<T, SIZE> as creusot_std::model:
   
   meta "rewrite_def" function index_array_usize_n
   
-  predicate is_elt_T (self: t_Sparse_T) (i: int) =
-    UInt64.t'int (index_array_usize_n self.idx i) < UInt64.t'int self.n
+  function is_elt_T (self: t_Sparse_T) (i: int) : bool = UInt64.t'int (index_array_usize_n self.idx i)
+      < UInt64.t'int self.n
     /\ UInt64.t'int (index_array_usize_n self.back (UInt64.t'int (index_array_usize_n self.idx i))) = i
   
   function index_array_T_n [@inline:trivial] (self: Slice64.array t_T) (ix: int) : t_T = Seq.get (Slice64.view self) ix

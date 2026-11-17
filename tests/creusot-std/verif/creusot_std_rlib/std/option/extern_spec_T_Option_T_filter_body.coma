@@ -14,25 +14,25 @@ let elim_Some (_x: t_Option_T) (return (f0: t_T)) = any
 
 type t_P
 
-predicate inv_P (_1: t_P)
+function inv_P (_1: t_P) : bool
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
 
-meta "rewrite_def" predicate invariant_ref_T
+meta "rewrite_def" function invariant_ref_T
 
-predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
 
-meta "rewrite_def" predicate inv_ref_T
+meta "rewrite_def" function inv_ref_T
 
-predicate inv_tup1_ref_T [@inline:trivial] (_1: t_T) = inv_ref_T _1
+function inv_tup1_ref_T [@inline:trivial] (_1: t_T) : bool = inv_ref_T _1
 
-meta "rewrite_def" predicate inv_tup1_ref_T
+meta "rewrite_def" function inv_tup1_ref_T
 
-predicate precondition_P (self: t_P) (args: t_T)
+function precondition_P (self: t_P) (args: t_T) : bool
 
-predicate postcondition_once_P (self: t_P) (args: t_T) (result: bool)
+function postcondition_once_P (self: t_P) (args: t_T) (result: bool) : bool
 
 let call_once_P (self: t_P) (args: t_T) (return (x: bool)) =
 {[@stop_split] [@expl:call_once_P requires] ([@stop_split] [@expl:call_once 'self' type invariant] inv_P self)
@@ -42,11 +42,11 @@ let call_once_P (self: t_P) (args: t_T) (return (x: bool)) =
   [ return (result: bool) -> {[@stop_split] [@expl:call_once ensures] postcondition_once_P self args result}
     (! return {result}) ]
 
-predicate resolve_T (_1: t_T)
+function resolve_T (_1: t_T) : bool
 
-predicate resolve_P (_1: t_P)
+function resolve_P (_1: t_P) : bool
 
-predicate inv_Option_T (_1: t_Option_T)
+function inv_Option_T (_1: t_Option_T) : bool
 
 axiom inv_axiom [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_T _1
     = match _1 with
@@ -54,7 +54,7 @@ axiom inv_axiom [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_
       | Some f0 -> inv_T f0
       end
 
-predicate resolve_Option_T (_1: t_Option_T)
+function resolve_Option_T (_1: t_Option_T) : bool
 
 axiom resolve_axiom [@rewrite]: forall _1: t_Option_T [resolve_Option_T _1]. resolve_Option_T _1
     = match _1 with

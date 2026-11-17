@@ -11,21 +11,21 @@ function addr_NonNull_T [@inline:trivial] (self: t_NonNull_T) : UInt64.t = Ptr.a
 
 meta "rewrite_def" function addr_NonNull_T
 
-predicate is_null_NonNull_T (self: t_NonNull_T) = addr_NonNull_T self = (0: UInt64.t)
+function is_null_NonNull_T (self: t_NonNull_T) : bool = addr_NonNull_T self = (0: UInt64.t)
 
-predicate invariant_NonNull_T (self: t_NonNull_T) = not is_null_NonNull_T self
+function invariant_NonNull_T (self: t_NonNull_T) : bool = not is_null_NonNull_T self
 
-predicate inv_NonNull_T (_1: t_NonNull_T)
+function inv_NonNull_T (_1: t_NonNull_T) : bool
 
 axiom inv_axiom: forall _1: t_NonNull_T [inv_NonNull_T _1]. inv_NonNull_T _1 -> invariant_NonNull_T _1
 
-predicate invariant_ref_NonNull_T [@inline:trivial] (self: t_NonNull_T) = inv_NonNull_T self
+function invariant_ref_NonNull_T [@inline:trivial] (self: t_NonNull_T) : bool = inv_NonNull_T self
 
-meta "rewrite_def" predicate invariant_ref_NonNull_T
+meta "rewrite_def" function invariant_ref_NonNull_T
 
-predicate inv_ref_NonNull_T [@inline:trivial] (_1: t_NonNull_T) = invariant_ref_NonNull_T _1
+function inv_ref_NonNull_T [@inline:trivial] (_1: t_NonNull_T) : bool = invariant_ref_NonNull_T _1
 
-meta "rewrite_def" predicate inv_ref_NonNull_T
+meta "rewrite_def" function inv_ref_NonNull_T
 
 meta "compute_max_steps" 1000000
 

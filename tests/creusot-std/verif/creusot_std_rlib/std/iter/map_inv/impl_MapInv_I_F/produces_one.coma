@@ -16,11 +16,11 @@ type t_B
 
 type tup2_Item_Snapshot_Seq_Item = { f0: t_Item; f1: Seq.seq t_Item }
 
-predicate postcondition_once_F (self: t_F) (args: tup2_Item_Snapshot_Seq_Item) (result: t_B)
+function postcondition_once_F (self: t_F) (args: tup2_Item_Snapshot_Seq_Item) (result: t_B) : bool
 
-predicate resolve_F (_1: t_F)
+function resolve_F (_1: t_F) : bool
 
-predicate postcondition_mut_F (self: t_F) (args: tup2_Item_Snapshot_Seq_Item) (result_state: t_F) (result: t_B)
+function postcondition_mut_F (self: t_F) (args: tup2_Item_Snapshot_Seq_Item) (result_state: t_F) (result: t_B) : bool
 
 function fn_mut_once_F (self: t_F) (args: tup2_Item_Snapshot_Seq_Item) (res: t_B) : ()
 
@@ -28,7 +28,7 @@ axiom fn_mut_once_F_spec:
   forall self: t_F, args: tup2_Item_Snapshot_Seq_Item, res: t_B [postcondition_once_F self args res]. postcondition_once_F self args res
     = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
 
-predicate hist_inv_F (self: t_F) (result_state: t_F)
+function hist_inv_F (self: t_F) (result_state: t_F) : bool
 
 function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
 
@@ -46,7 +46,7 @@ axiom postcondition_mut_hist_inv_F_spec:
   forall self: t_F, args: tup2_Item_Snapshot_Seq_Item, res_state: t_F, res: t_B [postcondition_mut_F self args res_state res | hist_inv_F self res_state]. postcondition_mut_F self args res_state res
     -> hist_inv_F self res_state
 
-predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
 
 function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
 
@@ -57,7 +57,7 @@ function produces_refl_I (self: t_I) : ()
 
 axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
 
-predicate produces_MapInv_I_F [@inline:trivial] (self: t_MapInv_I_F) (visited: Seq.seq t_B) (succ: t_MapInv_I_F) =
+function produces_MapInv_I_F [@inline:trivial] (self: t_MapInv_I_F) (visited: Seq.seq t_B) (succ: t_MapInv_I_F) : bool =
   hist_inv_F self.func succ.func
   /\ (exists fs: Seq.seq (MutBorrow.t t_F). Seq.length fs = Seq.length visited
     /\ (exists s: Seq.seq t_Item. Seq.length s = Seq.length visited
@@ -74,7 +74,7 @@ predicate produces_MapInv_I_F [@inline:trivial] (self: t_MapInv_I_F) (visited: S
         /\ postcondition_mut_F (Seq.get fs i).current { f0 = Seq.get s i;
                                                         f1 = Seq.(++) self.produced (Seq.([..]) s 0 i) } (Seq.get fs i).final (Seq.get visited i))))
 
-meta "rewrite_def" predicate produces_MapInv_I_F
+meta "rewrite_def" function produces_MapInv_I_F
 
 function produces_trans_MapInv_I_F (a: t_MapInv_I_F) (ab: Seq.seq t_B) (b: t_MapInv_I_F) (bc: Seq.seq t_B) (c: t_MapInv_I_F) : ()
  = ()
@@ -97,7 +97,7 @@ constant visited : t_B
 
 constant succ : t_MapInv_I_F
 
-predicate produces_one_I (self: t_MapInv_I_F) (visited: t_B) (succ: t_MapInv_I_F)
+function produces_one_I (self: t_MapInv_I_F) (visited: t_B) (succ: t_MapInv_I_F) : bool
 
 goal vc_produces_one_I: [@stop_split] [@expl:produces_one ensures] (exists f: MutBorrow.t t_F, e: t_Item. f.current
         = self.func

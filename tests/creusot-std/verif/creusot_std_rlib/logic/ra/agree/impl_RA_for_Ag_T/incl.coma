@@ -16,7 +16,7 @@ constant self : t_Ag_T
 
 constant other : t_Ag_T
 
-predicate incl_Ag_T (self: t_Ag_T) (other: t_Ag_T)
+function incl_Ag_T (self: t_Ag_T) (other: t_Ag_T) : bool
 
 goal vc_incl_Ag_T: [@stop_split] [@expl:incl ensures] (self.f0 = other.f0)
   = (exists factor: t_Ag_T. op_Ag_T self factor = Some other)

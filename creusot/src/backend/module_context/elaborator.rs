@@ -361,11 +361,8 @@ impl<'a, 'ctx, 'tcx> Expander<'a, 'ctx, 'tcx> {
         let names = self.namer(dep);
         let name = names.dependency(dep).ident();
         let sig = lower_logic_sig(ctx, &names, name, &pre_sig, def_id);
-        let kind = match sig.why_sig.retty {
-            None => DeclKind::Predicate,
-            Some(_) if sig.why_sig.args.is_empty() => DeclKind::Constant,
-            _ => DeclKind::Function,
-        };
+        let kind =
+            if sig.why_sig.args.is_empty() { DeclKind::Constant } else { DeclKind::Function };
         let mut decls = if concealed {
             vec![Decl::LogicDecl(LogicDecl { kind: Some(kind), sig: sig.why_sig })]
         } else if !opaque && let Some(term) = term(ctx, &names, def_id, subst, &pre_sig.inputs) {
@@ -703,7 +700,7 @@ impl<'a, 'ctx, 'tcx> Expander<'a, 'ctx, 'tcx> {
         let sig = Signature {
             name: names.dependency(dep).ident(),
             attrs: vec![],
-            retty: Some(translate_ty(ctx, &names, DUMMY_SP, target)),
+            retty: translate_ty(ctx, &names, DUMMY_SP, target),
             args: [(Ident::fresh_local("x"), translate_ty(ctx, &names, DUMMY_SP, source))].into(),
         };
         vec![Decl::LogicDecl(LogicDecl { kind: Some(DeclKind::Function), sig })]
@@ -784,7 +781,7 @@ impl<'a, 'ctx, 'tcx> Expander<'a, 'ctx, 'tcx> {
                 let sig = Signature {
                     name: namer.dependency(dep).ident(),
                     attrs: vec![],
-                    retty: None,
+                    retty: backend::ty::bool(),
                     args: Box::new([(
                         Ident::fresh_local("x"),
                         Type::TConstructor(Name::local(namer.private_fields(def_id, subst))),
@@ -868,12 +865,7 @@ impl<'a, 'ctx, 'tcx> Expander<'a, 'ctx, 'tcx> {
     }
 }
 
-fn val(mut sig: LogicSignature, kind: DeclKind) -> Vec<Decl> {
-    if let None = sig.why_sig.retty
-        && let DeclKind::Constant = kind
-    {
-        sig.why_sig.retty = Some(backend::ty::bool());
-    }
+fn val(sig: LogicSignature, kind: DeclKind) -> Vec<Decl> {
     let mut d = spec_axioms(&sig).collect::<Vec<_>>();
     d.insert(0, Decl::LogicDecl(LogicDecl { kind: Some(kind), sig: sig.why_sig }));
     d

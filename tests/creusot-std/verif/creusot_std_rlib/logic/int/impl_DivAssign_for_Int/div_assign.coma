@@ -9,9 +9,9 @@ let div_Int (self: int) (other: int) (return (x: int)) = {[@stop_split] [@expl:d
   [ return (result: int) -> {[@stop_split] [@expl:div ensures] result = ComputerDivision.div self other}
     (! return {result}) ]
 
-predicate resolve_refmut_Int [@inline:trivial] (_1: MutBorrow.t int) = _1.final = _1.current
+function resolve_refmut_Int [@inline:trivial] (_1: MutBorrow.t int) : bool = _1.final = _1.current
 
-meta "rewrite_def" predicate resolve_refmut_Int
+meta "rewrite_def" function resolve_refmut_Int
 
 meta "compute_max_steps" 1000000
 

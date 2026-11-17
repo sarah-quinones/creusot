@@ -8,24 +8,24 @@ module M_binary_search
   
   type t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_T (Seq.get self i)
+  function invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+      -> inv_ref_T (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_T
+  meta "rewrite_def" function invariant_Seq_T
   
-  predicate inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Seq_T _1
+  function inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Seq_T
+  meta "rewrite_def" function inv_Seq_T
   
   constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
   
@@ -34,19 +34,19 @@ module M_binary_search
   axiom view_Vec_T_Global_spec:
     forall self: t_Vec_T_Global [view_Vec_T_Global self]. Seq.length (view_Vec_T_Global self) <= UInt64.t'int const_MAX
   
-  predicate invariant_Vec_T_Global (self: t_Vec_T_Global) = inv_Seq_T (view_Vec_T_Global self)
+  function invariant_Vec_T_Global (self: t_Vec_T_Global) : bool = inv_Seq_T (view_Vec_T_Global self)
   
-  predicate inv_Vec_T_Global (_1: t_Vec_T_Global)
+  function inv_Vec_T_Global (_1: t_Vec_T_Global) : bool
   
   axiom inv_axiom: forall _1: t_Vec_T_Global [inv_Vec_T_Global _1]. inv_Vec_T_Global _1 -> invariant_Vec_T_Global _1
   
-  predicate invariant_ref_Vec_T_Global [@inline:trivial] (self: t_Vec_T_Global) = inv_Vec_T_Global self
+  function invariant_ref_Vec_T_Global [@inline:trivial] (self: t_Vec_T_Global) : bool = inv_Vec_T_Global self
   
-  meta "rewrite_def" predicate invariant_ref_Vec_T_Global
+  meta "rewrite_def" function invariant_ref_Vec_T_Global
   
-  predicate inv_ref_Vec_T_Global [@inline:trivial] (_1: t_Vec_T_Global) = invariant_ref_Vec_T_Global _1
+  function inv_ref_Vec_T_Global [@inline:trivial] (_1: t_Vec_T_Global) : bool = invariant_ref_Vec_T_Global _1
   
-  meta "rewrite_def" predicate inv_ref_Vec_T_Global
+  meta "rewrite_def" function inv_ref_Vec_T_Global
   
   let len_T (self: t_Vec_T_Global) (return (x: UInt64.t)) =
   {[@stop_split] [@expl:len 'self' type invariant] inv_ref_Vec_T_Global self}
@@ -55,15 +55,15 @@ module M_binary_search
       = Seq.length (view_Vec_T_Global self)}
       (! return {result}) ]
   
-  predicate resolve_T (_1: t_T)
+  function resolve_T (_1: t_T) : bool
   
   type t_Result_usize_usize = Ok UInt64.t | Err UInt64.t
   
   type t_DeepModelTy
   
-  predicate le_log_DeepModelTy (self: t_DeepModelTy) (other: t_DeepModelTy)
+  function le_log_DeepModelTy (self: t_DeepModelTy) (other: t_DeepModelTy) : bool
   
-  predicate lt_log_DeepModelTy (self: t_DeepModelTy) (other: t_DeepModelTy)
+  function lt_log_DeepModelTy (self: t_DeepModelTy) (other: t_DeepModelTy) : bool
   
   function le_lt_log_DeepModelTy (self: t_DeepModelTy) (other: t_DeepModelTy) : ()
   
@@ -102,14 +102,15 @@ module M_binary_search
   
   meta "rewrite_def" function deep_model_ref_Vec_T_Global
   
-  predicate in_bounds_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq t_T) = UInt64.t'int self < Seq.length seq
+  function in_bounds_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq t_T) : bool = UInt64.t'int self
+    < Seq.length seq
   
-  meta "rewrite_def" predicate in_bounds_usize
+  meta "rewrite_def" function in_bounds_usize
   
-  predicate has_value_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq t_T) (out: t_T) =
+  function has_value_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq t_T) (out: t_T) : bool =
     Seq.get seq (UInt64.t'int self) = out
   
-  meta "rewrite_def" predicate has_value_usize
+  meta "rewrite_def" function has_value_usize
   
   let index_Vec_T_Global'0 (self: t_Vec_T_Global) (index: UInt64.t) (return (x: t_T)) =
   {[@stop_split] [@expl:index_Vec_T_Global requires] ([@stop_split] [@expl:index 'self' type invariant] inv_ref_Vec_T_Global self)
@@ -122,31 +123,32 @@ module M_binary_search
   
   type tup2_ref_T_ref_T = { f0: t_T; f1: t_T }
   
-  predicate precondition_gt (self: ()) (args: tup2_ref_T_ref_T)
+  function precondition_gt (self: ()) (args: tup2_ref_T_ref_T) : bool
   
   axiom precondition_fndef:
     forall args: tup2_ref_T_ref_T [precondition_gt () args]. (let {f0 = self; f1 = other} = args in inv_ref_T self
         /\ inv_ref_T other) -> precondition_gt () args
   
-  predicate gt_log_DeepModelTy [@inline:trivial] (self: t_DeepModelTy) (other: t_DeepModelTy) =
+  function gt_log_DeepModelTy [@inline:trivial] (self: t_DeepModelTy) (other: t_DeepModelTy) : bool =
     lt_log_DeepModelTy other self
   
-  meta "rewrite_def" predicate gt_log_DeepModelTy
+  meta "rewrite_def" function gt_log_DeepModelTy
   
   function deep_model_ref_T [@inline:trivial] (self: t_T) : t_DeepModelTy = deep_model_T self
   
   meta "rewrite_def" function deep_model_ref_T
   
-  predicate postcondition_gt (self: ()) (args: tup2_ref_T_ref_T) (result: bool)
+  function postcondition_gt (self: ()) (args: tup2_ref_T_ref_T) (result: bool) : bool
   
   axiom postcondition_fndef:
     forall args: tup2_ref_T_ref_T, result: bool [postcondition_gt () args result]. postcondition_gt () args result
       -> (let {f0 = self; f1 = other} = args in result
       = gt_log_DeepModelTy (deep_model_ref_T self) (deep_model_ref_T other))
   
-  predicate postcondition_once_gt (self: ()) (args: tup2_ref_T_ref_T) (result: bool) = postcondition_gt self args result
+  function postcondition_once_gt (self: ()) (args: tup2_ref_T_ref_T) (result: bool) : bool =
+    postcondition_gt self args result
   
-  meta "rewrite_def" predicate postcondition_once_gt
+  meta "rewrite_def" function postcondition_once_gt
   
   let gt_T (self: t_T) (other: t_T) (return (x: bool)) =
   {[@stop_split] [@expl:gt requires] precondition_gt () { f0 = self; f1 = other }}
@@ -157,7 +159,7 @@ module M_binary_search
   
   type t_Ordering = Less | Equal | Greater
   
-  predicate precondition_cmp (self: ()) (args: tup2_ref_T_ref_T)
+  function precondition_cmp (self: ()) (args: tup2_ref_T_ref_T) : bool
   
   axiom precondition_fndef'0:
     forall args: tup2_ref_T_ref_T [precondition_cmp () args]. (let {f0 = self; f1 = other} = args in inv_ref_T self
@@ -174,16 +176,16 @@ module M_binary_search
       if lt_log_DeepModelTy self other then Less else Greater
   
   
-  predicate postcondition_cmp (self: ()) (args: tup2_ref_T_ref_T) (result: t_Ordering)
+  function postcondition_cmp (self: ()) (args: tup2_ref_T_ref_T) (result: t_Ordering) : bool
   
   axiom postcondition_fndef'0:
     forall args: tup2_ref_T_ref_T, result: t_Ordering [postcondition_cmp () args result]. postcondition_cmp () args result
       -> (let {f0 = self; f1 = other} = args in result = cmp_log_DeepModelTy (deep_model_T self) (deep_model_T other))
   
-  predicate postcondition_once_cmp (self: ()) (args: tup2_ref_T_ref_T) (result: t_Ordering) =
+  function postcondition_once_cmp (self: ()) (args: tup2_ref_T_ref_T) (result: t_Ordering) : bool =
     postcondition_cmp self args result
   
-  meta "rewrite_def" predicate postcondition_once_cmp
+  meta "rewrite_def" function postcondition_once_cmp
   
   let cmp_T (self: t_T) (other: t_T) (return (x: t_Ordering)) =
   {[@stop_split] [@expl:cmp requires] precondition_cmp () { f0 = self; f1 = other }}
@@ -192,10 +194,10 @@ module M_binary_search
                                                                                                     f1 = other } result}
       (! return {result}) ]
   
-  predicate sorted_range_DeepModelTy (s: Seq.seq t_DeepModelTy) (l: int) (u: int) =
-    forall i: int, j: int. l <= i /\ i <= j /\ j < u -> le_log_DeepModelTy (Seq.get s i) (Seq.get s j)
+  function sorted_range_DeepModelTy (s: Seq.seq t_DeepModelTy) (l: int) (u: int) : bool = forall i: int, j: int. l <= i
+        /\ i <= j /\ j < u -> le_log_DeepModelTy (Seq.get s i) (Seq.get s j)
   
-  predicate sorted_DeepModelTy (s: Seq.seq t_DeepModelTy) = sorted_range_DeepModelTy s 0 (Seq.length s)
+  function sorted_DeepModelTy (s: Seq.seq t_DeepModelTy) : bool = sorted_range_DeepModelTy s 0 (Seq.length s)
   
   meta "compute_max_steps" 1000000
   

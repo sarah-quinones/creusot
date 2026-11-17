@@ -17,7 +17,7 @@ function map_Option_T (self: t_Option_T) (f: Map.map t_T t_Option_T) : t_Option_
 
 function op_T (self: t_T) (other: t_T) : t_Option_T
 
-predicate incl_T (self: t_T) (other: t_T)
+function incl_T (self: t_T) (other: t_T) : bool
 
 axiom incl_T_spec: forall self: t_T, other: t_T [incl_T self other]. incl_T self other
     = (exists factor: t_T. op_T self factor = Some other)
@@ -61,9 +61,9 @@ axiom core_is_maximal_idemp_T_spec: forall self: t_T, i: t_T. op_T i i = Some i
       | None -> false
       end
 
-predicate index_Mapping_T_bool [@inline:trivial] (self: Map.map t_T bool) (a: t_T) = Map.get self a
+function index_Mapping_T_bool [@inline:trivial] (self: Map.map t_T bool) (a: t_T) : bool = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_T_bool
+meta "rewrite_def" function index_Mapping_T_bool
 
 function such_that_T (p: Map.map t_T bool) : t_T
 
@@ -85,7 +85,7 @@ axiom core_idemp_T_spec: forall self: t_T. core_T self <> None
 axiom core_idemp_T_spec'0: forall self: t_T. core_T self <> None
     -> op_T (unwrap_Option_T (core_T self)) self = Some self
 
-predicate cancelable_T (self: t_T)
+function cancelable_T (self: t_T) : bool
 
 axiom cancelable_T_spec: forall self: t_T [cancelable_T self]. cancelable_T self
     = (forall x: t_T, y: t_T. op_T self x <> None -> op_T self x = op_T self y -> x = y)
@@ -96,7 +96,7 @@ meta "select_lsinst" "all"
 
 constant self : t_Option_T
 
-predicate cancelable_Option_T (self: t_Option_T)
+function cancelable_Option_T (self: t_Option_T) : bool
 
 goal vc_cancelable_Option_T: match self with
     | None -> [@stop_split] [@expl:cancelable ensures] true

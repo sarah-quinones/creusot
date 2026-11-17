@@ -5,15 +5,15 @@ module M_custom_variant__impl_WellFounded_for_CustomVariant__no_infinite_decreas
   
   type t_CustomVariant = { f0: UInt32.t; f1: UInt32.t }
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate gt_log_u32 [@inline:trivial] (self: UInt32.t) (other: UInt32.t) = UInt32.lt other self
+  function gt_log_u32 [@inline:trivial] (self: UInt32.t) (other: UInt32.t) : bool = UInt32.lt other self
   
-  meta "rewrite_def" predicate gt_log_u32
+  meta "rewrite_def" function gt_log_u32
   
-  predicate well_founded_relation_CustomVariant (self: t_CustomVariant) (other: t_CustomVariant) =
+  function well_founded_relation_CustomVariant (self: t_CustomVariant) (other: t_CustomVariant) : bool =
     gt_log_u32 self.f0 other.f0 /\ gt_log_u32 self.f1 other.f1
   
   function index_Mapping_Int_CustomVariant [@inline:trivial] (self: Map.map int t_CustomVariant) (a: int) : t_CustomVariant
@@ -21,9 +21,9 @@ module M_custom_variant__impl_WellFounded_for_CustomVariant__no_infinite_decreas
   
   meta "rewrite_def" function index_Mapping_Int_CustomVariant
   
-  predicate well_founded_relation_u32 [@inline:trivial] (self: UInt32.t) (other: UInt32.t) = gt_log_u32 self other
+  function well_founded_relation_u32 [@inline:trivial] (self: UInt32.t) (other: UInt32.t) : bool = gt_log_u32 self other
   
-  meta "rewrite_def" predicate well_founded_relation_u32
+  meta "rewrite_def" function well_founded_relation_u32
   
   function index_Mapping_Int_u32 [@inline:trivial] (self: Map.map int UInt32.t) (a: int) : UInt32.t = Map.get self a
   
@@ -63,15 +63,15 @@ module M_custom_variant__impl_WellFounded_for_CustomVariant__no_infinite_decreas
   
   type t_CustomVariant = { f0: UInt32.t; f1: UInt32.t }
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate gt_log_u32 [@inline:trivial] (self: UInt32.t) (other: UInt32.t) = UInt32.lt other self
+  function gt_log_u32 [@inline:trivial] (self: UInt32.t) (other: UInt32.t) : bool = UInt32.lt other self
   
-  meta "rewrite_def" predicate gt_log_u32
+  meta "rewrite_def" function gt_log_u32
   
-  predicate well_founded_relation_CustomVariant (self: t_CustomVariant) (other: t_CustomVariant) =
+  function well_founded_relation_CustomVariant (self: t_CustomVariant) (other: t_CustomVariant) : bool =
     gt_log_u32 self.f0 other.f0 /\ gt_log_u32 self.f1 other.f1
   
   function index_Mapping_Int_CustomVariant [@inline:trivial] (self: Map.map int t_CustomVariant) (a: int) : t_CustomVariant
@@ -100,11 +100,11 @@ module M_custom_variant_0
     [ return (result: UInt32.t) -> {[@stop_split] [@expl:custom_variant ensures] result = (0: UInt32.t)}
       (! return {result}) ]
   
-  predicate gt_log_u32 [@inline:trivial] (self: UInt32.t) (other: UInt32.t) = UInt32.lt other self
+  function gt_log_u32 [@inline:trivial] (self: UInt32.t) (other: UInt32.t) : bool = UInt32.lt other self
   
-  meta "rewrite_def" predicate gt_log_u32
+  meta "rewrite_def" function gt_log_u32
   
-  predicate well_founded_relation_CustomVariant (self: t_CustomVariant) (other: t_CustomVariant) =
+  function well_founded_relation_CustomVariant (self: t_CustomVariant) (other: t_CustomVariant) : bool =
     gt_log_u32 self.f0 other.f0 /\ gt_log_u32 self.f1 other.f1
   
   meta "compute_max_steps" 1000000
@@ -143,13 +143,13 @@ module M_variant_int
   let variant_int (x: UInt32.t) (return (x'0: UInt32.t)) = any
     [ return (result: UInt32.t) -> {[@stop_split] [@expl:variant_int ensures] result = x} (! return {result}) ]
   
-  predicate gt_log_u32 [@inline:trivial] (self: UInt32.t) (other: UInt32.t) = UInt32.lt other self
+  function gt_log_u32 [@inline:trivial] (self: UInt32.t) (other: UInt32.t) : bool = UInt32.lt other self
   
-  meta "rewrite_def" predicate gt_log_u32
+  meta "rewrite_def" function gt_log_u32
   
-  predicate well_founded_relation_u32 [@inline:trivial] (self: UInt32.t) (other: UInt32.t) = gt_log_u32 self other
+  function well_founded_relation_u32 [@inline:trivial] (self: UInt32.t) (other: UInt32.t) : bool = gt_log_u32 self other
   
-  meta "rewrite_def" predicate well_founded_relation_u32
+  meta "rewrite_def" function well_founded_relation_u32
   
   meta "compute_max_steps" 1000000
   

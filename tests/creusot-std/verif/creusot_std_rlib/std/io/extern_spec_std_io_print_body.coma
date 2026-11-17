@@ -2,7 +2,7 @@ use creusot.prelude.Any
 
 type t_Arguments
 
-predicate inv_Arguments (_1: t_Arguments)
+function inv_Arguments (_1: t_Arguments) : bool
 
 meta "compute_max_steps" 1000000
 

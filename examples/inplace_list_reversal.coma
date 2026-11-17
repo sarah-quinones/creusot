@@ -7,19 +7,20 @@ module M_rev
   type tup2_T_List_T = { f0: t_T; f1: t_List_T }
   with t_List_T = Nil | Cons tup2_T_List_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_List_T (_1: t_List_T)
+  function inv_List_T (_1: t_List_T) : bool
   
-  predicate inv_tup2_T_List_T [@inline:trivial] (_1: tup2_T_List_T) = inv_T _1.f0 /\ inv_List_T _1.f1
+  function inv_tup2_T_List_T [@inline:trivial] (_1: tup2_T_List_T) : bool = inv_T _1.f0 /\ inv_List_T _1.f1
   
-  meta "rewrite_def" predicate inv_tup2_T_List_T
+  meta "rewrite_def" function inv_tup2_T_List_T
   
-  predicate invariant_Box_tup2_T_List_T_Global (self: tup2_T_List_T) = inv_tup2_T_List_T self
+  function invariant_Box_tup2_T_List_T_Global (self: tup2_T_List_T) : bool = inv_tup2_T_List_T self
   
-  predicate inv_Box_tup2_T_List_T_Global [@inline:trivial] (_1: tup2_T_List_T) = invariant_Box_tup2_T_List_T_Global _1
+  function inv_Box_tup2_T_List_T_Global [@inline:trivial] (_1: tup2_T_List_T) : bool =
+    invariant_Box_tup2_T_List_T_Global _1
   
-  meta "rewrite_def" predicate inv_Box_tup2_T_List_T_Global
+  meta "rewrite_def" function inv_Box_tup2_T_List_T_Global
   
   axiom inv_axiom [@rewrite]: forall _1: t_List_T [inv_List_T _1]. inv_List_T _1
       = match _1 with
@@ -27,14 +28,14 @@ module M_rev
         | Cons f0'0 -> inv_Box_tup2_T_List_T_Global f0'0
         end
   
-  predicate invariant_refmut_List_T [@inline:trivial] (self: MutBorrow.t t_List_T) =
-    inv_List_T self.current /\ inv_List_T self.final
+  function invariant_refmut_List_T [@inline:trivial] (self: MutBorrow.t t_List_T) : bool = inv_List_T self.current
+    /\ inv_List_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_List_T
+  meta "rewrite_def" function invariant_refmut_List_T
   
-  predicate inv_refmut_List_T [@inline:trivial] (_1: MutBorrow.t t_List_T) = invariant_refmut_List_T _1
+  function inv_refmut_List_T [@inline:trivial] (_1: MutBorrow.t t_List_T) : bool = invariant_refmut_List_T _1
   
-  meta "rewrite_def" predicate inv_refmut_List_T
+  meta "rewrite_def" function inv_refmut_List_T
   
   let replace_List_T (dest: MutBorrow.t t_List_T) (src: t_List_T) (return (x: t_List_T)) =
   {[@stop_split] [@expl:replace_List_T requires] ([@stop_split] [@expl:replace 'dest' type invariant] inv_refmut_List_T dest)
@@ -59,17 +60,17 @@ module M_rev
         end}
       any) ]
   
-  predicate resolve_T (_1: t_T)
+  function resolve_T (_1: t_T) : bool
   
-  predicate resolve_List_T (_1: t_List_T)
+  function resolve_List_T (_1: t_List_T) : bool
   
-  predicate resolve_tup2_T_List_T [@inline:trivial] (_1: tup2_T_List_T) = resolve_T _1.f0 /\ resolve_List_T _1.f1
+  function resolve_tup2_T_List_T [@inline:trivial] (_1: tup2_T_List_T) : bool = resolve_T _1.f0 /\ resolve_List_T _1.f1
   
-  meta "rewrite_def" predicate resolve_tup2_T_List_T
+  meta "rewrite_def" function resolve_tup2_T_List_T
   
-  predicate resolve_Box_tup2_T_List_T_Global [@inline:trivial] (_1: tup2_T_List_T) = resolve_tup2_T_List_T _1
+  function resolve_Box_tup2_T_List_T_Global [@inline:trivial] (_1: tup2_T_List_T) : bool = resolve_tup2_T_List_T _1
   
-  meta "rewrite_def" predicate resolve_Box_tup2_T_List_T_Global
+  meta "rewrite_def" function resolve_Box_tup2_T_List_T_Global
   
   axiom resolve_axiom [@rewrite]: forall _1: t_List_T [resolve_List_T _1]. resolve_List_T _1
       = match _1 with
@@ -77,9 +78,9 @@ module M_rev
         | Cons x0 -> resolve_Box_tup2_T_List_T_Global x0
         end
   
-  predicate resolve_refmut_List_T [@inline:trivial] (_1: MutBorrow.t t_List_T) = _1.final = _1.current
+  function resolve_refmut_List_T [@inline:trivial] (_1: MutBorrow.t t_List_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_List_T
+  meta "rewrite_def" function resolve_refmut_List_T
   
   meta "compute_max_steps" 1000000
   

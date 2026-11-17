@@ -19,17 +19,17 @@ function lookup_K [@inline:trivial] (self: t_FMap_K_V) (k: t_K) : t_Option_V = M
 
 meta "rewrite_def" function lookup_K
 
-predicate contains_K [@inline:trivial] (self: t_FMap_K_V) (k: t_K) = lookup_K self k <> None'0
+function contains_K [@inline:trivial] (self: t_FMap_K_V) (k: t_K) : bool = lookup_K self k <> None'0
 
-meta "rewrite_def" predicate contains_K
+meta "rewrite_def" function contains_K
 
-predicate inv_K (_1: t_K)
+function inv_K (_1: t_K) : bool
 
-predicate inv_V (_1: t_V)
+function inv_V (_1: t_V) : bool
 
-predicate index_Mapping_V_bool [@inline:trivial] (self: Map.map t_V bool) (a: t_V) = Map.get self a
+function index_Mapping_V_bool [@inline:trivial] (self: Map.map t_V bool) (a: t_V) : bool = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_V_bool
+meta "rewrite_def" function index_Mapping_V_bool
 
 function such_that_V (p: Map.map t_V bool) : t_V
 
@@ -47,40 +47,40 @@ function index_FMap_K_V [@inline:trivial] (self: t_FMap_K_V) (key: t_K) : t_V = 
 
 meta "rewrite_def" function index_FMap_K_V
 
-predicate invariant_FMap_K_V [@inline:trivial] (self: t_FMap_K_V) =
-  forall k: t_K. contains_K self k -> inv_K k /\ inv_V (index_FMap_K_V self k)
+function invariant_FMap_K_V [@inline:trivial] (self: t_FMap_K_V) : bool = forall k: t_K. contains_K self k
+    -> inv_K k /\ inv_V (index_FMap_K_V self k)
 
-meta "rewrite_def" predicate invariant_FMap_K_V
+meta "rewrite_def" function invariant_FMap_K_V
 
-predicate inv_FMap_K_V (_1: t_FMap_K_V)
+function inv_FMap_K_V (_1: t_FMap_K_V) : bool
 
 axiom inv_axiom [@rewrite]: forall _1: t_FMap_K_V [inv_FMap_K_V _1]. inv_FMap_K_V _1 = invariant_FMap_K_V _1
 
-predicate invariant_ref_FMap_K_V [@inline:trivial] (self: t_FMap_K_V) = inv_FMap_K_V self
+function invariant_ref_FMap_K_V [@inline:trivial] (self: t_FMap_K_V) : bool = inv_FMap_K_V self
 
-meta "rewrite_def" predicate invariant_ref_FMap_K_V
+meta "rewrite_def" function invariant_ref_FMap_K_V
 
-predicate inv_ref_FMap_K_V [@inline:trivial] (_1: t_FMap_K_V) = invariant_ref_FMap_K_V _1
+function inv_ref_FMap_K_V [@inline:trivial] (_1: t_FMap_K_V) : bool = invariant_ref_FMap_K_V _1
 
-meta "rewrite_def" predicate inv_ref_FMap_K_V
+meta "rewrite_def" function inv_ref_FMap_K_V
 
-predicate invariant_ref_K [@inline:trivial] (self: t_K) = inv_K self
+function invariant_ref_K [@inline:trivial] (self: t_K) : bool = inv_K self
 
-meta "rewrite_def" predicate invariant_ref_K
+meta "rewrite_def" function invariant_ref_K
 
-predicate inv_ref_K [@inline:trivial] (_1: t_K) = invariant_ref_K _1
+function inv_ref_K [@inline:trivial] (_1: t_K) : bool = invariant_ref_K _1
 
-meta "rewrite_def" predicate inv_ref_K
+meta "rewrite_def" function inv_ref_K
 
-predicate invariant_ref_V [@inline:trivial] (self: t_V) = inv_V self
+function invariant_ref_V [@inline:trivial] (self: t_V) : bool = inv_V self
 
-meta "rewrite_def" predicate invariant_ref_V
+meta "rewrite_def" function invariant_ref_V
 
-predicate inv_ref_V [@inline:trivial] (_1: t_V) = invariant_ref_V _1
+function inv_ref_V [@inline:trivial] (_1: t_V) : bool = invariant_ref_V _1
 
-meta "rewrite_def" predicate inv_ref_V
+meta "rewrite_def" function inv_ref_V
 
-predicate inv_Option_ref_V (_1: t_Option_ref_V)
+function inv_Option_ref_V (_1: t_Option_ref_V) : bool
 
 axiom inv_axiom'0 [@rewrite]: forall _1: t_Option_ref_V [inv_Option_ref_V _1]. inv_Option_ref_V _1
     = match _1 with
@@ -102,13 +102,13 @@ let get_K (self: t_FMap_K_V) (key: t_K) (return (x: t_Option_ref_V)) =
     /\ ([@stop_split] [@expl:get ensures] result = map_Option_V (lookup_K self key) (fun (v: t_V) -> v))}
     (! return {result}) ]
 
-predicate invariant_ref_Option_ref_V [@inline:trivial] (self: t_Option_ref_V) = inv_Option_ref_V self
+function invariant_ref_Option_ref_V [@inline:trivial] (self: t_Option_ref_V) : bool = inv_Option_ref_V self
 
-meta "rewrite_def" predicate invariant_ref_Option_ref_V
+meta "rewrite_def" function invariant_ref_Option_ref_V
 
-predicate inv_ref_Option_ref_V [@inline:trivial] (_1: t_Option_ref_V) = invariant_ref_Option_ref_V _1
+function inv_ref_Option_ref_V [@inline:trivial] (_1: t_Option_ref_V) : bool = invariant_ref_Option_ref_V _1
 
-meta "rewrite_def" predicate inv_ref_Option_ref_V
+meta "rewrite_def" function inv_ref_Option_ref_V
 
 let is_some_ref_V (self: t_Option_ref_V) (return (x: bool)) =
 {[@stop_split] [@expl:is_some 'self' type invariant] inv_ref_Option_ref_V self}

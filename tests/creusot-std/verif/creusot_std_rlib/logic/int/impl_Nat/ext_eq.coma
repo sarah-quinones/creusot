@@ -8,11 +8,11 @@ type t_Nat = { f0: t_Subset_NatInner }
 
 type t_NatInner = { f0'0: int }
 
-predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
 
-meta "rewrite_def" predicate ge_log_Int
+meta "rewrite_def" function ge_log_Int
 
-predicate invariant_NatInner (self: t_NatInner) = ge_log_Int self.f0'0 0
+function invariant_NatInner (self: t_NatInner) : bool = ge_log_Int self.f0'0 0
 
 function inner_NatInner (self: t_Subset_NatInner) : t_NatInner
 
@@ -36,7 +36,7 @@ constant self : t_Nat
 
 constant other : t_Nat
 
-predicate ext_eq (self: t_Nat) (other: t_Nat)
+function ext_eq (self: t_Nat) (other: t_Nat) : bool
 
 goal vc_ext_eq: forall local. local = ()
     -> ([@stop_split] [@expl:to_int ensures] ge_log_Int (to_int self) 0)

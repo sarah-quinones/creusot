@@ -33,9 +33,9 @@ meta "rewrite_def" function view_Resource_PositiveReal
 
 type t_Option_PositiveReal = None | Some t_PositiveReal
 
-predicate gt_log_Real [@inline:trivial] (self: Real.real) (other: Real.real) = Real.(<) other self
+function gt_log_Real [@inline:trivial] (self: Real.real) (other: Real.real) : bool = Real.(<) other self
 
-meta "rewrite_def" predicate gt_log_Real
+meta "rewrite_def" function gt_log_Real
 
 function to_real (self: t_PositiveReal) : Real.real
 
@@ -67,14 +67,14 @@ let join_in_PositiveReal (self: MutBorrow.t t_Resource_PositiveReal) (other: t_R
     = op_PositiveReal (view_Resource_PositiveReal self.current) (view_Resource_PositiveReal other))}
     (! return {result}) ]
 
-predicate resolve_refmut_Resource_PositiveReal [@inline:trivial] (_1: MutBorrow.t t_Resource_PositiveReal) =
+function resolve_refmut_Resource_PositiveReal [@inline:trivial] (_1: MutBorrow.t t_Resource_PositiveReal) : bool =
   _1.final = _1.current
 
-meta "rewrite_def" predicate resolve_refmut_Resource_PositiveReal
+meta "rewrite_def" function resolve_refmut_Resource_PositiveReal
 
-predicate resolve_refmut_LifetimeToken [@inline:trivial] (_1: MutBorrow.t t_LifetimeToken) = _1.final = _1.current
+function resolve_refmut_LifetimeToken [@inline:trivial] (_1: MutBorrow.t t_LifetimeToken) : bool = _1.final = _1.current
 
-meta "rewrite_def" predicate resolve_refmut_LifetimeToken
+meta "rewrite_def" function resolve_refmut_LifetimeToken
 
 let new_unit (x: ()) (return (x'0: ())) = any
   [ return (result: ()) -> {[@stop_split] [@expl:new ensures] result = x} (! return {result}) ]

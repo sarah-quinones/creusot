@@ -6,11 +6,11 @@ type t_T
 
 type t_Option_T = None'0 | Some'0 t_T
 
-predicate inv_Infallible [@inline:trivial] (_1: ()) = false
+function inv_Infallible [@inline:trivial] (_1: ()) : bool = false
 
-meta "rewrite_def" predicate inv_Infallible
+meta "rewrite_def" function inv_Infallible
 
-predicate inv_Option_Infallible (_1: t_Option_Infallible)
+function inv_Option_Infallible (_1: t_Option_Infallible) : bool
 
 axiom inv_axiom [@rewrite]: forall _1: t_Option_Infallible [inv_Option_Infallible _1]. inv_Option_Infallible _1
     = match _1 with
@@ -18,9 +18,9 @@ axiom inv_axiom [@rewrite]: forall _1: t_Option_Infallible [inv_Option_Infallibl
       | Some f0 -> inv_Infallible f0
       end
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate inv_Option_T (_1: t_Option_T)
+function inv_Option_T (_1: t_Option_T) : bool
 
 axiom inv_axiom'0 [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_T _1
     = match _1 with

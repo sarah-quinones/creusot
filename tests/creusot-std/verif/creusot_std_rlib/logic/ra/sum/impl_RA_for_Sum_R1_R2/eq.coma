@@ -12,7 +12,7 @@ type t_Option_R1 = None | Some t_R1
 
 function op_R1 (self: t_R1) (other: t_R1) : t_Option_R1
 
-predicate incl_R1 (self: t_R1) (other: t_R1)
+function incl_R1 (self: t_R1) (other: t_R1) : bool
 
 axiom incl_R1_spec: forall self: t_R1, other: t_R1 [incl_R1 self other]. incl_R1 self other
     = (exists factor: t_R1. op_R1 self factor = Some other)
@@ -39,7 +39,7 @@ function incl_op_R1 (self: t_R1) (other: t_R1) (comb: t_R1) : ()
 
 axiom incl_op_R1_spec: forall self: t_R1, other: t_R1, comb: t_R1. op_R1 self other = Some comb -> incl_R1 self comb
 
-predicate eq_R1 (self: t_R1) (other: t_R1)
+function eq_R1 (self: t_R1) (other: t_R1) : bool
 
 axiom eq_R1_spec: forall self: t_R1, other: t_R1 [eq_R1 self other]. eq_R1 self other = (self = other)
 
@@ -47,7 +47,7 @@ type t_Option_R2 = None'0 | Some'0 t_R2
 
 function op_R2 (self: t_R2) (other: t_R2) : t_Option_R2
 
-predicate incl_R2 (self: t_R2) (other: t_R2)
+function incl_R2 (self: t_R2) (other: t_R2) : bool
 
 axiom incl_R2_spec: forall self: t_R2, other: t_R2 [incl_R2 self other]. incl_R2 self other
     = (exists factor: t_R2. op_R2 self factor = Some'0 other)
@@ -74,7 +74,7 @@ function incl_op_R2 (self: t_R2) (other: t_R2) (comb: t_R2) : ()
 
 axiom incl_op_R2_spec: forall self: t_R2, other: t_R2, comb: t_R2. op_R2 self other = Some'0 comb -> incl_R2 self comb
 
-predicate eq_R2 (self: t_R2) (other: t_R2)
+function eq_R2 (self: t_R2) (other: t_R2) : bool
 
 axiom eq_R2_spec: forall self: t_R2, other: t_R2 [eq_R2 self other]. eq_R2 self other = (self = other)
 
@@ -86,7 +86,7 @@ constant self : t_Sum_R1_R2
 
 constant other : t_Sum_R1_R2
 
-predicate eq_Sum_R1_R2 (self: t_Sum_R1_R2) (other: t_Sum_R1_R2)
+function eq_Sum_R1_R2 (self: t_Sum_R1_R2) (other: t_Sum_R1_R2) : bool
 
 goal vc_eq_Sum_R1_R2: match { f0 = self; f1 = other } with
     | {f0 = Left s; f1 = Left o} -> ([@stop_split] [@expl:eq ensures] eq_R1 s o = (s = o))

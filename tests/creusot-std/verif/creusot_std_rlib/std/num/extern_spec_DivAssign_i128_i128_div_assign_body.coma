@@ -5,9 +5,9 @@ use creusot.prelude.Any
 use int.ComputerDivision
 use int.Int
 
-predicate resolve_refmut_i128 [@inline:trivial] (_1: MutBorrow.t Int128.t) = _1.final = _1.current
+function resolve_refmut_i128 [@inline:trivial] (_1: MutBorrow.t Int128.t) : bool = _1.final = _1.current
 
-meta "rewrite_def" predicate resolve_refmut_i128
+meta "rewrite_def" function resolve_refmut_i128
 
 constant const_MIN: Int128.t = (-170141183460469231731687303715884105728: Int128.t)
 

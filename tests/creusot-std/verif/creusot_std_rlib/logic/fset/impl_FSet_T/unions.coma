@@ -8,30 +8,30 @@ type t_T
 
 type t_U
 
-predicate contains_U [@inline:trivial] (self: Fset.fset t_U) (e: t_U) = Fset.mem e self
+function contains_U [@inline:trivial] (self: Fset.fset t_U) (e: t_U) : bool = Fset.mem e self
 
-meta "rewrite_def" predicate contains_U
+meta "rewrite_def" function contains_U
 
-predicate contains_T [@inline:trivial] (self: Fset.fset t_T) (e: t_T) = Fset.mem e self
+function contains_T [@inline:trivial] (self: Fset.fset t_T) (e: t_T) : bool = Fset.mem e self
 
-meta "rewrite_def" predicate contains_T
+meta "rewrite_def" function contains_T
 
 function remove_T [@inline:trivial] (self: Fset.fset t_T) (e: t_T) : Fset.fset t_T = Fset.remove e self
 
 meta "rewrite_def" function remove_T
 
-predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
 
-meta "rewrite_def" predicate ge_log_Int
+meta "rewrite_def" function ge_log_Int
 
-predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
 
-meta "rewrite_def" predicate gt_log_Int
+meta "rewrite_def" function gt_log_Int
 
-predicate well_founded_relation_Int [@inline:trivial] (self: int) (other: int) =
-  ge_log_Int self 0 /\ gt_log_Int self other
+function well_founded_relation_Int [@inline:trivial] (self: int) (other: int) : bool = ge_log_Int self 0
+  /\ gt_log_Int self other
 
-meta "rewrite_def" predicate well_founded_relation_Int
+meta "rewrite_def" function well_founded_relation_Int
 
 meta "compute_max_steps" 1000000
 

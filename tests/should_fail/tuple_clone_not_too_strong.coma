@@ -4,14 +4,15 @@ module M_clone_not_cross_field
   
   type tup2_u32_u32 = { f0: UInt32.t; f1: UInt32.t }
   
-  predicate postcondition_clone (self: ()) (args: UInt32.t) (result: UInt32.t) = let self'0 = args in result = self'0
+  function postcondition_clone (self: ()) (args: UInt32.t) (result: UInt32.t) : bool = let self'0 = args in result
+    = self'0
   
-  meta "rewrite_def" predicate postcondition_clone
+  meta "rewrite_def" function postcondition_clone
   
-  predicate postcondition_once_clone (self: ()) (args: UInt32.t) (result: UInt32.t) =
+  function postcondition_once_clone (self: ()) (args: UInt32.t) (result: UInt32.t) : bool =
     postcondition_clone self args result
   
-  meta "rewrite_def" predicate postcondition_once_clone
+  meta "rewrite_def" function postcondition_once_clone
   
   let clone_tup2_u32_u32 (self: tup2_u32_u32) (return (x: tup2_u32_u32)) = any
     [ return (result: tup2_u32_u32) ->

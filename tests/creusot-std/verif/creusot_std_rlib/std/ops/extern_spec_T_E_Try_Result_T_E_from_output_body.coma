@@ -6,11 +6,11 @@ type t_E
 
 type t_Result_T_E = Ok t_T | Err t_E
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate inv_E (_1: t_E)
+function inv_E (_1: t_E) : bool
 
-predicate inv_Result_T_E (_1: t_Result_T_E)
+function inv_Result_T_E (_1: t_Result_T_E) : bool
 
 axiom inv_axiom [@rewrite]: forall _1: t_Result_T_E [inv_Result_T_E _1]. inv_Result_T_E _1
     = match _1 with

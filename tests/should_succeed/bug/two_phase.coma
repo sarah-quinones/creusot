@@ -11,44 +11,44 @@ module M_impl_VacantEntry_K__insert (* VacantEntry<'_, K> *)
   
   type t_VacantEntry_K = { map: MutBorrow.t t_Vec_K_Global; key: t_K; index: UInt64.t }
   
-  predicate inv_K (_1: t_K)
+  function inv_K (_1: t_K) : bool
   
-  predicate invariant_ref_K [@inline:trivial] (self: t_K) = inv_K self
+  function invariant_ref_K [@inline:trivial] (self: t_K) : bool = inv_K self
   
-  meta "rewrite_def" predicate invariant_ref_K
+  meta "rewrite_def" function invariant_ref_K
   
-  predicate inv_ref_K [@inline:trivial] (_1: t_K) = invariant_ref_K _1
+  function inv_ref_K [@inline:trivial] (_1: t_K) : bool = invariant_ref_K _1
   
-  meta "rewrite_def" predicate inv_ref_K
+  meta "rewrite_def" function inv_ref_K
   
-  predicate precondition_clone (self: ()) (args: t_K)
+  function precondition_clone (self: ()) (args: t_K) : bool
   
   axiom precondition_fndef: forall args: t_K [precondition_clone () args]. (let self = args in inv_ref_K self)
       -> precondition_clone () args
   
-  predicate postcondition_clone (self: ()) (args: t_K) (result: t_K)
+  function postcondition_clone (self: ()) (args: t_K) (result: t_K) : bool
   
   axiom postcondition_fndef:
     forall args: t_K, result: t_K [postcondition_clone () args result]. postcondition_clone () args result
       -> (let self = args in inv_K result)
   
-  predicate postcondition_once_clone (self: ()) (args: t_K) (result: t_K) = postcondition_clone self args result
+  function postcondition_once_clone (self: ()) (args: t_K) (result: t_K) : bool = postcondition_clone self args result
   
-  meta "rewrite_def" predicate postcondition_once_clone
+  meta "rewrite_def" function postcondition_once_clone
   
   let clone_K (self: t_K) (return (x: t_K)) = {[@stop_split] [@expl:clone requires] precondition_clone () self}
     any
     [ return (result: t_K) -> {[@stop_split] [@expl:clone ensures] postcondition_once_clone () self result}
       (! return {result}) ]
   
-  predicate invariant_Seq_K [@inline:trivial] (self: Seq.seq t_K) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_K (Seq.get self i)
+  function invariant_Seq_K [@inline:trivial] (self: Seq.seq t_K) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+      -> inv_ref_K (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_K
+  meta "rewrite_def" function invariant_Seq_K
   
-  predicate inv_Seq_K [@inline:trivial] (_1: Seq.seq t_K) = invariant_Seq_K _1
+  function inv_Seq_K [@inline:trivial] (_1: Seq.seq t_K) : bool = invariant_Seq_K _1
   
-  meta "rewrite_def" predicate inv_Seq_K
+  meta "rewrite_def" function inv_Seq_K
   
   constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
   
@@ -57,21 +57,21 @@ module M_impl_VacantEntry_K__insert (* VacantEntry<'_, K> *)
   axiom view_Vec_K_Global_spec:
     forall self: t_Vec_K_Global [view_Vec_K_Global self]. Seq.length (view_Vec_K_Global self) <= UInt64.t'int const_MAX
   
-  predicate invariant_Vec_K_Global (self: t_Vec_K_Global) = inv_Seq_K (view_Vec_K_Global self)
+  function invariant_Vec_K_Global (self: t_Vec_K_Global) : bool = inv_Seq_K (view_Vec_K_Global self)
   
-  predicate inv_Vec_K_Global (_1: t_Vec_K_Global)
+  function inv_Vec_K_Global (_1: t_Vec_K_Global) : bool
   
   axiom inv_axiom: forall _1: t_Vec_K_Global [inv_Vec_K_Global _1]. inv_Vec_K_Global _1 -> invariant_Vec_K_Global _1
   
-  predicate invariant_refmut_Vec_K_Global [@inline:trivial] (self: MutBorrow.t t_Vec_K_Global) =
+  function invariant_refmut_Vec_K_Global [@inline:trivial] (self: MutBorrow.t t_Vec_K_Global) : bool =
     inv_Vec_K_Global self.current /\ inv_Vec_K_Global self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Vec_K_Global
+  meta "rewrite_def" function invariant_refmut_Vec_K_Global
   
-  predicate inv_refmut_Vec_K_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_K_Global) =
+  function inv_refmut_Vec_K_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_K_Global) : bool =
     invariant_refmut_Vec_K_Global _1
   
-  meta "rewrite_def" predicate inv_refmut_Vec_K_Global
+  meta "rewrite_def" function inv_refmut_Vec_K_Global
   
   function index_Vec_K_Global [@inline:trivial] (self: t_Vec_K_Global) (ix: int) : t_K =
     Seq.get (view_Vec_K_Global self) ix
@@ -94,24 +94,25 @@ module M_impl_VacantEntry_K__insert (* VacantEntry<'_, K> *)
         -> index_Vec_K_Global self.final i = index_Vec_K_Global self.current (i - 1))}
       (! return {result}) ]
   
-  predicate inv_VacantEntry_K (_1: t_VacantEntry_K)
+  function inv_VacantEntry_K (_1: t_VacantEntry_K) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_VacantEntry_K [inv_VacantEntry_K _1]. inv_VacantEntry_K _1
       = (inv_refmut_Vec_K_Global _1.map /\ inv_K _1.key)
   
-  predicate invariant_refmut_VacantEntry_K [@inline:trivial] (self: MutBorrow.t t_VacantEntry_K) =
+  function invariant_refmut_VacantEntry_K [@inline:trivial] (self: MutBorrow.t t_VacantEntry_K) : bool =
     inv_VacantEntry_K self.current /\ inv_VacantEntry_K self.final
   
-  meta "rewrite_def" predicate invariant_refmut_VacantEntry_K
+  meta "rewrite_def" function invariant_refmut_VacantEntry_K
   
-  predicate inv_refmut_VacantEntry_K [@inline:trivial] (_1: MutBorrow.t t_VacantEntry_K) =
+  function inv_refmut_VacantEntry_K [@inline:trivial] (_1: MutBorrow.t t_VacantEntry_K) : bool =
     invariant_refmut_VacantEntry_K _1
   
-  meta "rewrite_def" predicate inv_refmut_VacantEntry_K
+  meta "rewrite_def" function inv_refmut_VacantEntry_K
   
-  predicate resolve_refmut_VacantEntry_K [@inline:trivial] (_1: MutBorrow.t t_VacantEntry_K) = _1.final = _1.current
+  function resolve_refmut_VacantEntry_K [@inline:trivial] (_1: MutBorrow.t t_VacantEntry_K) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_VacantEntry_K
+  meta "rewrite_def" function resolve_refmut_VacantEntry_K
   
   meta "compute_max_steps" 1000000
   
@@ -167,10 +168,10 @@ module M_test
       = Seq.snoc (view_Vec_usize_Global self.current) value}
       (! return {result}) ]
   
-  predicate resolve_refmut_Vec_usize_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_usize_Global) =
-    _1.final = _1.current
+  function resolve_refmut_Vec_usize_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_usize_Global) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Vec_usize_Global
+  meta "rewrite_def" function resolve_refmut_Vec_usize_Global
   
   function index_Vec_usize_Global [@inline:trivial] (self: t_Vec_usize_Global) (ix: int) : UInt64.t =
     Seq.get (view_Vec_usize_Global self) ix

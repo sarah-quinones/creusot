@@ -1,18 +1,18 @@
 module M_fib
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
-  predicate well_founded_relation_Int [@inline:trivial] (self: int) (other: int) =
-    ge_log_Int self 0 /\ gt_log_Int self other
+  function well_founded_relation_Int [@inline:trivial] (self: int) (other: int) : bool = ge_log_Int self 0
+    /\ gt_log_Int self other
   
-  meta "rewrite_def" predicate well_founded_relation_Int
+  meta "rewrite_def" function well_founded_relation_Int
   
   meta "compute_max_steps" 1000000
   
@@ -47,10 +47,10 @@ module M_fib_memo
   
   type t_PredCell_Option_usize
   
-  predicate in_bounds_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq t_PredCell_Option_usize) =
+  function in_bounds_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq t_PredCell_Option_usize) : bool =
     UInt64.t'int self < Seq.length seq
   
-  meta "rewrite_def" predicate in_bounds_usize
+  meta "rewrite_def" function in_bounds_usize
   
   constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
   
@@ -60,10 +60,10 @@ module M_fib_memo
     forall self: t_Vec_PredCell_Option_usize_Global [view_Vec_PredCell_Option_usize_Global self]. Seq.length (view_Vec_PredCell_Option_usize_Global self)
       <= UInt64.t'int const_MAX
   
-  predicate has_value_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq t_PredCell_Option_usize) (out: t_PredCell_Option_usize) =
-    Seq.get seq (UInt64.t'int self) = out
+  function has_value_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq t_PredCell_Option_usize) (out: t_PredCell_Option_usize) : bool
+   = Seq.get seq (UInt64.t'int self) = out
   
-  meta "rewrite_def" predicate has_value_usize
+  meta "rewrite_def" function has_value_usize
   
   let index_Vec_PredCell_Option_usize_Global (self: t_Vec_PredCell_Option_usize_Global) (index: UInt64.t)
     (return (x: t_PredCell_Option_usize)) =
@@ -75,10 +75,10 @@ module M_fib_memo
   
   type t_Option_usize = None | Some UInt64.t
   
-  predicate index_Mapping_Option_usize_bool [@inline:trivial] (self: Map.map t_Option_usize bool) (a: t_Option_usize) =
-    Map.get self a
+  function index_Mapping_Option_usize_bool [@inline:trivial] (self: Map.map t_Option_usize bool) (a: t_Option_usize) : bool
+   = Map.get self a
   
-  meta "rewrite_def" predicate index_Mapping_Option_usize_bool
+  meta "rewrite_def" function index_Mapping_Option_usize_bool
   
   function view_PredCell_Option_usize (self: t_PredCell_Option_usize) : Map.map t_Option_usize bool
   
@@ -107,25 +107,25 @@ module M_fib_memo
   
   axiom lemma_fib_bound_spec: forall i: int. 0 <= i -> fib i <= Pow2int.pow2 i
   
-  predicate invariant_FibCache (self: t_FibCache) =
-    forall i: int. 0 <= i /\ i < Seq.length (view_Vec_PredCell_Option_usize_Global self.f0)
+  function invariant_FibCache (self: t_FibCache) : bool = forall i: int. 0 <= i
+        /\ i < Seq.length (view_Vec_PredCell_Option_usize_Global self.f0)
       -> (forall x: t_Option_usize. index_Mapping_Option_usize_bool (view_PredCell_Option_usize (Seq.get (view_Vec_PredCell_Option_usize_Global self.f0) i)) x
         = match x with
           | None -> true
           | Some v -> UInt64.t'int v = fib i
           end)
   
-  predicate inv_FibCache (_1: t_FibCache)
+  function inv_FibCache (_1: t_FibCache) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_FibCache [inv_FibCache _1]. inv_FibCache _1 = invariant_FibCache _1
   
-  predicate invariant_ref_FibCache [@inline:trivial] (self: t_FibCache) = inv_FibCache self
+  function invariant_ref_FibCache [@inline:trivial] (self: t_FibCache) : bool = inv_FibCache self
   
-  meta "rewrite_def" predicate invariant_ref_FibCache
+  meta "rewrite_def" function invariant_ref_FibCache
   
-  predicate inv_ref_FibCache [@inline:trivial] (_1: t_FibCache) = invariant_ref_FibCache _1
+  function inv_ref_FibCache [@inline:trivial] (_1: t_FibCache) : bool = invariant_ref_FibCache _1
   
-  meta "rewrite_def" predicate inv_ref_FibCache
+  meta "rewrite_def" function inv_ref_FibCache
   
   let fib_memo (mem: t_FibCache) (i: UInt64.t) (return (x: UInt64.t)) =
   {[@stop_split] [@expl:fib_memo requires] ([@stop_split] [@expl:fib_memo 'mem' type invariant] inv_ref_FibCache mem)
@@ -207,18 +207,18 @@ module M_lemma_fib_bound
   
   axiom fib_def: forall i: int [fib i]. fib i = (if i <= 0 then 0 else if i = 1 then 1 else fib (i - 1) + fib (i - 2))
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
-  predicate well_founded_relation_Int [@inline:trivial] (self: int) (other: int) =
-    ge_log_Int self 0 /\ gt_log_Int self other
+  function well_founded_relation_Int [@inline:trivial] (self: int) (other: int) : bool = ge_log_Int self 0
+    /\ gt_log_Int self other
   
-  meta "rewrite_def" predicate well_founded_relation_Int
+  meta "rewrite_def" function well_founded_relation_Int
   
   meta "compute_max_steps" 1000000
   

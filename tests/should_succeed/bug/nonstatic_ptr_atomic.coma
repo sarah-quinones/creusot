@@ -7,40 +7,40 @@ module M_f
   
   type t_AtomicPtr_T
   
-  predicate inv_AtomicPtr_T (_1: t_AtomicPtr_T)
+  function inv_AtomicPtr_T (_1: t_AtomicPtr_T) : bool
   
-  predicate resolve_AtomicPtr_T (_1: t_AtomicPtr_T)
+  function resolve_AtomicPtr_T (_1: t_AtomicPtr_T) : bool
   
   type t_Perm_AtomicPtr_T
   
   type t_FMap_Int_tup2_ptr_T_SyncView
   
-  predicate resolve_ref_FMap_Int_tup2_ptr_T_SyncView [@inline:trivial] (_1: t_FMap_Int_tup2_ptr_T_SyncView) = true
+  function resolve_ref_FMap_Int_tup2_ptr_T_SyncView [@inline:trivial] (_1: t_FMap_Int_tup2_ptr_T_SyncView) : bool = true
   
-  meta "rewrite_def" predicate resolve_ref_FMap_Int_tup2_ptr_T_SyncView
+  meta "rewrite_def" function resolve_ref_FMap_Int_tup2_ptr_T_SyncView
   
   function val_unsized_AtomicPtr_T (self: t_Perm_AtomicPtr_T) : t_FMap_Int_tup2_ptr_T_SyncView
   
-  predicate resolve_Perm_AtomicPtr_T [@inline:trivial] (self: t_Perm_AtomicPtr_T) =
+  function resolve_Perm_AtomicPtr_T [@inline:trivial] (self: t_Perm_AtomicPtr_T) : bool =
     resolve_ref_FMap_Int_tup2_ptr_T_SyncView (val_unsized_AtomicPtr_T self)
   
-  meta "rewrite_def" predicate resolve_Perm_AtomicPtr_T
+  meta "rewrite_def" function resolve_Perm_AtomicPtr_T
   
-  predicate resolve_Perm_AtomicPtr_T'0 (_1: t_Perm_AtomicPtr_T)
+  function resolve_Perm_AtomicPtr_T'0 (_1: t_Perm_AtomicPtr_T) : bool
   
   axiom resolve_axiom [@rewrite]:
     forall _1: t_Perm_AtomicPtr_T [resolve_Perm_AtomicPtr_T'0 _1]. resolve_Perm_AtomicPtr_T'0 _1
       = resolve_Perm_AtomicPtr_T _1
   
-  predicate resolve_Ghost_Perm_AtomicPtr_T [@inline:trivial] (self: t_Perm_AtomicPtr_T) =
+  function resolve_Ghost_Perm_AtomicPtr_T [@inline:trivial] (self: t_Perm_AtomicPtr_T) : bool =
     resolve_Perm_AtomicPtr_T'0 self
   
-  meta "rewrite_def" predicate resolve_Ghost_Perm_AtomicPtr_T
+  meta "rewrite_def" function resolve_Ghost_Perm_AtomicPtr_T
   
-  predicate resolve_Ghost_Perm_AtomicPtr_T'0 [@inline:trivial] (_1: t_Perm_AtomicPtr_T) =
+  function resolve_Ghost_Perm_AtomicPtr_T'0 [@inline:trivial] (_1: t_Perm_AtomicPtr_T) : bool =
     resolve_Ghost_Perm_AtomicPtr_T _1
   
-  meta "rewrite_def" predicate resolve_Ghost_Perm_AtomicPtr_T'0
+  meta "rewrite_def" function resolve_Ghost_Perm_AtomicPtr_T'0
   
   type closure1 = { c0: t_Perm_AtomicPtr_T }
   
@@ -57,18 +57,18 @@ module M_f
   
   type t_Committer_AtomicPtr_T_ptr_T_Acquire_unit
   
-  predicate shot_store_AtomicPtr_T (self: t_Committer_AtomicPtr_T_ptr_T_Acquire_unit)
+  function shot_store_AtomicPtr_T (self: t_Committer_AtomicPtr_T_ptr_T_Acquire_unit) : bool
   
   function ward_AtomicPtr_T (self: t_Committer_AtomicPtr_T_ptr_T_Acquire_unit) : t_AtomicPtr_T
   
   function ward_AtomicPtr_T'0 (self: t_Perm_AtomicPtr_T) : t_AtomicPtr_T
   
-  predicate lt_log_SyncView (self: t_SyncView) (_2: t_SyncView)
+  function lt_log_SyncView (self: t_SyncView) (_2: t_SyncView) : bool
   
-  predicate le_log_SyncView [@inline:trivial] (self: t_SyncView) (other: t_SyncView) =
-    lt_log_SyncView self other \/ self = other
+  function le_log_SyncView [@inline:trivial] (self: t_SyncView) (other: t_SyncView) : bool = lt_log_SyncView self other
+    \/ self = other
   
-  meta "rewrite_def" predicate le_log_SyncView
+  meta "rewrite_def" function le_log_SyncView
   
   function le_lt_log_SyncView (self: t_SyncView) (other: t_SyncView) : ()
   
@@ -129,13 +129,13 @@ module M_f
         end)}
       (! return {result}) ]
   
-  predicate resolve_refmut_Ghost_SyncView [@inline:trivial] (_1: MutBorrow.t t_SyncView) = _1.final = _1.current
+  function resolve_refmut_Ghost_SyncView [@inline:trivial] (_1: MutBorrow.t t_SyncView) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Ghost_SyncView
+  meta "rewrite_def" function resolve_refmut_Ghost_SyncView
   
-  predicate resolve_refmut_SyncView [@inline:trivial] (_1: MutBorrow.t t_SyncView) = _1.final = _1.current
+  function resolve_refmut_SyncView [@inline:trivial] (_1: MutBorrow.t t_SyncView) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_SyncView
+  meta "rewrite_def" function resolve_refmut_SyncView
   
   let closure1 [@coma:extspec] (self: closure1) (c: t_Committer_AtomicPtr_T_ptr_T_Acquire_unit) (return (x: ())) = bb0
     [ bb0 = s0
@@ -178,33 +178,33 @@ module M_f
   let new_FnGhostWrapper_closure1 (x: t_FnGhostWrapper_closure1) (return (x'0: t_FnGhostWrapper_closure1)) = any
     [ return (result: t_FnGhostWrapper_closure1) -> {[@stop_split] [@expl:new ensures] result = x} (! return {result}) ]
   
-  predicate invariant_ref_AtomicPtr_T [@inline:trivial] (self: t_AtomicPtr_T) = inv_AtomicPtr_T self
+  function invariant_ref_AtomicPtr_T [@inline:trivial] (self: t_AtomicPtr_T) : bool = inv_AtomicPtr_T self
   
-  meta "rewrite_def" predicate invariant_ref_AtomicPtr_T
+  meta "rewrite_def" function invariant_ref_AtomicPtr_T
   
-  predicate inv_ref_AtomicPtr_T [@inline:trivial] (_1: t_AtomicPtr_T) = invariant_ref_AtomicPtr_T _1
+  function inv_ref_AtomicPtr_T [@inline:trivial] (_1: t_AtomicPtr_T) : bool = invariant_ref_AtomicPtr_T _1
   
-  meta "rewrite_def" predicate inv_ref_AtomicPtr_T
+  meta "rewrite_def" function inv_ref_AtomicPtr_T
   
-  predicate precondition_closure1 (self: closure1) (args: t_Committer_AtomicPtr_T_ptr_T_Acquire_unit) =
+  function precondition_closure1 (self: closure1) (args: t_Committer_AtomicPtr_T_ptr_T_Acquire_unit) : bool =
     let c = args in closure1'pre self c
   
-  meta "rewrite_def" predicate precondition_closure1
+  meta "rewrite_def" function precondition_closure1
   
-  predicate precondition_FnGhostWrapper_closure1 (self: t_FnGhostWrapper_closure1) (args: t_Committer_AtomicPtr_T_ptr_T_Acquire_unit) =
-    precondition_closure1 self.f0'0 args
+  function precondition_FnGhostWrapper_closure1 (self: t_FnGhostWrapper_closure1) (args: t_Committer_AtomicPtr_T_ptr_T_Acquire_unit) : bool
+   = precondition_closure1 self.f0'0 args
   
-  meta "rewrite_def" predicate precondition_FnGhostWrapper_closure1
+  meta "rewrite_def" function precondition_FnGhostWrapper_closure1
   
-  predicate postcondition_once_closure1 (self: closure1) (args: t_Committer_AtomicPtr_T_ptr_T_Acquire_unit) (result: ()) =
-    let c = args in closure1'post'return self c result
+  function postcondition_once_closure1 (self: closure1) (args: t_Committer_AtomicPtr_T_ptr_T_Acquire_unit) (result: ()) : bool
+   = let c = args in closure1'post'return self c result
   
-  meta "rewrite_def" predicate postcondition_once_closure1
+  meta "rewrite_def" function postcondition_once_closure1
   
-  predicate postcondition_once_FnGhostWrapper_closure1 (self: t_FnGhostWrapper_closure1) (args: t_Committer_AtomicPtr_T_ptr_T_Acquire_unit) (result: ()) =
-    postcondition_once_closure1 self.f0'0 args result
+  function postcondition_once_FnGhostWrapper_closure1 (self: t_FnGhostWrapper_closure1) (args: t_Committer_AtomicPtr_T_ptr_T_Acquire_unit) (result: ()) : bool
+   = postcondition_once_closure1 self.f0'0 args result
   
-  meta "rewrite_def" predicate postcondition_once_FnGhostWrapper_closure1
+  meta "rewrite_def" function postcondition_once_FnGhostWrapper_closure1
   
   let load_T (self: t_AtomicPtr_T) (f: t_FnGhostWrapper_closure1) (return (x: Opaque.ptr)) =
   {[@stop_split] [@expl:load_T requires] ([@stop_split] [@expl:load 'self' type invariant] inv_ref_AtomicPtr_T self)
@@ -248,38 +248,38 @@ module M_g
   
   type t_AtomicPtr_T
   
-  predicate inv_AtomicPtr_T (_1: t_AtomicPtr_T)
+  function inv_AtomicPtr_T (_1: t_AtomicPtr_T) : bool
   
-  predicate resolve_AtomicPtr_T (_1: t_AtomicPtr_T)
+  function resolve_AtomicPtr_T (_1: t_AtomicPtr_T) : bool
   
   type t_Perm_AtomicPtr_T
   
-  predicate resolve_ref_ptr_T [@inline:trivial] (_1: Opaque.ptr) = true
+  function resolve_ref_ptr_T [@inline:trivial] (_1: Opaque.ptr) : bool = true
   
-  meta "rewrite_def" predicate resolve_ref_ptr_T
+  meta "rewrite_def" function resolve_ref_ptr_T
   
   function val_unsized_AtomicPtr_T (self: t_Perm_AtomicPtr_T) : Opaque.ptr
   
-  predicate resolve_Perm_AtomicPtr_T [@inline:trivial] (self: t_Perm_AtomicPtr_T) =
+  function resolve_Perm_AtomicPtr_T [@inline:trivial] (self: t_Perm_AtomicPtr_T) : bool =
     resolve_ref_ptr_T (val_unsized_AtomicPtr_T self)
   
-  meta "rewrite_def" predicate resolve_Perm_AtomicPtr_T
+  meta "rewrite_def" function resolve_Perm_AtomicPtr_T
   
-  predicate resolve_Perm_AtomicPtr_T'0 (_1: t_Perm_AtomicPtr_T)
+  function resolve_Perm_AtomicPtr_T'0 (_1: t_Perm_AtomicPtr_T) : bool
   
   axiom resolve_axiom [@rewrite]:
     forall _1: t_Perm_AtomicPtr_T [resolve_Perm_AtomicPtr_T'0 _1]. resolve_Perm_AtomicPtr_T'0 _1
       = resolve_Perm_AtomicPtr_T _1
   
-  predicate resolve_Ghost_Perm_AtomicPtr_T [@inline:trivial] (self: t_Perm_AtomicPtr_T) =
+  function resolve_Ghost_Perm_AtomicPtr_T [@inline:trivial] (self: t_Perm_AtomicPtr_T) : bool =
     resolve_Perm_AtomicPtr_T'0 self
   
-  meta "rewrite_def" predicate resolve_Ghost_Perm_AtomicPtr_T
+  meta "rewrite_def" function resolve_Ghost_Perm_AtomicPtr_T
   
-  predicate resolve_Ghost_Perm_AtomicPtr_T'0 [@inline:trivial] (_1: t_Perm_AtomicPtr_T) =
+  function resolve_Ghost_Perm_AtomicPtr_T'0 [@inline:trivial] (_1: t_Perm_AtomicPtr_T) : bool =
     resolve_Ghost_Perm_AtomicPtr_T _1
   
-  meta "rewrite_def" predicate resolve_Ghost_Perm_AtomicPtr_T'0
+  meta "rewrite_def" function resolve_Ghost_Perm_AtomicPtr_T'0
   
   type closure1 = { c0: t_Perm_AtomicPtr_T }
   
@@ -288,7 +288,7 @@ module M_g
   
   type t_Committer_AtomicPtr_T_ptr_T_SeqCst_unit
   
-  predicate shot_store_AtomicPtr_T (self: t_Committer_AtomicPtr_T_ptr_T_SeqCst_unit)
+  function shot_store_AtomicPtr_T (self: t_Committer_AtomicPtr_T_ptr_T_SeqCst_unit) : bool
   
   function ward_AtomicPtr_T (self: t_Committer_AtomicPtr_T_ptr_T_SeqCst_unit) : t_AtomicPtr_T
   
@@ -334,33 +334,33 @@ module M_g
   let new_FnGhostWrapper_closure1 (x: t_FnGhostWrapper_closure1) (return (x'0: t_FnGhostWrapper_closure1)) = any
     [ return (result: t_FnGhostWrapper_closure1) -> {[@stop_split] [@expl:new ensures] result = x} (! return {result}) ]
   
-  predicate invariant_ref_AtomicPtr_T [@inline:trivial] (self: t_AtomicPtr_T) = inv_AtomicPtr_T self
+  function invariant_ref_AtomicPtr_T [@inline:trivial] (self: t_AtomicPtr_T) : bool = inv_AtomicPtr_T self
   
-  meta "rewrite_def" predicate invariant_ref_AtomicPtr_T
+  meta "rewrite_def" function invariant_ref_AtomicPtr_T
   
-  predicate inv_ref_AtomicPtr_T [@inline:trivial] (_1: t_AtomicPtr_T) = invariant_ref_AtomicPtr_T _1
+  function inv_ref_AtomicPtr_T [@inline:trivial] (_1: t_AtomicPtr_T) : bool = invariant_ref_AtomicPtr_T _1
   
-  meta "rewrite_def" predicate inv_ref_AtomicPtr_T
+  meta "rewrite_def" function inv_ref_AtomicPtr_T
   
-  predicate precondition_closure1 (self: closure1) (args: t_Committer_AtomicPtr_T_ptr_T_SeqCst_unit) =
+  function precondition_closure1 (self: closure1) (args: t_Committer_AtomicPtr_T_ptr_T_SeqCst_unit) : bool =
     let c = args in closure1'pre self c
   
-  meta "rewrite_def" predicate precondition_closure1
+  meta "rewrite_def" function precondition_closure1
   
-  predicate precondition_FnGhostWrapper_closure1 (self: t_FnGhostWrapper_closure1) (args: t_Committer_AtomicPtr_T_ptr_T_SeqCst_unit) =
-    precondition_closure1 self.f0 args
+  function precondition_FnGhostWrapper_closure1 (self: t_FnGhostWrapper_closure1) (args: t_Committer_AtomicPtr_T_ptr_T_SeqCst_unit) : bool
+   = precondition_closure1 self.f0 args
   
-  meta "rewrite_def" predicate precondition_FnGhostWrapper_closure1
+  meta "rewrite_def" function precondition_FnGhostWrapper_closure1
   
-  predicate postcondition_once_closure1 (self: closure1) (args: t_Committer_AtomicPtr_T_ptr_T_SeqCst_unit) (result: ()) =
-    let c = args in closure1'post'return self c result
+  function postcondition_once_closure1 (self: closure1) (args: t_Committer_AtomicPtr_T_ptr_T_SeqCst_unit) (result: ()) : bool
+   = let c = args in closure1'post'return self c result
   
-  meta "rewrite_def" predicate postcondition_once_closure1
+  meta "rewrite_def" function postcondition_once_closure1
   
-  predicate postcondition_once_FnGhostWrapper_closure1 (self: t_FnGhostWrapper_closure1) (args: t_Committer_AtomicPtr_T_ptr_T_SeqCst_unit) (result: ()) =
-    postcondition_once_closure1 self.f0 args result
+  function postcondition_once_FnGhostWrapper_closure1 (self: t_FnGhostWrapper_closure1) (args: t_Committer_AtomicPtr_T_ptr_T_SeqCst_unit) (result: ()) : bool
+   = postcondition_once_closure1 self.f0 args result
   
-  meta "rewrite_def" predicate postcondition_once_FnGhostWrapper_closure1
+  meta "rewrite_def" function postcondition_once_FnGhostWrapper_closure1
   
   let load_T (self: t_AtomicPtr_T) (f: t_FnGhostWrapper_closure1) (return (x: Opaque.ptr)) =
   {[@stop_split] [@expl:load_T requires] ([@stop_split] [@expl:load 'self' type invariant] inv_ref_AtomicPtr_T self)

@@ -7,13 +7,13 @@ module M_rightmost_bit_64
     [ return (result: Int64BW.t) -> {[@stop_split] [@expl:wrapping_neg ensures] result = Int64BW.neg self}
       (! return {result}) ]
   
-  predicate ge_log_i64 [@inline:trivial] (self: Int64BW.t) (other: Int64BW.t) = Int64BW.le other self
+  function ge_log_i64 [@inline:trivial] (self: Int64BW.t) (other: Int64BW.t) : bool = Int64BW.le other self
   
-  meta "rewrite_def" predicate ge_log_i64
+  meta "rewrite_def" function ge_log_i64
   
-  predicate gt_log_i64 [@inline:trivial] (self: Int64BW.t) (other: Int64BW.t) = Int64BW.lt other self
+  function gt_log_i64 [@inline:trivial] (self: Int64BW.t) (other: Int64BW.t) : bool = Int64BW.lt other self
   
-  meta "rewrite_def" predicate gt_log_i64
+  meta "rewrite_def" function gt_log_i64
   
   constant const_MIN: Int64BW.t = (9223372036854775808: Int64BW.t)
   
@@ -46,13 +46,13 @@ module M_rightmost_bit_8
     [ return (result: Int8BW.t) -> {[@stop_split] [@expl:wrapping_neg ensures] result = Int8BW.neg self}
       (! return {result}) ]
   
-  predicate ge_log_i8 [@inline:trivial] (self: Int8BW.t) (other: Int8BW.t) = Int8BW.le other self
+  function ge_log_i8 [@inline:trivial] (self: Int8BW.t) (other: Int8BW.t) : bool = Int8BW.le other self
   
-  meta "rewrite_def" predicate ge_log_i8
+  meta "rewrite_def" function ge_log_i8
   
-  predicate gt_log_i8 [@inline:trivial] (self: Int8BW.t) (other: Int8BW.t) = Int8BW.lt other self
+  function gt_log_i8 [@inline:trivial] (self: Int8BW.t) (other: Int8BW.t) : bool = Int8BW.lt other self
   
-  meta "rewrite_def" predicate gt_log_i8
+  meta "rewrite_def" function gt_log_i8
   
   constant const_MIN: Int8BW.t = (128: Int8BW.t)
   

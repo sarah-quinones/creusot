@@ -3,9 +3,9 @@ module M_impl_T_for_i32__greater_or_eq (* <i32 as T> *)
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function deep_model_i32 [@inline:trivial] (self: Int32.t) : int = Int32.to_int self
   
@@ -20,7 +20,7 @@ module M_impl_T_for_i32__greater_or_eq (* <i32 as T> *)
       = ge_log_Int (deep_model_ref_i32 self) (deep_model_ref_i32 other)}
       (! return {result}) ]
   
-  predicate greater_or_eq_i32 (x: Int32.t) (y: Int32.t) = ge_log_Int (deep_model_i32 x) (deep_model_i32 y)
+  function greater_or_eq_i32 (x: Int32.t) (y: Int32.t) : bool = ge_log_Int (deep_model_i32 x) (deep_model_i32 y)
   
   meta "compute_max_steps" 1000000
   
@@ -36,15 +36,15 @@ module M_impl_T_for_i32__greater_or_eq__refines (* <i32 as T> *)
   use creusot.int.Int32
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function deep_model_i32 [@inline:trivial] (self: Int32.t) : int = Int32.to_int self
   
   meta "rewrite_def" function deep_model_i32
   
-  predicate greater_or_eq_i32 (x: Int32.t) (y: Int32.t) = ge_log_Int (deep_model_i32 x) (deep_model_i32 y)
+  function greater_or_eq_i32 (x: Int32.t) (y: Int32.t) : bool = ge_log_Int (deep_model_i32 x) (deep_model_i32 y)
   
   meta "compute_max_steps" 1000000
   
@@ -58,9 +58,9 @@ module M_impl_T_for_i64__greater_or_eq (* <i64 as T> *)
   use creusot.prelude.Any
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function deep_model_i64 [@inline:trivial] (self: Int64.t) : int = Int64.to_int self
   
@@ -75,7 +75,7 @@ module M_impl_T_for_i64__greater_or_eq (* <i64 as T> *)
       = ge_log_Int (deep_model_ref_i64 self) (deep_model_ref_i64 other)}
       (! return {result}) ]
   
-  predicate greater_or_eq_i64 (x: Int64.t) (y: Int64.t) = ge_log_Int (deep_model_i64 x) (deep_model_i64 y)
+  function greater_or_eq_i64 (x: Int64.t) (y: Int64.t) : bool = ge_log_Int (deep_model_i64 x) (deep_model_i64 y)
   
   meta "compute_max_steps" 1000000
   
@@ -91,15 +91,15 @@ module M_impl_T_for_i64__greater_or_eq__refines (* <i64 as T> *)
   use creusot.int.Int64
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function deep_model_i64 [@inline:trivial] (self: Int64.t) : int = Int64.to_int self
   
   meta "rewrite_def" function deep_model_i64
   
-  predicate greater_or_eq_i64 (x: Int64.t) (y: Int64.t) = ge_log_Int (deep_model_i64 x) (deep_model_i64 y)
+  function greater_or_eq_i64 (x: Int64.t) (y: Int64.t) : bool = ge_log_Int (deep_model_i64 x) (deep_model_i64 y)
   
   meta "compute_max_steps" 1000000
   
@@ -130,11 +130,11 @@ module M_less_than_i32
       = (deep_model_ref_ref_i32 self < deep_model_ref_ref_i32 other)}
       (! return {result}) ]
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate greater_or_eq_i32 (x: Int32.t) (y: Int32.t) = ge_log_Int (deep_model_i32 x) (deep_model_i32 y)
+  function greater_or_eq_i32 (x: Int32.t) (y: Int32.t) : bool = ge_log_Int (deep_model_i32 x) (deep_model_i32 y)
   
   meta "compute_max_steps" 1000000
   
@@ -168,11 +168,11 @@ module M_less_than_i64
       = (deep_model_ref_ref_i64 self < deep_model_ref_ref_i64 other)}
       (! return {result}) ]
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate greater_or_eq_i64 (x: Int64.t) (y: Int64.t) = ge_log_Int (deep_model_i64 x) (deep_model_i64 y)
+  function greater_or_eq_i64 (x: Int64.t) (y: Int64.t) : bool = ge_log_Int (deep_model_i64 x) (deep_model_i64 y)
   
   meta "compute_max_steps" 1000000
   

@@ -8,21 +8,22 @@ module M_bar
     [ return (result: MutBorrow.t (MutBorrow.t Int32.t)) -> {[@stop_split] [@expl:deref_mut ensures] result = self}
       (! return {result}) ]
   
-  predicate resolve_refmut_refmut_i32 [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t Int32.t)) = _1.final = _1.current
+  function resolve_refmut_refmut_i32 [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t Int32.t)) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_refmut_i32
+  meta "rewrite_def" function resolve_refmut_refmut_i32
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
-  predicate resolve_Ghost_refmut_i32 [@inline:trivial] (self: MutBorrow.t Int32.t) = resolve_refmut_i32 self
+  function resolve_Ghost_refmut_i32 [@inline:trivial] (self: MutBorrow.t Int32.t) : bool = resolve_refmut_i32 self
   
-  meta "rewrite_def" predicate resolve_Ghost_refmut_i32
+  meta "rewrite_def" function resolve_Ghost_refmut_i32
   
-  predicate resolve_Ghost_refmut_i32'0 [@inline:trivial] (_1: MutBorrow.t Int32.t) = resolve_Ghost_refmut_i32 _1
+  function resolve_Ghost_refmut_i32'0 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = resolve_Ghost_refmut_i32 _1
   
-  meta "rewrite_def" predicate resolve_Ghost_refmut_i32'0
+  meta "rewrite_def" function resolve_Ghost_refmut_i32'0
   
   let new_unit (x: ()) (return (x'0: ())) = any
     [ return (result: ()) -> {[@stop_split] [@expl:new ensures] result = x} (! return {result}) ]
@@ -56,28 +57,30 @@ module M_foo
   
   type t_WithInv = { f0: Int32.t }
   
-  predicate invariant_WithInv (self: t_WithInv) = self.f0 = (1: Int32.t)
+  function invariant_WithInv (self: t_WithInv) : bool = self.f0 = (1: Int32.t)
   
-  predicate inv_WithInv (_1: t_WithInv)
+  function inv_WithInv (_1: t_WithInv) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_WithInv [inv_WithInv _1]. inv_WithInv _1 = invariant_WithInv _1
   
-  predicate invariant_refmut_WithInv [@inline:trivial] (self: MutBorrow.t t_WithInv) =
-    inv_WithInv self.current /\ inv_WithInv self.final
+  function invariant_refmut_WithInv [@inline:trivial] (self: MutBorrow.t t_WithInv) : bool = inv_WithInv self.current
+    /\ inv_WithInv self.final
   
-  meta "rewrite_def" predicate invariant_refmut_WithInv
+  meta "rewrite_def" function invariant_refmut_WithInv
   
-  predicate inv_refmut_WithInv [@inline:trivial] (_1: MutBorrow.t t_WithInv) = invariant_refmut_WithInv _1
+  function inv_refmut_WithInv [@inline:trivial] (_1: MutBorrow.t t_WithInv) : bool = invariant_refmut_WithInv _1
   
-  meta "rewrite_def" predicate inv_refmut_WithInv
+  meta "rewrite_def" function inv_refmut_WithInv
   
-  predicate invariant_Ghost_refmut_WithInv [@inline:trivial] (self: MutBorrow.t t_WithInv) = inv_refmut_WithInv self
+  function invariant_Ghost_refmut_WithInv [@inline:trivial] (self: MutBorrow.t t_WithInv) : bool =
+    inv_refmut_WithInv self
   
-  meta "rewrite_def" predicate invariant_Ghost_refmut_WithInv
+  meta "rewrite_def" function invariant_Ghost_refmut_WithInv
   
-  predicate inv_Ghost_refmut_WithInv [@inline:trivial] (_1: MutBorrow.t t_WithInv) = invariant_Ghost_refmut_WithInv _1
+  function inv_Ghost_refmut_WithInv [@inline:trivial] (_1: MutBorrow.t t_WithInv) : bool =
+    invariant_Ghost_refmut_WithInv _1
   
-  meta "rewrite_def" predicate inv_Ghost_refmut_WithInv
+  meta "rewrite_def" function inv_Ghost_refmut_WithInv
   
   let into_inner_refmut_WithInv (self: MutBorrow.t t_WithInv) (return (x: MutBorrow.t t_WithInv)) =
   {[@stop_split] [@expl:into_inner 'self' type invariant] inv_Ghost_refmut_WithInv self}
@@ -93,9 +96,9 @@ module M_foo
   let bar (g2: MutBorrow.t Int32.t) (return (x: ())) = any
     [ return (result: ()) -> {[@stop_split] [@expl:bar ensures] g2.final = (1: Int32.t)} (! return {result}) ]
   
-  predicate resolve_refmut_WithInv [@inline:trivial] (_1: MutBorrow.t t_WithInv) = _1.final = _1.current
+  function resolve_refmut_WithInv [@inline:trivial] (_1: MutBorrow.t t_WithInv) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_WithInv
+  meta "rewrite_def" function resolve_refmut_WithInv
   
   meta "compute_max_steps" 1000000
   

@@ -7,19 +7,19 @@ module M_example
   
   type t_UF_i32
   
-  predicate invariant_UF_i32 (self: t_UF_i32)
+  function invariant_UF_i32 (self: t_UF_i32) : bool
   
-  predicate inv_UF_i32 (_1: t_UF_i32)
+  function inv_UF_i32 (_1: t_UF_i32) : bool
   
   axiom inv_axiom: forall _1: t_UF_i32 [inv_UF_i32 _1]. inv_UF_i32 _1 -> invariant_UF_i32 _1
   
-  predicate invariant_Ghost_UF_i32 [@inline:trivial] (self: t_UF_i32) = inv_UF_i32 self
+  function invariant_Ghost_UF_i32 [@inline:trivial] (self: t_UF_i32) : bool = inv_UF_i32 self
   
-  meta "rewrite_def" predicate invariant_Ghost_UF_i32
+  meta "rewrite_def" function invariant_Ghost_UF_i32
   
-  predicate inv_Ghost_UF_i32 [@inline:trivial] (_1: t_UF_i32) = invariant_Ghost_UF_i32 _1
+  function inv_Ghost_UF_i32 [@inline:trivial] (_1: t_UF_i32) : bool = invariant_Ghost_UF_i32 _1
   
-  meta "rewrite_def" predicate inv_Ghost_UF_i32
+  meta "rewrite_def" function inv_Ghost_UF_i32
   
   type t_Elem_i32
   
@@ -31,31 +31,33 @@ module M_example
       /\ ([@stop_split] [@expl:new ensures] Fset.is_empty (domain_i32 result))}
       (! return {result}) ]
   
-  predicate invariant_refmut_Ghost_UF_i32 [@inline:trivial] (self: MutBorrow.t t_UF_i32) =
+  function invariant_refmut_Ghost_UF_i32 [@inline:trivial] (self: MutBorrow.t t_UF_i32) : bool =
     inv_Ghost_UF_i32 self.current /\ inv_Ghost_UF_i32 self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Ghost_UF_i32
+  meta "rewrite_def" function invariant_refmut_Ghost_UF_i32
   
-  predicate inv_refmut_Ghost_UF_i32 [@inline:trivial] (_1: MutBorrow.t t_UF_i32) = invariant_refmut_Ghost_UF_i32 _1
+  function inv_refmut_Ghost_UF_i32 [@inline:trivial] (_1: MutBorrow.t t_UF_i32) : bool =
+    invariant_refmut_Ghost_UF_i32 _1
   
-  meta "rewrite_def" predicate inv_refmut_Ghost_UF_i32
+  meta "rewrite_def" function inv_refmut_Ghost_UF_i32
   
-  predicate invariant_refmut_UF_i32 [@inline:trivial] (self: MutBorrow.t t_UF_i32) =
-    inv_UF_i32 self.current /\ inv_UF_i32 self.final
+  function invariant_refmut_UF_i32 [@inline:trivial] (self: MutBorrow.t t_UF_i32) : bool = inv_UF_i32 self.current
+    /\ inv_UF_i32 self.final
   
-  meta "rewrite_def" predicate invariant_refmut_UF_i32
+  meta "rewrite_def" function invariant_refmut_UF_i32
   
-  predicate inv_refmut_UF_i32 [@inline:trivial] (_1: MutBorrow.t t_UF_i32) = invariant_refmut_UF_i32 _1
+  function inv_refmut_UF_i32 [@inline:trivial] (_1: MutBorrow.t t_UF_i32) : bool = invariant_refmut_UF_i32 _1
   
-  meta "rewrite_def" predicate inv_refmut_UF_i32
+  meta "rewrite_def" function inv_refmut_UF_i32
   
-  predicate invariant_Ghost_refmut_UF_i32 [@inline:trivial] (self: MutBorrow.t t_UF_i32) = inv_refmut_UF_i32 self
+  function invariant_Ghost_refmut_UF_i32 [@inline:trivial] (self: MutBorrow.t t_UF_i32) : bool = inv_refmut_UF_i32 self
   
-  meta "rewrite_def" predicate invariant_Ghost_refmut_UF_i32
+  meta "rewrite_def" function invariant_Ghost_refmut_UF_i32
   
-  predicate inv_Ghost_refmut_UF_i32 [@inline:trivial] (_1: MutBorrow.t t_UF_i32) = invariant_Ghost_refmut_UF_i32 _1
+  function inv_Ghost_refmut_UF_i32 [@inline:trivial] (_1: MutBorrow.t t_UF_i32) : bool =
+    invariant_Ghost_refmut_UF_i32 _1
   
-  meta "rewrite_def" predicate inv_Ghost_refmut_UF_i32
+  meta "rewrite_def" function inv_Ghost_refmut_UF_i32
   
   let borrow_mut_UF_i32 (self: MutBorrow.t t_UF_i32) (return (x: MutBorrow.t t_UF_i32)) =
   {[@stop_split] [@expl:borrow_mut 'self' type invariant] inv_refmut_Ghost_UF_i32 self}
@@ -65,13 +67,13 @@ module M_example
       /\ ([@stop_split] [@expl:borrow_mut ensures] result = self)}
       (! return {result}) ]
   
-  predicate inv_Elem_i32 (_1: t_Elem_i32)
+  function inv_Elem_i32 (_1: t_Elem_i32) : bool
   
-  predicate contains_Elem_i32 [@inline:trivial] (self: Fset.fset t_Elem_i32) (e: t_Elem_i32) = Fset.mem e self
+  function contains_Elem_i32 [@inline:trivial] (self: Fset.fset t_Elem_i32) (e: t_Elem_i32) : bool = Fset.mem e self
   
-  meta "rewrite_def" predicate contains_Elem_i32
+  meta "rewrite_def" function contains_Elem_i32
   
-  predicate in_domain_i32 (self: t_UF_i32) (e: t_Elem_i32) = contains_Elem_i32 (domain_i32 self) e
+  function in_domain_i32 (self: t_UF_i32) (e: t_Elem_i32) : bool = contains_Elem_i32 (domain_i32 self) e
   
   function fin_Ghost_refmut_UF_i32 [@inline:trivial] (self: MutBorrow.t t_UF_i32) : t_UF_i32 = self.final
   
@@ -111,29 +113,29 @@ module M_example
       = Map.set (payloads_map_i32 uf.current) result payload)}
       (! return {result}) ]
   
-  predicate invariant_ref_Ghost_UF_i32 [@inline:trivial] (self: t_UF_i32) = inv_Ghost_UF_i32 self
+  function invariant_ref_Ghost_UF_i32 [@inline:trivial] (self: t_UF_i32) : bool = inv_Ghost_UF_i32 self
   
-  meta "rewrite_def" predicate invariant_ref_Ghost_UF_i32
+  meta "rewrite_def" function invariant_ref_Ghost_UF_i32
   
-  predicate inv_ref_Ghost_UF_i32 [@inline:trivial] (_1: t_UF_i32) = invariant_ref_Ghost_UF_i32 _1
+  function inv_ref_Ghost_UF_i32 [@inline:trivial] (_1: t_UF_i32) : bool = invariant_ref_Ghost_UF_i32 _1
   
-  meta "rewrite_def" predicate inv_ref_Ghost_UF_i32
+  meta "rewrite_def" function inv_ref_Ghost_UF_i32
   
-  predicate invariant_ref_UF_i32 [@inline:trivial] (self: t_UF_i32) = inv_UF_i32 self
+  function invariant_ref_UF_i32 [@inline:trivial] (self: t_UF_i32) : bool = inv_UF_i32 self
   
-  meta "rewrite_def" predicate invariant_ref_UF_i32
+  meta "rewrite_def" function invariant_ref_UF_i32
   
-  predicate inv_ref_UF_i32 [@inline:trivial] (_1: t_UF_i32) = invariant_ref_UF_i32 _1
+  function inv_ref_UF_i32 [@inline:trivial] (_1: t_UF_i32) : bool = invariant_ref_UF_i32 _1
   
-  meta "rewrite_def" predicate inv_ref_UF_i32
+  meta "rewrite_def" function inv_ref_UF_i32
   
-  predicate invariant_Ghost_ref_UF_i32 [@inline:trivial] (self: t_UF_i32) = inv_ref_UF_i32 self
+  function invariant_Ghost_ref_UF_i32 [@inline:trivial] (self: t_UF_i32) : bool = inv_ref_UF_i32 self
   
-  meta "rewrite_def" predicate invariant_Ghost_ref_UF_i32
+  meta "rewrite_def" function invariant_Ghost_ref_UF_i32
   
-  predicate inv_Ghost_ref_UF_i32 [@inline:trivial] (_1: t_UF_i32) = invariant_Ghost_ref_UF_i32 _1
+  function inv_Ghost_ref_UF_i32 [@inline:trivial] (_1: t_UF_i32) : bool = invariant_Ghost_ref_UF_i32 _1
   
-  meta "rewrite_def" predicate inv_Ghost_ref_UF_i32
+  meta "rewrite_def" function inv_Ghost_ref_UF_i32
   
   let borrow_UF_i32 (self: t_UF_i32) (return (x: t_UF_i32)) =
   {[@stop_split] [@expl:borrow 'self' type invariant] inv_ref_Ghost_UF_i32 self}
@@ -143,13 +145,13 @@ module M_example
       /\ ([@stop_split] [@expl:borrow ensures] result = self)}
       (! return {result}) ]
   
-  predicate invariant_ref_Elem_i32 [@inline:trivial] (self: t_Elem_i32) = inv_Elem_i32 self
+  function invariant_ref_Elem_i32 [@inline:trivial] (self: t_Elem_i32) : bool = inv_Elem_i32 self
   
-  meta "rewrite_def" predicate invariant_ref_Elem_i32
+  meta "rewrite_def" function invariant_ref_Elem_i32
   
-  predicate inv_ref_Elem_i32 [@inline:trivial] (_1: t_Elem_i32) = invariant_ref_Elem_i32 _1
+  function inv_ref_Elem_i32 [@inline:trivial] (_1: t_Elem_i32) : bool = invariant_ref_Elem_i32 _1
   
-  meta "rewrite_def" predicate inv_ref_Elem_i32
+  meta "rewrite_def" function inv_ref_Elem_i32
   
   function root_i32 (self: t_UF_i32) (e: t_Elem_i32) : t_Elem_i32 =
     index_Mapping_Elem_i32_Elem_i32 (roots_map_i32 self) e
@@ -177,10 +179,10 @@ module M_example
       /\ ([@stop_split] [@expl:clone ensures] self = result)}
       (! return {result}) ]
   
-  predicate domain_unchanged_i32 (self: MutBorrow.t t_UF_i32) = domain_i32 self.current = domain_i32 self.final
+  function domain_unchanged_i32 (self: MutBorrow.t t_UF_i32) : bool = domain_i32 self.current = domain_i32 self.final
   
-  predicate payloads_unchanged_i32 (self: MutBorrow.t t_UF_i32) =
-    payloads_map_i32 self.current = payloads_map_i32 self.final
+  function payloads_unchanged_i32 (self: MutBorrow.t t_UF_i32) : bool = payloads_map_i32 self.current
+    = payloads_map_i32 self.final
   
   let union_i32 (uf: MutBorrow.t t_UF_i32) (x: t_Elem_i32) (y: t_Elem_i32) (return (x'0: t_Elem_i32)) =
   {[@stop_split] [@expl:union_i32 requires] ([@stop_split] [@expl:union 'uf' type invariant] inv_Ghost_refmut_UF_i32 uf)
@@ -201,10 +203,9 @@ module M_example
         ))}
       (! return {result}) ]
   
-  predicate resolve_Elem_i32 (_1: t_Elem_i32)
+  function resolve_Elem_i32 (_1: t_Elem_i32) : bool
   
-  predicate unchanged_i32 (self: MutBorrow.t t_UF_i32) =
-    domain_i32 self.current = domain_i32 self.final
+  function unchanged_i32 (self: MutBorrow.t t_UF_i32) : bool = domain_i32 self.current = domain_i32 self.final
     /\ roots_map_i32 self.current = roots_map_i32 self.final
     /\ payloads_map_i32 self.current = payloads_map_i32 self.final
   
@@ -219,15 +220,15 @@ module M_example
       /\ ([@stop_split] [@expl:find ensures #1] unchanged_i32 uf)}
       (! return {result}) ]
   
-  predicate resolve_UF_i32 (_1: t_UF_i32)
+  function resolve_UF_i32 (_1: t_UF_i32) : bool
   
-  predicate resolve_Ghost_UF_i32 [@inline:trivial] (self: t_UF_i32) = resolve_UF_i32 self
+  function resolve_Ghost_UF_i32 [@inline:trivial] (self: t_UF_i32) : bool = resolve_UF_i32 self
   
-  meta "rewrite_def" predicate resolve_Ghost_UF_i32
+  meta "rewrite_def" function resolve_Ghost_UF_i32
   
-  predicate resolve_Ghost_UF_i32'0 [@inline:trivial] (_1: t_UF_i32) = resolve_Ghost_UF_i32 _1
+  function resolve_Ghost_UF_i32'0 [@inline:trivial] (_1: t_UF_i32) : bool = resolve_Ghost_UF_i32 _1
   
-  meta "rewrite_def" predicate resolve_Ghost_UF_i32'0
+  meta "rewrite_def" function resolve_Ghost_UF_i32'0
   
   meta "compute_max_steps" 1000000
   
@@ -422,9 +423,9 @@ module M_implementation__find
   
   type t_UF_T = { f0'0: t_UFInner_T }
   
-  predicate contains_Elem_T [@inline:trivial] (self: Fset.fset t_Elem_T) (e: t_Elem_T) = Fset.mem e self
+  function contains_Elem_T [@inline:trivial] (self: Fset.fset t_Elem_T) (e: t_Elem_T) : bool = Fset.mem e self
   
-  meta "rewrite_def" predicate contains_Elem_T
+  meta "rewrite_def" function contains_Elem_T
   
   function domain_T (self: t_UF_T) : Fset.fset t_Elem_T = self.f0'0.domain
   
@@ -439,10 +440,10 @@ module M_implementation__find
   
   meta "rewrite_def" function lookup_Snapshot_Elem_T
   
-  predicate contains_Snapshot_Elem_T [@inline:trivial] (self: t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T) (k: t_Elem_T) =
-    lookup_Snapshot_Elem_T self k <> None
+  function contains_Snapshot_Elem_T [@inline:trivial] (self: t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T) (k: t_Elem_T) : bool
+   = lookup_Snapshot_Elem_T self k <> None
   
-  meta "rewrite_def" predicate contains_Snapshot_Elem_T
+  meta "rewrite_def" function contains_Snapshot_Elem_T
   
   type t_PCell_Node_T
   
@@ -481,7 +482,7 @@ module M_implementation__find
   
   meta "rewrite_def" function index_Mapping_Elem_T_T
   
-  predicate invariant_UF_T [@inline:trivial] (self: t_UF_T) =
+  function invariant_UF_T [@inline:trivial] (self: t_UF_T) : bool =
     forall e: t_Elem_T. contains_Elem_T (domain_T self) e
       -> contains_Snapshot_Elem_T self.f0'0.perms e
       /\ ward_PCell_Node_T (index_FMap_Snapshot_Elem_T_Perm_PCell_Node_T self.f0'0.perms e)
@@ -497,44 +498,46 @@ module M_implementation__find
         /\ index_Mapping_Elem_T_T self.f0'0.payloads e = payload
         end
   
-  meta "rewrite_def" predicate invariant_UF_T
+  meta "rewrite_def" function invariant_UF_T
   
-  predicate inv_UF_T (_1: t_UF_T)
+  function inv_UF_T (_1: t_UF_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_UF_T [inv_UF_T _1]. inv_UF_T _1 = invariant_UF_T _1
   
-  predicate invariant_refmut_UF_T [@inline:trivial] (self: MutBorrow.t t_UF_T) =
-    inv_UF_T self.current /\ inv_UF_T self.final
+  function invariant_refmut_UF_T [@inline:trivial] (self: MutBorrow.t t_UF_T) : bool = inv_UF_T self.current
+    /\ inv_UF_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_UF_T
+  meta "rewrite_def" function invariant_refmut_UF_T
   
-  predicate inv_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t t_UF_T) = invariant_refmut_UF_T _1
+  function inv_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t t_UF_T) : bool = invariant_refmut_UF_T _1
   
-  meta "rewrite_def" predicate inv_refmut_UF_T
+  meta "rewrite_def" function inv_refmut_UF_T
   
-  predicate invariant_Ghost_refmut_UF_T [@inline:trivial] (self: MutBorrow.t t_UF_T) = inv_refmut_UF_T self
+  function invariant_Ghost_refmut_UF_T [@inline:trivial] (self: MutBorrow.t t_UF_T) : bool = inv_refmut_UF_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_refmut_UF_T
+  meta "rewrite_def" function invariant_Ghost_refmut_UF_T
   
-  predicate inv_Ghost_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t t_UF_T) = invariant_Ghost_refmut_UF_T _1
+  function inv_Ghost_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t t_UF_T) : bool = invariant_Ghost_refmut_UF_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_refmut_UF_T
+  meta "rewrite_def" function inv_Ghost_refmut_UF_T
   
-  predicate invariant_ref_Ghost_refmut_UF_T [@inline:trivial] (self: MutBorrow.t t_UF_T) = inv_Ghost_refmut_UF_T self
+  function invariant_ref_Ghost_refmut_UF_T [@inline:trivial] (self: MutBorrow.t t_UF_T) : bool =
+    inv_Ghost_refmut_UF_T self
   
-  meta "rewrite_def" predicate invariant_ref_Ghost_refmut_UF_T
+  meta "rewrite_def" function invariant_ref_Ghost_refmut_UF_T
   
-  predicate inv_ref_Ghost_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t t_UF_T) = invariant_ref_Ghost_refmut_UF_T _1
+  function inv_ref_Ghost_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t t_UF_T) : bool =
+    invariant_ref_Ghost_refmut_UF_T _1
   
-  meta "rewrite_def" predicate inv_ref_Ghost_refmut_UF_T
+  meta "rewrite_def" function inv_ref_Ghost_refmut_UF_T
   
-  predicate invariant_ref_refmut_UF_T [@inline:trivial] (self: MutBorrow.t t_UF_T) = inv_refmut_UF_T self
+  function invariant_ref_refmut_UF_T [@inline:trivial] (self: MutBorrow.t t_UF_T) : bool = inv_refmut_UF_T self
   
-  meta "rewrite_def" predicate invariant_ref_refmut_UF_T
+  meta "rewrite_def" function invariant_ref_refmut_UF_T
   
-  predicate inv_ref_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t t_UF_T) = invariant_ref_refmut_UF_T _1
+  function inv_ref_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t t_UF_T) : bool = invariant_ref_refmut_UF_T _1
   
-  meta "rewrite_def" predicate inv_ref_refmut_UF_T
+  meta "rewrite_def" function inv_ref_refmut_UF_T
   
   let deref_Ghost_refmut_UF_T (self: MutBorrow.t t_UF_T) (return (x: MutBorrow.t t_UF_T)) =
   {[@stop_split] [@expl:deref 'self' type invariant] inv_ref_Ghost_refmut_UF_T self}
@@ -567,17 +570,17 @@ module M_implementation__find
   let new_ref_Perm_PCell_Node_T (x: t_Perm_PCell_Node_T) (return (x'0: t_Perm_PCell_Node_T)) = any
     [ return (result: t_Perm_PCell_Node_T) -> {[@stop_split] [@expl:new ensures] result = x} (! return {result}) ]
   
-  predicate inv_Rc_PCell_Node_T_Global (_1: t_Rc_PCell_Node_T_Global)
+  function inv_Rc_PCell_Node_T_Global (_1: t_Rc_PCell_Node_T_Global) : bool
   
-  predicate invariant_ref_Rc_PCell_Node_T_Global [@inline:trivial] (self: t_Rc_PCell_Node_T_Global) =
+  function invariant_ref_Rc_PCell_Node_T_Global [@inline:trivial] (self: t_Rc_PCell_Node_T_Global) : bool =
     inv_Rc_PCell_Node_T_Global self
   
-  meta "rewrite_def" predicate invariant_ref_Rc_PCell_Node_T_Global
+  meta "rewrite_def" function invariant_ref_Rc_PCell_Node_T_Global
   
-  predicate inv_ref_Rc_PCell_Node_T_Global [@inline:trivial] (_1: t_Rc_PCell_Node_T_Global) =
+  function inv_ref_Rc_PCell_Node_T_Global [@inline:trivial] (_1: t_Rc_PCell_Node_T_Global) : bool =
     invariant_ref_Rc_PCell_Node_T_Global _1
   
-  meta "rewrite_def" predicate inv_ref_Rc_PCell_Node_T_Global
+  meta "rewrite_def" function inv_ref_Rc_PCell_Node_T_Global
   
   let deref_Rc_PCell_Node_T_Global'0 (self: t_Rc_PCell_Node_T_Global) (return (x: t_PCell_Node_T)) =
   {[@stop_split] [@expl:deref 'self' type invariant] inv_ref_Rc_PCell_Node_T_Global self}
@@ -586,13 +589,13 @@ module M_implementation__find
       = deref_Rc_PCell_Node_T_Global self}
       (! return {result}) ]
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_Elem_T (_1: t_Elem_T)
+  function inv_Elem_T (_1: t_Elem_T) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Elem_T [inv_Elem_T _1]. inv_Elem_T _1 = inv_Rc_PCell_Node_T_Global _1.f0
   
-  predicate inv_Node_T (_1: t_Node_T)
+  function inv_Node_T (_1: t_Node_T) : bool
   
   axiom inv_axiom'1 [@rewrite]: forall _1: t_Node_T [inv_Node_T _1]. inv_Node_T _1
       = match _1 with
@@ -600,13 +603,13 @@ module M_implementation__find
         | Link f0'2 -> inv_Elem_T f0'2
         end
   
-  predicate invariant_ref_Node_T [@inline:trivial] (self: t_Node_T) = inv_Node_T self
+  function invariant_ref_Node_T [@inline:trivial] (self: t_Node_T) : bool = inv_Node_T self
   
-  meta "rewrite_def" predicate invariant_ref_Node_T
+  meta "rewrite_def" function invariant_ref_Node_T
   
-  predicate inv_ref_Node_T [@inline:trivial] (_1: t_Node_T) = invariant_ref_Node_T _1
+  function inv_ref_Node_T [@inline:trivial] (_1: t_Node_T) : bool = invariant_ref_Node_T _1
   
-  meta "rewrite_def" predicate inv_ref_Node_T
+  meta "rewrite_def" function inv_ref_Node_T
   
   let borrow_Node_T (self: t_PCell_Node_T) (perm: t_Perm_PCell_Node_T) (return (x: t_Node_T)) =
   {[@stop_split] [@expl:borrow requires] self = ward_PCell_Node_T perm}
@@ -624,13 +627,13 @@ module M_implementation__find
         end}
       any) ]
   
-  predicate invariant_ref_Elem_T [@inline:trivial] (self: t_Elem_T) = inv_Elem_T self
+  function invariant_ref_Elem_T [@inline:trivial] (self: t_Elem_T) : bool = inv_Elem_T self
   
-  meta "rewrite_def" predicate invariant_ref_Elem_T
+  meta "rewrite_def" function invariant_ref_Elem_T
   
-  predicate inv_ref_Elem_T [@inline:trivial] (_1: t_Elem_T) = invariant_ref_Elem_T _1
+  function inv_ref_Elem_T [@inline:trivial] (_1: t_Elem_T) : bool = invariant_ref_Elem_T _1
   
-  meta "rewrite_def" predicate inv_ref_Elem_T
+  meta "rewrite_def" function inv_ref_Elem_T
   
   let clone_Elem_T (self: t_Elem_T) (return (x: t_Elem_T)) =
   {[@stop_split] [@expl:clone 'self' type invariant] inv_ref_Elem_T self}
@@ -640,25 +643,25 @@ module M_implementation__find
       /\ ([@stop_split] [@expl:clone ensures] self = result)}
       (! return {result}) ]
   
-  predicate invariant_refmut_Ghost_refmut_UF_T [@inline:trivial] (self: MutBorrow.t (MutBorrow.t t_UF_T)) =
+  function invariant_refmut_Ghost_refmut_UF_T [@inline:trivial] (self: MutBorrow.t (MutBorrow.t t_UF_T)) : bool =
     inv_Ghost_refmut_UF_T self.current /\ inv_Ghost_refmut_UF_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Ghost_refmut_UF_T
+  meta "rewrite_def" function invariant_refmut_Ghost_refmut_UF_T
   
-  predicate inv_refmut_Ghost_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_UF_T)) =
+  function inv_refmut_Ghost_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_UF_T)) : bool =
     invariant_refmut_Ghost_refmut_UF_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Ghost_refmut_UF_T
+  meta "rewrite_def" function inv_refmut_Ghost_refmut_UF_T
   
-  predicate invariant_refmut_refmut_UF_T [@inline:trivial] (self: MutBorrow.t (MutBorrow.t t_UF_T)) =
+  function invariant_refmut_refmut_UF_T [@inline:trivial] (self: MutBorrow.t (MutBorrow.t t_UF_T)) : bool =
     inv_refmut_UF_T self.current /\ inv_refmut_UF_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_refmut_UF_T
+  meta "rewrite_def" function invariant_refmut_refmut_UF_T
   
-  predicate inv_refmut_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_UF_T)) =
+  function inv_refmut_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_UF_T)) : bool =
     invariant_refmut_refmut_UF_T _1
   
-  meta "rewrite_def" predicate inv_refmut_refmut_UF_T
+  meta "rewrite_def" function inv_refmut_refmut_UF_T
   
   let deref_mut_Ghost_refmut_UF_T (self: MutBorrow.t (MutBorrow.t t_UF_T))
     (return (x: MutBorrow.t (MutBorrow.t t_UF_T))) =
@@ -669,13 +672,14 @@ module M_implementation__find
       /\ ([@stop_split] [@expl:deref_mut ensures] result = self)}
       (! return {result}) ]
   
-  predicate resolve_refmut_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_UF_T)) = _1.final = _1.current
+  function resolve_refmut_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_UF_T)) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_refmut_UF_T
+  meta "rewrite_def" function resolve_refmut_refmut_UF_T
   
-  predicate resolve_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t t_UF_T) = _1.final = _1.current
+  function resolve_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t t_UF_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_UF_T
+  meta "rewrite_def" function resolve_refmut_UF_T
   
   let new_refmut_UF_T (x: MutBorrow.t t_UF_T) (return (x'0: MutBorrow.t t_UF_T)) =
   {[@stop_split] [@expl:new 'x' type invariant] inv_refmut_UF_T x}
@@ -685,7 +689,7 @@ module M_implementation__find
       /\ ([@stop_split] [@expl:new ensures] result = x)}
       (! return {result}) ]
   
-  predicate in_domain_T (self: t_UF_T) (e: t_Elem_T) = contains_Elem_T (domain_T self) e
+  function in_domain_T (self: t_UF_T) (e: t_Elem_T) : bool = contains_Elem_T (domain_T self) e
   
   function roots_map_T (self: t_UF_T) : Map.map t_Elem_T t_Elem_T = self.f0'0.roots
   
@@ -699,8 +703,7 @@ module M_implementation__find
   
   function payloads_map_T (self: t_UF_T) : Map.map t_Elem_T t_T = self.f0'0.payloads
   
-  predicate unchanged_T (self: MutBorrow.t t_UF_T) =
-    domain_T self.current = domain_T self.final
+  function unchanged_T (self: MutBorrow.t t_UF_T) : bool = domain_T self.current = domain_T self.final
     /\ roots_map_T self.current = roots_map_T self.final /\ payloads_map_T self.current = payloads_map_T self.final
   
   let find_T (uf: MutBorrow.t t_UF_T) (elem: t_Elem_T) (return (x: t_Elem_T)) =
@@ -724,9 +727,9 @@ module M_implementation__find
   
   type t_Option_refmut_Perm_PCell_Node_T = None'1 | Some'1 (MutBorrow.t t_Perm_PCell_Node_T)
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function len_Snapshot_Elem_T (self: t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T) : int
   
@@ -757,31 +760,31 @@ module M_implementation__find
     [ return (result: MutBorrow.t t_Perm_PCell_Node_T) -> {[@stop_split] [@expl:unwrap ensures] Some'1 result = self}
       (! return {result}) ]
   
-  predicate resolve_refmut_refmut_UFInner_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_UFInner_T)) =
+  function resolve_refmut_refmut_UFInner_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_UFInner_T)) : bool =
     _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_refmut_UFInner_T
+  meta "rewrite_def" function resolve_refmut_refmut_UFInner_T
   
   let new_refmut_Perm_PCell_Node_T (x: MutBorrow.t t_Perm_PCell_Node_T)
     (return (x'0: MutBorrow.t t_Perm_PCell_Node_T)) = any
     [ return (result: MutBorrow.t t_Perm_PCell_Node_T) -> {[@stop_split] [@expl:new ensures] result = x}
       (! return {result}) ]
   
-  predicate resolve_Rc_PCell_Node_T_Global (_1: t_Rc_PCell_Node_T_Global)
+  function resolve_Rc_PCell_Node_T_Global (_1: t_Rc_PCell_Node_T_Global) : bool
   
-  predicate resolve_Elem_T (_1: t_Elem_T)
+  function resolve_Elem_T (_1: t_Elem_T) : bool
   
   axiom resolve_axiom [@rewrite]: forall _1: t_Elem_T [resolve_Elem_T _1]. resolve_Elem_T _1
       = resolve_Rc_PCell_Node_T_Global _1.f0
   
-  predicate invariant_refmut_Node_T [@inline:trivial] (self: MutBorrow.t t_Node_T) =
-    inv_Node_T self.current /\ inv_Node_T self.final
+  function invariant_refmut_Node_T [@inline:trivial] (self: MutBorrow.t t_Node_T) : bool = inv_Node_T self.current
+    /\ inv_Node_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Node_T
+  meta "rewrite_def" function invariant_refmut_Node_T
   
-  predicate inv_refmut_Node_T [@inline:trivial] (_1: MutBorrow.t t_Node_T) = invariant_refmut_Node_T _1
+  function inv_refmut_Node_T [@inline:trivial] (_1: MutBorrow.t t_Node_T) : bool = invariant_refmut_Node_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Node_T
+  meta "rewrite_def" function inv_refmut_Node_T
   
   function fin_Ghost_refmut_Perm_PCell_Node_T [@inline:trivial] (self: MutBorrow.t t_Perm_PCell_Node_T) : t_Perm_PCell_Node_T
    = self.final
@@ -801,9 +804,9 @@ module M_implementation__find
       = val_unsized_PCell_Node_T (fin_Ghost_refmut_Perm_PCell_Node_T perm))}
       (! return {result}) ]
   
-  predicate resolve_T (_1: t_T)
+  function resolve_T (_1: t_T) : bool
   
-  predicate resolve_Node_T (_1: t_Node_T)
+  function resolve_Node_T (_1: t_Node_T) : bool
   
   axiom resolve_axiom'0 [@rewrite]: forall _1: t_Node_T [resolve_Node_T _1]. resolve_Node_T _1
       = match _1 with
@@ -811,31 +814,31 @@ module M_implementation__find
         | Link x0 -> resolve_Elem_T x0
         end
   
-  predicate resolve_refmut_Node_T [@inline:trivial] (_1: MutBorrow.t t_Node_T) = _1.final = _1.current
+  function resolve_refmut_Node_T [@inline:trivial] (_1: MutBorrow.t t_Node_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Node_T
+  meta "rewrite_def" function resolve_refmut_Node_T
   
-  predicate resolve_refmut_UFInner_T [@inline:trivial] (_1: MutBorrow.t t_UFInner_T) = _1.final = _1.current
+  function resolve_refmut_UFInner_T [@inline:trivial] (_1: MutBorrow.t t_UFInner_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_UFInner_T
+  meta "rewrite_def" function resolve_refmut_UFInner_T
   
-  predicate resolve_Ghost_refmut_UFInner_T [@inline:trivial] (self: MutBorrow.t t_UFInner_T) =
+  function resolve_Ghost_refmut_UFInner_T [@inline:trivial] (self: MutBorrow.t t_UFInner_T) : bool =
     resolve_refmut_UFInner_T self
   
-  meta "rewrite_def" predicate resolve_Ghost_refmut_UFInner_T
+  meta "rewrite_def" function resolve_Ghost_refmut_UFInner_T
   
-  predicate resolve_Ghost_refmut_UFInner_T'0 [@inline:trivial] (_1: MutBorrow.t t_UFInner_T) =
+  function resolve_Ghost_refmut_UFInner_T'0 [@inline:trivial] (_1: MutBorrow.t t_UFInner_T) : bool =
     resolve_Ghost_refmut_UFInner_T _1
   
-  meta "rewrite_def" predicate resolve_Ghost_refmut_UFInner_T'0
+  meta "rewrite_def" function resolve_Ghost_refmut_UFInner_T'0
   
-  predicate resolve_Ghost_refmut_UF_T [@inline:trivial] (self: MutBorrow.t t_UF_T) = resolve_refmut_UF_T self
+  function resolve_Ghost_refmut_UF_T [@inline:trivial] (self: MutBorrow.t t_UF_T) : bool = resolve_refmut_UF_T self
   
-  meta "rewrite_def" predicate resolve_Ghost_refmut_UF_T
+  meta "rewrite_def" function resolve_Ghost_refmut_UF_T
   
-  predicate resolve_Ghost_refmut_UF_T'0 [@inline:trivial] (_1: MutBorrow.t t_UF_T) = resolve_Ghost_refmut_UF_T _1
+  function resolve_Ghost_refmut_UF_T'0 [@inline:trivial] (_1: MutBorrow.t t_UF_T) : bool = resolve_Ghost_refmut_UF_T _1
   
-  meta "rewrite_def" predicate resolve_Ghost_refmut_UF_T'0
+  meta "rewrite_def" function resolve_Ghost_refmut_UF_T'0
   
   meta "compute_max_steps" 1000000
   
@@ -1012,9 +1015,9 @@ module M_implementation__get
   
   type t_UF_T = { f0'0: t_UFInner_T }
   
-  predicate contains_Elem_T [@inline:trivial] (self: Fset.fset t_Elem_T) (e: t_Elem_T) = Fset.mem e self
+  function contains_Elem_T [@inline:trivial] (self: Fset.fset t_Elem_T) (e: t_Elem_T) : bool = Fset.mem e self
   
-  meta "rewrite_def" predicate contains_Elem_T
+  meta "rewrite_def" function contains_Elem_T
   
   function domain_T (self: t_UF_T) : Fset.fset t_Elem_T = self.f0'0.domain
   
@@ -1029,10 +1032,10 @@ module M_implementation__get
   
   meta "rewrite_def" function lookup_Snapshot_Elem_T
   
-  predicate contains_Snapshot_Elem_T [@inline:trivial] (self: t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T) (k: t_Elem_T) =
-    lookup_Snapshot_Elem_T self k <> None
+  function contains_Snapshot_Elem_T [@inline:trivial] (self: t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T) (k: t_Elem_T) : bool
+   = lookup_Snapshot_Elem_T self k <> None
   
-  meta "rewrite_def" predicate contains_Snapshot_Elem_T
+  meta "rewrite_def" function contains_Snapshot_Elem_T
   
   type t_PCell_Node_T
   
@@ -1071,7 +1074,7 @@ module M_implementation__get
   
   meta "rewrite_def" function index_Mapping_Elem_T_T
   
-  predicate invariant_UF_T [@inline:trivial] (self: t_UF_T) =
+  function invariant_UF_T [@inline:trivial] (self: t_UF_T) : bool =
     forall e: t_Elem_T. contains_Elem_T (domain_T self) e
       -> contains_Snapshot_Elem_T self.f0'0.perms e
       /\ ward_PCell_Node_T (index_FMap_Snapshot_Elem_T_Perm_PCell_Node_T self.f0'0.perms e)
@@ -1087,43 +1090,43 @@ module M_implementation__get
         /\ index_Mapping_Elem_T_T self.f0'0.payloads e = payload
         end
   
-  meta "rewrite_def" predicate invariant_UF_T
+  meta "rewrite_def" function invariant_UF_T
   
-  predicate inv_UF_T (_1: t_UF_T)
+  function inv_UF_T (_1: t_UF_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_UF_T [inv_UF_T _1]. inv_UF_T _1 = invariant_UF_T _1
   
-  predicate invariant_ref_UF_T [@inline:trivial] (self: t_UF_T) = inv_UF_T self
+  function invariant_ref_UF_T [@inline:trivial] (self: t_UF_T) : bool = inv_UF_T self
   
-  meta "rewrite_def" predicate invariant_ref_UF_T
+  meta "rewrite_def" function invariant_ref_UF_T
   
-  predicate inv_ref_UF_T [@inline:trivial] (_1: t_UF_T) = invariant_ref_UF_T _1
+  function inv_ref_UF_T [@inline:trivial] (_1: t_UF_T) : bool = invariant_ref_UF_T _1
   
-  meta "rewrite_def" predicate inv_ref_UF_T
+  meta "rewrite_def" function inv_ref_UF_T
   
-  predicate invariant_Ghost_ref_UF_T [@inline:trivial] (self: t_UF_T) = inv_ref_UF_T self
+  function invariant_Ghost_ref_UF_T [@inline:trivial] (self: t_UF_T) : bool = inv_ref_UF_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_ref_UF_T
+  meta "rewrite_def" function invariant_Ghost_ref_UF_T
   
-  predicate inv_Ghost_ref_UF_T [@inline:trivial] (_1: t_UF_T) = invariant_Ghost_ref_UF_T _1
+  function inv_Ghost_ref_UF_T [@inline:trivial] (_1: t_UF_T) : bool = invariant_Ghost_ref_UF_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_ref_UF_T
+  meta "rewrite_def" function inv_Ghost_ref_UF_T
   
-  predicate invariant_ref_Ghost_ref_UF_T [@inline:trivial] (self: t_UF_T) = inv_Ghost_ref_UF_T self
+  function invariant_ref_Ghost_ref_UF_T [@inline:trivial] (self: t_UF_T) : bool = inv_Ghost_ref_UF_T self
   
-  meta "rewrite_def" predicate invariant_ref_Ghost_ref_UF_T
+  meta "rewrite_def" function invariant_ref_Ghost_ref_UF_T
   
-  predicate inv_ref_Ghost_ref_UF_T [@inline:trivial] (_1: t_UF_T) = invariant_ref_Ghost_ref_UF_T _1
+  function inv_ref_Ghost_ref_UF_T [@inline:trivial] (_1: t_UF_T) : bool = invariant_ref_Ghost_ref_UF_T _1
   
-  meta "rewrite_def" predicate inv_ref_Ghost_ref_UF_T
+  meta "rewrite_def" function inv_ref_Ghost_ref_UF_T
   
-  predicate invariant_ref_ref_UF_T [@inline:trivial] (self: t_UF_T) = inv_ref_UF_T self
+  function invariant_ref_ref_UF_T [@inline:trivial] (self: t_UF_T) : bool = inv_ref_UF_T self
   
-  meta "rewrite_def" predicate invariant_ref_ref_UF_T
+  meta "rewrite_def" function invariant_ref_ref_UF_T
   
-  predicate inv_ref_ref_UF_T [@inline:trivial] (_1: t_UF_T) = invariant_ref_ref_UF_T _1
+  function inv_ref_ref_UF_T [@inline:trivial] (_1: t_UF_T) : bool = invariant_ref_ref_UF_T _1
   
-  meta "rewrite_def" predicate inv_ref_ref_UF_T
+  meta "rewrite_def" function inv_ref_ref_UF_T
   
   let deref_Ghost_ref_UF_T (self: t_UF_T) (return (x: t_UF_T)) =
   {[@stop_split] [@expl:deref 'self' type invariant] inv_ref_Ghost_ref_UF_T self}
@@ -1156,17 +1159,17 @@ module M_implementation__get
   let new_ref_Perm_PCell_Node_T (x: t_Perm_PCell_Node_T) (return (x'0: t_Perm_PCell_Node_T)) = any
     [ return (result: t_Perm_PCell_Node_T) -> {[@stop_split] [@expl:new ensures] result = x} (! return {result}) ]
   
-  predicate inv_Rc_PCell_Node_T_Global (_1: t_Rc_PCell_Node_T_Global)
+  function inv_Rc_PCell_Node_T_Global (_1: t_Rc_PCell_Node_T_Global) : bool
   
-  predicate invariant_ref_Rc_PCell_Node_T_Global [@inline:trivial] (self: t_Rc_PCell_Node_T_Global) =
+  function invariant_ref_Rc_PCell_Node_T_Global [@inline:trivial] (self: t_Rc_PCell_Node_T_Global) : bool =
     inv_Rc_PCell_Node_T_Global self
   
-  meta "rewrite_def" predicate invariant_ref_Rc_PCell_Node_T_Global
+  meta "rewrite_def" function invariant_ref_Rc_PCell_Node_T_Global
   
-  predicate inv_ref_Rc_PCell_Node_T_Global [@inline:trivial] (_1: t_Rc_PCell_Node_T_Global) =
+  function inv_ref_Rc_PCell_Node_T_Global [@inline:trivial] (_1: t_Rc_PCell_Node_T_Global) : bool =
     invariant_ref_Rc_PCell_Node_T_Global _1
   
-  meta "rewrite_def" predicate inv_ref_Rc_PCell_Node_T_Global
+  meta "rewrite_def" function inv_ref_Rc_PCell_Node_T_Global
   
   let deref_Rc_PCell_Node_T_Global'0 (self: t_Rc_PCell_Node_T_Global) (return (x: t_PCell_Node_T)) =
   {[@stop_split] [@expl:deref 'self' type invariant] inv_ref_Rc_PCell_Node_T_Global self}
@@ -1175,13 +1178,13 @@ module M_implementation__get
       = deref_Rc_PCell_Node_T_Global self}
       (! return {result}) ]
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_Elem_T (_1: t_Elem_T)
+  function inv_Elem_T (_1: t_Elem_T) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Elem_T [inv_Elem_T _1]. inv_Elem_T _1 = inv_Rc_PCell_Node_T_Global _1.f0
   
-  predicate inv_Node_T (_1: t_Node_T)
+  function inv_Node_T (_1: t_Node_T) : bool
   
   axiom inv_axiom'1 [@rewrite]: forall _1: t_Node_T [inv_Node_T _1]. inv_Node_T _1
       = match _1 with
@@ -1189,13 +1192,13 @@ module M_implementation__get
         | Link f0'2 -> inv_Elem_T f0'2
         end
   
-  predicate invariant_ref_Node_T [@inline:trivial] (self: t_Node_T) = inv_Node_T self
+  function invariant_ref_Node_T [@inline:trivial] (self: t_Node_T) : bool = inv_Node_T self
   
-  meta "rewrite_def" predicate invariant_ref_Node_T
+  meta "rewrite_def" function invariant_ref_Node_T
   
-  predicate inv_ref_Node_T [@inline:trivial] (_1: t_Node_T) = invariant_ref_Node_T _1
+  function inv_ref_Node_T [@inline:trivial] (_1: t_Node_T) : bool = invariant_ref_Node_T _1
   
-  meta "rewrite_def" predicate inv_ref_Node_T
+  meta "rewrite_def" function inv_ref_Node_T
   
   let borrow_Node_T (self: t_PCell_Node_T) (perm: t_Perm_PCell_Node_T) (return (x: t_Node_T)) =
   {[@stop_split] [@expl:borrow requires] self = ward_PCell_Node_T perm}
@@ -1213,15 +1216,15 @@ module M_implementation__get
         end}
       any) ]
   
-  predicate invariant_ref_Elem_T [@inline:trivial] (self: t_Elem_T) = inv_Elem_T self
+  function invariant_ref_Elem_T [@inline:trivial] (self: t_Elem_T) : bool = inv_Elem_T self
   
-  meta "rewrite_def" predicate invariant_ref_Elem_T
+  meta "rewrite_def" function invariant_ref_Elem_T
   
-  predicate inv_ref_Elem_T [@inline:trivial] (_1: t_Elem_T) = invariant_ref_Elem_T _1
+  function inv_ref_Elem_T [@inline:trivial] (_1: t_Elem_T) : bool = invariant_ref_Elem_T _1
   
-  meta "rewrite_def" predicate inv_ref_Elem_T
+  meta "rewrite_def" function inv_ref_Elem_T
   
-  predicate in_domain_T (self: t_UF_T) (e: t_Elem_T) = contains_Elem_T (domain_T self) e
+  function in_domain_T (self: t_UF_T) (e: t_Elem_T) : bool = contains_Elem_T (domain_T self) e
   
   function roots_map_T (self: t_UF_T) : Map.map t_Elem_T t_Elem_T = self.f0'0.roots
   
@@ -1233,13 +1236,13 @@ module M_implementation__get
   
   function root_T (self: t_UF_T) (e: t_Elem_T) : t_Elem_T = index_Mapping_Elem_T_Elem_T (roots_map_T self) e
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
   function payloads_map_T (self: t_UF_T) : Map.map t_Elem_T t_T = self.f0'0.payloads
   
@@ -1296,17 +1299,17 @@ module M_implementation__impl_Clone_for_Elem_T__clone (* <implementation::Elem<T
   
   type t_Elem_T = { f0: t_Rc_PCell_Node_T_Global }
   
-  predicate inv_Rc_PCell_Node_T_Global (_1: t_Rc_PCell_Node_T_Global)
+  function inv_Rc_PCell_Node_T_Global (_1: t_Rc_PCell_Node_T_Global) : bool
   
-  predicate invariant_ref_Rc_PCell_Node_T_Global [@inline:trivial] (self: t_Rc_PCell_Node_T_Global) =
+  function invariant_ref_Rc_PCell_Node_T_Global [@inline:trivial] (self: t_Rc_PCell_Node_T_Global) : bool =
     inv_Rc_PCell_Node_T_Global self
   
-  meta "rewrite_def" predicate invariant_ref_Rc_PCell_Node_T_Global
+  meta "rewrite_def" function invariant_ref_Rc_PCell_Node_T_Global
   
-  predicate inv_ref_Rc_PCell_Node_T_Global [@inline:trivial] (_1: t_Rc_PCell_Node_T_Global) =
+  function inv_ref_Rc_PCell_Node_T_Global [@inline:trivial] (_1: t_Rc_PCell_Node_T_Global) : bool =
     invariant_ref_Rc_PCell_Node_T_Global _1
   
-  meta "rewrite_def" predicate inv_ref_Rc_PCell_Node_T_Global
+  meta "rewrite_def" function inv_ref_Rc_PCell_Node_T_Global
   
   let clone_Rc_PCell_Node_T_Global (self: t_Rc_PCell_Node_T_Global) (return (x: t_Rc_PCell_Node_T_Global)) =
   {[@stop_split] [@expl:clone 'self' type invariant] inv_ref_Rc_PCell_Node_T_Global self}
@@ -1316,17 +1319,17 @@ module M_implementation__impl_Clone_for_Elem_T__clone (* <implementation::Elem<T
       /\ ([@stop_split] [@expl:clone ensures] result = self)}
       (! return {result}) ]
   
-  predicate inv_Elem_T (_1: t_Elem_T)
+  function inv_Elem_T (_1: t_Elem_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Elem_T [inv_Elem_T _1]. inv_Elem_T _1 = inv_Rc_PCell_Node_T_Global _1.f0
   
-  predicate invariant_ref_Elem_T [@inline:trivial] (self: t_Elem_T) = inv_Elem_T self
+  function invariant_ref_Elem_T [@inline:trivial] (self: t_Elem_T) : bool = inv_Elem_T self
   
-  meta "rewrite_def" predicate invariant_ref_Elem_T
+  meta "rewrite_def" function invariant_ref_Elem_T
   
-  predicate inv_ref_Elem_T [@inline:trivial] (_1: t_Elem_T) = invariant_ref_Elem_T _1
+  function inv_ref_Elem_T [@inline:trivial] (_1: t_Elem_T) : bool = invariant_ref_Elem_T _1
   
-  meta "rewrite_def" predicate inv_ref_Elem_T
+  meta "rewrite_def" function inv_ref_Elem_T
   
   meta "compute_max_steps" 1000000
   
@@ -1350,19 +1353,19 @@ module M_implementation__impl_Clone_for_Elem_T__clone__refines (* <implementatio
   
   type t_Elem_T = { f0: t_Rc_PCell_Node_T_Global }
   
-  predicate inv_Rc_PCell_Node_T_Global (_1: t_Rc_PCell_Node_T_Global)
+  function inv_Rc_PCell_Node_T_Global (_1: t_Rc_PCell_Node_T_Global) : bool
   
-  predicate inv_Elem_T (_1: t_Elem_T)
+  function inv_Elem_T (_1: t_Elem_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Elem_T [inv_Elem_T _1]. inv_Elem_T _1 = inv_Rc_PCell_Node_T_Global _1.f0
   
-  predicate invariant_ref_Elem_T [@inline:trivial] (self: t_Elem_T) = inv_Elem_T self
+  function invariant_ref_Elem_T [@inline:trivial] (self: t_Elem_T) : bool = inv_Elem_T self
   
-  meta "rewrite_def" predicate invariant_ref_Elem_T
+  meta "rewrite_def" function invariant_ref_Elem_T
   
-  predicate inv_ref_Elem_T [@inline:trivial] (_1: t_Elem_T) = invariant_ref_Elem_T _1
+  function inv_ref_Elem_T [@inline:trivial] (_1: t_Elem_T) : bool = invariant_ref_Elem_T _1
   
-  meta "rewrite_def" predicate inv_ref_Elem_T
+  meta "rewrite_def" function inv_ref_Elem_T
   
   meta "compute_max_steps" 1000000
   
@@ -1381,17 +1384,17 @@ module M_implementation__impl_PartialEq_for_Elem_T__eq (* <implementation::Elem<
   
   type t_Elem_T = { f0: t_Rc_PCell_Node_T_Global }
   
-  predicate inv_Rc_PCell_Node_T_Global (_1: t_Rc_PCell_Node_T_Global)
+  function inv_Rc_PCell_Node_T_Global (_1: t_Rc_PCell_Node_T_Global) : bool
   
-  predicate invariant_ref_Rc_PCell_Node_T_Global [@inline:trivial] (self: t_Rc_PCell_Node_T_Global) =
+  function invariant_ref_Rc_PCell_Node_T_Global [@inline:trivial] (self: t_Rc_PCell_Node_T_Global) : bool =
     inv_Rc_PCell_Node_T_Global self
   
-  meta "rewrite_def" predicate invariant_ref_Rc_PCell_Node_T_Global
+  meta "rewrite_def" function invariant_ref_Rc_PCell_Node_T_Global
   
-  predicate inv_ref_Rc_PCell_Node_T_Global [@inline:trivial] (_1: t_Rc_PCell_Node_T_Global) =
+  function inv_ref_Rc_PCell_Node_T_Global [@inline:trivial] (_1: t_Rc_PCell_Node_T_Global) : bool =
     invariant_ref_Rc_PCell_Node_T_Global _1
   
-  meta "rewrite_def" predicate inv_ref_Rc_PCell_Node_T_Global
+  meta "rewrite_def" function inv_ref_Rc_PCell_Node_T_Global
   
   function as_ptr_Rc_PCell_Node_T_Global (self: t_Rc_PCell_Node_T_Global) : Opaque.ptr
   
@@ -1406,17 +1409,17 @@ module M_implementation__impl_PartialEq_for_Elem_T__eq (* <implementation::Elem<
       /\ ([@stop_split] [@expl:ptr_eq ensures #1] result -> this = other)}
       (! return {result}) ]
   
-  predicate inv_Elem_T (_1: t_Elem_T)
+  function inv_Elem_T (_1: t_Elem_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Elem_T [inv_Elem_T _1]. inv_Elem_T _1 = inv_Rc_PCell_Node_T_Global _1.f0
   
-  predicate invariant_ref_Elem_T [@inline:trivial] (self: t_Elem_T) = inv_Elem_T self
+  function invariant_ref_Elem_T [@inline:trivial] (self: t_Elem_T) : bool = inv_Elem_T self
   
-  meta "rewrite_def" predicate invariant_ref_Elem_T
+  meta "rewrite_def" function invariant_ref_Elem_T
   
-  predicate inv_ref_Elem_T [@inline:trivial] (_1: t_Elem_T) = invariant_ref_Elem_T _1
+  function inv_ref_Elem_T [@inline:trivial] (_1: t_Elem_T) : bool = invariant_ref_Elem_T _1
   
-  meta "rewrite_def" predicate inv_ref_Elem_T
+  meta "rewrite_def" function inv_ref_Elem_T
   
   function deep_model_Elem_T [@inline:trivial] (self: t_Elem_T) : UInt64.t =
     Ptr.addr_logic_u64 (as_ptr_Rc_PCell_Node_T_Global self.f0)
@@ -1459,19 +1462,19 @@ module M_implementation__impl_PartialEq_for_Elem_T__eq__refines (* <implementati
   
   type t_Elem_T = { f0: t_Rc_PCell_Node_T_Global }
   
-  predicate inv_Rc_PCell_Node_T_Global (_1: t_Rc_PCell_Node_T_Global)
+  function inv_Rc_PCell_Node_T_Global (_1: t_Rc_PCell_Node_T_Global) : bool
   
-  predicate inv_Elem_T (_1: t_Elem_T)
+  function inv_Elem_T (_1: t_Elem_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Elem_T [inv_Elem_T _1]. inv_Elem_T _1 = inv_Rc_PCell_Node_T_Global _1.f0
   
-  predicate invariant_ref_Elem_T [@inline:trivial] (self: t_Elem_T) = inv_Elem_T self
+  function invariant_ref_Elem_T [@inline:trivial] (self: t_Elem_T) : bool = inv_Elem_T self
   
-  meta "rewrite_def" predicate invariant_ref_Elem_T
+  meta "rewrite_def" function invariant_ref_Elem_T
   
-  predicate inv_ref_Elem_T [@inline:trivial] (_1: t_Elem_T) = invariant_ref_Elem_T _1
+  function inv_ref_Elem_T [@inline:trivial] (_1: t_Elem_T) : bool = invariant_ref_Elem_T _1
   
-  meta "rewrite_def" predicate inv_ref_Elem_T
+  meta "rewrite_def" function inv_ref_Elem_T
   
   function as_ptr_Rc_PCell_Node_T_Global (self: t_Rc_PCell_Node_T_Global) : Opaque.ptr
   
@@ -1516,9 +1519,9 @@ module M_implementation__impl_UF_T__roots_map (* implementation::UF<T> *)
   
   type t_UF_T = { f0'0: t_UFInner_T }
   
-  predicate contains_Elem_T [@inline:trivial] (self: Fset.fset t_Elem_T) (e: t_Elem_T) = Fset.mem e self
+  function contains_Elem_T [@inline:trivial] (self: Fset.fset t_Elem_T) (e: t_Elem_T) : bool = Fset.mem e self
   
-  meta "rewrite_def" predicate contains_Elem_T
+  meta "rewrite_def" function contains_Elem_T
   
   function domain_T (self: t_UF_T) : Fset.fset t_Elem_T = self.f0'0.domain
   
@@ -1533,10 +1536,10 @@ module M_implementation__impl_UF_T__roots_map (* implementation::UF<T> *)
   
   meta "rewrite_def" function lookup_Snapshot_Elem_T
   
-  predicate contains_Snapshot_Elem_T [@inline:trivial] (self: t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T) (k: t_Elem_T) =
-    lookup_Snapshot_Elem_T self k <> None
+  function contains_Snapshot_Elem_T [@inline:trivial] (self: t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T) (k: t_Elem_T) : bool
+   = lookup_Snapshot_Elem_T self k <> None
   
-  meta "rewrite_def" predicate contains_Snapshot_Elem_T
+  meta "rewrite_def" function contains_Snapshot_Elem_T
   
   type t_PCell_Node_T
   
@@ -1575,7 +1578,7 @@ module M_implementation__impl_UF_T__roots_map (* implementation::UF<T> *)
   
   meta "rewrite_def" function index_Mapping_Elem_T_T
   
-  predicate invariant_UF_T [@inline:trivial] (self: t_UF_T) =
+  function invariant_UF_T [@inline:trivial] (self: t_UF_T) : bool =
     forall e: t_Elem_T. contains_Elem_T (domain_T self) e
       -> contains_Snapshot_Elem_T self.f0'0.perms e
       /\ ward_PCell_Node_T (index_FMap_Snapshot_Elem_T_Perm_PCell_Node_T self.f0'0.perms e)
@@ -1591,13 +1594,13 @@ module M_implementation__impl_UF_T__roots_map (* implementation::UF<T> *)
         /\ index_Mapping_Elem_T_T self.f0'0.payloads e = payload
         end
   
-  meta "rewrite_def" predicate invariant_UF_T
+  meta "rewrite_def" function invariant_UF_T
   
-  predicate inv_UF_T (_1: t_UF_T)
+  function inv_UF_T (_1: t_UF_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_UF_T [inv_UF_T _1]. inv_UF_T _1 = invariant_UF_T _1
   
-  predicate in_domain_T (self: t_UF_T) (e: t_Elem_T) = contains_Elem_T (domain_T self) e
+  function in_domain_T (self: t_UF_T) (e: t_Elem_T) : bool = contains_Elem_T (domain_T self) e
   
   meta "compute_max_steps" 1000000
   
@@ -1639,9 +1642,9 @@ module M_implementation__link
   
   type t_UF_T = { f0'0: t_UFInner_T }
   
-  predicate contains_Elem_T [@inline:trivial] (self: Fset.fset t_Elem_T) (e: t_Elem_T) = Fset.mem e self
+  function contains_Elem_T [@inline:trivial] (self: Fset.fset t_Elem_T) (e: t_Elem_T) : bool = Fset.mem e self
   
-  meta "rewrite_def" predicate contains_Elem_T
+  meta "rewrite_def" function contains_Elem_T
   
   function domain_T (self: t_UF_T) : Fset.fset t_Elem_T = self.f0'0.domain
   
@@ -1656,10 +1659,10 @@ module M_implementation__link
   
   meta "rewrite_def" function lookup_Snapshot_Elem_T
   
-  predicate contains_Snapshot_Elem_T [@inline:trivial] (self: t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T) (k: t_Elem_T) =
-    lookup_Snapshot_Elem_T self k <> None
+  function contains_Snapshot_Elem_T [@inline:trivial] (self: t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T) (k: t_Elem_T) : bool
+   = lookup_Snapshot_Elem_T self k <> None
   
-  meta "rewrite_def" predicate contains_Snapshot_Elem_T
+  meta "rewrite_def" function contains_Snapshot_Elem_T
   
   type t_PCell_Node_T
   
@@ -1698,7 +1701,7 @@ module M_implementation__link
   
   meta "rewrite_def" function index_Mapping_Elem_T_T
   
-  predicate invariant_UF_T [@inline:trivial] (self: t_UF_T) =
+  function invariant_UF_T [@inline:trivial] (self: t_UF_T) : bool =
     forall e: t_Elem_T. contains_Elem_T (domain_T self) e
       -> contains_Snapshot_Elem_T self.f0'0.perms e
       /\ ward_PCell_Node_T (index_FMap_Snapshot_Elem_T_Perm_PCell_Node_T self.f0'0.perms e)
@@ -1714,48 +1717,48 @@ module M_implementation__link
         /\ index_Mapping_Elem_T_T self.f0'0.payloads e = payload
         end
   
-  meta "rewrite_def" predicate invariant_UF_T
+  meta "rewrite_def" function invariant_UF_T
   
-  predicate inv_UF_T (_1: t_UF_T)
+  function inv_UF_T (_1: t_UF_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_UF_T [inv_UF_T _1]. inv_UF_T _1 = invariant_UF_T _1
   
-  predicate invariant_refmut_UF_T [@inline:trivial] (self: MutBorrow.t t_UF_T) =
-    inv_UF_T self.current /\ inv_UF_T self.final
+  function invariant_refmut_UF_T [@inline:trivial] (self: MutBorrow.t t_UF_T) : bool = inv_UF_T self.current
+    /\ inv_UF_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_UF_T
+  meta "rewrite_def" function invariant_refmut_UF_T
   
-  predicate inv_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t t_UF_T) = invariant_refmut_UF_T _1
+  function inv_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t t_UF_T) : bool = invariant_refmut_UF_T _1
   
-  meta "rewrite_def" predicate inv_refmut_UF_T
+  meta "rewrite_def" function inv_refmut_UF_T
   
-  predicate invariant_Ghost_refmut_UF_T [@inline:trivial] (self: MutBorrow.t t_UF_T) = inv_refmut_UF_T self
+  function invariant_Ghost_refmut_UF_T [@inline:trivial] (self: MutBorrow.t t_UF_T) : bool = inv_refmut_UF_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_refmut_UF_T
+  meta "rewrite_def" function invariant_Ghost_refmut_UF_T
   
-  predicate inv_Ghost_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t t_UF_T) = invariant_Ghost_refmut_UF_T _1
+  function inv_Ghost_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t t_UF_T) : bool = invariant_Ghost_refmut_UF_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_refmut_UF_T
+  meta "rewrite_def" function inv_Ghost_refmut_UF_T
   
-  predicate invariant_refmut_Ghost_refmut_UF_T [@inline:trivial] (self: MutBorrow.t (MutBorrow.t t_UF_T)) =
+  function invariant_refmut_Ghost_refmut_UF_T [@inline:trivial] (self: MutBorrow.t (MutBorrow.t t_UF_T)) : bool =
     inv_Ghost_refmut_UF_T self.current /\ inv_Ghost_refmut_UF_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Ghost_refmut_UF_T
+  meta "rewrite_def" function invariant_refmut_Ghost_refmut_UF_T
   
-  predicate inv_refmut_Ghost_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_UF_T)) =
+  function inv_refmut_Ghost_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_UF_T)) : bool =
     invariant_refmut_Ghost_refmut_UF_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Ghost_refmut_UF_T
+  meta "rewrite_def" function inv_refmut_Ghost_refmut_UF_T
   
-  predicate invariant_refmut_refmut_UF_T [@inline:trivial] (self: MutBorrow.t (MutBorrow.t t_UF_T)) =
+  function invariant_refmut_refmut_UF_T [@inline:trivial] (self: MutBorrow.t (MutBorrow.t t_UF_T)) : bool =
     inv_refmut_UF_T self.current /\ inv_refmut_UF_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_refmut_UF_T
+  meta "rewrite_def" function invariant_refmut_refmut_UF_T
   
-  predicate inv_refmut_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_UF_T)) =
+  function inv_refmut_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_UF_T)) : bool =
     invariant_refmut_refmut_UF_T _1
   
-  meta "rewrite_def" predicate inv_refmut_refmut_UF_T
+  meta "rewrite_def" function inv_refmut_refmut_UF_T
   
   let deref_mut_Ghost_refmut_UF_T (self: MutBorrow.t (MutBorrow.t t_UF_T))
     (return (x: MutBorrow.t (MutBorrow.t t_UF_T))) =
@@ -1769,19 +1772,19 @@ module M_implementation__link
   let new_refmut_UFInner_T (x: MutBorrow.t t_UFInner_T) (return (x'0: MutBorrow.t t_UFInner_T)) = any
     [ return (result: MutBorrow.t t_UFInner_T) -> {[@stop_split] [@expl:new ensures] result = x} (! return {result}) ]
   
-  predicate inv_Rc_PCell_Node_T_Global (_1: t_Rc_PCell_Node_T_Global)
+  function inv_Rc_PCell_Node_T_Global (_1: t_Rc_PCell_Node_T_Global) : bool
   
-  predicate inv_Elem_T (_1: t_Elem_T)
+  function inv_Elem_T (_1: t_Elem_T) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Elem_T [inv_Elem_T _1]. inv_Elem_T _1 = inv_Rc_PCell_Node_T_Global _1.f0
   
-  predicate invariant_ref_Elem_T [@inline:trivial] (self: t_Elem_T) = inv_Elem_T self
+  function invariant_ref_Elem_T [@inline:trivial] (self: t_Elem_T) : bool = inv_Elem_T self
   
-  meta "rewrite_def" predicate invariant_ref_Elem_T
+  meta "rewrite_def" function invariant_ref_Elem_T
   
-  predicate inv_ref_Elem_T [@inline:trivial] (_1: t_Elem_T) = invariant_ref_Elem_T _1
+  function inv_ref_Elem_T [@inline:trivial] (_1: t_Elem_T) : bool = invariant_ref_Elem_T _1
   
-  meta "rewrite_def" predicate inv_ref_Elem_T
+  meta "rewrite_def" function inv_ref_Elem_T
   
   function as_ptr_Rc_PCell_Node_T_Global (self: t_Rc_PCell_Node_T_Global) : Opaque.ptr
   
@@ -1803,42 +1806,43 @@ module M_implementation__link
       /\ ([@stop_split] [@expl:eq ensures #1] result -> self = other)}
       (! return {result}) ]
   
-  predicate resolve_refmut_UFInner_T [@inline:trivial] (_1: MutBorrow.t t_UFInner_T) = _1.final = _1.current
+  function resolve_refmut_UFInner_T [@inline:trivial] (_1: MutBorrow.t t_UFInner_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_UFInner_T
+  meta "rewrite_def" function resolve_refmut_UFInner_T
   
-  predicate resolve_Ghost_refmut_UFInner_T [@inline:trivial] (self: MutBorrow.t t_UFInner_T) =
+  function resolve_Ghost_refmut_UFInner_T [@inline:trivial] (self: MutBorrow.t t_UFInner_T) : bool =
     resolve_refmut_UFInner_T self
   
-  meta "rewrite_def" predicate resolve_Ghost_refmut_UFInner_T
+  meta "rewrite_def" function resolve_Ghost_refmut_UFInner_T
   
-  predicate resolve_Ghost_refmut_UFInner_T'0 [@inline:trivial] (_1: MutBorrow.t t_UFInner_T) =
+  function resolve_Ghost_refmut_UFInner_T'0 [@inline:trivial] (_1: MutBorrow.t t_UFInner_T) : bool =
     resolve_Ghost_refmut_UFInner_T _1
   
-  meta "rewrite_def" predicate resolve_Ghost_refmut_UFInner_T'0
+  meta "rewrite_def" function resolve_Ghost_refmut_UFInner_T'0
   
-  predicate resolve_Rc_PCell_Node_T_Global (_1: t_Rc_PCell_Node_T_Global)
+  function resolve_Rc_PCell_Node_T_Global (_1: t_Rc_PCell_Node_T_Global) : bool
   
-  predicate resolve_Elem_T (_1: t_Elem_T)
+  function resolve_Elem_T (_1: t_Elem_T) : bool
   
   axiom resolve_axiom [@rewrite]: forall _1: t_Elem_T [resolve_Elem_T _1]. resolve_Elem_T _1
       = resolve_Rc_PCell_Node_T_Global _1.f0
   
-  predicate resolve_refmut_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_UF_T)) = _1.final = _1.current
+  function resolve_refmut_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_UF_T)) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_refmut_UF_T
+  meta "rewrite_def" function resolve_refmut_refmut_UF_T
   
-  predicate resolve_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t t_UF_T) = _1.final = _1.current
+  function resolve_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t t_UF_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_UF_T
+  meta "rewrite_def" function resolve_refmut_UF_T
   
-  predicate resolve_Ghost_refmut_UF_T [@inline:trivial] (self: MutBorrow.t t_UF_T) = resolve_refmut_UF_T self
+  function resolve_Ghost_refmut_UF_T [@inline:trivial] (self: MutBorrow.t t_UF_T) : bool = resolve_refmut_UF_T self
   
-  meta "rewrite_def" predicate resolve_Ghost_refmut_UF_T
+  meta "rewrite_def" function resolve_Ghost_refmut_UF_T
   
-  predicate resolve_Ghost_refmut_UF_T'0 [@inline:trivial] (_1: MutBorrow.t t_UF_T) = resolve_Ghost_refmut_UF_T _1
+  function resolve_Ghost_refmut_UF_T'0 [@inline:trivial] (_1: MutBorrow.t t_UF_T) : bool = resolve_Ghost_refmut_UF_T _1
   
-  meta "rewrite_def" predicate resolve_Ghost_refmut_UF_T'0
+  meta "rewrite_def" function resolve_Ghost_refmut_UF_T'0
   
   let deref_mut_Ghost_refmut_UFInner_T (self: MutBorrow.t (MutBorrow.t t_UFInner_T))
     (return (x: MutBorrow.t (MutBorrow.t t_UFInner_T))) = any
@@ -1849,9 +1853,9 @@ module M_implementation__link
     f0'2: MutBorrow.t t_Perm_PCell_Node_T;
     f1'2: MutBorrow.t t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T }
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function len_Snapshot_Elem_T (self: t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T) : int
   
@@ -1890,10 +1894,10 @@ module M_implementation__link
       /\ self.final = add_Snapshot_Elem_T result.f1'2.final key result.f0'2.final)}
       (! return {result}) ]
   
-  predicate resolve_refmut_refmut_UFInner_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_UFInner_T)) =
+  function resolve_refmut_refmut_UFInner_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_UFInner_T)) : bool =
     _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_refmut_UFInner_T
+  meta "rewrite_def" function resolve_refmut_refmut_UFInner_T
   
   let new_tup2_refmut_Perm_PCell_Node_T_refmut_FMap_Snapshot_Elem_T_Perm_PCell_Node_T
     (x: tup2_refmut_Perm_PCell_Node_T_refmut_FMap_Snapshot_Elem_T_Perm_PCell_Node_T)
@@ -1914,15 +1918,15 @@ module M_implementation__link
       /\ ([@stop_split] [@expl:split ensures #1] self.f1'2 = result.f1'3)}
       (! return {result}) ]
   
-  predicate invariant_ref_Rc_PCell_Node_T_Global [@inline:trivial] (self: t_Rc_PCell_Node_T_Global) =
+  function invariant_ref_Rc_PCell_Node_T_Global [@inline:trivial] (self: t_Rc_PCell_Node_T_Global) : bool =
     inv_Rc_PCell_Node_T_Global self
   
-  meta "rewrite_def" predicate invariant_ref_Rc_PCell_Node_T_Global
+  meta "rewrite_def" function invariant_ref_Rc_PCell_Node_T_Global
   
-  predicate inv_ref_Rc_PCell_Node_T_Global [@inline:trivial] (_1: t_Rc_PCell_Node_T_Global) =
+  function inv_ref_Rc_PCell_Node_T_Global [@inline:trivial] (_1: t_Rc_PCell_Node_T_Global) : bool =
     invariant_ref_Rc_PCell_Node_T_Global _1
   
-  meta "rewrite_def" predicate inv_ref_Rc_PCell_Node_T_Global
+  meta "rewrite_def" function inv_ref_Rc_PCell_Node_T_Global
   
   let deref_Rc_PCell_Node_T_Global'0 (self: t_Rc_PCell_Node_T_Global) (return (x: t_PCell_Node_T)) =
   {[@stop_split] [@expl:deref 'self' type invariant] inv_ref_Rc_PCell_Node_T_Global self}
@@ -1937,24 +1941,24 @@ module M_implementation__link
       = self}
       (! return {result}) ]
   
-  predicate resolve_refmut_refmut_Perm_PCell_Node_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_Perm_PCell_Node_T)) =
-    _1.final = _1.current
+  function resolve_refmut_refmut_Perm_PCell_Node_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_Perm_PCell_Node_T)) : bool
+   = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_refmut_Perm_PCell_Node_T
+  meta "rewrite_def" function resolve_refmut_refmut_Perm_PCell_Node_T
   
-  predicate resolve_refmut_Perm_PCell_Node_T [@inline:trivial] (_1: MutBorrow.t t_Perm_PCell_Node_T) =
-    _1.final = _1.current
+  function resolve_refmut_Perm_PCell_Node_T [@inline:trivial] (_1: MutBorrow.t t_Perm_PCell_Node_T) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Perm_PCell_Node_T
+  meta "rewrite_def" function resolve_refmut_Perm_PCell_Node_T
   
   let new_refmut_Perm_PCell_Node_T (x: MutBorrow.t t_Perm_PCell_Node_T)
     (return (x'0: MutBorrow.t t_Perm_PCell_Node_T)) = any
     [ return (result: MutBorrow.t t_Perm_PCell_Node_T) -> {[@stop_split] [@expl:new ensures] result = x}
       (! return {result}) ]
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_Node_T (_1: t_Node_T)
+  function inv_Node_T (_1: t_Node_T) : bool
   
   axiom inv_axiom'1 [@rewrite]: forall _1: t_Node_T [inv_Node_T _1]. inv_Node_T _1
       = match _1 with
@@ -1962,14 +1966,14 @@ module M_implementation__link
         | Link f0'4 -> inv_Elem_T f0'4
         end
   
-  predicate invariant_refmut_Node_T [@inline:trivial] (self: MutBorrow.t t_Node_T) =
-    inv_Node_T self.current /\ inv_Node_T self.final
+  function invariant_refmut_Node_T [@inline:trivial] (self: MutBorrow.t t_Node_T) : bool = inv_Node_T self.current
+    /\ inv_Node_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Node_T
+  meta "rewrite_def" function invariant_refmut_Node_T
   
-  predicate inv_refmut_Node_T [@inline:trivial] (_1: MutBorrow.t t_Node_T) = invariant_refmut_Node_T _1
+  function inv_refmut_Node_T [@inline:trivial] (_1: MutBorrow.t t_Node_T) : bool = invariant_refmut_Node_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Node_T
+  meta "rewrite_def" function inv_refmut_Node_T
   
   function fin_Ghost_refmut_Perm_PCell_Node_T [@inline:trivial] (self: MutBorrow.t t_Perm_PCell_Node_T) : t_Perm_PCell_Node_T
    = self.final
@@ -1989,9 +1993,9 @@ module M_implementation__link
       = val_unsized_PCell_Node_T (fin_Ghost_refmut_Perm_PCell_Node_T perm))}
       (! return {result}) ]
   
-  predicate resolve_refmut_Node_T [@inline:trivial] (_1: MutBorrow.t t_Node_T) = _1.final = _1.current
+  function resolve_refmut_Node_T [@inline:trivial] (_1: MutBorrow.t t_Node_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Node_T
+  meta "rewrite_def" function resolve_refmut_Node_T
   
   let deref_mut_Ghost_refmut_FMap_Snapshot_Elem_T_Perm_PCell_Node_T
     (self: MutBorrow.t (MutBorrow.t t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T))
@@ -2026,35 +2030,35 @@ module M_implementation__link
     [ return (result: MutBorrow.t t_Perm_PCell_Node_T) -> {[@stop_split] [@expl:unwrap ensures] Some'0 result = self}
       (! return {result}) ]
   
-  predicate resolve_refmut_refmut_FMap_Snapshot_Elem_T_Perm_PCell_Node_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T)) =
-    _1.final = _1.current
+  function resolve_refmut_refmut_FMap_Snapshot_Elem_T_Perm_PCell_Node_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T)) : bool
+   = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_refmut_FMap_Snapshot_Elem_T_Perm_PCell_Node_T
+  meta "rewrite_def" function resolve_refmut_refmut_FMap_Snapshot_Elem_T_Perm_PCell_Node_T
   
-  predicate resolve_refmut_FMap_Snapshot_Elem_T_Perm_PCell_Node_T [@inline:trivial] (_1: MutBorrow.t t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T) =
-    _1.final = _1.current
+  function resolve_refmut_FMap_Snapshot_Elem_T_Perm_PCell_Node_T [@inline:trivial] (_1: MutBorrow.t t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T) : bool
+   = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_FMap_Snapshot_Elem_T_Perm_PCell_Node_T
+  meta "rewrite_def" function resolve_refmut_FMap_Snapshot_Elem_T_Perm_PCell_Node_T
   
-  predicate resolve_Ghost_refmut_FMap_Snapshot_Elem_T_Perm_PCell_Node_T [@inline:trivial] (self: MutBorrow.t t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T) =
-    resolve_refmut_FMap_Snapshot_Elem_T_Perm_PCell_Node_T self
+  function resolve_Ghost_refmut_FMap_Snapshot_Elem_T_Perm_PCell_Node_T [@inline:trivial] (self: MutBorrow.t t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T) : bool
+   = resolve_refmut_FMap_Snapshot_Elem_T_Perm_PCell_Node_T self
   
-  meta "rewrite_def" predicate resolve_Ghost_refmut_FMap_Snapshot_Elem_T_Perm_PCell_Node_T
+  meta "rewrite_def" function resolve_Ghost_refmut_FMap_Snapshot_Elem_T_Perm_PCell_Node_T
   
-  predicate resolve_Ghost_refmut_FMap_Snapshot_Elem_T_Perm_PCell_Node_T'0 [@inline:trivial] (_1: MutBorrow.t t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T) =
-    resolve_Ghost_refmut_FMap_Snapshot_Elem_T_Perm_PCell_Node_T _1
+  function resolve_Ghost_refmut_FMap_Snapshot_Elem_T_Perm_PCell_Node_T'0 [@inline:trivial] (_1: MutBorrow.t t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T) : bool
+   = resolve_Ghost_refmut_FMap_Snapshot_Elem_T_Perm_PCell_Node_T _1
   
-  meta "rewrite_def" predicate resolve_Ghost_refmut_FMap_Snapshot_Elem_T_Perm_PCell_Node_T'0
+  meta "rewrite_def" function resolve_Ghost_refmut_FMap_Snapshot_Elem_T_Perm_PCell_Node_T'0
   
-  predicate resolve_Ghost_refmut_Perm_PCell_Node_T [@inline:trivial] (self: MutBorrow.t t_Perm_PCell_Node_T) =
+  function resolve_Ghost_refmut_Perm_PCell_Node_T [@inline:trivial] (self: MutBorrow.t t_Perm_PCell_Node_T) : bool =
     resolve_refmut_Perm_PCell_Node_T self
   
-  meta "rewrite_def" predicate resolve_Ghost_refmut_Perm_PCell_Node_T
+  meta "rewrite_def" function resolve_Ghost_refmut_Perm_PCell_Node_T
   
-  predicate resolve_Ghost_refmut_Perm_PCell_Node_T'0 [@inline:trivial] (_1: MutBorrow.t t_Perm_PCell_Node_T) =
+  function resolve_Ghost_refmut_Perm_PCell_Node_T'0 [@inline:trivial] (_1: MutBorrow.t t_Perm_PCell_Node_T) : bool =
     resolve_Ghost_refmut_Perm_PCell_Node_T _1
   
-  meta "rewrite_def" predicate resolve_Ghost_refmut_Perm_PCell_Node_T'0
+  meta "rewrite_def" function resolve_Ghost_refmut_Perm_PCell_Node_T'0
   
   let elim_Root (_x: t_Node_T) (return (rank: t_PeanoInt) (payload: t_T)) = any
     [ _k (rank: t_PeanoInt) (payload: t_T) -> {Root rank payload = _x} (! return {rank} {payload})
@@ -2064,9 +2068,9 @@ module M_implementation__link
         end}
       any) ]
   
-  predicate resolve_refmut_PeanoInt [@inline:trivial] (_1: MutBorrow.t t_PeanoInt) = _1.final = _1.current
+  function resolve_refmut_PeanoInt [@inline:trivial] (_1: MutBorrow.t t_PeanoInt) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_PeanoInt
+  meta "rewrite_def" function resolve_refmut_PeanoInt
   
   function deep_model_PeanoInt [@inline:trivial] (self: t_PeanoInt) : UInt64.t = self.f0'1
   
@@ -2095,9 +2099,9 @@ module M_implementation__link
       /\ ([@stop_split] [@expl:clone ensures] self = result)}
       (! return {result}) ]
   
-  predicate resolve_T (_1: t_T)
+  function resolve_T (_1: t_T) : bool
   
-  predicate resolve_Node_T (_1: t_Node_T)
+  function resolve_Node_T (_1: t_Node_T) : bool
   
   axiom resolve_axiom'0 [@rewrite]: forall _1: t_Node_T [resolve_Node_T _1]. resolve_Node_T _1
       = match _1 with
@@ -2118,7 +2122,7 @@ module M_implementation__link
       = UInt64.t'int self.f0'1 + 1}
       (! return {result}) ]
   
-  predicate in_domain_T (self: t_UF_T) (e: t_Elem_T) = contains_Elem_T (domain_T self) e
+  function in_domain_T (self: t_UF_T) (e: t_Elem_T) : bool = contains_Elem_T (domain_T self) e
   
   function roots_map_T (self: t_UF_T) : Map.map t_Elem_T t_Elem_T = self.f0'0.roots
   
@@ -2130,11 +2134,12 @@ module M_implementation__link
   
   function root_T (self: t_UF_T) (e: t_Elem_T) : t_Elem_T = index_Mapping_Elem_T_Elem_T (roots_map_T self) e
   
-  predicate domain_unchanged_T (self: MutBorrow.t t_UF_T) = domain_T self.current = domain_T self.final
+  function domain_unchanged_T (self: MutBorrow.t t_UF_T) : bool = domain_T self.current = domain_T self.final
   
   function payloads_map_T (self: t_UF_T) : Map.map t_Elem_T t_T = self.f0'0.payloads
   
-  predicate payloads_unchanged_T (self: MutBorrow.t t_UF_T) = payloads_map_T self.current = payloads_map_T self.final
+  function payloads_unchanged_T (self: MutBorrow.t t_UF_T) : bool = payloads_map_T self.current
+    = payloads_map_T self.final
   
   function fin_Ghost_refmut_UF_T [@inline:trivial] (self: MutBorrow.t t_UF_T) : t_UF_T = self.final
   
@@ -2508,15 +2513,15 @@ module M_implementation__make
   
   type tup2_PCell_Node_T_Ghost_Perm_PCell_Node_T = { f0'1: t_PCell_Node_T; f1'1: t_Perm_PCell_Node_T }
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_Rc_PCell_Node_T_Global (_1: t_Rc_PCell_Node_T_Global)
+  function inv_Rc_PCell_Node_T_Global (_1: t_Rc_PCell_Node_T_Global) : bool
   
-  predicate inv_Elem_T (_1: t_Elem_T)
+  function inv_Elem_T (_1: t_Elem_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Elem_T [inv_Elem_T _1]. inv_Elem_T _1 = inv_Rc_PCell_Node_T_Global _1.f0'0
   
-  predicate inv_Node_T (_1: t_Node_T)
+  function inv_Node_T (_1: t_Node_T) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Node_T [inv_Node_T _1]. inv_Node_T _1
       = match _1 with
@@ -2563,9 +2568,9 @@ module M_implementation__make
   
   type t_UF_T = { f0'2: t_UFInner_T }
   
-  predicate contains_Elem_T [@inline:trivial] (self: Fset.fset t_Elem_T) (e: t_Elem_T) = Fset.mem e self
+  function contains_Elem_T [@inline:trivial] (self: Fset.fset t_Elem_T) (e: t_Elem_T) : bool = Fset.mem e self
   
-  meta "rewrite_def" predicate contains_Elem_T
+  meta "rewrite_def" function contains_Elem_T
   
   function domain_T (self: t_UF_T) : Fset.fset t_Elem_T = self.f0'2.domain
   
@@ -2578,10 +2583,10 @@ module M_implementation__make
   
   meta "rewrite_def" function lookup_Snapshot_Elem_T
   
-  predicate contains_Snapshot_Elem_T [@inline:trivial] (self: t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T) (k: t_Elem_T) =
-    lookup_Snapshot_Elem_T self k <> None
+  function contains_Snapshot_Elem_T [@inline:trivial] (self: t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T) (k: t_Elem_T) : bool
+   = lookup_Snapshot_Elem_T self k <> None
   
-  meta "rewrite_def" predicate contains_Snapshot_Elem_T
+  meta "rewrite_def" function contains_Snapshot_Elem_T
   
   constant any_Perm_PCell_Node_T : t_Perm_PCell_Node_T
   
@@ -2604,7 +2609,7 @@ module M_implementation__make
   
   meta "rewrite_def" function index_Mapping_Elem_T_T
   
-  predicate invariant_UF_T [@inline:trivial] (self: t_UF_T) =
+  function invariant_UF_T [@inline:trivial] (self: t_UF_T) : bool =
     forall e: t_Elem_T. contains_Elem_T (domain_T self) e
       -> contains_Snapshot_Elem_T self.f0'2.perms e
       /\ ward_PCell_Node_T (index_FMap_Snapshot_Elem_T_Perm_PCell_Node_T self.f0'2.perms e)
@@ -2620,28 +2625,28 @@ module M_implementation__make
         /\ index_Mapping_Elem_T_T self.f0'2.payloads e = payload
         end
   
-  meta "rewrite_def" predicate invariant_UF_T
+  meta "rewrite_def" function invariant_UF_T
   
-  predicate inv_UF_T (_1: t_UF_T)
+  function inv_UF_T (_1: t_UF_T) : bool
   
   axiom inv_axiom'1 [@rewrite]: forall _1: t_UF_T [inv_UF_T _1]. inv_UF_T _1 = invariant_UF_T _1
   
-  predicate invariant_refmut_UF_T [@inline:trivial] (self: MutBorrow.t t_UF_T) =
-    inv_UF_T self.current /\ inv_UF_T self.final
+  function invariant_refmut_UF_T [@inline:trivial] (self: MutBorrow.t t_UF_T) : bool = inv_UF_T self.current
+    /\ inv_UF_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_UF_T
+  meta "rewrite_def" function invariant_refmut_UF_T
   
-  predicate inv_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t t_UF_T) = invariant_refmut_UF_T _1
+  function inv_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t t_UF_T) : bool = invariant_refmut_UF_T _1
   
-  meta "rewrite_def" predicate inv_refmut_UF_T
+  meta "rewrite_def" function inv_refmut_UF_T
   
-  predicate invariant_Ghost_refmut_UF_T [@inline:trivial] (self: MutBorrow.t t_UF_T) = inv_refmut_UF_T self
+  function invariant_Ghost_refmut_UF_T [@inline:trivial] (self: MutBorrow.t t_UF_T) : bool = inv_refmut_UF_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_refmut_UF_T
+  meta "rewrite_def" function invariant_Ghost_refmut_UF_T
   
-  predicate inv_Ghost_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t t_UF_T) = invariant_Ghost_refmut_UF_T _1
+  function inv_Ghost_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t t_UF_T) : bool = invariant_Ghost_refmut_UF_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_refmut_UF_T
+  meta "rewrite_def" function inv_Ghost_refmut_UF_T
   
   let into_inner_refmut_UF_T (self: MutBorrow.t t_UF_T) (return (x: MutBorrow.t t_UF_T)) =
   {[@stop_split] [@expl:into_inner 'self' type invariant] inv_Ghost_refmut_UF_T self}
@@ -2675,10 +2680,10 @@ module M_implementation__make
         end}
       any) ]
   
-  predicate is_disjoint_PCell_Node_T [@inline:trivial] (self: t_PCell_Node_T) (_self_val: t_Node_T) (other: t_PCell_Node_T) (_other_val: t_Node_T) =
-    self <> other
+  function is_disjoint_PCell_Node_T [@inline:trivial] (self: t_PCell_Node_T) (_self_val: t_Node_T) (other: t_PCell_Node_T) (_other_val: t_Node_T) : bool
+   = self <> other
   
-  meta "rewrite_def" predicate is_disjoint_PCell_Node_T
+  meta "rewrite_def" function is_disjoint_PCell_Node_T
   
   let disjoint_lemma_PCell_Node_T (self: MutBorrow.t t_Perm_PCell_Node_T) (other: t_Perm_PCell_Node_T)
     (return (x: ())) = any
@@ -2687,18 +2692,18 @@ module M_implementation__make
       /\ ([@stop_split] [@expl:disjoint_lemma ensures #1] self.current = self.final)}
       (! return {result}) ]
   
-  predicate resolve_refmut_Perm_PCell_Node_T [@inline:trivial] (_1: MutBorrow.t t_Perm_PCell_Node_T) =
-    _1.final = _1.current
+  function resolve_refmut_Perm_PCell_Node_T [@inline:trivial] (_1: MutBorrow.t t_Perm_PCell_Node_T) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Perm_PCell_Node_T
+  meta "rewrite_def" function resolve_refmut_Perm_PCell_Node_T
   
   function add_Elem_T [@inline:trivial] (self: Fset.fset t_Elem_T) (e: t_Elem_T) : Fset.fset t_Elem_T = Fset.add e self
   
   meta "rewrite_def" function add_Elem_T
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function len_Snapshot_Elem_T (self: t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T) : int
   
@@ -2723,14 +2728,14 @@ module M_implementation__make
       /\ ([@stop_split] [@expl:insert ensures #1] result = lookup_Snapshot_Elem_T self.current key)}
       (! return {result}) ]
   
-  predicate resolve_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t t_UF_T) = _1.final = _1.current
+  function resolve_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t t_UF_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_UF_T
+  meta "rewrite_def" function resolve_refmut_UF_T
   
   let new_unit (x: ()) (return (x'0: ())) = any
     [ return (result: ()) -> {[@stop_split] [@expl:new ensures] result = x} (! return {result}) ]
   
-  predicate in_domain_T (self: t_UF_T) (e: t_Elem_T) = contains_Elem_T (domain_T self) e
+  function in_domain_T (self: t_UF_T) (e: t_Elem_T) : bool = contains_Elem_T (domain_T self) e
   
   function fin_Ghost_refmut_UF_T [@inline:trivial] (self: MutBorrow.t t_UF_T) : t_UF_T = self.final
   
@@ -2858,9 +2863,9 @@ module M_implementation__new
   
   type t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function len_Snapshot_Elem_T (self: t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T) : int
   
@@ -2878,8 +2883,8 @@ module M_implementation__new
   
   meta "rewrite_def" function lookup_Snapshot_Elem_T
   
-  predicate ext_eq_Snapshot_Elem_T (self: t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T) (other: t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T) =
-    forall k: t_Elem_T. lookup_Snapshot_Elem_T self k = lookup_Snapshot_Elem_T other k
+  function ext_eq_Snapshot_Elem_T (self: t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T) (other: t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T) : bool
+   = forall k: t_Elem_T. lookup_Snapshot_Elem_T self k = lookup_Snapshot_Elem_T other k
   
   axiom ext_eq_Snapshot_Elem_T_spec:
     forall self: t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T, other: t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T [self
@@ -2891,7 +2896,7 @@ module M_implementation__new
   
   axiom empty_Snapshot_Elem_T_spec'0: to_mapping_Snapshot_Elem_T empty_Snapshot_Elem_T = Const.const (None)
   
-  predicate is_empty_Snapshot_Elem_T (self: t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T) =
+  function is_empty_Snapshot_Elem_T (self: t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T) : bool =
     ext_eq_Snapshot_Elem_T self empty_Snapshot_Elem_T
   
   axiom is_empty_Snapshot_Elem_T_spec:
@@ -2923,16 +2928,16 @@ module M_implementation__new
   
   type t_UF_T = { f0'0: t_UFInner_T }
   
-  predicate contains_Elem_T [@inline:trivial] (self: Fset.fset t_Elem_T) (e: t_Elem_T) = Fset.mem e self
+  function contains_Elem_T [@inline:trivial] (self: Fset.fset t_Elem_T) (e: t_Elem_T) : bool = Fset.mem e self
   
-  meta "rewrite_def" predicate contains_Elem_T
+  meta "rewrite_def" function contains_Elem_T
   
   function domain_T (self: t_UF_T) : Fset.fset t_Elem_T = self.f0'0.domain
   
-  predicate contains_Snapshot_Elem_T [@inline:trivial] (self: t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T) (k: t_Elem_T) =
-    lookup_Snapshot_Elem_T self k <> None
+  function contains_Snapshot_Elem_T [@inline:trivial] (self: t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T) (k: t_Elem_T) : bool
+   = lookup_Snapshot_Elem_T self k <> None
   
-  meta "rewrite_def" predicate contains_Snapshot_Elem_T
+  meta "rewrite_def" function contains_Snapshot_Elem_T
   
   type t_PCell_Node_T
   
@@ -2971,7 +2976,7 @@ module M_implementation__new
   
   meta "rewrite_def" function index_Mapping_Elem_T_T
   
-  predicate invariant_UF_T [@inline:trivial] (self: t_UF_T) =
+  function invariant_UF_T [@inline:trivial] (self: t_UF_T) : bool =
     forall e: t_Elem_T. contains_Elem_T (domain_T self) e
       -> contains_Snapshot_Elem_T self.f0'0.perms e
       /\ ward_PCell_Node_T (index_FMap_Snapshot_Elem_T_Perm_PCell_Node_T self.f0'0.perms e)
@@ -2987,19 +2992,19 @@ module M_implementation__new
         /\ index_Mapping_Elem_T_T self.f0'0.payloads e = payload
         end
   
-  meta "rewrite_def" predicate invariant_UF_T
+  meta "rewrite_def" function invariant_UF_T
   
-  predicate inv_UF_T (_1: t_UF_T)
+  function inv_UF_T (_1: t_UF_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_UF_T [inv_UF_T _1]. inv_UF_T _1 = invariant_UF_T _1
   
-  predicate invariant_Ghost_UF_T [@inline:trivial] (self: t_UF_T) = inv_UF_T self
+  function invariant_Ghost_UF_T [@inline:trivial] (self: t_UF_T) : bool = inv_UF_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_UF_T
+  meta "rewrite_def" function invariant_Ghost_UF_T
   
-  predicate inv_Ghost_UF_T [@inline:trivial] (_1: t_UF_T) = invariant_Ghost_UF_T _1
+  function inv_Ghost_UF_T [@inline:trivial] (_1: t_UF_T) : bool = invariant_Ghost_UF_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_UF_T
+  meta "rewrite_def" function inv_Ghost_UF_T
   
   let new_UF_T (x: t_UF_T) (return (x'0: t_UF_T)) = {[@stop_split] [@expl:new 'x' type invariant] inv_UF_T x}
     any
@@ -3060,9 +3065,9 @@ module M_implementation__union
   
   type t_UF_T = { f0'0: t_UFInner_T }
   
-  predicate contains_Elem_T [@inline:trivial] (self: Fset.fset t_Elem_T) (e: t_Elem_T) = Fset.mem e self
+  function contains_Elem_T [@inline:trivial] (self: Fset.fset t_Elem_T) (e: t_Elem_T) : bool = Fset.mem e self
   
-  meta "rewrite_def" predicate contains_Elem_T
+  meta "rewrite_def" function contains_Elem_T
   
   function domain_T (self: t_UF_T) : Fset.fset t_Elem_T = self.f0'0.domain
   
@@ -3077,10 +3082,10 @@ module M_implementation__union
   
   meta "rewrite_def" function lookup_Snapshot_Elem_T
   
-  predicate contains_Snapshot_Elem_T [@inline:trivial] (self: t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T) (k: t_Elem_T) =
-    lookup_Snapshot_Elem_T self k <> None
+  function contains_Snapshot_Elem_T [@inline:trivial] (self: t_FMap_Snapshot_Elem_T_Perm_PCell_Node_T) (k: t_Elem_T) : bool
+   = lookup_Snapshot_Elem_T self k <> None
   
-  meta "rewrite_def" predicate contains_Snapshot_Elem_T
+  meta "rewrite_def" function contains_Snapshot_Elem_T
   
   type t_PCell_Node_T
   
@@ -3119,7 +3124,7 @@ module M_implementation__union
   
   meta "rewrite_def" function index_Mapping_Elem_T_T
   
-  predicate invariant_UF_T [@inline:trivial] (self: t_UF_T) =
+  function invariant_UF_T [@inline:trivial] (self: t_UF_T) : bool =
     forall e: t_Elem_T. contains_Elem_T (domain_T self) e
       -> contains_Snapshot_Elem_T self.f0'0.perms e
       /\ ward_PCell_Node_T (index_FMap_Snapshot_Elem_T_Perm_PCell_Node_T self.f0'0.perms e)
@@ -3135,48 +3140,48 @@ module M_implementation__union
         /\ index_Mapping_Elem_T_T self.f0'0.payloads e = payload
         end
   
-  meta "rewrite_def" predicate invariant_UF_T
+  meta "rewrite_def" function invariant_UF_T
   
-  predicate inv_UF_T (_1: t_UF_T)
+  function inv_UF_T (_1: t_UF_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_UF_T [inv_UF_T _1]. inv_UF_T _1 = invariant_UF_T _1
   
-  predicate invariant_refmut_UF_T [@inline:trivial] (self: MutBorrow.t t_UF_T) =
-    inv_UF_T self.current /\ inv_UF_T self.final
+  function invariant_refmut_UF_T [@inline:trivial] (self: MutBorrow.t t_UF_T) : bool = inv_UF_T self.current
+    /\ inv_UF_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_UF_T
+  meta "rewrite_def" function invariant_refmut_UF_T
   
-  predicate inv_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t t_UF_T) = invariant_refmut_UF_T _1
+  function inv_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t t_UF_T) : bool = invariant_refmut_UF_T _1
   
-  meta "rewrite_def" predicate inv_refmut_UF_T
+  meta "rewrite_def" function inv_refmut_UF_T
   
-  predicate invariant_Ghost_refmut_UF_T [@inline:trivial] (self: MutBorrow.t t_UF_T) = inv_refmut_UF_T self
+  function invariant_Ghost_refmut_UF_T [@inline:trivial] (self: MutBorrow.t t_UF_T) : bool = inv_refmut_UF_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_refmut_UF_T
+  meta "rewrite_def" function invariant_Ghost_refmut_UF_T
   
-  predicate inv_Ghost_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t t_UF_T) = invariant_Ghost_refmut_UF_T _1
+  function inv_Ghost_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t t_UF_T) : bool = invariant_Ghost_refmut_UF_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_refmut_UF_T
+  meta "rewrite_def" function inv_Ghost_refmut_UF_T
   
-  predicate invariant_refmut_Ghost_refmut_UF_T [@inline:trivial] (self: MutBorrow.t (MutBorrow.t t_UF_T)) =
+  function invariant_refmut_Ghost_refmut_UF_T [@inline:trivial] (self: MutBorrow.t (MutBorrow.t t_UF_T)) : bool =
     inv_Ghost_refmut_UF_T self.current /\ inv_Ghost_refmut_UF_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Ghost_refmut_UF_T
+  meta "rewrite_def" function invariant_refmut_Ghost_refmut_UF_T
   
-  predicate inv_refmut_Ghost_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_UF_T)) =
+  function inv_refmut_Ghost_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_UF_T)) : bool =
     invariant_refmut_Ghost_refmut_UF_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Ghost_refmut_UF_T
+  meta "rewrite_def" function inv_refmut_Ghost_refmut_UF_T
   
-  predicate invariant_refmut_refmut_UF_T [@inline:trivial] (self: MutBorrow.t (MutBorrow.t t_UF_T)) =
+  function invariant_refmut_refmut_UF_T [@inline:trivial] (self: MutBorrow.t (MutBorrow.t t_UF_T)) : bool =
     inv_refmut_UF_T self.current /\ inv_refmut_UF_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_refmut_UF_T
+  meta "rewrite_def" function invariant_refmut_refmut_UF_T
   
-  predicate inv_refmut_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_UF_T)) =
+  function inv_refmut_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_UF_T)) : bool =
     invariant_refmut_refmut_UF_T _1
   
-  meta "rewrite_def" predicate inv_refmut_refmut_UF_T
+  meta "rewrite_def" function inv_refmut_refmut_UF_T
   
   let deref_mut_Ghost_refmut_UF_T (self: MutBorrow.t (MutBorrow.t t_UF_T))
     (return (x: MutBorrow.t (MutBorrow.t t_UF_T))) =
@@ -3187,13 +3192,14 @@ module M_implementation__union
       /\ ([@stop_split] [@expl:deref_mut ensures] result = self)}
       (! return {result}) ]
   
-  predicate resolve_refmut_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_UF_T)) = _1.final = _1.current
+  function resolve_refmut_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_UF_T)) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_refmut_UF_T
+  meta "rewrite_def" function resolve_refmut_refmut_UF_T
   
-  predicate resolve_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t t_UF_T) = _1.final = _1.current
+  function resolve_refmut_UF_T [@inline:trivial] (_1: MutBorrow.t t_UF_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_UF_T
+  meta "rewrite_def" function resolve_refmut_UF_T
   
   let new_refmut_UF_T (x: MutBorrow.t t_UF_T) (return (x'0: MutBorrow.t t_UF_T)) =
   {[@stop_split] [@expl:new 'x' type invariant] inv_refmut_UF_T x}
@@ -3203,13 +3209,13 @@ module M_implementation__union
       /\ ([@stop_split] [@expl:new ensures] result = x)}
       (! return {result}) ]
   
-  predicate inv_Rc_PCell_Node_T_Global (_1: t_Rc_PCell_Node_T_Global)
+  function inv_Rc_PCell_Node_T_Global (_1: t_Rc_PCell_Node_T_Global) : bool
   
-  predicate inv_Elem_T (_1: t_Elem_T)
+  function inv_Elem_T (_1: t_Elem_T) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Elem_T [inv_Elem_T _1]. inv_Elem_T _1 = inv_Rc_PCell_Node_T_Global _1.f0
   
-  predicate in_domain_T (self: t_UF_T) (e: t_Elem_T) = contains_Elem_T (domain_T self) e
+  function in_domain_T (self: t_UF_T) (e: t_Elem_T) : bool = contains_Elem_T (domain_T self) e
   
   function roots_map_T (self: t_UF_T) : Map.map t_Elem_T t_Elem_T = self.f0'0.roots
   
@@ -3223,8 +3229,7 @@ module M_implementation__union
   
   function payloads_map_T (self: t_UF_T) : Map.map t_Elem_T t_T = self.f0'0.payloads
   
-  predicate unchanged_T (self: MutBorrow.t t_UF_T) =
-    domain_T self.current = domain_T self.final
+  function unchanged_T (self: MutBorrow.t t_UF_T) : bool = domain_T self.current = domain_T self.final
     /\ roots_map_T self.current = roots_map_T self.final /\ payloads_map_T self.current = payloads_map_T self.final
   
   let find_T (uf: MutBorrow.t t_UF_T) (elem: t_Elem_T) (return (x: t_Elem_T)) =
@@ -3238,9 +3243,10 @@ module M_implementation__union
       /\ ([@stop_split] [@expl:find ensures #1] unchanged_T uf)}
       (! return {result}) ]
   
-  predicate domain_unchanged_T (self: MutBorrow.t t_UF_T) = domain_T self.current = domain_T self.final
+  function domain_unchanged_T (self: MutBorrow.t t_UF_T) : bool = domain_T self.current = domain_T self.final
   
-  predicate payloads_unchanged_T (self: MutBorrow.t t_UF_T) = payloads_map_T self.current = payloads_map_T self.final
+  function payloads_unchanged_T (self: MutBorrow.t t_UF_T) : bool = payloads_map_T self.current
+    = payloads_map_T self.final
   
   function fin_Ghost_refmut_UF_T [@inline:trivial] (self: MutBorrow.t t_UF_T) : t_UF_T = self.final
   

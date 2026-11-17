@@ -1,9 +1,9 @@
 use creusot.prelude.Bool
 use creusot.prelude.Any
 
-predicate bitand_bool [@inline:trivial] (self: bool) (other: bool) = self /\ other
+function bitand_bool [@inline:trivial] (self: bool) (other: bool) : bool = self /\ other
 
-meta "rewrite_def" predicate bitand_bool
+meta "rewrite_def" function bitand_bool
 
 meta "compute_max_steps" 1000000
 

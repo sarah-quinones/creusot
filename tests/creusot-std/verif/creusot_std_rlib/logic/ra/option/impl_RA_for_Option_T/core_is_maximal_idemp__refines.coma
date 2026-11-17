@@ -17,7 +17,7 @@ function map_Option_T (self: t_Option_T) (f: Map.map t_T t_Option_T) : t_Option_
 
 function op_T (self: t_T) (other: t_T) : t_Option_T
 
-predicate incl_T (self: t_T) (other: t_T)
+function incl_T (self: t_T) (other: t_T) : bool
 
 axiom incl_T_spec: forall self: t_T, other: t_T [incl_T self other]. incl_T self other
     = (exists factor: t_T. op_T self factor = Some other)
@@ -57,14 +57,13 @@ function core_Option_T (self: t_Option_T) : t_Option_Option_T = match self with
     | Some x -> Some'0 (core_T x)
     end
 
-predicate eq_T (self: t_T) (other: t_T)
+function eq_T (self: t_T) (other: t_T) : bool
 
 axiom eq_T_spec: forall self: t_T, other: t_T [eq_T self other]. eq_T self other = (self = other)
 
-predicate incl_eq_T (self: t_T) (other: t_T) = eq_T self other \/ incl_T self other
+function incl_eq_T (self: t_T) (other: t_T) : bool = eq_T self other \/ incl_T self other
 
-predicate incl_Option_T (self: t_Option_T) (other: t_Option_T) =
-  match { f0 = self; f1 = other } with
+function incl_Option_T (self: t_Option_T) (other: t_Option_T) : bool = match { f0 = self; f1 = other } with
     | {f0 = None} -> true
     | {f1 = None} -> false
     | {f0 = Some x; f1 = Some y} -> incl_eq_T x y

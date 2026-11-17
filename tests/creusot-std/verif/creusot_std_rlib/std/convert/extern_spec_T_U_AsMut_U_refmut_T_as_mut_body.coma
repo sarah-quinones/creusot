@@ -3,44 +3,44 @@ use creusot.prelude.Any
 
 type t_T
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
 type t_U
 
-predicate invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) = inv_T self.current /\ inv_T self.final
+function invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) : bool = inv_T self.current /\ inv_T self.final
 
-meta "rewrite_def" predicate invariant_refmut_T
+meta "rewrite_def" function invariant_refmut_T
 
-predicate inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = invariant_refmut_T _1
+function inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = invariant_refmut_T _1
 
-meta "rewrite_def" predicate inv_refmut_T
+meta "rewrite_def" function inv_refmut_T
 
-predicate precondition_as_mut (self: ()) (args: MutBorrow.t t_T)
+function precondition_as_mut (self: ()) (args: MutBorrow.t t_T) : bool
 
 axiom precondition_fndef:
   forall args: MutBorrow.t t_T [precondition_as_mut () args]. (let self = args in inv_refmut_T self)
     -> precondition_as_mut () args
 
-predicate inv_U (_1: t_U)
+function inv_U (_1: t_U) : bool
 
-predicate invariant_refmut_U [@inline:trivial] (self: MutBorrow.t t_U) = inv_U self.current /\ inv_U self.final
+function invariant_refmut_U [@inline:trivial] (self: MutBorrow.t t_U) : bool = inv_U self.current /\ inv_U self.final
 
-meta "rewrite_def" predicate invariant_refmut_U
+meta "rewrite_def" function invariant_refmut_U
 
-predicate inv_refmut_U [@inline:trivial] (_1: MutBorrow.t t_U) = invariant_refmut_U _1
+function inv_refmut_U [@inline:trivial] (_1: MutBorrow.t t_U) : bool = invariant_refmut_U _1
 
-meta "rewrite_def" predicate inv_refmut_U
+meta "rewrite_def" function inv_refmut_U
 
-predicate postcondition_as_mut (self: ()) (args: MutBorrow.t t_T) (result: MutBorrow.t t_U)
+function postcondition_as_mut (self: ()) (args: MutBorrow.t t_T) (result: MutBorrow.t t_U) : bool
 
 axiom postcondition_fndef:
   forall args: MutBorrow.t t_T, result: MutBorrow.t t_U [postcondition_as_mut () args result]. postcondition_as_mut () args result
     -> (let self = args in inv_refmut_U result)
 
-predicate postcondition_once_as_mut (self: ()) (args: MutBorrow.t t_T) (result: MutBorrow.t t_U) =
+function postcondition_once_as_mut (self: ()) (args: MutBorrow.t t_T) (result: MutBorrow.t t_U) : bool =
   postcondition_as_mut self args result
 
-meta "rewrite_def" predicate postcondition_once_as_mut
+meta "rewrite_def" function postcondition_once_as_mut
 
 let as_mut_T (self: MutBorrow.t t_T) (return (x: MutBorrow.t t_U)) =
 {[@stop_split] [@expl:as_mut requires] precondition_as_mut () self}
@@ -48,22 +48,22 @@ let as_mut_T (self: MutBorrow.t t_T) (return (x: MutBorrow.t t_U)) =
   [ return (result: MutBorrow.t t_U) -> {[@stop_split] [@expl:as_mut ensures] postcondition_once_as_mut () self result}
     (! return {result}) ]
 
-predicate resolve_refmut_U [@inline:trivial] (_1: MutBorrow.t t_U) = _1.final = _1.current
+function resolve_refmut_U [@inline:trivial] (_1: MutBorrow.t t_U) : bool = _1.final = _1.current
 
-meta "rewrite_def" predicate resolve_refmut_U
+meta "rewrite_def" function resolve_refmut_U
 
-predicate invariant_refmut_refmut_T [@inline:trivial] (self: MutBorrow.t (MutBorrow.t t_T)) =
+function invariant_refmut_refmut_T [@inline:trivial] (self: MutBorrow.t (MutBorrow.t t_T)) : bool =
   inv_refmut_T self.current /\ inv_refmut_T self.final
 
-meta "rewrite_def" predicate invariant_refmut_refmut_T
+meta "rewrite_def" function invariant_refmut_refmut_T
 
-predicate inv_refmut_refmut_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_T)) = invariant_refmut_refmut_T _1
+function inv_refmut_refmut_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_T)) : bool = invariant_refmut_refmut_T _1
 
-meta "rewrite_def" predicate inv_refmut_refmut_T
+meta "rewrite_def" function inv_refmut_refmut_T
 
-predicate resolve_refmut_refmut_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_T)) = _1.final = _1.current
+function resolve_refmut_refmut_T [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t t_T)) : bool = _1.final = _1.current
 
-meta "rewrite_def" predicate resolve_refmut_refmut_T
+meta "rewrite_def" function resolve_refmut_refmut_T
 
 meta "compute_max_steps" 1000000
 

@@ -2,9 +2,9 @@
 
 type t_T
 
-predicate le_log_T (self: t_T) (other: t_T)
+function le_log_T (self: t_T) (other: t_T) : bool
 
-predicate lt_log_T (self: t_T) (other: t_T)
+function lt_log_T (self: t_T) (other: t_T) : bool
 
 function le_lt_log_T (self: t_T) (other: t_T) : ()
 
@@ -18,9 +18,9 @@ function irreflexive_T (self: t_T) : ()
 
 axiom irreflexive_T_spec: forall self: t_T. not lt_log_T self self
 
-predicate lt_log_ref_T [@inline:trivial] (self: t_T) (other: t_T) = lt_log_T self other
+function lt_log_ref_T [@inline:trivial] (self: t_T) (other: t_T) : bool = lt_log_T self other
 
-meta "rewrite_def" predicate lt_log_ref_T
+meta "rewrite_def" function lt_log_ref_T
 
 meta "compute_max_steps" 1000000
 

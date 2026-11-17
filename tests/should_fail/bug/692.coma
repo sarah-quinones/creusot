@@ -3,23 +3,23 @@ module M_incorrect
   
   type t_B
   
-  predicate inv_B (_1: t_B)
+  function inv_B (_1: t_B) : bool
   
-  predicate resolve_B (_1: t_B)
+  function resolve_B (_1: t_B) : bool
   
   type t_C
   
-  predicate inv_C (_1: t_C)
+  function inv_C (_1: t_C) : bool
   
-  predicate resolve_C (_1: t_C)
+  function resolve_C (_1: t_C) : bool
   
-  predicate precondition_C (self: t_C) (args: ())
+  function precondition_C (self: t_C) (args: ()) : bool
   
-  predicate precondition_B (self: t_B) (args: bool)
+  function precondition_B (self: t_B) (args: bool) : bool
   
-  predicate postcondition_once_C (self: t_C) (args: ()) (result: bool)
+  function postcondition_once_C (self: t_C) (args: ()) (result: bool) : bool
   
-  predicate postcondition_mut_C (self: t_C) (args: ()) (result_state: t_C) (result: bool)
+  function postcondition_mut_C (self: t_C) (args: ()) (result_state: t_C) (result: bool) : bool
   
   function fn_mut_once_C (self: t_C) (args: ()) (res: bool) : ()
   
@@ -27,7 +27,7 @@ module M_incorrect
     forall self: t_C, args: (), res: bool [postcondition_once_C self args res]. postcondition_once_C self args res
       = (exists res_state: t_C. postcondition_mut_C self args res_state res /\ resolve_C res_state)
   
-  predicate hist_inv_C (self: t_C) (result_state: t_C)
+  function hist_inv_C (self: t_C) (result_state: t_C) : bool
   
   function hist_inv_trans_C (self: t_C) (b: t_C) (c: t_C) : ()
   
@@ -50,7 +50,7 @@ module M_incorrect
   axiom fn_hist_inv_C_spec: forall self: t_C, res_state: t_C [hist_inv_C self res_state]. hist_inv_C self res_state
       = (self = res_state)
   
-  predicate postcondition_C (self: t_C) (args: ()) (result: bool)
+  function postcondition_C (self: t_C) (args: ()) (result: bool) : bool
   
   function fn_once_C (self: t_C) (args: ()) (res: bool) : ()
   
@@ -90,9 +90,9 @@ module M_valid_normal
   
   type closure1 = { c0: UInt32.t }
   
-  predicate gt_log_u32 [@inline:trivial] (self: UInt32.t) (other: UInt32.t) = UInt32.lt other self
+  function gt_log_u32 [@inline:trivial] (self: UInt32.t) (other: UInt32.t) : bool = UInt32.lt other self
   
-  meta "rewrite_def" predicate gt_log_u32
+  meta "rewrite_def" function gt_log_u32
   
   let closure1 (self: closure1) (return (x: bool)) = (! bb0
     [ bb0 = s0 [ s0 = [ &res <- UInt32.gt self.c0 (7: UInt32.t) ] s1 | s1 = [ &_ret <- res ] s2 | s2 = return {_ret} ] ]
@@ -102,11 +102,12 @@ module M_valid_normal
   
   type closure2 = { c0'0: MutBorrow.t UInt32.t }
   
-  predicate resolve_refmut_closure2 [@inline:trivial] (_1: MutBorrow.t closure2) = _1.final = _1.current
+  function resolve_refmut_closure2 [@inline:trivial] (_1: MutBorrow.t closure2) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_closure2
+  meta "rewrite_def" function resolve_refmut_closure2
   
-  predicate hist_inv_closure2 (self: closure2) (result_state: closure2) = result_state.c0'0.final = self.c0'0.final
+  function hist_inv_closure2 (self: closure2) (result_state: closure2) : bool = result_state.c0'0.final
+    = self.c0'0.final
   
   let closure2 (self: MutBorrow.t closure2) (b: bool) (return (x: ())) = (! bb0
     [ bb0 = any [ br0 -> {b = false} (! bb2) | br1 -> {b} (! bb1) ]
@@ -123,18 +124,18 @@ module M_valid_normal
       /\ ([@stop_split] [@expl:closure hist_inv post] hist_inv_closure2 self.current self.final)}
       (! return {result}) ]
   
-  predicate precondition_closure1 (self: closure1) (args: ()) = true
+  function precondition_closure1 (self: closure1) (args: ()) : bool = true
   
-  meta "rewrite_def" predicate precondition_closure1
+  meta "rewrite_def" function precondition_closure1
   
-  predicate precondition_closure2 (self: closure2) (args: bool) = let b = args in true
+  function precondition_closure2 (self: closure2) (args: bool) : bool = let b = args in true
   
-  meta "rewrite_def" predicate precondition_closure2
+  meta "rewrite_def" function precondition_closure2
   
-  predicate postcondition_closure1 (self: closure1) (args: ()) (result: bool) =
-    result = gt_log_u32 self.c0 (7: UInt32.t)
+  function postcondition_closure1 (self: closure1) (args: ()) (result: bool) : bool = result
+    = gt_log_u32 self.c0 (7: UInt32.t)
   
-  meta "rewrite_def" predicate postcondition_closure1
+  meta "rewrite_def" function postcondition_closure1
   
   let incorrect_closure1 (cond: closure1) (branch: closure2) (return (x: ())) =
   {[@stop_split] [@expl:incorrect requires] precondition_closure1 cond ()

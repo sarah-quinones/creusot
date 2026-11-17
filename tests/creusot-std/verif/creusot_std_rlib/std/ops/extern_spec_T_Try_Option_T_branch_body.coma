@@ -16,9 +16,9 @@ type t_Option_Infallible = None'0 | Some'0 ()
 
 type t_ControlFlow_Option_Infallible_T = Continue t_T | Break t_Option_Infallible
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate inv_Option_T (_1: t_Option_T)
+function inv_Option_T (_1: t_Option_T) : bool
 
 axiom inv_axiom [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_T _1
     = match _1 with
@@ -26,9 +26,9 @@ axiom inv_axiom [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_
       | Some f0 -> inv_T f0
       end
 
-predicate resolve_T (_1: t_T)
+function resolve_T (_1: t_T) : bool
 
-predicate resolve_Option_T (_1: t_Option_T)
+function resolve_Option_T (_1: t_Option_T) : bool
 
 axiom resolve_axiom [@rewrite]: forall _1: t_Option_T [resolve_Option_T _1]. resolve_Option_T _1
     = match _1 with
@@ -36,11 +36,11 @@ axiom resolve_axiom [@rewrite]: forall _1: t_Option_T [resolve_Option_T _1]. res
       | Some x0 -> resolve_T x0
       end
 
-predicate inv_Infallible [@inline:trivial] (_1: ()) = false
+function inv_Infallible [@inline:trivial] (_1: ()) : bool = false
 
-meta "rewrite_def" predicate inv_Infallible
+meta "rewrite_def" function inv_Infallible
 
-predicate inv_Option_Infallible (_1: t_Option_Infallible)
+function inv_Option_Infallible (_1: t_Option_Infallible) : bool
 
 axiom inv_axiom'0 [@rewrite]: forall _1: t_Option_Infallible [inv_Option_Infallible _1]. inv_Option_Infallible _1
     = match _1 with
@@ -48,7 +48,7 @@ axiom inv_axiom'0 [@rewrite]: forall _1: t_Option_Infallible [inv_Option_Infalli
       | Some'0 f0 -> inv_Infallible f0
       end
 
-predicate inv_ControlFlow_Option_Infallible_T (_1: t_ControlFlow_Option_Infallible_T)
+function inv_ControlFlow_Option_Infallible_T (_1: t_ControlFlow_Option_Infallible_T) : bool
 
 axiom inv_axiom'1 [@rewrite]:
   forall _1: t_ControlFlow_Option_Infallible_T [inv_ControlFlow_Option_Infallible_T _1]. inv_ControlFlow_Option_Infallible_T _1

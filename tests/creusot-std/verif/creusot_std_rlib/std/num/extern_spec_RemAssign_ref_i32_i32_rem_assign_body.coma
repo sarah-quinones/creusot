@@ -14,9 +14,9 @@ let rem_assign_i32 (self: MutBorrow.t Int32.t) (other: Int32.t) (return (x: ()))
     = ComputerDivision.mod (Int32.to_int self.current) (Int32.to_int other)}
     (! return {result}) ]
 
-predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
 
-meta "rewrite_def" predicate resolve_refmut_i32
+meta "rewrite_def" function resolve_refmut_i32
 
 meta "compute_max_steps" 1000000
 

@@ -1,7 +1,7 @@
 module M_id
   type t_T
   
-  predicate const_true_T (_1: t_T)
+  function const_true_T (_1: t_T) : bool
   
   axiom const_true_T_def: forall _1: t_T [const_true_T _1]. const_true_T _1 = true
   
@@ -29,7 +29,7 @@ module M_test
   
   meta "rewrite_def" function index_Mapping_Int_unit
   
-  predicate const_true_unit (_1: ())
+  function const_true_unit (_1: ()) : bool
   
   axiom const_true_unit_def: forall _1: () [const_true_unit _1]. const_true_unit _1 = true
   

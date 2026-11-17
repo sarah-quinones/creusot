@@ -9,8 +9,8 @@ type t_T
 
 function view_Iter_T (self: t_Iter_T) : Seq.seq t_T
 
-predicate produces_back_Iter_T (self: t_Iter_T) (visited: Seq.seq t_T) (tl: t_Iter_T) =
-  view_Iter_T self = Seq.(++) (view_Iter_T tl) (Reverse.reverse visited)
+function produces_back_Iter_T (self: t_Iter_T) (visited: Seq.seq t_T) (tl: t_Iter_T) : bool = view_Iter_T self
+  = Seq.(++) (view_Iter_T tl) (Reverse.reverse visited)
 
 function reverse_concat_ref_T (self: Seq.seq t_T) (other: Seq.seq t_T) : ()
 

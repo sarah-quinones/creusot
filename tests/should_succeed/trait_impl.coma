@@ -7,21 +7,21 @@ module M_impl_T_for_tup2_T1_T2__x (* <(T1, T2) as T<B>> *)
   
   type tup2_T1_T2 = { f0: t_T1; f1: t_T2 }
   
-  predicate inv_T1 (_1: t_T1)
+  function inv_T1 (_1: t_T1) : bool
   
-  predicate inv_T2 (_1: t_T2)
+  function inv_T2 (_1: t_T2) : bool
   
-  predicate inv_tup2_T1_T2 [@inline:trivial] (_1: tup2_T1_T2) = inv_T1 _1.f0 /\ inv_T2 _1.f1
+  function inv_tup2_T1_T2 [@inline:trivial] (_1: tup2_T1_T2) : bool = inv_T1 _1.f0 /\ inv_T2 _1.f1
   
-  meta "rewrite_def" predicate inv_tup2_T1_T2
+  meta "rewrite_def" function inv_tup2_T1_T2
   
-  predicate resolve_T1 (_1: t_T1)
+  function resolve_T1 (_1: t_T1) : bool
   
-  predicate resolve_T2 (_1: t_T2)
+  function resolve_T2 (_1: t_T2) : bool
   
-  predicate resolve_tup2_T1_T2 [@inline:trivial] (_1: tup2_T1_T2) = resolve_T1 _1.f0 /\ resolve_T2 _1.f1
+  function resolve_tup2_T1_T2 [@inline:trivial] (_1: tup2_T1_T2) : bool = resolve_T1 _1.f0 /\ resolve_T2 _1.f1
   
-  meta "rewrite_def" predicate resolve_tup2_T1_T2
+  meta "rewrite_def" function resolve_tup2_T1_T2
   
   meta "compute_max_steps" 1000000
   
@@ -43,13 +43,13 @@ module M_impl_T_for_tup2_T1_T2__x__refines (* <(T1, T2) as T<B>> *)
   
   type tup2_T1_T2 = { f0: t_T1; f1: t_T2 }
   
-  predicate inv_T1 (_1: t_T1)
+  function inv_T1 (_1: t_T1) : bool
   
-  predicate inv_T2 (_1: t_T2)
+  function inv_T2 (_1: t_T2) : bool
   
-  predicate inv_tup2_T1_T2 [@inline:trivial] (_1: tup2_T1_T2) = inv_T1 _1.f0 /\ inv_T2 _1.f1
+  function inv_tup2_T1_T2 [@inline:trivial] (_1: tup2_T1_T2) : bool = inv_T1 _1.f0 /\ inv_T2 _1.f1
   
-  meta "rewrite_def" predicate inv_tup2_T1_T2
+  meta "rewrite_def" function inv_tup2_T1_T2
   
   meta "compute_max_steps" 1000000
   

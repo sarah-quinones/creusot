@@ -5,19 +5,19 @@ module M_f
   
   type closure1 = { c0: t_T }
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_closure1 [@inline:trivial] (_1: closure1) = let {c0 = x0} = _1 in inv_T x0
+  function inv_closure1 [@inline:trivial] (_1: closure1) : bool = let {c0 = x0} = _1 in inv_T x0
   
-  meta "rewrite_def" predicate inv_closure1
+  meta "rewrite_def" function inv_closure1
   
-  predicate invariant_ref_closure1 [@inline:trivial] (self: closure1) = inv_closure1 self
+  function invariant_ref_closure1 [@inline:trivial] (self: closure1) : bool = inv_closure1 self
   
-  meta "rewrite_def" predicate invariant_ref_closure1
+  meta "rewrite_def" function invariant_ref_closure1
   
-  predicate inv_ref_closure1 [@inline:trivial] (_1: closure1) = invariant_ref_closure1 _1
+  function inv_ref_closure1 [@inline:trivial] (_1: closure1) : bool = invariant_ref_closure1 _1
   
-  meta "rewrite_def" predicate inv_ref_closure1
+  meta "rewrite_def" function inv_ref_closure1
   
   let closure1 (self: closure1) (return (x: ())) =
   {[@stop_split] [@expl:closure 'self' type invariant] inv_ref_closure1 self}
@@ -25,23 +25,23 @@ module M_f
     [ bb0 = return {_ret} ] [ & _ret: () = Any.any_l () | & self: closure1 = self ])
     [ return (result: ()) -> (! return {result}) ]
   
-  predicate resolve_T (_1: t_T)
+  function resolve_T (_1: t_T) : bool
   
-  predicate postcondition_once_closure1 (self: closure1) (args: ()) (result: ()) = resolve_T self.c0
+  function postcondition_once_closure1 (self: closure1) (args: ()) (result: ()) : bool = resolve_T self.c0
   
-  meta "rewrite_def" predicate postcondition_once_closure1
+  meta "rewrite_def" function postcondition_once_closure1
   
-  predicate resolve_closure1 [@inline:trivial] (_1: closure1) = resolve_T _1.c0
+  function resolve_closure1 [@inline:trivial] (_1: closure1) : bool = resolve_T _1.c0
   
-  meta "rewrite_def" predicate resolve_closure1
+  meta "rewrite_def" function resolve_closure1
   
-  predicate precondition_closure1 (self: closure1) (args: ()) = true
+  function precondition_closure1 (self: closure1) (args: ()) : bool = true
   
-  meta "rewrite_def" predicate precondition_closure1
+  meta "rewrite_def" function precondition_closure1
   
-  predicate postcondition_closure1 (self: closure1) (args: ()) (result: ()) = true
+  function postcondition_closure1 (self: closure1) (args: ()) (result: ()) : bool = true
   
-  meta "rewrite_def" predicate postcondition_closure1
+  meta "rewrite_def" function postcondition_closure1
   
   let call_closure1 (self: closure1) (args: ()) (return (x: ())) =
   {[@stop_split] [@expl:call_closure1 requires] ([@stop_split] [@expl:call 'self' type invariant] inv_ref_closure1 self)
@@ -77,19 +77,19 @@ module M_g
   
   type closure0 = { c0: t_T }
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_closure0 [@inline:trivial] (_1: closure0) = let {c0 = x0} = _1 in inv_T x0
+  function inv_closure0 [@inline:trivial] (_1: closure0) : bool = let {c0 = x0} = _1 in inv_T x0
   
-  meta "rewrite_def" predicate inv_closure0
+  meta "rewrite_def" function inv_closure0
   
-  predicate invariant_ref_closure0 [@inline:trivial] (self: closure0) = inv_closure0 self
+  function invariant_ref_closure0 [@inline:trivial] (self: closure0) : bool = inv_closure0 self
   
-  meta "rewrite_def" predicate invariant_ref_closure0
+  meta "rewrite_def" function invariant_ref_closure0
   
-  predicate inv_ref_closure0 [@inline:trivial] (_1: closure0) = invariant_ref_closure0 _1
+  function inv_ref_closure0 [@inline:trivial] (_1: closure0) : bool = invariant_ref_closure0 _1
   
-  meta "rewrite_def" predicate inv_ref_closure0
+  meta "rewrite_def" function inv_ref_closure0
   
   let closure0 [@coma:extspec] (self: closure0) (return (x: ())) =
   {[@stop_split] [@expl:closure 'self' type invariant] inv_ref_closure0 self}
@@ -101,24 +101,24 @@ module M_g
   
   meta "rewrite_def" predicate closure0'post'return
   
-  predicate resolve_T (_1: t_T)
+  function resolve_T (_1: t_T) : bool
   
-  predicate resolve_closure0 [@inline:trivial] (_1: closure0) = resolve_T _1.c0
+  function resolve_closure0 [@inline:trivial] (_1: closure0) : bool = resolve_T _1.c0
   
-  meta "rewrite_def" predicate resolve_closure0
+  meta "rewrite_def" function resolve_closure0
   
-  predicate postcondition_once_closure0 (self: closure0) (args: ()) (result: ()) =
+  function postcondition_once_closure0 (self: closure0) (args: ()) (result: ()) : bool =
     closure0'post'return self result /\ resolve_closure0 self
   
-  meta "rewrite_def" predicate postcondition_once_closure0
+  meta "rewrite_def" function postcondition_once_closure0
   
-  predicate precondition_closure0 (self: closure0) (args: ()) = closure0'pre self
+  function precondition_closure0 (self: closure0) (args: ()) : bool = closure0'pre self
   
-  meta "rewrite_def" predicate precondition_closure0
+  meta "rewrite_def" function precondition_closure0
   
-  predicate postcondition_closure0 (self: closure0) (args: ()) (result: ()) = closure0'post'return self result
+  function postcondition_closure0 (self: closure0) (args: ()) (result: ()) : bool = closure0'post'return self result
   
-  meta "rewrite_def" predicate postcondition_closure0
+  meta "rewrite_def" function postcondition_closure0
   
   let call_closure0 (self: closure0) (args: ()) (return (x: ())) =
   {[@stop_split] [@expl:call_closure0 requires] ([@stop_split] [@expl:call 'self' type invariant] inv_ref_closure0 self)

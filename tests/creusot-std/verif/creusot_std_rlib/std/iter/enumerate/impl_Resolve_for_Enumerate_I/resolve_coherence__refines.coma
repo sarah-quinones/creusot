@@ -2,19 +2,19 @@
 
 type t_Enumerate_I
 
-predicate inv_Enumerate_I (_1: t_Enumerate_I)
+function inv_Enumerate_I (_1: t_Enumerate_I) : bool
 
-predicate structural_resolve_Enumerate_I (_1: t_Enumerate_I)
+function structural_resolve_Enumerate_I (_1: t_Enumerate_I) : bool
 
 type t_I
 
-predicate resolve_I (_1: t_I)
+function resolve_I (_1: t_I) : bool
 
 function iter_Enumerate_I (self: t_Enumerate_I) : t_I
 
-predicate resolve_Enumerate_I [@inline:trivial] (self: t_Enumerate_I) = resolve_I (iter_Enumerate_I self)
+function resolve_Enumerate_I [@inline:trivial] (self: t_Enumerate_I) : bool = resolve_I (iter_Enumerate_I self)
 
-meta "rewrite_def" predicate resolve_Enumerate_I
+meta "rewrite_def" function resolve_Enumerate_I
 
 meta "compute_max_steps" 1000000
 

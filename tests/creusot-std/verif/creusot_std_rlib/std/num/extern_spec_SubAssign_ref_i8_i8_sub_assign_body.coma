@@ -15,9 +15,9 @@ let sub_assign_i8 (self: MutBorrow.t Int8.t) (other: Int8.t) (return (x: ())) =
     = Int8.to_int self.current - Int8.to_int other}
     (! return {result}) ]
 
-predicate resolve_refmut_i8 [@inline:trivial] (_1: MutBorrow.t Int8.t) = _1.final = _1.current
+function resolve_refmut_i8 [@inline:trivial] (_1: MutBorrow.t Int8.t) : bool = _1.final = _1.current
 
-meta "rewrite_def" predicate resolve_refmut_i8
+meta "rewrite_def" function resolve_refmut_i8
 
 meta "compute_max_steps" 1000000
 

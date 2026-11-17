@@ -30,7 +30,7 @@ type tup4_Option_T1_Option_T2_Option_T3_Option_T4 = {
 
 function op_T1 (self: t_T1) (other: t_T1) : t_Option_T1
 
-predicate incl_T1 (self: t_T1) (other: t_T1)
+function incl_T1 (self: t_T1) (other: t_T1) : bool
 
 axiom incl_T1_spec: forall self: t_T1, other: t_T1 [incl_T1 self other]. incl_T1 self other
     = (exists factor: t_T1. op_T1 self factor = Some'0 other)
@@ -61,7 +61,7 @@ function core_T1 (self: t_T1) : t_Option_T1
 
 function op_T2 (self: t_T2) (other: t_T2) : t_Option_T2
 
-predicate incl_T2 (self: t_T2) (other: t_T2)
+function incl_T2 (self: t_T2) (other: t_T2) : bool
 
 axiom incl_T2_spec: forall self: t_T2, other: t_T2 [incl_T2 self other]. incl_T2 self other
     = (exists factor: t_T2. op_T2 self factor = Some'1 other)
@@ -92,7 +92,7 @@ function core_T2 (self: t_T2) : t_Option_T2
 
 function op_T3 (self: t_T3) (other: t_T3) : t_Option_T3
 
-predicate incl_T3 (self: t_T3) (other: t_T3)
+function incl_T3 (self: t_T3) (other: t_T3) : bool
 
 axiom incl_T3_spec: forall self: t_T3, other: t_T3 [incl_T3 self other]. incl_T3 self other
     = (exists factor: t_T3. op_T3 self factor = Some'2 other)
@@ -123,7 +123,7 @@ function core_T3 (self: t_T3) : t_Option_T3
 
 function op_T4 (self: t_T4) (other: t_T4) : t_Option_T4
 
-predicate incl_T4 (self: t_T4) (other: t_T4)
+function incl_T4 (self: t_T4) (other: t_T4) : bool
 
 axiom incl_T4_spec: forall self: t_T4, other: t_T4 [incl_T4 self other]. incl_T4 self other
     = (exists factor: t_T4. op_T4 self factor = Some'3 other)
@@ -163,10 +163,10 @@ function core_tup4_T1_T2_T3_T4 (self: tup4_T1_T2_T3_T4) : t_Option_tup4_T1_T2_T3
     | _ -> None
     end
 
-predicate index_Mapping_tup4_T1_T2_T3_T4_bool [@inline:trivial] (self: Map.map tup4_T1_T2_T3_T4 bool) (a: tup4_T1_T2_T3_T4) =
-  Map.get self a
+function index_Mapping_tup4_T1_T2_T3_T4_bool [@inline:trivial] (self: Map.map tup4_T1_T2_T3_T4 bool) (a: tup4_T1_T2_T3_T4) : bool
+ = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_tup4_T1_T2_T3_T4_bool
+meta "rewrite_def" function index_Mapping_tup4_T1_T2_T3_T4_bool
 
 function such_that_tup4_T1_T2_T3_T4 (p: Map.map tup4_T1_T2_T3_T4 bool) : tup4_T1_T2_T3_T4
 
@@ -193,9 +193,9 @@ function op_tup4_T1_T2_T3_T4 (self: tup4_T1_T2_T3_T4) (other: tup4_T1_T2_T3_T4) 
     | _ -> None
     end
 
-predicate index_Mapping_T1_bool [@inline:trivial] (self: Map.map t_T1 bool) (a: t_T1) = Map.get self a
+function index_Mapping_T1_bool [@inline:trivial] (self: Map.map t_T1 bool) (a: t_T1) : bool = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_T1_bool
+meta "rewrite_def" function index_Mapping_T1_bool
 
 function such_that_T1 (p: Map.map t_T1 bool) : t_T1
 
@@ -217,9 +217,9 @@ axiom core_idemp_T1_spec: forall self: t_T1. core_T1 self <> None'0
 axiom core_idemp_T1_spec'0: forall self: t_T1. core_T1 self <> None'0
     -> op_T1 (unwrap_Option_T1 (core_T1 self)) self = Some'0 self
 
-predicate index_Mapping_T2_bool [@inline:trivial] (self: Map.map t_T2 bool) (a: t_T2) = Map.get self a
+function index_Mapping_T2_bool [@inline:trivial] (self: Map.map t_T2 bool) (a: t_T2) : bool = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_T2_bool
+meta "rewrite_def" function index_Mapping_T2_bool
 
 function such_that_T2 (p: Map.map t_T2 bool) : t_T2
 
@@ -241,9 +241,9 @@ axiom core_idemp_T2_spec: forall self: t_T2. core_T2 self <> None'1
 axiom core_idemp_T2_spec'0: forall self: t_T2. core_T2 self <> None'1
     -> op_T2 (unwrap_Option_T2 (core_T2 self)) self = Some'1 self
 
-predicate index_Mapping_T3_bool [@inline:trivial] (self: Map.map t_T3 bool) (a: t_T3) = Map.get self a
+function index_Mapping_T3_bool [@inline:trivial] (self: Map.map t_T3 bool) (a: t_T3) : bool = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_T3_bool
+meta "rewrite_def" function index_Mapping_T3_bool
 
 function such_that_T3 (p: Map.map t_T3 bool) : t_T3
 
@@ -265,9 +265,9 @@ axiom core_idemp_T3_spec: forall self: t_T3. core_T3 self <> None'2
 axiom core_idemp_T3_spec'0: forall self: t_T3. core_T3 self <> None'2
     -> op_T3 (unwrap_Option_T3 (core_T3 self)) self = Some'2 self
 
-predicate index_Mapping_T4_bool [@inline:trivial] (self: Map.map t_T4 bool) (a: t_T4) = Map.get self a
+function index_Mapping_T4_bool [@inline:trivial] (self: Map.map t_T4 bool) (a: t_T4) : bool = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_T4_bool
+meta "rewrite_def" function index_Mapping_T4_bool
 
 function such_that_T4 (p: Map.map t_T4 bool) : t_T4
 

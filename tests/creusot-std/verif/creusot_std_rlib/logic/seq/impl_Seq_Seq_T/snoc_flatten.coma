@@ -22,9 +22,9 @@ function flatten_T (self: Seq.seq (Seq.seq t_T)) : Seq.seq t_T
 axiom flatten_T_def: forall self: Seq.seq (Seq.seq t_T) [flatten_T self]. flatten_T self
     = (if Seq.length self = 0 then Seq.empty: Seq.seq t_T else Seq.(++) (Seq.get self 0) (flatten_T (tail_Seq_T self)))
 
-predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
 
-meta "rewrite_def" predicate gt_log_Int
+meta "rewrite_def" function gt_log_Int
 
 function concat_flatten_T (self: Seq.seq (Seq.seq t_T)) (other: Seq.seq (Seq.seq t_T)) : ()
 

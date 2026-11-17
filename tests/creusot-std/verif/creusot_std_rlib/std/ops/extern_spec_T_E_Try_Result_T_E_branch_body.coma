@@ -6,11 +6,11 @@ type t_E
 
 type t_Result_T_E = Ok t_T | Err t_E
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate inv_E (_1: t_E)
+function inv_E (_1: t_E) : bool
 
-predicate inv_Result_T_E (_1: t_Result_T_E)
+function inv_Result_T_E (_1: t_Result_T_E) : bool
 
 axiom inv_axiom [@rewrite]: forall _1: t_Result_T_E [inv_Result_T_E _1]. inv_Result_T_E _1
     = match _1 with
@@ -18,11 +18,11 @@ axiom inv_axiom [@rewrite]: forall _1: t_Result_T_E [inv_Result_T_E _1]. inv_Res
       | Err f0 -> inv_E f0
       end
 
-predicate resolve_T (_1: t_T)
+function resolve_T (_1: t_T) : bool
 
-predicate resolve_E (_1: t_E)
+function resolve_E (_1: t_E) : bool
 
-predicate resolve_Result_T_E (_1: t_Result_T_E)
+function resolve_Result_T_E (_1: t_Result_T_E) : bool
 
 axiom resolve_axiom [@rewrite]: forall _1: t_Result_T_E [resolve_Result_T_E _1]. resolve_Result_T_E _1
     = match _1 with
@@ -50,11 +50,11 @@ let elim_Ok (_x: t_Result_T_E) (return (f0: t_T)) = any
       end}
     any) ]
 
-predicate inv_Infallible [@inline:trivial] (_1: ()) = false
+function inv_Infallible [@inline:trivial] (_1: ()) : bool = false
 
-meta "rewrite_def" predicate inv_Infallible
+meta "rewrite_def" function inv_Infallible
 
-predicate inv_Result_Infallible_E (_1: t_Result_Infallible_E)
+function inv_Result_Infallible_E (_1: t_Result_Infallible_E) : bool
 
 axiom inv_axiom'0 [@rewrite]: forall _1: t_Result_Infallible_E [inv_Result_Infallible_E _1]. inv_Result_Infallible_E _1
     = match _1 with
@@ -62,7 +62,7 @@ axiom inv_axiom'0 [@rewrite]: forall _1: t_Result_Infallible_E [inv_Result_Infal
       | Err'0 f0 -> inv_E f0
       end
 
-predicate inv_ControlFlow_Result_Infallible_E_T (_1: t_ControlFlow_Result_Infallible_E_T)
+function inv_ControlFlow_Result_Infallible_E_T (_1: t_ControlFlow_Result_Infallible_E_T) : bool
 
 axiom inv_axiom'1 [@rewrite]:
   forall _1: t_ControlFlow_Result_Infallible_E_T [inv_ControlFlow_Result_Infallible_E_T _1]. inv_ControlFlow_Result_Infallible_E_T _1

@@ -8,7 +8,7 @@ module M_test_filter
   
   type t_Iter_bool
   
-  predicate inv_Iter_bool (_1: t_Iter_bool)
+  function inv_Iter_bool (_1: t_Iter_bool) : bool
   
   function view_Iter_bool (self: t_Iter_bool) : Slice64.slice bool
   
@@ -18,11 +18,11 @@ module M_test_filter
       /\ ([@stop_split] [@expl:iter ensures] view_Iter_bool result = self)}
       (! return {result}) ]
   
-  predicate resolve_refmut_closure0 [@inline:trivial] (_1: MutBorrow.t ()) = _1.final = _1.current
+  function resolve_refmut_closure0 [@inline:trivial] (_1: MutBorrow.t ()) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_closure0
+  meta "rewrite_def" function resolve_refmut_closure0
   
-  predicate hist_inv_closure0 (self: ()) (result_state: ()) = true
+  function hist_inv_closure0 (self: ()) (result_state: ()) : bool = true
   
   let closure0 (self: MutBorrow.t ()) (b: bool) (return (x: bool)) = (! bb0
     [ bb0 = s0
@@ -38,29 +38,29 @@ module M_test_filter
   
   type t_Filter_Iter_bool_closure0
   
-  predicate immutable_ref_ref_bool (_1: ()) = forall f: (), g: (). hist_inv_closure0 f g -> f = g
+  function immutable_ref_ref_bool (_1: ()) : bool = forall f: (), g: (). hist_inv_closure0 f g -> f = g
   
-  predicate inv_closure0 [@inline:trivial] (_1: ()) = true
+  function inv_closure0 [@inline:trivial] (_1: ()) : bool = true
   
-  meta "rewrite_def" predicate inv_closure0
+  meta "rewrite_def" function inv_closure0
   
-  predicate inv_ref_ref_bool [@inline:trivial] (_1: bool) = true
+  function inv_ref_ref_bool [@inline:trivial] (_1: bool) : bool = true
   
-  meta "rewrite_def" predicate inv_ref_ref_bool
+  meta "rewrite_def" function inv_ref_ref_bool
   
-  predicate precondition_closure0 (self: ()) (args: bool) = let b = args in true
+  function precondition_closure0 (self: ()) (args: bool) : bool = let b = args in true
   
-  meta "rewrite_def" predicate precondition_closure0
+  meta "rewrite_def" function precondition_closure0
   
-  predicate no_precondition_ref_ref_bool (_1: ()) =
-    forall f: (), i: bool. inv_closure0 f /\ inv_ref_ref_bool i -> precondition_closure0 f i
+  function no_precondition_ref_ref_bool (_1: ()) : bool = forall f: (), i: bool. inv_closure0 f /\ inv_ref_ref_bool i
+      -> precondition_closure0 f i
   
-  predicate postcondition_mut_closure0 (self: ()) (args: bool) (result_state: ()) (result: bool) =
+  function postcondition_mut_closure0 (self: ()) (args: bool) (result_state: ()) (result: bool) : bool =
     let b = args in result = b /\ hist_inv_closure0 self result_state
   
-  meta "rewrite_def" predicate postcondition_mut_closure0
+  meta "rewrite_def" function postcondition_mut_closure0
   
-  predicate precise_ref_ref_bool (_1: ()) =
+  function precise_ref_ref_bool (_1: ()) : bool =
     forall f1: (), f2: (), i: bool. not (postcondition_mut_closure0 f1 i f2 true
       /\ postcondition_mut_closure0 f1 i f2 false)
   
@@ -68,19 +68,19 @@ module M_test_filter
   
   function func_Filter_Iter_bool_closure0 (self: t_Filter_Iter_bool_closure0) : ()
   
-  predicate private_invariant_Iter_bool (f: t_Filter_Iter_bool_closure0)
+  function private_invariant_Iter_bool (f: t_Filter_Iter_bool_closure0) : bool
   
-  predicate invariant_Filter_Iter_bool_closure0 [@inline:trivial] (self: t_Filter_Iter_bool_closure0) =
+  function invariant_Filter_Iter_bool_closure0 [@inline:trivial] (self: t_Filter_Iter_bool_closure0) : bool =
     inv_Iter_bool (iter_Filter_Iter_bool_closure0 self)
     /\ inv_closure0 (func_Filter_Iter_bool_closure0 self) /\ private_invariant_Iter_bool self
   
-  meta "rewrite_def" predicate invariant_Filter_Iter_bool_closure0
+  meta "rewrite_def" function invariant_Filter_Iter_bool_closure0
   
   axiom invariant_Filter_Iter_bool_closure0_spec:
     forall self: t_Filter_Iter_bool_closure0 [invariant_Filter_Iter_bool_closure0 self]. invariant_Filter_Iter_bool_closure0 self
       -> inv_Iter_bool (iter_Filter_Iter_bool_closure0 self) /\ inv_closure0 (func_Filter_Iter_bool_closure0 self)
   
-  predicate inv_Filter_Iter_bool_closure0 (_1: t_Filter_Iter_bool_closure0)
+  function inv_Filter_Iter_bool_closure0 (_1: t_Filter_Iter_bool_closure0) : bool
   
   axiom inv_axiom:
     forall _1: t_Filter_Iter_bool_closure0 [inv_Filter_Iter_bool_closure0 _1]. inv_Filter_Iter_bool_closure0 _1
@@ -100,19 +100,20 @@ module M_test_filter
   
   type t_Option_ref_bool = None | Some bool
   
-  predicate invariant_refmut_Filter_Iter_bool_closure0 [@inline:trivial] (self: MutBorrow.t t_Filter_Iter_bool_closure0) =
-    inv_Filter_Iter_bool_closure0 self.current /\ inv_Filter_Iter_bool_closure0 self.final
+  function invariant_refmut_Filter_Iter_bool_closure0 [@inline:trivial] (self: MutBorrow.t t_Filter_Iter_bool_closure0) : bool
+   = inv_Filter_Iter_bool_closure0 self.current /\ inv_Filter_Iter_bool_closure0 self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Filter_Iter_bool_closure0
+  meta "rewrite_def" function invariant_refmut_Filter_Iter_bool_closure0
   
-  predicate inv_refmut_Filter_Iter_bool_closure0 [@inline:trivial] (_1: MutBorrow.t t_Filter_Iter_bool_closure0) =
+  function inv_refmut_Filter_Iter_bool_closure0 [@inline:trivial] (_1: MutBorrow.t t_Filter_Iter_bool_closure0) : bool =
     invariant_refmut_Filter_Iter_bool_closure0 _1
   
-  meta "rewrite_def" predicate inv_refmut_Filter_Iter_bool_closure0
+  meta "rewrite_def" function inv_refmut_Filter_Iter_bool_closure0
   
-  predicate index_slice_bool [@inline:trivial] (self: Slice64.slice bool) (ix: int) = Seq.get (Slice64.view self) ix
+  function index_slice_bool [@inline:trivial] (self: Slice64.slice bool) (ix: int) : bool =
+    Seq.get (Slice64.view self) ix
   
-  meta "rewrite_def" predicate index_slice_bool
+  meta "rewrite_def" function index_slice_bool
   
   function to_ref_seq_slice_bool (self: Slice64.slice bool) : Seq.seq bool
   
@@ -125,7 +126,7 @@ module M_test_filter
           /\ i < Seq.length (to_ref_seq_slice_bool self)
         -> Seq.get (to_ref_seq_slice_bool self) i = index_slice_bool self i
   
-  predicate produces_Iter_bool (self: t_Iter_bool) (visited: Seq.seq bool) (tl: t_Iter_bool) =
+  function produces_Iter_bool (self: t_Iter_bool) (visited: Seq.seq bool) (tl: t_Iter_bool) : bool =
     to_ref_seq_slice_bool (view_Iter_bool self) = Seq.(++) visited (to_ref_seq_slice_bool (view_Iter_bool tl))
   
   function produces_trans_Iter_bool (a: t_Iter_bool) (ab: Seq.seq bool) (b: t_Iter_bool) (bc: Seq.seq bool) (c: t_Iter_bool) : ()
@@ -138,8 +139,8 @@ module M_test_filter
   
   axiom produces_refl_Iter_bool_spec: forall self: t_Iter_bool. produces_Iter_bool self (Seq.empty: Seq.seq bool) self
   
-  predicate produces_Filter_Iter_bool_closure0 (self: t_Filter_Iter_bool_closure0) (visited: Seq.seq bool) (succ: t_Filter_Iter_bool_closure0) =
-    private_invariant_Iter_bool self
+  function produces_Filter_Iter_bool_closure0 (self: t_Filter_Iter_bool_closure0) (visited: Seq.seq bool) (succ: t_Filter_Iter_bool_closure0) : bool
+   = private_invariant_Iter_bool self
     -> hist_inv_closure0 (func_Filter_Iter_bool_closure0 self) (func_Filter_Iter_bool_closure0 succ)
     /\ (exists s: Seq.seq bool, f: Map.map int int. produces_Iter_bool (iter_Filter_Iter_bool_closure0 self) s (iter_Filter_Iter_bool_closure0 succ)
       /\ (forall i: int. 0 <= i /\ i < Seq.length visited -> 0 <= Map.get f i /\ Map.get f i < Seq.length s)
@@ -160,14 +161,14 @@ module M_test_filter
   axiom produces_refl_Filter_Iter_bool_closure0_spec:
     forall self: t_Filter_Iter_bool_closure0. produces_Filter_Iter_bool_closure0 self (Seq.empty: Seq.seq bool) self
   
-  predicate resolve_refmut_Iter_bool [@inline:trivial] (_1: MutBorrow.t t_Iter_bool) = _1.final = _1.current
+  function resolve_refmut_Iter_bool [@inline:trivial] (_1: MutBorrow.t t_Iter_bool) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Iter_bool
+  meta "rewrite_def" function resolve_refmut_Iter_bool
   
-  predicate completed_Iter_bool (self: MutBorrow.t t_Iter_bool) =
-    resolve_refmut_Iter_bool self /\ Slice64.view (view_Iter_bool self.current) = (Seq.empty: Seq.seq bool)
+  function completed_Iter_bool (self: MutBorrow.t t_Iter_bool) : bool = resolve_refmut_Iter_bool self
+    /\ Slice64.view (view_Iter_bool self.current) = (Seq.empty: Seq.seq bool)
   
-  predicate completed_Filter_Iter_bool_closure0 (self: MutBorrow.t t_Filter_Iter_bool_closure0) =
+  function completed_Filter_Iter_bool_closure0 (self: MutBorrow.t t_Filter_Iter_bool_closure0) : bool =
     (exists s: Seq.seq bool, e: MutBorrow.t t_Iter_bool. produces_Iter_bool (iter_Filter_Iter_bool_closure0 self.current) s e.current
         /\ completed_Iter_bool e
         /\ (forall i: int. 0 <= i /\ i < Seq.length s
@@ -183,22 +184,22 @@ module M_test_filter
         end}
       (! return {result}) ]
   
-  predicate resolve_refmut_Filter_Iter_bool_closure0 [@inline:trivial] (_1: MutBorrow.t t_Filter_Iter_bool_closure0) =
-    _1.final = _1.current
+  function resolve_refmut_Filter_Iter_bool_closure0 [@inline:trivial] (_1: MutBorrow.t t_Filter_Iter_bool_closure0) : bool
+   = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Filter_Iter_bool_closure0
+  meta "rewrite_def" function resolve_refmut_Filter_Iter_bool_closure0
   
   type tup2_ref_Option_ref_bool_ref_Option_ref_bool = { f0: t_Option_ref_bool; f1: t_Option_ref_bool }
   
   type t_Option_bool = None'0 | Some'0 bool
   
-  predicate deep_model_bool [@inline:trivial] (self: bool) = self
+  function deep_model_bool [@inline:trivial] (self: bool) : bool = self
   
-  meta "rewrite_def" predicate deep_model_bool
+  meta "rewrite_def" function deep_model_bool
   
-  predicate deep_model_ref_bool [@inline:trivial] (self: bool) = deep_model_bool self
+  function deep_model_ref_bool [@inline:trivial] (self: bool) : bool = deep_model_bool self
   
-  meta "rewrite_def" predicate deep_model_ref_bool
+  meta "rewrite_def" function deep_model_ref_bool
   
   function deep_model_Option_ref_bool [@inline:trivial] (self: t_Option_ref_bool) : t_Option_bool = match self with
       | Some t -> Some'0 (deep_model_ref_bool t)
@@ -217,7 +218,7 @@ module M_test_filter
       = (deep_model_ref_Option_ref_bool self = deep_model_ref_Option_ref_bool other)}
       (! return {result}) ]
   
-  predicate resolve_Filter_Iter_bool_closure0 (_1: t_Filter_Iter_bool_closure0)
+  function resolve_Filter_Iter_bool_closure0 (_1: t_Filter_Iter_bool_closure0) : bool
   
   type t_AssertKind = Eq | Ne | Match
   
@@ -379,7 +380,7 @@ module M_test_filter_map
   
   type t_Iter_bool
   
-  predicate inv_Iter_bool (_1: t_Iter_bool)
+  function inv_Iter_bool (_1: t_Iter_bool) : bool
   
   function view_Iter_bool (self: t_Iter_bool) : Slice64.slice bool
   
@@ -389,13 +390,13 @@ module M_test_filter_map
       /\ ([@stop_split] [@expl:iter ensures] view_Iter_bool result = self)}
       (! return {result}) ]
   
-  predicate resolve_refmut_closure0 [@inline:trivial] (_1: MutBorrow.t ()) = _1.final = _1.current
+  function resolve_refmut_closure0 [@inline:trivial] (_1: MutBorrow.t ()) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_closure0
+  meta "rewrite_def" function resolve_refmut_closure0
   
   type t_Option_bool = None | Some bool
   
-  predicate hist_inv_closure0 (self: ()) (result_state: ()) = true
+  function hist_inv_closure0 (self: ()) (result_state: ()) : bool = true
   
   let closure0 (self: MutBorrow.t ()) (b: bool) (return (x: t_Option_bool)) = (! bb0
     [ bb0 = s0
@@ -415,44 +416,44 @@ module M_test_filter_map
   
   type t_FilterMap_Iter_bool_closure0
   
-  predicate immutable_ref_bool (f: ()) = forall g: (). hist_inv_closure0 f g -> f = g
+  function immutable_ref_bool (f: ()) : bool = forall g: (). hist_inv_closure0 f g -> f = g
   
-  predicate inv_ref_bool [@inline:trivial] (_1: bool) = true
+  function inv_ref_bool [@inline:trivial] (_1: bool) : bool = true
   
-  meta "rewrite_def" predicate inv_ref_bool
+  meta "rewrite_def" function inv_ref_bool
   
-  predicate precondition_closure0 (self: ()) (args: bool) = let b = args in true
+  function precondition_closure0 (self: ()) (args: bool) : bool = let b = args in true
   
-  meta "rewrite_def" predicate precondition_closure0
+  meta "rewrite_def" function precondition_closure0
   
-  predicate no_precondition_ref_bool (f: ()) = forall i: bool. inv_ref_bool i -> precondition_closure0 f i
+  function no_precondition_ref_bool (f: ()) : bool = forall i: bool. inv_ref_bool i -> precondition_closure0 f i
   
-  predicate postcondition_mut_closure0 (self: ()) (args: bool) (result_state: ()) (result: t_Option_bool) =
+  function postcondition_mut_closure0 (self: ()) (args: bool) (result_state: ()) (result: t_Option_bool) : bool =
     let b = args in result = (if b then Some false else None) /\ hist_inv_closure0 self result_state
   
-  meta "rewrite_def" predicate postcondition_mut_closure0
+  meta "rewrite_def" function postcondition_mut_closure0
   
-  predicate precise_ref_bool (f1: ()) =
+  function precise_ref_bool (f1: ()) : bool =
     forall f2: (), i: bool. not ((exists b: bool. postcondition_mut_closure0 f1 i f2 (Some b))
       /\ postcondition_mut_closure0 f1 i f2 (None))
   
   function iter_FilterMap_Iter_bool_closure0 (self: t_FilterMap_Iter_bool_closure0) : t_Iter_bool
   
-  predicate inv_closure0 [@inline:trivial] (_1: ()) = true
+  function inv_closure0 [@inline:trivial] (_1: ()) : bool = true
   
-  meta "rewrite_def" predicate inv_closure0
+  meta "rewrite_def" function inv_closure0
   
   function func_FilterMap_Iter_bool_closure0 (self: t_FilterMap_Iter_bool_closure0) : ()
   
-  predicate private_invariant_bool (f: t_FilterMap_Iter_bool_closure0)
+  function private_invariant_bool (f: t_FilterMap_Iter_bool_closure0) : bool
   
-  predicate invariant_FilterMap_Iter_bool_closure0 [@inline:trivial] (self: t_FilterMap_Iter_bool_closure0) =
+  function invariant_FilterMap_Iter_bool_closure0 [@inline:trivial] (self: t_FilterMap_Iter_bool_closure0) : bool =
     inv_Iter_bool (iter_FilterMap_Iter_bool_closure0 self)
     /\ inv_closure0 (func_FilterMap_Iter_bool_closure0 self) /\ private_invariant_bool self
   
-  meta "rewrite_def" predicate invariant_FilterMap_Iter_bool_closure0
+  meta "rewrite_def" function invariant_FilterMap_Iter_bool_closure0
   
-  predicate inv_FilterMap_Iter_bool_closure0 (_1: t_FilterMap_Iter_bool_closure0)
+  function inv_FilterMap_Iter_bool_closure0 (_1: t_FilterMap_Iter_bool_closure0) : bool
   
   axiom inv_axiom:
     forall _1: t_FilterMap_Iter_bool_closure0 [inv_FilterMap_Iter_bool_closure0 _1]. inv_FilterMap_Iter_bool_closure0 _1
@@ -470,19 +471,20 @@ module M_test_filter_map
       /\ func_FilterMap_Iter_bool_closure0 result = f)}
       (! return {result}) ]
   
-  predicate invariant_refmut_FilterMap_Iter_bool_closure0 [@inline:trivial] (self: MutBorrow.t t_FilterMap_Iter_bool_closure0) =
-    inv_FilterMap_Iter_bool_closure0 self.current /\ inv_FilterMap_Iter_bool_closure0 self.final
+  function invariant_refmut_FilterMap_Iter_bool_closure0 [@inline:trivial] (self: MutBorrow.t t_FilterMap_Iter_bool_closure0) : bool
+   = inv_FilterMap_Iter_bool_closure0 self.current /\ inv_FilterMap_Iter_bool_closure0 self.final
   
-  meta "rewrite_def" predicate invariant_refmut_FilterMap_Iter_bool_closure0
+  meta "rewrite_def" function invariant_refmut_FilterMap_Iter_bool_closure0
   
-  predicate inv_refmut_FilterMap_Iter_bool_closure0 [@inline:trivial] (_1: MutBorrow.t t_FilterMap_Iter_bool_closure0) =
-    invariant_refmut_FilterMap_Iter_bool_closure0 _1
+  function inv_refmut_FilterMap_Iter_bool_closure0 [@inline:trivial] (_1: MutBorrow.t t_FilterMap_Iter_bool_closure0) : bool
+   = invariant_refmut_FilterMap_Iter_bool_closure0 _1
   
-  meta "rewrite_def" predicate inv_refmut_FilterMap_Iter_bool_closure0
+  meta "rewrite_def" function inv_refmut_FilterMap_Iter_bool_closure0
   
-  predicate index_slice_bool [@inline:trivial] (self: Slice64.slice bool) (ix: int) = Seq.get (Slice64.view self) ix
+  function index_slice_bool [@inline:trivial] (self: Slice64.slice bool) (ix: int) : bool =
+    Seq.get (Slice64.view self) ix
   
-  meta "rewrite_def" predicate index_slice_bool
+  meta "rewrite_def" function index_slice_bool
   
   function to_ref_seq_slice_bool (self: Slice64.slice bool) : Seq.seq bool
   
@@ -495,7 +497,7 @@ module M_test_filter_map
           /\ i < Seq.length (to_ref_seq_slice_bool self)
         -> Seq.get (to_ref_seq_slice_bool self) i = index_slice_bool self i
   
-  predicate produces_Iter_bool (self: t_Iter_bool) (visited: Seq.seq bool) (tl: t_Iter_bool) =
+  function produces_Iter_bool (self: t_Iter_bool) (visited: Seq.seq bool) (tl: t_Iter_bool) : bool =
     to_ref_seq_slice_bool (view_Iter_bool self) = Seq.(++) visited (to_ref_seq_slice_bool (view_Iter_bool tl))
   
   function produces_trans_Iter_bool (a: t_Iter_bool) (ab: Seq.seq bool) (b: t_Iter_bool) (bc: Seq.seq bool) (c: t_Iter_bool) : ()
@@ -508,8 +510,8 @@ module M_test_filter_map
   
   axiom produces_refl_Iter_bool_spec: forall self: t_Iter_bool. produces_Iter_bool self (Seq.empty: Seq.seq bool) self
   
-  predicate produces_FilterMap_Iter_bool_closure0 (self: t_FilterMap_Iter_bool_closure0) (visited: Seq.seq bool) (succ: t_FilterMap_Iter_bool_closure0) =
-    private_invariant_bool self
+  function produces_FilterMap_Iter_bool_closure0 (self: t_FilterMap_Iter_bool_closure0) (visited: Seq.seq bool) (succ: t_FilterMap_Iter_bool_closure0) : bool
+   = private_invariant_bool self
     -> hist_inv_closure0 (func_FilterMap_Iter_bool_closure0 self) (func_FilterMap_Iter_bool_closure0 succ)
     /\ (exists s: Seq.seq bool, f: Map.map int int. produces_Iter_bool (iter_FilterMap_Iter_bool_closure0 self) s (iter_FilterMap_Iter_bool_closure0 succ)
       /\ (forall i: int. 0 <= i /\ i < Seq.length visited -> 0 <= Map.get f i /\ Map.get f i < Seq.length s)
@@ -531,14 +533,14 @@ module M_test_filter_map
   axiom produces_refl_FilterMap_Iter_bool_closure0_spec:
     forall self: t_FilterMap_Iter_bool_closure0. produces_FilterMap_Iter_bool_closure0 self (Seq.empty: Seq.seq bool) self
   
-  predicate resolve_refmut_Iter_bool [@inline:trivial] (_1: MutBorrow.t t_Iter_bool) = _1.final = _1.current
+  function resolve_refmut_Iter_bool [@inline:trivial] (_1: MutBorrow.t t_Iter_bool) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Iter_bool
+  meta "rewrite_def" function resolve_refmut_Iter_bool
   
-  predicate completed_Iter_bool (self: MutBorrow.t t_Iter_bool) =
-    resolve_refmut_Iter_bool self /\ Slice64.view (view_Iter_bool self.current) = (Seq.empty: Seq.seq bool)
+  function completed_Iter_bool (self: MutBorrow.t t_Iter_bool) : bool = resolve_refmut_Iter_bool self
+    /\ Slice64.view (view_Iter_bool self.current) = (Seq.empty: Seq.seq bool)
   
-  predicate completed_FilterMap_Iter_bool_closure0 (self: MutBorrow.t t_FilterMap_Iter_bool_closure0) =
+  function completed_FilterMap_Iter_bool_closure0 (self: MutBorrow.t t_FilterMap_Iter_bool_closure0) : bool =
     (exists s: Seq.seq bool, e: MutBorrow.t t_Iter_bool. produces_Iter_bool (iter_FilterMap_Iter_bool_closure0 self.current) s e.current
         /\ completed_Iter_bool e
         /\ (forall i: int. 0 <= i /\ i < Seq.length s
@@ -554,16 +556,16 @@ module M_test_filter_map
         end}
       (! return {result}) ]
   
-  predicate resolve_refmut_FilterMap_Iter_bool_closure0 [@inline:trivial] (_1: MutBorrow.t t_FilterMap_Iter_bool_closure0) =
-    _1.final = _1.current
+  function resolve_refmut_FilterMap_Iter_bool_closure0 [@inline:trivial] (_1: MutBorrow.t t_FilterMap_Iter_bool_closure0) : bool
+   = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_FilterMap_Iter_bool_closure0
+  meta "rewrite_def" function resolve_refmut_FilterMap_Iter_bool_closure0
   
   type tup2_ref_Option_bool_ref_Option_bool = { f0: t_Option_bool; f1: t_Option_bool }
   
-  predicate deep_model_bool [@inline:trivial] (self: bool) = self
+  function deep_model_bool [@inline:trivial] (self: bool) : bool = self
   
-  meta "rewrite_def" predicate deep_model_bool
+  meta "rewrite_def" function deep_model_bool
   
   function deep_model_Option_bool [@inline:trivial] (self: t_Option_bool) : t_Option_bool = match self with
       | Some t -> Some (deep_model_bool t)
@@ -582,7 +584,7 @@ module M_test_filter_map
       = (deep_model_ref_Option_bool self = deep_model_ref_Option_bool other)}
       (! return {result}) ]
   
-  predicate resolve_FilterMap_Iter_bool_closure0 (_1: t_FilterMap_Iter_bool_closure0)
+  function resolve_FilterMap_Iter_bool_closure0 (_1: t_FilterMap_Iter_bool_closure0) : bool
   
   type t_AssertKind = Eq | Ne | Match
   
@@ -744,7 +746,7 @@ module M_test_mut_ref
   
   type t_Iter_i32
   
-  predicate inv_Iter_i32 (_1: t_Iter_i32)
+  function inv_Iter_i32 (_1: t_Iter_i32) : bool
   
   function view_Iter_i32 (self: t_Iter_i32) : Slice64.slice Int32.t
   
@@ -756,14 +758,14 @@ module M_test_mut_ref
   
   type t_Option_ref_i32 = None | Some Int32.t
   
-  predicate invariant_refmut_Iter_i32 [@inline:trivial] (self: MutBorrow.t t_Iter_i32) =
-    inv_Iter_i32 self.current /\ inv_Iter_i32 self.final
+  function invariant_refmut_Iter_i32 [@inline:trivial] (self: MutBorrow.t t_Iter_i32) : bool = inv_Iter_i32 self.current
+    /\ inv_Iter_i32 self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Iter_i32
+  meta "rewrite_def" function invariant_refmut_Iter_i32
   
-  predicate inv_refmut_Iter_i32 [@inline:trivial] (_1: MutBorrow.t t_Iter_i32) = invariant_refmut_Iter_i32 _1
+  function inv_refmut_Iter_i32 [@inline:trivial] (_1: MutBorrow.t t_Iter_i32) : bool = invariant_refmut_Iter_i32 _1
   
-  meta "rewrite_def" predicate inv_refmut_Iter_i32
+  meta "rewrite_def" function inv_refmut_Iter_i32
   
   function index_slice_i32 [@inline:trivial] (self: Slice64.slice Int32.t) (ix: int) : Int32.t =
     Seq.get (Slice64.view self) ix
@@ -781,7 +783,7 @@ module M_test_mut_ref
           /\ i < Seq.length (to_ref_seq_slice_i32 self)
         -> Seq.get (to_ref_seq_slice_i32 self) i = index_slice_i32 self i
   
-  predicate produces_Iter_i32 (self: t_Iter_i32) (visited: Seq.seq Int32.t) (tl: t_Iter_i32) =
+  function produces_Iter_i32 (self: t_Iter_i32) (visited: Seq.seq Int32.t) (tl: t_Iter_i32) : bool =
     to_ref_seq_slice_i32 (view_Iter_i32 self) = Seq.(++) visited (to_ref_seq_slice_i32 (view_Iter_i32 tl))
   
   function produces_trans_Iter_i32 (a: t_Iter_i32) (ab: Seq.seq Int32.t) (b: t_Iter_i32) (bc: Seq.seq Int32.t) (c: t_Iter_i32) : ()
@@ -794,12 +796,12 @@ module M_test_mut_ref
   
   axiom produces_refl_Iter_i32_spec: forall self: t_Iter_i32. produces_Iter_i32 self (Seq.empty: Seq.seq Int32.t) self
   
-  predicate resolve_refmut_Iter_i32 [@inline:trivial] (_1: MutBorrow.t t_Iter_i32) = _1.final = _1.current
+  function resolve_refmut_Iter_i32 [@inline:trivial] (_1: MutBorrow.t t_Iter_i32) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Iter_i32
+  meta "rewrite_def" function resolve_refmut_Iter_i32
   
-  predicate completed_Iter_i32 (self: MutBorrow.t t_Iter_i32) =
-    resolve_refmut_Iter_i32 self /\ Slice64.view (view_Iter_i32 self.current) = (Seq.empty: Seq.seq Int32.t)
+  function completed_Iter_i32 (self: MutBorrow.t t_Iter_i32) : bool = resolve_refmut_Iter_i32 self
+    /\ Slice64.view (view_Iter_i32 self.current) = (Seq.empty: Seq.seq Int32.t)
   
   let next_Iter_i32 (self: MutBorrow.t t_Iter_i32) (return (x: t_Option_ref_i32)) =
   {[@stop_split] [@expl:next 'self' type invariant] inv_refmut_Iter_i32 self}
@@ -839,7 +841,7 @@ module M_test_mut_ref
       = (deep_model_ref_Option_ref_i32 self = deep_model_ref_Option_ref_i32 other)}
       (! return {result}) ]
   
-  predicate resolve_Iter_i32 (_1: t_Iter_i32)
+  function resolve_Iter_i32 (_1: t_Iter_i32) : bool
   
   type t_AssertKind = Eq | Ne | Match
   

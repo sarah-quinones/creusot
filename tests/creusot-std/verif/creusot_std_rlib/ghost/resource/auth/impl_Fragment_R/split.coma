@@ -10,7 +10,7 @@ type t_Option_R = None | Some t_R
 
 function op_R (self: t_R) (other: t_R) : t_Option_R
 
-predicate incl_R (self: t_R) (other: t_R)
+function incl_R (self: t_R) (other: t_R) : bool
 
 axiom incl_R_spec: forall self: t_R, other: t_R [incl_R self other]. incl_R self other
     = (exists factor: t_R. op_R self factor = Some other)
@@ -55,8 +55,7 @@ constant incl_refl_R : ()
 
 axiom incl_refl_R_spec: forall x: t_R. incl_R x x
 
-predicate rel_AuthViewRel_R (a: t_Option_R) (f: t_R) =
-  match a with
+function rel_AuthViewRel_R (a: t_Option_R) (f: t_R) : bool = match a with
     | Some a'0 -> incl_R f a'0
     | None -> true
     end
@@ -122,7 +121,7 @@ function commutative_View_AuthViewRel_R (a: t_View_AuthViewRel_R) (b: t_View_Aut
 axiom commutative_View_AuthViewRel_R_spec:
   forall a: t_View_AuthViewRel_R, b: t_View_AuthViewRel_R. op_View_AuthViewRel_R a b = op_View_AuthViewRel_R b a
 
-predicate incl_View_AuthViewRel_R (self: t_View_AuthViewRel_R) (other: t_View_AuthViewRel_R) =
+function incl_View_AuthViewRel_R (self: t_View_AuthViewRel_R) (other: t_View_AuthViewRel_R) : bool =
   let r = incl_R (frag_AuthViewRel_R self) (frag_AuthViewRel_R other)
   /\ (auth_AuthViewRel_R self = None \/ auth_AuthViewRel_R self = auth_AuthViewRel_R other) in r
 
@@ -154,19 +153,19 @@ axiom incl_op_View_AuthViewRel_R_spec:
   forall self: t_View_AuthViewRel_R, other: t_View_AuthViewRel_R, comb: t_View_AuthViewRel_R. op_View_AuthViewRel_R self other
       = Some'0 comb -> incl_View_AuthViewRel_R self comb
 
-predicate eq_View_AuthViewRel_R [@inline:trivial] (self: t_View_AuthViewRel_R) (other: t_View_AuthViewRel_R) =
+function eq_View_AuthViewRel_R [@inline:trivial] (self: t_View_AuthViewRel_R) (other: t_View_AuthViewRel_R) : bool =
   auth_AuthViewRel_R self = auth_AuthViewRel_R other /\ frag_AuthViewRel_R self = frag_AuthViewRel_R other
 
-meta "rewrite_def" predicate eq_View_AuthViewRel_R
+meta "rewrite_def" function eq_View_AuthViewRel_R
 
 axiom eq_View_AuthViewRel_R_spec: forall self: t_View_AuthViewRel_R, other: t_View_AuthViewRel_R [self
     = other]. eq_View_AuthViewRel_R self other = (self = other)
 
-predicate incl_eq_View_AuthViewRel_R (self: t_View_AuthViewRel_R) (other: t_View_AuthViewRel_R) =
+function incl_eq_View_AuthViewRel_R (self: t_View_AuthViewRel_R) (other: t_View_AuthViewRel_R) : bool =
   eq_View_AuthViewRel_R self other \/ incl_View_AuthViewRel_R self other
 
-predicate incl_eq_op_View_AuthViewRel_R (a: t_View_AuthViewRel_R) (b: t_View_AuthViewRel_R) (x: t_View_AuthViewRel_R) =
-  match op_View_AuthViewRel_R a b with
+function incl_eq_op_View_AuthViewRel_R (a: t_View_AuthViewRel_R) (b: t_View_AuthViewRel_R) (x: t_View_AuthViewRel_R) : bool
+ = match op_View_AuthViewRel_R a b with
     | None'0 -> false
     | Some'0 ab -> incl_eq_View_AuthViewRel_R ab x
     end
@@ -196,14 +195,13 @@ let split_View_AuthViewRel_R (self: t_Resource_View_AuthViewRel_R) (a: t_View_Au
 
 type tup2_Fragment_R_Fragment_R = { f0'2: t_Fragment_R; f1'2: t_Fragment_R }
 
-predicate eq_R (self: t_R) (other: t_R)
+function eq_R (self: t_R) (other: t_R) : bool
 
 axiom eq_R_spec: forall self: t_R, other: t_R [eq_R self other]. eq_R self other = (self = other)
 
-predicate incl_eq_R (self: t_R) (other: t_R) = eq_R self other \/ incl_R self other
+function incl_eq_R (self: t_R) (other: t_R) : bool = eq_R self other \/ incl_R self other
 
-predicate incl_eq_op_R (a: t_R) (b: t_R) (x: t_R) =
-  match op_R a b with
+function incl_eq_op_R (a: t_R) (b: t_R) (x: t_R) : bool = match op_R a b with
     | None -> false
     | Some ab -> incl_eq_R ab x
     end

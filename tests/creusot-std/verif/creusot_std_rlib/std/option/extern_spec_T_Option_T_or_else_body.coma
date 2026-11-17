@@ -6,9 +6,9 @@ type t_Option_T = None | Some t_T
 
 type t_F
 
-predicate inv_F (_1: t_F)
+function inv_F (_1: t_F) : bool
 
-predicate resolve_F (_1: t_F)
+function resolve_F (_1: t_F) : bool
 
 let elim_Some (_x: t_Option_T) (return (f0: t_T)) = any
   [ _k (f0: t_T) -> {Some f0 = _x} (! return {f0})
@@ -18,9 +18,9 @@ let elim_Some (_x: t_Option_T) (return (f0: t_T)) = any
       end}
     any) ]
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate inv_Option_T (_1: t_Option_T)
+function inv_Option_T (_1: t_Option_T) : bool
 
 axiom inv_axiom [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_T _1
     = match _1 with
@@ -28,9 +28,9 @@ axiom inv_axiom [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_
       | Some f0 -> inv_T f0
       end
 
-predicate resolve_T (_1: t_T)
+function resolve_T (_1: t_T) : bool
 
-predicate resolve_Option_T (_1: t_Option_T)
+function resolve_Option_T (_1: t_Option_T) : bool
 
 axiom resolve_axiom [@rewrite]: forall _1: t_Option_T [resolve_Option_T _1]. resolve_Option_T _1
     = match _1 with
@@ -38,9 +38,9 @@ axiom resolve_axiom [@rewrite]: forall _1: t_Option_T [resolve_Option_T _1]. res
       | Some x0 -> resolve_T x0
       end
 
-predicate precondition_F (self: t_F) (args: ())
+function precondition_F (self: t_F) (args: ()) : bool
 
-predicate postcondition_once_F (self: t_F) (args: ()) (result: t_Option_T)
+function postcondition_once_F (self: t_F) (args: ()) (result: t_Option_T) : bool
 
 let call_once_F (self: t_F) (args: ()) (return (x: t_Option_T)) =
 {[@stop_split] [@expl:call_once_F requires] ([@stop_split] [@expl:call_once 'self' type invariant] inv_F self)

@@ -9,13 +9,13 @@ type t_Enumerate_I
 
 type t_I
 
-predicate inv_I (_1: t_I)
+function inv_I (_1: t_I) : bool
 
 function iter_Enumerate_I (self: t_Enumerate_I) : t_I
 
 type t_Item
 
-predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
 
 function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
 
@@ -30,7 +30,7 @@ function n_Enumerate_I (self: t_Enumerate_I) : UInt64.t
 
 constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
 
-predicate completed_I (self: MutBorrow.t t_I)
+function completed_I (self: MutBorrow.t t_I) : bool
 
 meta "compute_max_steps" 1000000
 
@@ -38,7 +38,7 @@ meta "select_lsinst" "all"
 
 constant self : t_Enumerate_I
 
-predicate invariant_Enumerate_I (self: t_Enumerate_I)
+function invariant_Enumerate_I (self: t_Enumerate_I) : bool
 
 goal vc_invariant_Enumerate_I: [@stop_split] [@expl:invariant ensures] inv_I (iter_Enumerate_I self)
     /\ (forall s: Seq.seq t_Item, i: t_I [produces_I (iter_Enumerate_I self) s i]. produces_I (iter_Enumerate_I self) s i

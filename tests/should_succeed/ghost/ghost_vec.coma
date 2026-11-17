@@ -27,9 +27,9 @@ module M_ghost_vec
     [ return (result: ()) -> {[@stop_split] [@expl:push_back ensures] self.final = Seq.snoc self.current x}
       (! return {result}) ]
   
-  predicate resolve_refmut_Seq_i32 [@inline:trivial] (_1: MutBorrow.t (Seq.seq Int32.t)) = _1.final = _1.current
+  function resolve_refmut_Seq_i32 [@inline:trivial] (_1: MutBorrow.t (Seq.seq Int32.t)) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Seq_i32
+  meta "rewrite_def" function resolve_refmut_Seq_i32
   
   let len_i32 (self: Seq.seq Int32.t) (return (x: int)) = any
     [ return (result: int) -> {[@stop_split] [@expl:len ensures] result = Seq.length self} (! return {result}) ]
@@ -71,9 +71,9 @@ module M_ghost_vec
       /\ ([@stop_split] [@expl:get_mut ensures #2] Seq.length self.current = Seq.length self.final)}
       (! return {result}) ]
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
   let elim_Some (_x: t_Option_refmut_i32) (return (f0: MutBorrow.t Int32.t)) = any
     [ _k (f0: MutBorrow.t Int32.t) -> {Some'0 f0 = _x} (! return {f0})
@@ -103,9 +103,9 @@ module M_ghost_vec
     [ return (result: ()) -> {[@stop_split] [@expl:push_front ensures] self.final = cons_i32 self.current x}
       (! return {result}) ]
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   type t_RangeFrom_Int = { start: int }
   

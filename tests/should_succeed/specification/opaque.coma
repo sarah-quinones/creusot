@@ -1,9 +1,9 @@
 module M_test
   use creusot.prelude.Any
   
-  predicate transparent = true
+  constant transparent: bool = true
   
-  predicate transparent_crate = true
+  constant transparent_crate: bool = true
   
   meta "compute_max_steps" 1000000
   

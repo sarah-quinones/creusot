@@ -4,15 +4,15 @@ use int.Int
 
 type t_Nat
 
-predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
 
-meta "rewrite_def" predicate ge_log_Int
+meta "rewrite_def" function ge_log_Int
 
 function to_int (self: t_Nat) : int
 
 axiom to_int_spec: forall self: t_Nat [to_int self]. ge_log_Int (to_int self) 0
 
-predicate ext_eq (self: t_Nat) (other: t_Nat) = to_int self = to_int other
+function ext_eq (self: t_Nat) (other: t_Nat) : bool = to_int self = to_int other
 
 axiom ext_eq_spec: forall self: t_Nat, other: t_Nat [self = other]. ext_eq self other = (self = other)
 
@@ -24,7 +24,7 @@ constant self : t_Nat
 
 constant other : t_Nat
 
-predicate eq_Nat (self: t_Nat) (other: t_Nat)
+function eq_Nat (self: t_Nat) (other: t_Nat) : bool
 
 goal vc_eq_Nat: ([@stop_split] [@expl:ext_eq ensures] ext_eq self other = (self = other))
   -> ([@stop_split] [@expl:eq ensures] ext_eq self other = (self = other))

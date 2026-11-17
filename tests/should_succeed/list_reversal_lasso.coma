@@ -9,10 +9,10 @@ module M_impl_IndexMut_for_Memory__index_mut (* <Memory as std::ops::IndexMut<us
   
   type t_Memory = { f0: t_Vec_usize_Global }
   
-  predicate in_bounds_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq UInt64.t) =
-    UInt64.t'int self < Seq.length seq
+  function in_bounds_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq UInt64.t) : bool = UInt64.t'int self
+    < Seq.length seq
   
-  meta "rewrite_def" predicate in_bounds_usize
+  meta "rewrite_def" function in_bounds_usize
   
   constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
   
@@ -22,15 +22,15 @@ module M_impl_IndexMut_for_Memory__index_mut (* <Memory as std::ops::IndexMut<us
     forall self: t_Vec_usize_Global [view_Vec_usize_Global self]. Seq.length (view_Vec_usize_Global self)
       <= UInt64.t'int const_MAX
   
-  predicate has_value_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq UInt64.t) (out: UInt64.t) =
+  function has_value_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq UInt64.t) (out: UInt64.t) : bool =
     Seq.get seq (UInt64.t'int self) = out
   
-  meta "rewrite_def" predicate has_value_usize
+  meta "rewrite_def" function has_value_usize
   
-  predicate resolve_elswhere_usize [@inline:trivial] (self: UInt64.t) (old': Seq.seq UInt64.t) (fin: Seq.seq UInt64.t) =
-    forall i: int. 0 <= i /\ i <> UInt64.t'int self /\ i < Seq.length old' -> Seq.get old' i = Seq.get fin i
+  function resolve_elswhere_usize [@inline:trivial] (self: UInt64.t) (old': Seq.seq UInt64.t) (fin: Seq.seq UInt64.t) : bool
+   = forall i: int. 0 <= i /\ i <> UInt64.t'int self /\ i < Seq.length old' -> Seq.get old' i = Seq.get fin i
   
-  meta "rewrite_def" predicate resolve_elswhere_usize
+  meta "rewrite_def" function resolve_elswhere_usize
   
   let index_mut_Vec_usize_Global (self: MutBorrow.t t_Vec_usize_Global) (index: UInt64.t)
     (return (x: MutBorrow.t UInt64.t)) =
@@ -44,16 +44,16 @@ module M_impl_IndexMut_for_Memory__index_mut (* <Memory as std::ops::IndexMut<us
       = Seq.length (view_Vec_usize_Global self.current))}
       (! return {result}) ]
   
-  predicate resolve_refmut_usize [@inline:trivial] (_1: MutBorrow.t UInt64.t) = _1.final = _1.current
+  function resolve_refmut_usize [@inline:trivial] (_1: MutBorrow.t UInt64.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_usize
+  meta "rewrite_def" function resolve_refmut_usize
   
-  predicate resolve_refmut_Memory [@inline:trivial] (_1: MutBorrow.t t_Memory) = _1.final = _1.current
+  function resolve_refmut_Memory [@inline:trivial] (_1: MutBorrow.t t_Memory) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Memory
+  meta "rewrite_def" function resolve_refmut_Memory
   
-  predicate nonnull_ptr (self: t_Memory) (i: UInt64.t) =
-    Seq.length (view_Vec_usize_Global self.f0) <= UInt64.t'int const_MAX
+  function nonnull_ptr (self: t_Memory) (i: UInt64.t) : bool = Seq.length (view_Vec_usize_Global self.f0)
+      <= UInt64.t'int const_MAX
     /\ UInt64.t'int i < Seq.length (view_Vec_usize_Global self.f0)
   
   function index_Vec_usize_Global [@inline:trivial] (self: t_Vec_usize_Global) (ix: UInt64.t) : UInt64.t =
@@ -114,10 +114,10 @@ module M_impl_Index_for_Memory__index (* <Memory as std::ops::Index<usize>> *)
   
   type t_Memory = { f0: t_Vec_usize_Global }
   
-  predicate in_bounds_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq UInt64.t) =
-    UInt64.t'int self < Seq.length seq
+  function in_bounds_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq UInt64.t) : bool = UInt64.t'int self
+    < Seq.length seq
   
-  meta "rewrite_def" predicate in_bounds_usize
+  meta "rewrite_def" function in_bounds_usize
   
   constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
   
@@ -127,10 +127,10 @@ module M_impl_Index_for_Memory__index (* <Memory as std::ops::Index<usize>> *)
     forall self: t_Vec_usize_Global [view_Vec_usize_Global self]. Seq.length (view_Vec_usize_Global self)
       <= UInt64.t'int const_MAX
   
-  predicate has_value_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq UInt64.t) (out: UInt64.t) =
+  function has_value_usize [@inline:trivial] (self: UInt64.t) (seq: Seq.seq UInt64.t) (out: UInt64.t) : bool =
     Seq.get seq (UInt64.t'int self) = out
   
-  meta "rewrite_def" predicate has_value_usize
+  meta "rewrite_def" function has_value_usize
   
   let index_Vec_usize_Global (self: t_Vec_usize_Global) (index: UInt64.t) (return (x: UInt64.t)) =
   {[@stop_split] [@expl:index requires] in_bounds_usize index (view_Vec_usize_Global self)}
@@ -139,8 +139,8 @@ module M_impl_Index_for_Memory__index (* <Memory as std::ops::Index<usize>> *)
     {[@stop_split] [@expl:index ensures] has_value_usize index (view_Vec_usize_Global self) result}
       (! return {result}) ]
   
-  predicate nonnull_ptr (self: t_Memory) (i: UInt64.t) =
-    Seq.length (view_Vec_usize_Global self.f0) <= UInt64.t'int const_MAX
+  function nonnull_ptr (self: t_Memory) (i: UInt64.t) : bool = Seq.length (view_Vec_usize_Global self.f0)
+      <= UInt64.t'int const_MAX
     /\ UInt64.t'int i < Seq.length (view_Vec_usize_Global self.f0)
   
   function index_Vec_usize_Global'0 [@inline:trivial] (self: t_Vec_usize_Global) (ix: UInt64.t) : UInt64.t =
@@ -191,8 +191,8 @@ module M_impl_Memory_0__find_lasso (* Memory *)
     forall self: t_Vec_usize_Global [view_Vec_usize_Global self]. Seq.length (view_Vec_usize_Global self)
       <= UInt64.t'int const_MAX
   
-  predicate nonnull_ptr (self: t_Memory) (i: UInt64.t) =
-    Seq.length (view_Vec_usize_Global self.f0) <= UInt64.t'int const_MAX
+  function nonnull_ptr (self: t_Memory) (i: UInt64.t) : bool = Seq.length (view_Vec_usize_Global self.f0)
+      <= UInt64.t'int const_MAX
     /\ UInt64.t'int i < Seq.length (view_Vec_usize_Global self.f0)
   
   function index_Vec_usize_Global [@inline:trivial] (self: t_Vec_usize_Global) (ix: UInt64.t) : UInt64.t =
@@ -204,24 +204,24 @@ module M_impl_Memory_0__find_lasso (* Memory *)
   
   constant const_NULL: UInt64.t = const_MAX
   
-  predicate mem_is_well_formed (self: t_Memory) =
-    forall i: UInt64.t. nonnull_ptr self i -> index_Memory self i = const_NULL \/ nonnull_ptr self (index_Memory self i)
+  function mem_is_well_formed (self: t_Memory) : bool = forall i: UInt64.t. nonnull_ptr self i
+      -> index_Memory self i = const_NULL \/ nonnull_ptr self (index_Memory self i)
   
-  predicate list_seg (self: t_Memory) (first: UInt64.t) (s: Seq.seq UInt64.t) (last: UInt64.t) (l: int) (h: int) =
+  function list_seg (self: t_Memory) (first: UInt64.t) (s: Seq.seq UInt64.t) (last: UInt64.t) (l: int) (h: int) : bool =
     first = (if h = l then last else Seq.get s l)
     /\ (forall i: int. l <= i /\ i < h
         -> nonnull_ptr self (Seq.get s i)
         /\ index_Memory self (Seq.get s i) = (if i = h - 1 then last else Seq.get s (i + 1)))
     /\ (forall i: int, j: int. l <= i /\ i < h /\ l <= j /\ j < h /\ i <> j -> Seq.get s i <> Seq.get s j)
   
-  predicate list (self: t_Memory) (first: UInt64.t) (s: Seq.seq UInt64.t) =
+  function list (self: t_Memory) (first: UInt64.t) (s: Seq.seq UInt64.t) : bool =
     list_seg self first s const_NULL 0 (Seq.length s)
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
-  predicate lasso (self: t_Memory) (first: UInt64.t) (s1: Seq.seq UInt64.t) (s2: Seq.seq UInt64.t) =
+  function lasso (self: t_Memory) (first: UInt64.t) (s1: Seq.seq UInt64.t) (s2: Seq.seq UInt64.t) : bool =
     let mid = if Seq.length s2 = 0 then Seq.get s1 (Seq.length s1 - 1) else Seq.get s2 0 in gt_log_Int (Seq.length s1) 0
     /\ (forall i: int, j: int. 0 <= i /\ i < Seq.length s1 /\ 0 <= j /\ j < Seq.length s2
         -> Seq.get s1 i <> Seq.get s2 j)
@@ -248,7 +248,7 @@ module M_impl_Memory_0__find_lasso (* Memory *)
         | Some'0 j -> i <= j /\ j < Seq.length s /\ UInt64.t'int (Seq.get s j) = p
         end
   
-  predicate pigeon (s: Seq.seq UInt64.t) (n: int)
+  function pigeon (s: Seq.seq UInt64.t) (n: int) : bool
   
   axiom pigeon_def: forall s: Seq.seq UInt64.t, n: int [pigeon s n]. 0 <= n
       -> (forall i: int. 0 <= i /\ i < Seq.length s -> UInt64.t'int (Seq.get s i) < n)
@@ -351,8 +351,8 @@ module M_impl_Memory_0__find_lasso_aux (* Memory *)
     forall self: t_Vec_usize_Global [view_Vec_usize_Global self]. Seq.length (view_Vec_usize_Global self)
       <= UInt64.t'int const_MAX
   
-  predicate nonnull_ptr (self: t_Memory) (i: UInt64.t) =
-    Seq.length (view_Vec_usize_Global self.f0) <= UInt64.t'int const_MAX
+  function nonnull_ptr (self: t_Memory) (i: UInt64.t) : bool = Seq.length (view_Vec_usize_Global self.f0)
+      <= UInt64.t'int const_MAX
     /\ UInt64.t'int i < Seq.length (view_Vec_usize_Global self.f0)
   
   function index_Vec_usize_Global [@inline:trivial] (self: t_Vec_usize_Global) (ix: UInt64.t) : UInt64.t =
@@ -364,24 +364,24 @@ module M_impl_Memory_0__find_lasso_aux (* Memory *)
   
   constant const_NULL: UInt64.t = const_MAX
   
-  predicate mem_is_well_formed (self: t_Memory) =
-    forall i: UInt64.t. nonnull_ptr self i -> index_Memory self i = const_NULL \/ nonnull_ptr self (index_Memory self i)
+  function mem_is_well_formed (self: t_Memory) : bool = forall i: UInt64.t. nonnull_ptr self i
+      -> index_Memory self i = const_NULL \/ nonnull_ptr self (index_Memory self i)
   
-  predicate list_seg (self: t_Memory) (first: UInt64.t) (s: Seq.seq UInt64.t) (last: UInt64.t) (l: int) (h: int) =
+  function list_seg (self: t_Memory) (first: UInt64.t) (s: Seq.seq UInt64.t) (last: UInt64.t) (l: int) (h: int) : bool =
     first = (if h = l then last else Seq.get s l)
     /\ (forall i: int. l <= i /\ i < h
         -> nonnull_ptr self (Seq.get s i)
         /\ index_Memory self (Seq.get s i) = (if i = h - 1 then last else Seq.get s (i + 1)))
     /\ (forall i: int, j: int. l <= i /\ i < h /\ l <= j /\ j < h /\ i <> j -> Seq.get s i <> Seq.get s j)
   
-  predicate list (self: t_Memory) (first: UInt64.t) (s: Seq.seq UInt64.t) =
+  function list (self: t_Memory) (first: UInt64.t) (s: Seq.seq UInt64.t) : bool =
     list_seg self first s const_NULL 0 (Seq.length s)
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
-  predicate lasso (self: t_Memory) (first: UInt64.t) (s1: Seq.seq UInt64.t) (s2: Seq.seq UInt64.t) =
+  function lasso (self: t_Memory) (first: UInt64.t) (s1: Seq.seq UInt64.t) (s2: Seq.seq UInt64.t) : bool =
     let mid = if Seq.length s2 = 0 then Seq.get s1 (Seq.length s1 - 1) else Seq.get s2 0 in gt_log_Int (Seq.length s1) 0
     /\ (forall i: int, j: int. 0 <= i /\ i < Seq.length s1 /\ 0 <= j /\ j < Seq.length s2
         -> Seq.get s1 i <> Seq.get s2 j)
@@ -408,7 +408,7 @@ module M_impl_Memory_0__find_lasso_aux (* Memory *)
         | Some'0 j -> i <= j /\ j < Seq.length s /\ UInt64.t'int (Seq.get s j) = p
         end
   
-  predicate pigeon (s: Seq.seq UInt64.t) (n: int)
+  function pigeon (s: Seq.seq UInt64.t) (n: int) : bool
   
   axiom pigeon_def: forall s: Seq.seq UInt64.t, n: int [pigeon s n]. 0 <= n
       -> (forall i: int. 0 <= i /\ i < Seq.length s -> UInt64.t'int (Seq.get s i) < n)
@@ -437,14 +437,14 @@ module M_impl_Memory_0__find_lasso_aux (* Memory *)
       -> (forall i: int, j: int. 0 <= i /\ i < Seq.length s /\ 0 <= j /\ j < Seq.length s /\ i <> j
           -> Seq.get s i <> Seq.get s j) -> pigeon s n
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate well_founded_relation_Int [@inline:trivial] (self: int) (other: int) =
-    ge_log_Int self 0 /\ gt_log_Int self other
+  function well_founded_relation_Int [@inline:trivial] (self: int) (other: int) : bool = ge_log_Int self 0
+    /\ gt_log_Int self other
   
-  meta "rewrite_def" predicate well_founded_relation_Int
+  meta "rewrite_def" function well_founded_relation_Int
   
   meta "compute_max_steps" 1000000
   
@@ -523,18 +523,18 @@ module M_impl_Memory_0__find_ptr_in_seq (* Memory *)
   
   type t_Option_Int = None | Some int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
-  predicate well_founded_relation_Int [@inline:trivial] (self: int) (other: int) =
-    ge_log_Int self 0 /\ gt_log_Int self other
+  function well_founded_relation_Int [@inline:trivial] (self: int) (other: int) : bool = ge_log_Int self 0
+    /\ gt_log_Int self other
   
-  meta "rewrite_def" predicate well_founded_relation_Int
+  meta "rewrite_def" function well_founded_relation_Int
   
   meta "compute_max_steps" 1000000
   
@@ -596,8 +596,8 @@ module M_impl_Memory_0__list_reversal_lasso (* Memory *)
     forall self: t_Vec_usize_Global [view_Vec_usize_Global self]. Seq.length (view_Vec_usize_Global self)
       <= UInt64.t'int const_MAX
   
-  predicate nonnull_ptr (self: t_Memory) (i: UInt64.t) =
-    Seq.length (view_Vec_usize_Global self.f0) <= UInt64.t'int const_MAX
+  function nonnull_ptr (self: t_Memory) (i: UInt64.t) : bool = Seq.length (view_Vec_usize_Global self.f0)
+      <= UInt64.t'int const_MAX
     /\ UInt64.t'int i < Seq.length (view_Vec_usize_Global self.f0)
   
   function index_Vec_usize_Global [@inline:trivial] (self: t_Vec_usize_Global) (ix: UInt64.t) : UInt64.t =
@@ -607,7 +607,7 @@ module M_impl_Memory_0__list_reversal_lasso (* Memory *)
   
   function index_Memory (self: t_Memory) (i: UInt64.t) : UInt64.t = index_Vec_usize_Global self.f0 i
   
-  predicate list_seg (self: t_Memory) (first: UInt64.t) (s: Seq.seq UInt64.t) (last: UInt64.t) (l: int) (h: int) =
+  function list_seg (self: t_Memory) (first: UInt64.t) (s: Seq.seq UInt64.t) (last: UInt64.t) (l: int) (h: int) : bool =
     first = (if h = l then last else Seq.get s l)
     /\ (forall i: int. l <= i /\ i < h
         -> nonnull_ptr self (Seq.get s i)
@@ -633,19 +633,19 @@ module M_impl_Memory_0__list_reversal_lasso (* Memory *)
       /\ ([@stop_split] [@expl:replace ensures #1] result = dest.current)}
       (! return {result}) ]
   
-  predicate resolve_refmut_usize [@inline:trivial] (_1: MutBorrow.t UInt64.t) = _1.final = _1.current
+  function resolve_refmut_usize [@inline:trivial] (_1: MutBorrow.t UInt64.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_usize
+  meta "rewrite_def" function resolve_refmut_usize
   
-  predicate resolve_refmut_Memory [@inline:trivial] (_1: MutBorrow.t t_Memory) = _1.final = _1.current
+  function resolve_refmut_Memory [@inline:trivial] (_1: MutBorrow.t t_Memory) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Memory
+  meta "rewrite_def" function resolve_refmut_Memory
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
-  predicate lasso (self: t_Memory) (first: UInt64.t) (s1: Seq.seq UInt64.t) (s2: Seq.seq UInt64.t) =
+  function lasso (self: t_Memory) (first: UInt64.t) (s1: Seq.seq UInt64.t) (s2: Seq.seq UInt64.t) : bool =
     let mid = if Seq.length s2 = 0 then Seq.get s1 (Seq.length s1 - 1) else Seq.get s2 0 in gt_log_Int (Seq.length s1) 0
     /\ (forall i: int, j: int. 0 <= i /\ i < Seq.length s1 /\ 0 <= j /\ j < Seq.length s2
         -> Seq.get s1 i <> Seq.get s2 j)
@@ -754,8 +754,8 @@ module M_impl_Memory_0__list_reversal_list (* Memory *)
     forall self: t_Vec_usize_Global [view_Vec_usize_Global self]. Seq.length (view_Vec_usize_Global self)
       <= UInt64.t'int const_MAX
   
-  predicate nonnull_ptr (self: t_Memory) (i: UInt64.t) =
-    Seq.length (view_Vec_usize_Global self.f0) <= UInt64.t'int const_MAX
+  function nonnull_ptr (self: t_Memory) (i: UInt64.t) : bool = Seq.length (view_Vec_usize_Global self.f0)
+      <= UInt64.t'int const_MAX
     /\ UInt64.t'int i < Seq.length (view_Vec_usize_Global self.f0)
   
   function index_Vec_usize_Global [@inline:trivial] (self: t_Vec_usize_Global) (ix: UInt64.t) : UInt64.t =
@@ -765,7 +765,7 @@ module M_impl_Memory_0__list_reversal_list (* Memory *)
   
   function index_Memory (self: t_Memory) (i: UInt64.t) : UInt64.t = index_Vec_usize_Global self.f0 i
   
-  predicate list_seg (self: t_Memory) (first: UInt64.t) (s: Seq.seq UInt64.t) (last: UInt64.t) (l: int) (h: int) =
+  function list_seg (self: t_Memory) (first: UInt64.t) (s: Seq.seq UInt64.t) (last: UInt64.t) (l: int) (h: int) : bool =
     first = (if h = l then last else Seq.get s l)
     /\ (forall i: int. l <= i /\ i < h
         -> nonnull_ptr self (Seq.get s i)
@@ -791,15 +791,15 @@ module M_impl_Memory_0__list_reversal_list (* Memory *)
       /\ ([@stop_split] [@expl:replace ensures #1] result = dest.current)}
       (! return {result}) ]
   
-  predicate resolve_refmut_usize [@inline:trivial] (_1: MutBorrow.t UInt64.t) = _1.final = _1.current
+  function resolve_refmut_usize [@inline:trivial] (_1: MutBorrow.t UInt64.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_usize
+  meta "rewrite_def" function resolve_refmut_usize
   
-  predicate resolve_refmut_Memory [@inline:trivial] (_1: MutBorrow.t t_Memory) = _1.final = _1.current
+  function resolve_refmut_Memory [@inline:trivial] (_1: MutBorrow.t t_Memory) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Memory
+  meta "rewrite_def" function resolve_refmut_Memory
   
-  predicate list (self: t_Memory) (first: UInt64.t) (s: Seq.seq UInt64.t) =
+  function list (self: t_Memory) (first: UInt64.t) (s: Seq.seq UInt64.t) : bool =
     list_seg self first s const_NULL 0 (Seq.length s)
   
   meta "compute_max_steps" 1000000
@@ -883,8 +883,8 @@ module M_impl_Memory_0__list_reversal_loop (* Memory *)
     forall self: t_Vec_usize_Global [view_Vec_usize_Global self]. Seq.length (view_Vec_usize_Global self)
       <= UInt64.t'int const_MAX
   
-  predicate nonnull_ptr (self: t_Memory) (i: UInt64.t) =
-    Seq.length (view_Vec_usize_Global self.f0) <= UInt64.t'int const_MAX
+  function nonnull_ptr (self: t_Memory) (i: UInt64.t) : bool = Seq.length (view_Vec_usize_Global self.f0)
+      <= UInt64.t'int const_MAX
     /\ UInt64.t'int i < Seq.length (view_Vec_usize_Global self.f0)
   
   function index_Vec_usize_Global [@inline:trivial] (self: t_Vec_usize_Global) (ix: UInt64.t) : UInt64.t =
@@ -894,7 +894,7 @@ module M_impl_Memory_0__list_reversal_loop (* Memory *)
   
   function index_Memory (self: t_Memory) (i: UInt64.t) : UInt64.t = index_Vec_usize_Global self.f0 i
   
-  predicate list_seg (self: t_Memory) (first: UInt64.t) (s: Seq.seq UInt64.t) (last: UInt64.t) (l: int) (h: int) =
+  function list_seg (self: t_Memory) (first: UInt64.t) (s: Seq.seq UInt64.t) (last: UInt64.t) (l: int) (h: int) : bool =
     first = (if h = l then last else Seq.get s l)
     /\ (forall i: int. l <= i /\ i < h
         -> nonnull_ptr self (Seq.get s i)
@@ -920,23 +920,23 @@ module M_impl_Memory_0__list_reversal_loop (* Memory *)
       /\ ([@stop_split] [@expl:replace ensures #1] result = dest.current)}
       (! return {result}) ]
   
-  predicate resolve_refmut_usize [@inline:trivial] (_1: MutBorrow.t UInt64.t) = _1.final = _1.current
+  function resolve_refmut_usize [@inline:trivial] (_1: MutBorrow.t UInt64.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_usize
+  meta "rewrite_def" function resolve_refmut_usize
   
-  predicate resolve_refmut_Memory [@inline:trivial] (_1: MutBorrow.t t_Memory) = _1.final = _1.current
+  function resolve_refmut_Memory [@inline:trivial] (_1: MutBorrow.t t_Memory) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Memory
+  meta "rewrite_def" function resolve_refmut_Memory
   
   function cons_usize [@inline:trivial] (self: Seq.seq UInt64.t) (x: UInt64.t) : Seq.seq UInt64.t = Seq.cons x self
   
   meta "rewrite_def" function cons_usize
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
-  predicate loop_ (self: t_Memory) (first: UInt64.t) (s: Seq.seq UInt64.t) =
+  function loop_ (self: t_Memory) (first: UInt64.t) (s: Seq.seq UInt64.t) : bool =
     list_seg self first s (Seq.get s 0) 0 (Seq.length s)
   
   meta "compute_max_steps" 1000000
@@ -1034,8 +1034,8 @@ module M_impl_Memory_0__list_reversal_safe (* Memory *)
     forall self: t_Vec_usize_Global [view_Vec_usize_Global self]. Seq.length (view_Vec_usize_Global self)
       <= UInt64.t'int const_MAX
   
-  predicate nonnull_ptr (self: t_Memory) (i: UInt64.t) =
-    Seq.length (view_Vec_usize_Global self.f0) <= UInt64.t'int const_MAX
+  function nonnull_ptr (self: t_Memory) (i: UInt64.t) : bool = Seq.length (view_Vec_usize_Global self.f0)
+      <= UInt64.t'int const_MAX
     /\ UInt64.t'int i < Seq.length (view_Vec_usize_Global self.f0)
   
   function index_Vec_usize_Global [@inline:trivial] (self: t_Vec_usize_Global) (ix: UInt64.t) : UInt64.t =
@@ -1045,8 +1045,8 @@ module M_impl_Memory_0__list_reversal_safe (* Memory *)
   
   function index_Memory (self: t_Memory) (i: UInt64.t) : UInt64.t = index_Vec_usize_Global self.f0 i
   
-  predicate mem_is_well_formed (self: t_Memory) =
-    forall i: UInt64.t. nonnull_ptr self i -> index_Memory self i = const_NULL \/ nonnull_ptr self (index_Memory self i)
+  function mem_is_well_formed (self: t_Memory) : bool = forall i: UInt64.t. nonnull_ptr self i
+      -> index_Memory self i = const_NULL \/ nonnull_ptr self (index_Memory self i)
   
   let index_Memory'0 (self: t_Memory) (i: UInt64.t) (return (x: UInt64.t)) =
   {[@stop_split] [@expl:index requires] nonnull_ptr self i}
@@ -1067,13 +1067,13 @@ module M_impl_Memory_0__list_reversal_safe (* Memory *)
         -> index_Memory self.final j = index_Memory self.current j)}
       (! return {result}) ]
   
-  predicate resolve_refmut_usize [@inline:trivial] (_1: MutBorrow.t UInt64.t) = _1.final = _1.current
+  function resolve_refmut_usize [@inline:trivial] (_1: MutBorrow.t UInt64.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_usize
+  meta "rewrite_def" function resolve_refmut_usize
   
-  predicate resolve_refmut_Memory [@inline:trivial] (_1: MutBorrow.t t_Memory) = _1.final = _1.current
+  function resolve_refmut_Memory [@inline:trivial] (_1: MutBorrow.t t_Memory) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Memory
+  meta "rewrite_def" function resolve_refmut_Memory
   
   meta "compute_max_steps" 1000000
   
@@ -1139,18 +1139,18 @@ module M_impl_Memory_0__pigeon (* Memory *)
         | Some j -> i <= j /\ j < Seq.length s /\ UInt64.t'int (Seq.get s j) = p
         end
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
-  predicate well_founded_relation_Int [@inline:trivial] (self: int) (other: int) =
-    ge_log_Int self 0 /\ gt_log_Int self other
+  function well_founded_relation_Int [@inline:trivial] (self: int) (other: int) : bool = ge_log_Int self 0
+    /\ gt_log_Int self other
   
-  meta "rewrite_def" predicate well_founded_relation_Int
+  meta "rewrite_def" function well_founded_relation_Int
   
   meta "compute_max_steps" 1000000
   
@@ -1160,7 +1160,7 @@ module M_impl_Memory_0__pigeon (* Memory *)
   
   constant n : int
   
-  predicate pigeon (s: Seq.seq UInt64.t) (n: int)
+  function pigeon (s: Seq.seq UInt64.t) (n: int) : bool
   
   goal vc_pigeon: 0 <= n
     -> (forall i: int. 0 <= i /\ i < Seq.length s -> UInt64.t'int (Seq.get s i) < n)

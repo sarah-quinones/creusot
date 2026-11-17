@@ -21,9 +21,9 @@ module M_test
   
   axiom id_mono_spec: forall i: int, j: int [id i, id j]. i <= j -> id i <= id j
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   meta "compute_max_steps" 1000000
   

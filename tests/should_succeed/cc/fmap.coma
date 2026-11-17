@@ -9,9 +9,9 @@ module M_resolves
   
   type t_FMap_refmut_usize_refmut_usize
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function len_refmut_usize (self: t_FMap_refmut_usize_refmut_usize) : int
   
@@ -27,8 +27,8 @@ module M_resolves
   
   meta "rewrite_def" function lookup_refmut_usize
   
-  predicate ext_eq_refmut_usize (self: t_FMap_refmut_usize_refmut_usize) (other: t_FMap_refmut_usize_refmut_usize) =
-    forall k: MutBorrow.t UInt64.t. lookup_refmut_usize self k = lookup_refmut_usize other k
+  function ext_eq_refmut_usize (self: t_FMap_refmut_usize_refmut_usize) (other: t_FMap_refmut_usize_refmut_usize) : bool
+   = forall k: MutBorrow.t UInt64.t. lookup_refmut_usize self k = lookup_refmut_usize other k
   
   axiom ext_eq_refmut_usize_spec:
     forall self: t_FMap_refmut_usize_refmut_usize, other: t_FMap_refmut_usize_refmut_usize [self
@@ -40,7 +40,8 @@ module M_resolves
   
   axiom empty_refmut_usize_spec'0: to_mapping_refmut_usize empty_refmut_usize = Const.const (None)
   
-  predicate is_empty_refmut_usize (self: t_FMap_refmut_usize_refmut_usize) = ext_eq_refmut_usize self empty_refmut_usize
+  function is_empty_refmut_usize (self: t_FMap_refmut_usize_refmut_usize) : bool =
+    ext_eq_refmut_usize self empty_refmut_usize
   
   axiom is_empty_refmut_usize_spec:
     forall self: t_FMap_refmut_usize_refmut_usize [is_empty_refmut_usize self]. is_empty_refmut_usize self
@@ -56,10 +57,10 @@ module M_resolves
     [ return (result: t_FMap_refmut_usize_refmut_usize) -> {[@stop_split] [@expl:into_inner ensures] result = self}
       (! return {result}) ]
   
-  predicate contains_refmut_usize [@inline:trivial] (self: t_FMap_refmut_usize_refmut_usize) (k: MutBorrow.t UInt64.t) =
-    lookup_refmut_usize self k <> None
+  function contains_refmut_usize [@inline:trivial] (self: t_FMap_refmut_usize_refmut_usize) (k: MutBorrow.t UInt64.t) : bool
+   = lookup_refmut_usize self k <> None
   
-  meta "rewrite_def" predicate contains_refmut_usize
+  meta "rewrite_def" function contains_refmut_usize
   
   function add_refmut_usize (self: t_FMap_refmut_usize_refmut_usize) (k: MutBorrow.t UInt64.t) (v: MutBorrow.t UInt64.t) : t_FMap_refmut_usize_refmut_usize
   
@@ -79,11 +80,11 @@ module M_resolves
       /\ ([@stop_split] [@expl:insert ensures #1] result = lookup_refmut_usize self.current key)}
       (! return {result}) ]
   
-  predicate resolve_refmut_usize [@inline:trivial] (_1: MutBorrow.t UInt64.t) = _1.final = _1.current
+  function resolve_refmut_usize [@inline:trivial] (_1: MutBorrow.t UInt64.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_usize
+  meta "rewrite_def" function resolve_refmut_usize
   
-  predicate resolve_Option_refmut_usize (_1: t_Option_refmut_usize)
+  function resolve_Option_refmut_usize (_1: t_Option_refmut_usize) : bool
   
   axiom resolve_axiom [@rewrite]:
     forall _1: t_Option_refmut_usize [resolve_Option_refmut_usize _1]. resolve_Option_refmut_usize _1
@@ -94,7 +95,7 @@ module M_resolves
   
   type t_Iter_refmut_usize_refmut_usize
   
-  predicate inv_Iter_refmut_usize_refmut_usize (_1: t_Iter_refmut_usize_refmut_usize)
+  function inv_Iter_refmut_usize_refmut_usize (_1: t_Iter_refmut_usize_refmut_usize) : bool
   
   function view_Iter_refmut_usize_refmut_usize (self: t_Iter_refmut_usize_refmut_usize) : t_FMap_refmut_usize_refmut_usize
   
@@ -111,31 +112,31 @@ module M_resolves
   
   type tup2_refmut_usize_refmut_usize = { f0: MutBorrow.t UInt64.t; f1: MutBorrow.t UInt64.t }
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
-  predicate well_founded_relation_Int [@inline:trivial] (self: int) (other: int) =
-    ge_log_Int self 0 /\ gt_log_Int self other
+  function well_founded_relation_Int [@inline:trivial] (self: int) (other: int) : bool = ge_log_Int self 0
+    /\ gt_log_Int self other
   
-  meta "rewrite_def" predicate well_founded_relation_Int
+  meta "rewrite_def" function well_founded_relation_Int
   
   type t_Option_tup2_refmut_usize_refmut_usize = None'0 | Some'0 tup2_refmut_usize_refmut_usize
   
-  predicate invariant_refmut_Iter_refmut_usize_refmut_usize [@inline:trivial] (self: MutBorrow.t t_Iter_refmut_usize_refmut_usize) =
-    inv_Iter_refmut_usize_refmut_usize self.current /\ inv_Iter_refmut_usize_refmut_usize self.final
+  function invariant_refmut_Iter_refmut_usize_refmut_usize [@inline:trivial] (self: MutBorrow.t t_Iter_refmut_usize_refmut_usize) : bool
+   = inv_Iter_refmut_usize_refmut_usize self.current /\ inv_Iter_refmut_usize_refmut_usize self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Iter_refmut_usize_refmut_usize
+  meta "rewrite_def" function invariant_refmut_Iter_refmut_usize_refmut_usize
   
-  predicate inv_refmut_Iter_refmut_usize_refmut_usize [@inline:trivial] (_1: MutBorrow.t t_Iter_refmut_usize_refmut_usize) =
-    invariant_refmut_Iter_refmut_usize_refmut_usize _1
+  function inv_refmut_Iter_refmut_usize_refmut_usize [@inline:trivial] (_1: MutBorrow.t t_Iter_refmut_usize_refmut_usize) : bool
+   = invariant_refmut_Iter_refmut_usize_refmut_usize _1
   
-  meta "rewrite_def" predicate inv_refmut_Iter_refmut_usize_refmut_usize
+  meta "rewrite_def" function inv_refmut_Iter_refmut_usize_refmut_usize
   
   type t_Option_ref_tup2_refmut_usize_refmut_usize = None'1 | Some'1 tup2_refmut_usize_refmut_usize
   
-  predicate produces_Iter_refmut_usize_refmut_usize (self: t_Iter_refmut_usize_refmut_usize) (visited: Seq.seq tup2_refmut_usize_refmut_usize) (o: t_Iter_refmut_usize_refmut_usize) =
-    (forall i: int, j: int. 0 <= i /\ i < j /\ j < Seq.length visited
+  function produces_Iter_refmut_usize_refmut_usize (self: t_Iter_refmut_usize_refmut_usize) (visited: Seq.seq tup2_refmut_usize_refmut_usize) (o: t_Iter_refmut_usize_refmut_usize) : bool
+   = (forall i: int, j: int. 0 <= i /\ i < j /\ j < Seq.length visited
         -> (Seq.get visited i).f0 <> (Seq.get visited j).f0)
     /\ (forall k: MutBorrow.t UInt64.t, v: MutBorrow.t UInt64.t, i: int. (if 0 <= i /\ i < Seq.length visited then
               Some'1 (Seq.get visited i)
@@ -162,7 +163,7 @@ module M_resolves
   axiom produces_refl_Iter_refmut_usize_refmut_usize_spec:
     forall self: t_Iter_refmut_usize_refmut_usize. produces_Iter_refmut_usize_refmut_usize self (Seq.empty: Seq.seq tup2_refmut_usize_refmut_usize) self
   
-  predicate completed_Iter_refmut_usize_refmut_usize (self: MutBorrow.t t_Iter_refmut_usize_refmut_usize) =
+  function completed_Iter_refmut_usize_refmut_usize (self: MutBorrow.t t_Iter_refmut_usize_refmut_usize) : bool =
     is_empty_refmut_usize (view_Iter_refmut_usize_refmut_usize self.current)
   
   let next_Iter_refmut_usize_refmut_usize (self: MutBorrow.t t_Iter_refmut_usize_refmut_usize)
@@ -178,18 +179,19 @@ module M_resolves
         end}
       (! return {result}) ]
   
-  predicate resolve_refmut_Iter_refmut_usize_refmut_usize [@inline:trivial] (_1: MutBorrow.t t_Iter_refmut_usize_refmut_usize) =
-    _1.final = _1.current
+  function resolve_refmut_Iter_refmut_usize_refmut_usize [@inline:trivial] (_1: MutBorrow.t t_Iter_refmut_usize_refmut_usize) : bool
+   = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Iter_refmut_usize_refmut_usize
+  meta "rewrite_def" function resolve_refmut_Iter_refmut_usize_refmut_usize
   
   function fin_Snapshot_refmut_usize [@inline:trivial] (self: MutBorrow.t UInt64.t) : UInt64.t = self.final
   
   meta "rewrite_def" function fin_Snapshot_refmut_usize
   
-  predicate inv_Seq_tup2_refmut_usize_refmut_usize [@inline:trivial] (_1: Seq.seq tup2_refmut_usize_refmut_usize) = true
+  function inv_Seq_tup2_refmut_usize_refmut_usize [@inline:trivial] (_1: Seq.seq tup2_refmut_usize_refmut_usize) : bool
+   = true
   
-  meta "rewrite_def" predicate inv_Seq_tup2_refmut_usize_refmut_usize
+  meta "rewrite_def" function inv_Seq_tup2_refmut_usize_refmut_usize
   
   let elim_Some (_x: t_Option_tup2_refmut_usize_refmut_usize) (return (f0'0: tup2_refmut_usize_refmut_usize)) = any
     [ _k (f0'0: tup2_refmut_usize_refmut_usize) -> {Some'0 f0'0 = _x} (! return {f0'0})
@@ -199,12 +201,12 @@ module M_resolves
         end}
       any) ]
   
-  predicate resolve_tup2_refmut_usize_refmut_usize [@inline:trivial] (_1: tup2_refmut_usize_refmut_usize) =
+  function resolve_tup2_refmut_usize_refmut_usize [@inline:trivial] (_1: tup2_refmut_usize_refmut_usize) : bool =
     resolve_refmut_usize _1.f0 /\ resolve_refmut_usize _1.f1
   
-  meta "rewrite_def" predicate resolve_tup2_refmut_usize_refmut_usize
+  meta "rewrite_def" function resolve_tup2_refmut_usize_refmut_usize
   
-  predicate resolve_Option_tup2_refmut_usize_refmut_usize (_1: t_Option_tup2_refmut_usize_refmut_usize)
+  function resolve_Option_tup2_refmut_usize_refmut_usize (_1: t_Option_tup2_refmut_usize_refmut_usize) : bool
   
   axiom resolve_axiom'0 [@rewrite]:
     forall _1: t_Option_tup2_refmut_usize_refmut_usize [resolve_Option_tup2_refmut_usize_refmut_usize _1]. resolve_Option_tup2_refmut_usize_refmut_usize _1
@@ -213,22 +215,22 @@ module M_resolves
         | Some'0 x0 -> resolve_tup2_refmut_usize_refmut_usize x0
         end
   
-  predicate resolve_FMap_refmut_usize_refmut_usize (self: t_FMap_refmut_usize_refmut_usize) =
+  function resolve_FMap_refmut_usize_refmut_usize (self: t_FMap_refmut_usize_refmut_usize) : bool =
     forall k: MutBorrow.t UInt64.t, v: MutBorrow.t UInt64.t. lookup_refmut_usize self k = Some v
       -> resolve_refmut_usize k /\ resolve_refmut_usize v
   
-  predicate resolve_FMap_refmut_usize_refmut_usize'0 (_1: t_FMap_refmut_usize_refmut_usize)
+  function resolve_FMap_refmut_usize_refmut_usize'0 (_1: t_FMap_refmut_usize_refmut_usize) : bool
   
   axiom resolve_axiom'1 [@rewrite]:
     forall _1: t_FMap_refmut_usize_refmut_usize [resolve_FMap_refmut_usize_refmut_usize'0 _1]. resolve_FMap_refmut_usize_refmut_usize'0 _1
       = resolve_FMap_refmut_usize_refmut_usize _1
   
-  predicate resolve_Iter_refmut_usize_refmut_usize [@inline:trivial] (self: t_Iter_refmut_usize_refmut_usize) =
+  function resolve_Iter_refmut_usize_refmut_usize [@inline:trivial] (self: t_Iter_refmut_usize_refmut_usize) : bool =
     resolve_FMap_refmut_usize_refmut_usize'0 (view_Iter_refmut_usize_refmut_usize self)
   
-  meta "rewrite_def" predicate resolve_Iter_refmut_usize_refmut_usize
+  meta "rewrite_def" function resolve_Iter_refmut_usize_refmut_usize
   
-  predicate resolve_Iter_refmut_usize_refmut_usize'0 (_1: t_Iter_refmut_usize_refmut_usize)
+  function resolve_Iter_refmut_usize_refmut_usize'0 (_1: t_Iter_refmut_usize_refmut_usize) : bool
   
   axiom resolve_axiom'2:
     forall _1: t_Iter_refmut_usize_refmut_usize [resolve_Iter_refmut_usize_refmut_usize'0 _1]. resolve_Iter_refmut_usize_refmut_usize'0 _1

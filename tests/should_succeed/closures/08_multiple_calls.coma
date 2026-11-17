@@ -6,35 +6,35 @@ module M_multi_use
   
   type closure0 = { c0: t_T }
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate invariant_ref_ref_T [@inline:trivial] (self: t_T) = inv_ref_T self
+  function invariant_ref_ref_T [@inline:trivial] (self: t_T) : bool = inv_ref_T self
   
-  meta "rewrite_def" predicate invariant_ref_ref_T
+  meta "rewrite_def" function invariant_ref_ref_T
   
-  predicate inv_ref_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_ref_T _1
+  function inv_ref_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_ref_T
+  meta "rewrite_def" function inv_ref_ref_T
   
-  predicate inv_closure0 [@inline:trivial] (_1: closure0) = let {c0 = x0} = _1 in inv_ref_ref_T x0
+  function inv_closure0 [@inline:trivial] (_1: closure0) : bool = let {c0 = x0} = _1 in inv_ref_ref_T x0
   
-  meta "rewrite_def" predicate inv_closure0
+  meta "rewrite_def" function inv_closure0
   
-  predicate invariant_ref_closure0 [@inline:trivial] (self: closure0) = inv_closure0 self
+  function invariant_ref_closure0 [@inline:trivial] (self: closure0) : bool = inv_closure0 self
   
-  meta "rewrite_def" predicate invariant_ref_closure0
+  meta "rewrite_def" function invariant_ref_closure0
   
-  predicate inv_ref_closure0 [@inline:trivial] (_1: closure0) = invariant_ref_closure0 _1
+  function inv_ref_closure0 [@inline:trivial] (_1: closure0) : bool = invariant_ref_closure0 _1
   
-  meta "rewrite_def" predicate inv_ref_closure0
+  meta "rewrite_def" function inv_ref_closure0
   
   let closure0 (self: closure0) (return (x: UInt32.t)) =
   {[@stop_split] [@expl:closure0 requires] ([@stop_split] [@expl:closure 'self' type invariant] inv_ref_closure0 self)
@@ -44,18 +44,18 @@ module M_multi_use
     [ & _ret: UInt32.t = Any.any_l () | & res: UInt32.t = Any.any_l () ])
     [ return (result: UInt32.t) -> (! return {result}) ]
   
-  predicate precondition_closure0 (self: closure0) (args: ()) = self.c0 = self.c0
+  function precondition_closure0 (self: closure0) (args: ()) : bool = self.c0 = self.c0
   
-  meta "rewrite_def" predicate precondition_closure0
+  meta "rewrite_def" function precondition_closure0
   
-  predicate postcondition_closure0 (self: closure0) (args: ()) (result: UInt32.t) = true
+  function postcondition_closure0 (self: closure0) (args: ()) (result: UInt32.t) : bool = true
   
-  meta "rewrite_def" predicate postcondition_closure0
+  meta "rewrite_def" function postcondition_closure0
   
-  predicate postcondition_ref_closure0 (self: closure0) (args: ()) (result: UInt32.t) =
+  function postcondition_ref_closure0 (self: closure0) (args: ()) (result: UInt32.t) : bool =
     postcondition_closure0 self args result
   
-  meta "rewrite_def" predicate postcondition_ref_closure0
+  meta "rewrite_def" function postcondition_ref_closure0
   
   let uses_fn_closure0 (f: closure0) (return (x: ())) =
   {[@stop_split] [@expl:uses_fn_closure0 requires] ([@stop_split] [@expl:uses_fn 'f' type invariant] inv_closure0 f)

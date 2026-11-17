@@ -5,7 +5,8 @@ use int.Int
 
 type t_T
 
-predicate contains_T (self: Seq.seq t_T) (x: t_T) = exists i: int. 0 <= i /\ i < Seq.length self /\ Seq.get self i = x
+function contains_T (self: Seq.seq t_T) (x: t_T) : bool = exists i: int. 0 <= i
+    /\ i < Seq.length self /\ Seq.get self i = x
 
 meta "compute_max_steps" 1000000
 

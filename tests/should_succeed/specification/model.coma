@@ -4,9 +4,9 @@ module M_test_arc
   
   type t_Arc_usize_Global
   
-  predicate inv_Arc_usize_Global (_1: t_Arc_usize_Global)
+  function inv_Arc_usize_Global (_1: t_Arc_usize_Global) : bool
   
-  predicate resolve_Arc_usize_Global (_1: t_Arc_usize_Global)
+  function resolve_Arc_usize_Global (_1: t_Arc_usize_Global) : bool
   
   function deref_Arc_usize_Global (self: t_Arc_usize_Global) : UInt64.t
   
@@ -30,9 +30,9 @@ module M_test_rc
   
   type t_Rc_usize_Global
   
-  predicate inv_Rc_usize_Global (_1: t_Rc_usize_Global)
+  function inv_Rc_usize_Global (_1: t_Rc_usize_Global) : bool
   
-  predicate resolve_Rc_usize_Global (_1: t_Rc_usize_Global)
+  function resolve_Rc_usize_Global (_1: t_Rc_usize_Global) : bool
   
   function deref_Rc_usize_Global (self: t_Rc_usize_Global) : UInt64.t
   

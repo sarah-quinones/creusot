@@ -4,25 +4,25 @@ type t_Copied_I
 
 type t_I
 
-predicate inv_I (_1: t_I)
+function inv_I (_1: t_I) : bool
 
 function iter_Copied_I (self: t_Copied_I) : t_I
 
-predicate invariant_Copied_I [@inline:trivial] (self: t_Copied_I) = inv_I (iter_Copied_I self)
+function invariant_Copied_I [@inline:trivial] (self: t_Copied_I) : bool = inv_I (iter_Copied_I self)
 
-meta "rewrite_def" predicate invariant_Copied_I
+meta "rewrite_def" function invariant_Copied_I
 
-predicate inv_Copied_I (_1: t_Copied_I)
+function inv_Copied_I (_1: t_Copied_I) : bool
 
 axiom inv_axiom: forall _1: t_Copied_I [inv_Copied_I _1]. inv_Copied_I _1 -> invariant_Copied_I _1
 
-predicate structural_resolve_Copied_I (_1: t_Copied_I)
+function structural_resolve_Copied_I (_1: t_Copied_I) : bool
 
-predicate resolve_I (_1: t_I)
+function resolve_I (_1: t_I) : bool
 
-predicate resolve_Copied_I [@inline:trivial] (self: t_Copied_I) = resolve_I (iter_Copied_I self)
+function resolve_Copied_I [@inline:trivial] (self: t_Copied_I) : bool = resolve_I (iter_Copied_I self)
 
-meta "rewrite_def" predicate resolve_Copied_I
+meta "rewrite_def" function resolve_Copied_I
 
 meta "compute_max_steps" 1000000
 

@@ -4,9 +4,9 @@ use creusot.int.UInt64
 
 type t_PeanoInt = { f0: UInt64.t }
 
-predicate ge_log_u64 [@inline:trivial] (self: UInt64.t) (other: UInt64.t) = UInt64.le other self
+function ge_log_u64 [@inline:trivial] (self: UInt64.t) (other: UInt64.t) : bool = UInt64.le other self
 
-meta "rewrite_def" predicate ge_log_u64
+meta "rewrite_def" function ge_log_u64
 
 function view_PeanoInt [@inline:trivial] (self: t_PeanoInt) : UInt64.t = self.f0
 

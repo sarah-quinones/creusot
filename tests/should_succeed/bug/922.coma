@@ -5,14 +5,14 @@ module M_f1
   
   type tup2_i32_refmut_i32 = { f0: Int32.t; f1: MutBorrow.t Int32.t }
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
-  predicate resolve_refmut_tup2_i32_refmut_i32 [@inline:trivial] (_1: MutBorrow.t tup2_i32_refmut_i32) =
-    _1.final = _1.current
+  function resolve_refmut_tup2_i32_refmut_i32 [@inline:trivial] (_1: MutBorrow.t tup2_i32_refmut_i32) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_tup2_i32_refmut_i32
+  meta "rewrite_def" function resolve_refmut_tup2_i32_refmut_i32
   
   meta "compute_max_steps" 1000000
   
@@ -49,14 +49,14 @@ module M_f2
   
   type tup2_i32_refmut_i32 = { f0: Int32.t; f1: MutBorrow.t Int32.t }
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
-  predicate resolve_refmut_tup2_i32_refmut_i32 [@inline:trivial] (_1: MutBorrow.t tup2_i32_refmut_i32) =
-    _1.final = _1.current
+  function resolve_refmut_tup2_i32_refmut_i32 [@inline:trivial] (_1: MutBorrow.t tup2_i32_refmut_i32) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_tup2_i32_refmut_i32
+  meta "rewrite_def" function resolve_refmut_tup2_i32_refmut_i32
   
   meta "compute_max_steps" 1000000
   
@@ -93,14 +93,14 @@ module M_f3
   
   type tup2_i32_refmut_i32 = { f0: Int32.t; f1: MutBorrow.t Int32.t }
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
-  predicate resolve_refmut_tup2_i32_refmut_i32 [@inline:trivial] (_1: MutBorrow.t tup2_i32_refmut_i32) =
-    _1.final = _1.current
+  function resolve_refmut_tup2_i32_refmut_i32 [@inline:trivial] (_1: MutBorrow.t tup2_i32_refmut_i32) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_tup2_i32_refmut_i32
+  meta "rewrite_def" function resolve_refmut_tup2_i32_refmut_i32
   
   meta "compute_max_steps" 1000000
   
@@ -137,14 +137,14 @@ module M_f4
   
   type tup2_i32_refmut_i32 = { f0: Int32.t; f1: MutBorrow.t Int32.t }
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
-  predicate resolve_refmut_tup2_i32_refmut_i32 [@inline:trivial] (_1: MutBorrow.t tup2_i32_refmut_i32) =
-    _1.final = _1.current
+  function resolve_refmut_tup2_i32_refmut_i32 [@inline:trivial] (_1: MutBorrow.t tup2_i32_refmut_i32) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_tup2_i32_refmut_i32
+  meta "rewrite_def" function resolve_refmut_tup2_i32_refmut_i32
   
   meta "compute_max_steps" 1000000
   
@@ -183,18 +183,18 @@ module M_g
   
   type tup2_tup2_i32_refmut_i32_i32 = { f0'0: tup2_i32_refmut_i32; f1'0: Int32.t }
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
-  predicate resolve_tup2_i32_refmut_i32 [@inline:trivial] (_1: tup2_i32_refmut_i32) = resolve_refmut_i32 _1.f1
+  function resolve_tup2_i32_refmut_i32 [@inline:trivial] (_1: tup2_i32_refmut_i32) : bool = resolve_refmut_i32 _1.f1
   
-  meta "rewrite_def" predicate resolve_tup2_i32_refmut_i32
+  meta "rewrite_def" function resolve_tup2_i32_refmut_i32
   
-  predicate resolve_tup2_tup2_i32_refmut_i32_i32 [@inline:trivial] (_1: tup2_tup2_i32_refmut_i32_i32) =
+  function resolve_tup2_tup2_i32_refmut_i32_i32 [@inline:trivial] (_1: tup2_tup2_i32_refmut_i32_i32) : bool =
     resolve_tup2_i32_refmut_i32 _1.f0'0
   
-  meta "rewrite_def" predicate resolve_tup2_tup2_i32_refmut_i32_i32
+  meta "rewrite_def" function resolve_tup2_tup2_i32_refmut_i32_i32
   
   meta "compute_max_steps" 1000000
   

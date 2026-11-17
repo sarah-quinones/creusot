@@ -9,7 +9,7 @@ module M_fulcrum
   
   type t_Iter_u32
   
-  predicate inv_Iter_u32 (_1: t_Iter_u32)
+  function inv_Iter_u32 (_1: t_Iter_u32) : bool
   
   function view_Iter_u32 (self: t_Iter_u32) : Slice64.slice UInt32.t
   
@@ -21,14 +21,14 @@ module M_fulcrum
   
   type t_Option_ref_u32 = None | Some UInt32.t
   
-  predicate invariant_refmut_Iter_u32 [@inline:trivial] (self: MutBorrow.t t_Iter_u32) =
-    inv_Iter_u32 self.current /\ inv_Iter_u32 self.final
+  function invariant_refmut_Iter_u32 [@inline:trivial] (self: MutBorrow.t t_Iter_u32) : bool = inv_Iter_u32 self.current
+    /\ inv_Iter_u32 self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Iter_u32
+  meta "rewrite_def" function invariant_refmut_Iter_u32
   
-  predicate inv_refmut_Iter_u32 [@inline:trivial] (_1: MutBorrow.t t_Iter_u32) = invariant_refmut_Iter_u32 _1
+  function inv_refmut_Iter_u32 [@inline:trivial] (_1: MutBorrow.t t_Iter_u32) : bool = invariant_refmut_Iter_u32 _1
   
-  meta "rewrite_def" predicate inv_refmut_Iter_u32
+  meta "rewrite_def" function inv_refmut_Iter_u32
   
   function index_slice_u32 [@inline:trivial] (self: Slice64.slice UInt32.t) (ix: int) : UInt32.t =
     Seq.get (Slice64.view self) ix
@@ -46,7 +46,7 @@ module M_fulcrum
           /\ i < Seq.length (to_ref_seq_slice_u32 self)
         -> Seq.get (to_ref_seq_slice_u32 self) i = index_slice_u32 self i
   
-  predicate produces_Iter_u32 (self: t_Iter_u32) (visited: Seq.seq UInt32.t) (tl: t_Iter_u32) =
+  function produces_Iter_u32 (self: t_Iter_u32) (visited: Seq.seq UInt32.t) (tl: t_Iter_u32) : bool =
     to_ref_seq_slice_u32 (view_Iter_u32 self) = Seq.(++) visited (to_ref_seq_slice_u32 (view_Iter_u32 tl))
   
   function produces_trans_Iter_u32 (a: t_Iter_u32) (ab: Seq.seq UInt32.t) (b: t_Iter_u32) (bc: Seq.seq UInt32.t) (c: t_Iter_u32) : ()
@@ -59,12 +59,12 @@ module M_fulcrum
   
   axiom produces_refl_Iter_u32_spec: forall self: t_Iter_u32. produces_Iter_u32 self (Seq.empty: Seq.seq UInt32.t) self
   
-  predicate resolve_refmut_Iter_u32 [@inline:trivial] (_1: MutBorrow.t t_Iter_u32) = _1.final = _1.current
+  function resolve_refmut_Iter_u32 [@inline:trivial] (_1: MutBorrow.t t_Iter_u32) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Iter_u32
+  meta "rewrite_def" function resolve_refmut_Iter_u32
   
-  predicate completed_Iter_u32 (self: MutBorrow.t t_Iter_u32) =
-    resolve_refmut_Iter_u32 self /\ Slice64.view (view_Iter_u32 self.current) = (Seq.empty: Seq.seq UInt32.t)
+  function completed_Iter_u32 (self: MutBorrow.t t_Iter_u32) : bool = resolve_refmut_Iter_u32 self
+    /\ Slice64.view (view_Iter_u32 self.current) = (Seq.empty: Seq.seq UInt32.t)
   
   let next_Iter_u32 (self: MutBorrow.t t_Iter_u32) (return (x: t_Option_ref_u32)) =
   {[@stop_split] [@expl:next 'self' type invariant] inv_refmut_Iter_u32 self}
@@ -75,13 +75,13 @@ module M_fulcrum
         end}
       (! return {result}) ]
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   function sum_range (seq: Seq.seq UInt32.t) (from: int) (to': int) : int
   
@@ -93,9 +93,9 @@ module M_fulcrum
   axiom sum_range_spec: forall seq: Seq.seq UInt32.t, from: int, to': int [sum_range seq from to']. 0 <= from
         /\ from <= to' /\ to' <= Seq.length seq -> ge_log_Int (sum_range seq from to') 0
   
-  predicate inv_Seq_ref_u32 [@inline:trivial] (_1: Seq.seq UInt32.t) = true
+  function inv_Seq_ref_u32 [@inline:trivial] (_1: Seq.seq UInt32.t) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_ref_u32
+  meta "rewrite_def" function inv_Seq_ref_u32
   
   let elim_Some (_x: t_Option_ref_u32) (return (f0: UInt32.t)) = any
     [ _k (f0: UInt32.t) -> {Some f0 = _x} (! return {f0})
@@ -105,7 +105,7 @@ module M_fulcrum
         end}
       any) ]
   
-  predicate resolve_Iter_u32 (_1: t_Iter_u32)
+  function resolve_Iter_u32 (_1: t_Iter_u32) : bool
   
   let len_u32 (self: Slice64.slice UInt32.t) (return (x: UInt64.t)) = any
     [ return (result: UInt64.t) -> {[@stop_split] [@expl:len ensures] Seq.length (Slice64.view self)
@@ -123,8 +123,8 @@ module M_fulcrum
   
   meta "rewrite_def" function deep_model_usize
   
-  predicate produces_Range_usize (self: t_Range_usize) (visited: Seq.seq UInt64.t) (o: t_Range_usize) =
-    self.end' = o.end'
+  function produces_Range_usize (self: t_Range_usize) (visited: Seq.seq UInt64.t) (o: t_Range_usize) : bool = self.end'
+      = o.end'
     /\ deep_model_usize self.start <= deep_model_usize o.start
     /\ (gt_log_Int (Seq.length visited) 0 -> deep_model_usize o.start <= deep_model_usize o.end')
     /\ Seq.length visited = deep_model_usize o.start - deep_model_usize self.start
@@ -142,12 +142,11 @@ module M_fulcrum
   axiom produces_refl_Range_usize_spec:
     forall self: t_Range_usize. produces_Range_usize self (Seq.empty: Seq.seq UInt64.t) self
   
-  predicate resolve_refmut_Range_usize [@inline:trivial] (_1: MutBorrow.t t_Range_usize) = _1.final = _1.current
+  function resolve_refmut_Range_usize [@inline:trivial] (_1: MutBorrow.t t_Range_usize) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Range_usize
+  meta "rewrite_def" function resolve_refmut_Range_usize
   
-  predicate completed_Range_usize (self: MutBorrow.t t_Range_usize) =
-    resolve_refmut_Range_usize self
+  function completed_Range_usize (self: MutBorrow.t t_Range_usize) : bool = resolve_refmut_Range_usize self
     /\ ge_log_Int (deep_model_usize self.current.start) (deep_model_usize self.current.end')
   
   let next_Range_usize (self: MutBorrow.t t_Range_usize) (return (x: t_Option_usize)) = any
@@ -180,9 +179,9 @@ module M_fulcrum
   axiom score_spec'0: forall seq: Seq.seq UInt32.t, i: int [score seq i]. 0 <= i /\ i <= Seq.length seq
       -> 0 = i \/ i = Seq.length seq -> score seq i = sum_range seq 0 (Seq.length seq)
   
-  predicate inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) = true
+  function inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_usize
+  meta "rewrite_def" function inv_Seq_usize
   
   let elim_Some'0 (_x: t_Option_usize) (return (f0: UInt64.t)) = any
     [ _k (f0: UInt64.t) -> {Some'0 f0 = _x} (! return {f0})
@@ -343,11 +342,12 @@ module M_insert_unique
   
   type t_DeepModelTy
   
-  predicate contains_DeepModelTy (seq: Seq.seq t_DeepModelTy) (elem: t_DeepModelTy) =
-    exists i: int. 0 <= i /\ i < Seq.length seq /\ Seq.get seq i = elem
+  function contains_DeepModelTy (seq: Seq.seq t_DeepModelTy) (elem: t_DeepModelTy) : bool = exists i: int. 0 <= i
+      /\ i < Seq.length seq /\ Seq.get seq i = elem
   
-  predicate is_subset_DeepModelTy (sub: Seq.seq t_DeepModelTy) (sup: Seq.seq t_DeepModelTy) =
-    forall i: int. 0 <= i /\ i < Seq.length sub -> contains_DeepModelTy sup (Seq.get sub i)
+  function is_subset_DeepModelTy (sub: Seq.seq t_DeepModelTy) (sup: Seq.seq t_DeepModelTy) : bool = forall i: int. 0
+          <= i
+        /\ i < Seq.length sub -> contains_DeepModelTy sup (Seq.get sub i)
   
   function subset_push_DeepModelTy (s: Seq.seq t_DeepModelTy) (elem: t_DeepModelTy) : () = ()
   
@@ -388,52 +388,52 @@ module M_insert_unique
   
   meta "rewrite_def" function deep_model_refmut_Vec_T_Global
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_T (Seq.get self i)
+  function invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+      -> inv_ref_T (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_T
+  meta "rewrite_def" function invariant_Seq_T
   
-  predicate inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Seq_T _1
+  function inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Seq_T
+  meta "rewrite_def" function inv_Seq_T
   
-  predicate invariant_Vec_T_Global (self: t_Vec_T_Global) = inv_Seq_T (view_Vec_T_Global self)
+  function invariant_Vec_T_Global (self: t_Vec_T_Global) : bool = inv_Seq_T (view_Vec_T_Global self)
   
-  predicate inv_Vec_T_Global (_1: t_Vec_T_Global)
+  function inv_Vec_T_Global (_1: t_Vec_T_Global) : bool
   
   axiom inv_axiom: forall _1: t_Vec_T_Global [inv_Vec_T_Global _1]. inv_Vec_T_Global _1 -> invariant_Vec_T_Global _1
   
-  predicate invariant_ref_Vec_T_Global [@inline:trivial] (self: t_Vec_T_Global) = inv_Vec_T_Global self
+  function invariant_ref_Vec_T_Global [@inline:trivial] (self: t_Vec_T_Global) : bool = inv_Vec_T_Global self
   
-  meta "rewrite_def" predicate invariant_ref_Vec_T_Global
+  meta "rewrite_def" function invariant_ref_Vec_T_Global
   
-  predicate inv_ref_Vec_T_Global [@inline:trivial] (_1: t_Vec_T_Global) = invariant_ref_Vec_T_Global _1
+  function inv_ref_Vec_T_Global [@inline:trivial] (_1: t_Vec_T_Global) : bool = invariant_ref_Vec_T_Global _1
   
-  meta "rewrite_def" predicate inv_ref_Vec_T_Global
+  meta "rewrite_def" function inv_ref_Vec_T_Global
   
-  predicate invariant_slice_T (self: Slice64.slice t_T) = inv_Seq_T (Slice64.view self)
+  function invariant_slice_T (self: Slice64.slice t_T) : bool = inv_Seq_T (Slice64.view self)
   
-  predicate inv_slice_T [@inline:trivial] (_1: Slice64.slice t_T) = invariant_slice_T _1
+  function inv_slice_T [@inline:trivial] (_1: Slice64.slice t_T) : bool = invariant_slice_T _1
   
-  meta "rewrite_def" predicate inv_slice_T
+  meta "rewrite_def" function inv_slice_T
   
-  predicate invariant_ref_slice_T [@inline:trivial] (self: Slice64.slice t_T) = inv_slice_T self
+  function invariant_ref_slice_T [@inline:trivial] (self: Slice64.slice t_T) : bool = inv_slice_T self
   
-  meta "rewrite_def" predicate invariant_ref_slice_T
+  meta "rewrite_def" function invariant_ref_slice_T
   
-  predicate inv_ref_slice_T [@inline:trivial] (_1: Slice64.slice t_T) = invariant_ref_slice_T _1
+  function inv_ref_slice_T [@inline:trivial] (_1: Slice64.slice t_T) : bool = invariant_ref_slice_T _1
   
-  meta "rewrite_def" predicate inv_ref_slice_T
+  meta "rewrite_def" function inv_ref_slice_T
   
   let deref_Vec_T_Global (self: t_Vec_T_Global) (return (x: Slice64.slice t_T)) =
   {[@stop_split] [@expl:deref 'self' type invariant] inv_ref_Vec_T_Global self}
@@ -445,7 +445,7 @@ module M_insert_unique
   
   type t_Iter_T
   
-  predicate inv_Iter_T (_1: t_Iter_T)
+  function inv_Iter_T (_1: t_Iter_T) : bool
   
   function view_Iter_T (self: t_Iter_T) : Slice64.slice t_T
   
@@ -467,16 +467,16 @@ module M_insert_unique
   
   type t_Option_ref_T = None | Some t_T
   
-  predicate invariant_refmut_Iter_T [@inline:trivial] (self: MutBorrow.t t_Iter_T) =
-    inv_Iter_T self.current /\ inv_Iter_T self.final
+  function invariant_refmut_Iter_T [@inline:trivial] (self: MutBorrow.t t_Iter_T) : bool = inv_Iter_T self.current
+    /\ inv_Iter_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Iter_T
+  meta "rewrite_def" function invariant_refmut_Iter_T
   
-  predicate inv_refmut_Iter_T [@inline:trivial] (_1: MutBorrow.t t_Iter_T) = invariant_refmut_Iter_T _1
+  function inv_refmut_Iter_T [@inline:trivial] (_1: MutBorrow.t t_Iter_T) : bool = invariant_refmut_Iter_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Iter_T
+  meta "rewrite_def" function inv_refmut_Iter_T
   
-  predicate inv_Option_ref_T (_1: t_Option_ref_T)
+  function inv_Option_ref_T (_1: t_Option_ref_T) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Option_ref_T [inv_Option_ref_T _1]. inv_Option_ref_T _1
       = match _1 with
@@ -497,7 +497,7 @@ module M_insert_unique
   axiom to_ref_seq_slice_T_spec'0: forall self: Slice64.slice t_T [to_ref_seq_slice_T self]. forall i: int. 0 <= i
           /\ i < Seq.length (to_ref_seq_slice_T self) -> Seq.get (to_ref_seq_slice_T self) i = index_slice_T self i
   
-  predicate produces_Iter_T (self: t_Iter_T) (visited: Seq.seq t_T) (tl: t_Iter_T) =
+  function produces_Iter_T (self: t_Iter_T) (visited: Seq.seq t_T) (tl: t_Iter_T) : bool =
     to_ref_seq_slice_T (view_Iter_T self) = Seq.(++) visited (to_ref_seq_slice_T (view_Iter_T tl))
   
   function produces_trans_Iter_T (a: t_Iter_T) (ab: Seq.seq t_T) (b: t_Iter_T) (bc: Seq.seq t_T) (c: t_Iter_T) : ()
@@ -510,12 +510,12 @@ module M_insert_unique
   
   axiom produces_refl_Iter_T_spec: forall self: t_Iter_T. produces_Iter_T self (Seq.empty: Seq.seq t_T) self
   
-  predicate resolve_refmut_Iter_T [@inline:trivial] (_1: MutBorrow.t t_Iter_T) = _1.final = _1.current
+  function resolve_refmut_Iter_T [@inline:trivial] (_1: MutBorrow.t t_Iter_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Iter_T
+  meta "rewrite_def" function resolve_refmut_Iter_T
   
-  predicate completed_Iter_T (self: MutBorrow.t t_Iter_T) =
-    resolve_refmut_Iter_T self /\ Slice64.view (view_Iter_T self.current) = (Seq.empty: Seq.seq t_T)
+  function completed_Iter_T (self: MutBorrow.t t_Iter_T) : bool = resolve_refmut_Iter_T self
+    /\ Slice64.view (view_Iter_T self.current) = (Seq.empty: Seq.seq t_T)
   
   let next_Iter_T (self: MutBorrow.t t_Iter_T) (return (x: t_Option_ref_T)) =
   {[@stop_split] [@expl:next 'self' type invariant] inv_refmut_Iter_T self}
@@ -532,22 +532,22 @@ module M_insert_unique
   
   meta "rewrite_def" function deep_model_ref_T
   
-  predicate invariant_ref_ref_T [@inline:trivial] (self: t_T) = inv_ref_T self
+  function invariant_ref_ref_T [@inline:trivial] (self: t_T) : bool = inv_ref_T self
   
-  meta "rewrite_def" predicate invariant_ref_ref_T
+  meta "rewrite_def" function invariant_ref_ref_T
   
-  predicate inv_ref_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_ref_T _1
+  function inv_ref_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_ref_T
+  meta "rewrite_def" function inv_ref_ref_T
   
-  predicate invariant_Seq_ref_T [@inline:trivial] (self: Seq.seq t_T) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_ref_T (Seq.get self i)
+  function invariant_Seq_ref_T [@inline:trivial] (self: Seq.seq t_T) : bool = forall i: int. 0 <= i
+        /\ i < Seq.length self -> inv_ref_ref_T (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_ref_T
+  meta "rewrite_def" function invariant_Seq_ref_T
   
-  predicate inv_Seq_ref_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Seq_ref_T _1
+  function inv_Seq_ref_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Seq_ref_T _1
   
-  meta "rewrite_def" predicate inv_Seq_ref_T
+  meta "rewrite_def" function inv_Seq_ref_T
   
   let elim_Some (_x: t_Option_ref_T) (return (f0: t_T)) = any
     [ _k (f0: t_T) -> {Some f0 = _x} (! return {f0})
@@ -569,27 +569,26 @@ module M_insert_unique
       = (deep_model_ref_ref_T self = deep_model_ref_ref_T other)}
       (! return {result}) ]
   
-  predicate resolve_Iter_T (_1: t_Iter_T)
+  function resolve_Iter_T (_1: t_Iter_T) : bool
   
-  predicate resolve_T (_1: t_T)
+  function resolve_T (_1: t_T) : bool
   
-  predicate invariant_refmut_Vec_T_Global [@inline:trivial] (self: MutBorrow.t t_Vec_T_Global) =
+  function invariant_refmut_Vec_T_Global [@inline:trivial] (self: MutBorrow.t t_Vec_T_Global) : bool =
     inv_Vec_T_Global self.current /\ inv_Vec_T_Global self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Vec_T_Global
+  meta "rewrite_def" function invariant_refmut_Vec_T_Global
   
-  predicate inv_refmut_Vec_T_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_T_Global) =
+  function inv_refmut_Vec_T_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_T_Global) : bool =
     invariant_refmut_Vec_T_Global _1
   
-  meta "rewrite_def" predicate inv_refmut_Vec_T_Global
+  meta "rewrite_def" function inv_refmut_Vec_T_Global
   
-  predicate resolve_refmut_Vec_T_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_T_Global) = _1.final = _1.current
+  function resolve_refmut_Vec_T_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_T_Global) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Vec_T_Global
+  meta "rewrite_def" function resolve_refmut_Vec_T_Global
   
-  predicate is_unique_DeepModelTy (s: Seq.seq t_DeepModelTy) =
-    forall i: int, j: int. 0 <= i /\ i < Seq.length s /\ 0 <= j /\ j < Seq.length s
-      -> Seq.get s i = Seq.get s j -> i = j
+  function is_unique_DeepModelTy (s: Seq.seq t_DeepModelTy) : bool = forall i: int, j: int. 0 <= i
+        /\ i < Seq.length s /\ 0 <= j /\ j < Seq.length s -> Seq.get s i = Seq.get s j -> i = j
   
   let push_T (self: MutBorrow.t t_Vec_T_Global) (value: t_T) (return (x: ())) =
   {[@stop_split] [@expl:push_T requires] ([@stop_split] [@expl:push 'self' type invariant] inv_refmut_Vec_T_Global self)
@@ -711,24 +710,24 @@ module M_left_pad
   
   type t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_T (Seq.get self i)
+  function invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+      -> inv_ref_T (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_T
+  meta "rewrite_def" function invariant_Seq_T
   
-  predicate inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Seq_T _1
+  function inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Seq_T
+  meta "rewrite_def" function inv_Seq_T
   
   constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
   
@@ -737,19 +736,19 @@ module M_left_pad
   axiom view_Vec_T_Global_spec:
     forall self: t_Vec_T_Global [view_Vec_T_Global self]. Seq.length (view_Vec_T_Global self) <= UInt64.t'int const_MAX
   
-  predicate invariant_Vec_T_Global (self: t_Vec_T_Global) = inv_Seq_T (view_Vec_T_Global self)
+  function invariant_Vec_T_Global (self: t_Vec_T_Global) : bool = inv_Seq_T (view_Vec_T_Global self)
   
-  predicate inv_Vec_T_Global (_1: t_Vec_T_Global)
+  function inv_Vec_T_Global (_1: t_Vec_T_Global) : bool
   
   axiom inv_axiom: forall _1: t_Vec_T_Global [inv_Vec_T_Global _1]. inv_Vec_T_Global _1 -> invariant_Vec_T_Global _1
   
-  predicate invariant_ref_Vec_T_Global [@inline:trivial] (self: t_Vec_T_Global) = inv_Vec_T_Global self
+  function invariant_ref_Vec_T_Global [@inline:trivial] (self: t_Vec_T_Global) : bool = inv_Vec_T_Global self
   
-  meta "rewrite_def" predicate invariant_ref_Vec_T_Global
+  meta "rewrite_def" function invariant_ref_Vec_T_Global
   
-  predicate inv_ref_Vec_T_Global [@inline:trivial] (_1: t_Vec_T_Global) = invariant_ref_Vec_T_Global _1
+  function inv_ref_Vec_T_Global [@inline:trivial] (_1: t_Vec_T_Global) : bool = invariant_ref_Vec_T_Global _1
   
-  meta "rewrite_def" predicate inv_ref_Vec_T_Global
+  meta "rewrite_def" function inv_ref_Vec_T_Global
   
   let len_T (self: t_Vec_T_Global) (return (x: UInt64.t)) =
   {[@stop_split] [@expl:len 'self' type invariant] inv_ref_Vec_T_Global self}
@@ -763,19 +762,19 @@ module M_left_pad
   
   meta "rewrite_def" function index_Vec_T_Global
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
-  predicate invariant_refmut_Vec_T_Global [@inline:trivial] (self: MutBorrow.t t_Vec_T_Global) =
+  function invariant_refmut_Vec_T_Global [@inline:trivial] (self: MutBorrow.t t_Vec_T_Global) : bool =
     inv_Vec_T_Global self.current /\ inv_Vec_T_Global self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Vec_T_Global
+  meta "rewrite_def" function invariant_refmut_Vec_T_Global
   
-  predicate inv_refmut_Vec_T_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_T_Global) =
+  function inv_refmut_Vec_T_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_T_Global) : bool =
     invariant_refmut_Vec_T_Global _1
   
-  meta "rewrite_def" predicate inv_refmut_Vec_T_Global
+  meta "rewrite_def" function inv_refmut_Vec_T_Global
   
   let insert_T (self: MutBorrow.t t_Vec_T_Global) (index: UInt64.t) (element: t_T) (return (x: ())) =
   {[@stop_split] [@expl:insert_T requires] ([@stop_split] [@expl:insert 'self' type invariant] inv_refmut_Vec_T_Global self)
@@ -793,13 +792,13 @@ module M_left_pad
         -> index_Vec_T_Global self.final i = index_Vec_T_Global self.current (i - 1))}
       (! return {result}) ]
   
-  predicate resolve_refmut_Vec_T_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_T_Global) = _1.final = _1.current
+  function resolve_refmut_Vec_T_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_T_Global) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Vec_T_Global
+  meta "rewrite_def" function resolve_refmut_Vec_T_Global
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   meta "compute_max_steps" 1000000
   
@@ -880,24 +879,24 @@ module M_right_pad
   
   type t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_T (Seq.get self i)
+  function invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+      -> inv_ref_T (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_T
+  meta "rewrite_def" function invariant_Seq_T
   
-  predicate inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Seq_T _1
+  function inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Seq_T
+  meta "rewrite_def" function inv_Seq_T
   
   constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
   
@@ -906,19 +905,19 @@ module M_right_pad
   axiom view_Vec_T_Global_spec:
     forall self: t_Vec_T_Global [view_Vec_T_Global self]. Seq.length (view_Vec_T_Global self) <= UInt64.t'int const_MAX
   
-  predicate invariant_Vec_T_Global (self: t_Vec_T_Global) = inv_Seq_T (view_Vec_T_Global self)
+  function invariant_Vec_T_Global (self: t_Vec_T_Global) : bool = inv_Seq_T (view_Vec_T_Global self)
   
-  predicate inv_Vec_T_Global (_1: t_Vec_T_Global)
+  function inv_Vec_T_Global (_1: t_Vec_T_Global) : bool
   
   axiom inv_axiom: forall _1: t_Vec_T_Global [inv_Vec_T_Global _1]. inv_Vec_T_Global _1 -> invariant_Vec_T_Global _1
   
-  predicate invariant_ref_Vec_T_Global [@inline:trivial] (self: t_Vec_T_Global) = inv_Vec_T_Global self
+  function invariant_ref_Vec_T_Global [@inline:trivial] (self: t_Vec_T_Global) : bool = inv_Vec_T_Global self
   
-  meta "rewrite_def" predicate invariant_ref_Vec_T_Global
+  meta "rewrite_def" function invariant_ref_Vec_T_Global
   
-  predicate inv_ref_Vec_T_Global [@inline:trivial] (_1: t_Vec_T_Global) = invariant_ref_Vec_T_Global _1
+  function inv_ref_Vec_T_Global [@inline:trivial] (_1: t_Vec_T_Global) : bool = invariant_ref_Vec_T_Global _1
   
-  meta "rewrite_def" predicate inv_ref_Vec_T_Global
+  meta "rewrite_def" function inv_ref_Vec_T_Global
   
   let len_T (self: t_Vec_T_Global) (return (x: UInt64.t)) =
   {[@stop_split] [@expl:len 'self' type invariant] inv_ref_Vec_T_Global self}
@@ -932,19 +931,19 @@ module M_right_pad
   
   meta "rewrite_def" function index_Vec_T_Global
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
-  predicate invariant_refmut_Vec_T_Global [@inline:trivial] (self: MutBorrow.t t_Vec_T_Global) =
+  function invariant_refmut_Vec_T_Global [@inline:trivial] (self: MutBorrow.t t_Vec_T_Global) : bool =
     inv_Vec_T_Global self.current /\ inv_Vec_T_Global self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Vec_T_Global
+  meta "rewrite_def" function invariant_refmut_Vec_T_Global
   
-  predicate inv_refmut_Vec_T_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_T_Global) =
+  function inv_refmut_Vec_T_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_T_Global) : bool =
     invariant_refmut_Vec_T_Global _1
   
-  meta "rewrite_def" predicate inv_refmut_Vec_T_Global
+  meta "rewrite_def" function inv_refmut_Vec_T_Global
   
   let push_T (self: MutBorrow.t t_Vec_T_Global) (value: t_T) (return (x: ())) =
   {[@stop_split] [@expl:push_T requires] ([@stop_split] [@expl:push 'self' type invariant] inv_refmut_Vec_T_Global self)
@@ -954,13 +953,13 @@ module M_right_pad
       = Seq.snoc (view_Vec_T_Global self.current) value}
       (! return {result}) ]
   
-  predicate resolve_refmut_Vec_T_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_T_Global) = _1.final = _1.current
+  function resolve_refmut_Vec_T_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_T_Global) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Vec_T_Global
+  meta "rewrite_def" function resolve_refmut_Vec_T_Global
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   meta "compute_max_steps" 1000000
   
@@ -1031,13 +1030,13 @@ module M_score
   use seq.Seq
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   function sum_range (seq: Seq.seq UInt32.t) (from: int) (to': int) : int
   
@@ -1095,11 +1094,11 @@ module M_subset_push
   
   type t_T
   
-  predicate contains_T (seq: Seq.seq t_T) (elem: t_T) =
-    exists i: int. 0 <= i /\ i < Seq.length seq /\ Seq.get seq i = elem
+  function contains_T (seq: Seq.seq t_T) (elem: t_T) : bool = exists i: int. 0 <= i
+      /\ i < Seq.length seq /\ Seq.get seq i = elem
   
-  predicate is_subset_T (sub: Seq.seq t_T) (sup: Seq.seq t_T) =
-    forall i: int. 0 <= i /\ i < Seq.length sub -> contains_T sup (Seq.get sub i)
+  function is_subset_T (sub: Seq.seq t_T) (sup: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length sub
+      -> contains_T sup (Seq.get sub i)
   
   meta "compute_max_steps" 1000000
   
@@ -1118,18 +1117,18 @@ module M_sum_range
   use seq.Seq
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
-  predicate well_founded_relation_Int [@inline:trivial] (self: int) (other: int) =
-    ge_log_Int self 0 /\ gt_log_Int self other
+  function well_founded_relation_Int [@inline:trivial] (self: int) (other: int) : bool = ge_log_Int self 0
+    /\ gt_log_Int self other
   
-  meta "rewrite_def" predicate well_founded_relation_Int
+  meta "rewrite_def" function well_founded_relation_Int
   
   meta "compute_max_steps" 1000000
   
@@ -1159,13 +1158,13 @@ module M_sum_range_split
   use seq.Seq
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   function sum_range (seq: Seq.seq UInt32.t) (from: int) (to': int) : int
   
@@ -1177,10 +1176,10 @@ module M_sum_range_split
   axiom sum_range_spec: forall seq: Seq.seq UInt32.t, from: int, to': int [sum_range seq from to']. 0 <= from
         /\ from <= to' /\ to' <= Seq.length seq -> ge_log_Int (sum_range seq from to') 0
   
-  predicate well_founded_relation_Int [@inline:trivial] (self: int) (other: int) =
-    ge_log_Int self 0 /\ gt_log_Int self other
+  function well_founded_relation_Int [@inline:trivial] (self: int) (other: int) : bool = ge_log_Int self 0
+    /\ gt_log_Int self other
   
-  meta "rewrite_def" predicate well_founded_relation_Int
+  meta "rewrite_def" function well_founded_relation_Int
   
   meta "compute_max_steps" 1000000
   
@@ -1222,24 +1221,24 @@ module M_unique
   
   type t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_T (Seq.get self i)
+  function invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+      -> inv_ref_T (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_T
+  meta "rewrite_def" function invariant_Seq_T
   
-  predicate inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Seq_T _1
+  function inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Seq_T _1
   
-  meta "rewrite_def" predicate inv_Seq_T
+  meta "rewrite_def" function inv_Seq_T
   
   constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
   
@@ -1248,9 +1247,9 @@ module M_unique
   axiom view_Vec_T_Global_spec:
     forall self: t_Vec_T_Global [view_Vec_T_Global self]. Seq.length (view_Vec_T_Global self) <= UInt64.t'int const_MAX
   
-  predicate invariant_Vec_T_Global (self: t_Vec_T_Global) = inv_Seq_T (view_Vec_T_Global self)
+  function invariant_Vec_T_Global (self: t_Vec_T_Global) : bool = inv_Seq_T (view_Vec_T_Global self)
   
-  predicate inv_Vec_T_Global (_1: t_Vec_T_Global)
+  function inv_Vec_T_Global (_1: t_Vec_T_Global) : bool
   
   axiom inv_axiom: forall _1: t_Vec_T_Global [inv_Vec_T_Global _1]. inv_Vec_T_Global _1 -> invariant_Vec_T_Global _1
   
@@ -1260,19 +1259,19 @@ module M_unique
       /\ ([@stop_split] [@expl:new ensures] Seq.length (view_Vec_T_Global result) = 0)}
       (! return {result}) ]
   
-  predicate invariant_slice_T (self: Slice64.slice t_T) = inv_Seq_T (Slice64.view self)
+  function invariant_slice_T (self: Slice64.slice t_T) : bool = inv_Seq_T (Slice64.view self)
   
-  predicate inv_slice_T [@inline:trivial] (_1: Slice64.slice t_T) = invariant_slice_T _1
+  function inv_slice_T [@inline:trivial] (_1: Slice64.slice t_T) : bool = invariant_slice_T _1
   
-  meta "rewrite_def" predicate inv_slice_T
+  meta "rewrite_def" function inv_slice_T
   
-  predicate invariant_ref_slice_T [@inline:trivial] (self: Slice64.slice t_T) = inv_slice_T self
+  function invariant_ref_slice_T [@inline:trivial] (self: Slice64.slice t_T) : bool = inv_slice_T self
   
-  meta "rewrite_def" predicate invariant_ref_slice_T
+  meta "rewrite_def" function invariant_ref_slice_T
   
-  predicate inv_ref_slice_T [@inline:trivial] (_1: Slice64.slice t_T) = invariant_ref_slice_T _1
+  function inv_ref_slice_T [@inline:trivial] (_1: Slice64.slice t_T) : bool = invariant_ref_slice_T _1
   
-  meta "rewrite_def" predicate inv_ref_slice_T
+  meta "rewrite_def" function inv_ref_slice_T
   
   let len_T (self: Slice64.slice t_T) (return (x: UInt64.t)) =
   {[@stop_split] [@expl:len 'self' type invariant] inv_ref_slice_T self}
@@ -1292,12 +1291,12 @@ module M_unique
   
   meta "rewrite_def" function deep_model_usize
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
-  predicate produces_Range_usize (self: t_Range_usize) (visited: Seq.seq UInt64.t) (o: t_Range_usize) =
-    self.end' = o.end'
+  function produces_Range_usize (self: t_Range_usize) (visited: Seq.seq UInt64.t) (o: t_Range_usize) : bool = self.end'
+      = o.end'
     /\ deep_model_usize self.start <= deep_model_usize o.start
     /\ (gt_log_Int (Seq.length visited) 0 -> deep_model_usize o.start <= deep_model_usize o.end')
     /\ Seq.length visited = deep_model_usize o.start - deep_model_usize self.start
@@ -1315,16 +1314,15 @@ module M_unique
   axiom produces_refl_Range_usize_spec:
     forall self: t_Range_usize. produces_Range_usize self (Seq.empty: Seq.seq UInt64.t) self
   
-  predicate resolve_refmut_Range_usize [@inline:trivial] (_1: MutBorrow.t t_Range_usize) = _1.final = _1.current
+  function resolve_refmut_Range_usize [@inline:trivial] (_1: MutBorrow.t t_Range_usize) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Range_usize
+  meta "rewrite_def" function resolve_refmut_Range_usize
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate completed_Range_usize (self: MutBorrow.t t_Range_usize) =
-    resolve_refmut_Range_usize self
+  function completed_Range_usize (self: MutBorrow.t t_Range_usize) : bool = resolve_refmut_Range_usize self
     /\ ge_log_Int (deep_model_usize self.current.start) (deep_model_usize self.current.end')
   
   let next_Range_usize (self: MutBorrow.t t_Range_usize) (return (x: t_Option_usize)) = any
@@ -1336,11 +1334,12 @@ module M_unique
   
   type t_DeepModelTy
   
-  predicate contains_DeepModelTy (seq: Seq.seq t_DeepModelTy) (elem: t_DeepModelTy) =
-    exists i: int. 0 <= i /\ i < Seq.length seq /\ Seq.get seq i = elem
+  function contains_DeepModelTy (seq: Seq.seq t_DeepModelTy) (elem: t_DeepModelTy) : bool = exists i: int. 0 <= i
+      /\ i < Seq.length seq /\ Seq.get seq i = elem
   
-  predicate is_subset_DeepModelTy (sub: Seq.seq t_DeepModelTy) (sup: Seq.seq t_DeepModelTy) =
-    forall i: int. 0 <= i /\ i < Seq.length sub -> contains_DeepModelTy sup (Seq.get sub i)
+  function is_subset_DeepModelTy (sub: Seq.seq t_DeepModelTy) (sup: Seq.seq t_DeepModelTy) : bool = forall i: int. 0
+          <= i
+        /\ i < Seq.length sub -> contains_DeepModelTy sup (Seq.get sub i)
   
   function deep_model_T (self: t_T) : t_DeepModelTy
   
@@ -1379,13 +1378,12 @@ module M_unique
           /\ i < Seq.length (view_Vec_T_Global self)
         -> Seq.get (deep_model_Vec_T_Global self) i = deep_model_T (index_Vec_T_Global self i)
   
-  predicate is_unique_DeepModelTy (s: Seq.seq t_DeepModelTy) =
-    forall i: int, j: int. 0 <= i /\ i < Seq.length s /\ 0 <= j /\ j < Seq.length s
-      -> Seq.get s i = Seq.get s j -> i = j
+  function is_unique_DeepModelTy (s: Seq.seq t_DeepModelTy) : bool = forall i: int, j: int. 0 <= i
+        /\ i < Seq.length s /\ 0 <= j /\ j < Seq.length s -> Seq.get s i = Seq.get s j -> i = j
   
-  predicate inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) = true
+  function inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_usize
+  meta "rewrite_def" function inv_Seq_usize
   
   let elim_Some (_x: t_Option_usize) (return (f0: UInt64.t)) = any
     [ _k (f0: UInt64.t) -> {Some f0 = _x} (! return {f0})
@@ -1395,15 +1393,15 @@ module M_unique
         end}
       any) ]
   
-  predicate invariant_refmut_Vec_T_Global [@inline:trivial] (self: MutBorrow.t t_Vec_T_Global) =
+  function invariant_refmut_Vec_T_Global [@inline:trivial] (self: MutBorrow.t t_Vec_T_Global) : bool =
     inv_Vec_T_Global self.current /\ inv_Vec_T_Global self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Vec_T_Global
+  meta "rewrite_def" function invariant_refmut_Vec_T_Global
   
-  predicate inv_refmut_Vec_T_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_T_Global) =
+  function inv_refmut_Vec_T_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_T_Global) : bool =
     invariant_refmut_Vec_T_Global _1
   
-  meta "rewrite_def" predicate inv_refmut_Vec_T_Global
+  meta "rewrite_def" function inv_refmut_Vec_T_Global
   
   function deep_model_refmut_Vec_T_Global [@inline:trivial] (self: MutBorrow.t t_Vec_T_Global) : Seq.seq t_DeepModelTy =
     deep_model_Vec_T_Global self.current
@@ -1422,9 +1420,9 @@ module M_unique
       /\ ([@stop_split] [@expl:insert_unique ensures #3] contains_DeepModelTy (deep_model_Vec_T_Global vec.final) (deep_model_T elem))}
       (! return {result}) ]
   
-  predicate resolve_refmut_Vec_T_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_T_Global) = _1.final = _1.current
+  function resolve_refmut_Vec_T_Global [@inline:trivial] (_1: MutBorrow.t t_Vec_T_Global) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Vec_T_Global
+  meta "rewrite_def" function resolve_refmut_Vec_T_Global
   
   meta "compute_max_steps" 1000000
   

@@ -7,14 +7,14 @@ type t_T2
 
 type tup2_T1_T2 = { f0: t_T1; f1: t_T2 }
 
-predicate well_founded_relation_T1 (self: t_T1) (other: t_T1)
+function well_founded_relation_T1 (self: t_T1) (other: t_T1) : bool
 
-predicate well_founded_relation_T2 (self: t_T2) (other: t_T2)
+function well_founded_relation_T2 (self: t_T2) (other: t_T2) : bool
 
-predicate well_founded_relation_tup2_T1_T2 [@inline:trivial] (self: tup2_T1_T2) (other: tup2_T1_T2) =
+function well_founded_relation_tup2_T1_T2 [@inline:trivial] (self: tup2_T1_T2) (other: tup2_T1_T2) : bool =
   well_founded_relation_T1 self.f0 other.f0 \/ self.f0 = other.f0 /\ well_founded_relation_T2 self.f1 other.f1
 
-meta "rewrite_def" predicate well_founded_relation_tup2_T1_T2
+meta "rewrite_def" function well_founded_relation_tup2_T1_T2
 
 function index_Mapping_Int_tup2_T1_T2 [@inline:trivial] (self: Map.map int tup2_T1_T2) (a: int) : tup2_T1_T2 =
   Map.get self a
@@ -72,9 +72,9 @@ axiom extract_nth_T1_spec'0: forall s: Map.map int tup2_T1_T2, i: int [extract_n
     -> (let prev = extract_nth_T1 s (i - 1) in prev < extract_nth_T1 s i
     /\ well_founded_relation_T1 (index_Mapping_Int_tup2_T1_T2 s prev).f0 (index_Mapping_Int_tup2_T1_T2 s (extract_nth_T1 s i)).f0)
 
-predicate index_Mapping_T1_bool [@inline:trivial] (self: Map.map t_T1 bool) (a: t_T1) = Map.get self a
+function index_Mapping_T1_bool [@inline:trivial] (self: Map.map t_T1 bool) (a: t_T1) : bool = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_T1_bool
+meta "rewrite_def" function index_Mapping_T1_bool
 
 function such_that_T1 (p: Map.map t_T1 bool) : t_T1
 

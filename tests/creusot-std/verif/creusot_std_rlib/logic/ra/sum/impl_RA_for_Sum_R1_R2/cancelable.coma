@@ -21,7 +21,7 @@ function map_Option_R1 (self: t_Option_R1) (f: Map.map t_R1 t_Sum_R1_R2) : t_Opt
 
 function op_R1 (self: t_R1) (other: t_R1) : t_Option_R1
 
-predicate incl_R1 (self: t_R1) (other: t_R1)
+function incl_R1 (self: t_R1) (other: t_R1) : bool
 
 axiom incl_R1_spec: forall self: t_R1, other: t_R1 [incl_R1 self other]. incl_R1 self other
     = (exists factor: t_R1. op_R1 self factor = Some'0 other)
@@ -57,7 +57,7 @@ function map_Option_R2 (self: t_Option_R2) (f: Map.map t_R2 t_Sum_R1_R2) : t_Opt
 
 function op_R2 (self: t_R2) (other: t_R2) : t_Option_R2
 
-predicate incl_R2 (self: t_R2) (other: t_R2)
+function incl_R2 (self: t_R2) (other: t_R2) : bool
 
 axiom incl_R2_spec: forall self: t_R2, other: t_R2 [incl_R2 self other]. incl_R2 self other
     = (exists factor: t_R2. op_R2 self factor = Some'1 other)
@@ -91,12 +91,12 @@ function op_Sum_R1_R2 (self: t_Sum_R1_R2) (other: t_Sum_R1_R2) : t_Option_Sum_R1
     | _ -> None
     end
 
-predicate cancelable_R1 (self: t_R1)
+function cancelable_R1 (self: t_R1) : bool
 
 axiom cancelable_R1_spec: forall self: t_R1 [cancelable_R1 self]. cancelable_R1 self
     = (forall x: t_R1, y: t_R1. op_R1 self x <> None'0 -> op_R1 self x = op_R1 self y -> x = y)
 
-predicate cancelable_R2 (self: t_R2)
+function cancelable_R2 (self: t_R2) : bool
 
 axiom cancelable_R2_spec: forall self: t_R2 [cancelable_R2 self]. cancelable_R2 self
     = (forall x: t_R2, y: t_R2. op_R2 self x <> None'1 -> op_R2 self x = op_R2 self y -> x = y)
@@ -107,7 +107,7 @@ meta "select_lsinst" "all"
 
 constant self : t_Sum_R1_R2
 
-predicate cancelable_Sum_R1_R2 (self: t_Sum_R1_R2)
+function cancelable_Sum_R1_R2 (self: t_Sum_R1_R2) : bool
 
 goal vc_cancelable_Sum_R1_R2: match self with
     | Left l -> (forall b: t_R1, c: t_R1. op_R1 l b = op_R1 l c

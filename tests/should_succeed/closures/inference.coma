@@ -4,23 +4,23 @@ module M_call_with_one
   
   type t_F
   
-  predicate inv_F (_1: t_F)
+  function inv_F (_1: t_F) : bool
   
-  predicate resolve_F (_1: t_F)
+  function resolve_F (_1: t_F) : bool
   
-  predicate invariant_ref_F [@inline:trivial] (self: t_F) = inv_F self
+  function invariant_ref_F [@inline:trivial] (self: t_F) : bool = inv_F self
   
-  meta "rewrite_def" predicate invariant_ref_F
+  meta "rewrite_def" function invariant_ref_F
   
-  predicate inv_ref_F [@inline:trivial] (_1: t_F) = invariant_ref_F _1
+  function inv_ref_F [@inline:trivial] (_1: t_F) : bool = invariant_ref_F _1
   
-  meta "rewrite_def" predicate inv_ref_F
+  meta "rewrite_def" function inv_ref_F
   
-  predicate precondition_F (self: t_F) (args: Int32.t)
+  function precondition_F (self: t_F) (args: Int32.t) : bool
   
-  predicate postcondition_once_F (self: t_F) (args: Int32.t) (result: Int32.t)
+  function postcondition_once_F (self: t_F) (args: Int32.t) (result: Int32.t) : bool
   
-  predicate postcondition_mut_F (self: t_F) (args: Int32.t) (result_state: t_F) (result: Int32.t)
+  function postcondition_mut_F (self: t_F) (args: Int32.t) (result_state: t_F) (result: Int32.t) : bool
   
   function fn_mut_once_F (self: t_F) (args: Int32.t) (res: Int32.t) : ()
   
@@ -28,7 +28,7 @@ module M_call_with_one
     forall self: t_F, args: Int32.t, res: Int32.t [postcondition_once_F self args res]. postcondition_once_F self args res
       = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
   
-  predicate hist_inv_F (self: t_F) (result_state: t_F)
+  function hist_inv_F (self: t_F) (result_state: t_F) : bool
   
   function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
   
@@ -51,7 +51,7 @@ module M_call_with_one
   axiom fn_hist_inv_F_spec: forall self: t_F, res_state: t_F [hist_inv_F self res_state]. hist_inv_F self res_state
       = (self = res_state)
   
-  predicate postcondition_F (self: t_F) (args: Int32.t) (result: Int32.t)
+  function postcondition_F (self: t_F) (args: Int32.t) (result: Int32.t) : bool
   
   function fn_once_F (self: t_F) (args: Int32.t) (res: Int32.t) : ()
   
@@ -96,23 +96,23 @@ module M_call_with_one_mut
   
   type t_F
   
-  predicate inv_F (_1: t_F)
+  function inv_F (_1: t_F) : bool
   
-  predicate invariant_refmut_F [@inline:trivial] (self: MutBorrow.t t_F) = inv_F self.current /\ inv_F self.final
+  function invariant_refmut_F [@inline:trivial] (self: MutBorrow.t t_F) : bool = inv_F self.current /\ inv_F self.final
   
-  meta "rewrite_def" predicate invariant_refmut_F
+  meta "rewrite_def" function invariant_refmut_F
   
-  predicate inv_refmut_F [@inline:trivial] (_1: MutBorrow.t t_F) = invariant_refmut_F _1
+  function inv_refmut_F [@inline:trivial] (_1: MutBorrow.t t_F) : bool = invariant_refmut_F _1
   
-  meta "rewrite_def" predicate inv_refmut_F
+  meta "rewrite_def" function inv_refmut_F
   
-  predicate precondition_F (self: t_F) (args: Int32.t)
+  function precondition_F (self: t_F) (args: Int32.t) : bool
   
-  predicate postcondition_once_F (self: t_F) (args: Int32.t) (result: Int32.t)
+  function postcondition_once_F (self: t_F) (args: Int32.t) (result: Int32.t) : bool
   
-  predicate resolve_F (_1: t_F)
+  function resolve_F (_1: t_F) : bool
   
-  predicate postcondition_mut_F (self: t_F) (args: Int32.t) (result_state: t_F) (result: Int32.t)
+  function postcondition_mut_F (self: t_F) (args: Int32.t) (result_state: t_F) (result: Int32.t) : bool
   
   function fn_mut_once_F (self: t_F) (args: Int32.t) (res: Int32.t) : ()
   
@@ -120,7 +120,7 @@ module M_call_with_one_mut
     forall self: t_F, args: Int32.t, res: Int32.t [postcondition_once_F self args res]. postcondition_once_F self args res
       = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
   
-  predicate hist_inv_F (self: t_F) (result_state: t_F)
+  function hist_inv_F (self: t_F) (result_state: t_F) : bool
   
   function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
   
@@ -146,9 +146,9 @@ module M_call_with_one_mut
     {[@stop_split] [@expl:call_mut ensures] postcondition_mut_F self.current args self.final result}
       (! return {result}) ]
   
-  predicate resolve_refmut_F [@inline:trivial] (_1: MutBorrow.t t_F) = _1.final = _1.current
+  function resolve_refmut_F [@inline:trivial] (_1: MutBorrow.t t_F) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_F
+  meta "rewrite_def" function resolve_refmut_F
   
   meta "compute_max_steps" 1000000
   
@@ -182,11 +182,11 @@ module M_call_with_one_once
   
   type t_F
   
-  predicate inv_F (_1: t_F)
+  function inv_F (_1: t_F) : bool
   
-  predicate precondition_F (self: t_F) (args: Int32.t)
+  function precondition_F (self: t_F) (args: Int32.t) : bool
   
-  predicate postcondition_once_F (self: t_F) (args: Int32.t) (result: Int32.t)
+  function postcondition_once_F (self: t_F) (args: Int32.t) (result: Int32.t) : bool
   
   let call_once_F (self: t_F) (args: Int32.t) (return (x: Int32.t)) =
   {[@stop_split] [@expl:call_once_F requires] ([@stop_split] [@expl:call_once 'self' type invariant] inv_F self)
@@ -224,14 +224,14 @@ module M_closure_fn
   
   meta "rewrite_def" predicate closure0'post'return
   
-  predicate precondition_closure0 (self: ()) (args: Int32.t) = let x = args in closure0'pre self x
+  function precondition_closure0 (self: ()) (args: Int32.t) : bool = let x = args in closure0'pre self x
   
-  meta "rewrite_def" predicate precondition_closure0
+  meta "rewrite_def" function precondition_closure0
   
-  predicate postcondition_closure0 (self: ()) (args: Int32.t) (result: Int32.t) =
+  function postcondition_closure0 (self: ()) (args: Int32.t) (result: Int32.t) : bool =
     let x = args in closure0'post'return self x result
   
-  meta "rewrite_def" predicate postcondition_closure0
+  meta "rewrite_def" function postcondition_closure0
   
   let call_with_one_closure0 (f: ()) (return (x: Int32.t)) =
   {[@stop_split] [@expl:call_with_one requires] precondition_closure0 f (1: Int32.t)}
@@ -240,10 +240,10 @@ module M_closure_fn
     {[@stop_split] [@expl:call_with_one ensures] postcondition_closure0 f (1: Int32.t) result}
       (! return {result}) ]
   
-  predicate postcondition_mut_closure0 (self: ()) (args: Int32.t) (result_state: ()) (result: Int32.t) =
+  function postcondition_mut_closure0 (self: ()) (args: Int32.t) (result_state: ()) (result: Int32.t) : bool =
     let x = args in closure0'post'return self x result /\ self = result_state
   
-  meta "rewrite_def" predicate postcondition_mut_closure0
+  meta "rewrite_def" function postcondition_mut_closure0
   
   let call_with_one_mut_closure0 (f: MutBorrow.t ()) (return (x: Int32.t)) =
   {[@stop_split] [@expl:call_with_one_mut requires] precondition_closure0 f.current (1: Int32.t)}
@@ -252,14 +252,14 @@ module M_closure_fn
     {[@stop_split] [@expl:call_with_one_mut ensures] postcondition_mut_closure0 f.current (1: Int32.t) f.final result}
       (! return {result}) ]
   
-  predicate resolve_refmut_closure0 [@inline:trivial] (_1: MutBorrow.t ()) = _1.final = _1.current
+  function resolve_refmut_closure0 [@inline:trivial] (_1: MutBorrow.t ()) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_closure0
+  meta "rewrite_def" function resolve_refmut_closure0
   
-  predicate postcondition_once_closure0 (self: ()) (args: Int32.t) (result: Int32.t) =
+  function postcondition_once_closure0 (self: ()) (args: Int32.t) (result: Int32.t) : bool =
     let x = args in closure0'post'return self x result
   
-  meta "rewrite_def" predicate postcondition_once_closure0
+  meta "rewrite_def" function postcondition_once_closure0
   
   let call_with_one_once_closure0 (f: ()) (return (x: Int32.t)) =
   {[@stop_split] [@expl:call_with_one_once requires] precondition_closure0 f (1: Int32.t)}
@@ -312,11 +312,11 @@ module M_closure_fn_mut
   
   type closure0 = { c0: MutBorrow.t Int32.t }
   
-  predicate resolve_refmut_closure0 [@inline:trivial] (_1: MutBorrow.t closure0) = _1.final = _1.current
+  function resolve_refmut_closure0 [@inline:trivial] (_1: MutBorrow.t closure0) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_closure0
+  meta "rewrite_def" function resolve_refmut_closure0
   
-  predicate hist_inv_closure0 (self: closure0) (result_state: closure0) = result_state.c0.final = self.c0.final
+  function hist_inv_closure0 (self: closure0) (result_state: closure0) : bool = result_state.c0.final = self.c0.final
   
   let closure0 [@coma:extspec] (self: MutBorrow.t closure0) (x: Int32.t) (return (x'0: Int32.t)) = bb0
     [ bb0 = s0
@@ -334,16 +334,16 @@ module M_closure_fn_mut
   
   meta "rewrite_def" predicate closure0'post'return
   
-  predicate precondition_closure0 (self: closure0) (args: Int32.t) =
+  function precondition_closure0 (self: closure0) (args: Int32.t) : bool =
     let x = args in forall bor_self: MutBorrow.t closure0. bor_self.current = self -> closure0'pre bor_self x
   
-  meta "rewrite_def" predicate precondition_closure0
+  meta "rewrite_def" function precondition_closure0
   
-  predicate postcondition_mut_closure0 (self: closure0) (args: Int32.t) (result_state: closure0) (result: Int32.t) =
-    let x = args in exists bor_self: MutBorrow.t closure0. bor_self.current = self
+  function postcondition_mut_closure0 (self: closure0) (args: Int32.t) (result_state: closure0) (result: Int32.t) : bool
+   = let x = args in exists bor_self: MutBorrow.t closure0. bor_self.current = self
       /\ bor_self.final = result_state /\ closure0'post'return bor_self x result /\ hist_inv_closure0 self result_state
   
-  meta "rewrite_def" predicate postcondition_mut_closure0
+  meta "rewrite_def" function postcondition_mut_closure0
   
   let call_with_one_mut_closure0 (f: MutBorrow.t closure0) (return (x: Int32.t)) =
   {[@stop_split] [@expl:call_with_one_mut requires] precondition_closure0 f.current (1: Int32.t)}
@@ -352,20 +352,20 @@ module M_closure_fn_mut
     {[@stop_split] [@expl:call_with_one_mut ensures] postcondition_mut_closure0 f.current (1: Int32.t) f.final result}
       (! return {result}) ]
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
-  predicate resolve_closure0 [@inline:trivial] (_1: closure0) = resolve_refmut_i32 _1.c0
+  function resolve_closure0 [@inline:trivial] (_1: closure0) : bool = resolve_refmut_i32 _1.c0
   
-  meta "rewrite_def" predicate resolve_closure0
+  meta "rewrite_def" function resolve_closure0
   
-  predicate postcondition_once_closure0 (self: closure0) (args: Int32.t) (result: Int32.t) =
+  function postcondition_once_closure0 (self: closure0) (args: Int32.t) (result: Int32.t) : bool =
     let x = args in exists e: closure0. (exists bor_self: MutBorrow.t closure0. bor_self.current = self
           /\ bor_self.final = e /\ closure0'post'return bor_self x result /\ hist_inv_closure0 self e)
       /\ resolve_closure0 e
   
-  meta "rewrite_def" predicate postcondition_once_closure0
+  meta "rewrite_def" function postcondition_once_closure0
   
   let call_with_one_once_closure0 (f: closure0) (return (x: Int32.t)) =
   {[@stop_split] [@expl:call_with_one_once requires] precondition_closure0 f (1: Int32.t)}
@@ -437,14 +437,14 @@ module M_closure_fn_once
   
   meta "rewrite_def" predicate closure0'post'return
   
-  predicate precondition_closure0 (self: closure0) (args: Int32.t) = let x = args in closure0'pre self x
+  function precondition_closure0 (self: closure0) (args: Int32.t) : bool = let x = args in closure0'pre self x
   
-  meta "rewrite_def" predicate precondition_closure0
+  meta "rewrite_def" function precondition_closure0
   
-  predicate postcondition_once_closure0 (self: closure0) (args: Int32.t) (result: Int32.t) =
+  function postcondition_once_closure0 (self: closure0) (args: Int32.t) (result: Int32.t) : bool =
     let x = args in closure0'post'return self x result
   
-  meta "rewrite_def" predicate postcondition_once_closure0
+  meta "rewrite_def" function postcondition_once_closure0
   
   let call_with_one_once_closure0 (f: closure0) (return (x: Int32.t)) =
   {[@stop_split] [@expl:call_with_one_once requires] precondition_closure0 f (1: Int32.t)}

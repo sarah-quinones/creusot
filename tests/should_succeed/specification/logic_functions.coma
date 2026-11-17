@@ -1,7 +1,7 @@
 module M_use_logic
   use creusot.prelude.Any
   
-  predicate logic = true
+  constant logic: bool = true
   
   meta "compute_max_steps" 1000000
   
@@ -14,7 +14,7 @@ end
 module M_use_logic_pearlite
   use creusot.prelude.Any
   
-  predicate logic_pearlite = 0 = 0
+  constant logic_pearlite: bool = 0 = 0
   
   meta "compute_max_steps" 1000000
   

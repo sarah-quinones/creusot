@@ -16,22 +16,21 @@ module M_resolve_seq
     forall self: t_Vec_refmut_T_Global [view_Vec_refmut_T_Global self]. Seq.length (view_Vec_refmut_T_Global self)
       <= UInt64.t'int const_MAX
   
-  predicate resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = _1.final = _1.current
+  function resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_T
+  meta "rewrite_def" function resolve_refmut_T
   
   function index_Vec_refmut_T_Global [@inline:trivial] (self: t_Vec_refmut_T_Global) (ix: int) : MutBorrow.t t_T =
     Seq.get (view_Vec_refmut_T_Global self) ix
   
   meta "rewrite_def" function index_Vec_refmut_T_Global
   
-  predicate resolve_Vec_refmut_T_Global [@inline:trivial] (self: t_Vec_refmut_T_Global) =
-    forall i: int. 0 <= i /\ i < Seq.length (view_Vec_refmut_T_Global self)
-      -> resolve_refmut_T (index_Vec_refmut_T_Global self i)
+  function resolve_Vec_refmut_T_Global [@inline:trivial] (self: t_Vec_refmut_T_Global) : bool = forall i: int. 0 <= i
+        /\ i < Seq.length (view_Vec_refmut_T_Global self) -> resolve_refmut_T (index_Vec_refmut_T_Global self i)
   
-  meta "rewrite_def" predicate resolve_Vec_refmut_T_Global
+  meta "rewrite_def" function resolve_Vec_refmut_T_Global
   
-  predicate resolve_Vec_refmut_T_Global'0 (_1: t_Vec_refmut_T_Global)
+  function resolve_Vec_refmut_T_Global'0 (_1: t_Vec_refmut_T_Global) : bool
   
   axiom resolve_axiom:
     forall _1: t_Vec_refmut_T_Global [resolve_Vec_refmut_T_Global'0 _1]. resolve_Vec_refmut_T_Global'0 _1
@@ -43,7 +42,7 @@ module M_resolve_seq
   
   constant seq : t_Vec_refmut_T_Global
   
-  predicate resolve_seq_T (seq: t_Vec_refmut_T_Global)
+  function resolve_seq_T (seq: t_Vec_refmut_T_Global) : bool
   
   goal vc_resolve_seq_T: [@stop_split] [@expl:resolve_seq ensures] resolve_Vec_refmut_T_Global'0 seq
     -> (forall i: int [Seq.get (view_Vec_refmut_T_Global seq) i]. 0 <= i
@@ -68,28 +67,27 @@ module M_resolve_seq2
     forall self: t_Vec_refmut_T_Global [view_Vec_refmut_T_Global self]. Seq.length (view_Vec_refmut_T_Global self)
       <= UInt64.t'int const_MAX
   
-  predicate resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = _1.final = _1.current
+  function resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_T
+  meta "rewrite_def" function resolve_refmut_T
   
   function index_Vec_refmut_T_Global [@inline:trivial] (self: t_Vec_refmut_T_Global) (ix: int) : MutBorrow.t t_T =
     Seq.get (view_Vec_refmut_T_Global self) ix
   
   meta "rewrite_def" function index_Vec_refmut_T_Global
   
-  predicate resolve_Vec_refmut_T_Global [@inline:trivial] (self: t_Vec_refmut_T_Global) =
-    forall i: int. 0 <= i /\ i < Seq.length (view_Vec_refmut_T_Global self)
-      -> resolve_refmut_T (index_Vec_refmut_T_Global self i)
+  function resolve_Vec_refmut_T_Global [@inline:trivial] (self: t_Vec_refmut_T_Global) : bool = forall i: int. 0 <= i
+        /\ i < Seq.length (view_Vec_refmut_T_Global self) -> resolve_refmut_T (index_Vec_refmut_T_Global self i)
   
-  meta "rewrite_def" predicate resolve_Vec_refmut_T_Global
+  meta "rewrite_def" function resolve_Vec_refmut_T_Global
   
-  predicate resolve_Vec_refmut_T_Global'0 (_1: t_Vec_refmut_T_Global)
+  function resolve_Vec_refmut_T_Global'0 (_1: t_Vec_refmut_T_Global) : bool
   
   axiom resolve_axiom:
     forall _1: t_Vec_refmut_T_Global [resolve_Vec_refmut_T_Global'0 _1]. resolve_Vec_refmut_T_Global'0 _1
       -> resolve_Vec_refmut_T_Global _1
   
-  predicate resolve_seq_T (seq: t_Vec_refmut_T_Global) =
+  function resolve_seq_T (seq: t_Vec_refmut_T_Global) : bool =
     forall i: int [Seq.get (view_Vec_refmut_T_Global seq) i]. 0 <= i /\ i < Seq.length (view_Vec_refmut_T_Global seq)
       -> (Seq.get (view_Vec_refmut_T_Global seq) i).current = (Seq.get (view_Vec_refmut_T_Global seq) i).final
   
@@ -102,7 +100,7 @@ module M_resolve_seq2
   
   constant seq : t_Vec_refmut_T_Global
   
-  predicate resolve_seq2_T (seq: t_Vec_refmut_T_Global)
+  function resolve_seq2_T (seq: t_Vec_refmut_T_Global) : bool
   
   goal vc_resolve_seq2_T: ([@stop_split] [@expl:resolve_seq ensures] resolve_Vec_refmut_T_Global'0 seq
       -> resolve_seq_T seq)

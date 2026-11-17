@@ -3,11 +3,11 @@ module M_prog
   
   type t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate resolve_T (_1: t_T)
+  function resolve_T (_1: t_T) : bool
   
-  predicate omg_T (_x: t_T) = true
+  function omg_T (_x: t_T) : bool = true
   
   meta "compute_max_steps" 1000000
   
@@ -24,12 +24,12 @@ module M_prog2
   use creusot.int.Int32
   use creusot.prelude.Any
   
-  predicate omg_i32 (_x: Int32.t) = true
+  function omg_i32 (_x: Int32.t) : bool = true
   
   let prog_i32 (x: Int32.t) (return (x'0: ())) = any
     [ return (result: ()) -> {[@stop_split] [@expl:prog ensures] omg_i32 x} (! return {result}) ]
   
-  predicate omg_Int (_x: int) = true
+  function omg_Int (_x: int) : bool = true
   
   meta "compute_max_steps" 1000000
   
@@ -45,7 +45,7 @@ module M_prog3
   
   type tup2_Int_Int = { f0: int; f1: int }
   
-  predicate omg_tup2_Int_Int (_x: tup2_Int_Int) = true
+  function omg_tup2_Int_Int (_x: tup2_Int_Int) : bool = true
   
   meta "compute_max_steps" 1000000
   

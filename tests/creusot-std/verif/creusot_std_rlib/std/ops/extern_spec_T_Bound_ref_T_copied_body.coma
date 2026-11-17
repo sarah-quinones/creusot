@@ -22,17 +22,17 @@ let elim_Included (_x: t_Bound_ref_T) (return (f0: t_T)) = any
       end}
     any) ]
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
 
-meta "rewrite_def" predicate invariant_ref_T
+meta "rewrite_def" function invariant_ref_T
 
-predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
 
-meta "rewrite_def" predicate inv_ref_T
+meta "rewrite_def" function inv_ref_T
 
-predicate inv_Bound_ref_T (_1: t_Bound_ref_T)
+function inv_Bound_ref_T (_1: t_Bound_ref_T) : bool
 
 axiom inv_axiom [@rewrite]: forall _1: t_Bound_ref_T [inv_Bound_ref_T _1]. inv_Bound_ref_T _1
     = match _1 with
@@ -41,7 +41,7 @@ axiom inv_axiom [@rewrite]: forall _1: t_Bound_ref_T [inv_Bound_ref_T _1]. inv_B
       | Unbounded -> true
       end
 
-predicate inv_Bound_T (_1: t_Bound_T)
+function inv_Bound_T (_1: t_Bound_T) : bool
 
 axiom inv_axiom'0 [@rewrite]: forall _1: t_Bound_T [inv_Bound_T _1]. inv_Bound_T _1
     = match _1 with

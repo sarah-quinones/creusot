@@ -18,9 +18,9 @@ module M_impl_Tree__height (* Tree *)
   
   let height (self: t_Tree) (return (x: UInt64.t)) = any [ return (result: UInt64.t) -> (! return {result}) ]
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function deep_model_u64 [@inline:trivial] (self: UInt64.t) : int = UInt64.t'int self
   

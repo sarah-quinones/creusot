@@ -10,9 +10,9 @@ type t_Ordering = Less | Equal | Greater
 
 type t_Option_Ordering = None | Some t_Ordering
 
-predicate lt_log_PeanoInt [@inline:trivial] (self: t_PeanoInt) (o: t_PeanoInt) = UInt64.lt self.f0 o.f0
+function lt_log_PeanoInt [@inline:trivial] (self: t_PeanoInt) (o: t_PeanoInt) : bool = UInt64.lt self.f0 o.f0
 
-meta "rewrite_def" predicate lt_log_PeanoInt
+meta "rewrite_def" function lt_log_PeanoInt
 
 function cmp_log_PeanoInt (self: t_PeanoInt) (other: t_PeanoInt) : t_Ordering = if self = other then
     Equal
@@ -41,9 +41,9 @@ let elim_Some (_x: t_Option_Ordering) (return (f0'0: t_Ordering)) = any
       end}
     any) ]
 
-predicate ge_log_u64 [@inline:trivial] (self: UInt64.t) (other: UInt64.t) = UInt64.le other self
+function ge_log_u64 [@inline:trivial] (self: UInt64.t) (other: UInt64.t) : bool = UInt64.le other self
 
-meta "rewrite_def" predicate ge_log_u64
+meta "rewrite_def" function ge_log_u64
 
 function view_PeanoInt [@inline:trivial] (self: t_PeanoInt) : UInt64.t = self.f0
 

@@ -6,9 +6,9 @@ type t_SemiLattice_T = { f0: t_T }
 
 type t_Option_SemiLattice_T = None | Some t_SemiLattice_T
 
-predicate lt_log_T (self: t_T) (other: t_T)
+function lt_log_T (self: t_T) (other: t_T) : bool
 
-predicate le_log_T (self: t_T) (other: t_T)
+function le_log_T (self: t_T) (other: t_T) : bool
 
 function le_lt_log_T (self: t_T) (other: t_T) : ()
 
@@ -40,10 +40,10 @@ function core_SemiLattice_T [@inline:trivial] (self: t_SemiLattice_T) : t_Option
 
 meta "rewrite_def" function core_SemiLattice_T
 
-predicate incl_SemiLattice_T [@inline:trivial] (self: t_SemiLattice_T) (other: t_SemiLattice_T) =
+function incl_SemiLattice_T [@inline:trivial] (self: t_SemiLattice_T) (other: t_SemiLattice_T) : bool =
   le_log_T self.f0 other.f0
 
-meta "rewrite_def" predicate incl_SemiLattice_T
+meta "rewrite_def" function incl_SemiLattice_T
 
 axiom incl_SemiLattice_T_spec:
   forall self: t_SemiLattice_T, other: t_SemiLattice_T [incl_SemiLattice_T self other]. incl_SemiLattice_T self other

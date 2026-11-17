@@ -8,40 +8,40 @@ type t_FnGhostWrapper_F = { f0: t_F }
 
 type t_I
 
-predicate inv_F (_1: t_F)
+function inv_F (_1: t_F) : bool
 
-predicate inv_FnGhostWrapper_F (_1: t_FnGhostWrapper_F)
+function inv_FnGhostWrapper_F (_1: t_FnGhostWrapper_F) : bool
 
 axiom inv_axiom [@rewrite]: forall _1: t_FnGhostWrapper_F [inv_FnGhostWrapper_F _1]. inv_FnGhostWrapper_F _1
     = inv_F _1.f0
 
-predicate invariant_refmut_FnGhostWrapper_F [@inline:trivial] (self: MutBorrow.t t_FnGhostWrapper_F) =
+function invariant_refmut_FnGhostWrapper_F [@inline:trivial] (self: MutBorrow.t t_FnGhostWrapper_F) : bool =
   inv_FnGhostWrapper_F self.current /\ inv_FnGhostWrapper_F self.final
 
-meta "rewrite_def" predicate invariant_refmut_FnGhostWrapper_F
+meta "rewrite_def" function invariant_refmut_FnGhostWrapper_F
 
-predicate inv_refmut_FnGhostWrapper_F [@inline:trivial] (_1: MutBorrow.t t_FnGhostWrapper_F) =
+function inv_refmut_FnGhostWrapper_F [@inline:trivial] (_1: MutBorrow.t t_FnGhostWrapper_F) : bool =
   invariant_refmut_FnGhostWrapper_F _1
 
-meta "rewrite_def" predicate inv_refmut_FnGhostWrapper_F
+meta "rewrite_def" function inv_refmut_FnGhostWrapper_F
 
-predicate inv_I (_1: t_I)
+function inv_I (_1: t_I) : bool
 
-predicate precondition_F (self: t_F) (args: t_I)
+function precondition_F (self: t_F) (args: t_I) : bool
 
-predicate precondition_FnGhostWrapper_F (self: t_FnGhostWrapper_F) (args: t_I) = precondition_F self.f0 args
+function precondition_FnGhostWrapper_F (self: t_FnGhostWrapper_F) (args: t_I) : bool = precondition_F self.f0 args
 
-meta "rewrite_def" predicate precondition_FnGhostWrapper_F
+meta "rewrite_def" function precondition_FnGhostWrapper_F
 
 type t_Output
 
-predicate inv_Output (_1: t_Output)
+function inv_Output (_1: t_Output) : bool
 
-predicate postcondition_once_F (self: t_F) (args: t_I) (result: t_Output)
+function postcondition_once_F (self: t_F) (args: t_I) (result: t_Output) : bool
 
-predicate resolve_F (_1: t_F)
+function resolve_F (_1: t_F) : bool
 
-predicate postcondition_mut_F (self: t_F) (args: t_I) (result_state: t_F) (result: t_Output)
+function postcondition_mut_F (self: t_F) (args: t_I) (result_state: t_F) (result: t_Output) : bool
 
 function fn_mut_once_F (self: t_F) (args: t_I) (res: t_Output) : ()
 
@@ -49,7 +49,7 @@ axiom fn_mut_once_F_spec:
   forall self: t_F, args: t_I, res: t_Output [postcondition_once_F self args res]. postcondition_once_F self args res
     = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
 
-predicate hist_inv_F (self: t_F) (result_state: t_F)
+function hist_inv_F (self: t_F) (result_state: t_F) : bool
 
 function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
 
@@ -67,10 +67,10 @@ axiom postcondition_mut_hist_inv_F_spec:
   forall self: t_F, args: t_I, res_state: t_F, res: t_Output [postcondition_mut_F self args res_state res | hist_inv_F self res_state]. postcondition_mut_F self args res_state res
     -> hist_inv_F self res_state
 
-predicate postcondition_mut_FnGhostWrapper_F (self: t_FnGhostWrapper_F) (args: t_I) (result_state: t_FnGhostWrapper_F) (result: t_Output) =
-  postcondition_mut_F self.f0 args result_state.f0 result
+function postcondition_mut_FnGhostWrapper_F (self: t_FnGhostWrapper_F) (args: t_I) (result_state: t_FnGhostWrapper_F) (result: t_Output) : bool
+ = postcondition_mut_F self.f0 args result_state.f0 result
 
-meta "rewrite_def" predicate postcondition_mut_FnGhostWrapper_F
+meta "rewrite_def" function postcondition_mut_FnGhostWrapper_F
 
 meta "compute_max_steps" 1000000
 

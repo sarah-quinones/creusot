@@ -6,18 +6,18 @@ module M_f
   
   type t_IntoIter_unit
   
-  predicate inv_Seq_unit [@inline:trivial] (_1: Seq.seq ()) = true
+  function inv_Seq_unit [@inline:trivial] (_1: Seq.seq ()) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_unit
+  meta "rewrite_def" function inv_Seq_unit
   
-  predicate invariant_array_unit_1 (self: Slice64.array ()) =
-    inv_Seq_unit (Slice64.view self) /\ Seq.length (Slice64.view self) = UInt64.t'int (1: UInt64.t)
+  function invariant_array_unit_1 (self: Slice64.array ()) : bool = inv_Seq_unit (Slice64.view self)
+    /\ Seq.length (Slice64.view self) = UInt64.t'int (1: UInt64.t)
   
-  predicate inv_array_unit_1 [@inline:trivial] (_1: Slice64.array ()) = invariant_array_unit_1 _1
+  function inv_array_unit_1 [@inline:trivial] (_1: Slice64.array ()) : bool = invariant_array_unit_1 _1
   
-  meta "rewrite_def" predicate inv_array_unit_1
+  meta "rewrite_def" function inv_array_unit_1
   
-  predicate inv_IntoIter_unit (_1: t_IntoIter_unit)
+  function inv_IntoIter_unit (_1: t_IntoIter_unit) : bool
   
   function view_IntoIter_unit (self: t_IntoIter_unit) : Seq.seq ()
   
@@ -57,9 +57,9 @@ module M_impl_FromIterator_for_S__from_iter (* <S as std::iter::FromIterator<()>
   
   type t_I
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate resolve_I (_1: t_I)
+  function resolve_I (_1: t_I) : bool
   
   meta "compute_max_steps" 1000000
   
@@ -77,27 +77,27 @@ end
 module M_impl_FromIterator_for_S__from_iter__refines (* <S as std::iter::FromIterator<()>> *)
   type t_I
   
-  predicate inv_I (_1: t_I)
+  function inv_I (_1: t_I) : bool
   
-  predicate precondition_into_iter (self: ()) (args: t_I)
+  function precondition_into_iter (self: ()) (args: t_I) : bool
   
   axiom precondition_fndef: forall args: t_I [precondition_into_iter () args]. (let self = args in false)
       -> precondition_into_iter () args
   
   type t_IntoIter
   
-  predicate inv_IntoIter (_1: t_IntoIter)
+  function inv_IntoIter (_1: t_IntoIter) : bool
   
-  predicate postcondition_into_iter (self: ()) (args: t_I) (result: t_IntoIter)
+  function postcondition_into_iter (self: ()) (args: t_I) (result: t_IntoIter) : bool
   
   axiom postcondition_fndef:
     forall args: t_I, result: t_IntoIter [postcondition_into_iter () args result]. postcondition_into_iter () args result
       -> (let self = args in inv_IntoIter result)
   
-  predicate postcondition_once_into_iter (self: ()) (args: t_I) (result: t_IntoIter) =
+  function postcondition_once_into_iter (self: ()) (args: t_I) (result: t_IntoIter) : bool =
     postcondition_into_iter self args result
   
-  meta "rewrite_def" predicate postcondition_once_into_iter
+  meta "rewrite_def" function postcondition_once_into_iter
   
   let into_iter_I (self: t_I) (return (x: t_IntoIter)) =
   {[@stop_split] [@expl:into_iter requires] precondition_into_iter () self}

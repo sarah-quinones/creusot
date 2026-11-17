@@ -6,31 +6,31 @@ type t_FnGhostWrapper_F = { f0: t_F }
 
 type t_I
 
-predicate inv_F (_1: t_F)
+function inv_F (_1: t_F) : bool
 
-predicate inv_FnGhostWrapper_F (_1: t_FnGhostWrapper_F)
+function inv_FnGhostWrapper_F (_1: t_FnGhostWrapper_F) : bool
 
 axiom inv_axiom [@rewrite]: forall _1: t_FnGhostWrapper_F [inv_FnGhostWrapper_F _1]. inv_FnGhostWrapper_F _1
     = inv_F _1.f0
 
-predicate inv_I (_1: t_I)
+function inv_I (_1: t_I) : bool
 
-predicate precondition_F (self: t_F) (args: t_I)
+function precondition_F (self: t_F) (args: t_I) : bool
 
-predicate precondition_FnGhostWrapper_F (self: t_FnGhostWrapper_F) (args: t_I) = precondition_F self.f0 args
+function precondition_FnGhostWrapper_F (self: t_FnGhostWrapper_F) (args: t_I) : bool = precondition_F self.f0 args
 
-meta "rewrite_def" predicate precondition_FnGhostWrapper_F
+meta "rewrite_def" function precondition_FnGhostWrapper_F
 
 type t_Output
 
-predicate inv_Output (_1: t_Output)
+function inv_Output (_1: t_Output) : bool
 
-predicate postcondition_once_F (self: t_F) (args: t_I) (result: t_Output)
+function postcondition_once_F (self: t_F) (args: t_I) (result: t_Output) : bool
 
-predicate postcondition_once_FnGhostWrapper_F (self: t_FnGhostWrapper_F) (args: t_I) (result: t_Output) =
+function postcondition_once_FnGhostWrapper_F (self: t_FnGhostWrapper_F) (args: t_I) (result: t_Output) : bool =
   postcondition_once_F self.f0 args result
 
-meta "rewrite_def" predicate postcondition_once_FnGhostWrapper_F
+meta "rewrite_def" function postcondition_once_FnGhostWrapper_F
 
 meta "compute_max_steps" 1000000
 

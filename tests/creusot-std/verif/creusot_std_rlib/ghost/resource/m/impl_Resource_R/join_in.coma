@@ -29,7 +29,7 @@ type t_Option_R = None | Some t_R
 
 function op_R (self: t_R) (other: t_R) : t_Option_R
 
-predicate incl_R (self: t_R) (other: t_R)
+function incl_R (self: t_R) (other: t_R) : bool
 
 axiom incl_R_spec: forall self: t_R, other: t_R [incl_R self other]. incl_R self other
     = (exists factor: t_R. op_R self factor = Some other)
@@ -65,9 +65,9 @@ let join_R (self: t_Resource_R) (other: t_Resource_R) (return (x: t_Resource_R))
     = op_R (view_Resource_R self) (view_Resource_R other))}
     (! return {result}) ]
 
-predicate resolve_refmut_Resource_R [@inline:trivial] (_1: MutBorrow.t t_Resource_R) = _1.final = _1.current
+function resolve_refmut_Resource_R [@inline:trivial] (_1: MutBorrow.t t_Resource_R) : bool = _1.final = _1.current
 
-meta "rewrite_def" predicate resolve_refmut_Resource_R
+meta "rewrite_def" function resolve_refmut_Resource_R
 
 meta "compute_max_steps" 1000000
 

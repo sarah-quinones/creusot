@@ -14,9 +14,9 @@ function val_PositiveReal (self: t_Resource_PositiveReal) : t_PositiveReal
 
 function frac (self: t_LifetimeToken) : t_PositiveReal = val_PositiveReal self.f0
 
-predicate gt_log_Real [@inline:trivial] (self: Real.real) (other: Real.real) = Real.(<) other self
+function gt_log_Real [@inline:trivial] (self: Real.real) (other: Real.real) : bool = Real.(<) other self
 
-meta "rewrite_def" predicate gt_log_Real
+meta "rewrite_def" function gt_log_Real
 
 function to_real (self: t_PositiveReal) : Real.real
 

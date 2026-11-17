@@ -7,17 +7,17 @@ module M_common__trait_ExactSizeIterator__is_empty
   
   type t_Self
   
-  predicate inv_Self (_1: t_Self)
+  function inv_Self (_1: t_Self) : bool
   
-  predicate invariant_ref_Self [@inline:trivial] (self: t_Self) = inv_Self self
+  function invariant_ref_Self [@inline:trivial] (self: t_Self) : bool = inv_Self self
   
-  meta "rewrite_def" predicate invariant_ref_Self
+  meta "rewrite_def" function invariant_ref_Self
   
-  predicate inv_ref_Self [@inline:trivial] (_1: t_Self) = invariant_ref_Self _1
+  function inv_ref_Self [@inline:trivial] (_1: t_Self) : bool = invariant_ref_Self _1
   
-  meta "rewrite_def" predicate inv_ref_Self
+  meta "rewrite_def" function inv_ref_Self
   
-  predicate precondition_len (self: ()) (args: t_Self)
+  function precondition_len (self: ()) (args: t_Self) : bool
   
   axiom precondition_fndef: forall args: t_Self [precondition_len () args]. (let self = args in inv_ref_Self self)
       -> precondition_len () args
@@ -28,7 +28,7 @@ module M_common__trait_ExactSizeIterator__is_empty
   
   type t_Item
   
-  predicate produces_Self (self: t_Self) (visited: Seq.seq t_Item) (o: t_Self)
+  function produces_Self (self: t_Self) (visited: Seq.seq t_Item) (o: t_Self) : bool
   
   function produces_trans_Self (a: t_Self) (ab: Seq.seq t_Item) (b: t_Self) (bc: Seq.seq t_Item) (c: t_Self) : ()
   
@@ -40,9 +40,9 @@ module M_common__trait_ExactSizeIterator__is_empty
   
   axiom produces_refl_Self_spec: forall self: t_Self. produces_Self self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_Self (self: MutBorrow.t t_Self)
+  function completed_Self (self: MutBorrow.t t_Self) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_Self, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -53,16 +53,16 @@ module M_common__trait_ExactSizeIterator__is_empty
         | None -> true
         end)
   
-  predicate precondition_size_hint (self: ()) (args: t_Self)
+  function precondition_size_hint (self: ()) (args: t_Self) : bool
   
   axiom precondition_fndef'0:
     forall args: t_Self [precondition_size_hint () args]. (let self = args in inv_ref_Self self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_Self (self: t_Self) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -71,15 +71,16 @@ module M_common__trait_ExactSizeIterator__is_empty
     {[@stop_split] [@expl:size_hint ensures] postcondition_once_size_hint () self result}
       (! return {result}) ]
   
-  predicate postcondition_len (self: ()) (args: t_Self) (result: UInt64.t)
+  function postcondition_len (self: ()) (args: t_Self) (result: UInt64.t) : bool
   
   axiom postcondition_fndef'0:
     forall args: t_Self, result: UInt64.t [postcondition_len () args result]. postcondition_len () args result
       -> (let self = args in postcondition_size_hint () self { f0 = result; f1 = Some result })
   
-  predicate postcondition_once_len (self: ()) (args: t_Self) (result: UInt64.t) = postcondition_len self args result
+  function postcondition_once_len (self: ()) (args: t_Self) (result: UInt64.t) : bool =
+    postcondition_len self args result
   
-  meta "rewrite_def" predicate postcondition_once_len
+  meta "rewrite_def" function postcondition_once_len
   
   let len_Self (self: t_Self) (return (x: UInt64.t)) = {[@stop_split] [@expl:len requires] precondition_len () self}
     any
@@ -117,7 +118,7 @@ module M_common__trait_ExactSizeIterator__len
   
   type t_Item
   
-  predicate produces_Self (self: t_Self) (visited: Seq.seq t_Item) (o: t_Self)
+  function produces_Self (self: t_Self) (visited: Seq.seq t_Item) (o: t_Self) : bool
   
   function produces_trans_Self (a: t_Self) (ab: Seq.seq t_Item) (b: t_Self) (bc: Seq.seq t_Item) (c: t_Self) : ()
   
@@ -129,9 +130,9 @@ module M_common__trait_ExactSizeIterator__len
   
   axiom produces_refl_Self_spec: forall self: t_Self. produces_Self self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_Self (self: MutBorrow.t t_Self)
+  function completed_Self (self: MutBorrow.t t_Self) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_Self, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -142,25 +143,25 @@ module M_common__trait_ExactSizeIterator__len
         | None -> true
         end)
   
-  predicate inv_Self (_1: t_Self)
+  function inv_Self (_1: t_Self) : bool
   
-  predicate invariant_ref_Self [@inline:trivial] (self: t_Self) = inv_Self self
+  function invariant_ref_Self [@inline:trivial] (self: t_Self) : bool = inv_Self self
   
-  meta "rewrite_def" predicate invariant_ref_Self
+  meta "rewrite_def" function invariant_ref_Self
   
-  predicate inv_ref_Self [@inline:trivial] (_1: t_Self) = invariant_ref_Self _1
+  function inv_ref_Self [@inline:trivial] (_1: t_Self) : bool = invariant_ref_Self _1
   
-  meta "rewrite_def" predicate inv_ref_Self
+  meta "rewrite_def" function inv_ref_Self
   
-  predicate precondition_size_hint (self: ()) (args: t_Self)
+  function precondition_size_hint (self: ()) (args: t_Self) : bool
   
   axiom precondition_fndef: forall args: t_Self [precondition_size_hint () args]. (let self = args in inv_ref_Self self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_Self (self: t_Self) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -258,7 +259,7 @@ module M_impl_ExactSizeIterator_for_Zip_A_B__size_hint_exact (* <Zip<A, B> as co
   
   type t_Item
   
-  predicate produces_A (self: t_A) (visited: Seq.seq t_Item) (o: t_A)
+  function produces_A (self: t_A) (visited: Seq.seq t_Item) (o: t_A) : bool
   
   function produces_trans_A (a'0: t_A) (ab: Seq.seq t_Item) (b'0: t_A) (bc: Seq.seq t_Item) (c: t_A) : ()
   
@@ -270,9 +271,9 @@ module M_impl_ExactSizeIterator_for_Zip_A_B__size_hint_exact (* <Zip<A, B> as co
   
   axiom produces_refl_A_spec: forall self: t_A. produces_A self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_A (self: MutBorrow.t t_A)
+  function completed_A (self: MutBorrow.t t_A) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_A) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_A) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_A, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -285,7 +286,7 @@ module M_impl_ExactSizeIterator_for_Zip_A_B__size_hint_exact (* <Zip<A, B> as co
   
   type t_Item'0
   
-  predicate produces_B (self: t_B) (visited: Seq.seq t_Item'0) (o: t_B)
+  function produces_B (self: t_B) (visited: Seq.seq t_Item'0) (o: t_B) : bool
   
   function produces_trans_B (a'0: t_B) (ab: Seq.seq t_Item'0) (b'0: t_B) (bc: Seq.seq t_Item'0) (c: t_B) : ()
   
@@ -297,9 +298,9 @@ module M_impl_ExactSizeIterator_for_Zip_A_B__size_hint_exact (* <Zip<A, B> as co
   
   axiom produces_refl_B_spec: forall self: t_B. produces_B self (Seq.empty: Seq.seq t_Item'0) self
   
-  predicate completed_B (self: MutBorrow.t t_B)
+  function completed_B (self: MutBorrow.t t_B) : bool
   
-  predicate postcondition_size_hint'0 (self: ()) (args: t_B) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint'0 (self: ()) (args: t_B) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef'0:
     forall args: t_B, result: tup2_usize_Option_usize [postcondition_size_hint'0 () args result]. postcondition_size_hint'0 () args result
@@ -310,13 +311,13 @@ module M_impl_ExactSizeIterator_for_Zip_A_B__size_hint_exact (* <Zip<A, B> as co
         | None -> true
         end)
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   type tup2_Option_usize_Option_usize = { f0'0: t_Option_usize; f1'0: t_Option_usize }
   
-  predicate postcondition_size_hint'1 (self: ()) (args: t_Zip_A_B) (result: tup2_usize_Option_usize) =
+  function postcondition_size_hint'1 (self: ()) (args: t_Zip_A_B) (result: tup2_usize_Option_usize) : bool =
     let self'0 = args in exists ra: tup2_usize_Option_usize, rb: tup2_usize_Option_usize. postcondition_size_hint () self'0.a ra
       /\ postcondition_size_hint'0 () self'0.b rb
       /\ (UInt64.t'int ra.f0 <= UInt64.t'int rb.f0 -> result.f0 = ra.f0)
@@ -329,11 +330,11 @@ module M_impl_ExactSizeIterator_for_Zip_A_B__size_hint_exact (* <Zip<A, B> as co
         | {f0'0 = None; f1'0 = None} -> result.f1 = None
         end
   
-  meta "rewrite_def" predicate postcondition_size_hint'1
+  meta "rewrite_def" function postcondition_size_hint'1
   
   type tup2_Item_Item = { f0'1: t_Item; f1'1: t_Item'0 }
   
-  predicate produces_Zip_A_B (self: t_Zip_A_B) (visited: Seq.seq tup2_Item_Item) (tl: t_Zip_A_B) =
+  function produces_Zip_A_B (self: t_Zip_A_B) (visited: Seq.seq tup2_Item_Item) (tl: t_Zip_A_B) : bool =
     exists p1: Seq.seq t_Item, p2: Seq.seq t_Item'0. Seq.length p1 = Seq.length p2
       /\ Seq.length p2 = Seq.length visited
       /\ (forall i: int. 0 <= i /\ i < Seq.length visited
@@ -352,39 +353,39 @@ module M_impl_ExactSizeIterator_for_Zip_A_B__size_hint_exact (* <Zip<A, B> as co
   axiom produces_refl_Zip_A_B_spec:
     forall self: t_Zip_A_B. produces_Zip_A_B self (Seq.empty: Seq.seq tup2_Item_Item) self
   
-  predicate inv_A (_1: t_A)
+  function inv_A (_1: t_A) : bool
   
-  predicate inv_B (_1: t_B)
+  function inv_B (_1: t_B) : bool
   
-  predicate inv_Zip_A_B (_1: t_Zip_A_B)
+  function inv_Zip_A_B (_1: t_Zip_A_B) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Zip_A_B [inv_Zip_A_B _1]. inv_Zip_A_B _1 = (inv_A _1.a /\ inv_B _1.b)
   
-  predicate invariant_ref_Zip_A_B [@inline:trivial] (self: t_Zip_A_B) = inv_Zip_A_B self
+  function invariant_ref_Zip_A_B [@inline:trivial] (self: t_Zip_A_B) : bool = inv_Zip_A_B self
   
-  meta "rewrite_def" predicate invariant_ref_Zip_A_B
+  meta "rewrite_def" function invariant_ref_Zip_A_B
   
-  predicate inv_ref_Zip_A_B [@inline:trivial] (_1: t_Zip_A_B) = invariant_ref_Zip_A_B _1
+  function inv_ref_Zip_A_B [@inline:trivial] (_1: t_Zip_A_B) : bool = invariant_ref_Zip_A_B _1
   
-  meta "rewrite_def" predicate inv_ref_Zip_A_B
+  meta "rewrite_def" function inv_ref_Zip_A_B
   
-  predicate invariant_ref_A [@inline:trivial] (self: t_A) = inv_A self
+  function invariant_ref_A [@inline:trivial] (self: t_A) : bool = inv_A self
   
-  meta "rewrite_def" predicate invariant_ref_A
+  meta "rewrite_def" function invariant_ref_A
   
-  predicate inv_ref_A [@inline:trivial] (_1: t_A) = invariant_ref_A _1
+  function inv_ref_A [@inline:trivial] (_1: t_A) : bool = invariant_ref_A _1
   
-  meta "rewrite_def" predicate inv_ref_A
+  meta "rewrite_def" function inv_ref_A
   
-  predicate precondition_size_hint (self: ()) (args: t_A)
+  function precondition_size_hint (self: ()) (args: t_A) : bool
   
   axiom precondition_fndef: forall args: t_A [precondition_size_hint () args]. (let self = args in inv_ref_A self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_A) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_A) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_A (self: t_A) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -393,23 +394,23 @@ module M_impl_ExactSizeIterator_for_Zip_A_B__size_hint_exact (* <Zip<A, B> as co
     {[@stop_split] [@expl:size_hint ensures] postcondition_once_size_hint () self result}
       (! return {result}) ]
   
-  predicate invariant_ref_B [@inline:trivial] (self: t_B) = inv_B self
+  function invariant_ref_B [@inline:trivial] (self: t_B) : bool = inv_B self
   
-  meta "rewrite_def" predicate invariant_ref_B
+  meta "rewrite_def" function invariant_ref_B
   
-  predicate inv_ref_B [@inline:trivial] (_1: t_B) = invariant_ref_B _1
+  function inv_ref_B [@inline:trivial] (_1: t_B) : bool = invariant_ref_B _1
   
-  meta "rewrite_def" predicate inv_ref_B
+  meta "rewrite_def" function inv_ref_B
   
-  predicate precondition_size_hint'0 (self: ()) (args: t_B)
+  function precondition_size_hint'0 (self: ()) (args: t_B) : bool
   
   axiom precondition_fndef'0: forall args: t_B [precondition_size_hint'0 () args]. (let self = args in inv_ref_B self)
       -> precondition_size_hint'0 () args
   
-  predicate postcondition_once_size_hint'0 (self: ()) (args: t_B) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint'0 (self: ()) (args: t_B) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint'0 self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint'0
+  meta "rewrite_def" function postcondition_once_size_hint'0
   
   let size_hint_B (self: t_B) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint'0 () self}
@@ -476,7 +477,7 @@ module M_impl_ExactSizeIterator_for_Zip_A_B__size_hint_exact__refines (* <Zip<A,
   
   type t_Item
   
-  predicate produces_A (self: t_A) (visited: Seq.seq t_Item) (o: t_A)
+  function produces_A (self: t_A) (visited: Seq.seq t_Item) (o: t_A) : bool
   
   function produces_trans_A (a'0: t_A) (ab: Seq.seq t_Item) (b'0: t_A) (bc: Seq.seq t_Item) (c: t_A) : ()
   
@@ -488,9 +489,9 @@ module M_impl_ExactSizeIterator_for_Zip_A_B__size_hint_exact__refines (* <Zip<A,
   
   axiom produces_refl_A_spec: forall self: t_A. produces_A self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_A (self: MutBorrow.t t_A)
+  function completed_A (self: MutBorrow.t t_A) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_A) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_A) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_A, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -503,7 +504,7 @@ module M_impl_ExactSizeIterator_for_Zip_A_B__size_hint_exact__refines (* <Zip<A,
   
   type t_Item'0
   
-  predicate produces_B (self: t_B) (visited: Seq.seq t_Item'0) (o: t_B)
+  function produces_B (self: t_B) (visited: Seq.seq t_Item'0) (o: t_B) : bool
   
   function produces_trans_B (a'0: t_B) (ab: Seq.seq t_Item'0) (b'0: t_B) (bc: Seq.seq t_Item'0) (c: t_B) : ()
   
@@ -515,9 +516,9 @@ module M_impl_ExactSizeIterator_for_Zip_A_B__size_hint_exact__refines (* <Zip<A,
   
   axiom produces_refl_B_spec: forall self: t_B. produces_B self (Seq.empty: Seq.seq t_Item'0) self
   
-  predicate completed_B (self: MutBorrow.t t_B)
+  function completed_B (self: MutBorrow.t t_B) : bool
   
-  predicate postcondition_size_hint'0 (self: ()) (args: t_B) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint'0 (self: ()) (args: t_B) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef'0:
     forall args: t_B, result: tup2_usize_Option_usize [postcondition_size_hint'0 () args result]. postcondition_size_hint'0 () args result
@@ -528,13 +529,13 @@ module M_impl_ExactSizeIterator_for_Zip_A_B__size_hint_exact__refines (* <Zip<A,
         | None -> true
         end)
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   type tup2_Option_usize_Option_usize = { f0'0: t_Option_usize; f1'0: t_Option_usize }
   
-  predicate postcondition_size_hint'1 (self: ()) (args: t_Zip_A_B) (result: tup2_usize_Option_usize) =
+  function postcondition_size_hint'1 (self: ()) (args: t_Zip_A_B) (result: tup2_usize_Option_usize) : bool =
     let self'0 = args in exists ra: tup2_usize_Option_usize, rb: tup2_usize_Option_usize. postcondition_size_hint () self'0.a ra
       /\ postcondition_size_hint'0 () self'0.b rb
       /\ (UInt64.t'int ra.f0 <= UInt64.t'int rb.f0 -> result.f0 = ra.f0)
@@ -547,11 +548,11 @@ module M_impl_ExactSizeIterator_for_Zip_A_B__size_hint_exact__refines (* <Zip<A,
         | {f0'0 = None; f1'0 = None} -> result.f1 = None
         end
   
-  meta "rewrite_def" predicate postcondition_size_hint'1
+  meta "rewrite_def" function postcondition_size_hint'1
   
   type tup2_Item_Item = { f0'1: t_Item; f1'1: t_Item'0 }
   
-  predicate produces_Zip_A_B (self: t_Zip_A_B) (visited: Seq.seq tup2_Item_Item) (tl: t_Zip_A_B) =
+  function produces_Zip_A_B (self: t_Zip_A_B) (visited: Seq.seq tup2_Item_Item) (tl: t_Zip_A_B) : bool =
     exists p1: Seq.seq t_Item, p2: Seq.seq t_Item'0. Seq.length p1 = Seq.length p2
       /\ Seq.length p2 = Seq.length visited
       /\ (forall i: int. 0 <= i /\ i < Seq.length visited
@@ -570,39 +571,39 @@ module M_impl_ExactSizeIterator_for_Zip_A_B__size_hint_exact__refines (* <Zip<A,
   axiom produces_refl_Zip_A_B_spec:
     forall self: t_Zip_A_B. produces_Zip_A_B self (Seq.empty: Seq.seq tup2_Item_Item) self
   
-  predicate inv_A (_1: t_A)
+  function inv_A (_1: t_A) : bool
   
-  predicate inv_B (_1: t_B)
+  function inv_B (_1: t_B) : bool
   
-  predicate inv_Zip_A_B (_1: t_Zip_A_B)
+  function inv_Zip_A_B (_1: t_Zip_A_B) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Zip_A_B [inv_Zip_A_B _1]. inv_Zip_A_B _1 = (inv_A _1.a /\ inv_B _1.b)
   
-  predicate invariant_ref_Zip_A_B [@inline:trivial] (self: t_Zip_A_B) = inv_Zip_A_B self
+  function invariant_ref_Zip_A_B [@inline:trivial] (self: t_Zip_A_B) : bool = inv_Zip_A_B self
   
-  meta "rewrite_def" predicate invariant_ref_Zip_A_B
+  meta "rewrite_def" function invariant_ref_Zip_A_B
   
-  predicate inv_ref_Zip_A_B [@inline:trivial] (_1: t_Zip_A_B) = invariant_ref_Zip_A_B _1
+  function inv_ref_Zip_A_B [@inline:trivial] (_1: t_Zip_A_B) : bool = invariant_ref_Zip_A_B _1
   
-  meta "rewrite_def" predicate inv_ref_Zip_A_B
+  meta "rewrite_def" function inv_ref_Zip_A_B
   
-  predicate invariant_ref_A [@inline:trivial] (self: t_A) = inv_A self
+  function invariant_ref_A [@inline:trivial] (self: t_A) : bool = inv_A self
   
-  meta "rewrite_def" predicate invariant_ref_A
+  meta "rewrite_def" function invariant_ref_A
   
-  predicate inv_ref_A [@inline:trivial] (_1: t_A) = invariant_ref_A _1
+  function inv_ref_A [@inline:trivial] (_1: t_A) : bool = invariant_ref_A _1
   
-  meta "rewrite_def" predicate inv_ref_A
+  meta "rewrite_def" function inv_ref_A
   
-  predicate precondition_size_hint (self: ()) (args: t_A)
+  function precondition_size_hint (self: ()) (args: t_A) : bool
   
   axiom precondition_fndef: forall args: t_A [precondition_size_hint () args]. (let self = args in inv_ref_A self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_A) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_A) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_A (self: t_A) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -611,23 +612,23 @@ module M_impl_ExactSizeIterator_for_Zip_A_B__size_hint_exact__refines (* <Zip<A,
     {[@stop_split] [@expl:size_hint ensures] postcondition_once_size_hint () self result}
       (! return {result}) ]
   
-  predicate invariant_ref_B [@inline:trivial] (self: t_B) = inv_B self
+  function invariant_ref_B [@inline:trivial] (self: t_B) : bool = inv_B self
   
-  meta "rewrite_def" predicate invariant_ref_B
+  meta "rewrite_def" function invariant_ref_B
   
-  predicate inv_ref_B [@inline:trivial] (_1: t_B) = invariant_ref_B _1
+  function inv_ref_B [@inline:trivial] (_1: t_B) : bool = invariant_ref_B _1
   
-  meta "rewrite_def" predicate inv_ref_B
+  meta "rewrite_def" function inv_ref_B
   
-  predicate precondition_size_hint'0 (self: ()) (args: t_B)
+  function precondition_size_hint'0 (self: ()) (args: t_B) : bool
   
   axiom precondition_fndef'0: forall args: t_B [precondition_size_hint'0 () args]. (let self = args in inv_ref_B self)
       -> precondition_size_hint'0 () args
   
-  predicate postcondition_once_size_hint'0 (self: ()) (args: t_B) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint'0 (self: ()) (args: t_B) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint'0 self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint'0
+  meta "rewrite_def" function postcondition_once_size_hint'0
   
   let size_hint_B (self: t_B) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint'0 () self}
@@ -672,11 +673,11 @@ module M_impl_Iterator_for_Zip_A_B__next (* <Zip<A, B> as common::Iterator> *)
   
   type t_Zip_A_B = { a: t_A; b: t_B }
   
-  predicate inv_A (_1: t_A)
+  function inv_A (_1: t_A) : bool
   
   type t_Item
   
-  predicate produces_A (self: t_A) (visited: Seq.seq t_Item) (o: t_A)
+  function produces_A (self: t_A) (visited: Seq.seq t_Item) (o: t_A) : bool
   
   function produces_trans_A (a'0: t_A) (ab: Seq.seq t_Item) (b'0: t_A) (bc: Seq.seq t_Item) (c: t_A) : ()
   
@@ -690,23 +691,23 @@ module M_impl_Iterator_for_Zip_A_B__next (* <Zip<A, B> as common::Iterator> *)
   
   type t_Option_Item = None | Some t_Item
   
-  predicate invariant_refmut_A [@inline:trivial] (self: MutBorrow.t t_A) = inv_A self.current /\ inv_A self.final
+  function invariant_refmut_A [@inline:trivial] (self: MutBorrow.t t_A) : bool = inv_A self.current /\ inv_A self.final
   
-  meta "rewrite_def" predicate invariant_refmut_A
+  meta "rewrite_def" function invariant_refmut_A
   
-  predicate inv_refmut_A [@inline:trivial] (_1: MutBorrow.t t_A) = invariant_refmut_A _1
+  function inv_refmut_A [@inline:trivial] (_1: MutBorrow.t t_A) : bool = invariant_refmut_A _1
   
-  meta "rewrite_def" predicate inv_refmut_A
+  meta "rewrite_def" function inv_refmut_A
   
-  predicate precondition_next (self: ()) (args: MutBorrow.t t_A)
+  function precondition_next (self: ()) (args: MutBorrow.t t_A) : bool
   
   axiom precondition_fndef:
     forall args: MutBorrow.t t_A [precondition_next () args]. (let self = args in inv_refmut_A self)
       -> precondition_next () args
   
-  predicate inv_Item (_1: t_Item)
+  function inv_Item (_1: t_Item) : bool
   
-  predicate inv_Option_Item (_1: t_Option_Item)
+  function inv_Option_Item (_1: t_Option_Item) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Option_Item [inv_Option_Item _1]. inv_Option_Item _1
       = match _1 with
@@ -714,9 +715,9 @@ module M_impl_Iterator_for_Zip_A_B__next (* <Zip<A, B> as common::Iterator> *)
         | Some f0 -> inv_Item f0
         end
   
-  predicate completed_A (self: MutBorrow.t t_A)
+  function completed_A (self: MutBorrow.t t_A) : bool
   
-  predicate postcondition_next (self: ()) (args: MutBorrow.t t_A) (result: t_Option_Item)
+  function postcondition_next (self: ()) (args: MutBorrow.t t_A) (result: t_Option_Item) : bool
   
   axiom postcondition_fndef:
     forall args: MutBorrow.t t_A, result: t_Option_Item [postcondition_next () args result]. postcondition_next () args result
@@ -726,10 +727,10 @@ module M_impl_Iterator_for_Zip_A_B__next (* <Zip<A, B> as common::Iterator> *)
         | Some v -> produces_A self.current (Seq.singleton v) self.final
         end)
   
-  predicate postcondition_once_next (self: ()) (args: MutBorrow.t t_A) (result: t_Option_Item) =
+  function postcondition_once_next (self: ()) (args: MutBorrow.t t_A) (result: t_Option_Item) : bool =
     postcondition_next self args result
   
-  meta "rewrite_def" predicate postcondition_once_next
+  meta "rewrite_def" function postcondition_once_next
   
   let next_A (self: MutBorrow.t t_A) (return (x: t_Option_Item)) =
   {[@stop_split] [@expl:next requires] precondition_next () self}
@@ -745,11 +746,11 @@ module M_impl_Iterator_for_Zip_A_B__next (* <Zip<A, B> as common::Iterator> *)
         end}
       any) ]
   
-  predicate inv_B (_1: t_B)
+  function inv_B (_1: t_B) : bool
   
   type t_Item'0
   
-  predicate produces_B (self: t_B) (visited: Seq.seq t_Item'0) (o: t_B)
+  function produces_B (self: t_B) (visited: Seq.seq t_Item'0) (o: t_B) : bool
   
   function produces_trans_B (a'0: t_B) (ab: Seq.seq t_Item'0) (b'0: t_B) (bc: Seq.seq t_Item'0) (c: t_B) : ()
   
@@ -763,23 +764,23 @@ module M_impl_Iterator_for_Zip_A_B__next (* <Zip<A, B> as common::Iterator> *)
   
   type t_Option_Item'0 = None'0 | Some'0 t_Item'0
   
-  predicate invariant_refmut_B [@inline:trivial] (self: MutBorrow.t t_B) = inv_B self.current /\ inv_B self.final
+  function invariant_refmut_B [@inline:trivial] (self: MutBorrow.t t_B) : bool = inv_B self.current /\ inv_B self.final
   
-  meta "rewrite_def" predicate invariant_refmut_B
+  meta "rewrite_def" function invariant_refmut_B
   
-  predicate inv_refmut_B [@inline:trivial] (_1: MutBorrow.t t_B) = invariant_refmut_B _1
+  function inv_refmut_B [@inline:trivial] (_1: MutBorrow.t t_B) : bool = invariant_refmut_B _1
   
-  meta "rewrite_def" predicate inv_refmut_B
+  meta "rewrite_def" function inv_refmut_B
   
-  predicate precondition_next'0 (self: ()) (args: MutBorrow.t t_B)
+  function precondition_next'0 (self: ()) (args: MutBorrow.t t_B) : bool
   
   axiom precondition_fndef'0:
     forall args: MutBorrow.t t_B [precondition_next'0 () args]. (let self = args in inv_refmut_B self)
       -> precondition_next'0 () args
   
-  predicate inv_Item'0 (_1: t_Item'0)
+  function inv_Item'0 (_1: t_Item'0) : bool
   
-  predicate inv_Option_Item'0 (_1: t_Option_Item'0)
+  function inv_Option_Item'0 (_1: t_Option_Item'0) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Option_Item'0 [inv_Option_Item'0 _1]. inv_Option_Item'0 _1
       = match _1 with
@@ -787,9 +788,9 @@ module M_impl_Iterator_for_Zip_A_B__next (* <Zip<A, B> as common::Iterator> *)
         | Some'0 f0 -> inv_Item'0 f0
         end
   
-  predicate completed_B (self: MutBorrow.t t_B)
+  function completed_B (self: MutBorrow.t t_B) : bool
   
-  predicate postcondition_next'0 (self: ()) (args: MutBorrow.t t_B) (result: t_Option_Item'0)
+  function postcondition_next'0 (self: ()) (args: MutBorrow.t t_B) (result: t_Option_Item'0) : bool
   
   axiom postcondition_fndef'0:
     forall args: MutBorrow.t t_B, result: t_Option_Item'0 [postcondition_next'0 () args result]. postcondition_next'0 () args result
@@ -799,10 +800,10 @@ module M_impl_Iterator_for_Zip_A_B__next (* <Zip<A, B> as common::Iterator> *)
         | Some'0 v -> produces_B self.current (Seq.singleton v) self.final
         end)
   
-  predicate postcondition_once_next'0 (self: ()) (args: MutBorrow.t t_B) (result: t_Option_Item'0) =
+  function postcondition_once_next'0 (self: ()) (args: MutBorrow.t t_B) (result: t_Option_Item'0) : bool =
     postcondition_next'0 self args result
   
-  meta "rewrite_def" predicate postcondition_once_next'0
+  meta "rewrite_def" function postcondition_once_next'0
   
   let next_B (self: MutBorrow.t t_B) (return (x: t_Option_Item'0)) =
   {[@stop_split] [@expl:next requires] precondition_next'0 () self}
@@ -810,22 +811,22 @@ module M_impl_Iterator_for_Zip_A_B__next (* <Zip<A, B> as common::Iterator> *)
     [ return (result: t_Option_Item'0) -> {[@stop_split] [@expl:next ensures] postcondition_once_next'0 () self result}
       (! return {result}) ]
   
-  predicate inv_Zip_A_B (_1: t_Zip_A_B)
+  function inv_Zip_A_B (_1: t_Zip_A_B) : bool
   
   axiom inv_axiom'1 [@rewrite]: forall _1: t_Zip_A_B [inv_Zip_A_B _1]. inv_Zip_A_B _1 = (inv_A _1.a /\ inv_B _1.b)
   
-  predicate invariant_refmut_Zip_A_B [@inline:trivial] (self: MutBorrow.t t_Zip_A_B) =
-    inv_Zip_A_B self.current /\ inv_Zip_A_B self.final
+  function invariant_refmut_Zip_A_B [@inline:trivial] (self: MutBorrow.t t_Zip_A_B) : bool = inv_Zip_A_B self.current
+    /\ inv_Zip_A_B self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Zip_A_B
+  meta "rewrite_def" function invariant_refmut_Zip_A_B
   
-  predicate inv_refmut_Zip_A_B [@inline:trivial] (_1: MutBorrow.t t_Zip_A_B) = invariant_refmut_Zip_A_B _1
+  function inv_refmut_Zip_A_B [@inline:trivial] (_1: MutBorrow.t t_Zip_A_B) : bool = invariant_refmut_Zip_A_B _1
   
-  meta "rewrite_def" predicate inv_refmut_Zip_A_B
+  meta "rewrite_def" function inv_refmut_Zip_A_B
   
-  predicate resolve_refmut_Zip_A_B [@inline:trivial] (_1: MutBorrow.t t_Zip_A_B) = _1.final = _1.current
+  function resolve_refmut_Zip_A_B [@inline:trivial] (_1: MutBorrow.t t_Zip_A_B) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Zip_A_B
+  meta "rewrite_def" function resolve_refmut_Zip_A_B
   
   let elim_Some'0 (_x: t_Option_Item'0) (return (f0: t_Item'0)) = any
     [ _k (f0: t_Item'0) -> {Some'0 f0 = _x} (! return {f0})
@@ -839,9 +840,9 @@ module M_impl_Iterator_for_Zip_A_B__next (* <Zip<A, B> as common::Iterator> *)
   
   type t_Option_tup2_Item_Item = None'1 | Some'1 tup2_Item_Item
   
-  predicate resolve_Item (_1: t_Item'0)
+  function resolve_Item (_1: t_Item'0) : bool
   
-  predicate resolve_Option_Item (_1: t_Option_Item'0)
+  function resolve_Option_Item (_1: t_Option_Item'0) : bool
   
   axiom resolve_axiom [@rewrite]: forall _1: t_Option_Item'0 [resolve_Option_Item _1]. resolve_Option_Item _1
       = match _1 with
@@ -849,9 +850,9 @@ module M_impl_Iterator_for_Zip_A_B__next (* <Zip<A, B> as common::Iterator> *)
         | Some'0 x0 -> resolve_Item x0
         end
   
-  predicate resolve_Item'0 (_1: t_Item)
+  function resolve_Item'0 (_1: t_Item) : bool
   
-  predicate resolve_Option_Item'0 (_1: t_Option_Item)
+  function resolve_Option_Item'0 (_1: t_Option_Item) : bool
   
   axiom resolve_axiom'0 [@rewrite]: forall _1: t_Option_Item [resolve_Option_Item'0 _1]. resolve_Option_Item'0 _1
       = match _1 with
@@ -859,11 +860,11 @@ module M_impl_Iterator_for_Zip_A_B__next (* <Zip<A, B> as common::Iterator> *)
         | Some x0 -> resolve_Item'0 x0
         end
   
-  predicate inv_tup2_Item_Item [@inline:trivial] (_1: tup2_Item_Item) = inv_Item _1.f0 /\ inv_Item'0 _1.f1
+  function inv_tup2_Item_Item [@inline:trivial] (_1: tup2_Item_Item) : bool = inv_Item _1.f0 /\ inv_Item'0 _1.f1
   
-  meta "rewrite_def" predicate inv_tup2_Item_Item
+  meta "rewrite_def" function inv_tup2_Item_Item
   
-  predicate inv_Option_tup2_Item_Item (_1: t_Option_tup2_Item_Item)
+  function inv_Option_tup2_Item_Item (_1: t_Option_tup2_Item_Item) : bool
   
   axiom inv_axiom'2 [@rewrite]:
     forall _1: t_Option_tup2_Item_Item [inv_Option_tup2_Item_Item _1]. inv_Option_tup2_Item_Item _1
@@ -872,14 +873,14 @@ module M_impl_Iterator_for_Zip_A_B__next (* <Zip<A, B> as common::Iterator> *)
         | Some'1 f0'0 -> inv_tup2_Item_Item f0'0
         end
   
-  predicate completed_Zip_A_B (self: MutBorrow.t t_Zip_A_B) =
+  function completed_Zip_A_B (self: MutBorrow.t t_Zip_A_B) : bool =
     completed_A (MutBorrow.borrow_logic self.current.a self.final.a (MutBorrow.inherit_id (MutBorrow.get_id self) 0))
       /\ self.current.b = self.final.b
     \/ (exists x: t_Item. produces_A self.current.a (Seq.singleton x) self.final.a
       /\ resolve_Item'0 x
       /\ completed_B (MutBorrow.borrow_logic self.current.b self.final.b (MutBorrow.inherit_id (MutBorrow.get_id self) 1)))
   
-  predicate produces_Zip_A_B (self: t_Zip_A_B) (visited: Seq.seq tup2_Item_Item) (tl: t_Zip_A_B) =
+  function produces_Zip_A_B (self: t_Zip_A_B) (visited: Seq.seq tup2_Item_Item) (tl: t_Zip_A_B) : bool =
     exists p1: Seq.seq t_Item, p2: Seq.seq t_Item'0. Seq.length p1 = Seq.length p2
       /\ Seq.length p2 = Seq.length visited
       /\ (forall i: int. 0 <= i /\ i < Seq.length visited
@@ -963,26 +964,26 @@ module M_impl_Iterator_for_Zip_A_B__next__refines (* <Zip<A, B> as common::Itera
   
   type t_Zip_A_B = { a: t_A; b: t_B }
   
-  predicate inv_A (_1: t_A)
+  function inv_A (_1: t_A) : bool
   
-  predicate inv_B (_1: t_B)
+  function inv_B (_1: t_B) : bool
   
-  predicate inv_Zip_A_B (_1: t_Zip_A_B)
+  function inv_Zip_A_B (_1: t_Zip_A_B) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Zip_A_B [inv_Zip_A_B _1]. inv_Zip_A_B _1 = (inv_A _1.a /\ inv_B _1.b)
   
-  predicate invariant_refmut_Zip_A_B [@inline:trivial] (self: MutBorrow.t t_Zip_A_B) =
-    inv_Zip_A_B self.current /\ inv_Zip_A_B self.final
+  function invariant_refmut_Zip_A_B [@inline:trivial] (self: MutBorrow.t t_Zip_A_B) : bool = inv_Zip_A_B self.current
+    /\ inv_Zip_A_B self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Zip_A_B
+  meta "rewrite_def" function invariant_refmut_Zip_A_B
   
-  predicate inv_refmut_Zip_A_B [@inline:trivial] (_1: MutBorrow.t t_Zip_A_B) = invariant_refmut_Zip_A_B _1
+  function inv_refmut_Zip_A_B [@inline:trivial] (_1: MutBorrow.t t_Zip_A_B) : bool = invariant_refmut_Zip_A_B _1
   
-  meta "rewrite_def" predicate inv_refmut_Zip_A_B
+  meta "rewrite_def" function inv_refmut_Zip_A_B
   
   type t_Item
   
-  predicate produces_A (self: t_A) (visited: Seq.seq t_Item) (o: t_A)
+  function produces_A (self: t_A) (visited: Seq.seq t_Item) (o: t_A) : bool
   
   function produces_trans_A (a'0: t_A) (ab: Seq.seq t_Item) (b'0: t_A) (bc: Seq.seq t_Item) (c: t_A) : ()
   
@@ -996,7 +997,7 @@ module M_impl_Iterator_for_Zip_A_B__next__refines (* <Zip<A, B> as common::Itera
   
   type t_Item'0
   
-  predicate produces_B (self: t_B) (visited: Seq.seq t_Item'0) (o: t_B)
+  function produces_B (self: t_B) (visited: Seq.seq t_Item'0) (o: t_B) : bool
   
   function produces_trans_B (a'0: t_B) (ab: Seq.seq t_Item'0) (b'0: t_B) (bc: Seq.seq t_Item'0) (c: t_B) : ()
   
@@ -1012,15 +1013,15 @@ module M_impl_Iterator_for_Zip_A_B__next__refines (* <Zip<A, B> as common::Itera
   
   type t_Option_tup2_Item_Item = None | Some tup2_Item_Item
   
-  predicate inv_Item (_1: t_Item)
+  function inv_Item (_1: t_Item) : bool
   
-  predicate inv_Item'0 (_1: t_Item'0)
+  function inv_Item'0 (_1: t_Item'0) : bool
   
-  predicate inv_tup2_Item_Item [@inline:trivial] (_1: tup2_Item_Item) = inv_Item _1.f0 /\ inv_Item'0 _1.f1
+  function inv_tup2_Item_Item [@inline:trivial] (_1: tup2_Item_Item) : bool = inv_Item _1.f0 /\ inv_Item'0 _1.f1
   
-  meta "rewrite_def" predicate inv_tup2_Item_Item
+  meta "rewrite_def" function inv_tup2_Item_Item
   
-  predicate inv_Option_tup2_Item_Item (_1: t_Option_tup2_Item_Item)
+  function inv_Option_tup2_Item_Item (_1: t_Option_tup2_Item_Item) : bool
   
   axiom inv_axiom'0 [@rewrite]:
     forall _1: t_Option_tup2_Item_Item [inv_Option_tup2_Item_Item _1]. inv_Option_tup2_Item_Item _1
@@ -1029,20 +1030,20 @@ module M_impl_Iterator_for_Zip_A_B__next__refines (* <Zip<A, B> as common::Itera
         | Some f0'0 -> inv_tup2_Item_Item f0'0
         end
   
-  predicate completed_A (self: MutBorrow.t t_A)
+  function completed_A (self: MutBorrow.t t_A) : bool
   
-  predicate resolve_Item (_1: t_Item)
+  function resolve_Item (_1: t_Item) : bool
   
-  predicate completed_B (self: MutBorrow.t t_B)
+  function completed_B (self: MutBorrow.t t_B) : bool
   
-  predicate completed_Zip_A_B (self: MutBorrow.t t_Zip_A_B) =
+  function completed_Zip_A_B (self: MutBorrow.t t_Zip_A_B) : bool =
     completed_A (MutBorrow.borrow_logic self.current.a self.final.a (MutBorrow.inherit_id (MutBorrow.get_id self) 0))
       /\ self.current.b = self.final.b
     \/ (exists x: t_Item. produces_A self.current.a (Seq.singleton x) self.final.a
       /\ resolve_Item x
       /\ completed_B (MutBorrow.borrow_logic self.current.b self.final.b (MutBorrow.inherit_id (MutBorrow.get_id self) 1)))
   
-  predicate produces_Zip_A_B (self: t_Zip_A_B) (visited: Seq.seq tup2_Item_Item) (tl: t_Zip_A_B) =
+  function produces_Zip_A_B (self: t_Zip_A_B) (visited: Seq.seq tup2_Item_Item) (tl: t_Zip_A_B) : bool =
     exists p1: Seq.seq t_Item, p2: Seq.seq t_Item'0. Seq.length p1 = Seq.length p2
       /\ Seq.length p2 = Seq.length visited
       /\ (forall i: int. 0 <= i /\ i < Seq.length visited
@@ -1078,7 +1079,7 @@ module M_impl_Iterator_for_Zip_A_B__produces_refl (* <Zip<A, B> as common::Itera
   
   type t_Item
   
-  predicate produces_A (self: t_A) (visited: Seq.seq t_Item) (o: t_A)
+  function produces_A (self: t_A) (visited: Seq.seq t_Item) (o: t_A) : bool
   
   function produces_trans_A (a'0: t_A) (ab: Seq.seq t_Item) (b'0: t_A) (bc: Seq.seq t_Item) (c: t_A) : ()
   
@@ -1092,7 +1093,7 @@ module M_impl_Iterator_for_Zip_A_B__produces_refl (* <Zip<A, B> as common::Itera
   
   type t_Item'0
   
-  predicate produces_B (self: t_B) (visited: Seq.seq t_Item'0) (o: t_B)
+  function produces_B (self: t_B) (visited: Seq.seq t_Item'0) (o: t_B) : bool
   
   function produces_trans_B (a'0: t_B) (ab: Seq.seq t_Item'0) (b'0: t_B) (bc: Seq.seq t_Item'0) (c: t_B) : ()
   
@@ -1106,7 +1107,7 @@ module M_impl_Iterator_for_Zip_A_B__produces_refl (* <Zip<A, B> as common::Itera
   
   type tup2_Item_Item = { f0: t_Item; f1: t_Item'0 }
   
-  predicate produces_Zip_A_B (self: t_Zip_A_B) (visited: Seq.seq tup2_Item_Item) (tl: t_Zip_A_B) =
+  function produces_Zip_A_B (self: t_Zip_A_B) (visited: Seq.seq tup2_Item_Item) (tl: t_Zip_A_B) : bool =
     exists p1: Seq.seq t_Item, p2: Seq.seq t_Item'0. Seq.length p1 = Seq.length p2
       /\ Seq.length p2 = Seq.length visited
       /\ (forall i: int. 0 <= i /\ i < Seq.length visited
@@ -1136,7 +1137,7 @@ module M_impl_Iterator_for_Zip_A_B__produces_refl__refines (* <Zip<A, B> as comm
   
   type t_Item
   
-  predicate produces_A (self: t_A) (visited: Seq.seq t_Item) (o: t_A)
+  function produces_A (self: t_A) (visited: Seq.seq t_Item) (o: t_A) : bool
   
   function produces_trans_A (a'0: t_A) (ab: Seq.seq t_Item) (b'0: t_A) (bc: Seq.seq t_Item) (c: t_A) : ()
   
@@ -1150,7 +1151,7 @@ module M_impl_Iterator_for_Zip_A_B__produces_refl__refines (* <Zip<A, B> as comm
   
   type t_Item'0
   
-  predicate produces_B (self: t_B) (visited: Seq.seq t_Item'0) (o: t_B)
+  function produces_B (self: t_B) (visited: Seq.seq t_Item'0) (o: t_B) : bool
   
   function produces_trans_B (a'0: t_B) (ab: Seq.seq t_Item'0) (b'0: t_B) (bc: Seq.seq t_Item'0) (c: t_B) : ()
   
@@ -1164,7 +1165,7 @@ module M_impl_Iterator_for_Zip_A_B__produces_refl__refines (* <Zip<A, B> as comm
   
   type tup2_Item_Item = { f0: t_Item; f1: t_Item'0 }
   
-  predicate produces_Zip_A_B (self: t_Zip_A_B) (visited: Seq.seq tup2_Item_Item) (tl: t_Zip_A_B) =
+  function produces_Zip_A_B (self: t_Zip_A_B) (visited: Seq.seq tup2_Item_Item) (tl: t_Zip_A_B) : bool =
     exists p1: Seq.seq t_Item, p2: Seq.seq t_Item'0. Seq.length p1 = Seq.length p2
       /\ Seq.length p2 = Seq.length visited
       /\ (forall i: int. 0 <= i /\ i < Seq.length visited
@@ -1191,7 +1192,7 @@ module M_impl_Iterator_for_Zip_A_B__produces_trans (* <Zip<A, B> as common::Iter
   
   type t_Item
   
-  predicate produces_A (self: t_A) (visited: Seq.seq t_Item) (o: t_A)
+  function produces_A (self: t_A) (visited: Seq.seq t_Item) (o: t_A) : bool
   
   function produces_trans_A (a'0: t_A) (ab: Seq.seq t_Item) (b'0: t_A) (bc: Seq.seq t_Item) (c: t_A) : ()
   
@@ -1205,7 +1206,7 @@ module M_impl_Iterator_for_Zip_A_B__produces_trans (* <Zip<A, B> as common::Iter
   
   type t_Item'0
   
-  predicate produces_B (self: t_B) (visited: Seq.seq t_Item'0) (o: t_B)
+  function produces_B (self: t_B) (visited: Seq.seq t_Item'0) (o: t_B) : bool
   
   function produces_trans_B (a'0: t_B) (ab: Seq.seq t_Item'0) (b'0: t_B) (bc: Seq.seq t_Item'0) (c: t_B) : ()
   
@@ -1219,7 +1220,7 @@ module M_impl_Iterator_for_Zip_A_B__produces_trans (* <Zip<A, B> as common::Iter
   
   type tup2_Item_Item = { f0: t_Item; f1: t_Item'0 }
   
-  predicate produces_Zip_A_B (self: t_Zip_A_B) (visited: Seq.seq tup2_Item_Item) (tl: t_Zip_A_B) =
+  function produces_Zip_A_B (self: t_Zip_A_B) (visited: Seq.seq tup2_Item_Item) (tl: t_Zip_A_B) : bool =
     exists p1: Seq.seq t_Item, p2: Seq.seq t_Item'0. Seq.length p1 = Seq.length p2
       /\ Seq.length p2 = Seq.length visited
       /\ (forall i: int. 0 <= i /\ i < Seq.length visited
@@ -1258,7 +1259,7 @@ module M_impl_Iterator_for_Zip_A_B__produces_trans__refines (* <Zip<A, B> as com
   
   type t_Item
   
-  predicate produces_A (self: t_A) (visited: Seq.seq t_Item) (o: t_A)
+  function produces_A (self: t_A) (visited: Seq.seq t_Item) (o: t_A) : bool
   
   function produces_trans_A (a'0: t_A) (ab: Seq.seq t_Item) (b'0: t_A) (bc: Seq.seq t_Item) (c: t_A) : ()
   
@@ -1272,7 +1273,7 @@ module M_impl_Iterator_for_Zip_A_B__produces_trans__refines (* <Zip<A, B> as com
   
   type t_Item'0
   
-  predicate produces_B (self: t_B) (visited: Seq.seq t_Item'0) (o: t_B)
+  function produces_B (self: t_B) (visited: Seq.seq t_Item'0) (o: t_B) : bool
   
   function produces_trans_B (a'0: t_B) (ab: Seq.seq t_Item'0) (b'0: t_B) (bc: Seq.seq t_Item'0) (c: t_B) : ()
   
@@ -1286,7 +1287,7 @@ module M_impl_Iterator_for_Zip_A_B__produces_trans__refines (* <Zip<A, B> as com
   
   type tup2_Item_Item = { f0: t_Item; f1: t_Item'0 }
   
-  predicate produces_Zip_A_B (self: t_Zip_A_B) (visited: Seq.seq tup2_Item_Item) (tl: t_Zip_A_B) =
+  function produces_Zip_A_B (self: t_Zip_A_B) (visited: Seq.seq tup2_Item_Item) (tl: t_Zip_A_B) : bool =
     exists p1: Seq.seq t_Item, p2: Seq.seq t_Item'0. Seq.length p1 = Seq.length p2
       /\ Seq.length p2 = Seq.length visited
       /\ (forall i: int. 0 <= i /\ i < Seq.length visited
@@ -1319,7 +1320,7 @@ module M_impl_Iterator_for_Zip_A_B__size_hint (* <Zip<A, B> as common::Iterator>
   
   type t_Item
   
-  predicate produces_A (self: t_A) (visited: Seq.seq t_Item) (o: t_A)
+  function produces_A (self: t_A) (visited: Seq.seq t_Item) (o: t_A) : bool
   
   function produces_trans_A (a'0: t_A) (ab: Seq.seq t_Item) (b'0: t_A) (bc: Seq.seq t_Item) (c: t_A) : ()
   
@@ -1335,24 +1336,24 @@ module M_impl_Iterator_for_Zip_A_B__size_hint (* <Zip<A, B> as common::Iterator>
   
   type tup2_usize_Option_usize = { f0: UInt64.t; f1: t_Option_usize }
   
-  predicate inv_A (_1: t_A)
+  function inv_A (_1: t_A) : bool
   
-  predicate invariant_ref_A [@inline:trivial] (self: t_A) = inv_A self
+  function invariant_ref_A [@inline:trivial] (self: t_A) : bool = inv_A self
   
-  meta "rewrite_def" predicate invariant_ref_A
+  meta "rewrite_def" function invariant_ref_A
   
-  predicate inv_ref_A [@inline:trivial] (_1: t_A) = invariant_ref_A _1
+  function inv_ref_A [@inline:trivial] (_1: t_A) : bool = invariant_ref_A _1
   
-  meta "rewrite_def" predicate inv_ref_A
+  meta "rewrite_def" function inv_ref_A
   
-  predicate precondition_size_hint (self: ()) (args: t_A)
+  function precondition_size_hint (self: ()) (args: t_A) : bool
   
   axiom precondition_fndef: forall args: t_A [precondition_size_hint () args]. (let self = args in inv_ref_A self)
       -> precondition_size_hint () args
   
-  predicate completed_A (self: MutBorrow.t t_A)
+  function completed_A (self: MutBorrow.t t_A) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_A) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_A) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_A, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -1363,10 +1364,10 @@ module M_impl_Iterator_for_Zip_A_B__size_hint (* <Zip<A, B> as common::Iterator>
         | None -> true
         end)
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_A) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_A) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_A (self: t_A) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -1377,7 +1378,7 @@ module M_impl_Iterator_for_Zip_A_B__size_hint (* <Zip<A, B> as common::Iterator>
   
   type t_Item'0
   
-  predicate produces_B (self: t_B) (visited: Seq.seq t_Item'0) (o: t_B)
+  function produces_B (self: t_B) (visited: Seq.seq t_Item'0) (o: t_B) : bool
   
   function produces_trans_B (a'0: t_B) (ab: Seq.seq t_Item'0) (b'0: t_B) (bc: Seq.seq t_Item'0) (c: t_B) : ()
   
@@ -1389,24 +1390,24 @@ module M_impl_Iterator_for_Zip_A_B__size_hint (* <Zip<A, B> as common::Iterator>
   
   axiom produces_refl_B_spec: forall self: t_B. produces_B self (Seq.empty: Seq.seq t_Item'0) self
   
-  predicate inv_B (_1: t_B)
+  function inv_B (_1: t_B) : bool
   
-  predicate invariant_ref_B [@inline:trivial] (self: t_B) = inv_B self
+  function invariant_ref_B [@inline:trivial] (self: t_B) : bool = inv_B self
   
-  meta "rewrite_def" predicate invariant_ref_B
+  meta "rewrite_def" function invariant_ref_B
   
-  predicate inv_ref_B [@inline:trivial] (_1: t_B) = invariant_ref_B _1
+  function inv_ref_B [@inline:trivial] (_1: t_B) : bool = invariant_ref_B _1
   
-  meta "rewrite_def" predicate inv_ref_B
+  meta "rewrite_def" function inv_ref_B
   
-  predicate precondition_size_hint'0 (self: ()) (args: t_B)
+  function precondition_size_hint'0 (self: ()) (args: t_B) : bool
   
   axiom precondition_fndef'0: forall args: t_B [precondition_size_hint'0 () args]. (let self = args in inv_ref_B self)
       -> precondition_size_hint'0 () args
   
-  predicate completed_B (self: MutBorrow.t t_B)
+  function completed_B (self: MutBorrow.t t_B) : bool
   
-  predicate postcondition_size_hint'0 (self: ()) (args: t_B) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint'0 (self: ()) (args: t_B) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef'0:
     forall args: t_B, result: tup2_usize_Option_usize [postcondition_size_hint'0 () args result]. postcondition_size_hint'0 () args result
@@ -1417,10 +1418,10 @@ module M_impl_Iterator_for_Zip_A_B__size_hint (* <Zip<A, B> as common::Iterator>
         | None -> true
         end)
   
-  predicate postcondition_once_size_hint'0 (self: ()) (args: t_B) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint'0 (self: ()) (args: t_B) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint'0 self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint'0
+  meta "rewrite_def" function postcondition_once_size_hint'0
   
   let size_hint_B (self: t_B) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint'0 () self}
@@ -1453,21 +1454,21 @@ module M_impl_Iterator_for_Zip_A_B__size_hint (* <Zip<A, B> as common::Iterator>
         end}
       any) ]
   
-  predicate inv_Zip_A_B (_1: t_Zip_A_B)
+  function inv_Zip_A_B (_1: t_Zip_A_B) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Zip_A_B [inv_Zip_A_B _1]. inv_Zip_A_B _1 = (inv_A _1.a /\ inv_B _1.b)
   
-  predicate invariant_ref_Zip_A_B [@inline:trivial] (self: t_Zip_A_B) = inv_Zip_A_B self
+  function invariant_ref_Zip_A_B [@inline:trivial] (self: t_Zip_A_B) : bool = inv_Zip_A_B self
   
-  meta "rewrite_def" predicate invariant_ref_Zip_A_B
+  meta "rewrite_def" function invariant_ref_Zip_A_B
   
-  predicate inv_ref_Zip_A_B [@inline:trivial] (_1: t_Zip_A_B) = invariant_ref_Zip_A_B _1
+  function inv_ref_Zip_A_B [@inline:trivial] (_1: t_Zip_A_B) : bool = invariant_ref_Zip_A_B _1
   
-  meta "rewrite_def" predicate inv_ref_Zip_A_B
+  meta "rewrite_def" function inv_ref_Zip_A_B
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   meta "compute_max_steps" 1000000
   
@@ -1546,21 +1547,21 @@ module M_impl_Iterator_for_Zip_A_B__size_hint__refines (* <Zip<A, B> as common::
   
   type t_Zip_A_B = { a: t_A; b: t_B }
   
-  predicate inv_A (_1: t_A)
+  function inv_A (_1: t_A) : bool
   
-  predicate inv_B (_1: t_B)
+  function inv_B (_1: t_B) : bool
   
-  predicate inv_Zip_A_B (_1: t_Zip_A_B)
+  function inv_Zip_A_B (_1: t_Zip_A_B) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Zip_A_B [inv_Zip_A_B _1]. inv_Zip_A_B _1 = (inv_A _1.a /\ inv_B _1.b)
   
-  predicate invariant_ref_Zip_A_B [@inline:trivial] (self: t_Zip_A_B) = inv_Zip_A_B self
+  function invariant_ref_Zip_A_B [@inline:trivial] (self: t_Zip_A_B) : bool = inv_Zip_A_B self
   
-  meta "rewrite_def" predicate invariant_ref_Zip_A_B
+  meta "rewrite_def" function invariant_ref_Zip_A_B
   
-  predicate inv_ref_Zip_A_B [@inline:trivial] (_1: t_Zip_A_B) = invariant_ref_Zip_A_B _1
+  function inv_ref_Zip_A_B [@inline:trivial] (_1: t_Zip_A_B) : bool = invariant_ref_Zip_A_B _1
   
-  meta "rewrite_def" predicate inv_ref_Zip_A_B
+  meta "rewrite_def" function inv_ref_Zip_A_B
   
   type t_Option_usize = None | Some UInt64.t
   
@@ -1568,7 +1569,7 @@ module M_impl_Iterator_for_Zip_A_B__size_hint__refines (* <Zip<A, B> as common::
   
   type t_Item
   
-  predicate produces_A (self: t_A) (visited: Seq.seq t_Item) (o: t_A)
+  function produces_A (self: t_A) (visited: Seq.seq t_Item) (o: t_A) : bool
   
   function produces_trans_A (a'0: t_A) (ab: Seq.seq t_Item) (b'0: t_A) (bc: Seq.seq t_Item) (c: t_A) : ()
   
@@ -1580,9 +1581,9 @@ module M_impl_Iterator_for_Zip_A_B__size_hint__refines (* <Zip<A, B> as common::
   
   axiom produces_refl_A_spec: forall self: t_A. produces_A self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_A (self: MutBorrow.t t_A)
+  function completed_A (self: MutBorrow.t t_A) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_A) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_A) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_A, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -1593,23 +1594,23 @@ module M_impl_Iterator_for_Zip_A_B__size_hint__refines (* <Zip<A, B> as common::
         | None -> true
         end)
   
-  predicate invariant_ref_A [@inline:trivial] (self: t_A) = inv_A self
+  function invariant_ref_A [@inline:trivial] (self: t_A) : bool = inv_A self
   
-  meta "rewrite_def" predicate invariant_ref_A
+  meta "rewrite_def" function invariant_ref_A
   
-  predicate inv_ref_A [@inline:trivial] (_1: t_A) = invariant_ref_A _1
+  function inv_ref_A [@inline:trivial] (_1: t_A) : bool = invariant_ref_A _1
   
-  meta "rewrite_def" predicate inv_ref_A
+  meta "rewrite_def" function inv_ref_A
   
-  predicate precondition_size_hint (self: ()) (args: t_A)
+  function precondition_size_hint (self: ()) (args: t_A) : bool
   
   axiom precondition_fndef: forall args: t_A [precondition_size_hint () args]. (let self = args in inv_ref_A self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_A) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_A) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_A (self: t_A) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -1620,7 +1621,7 @@ module M_impl_Iterator_for_Zip_A_B__size_hint__refines (* <Zip<A, B> as common::
   
   type t_Item'0
   
-  predicate produces_B (self: t_B) (visited: Seq.seq t_Item'0) (o: t_B)
+  function produces_B (self: t_B) (visited: Seq.seq t_Item'0) (o: t_B) : bool
   
   function produces_trans_B (a'0: t_B) (ab: Seq.seq t_Item'0) (b'0: t_B) (bc: Seq.seq t_Item'0) (c: t_B) : ()
   
@@ -1632,9 +1633,9 @@ module M_impl_Iterator_for_Zip_A_B__size_hint__refines (* <Zip<A, B> as common::
   
   axiom produces_refl_B_spec: forall self: t_B. produces_B self (Seq.empty: Seq.seq t_Item'0) self
   
-  predicate completed_B (self: MutBorrow.t t_B)
+  function completed_B (self: MutBorrow.t t_B) : bool
   
-  predicate postcondition_size_hint'0 (self: ()) (args: t_B) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint'0 (self: ()) (args: t_B) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef'0:
     forall args: t_B, result: tup2_usize_Option_usize [postcondition_size_hint'0 () args result]. postcondition_size_hint'0 () args result
@@ -1645,23 +1646,23 @@ module M_impl_Iterator_for_Zip_A_B__size_hint__refines (* <Zip<A, B> as common::
         | None -> true
         end)
   
-  predicate invariant_ref_B [@inline:trivial] (self: t_B) = inv_B self
+  function invariant_ref_B [@inline:trivial] (self: t_B) : bool = inv_B self
   
-  meta "rewrite_def" predicate invariant_ref_B
+  meta "rewrite_def" function invariant_ref_B
   
-  predicate inv_ref_B [@inline:trivial] (_1: t_B) = invariant_ref_B _1
+  function inv_ref_B [@inline:trivial] (_1: t_B) : bool = invariant_ref_B _1
   
-  meta "rewrite_def" predicate inv_ref_B
+  meta "rewrite_def" function inv_ref_B
   
-  predicate precondition_size_hint'0 (self: ()) (args: t_B)
+  function precondition_size_hint'0 (self: ()) (args: t_B) : bool
   
   axiom precondition_fndef'0: forall args: t_B [precondition_size_hint'0 () args]. (let self = args in inv_ref_B self)
       -> precondition_size_hint'0 () args
   
-  predicate postcondition_once_size_hint'0 (self: ()) (args: t_B) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint'0 (self: ()) (args: t_B) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint'0 self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint'0
+  meta "rewrite_def" function postcondition_once_size_hint'0
   
   let size_hint_B (self: t_B) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint'0 () self}
@@ -1670,24 +1671,24 @@ module M_impl_Iterator_for_Zip_A_B__size_hint__refines (* <Zip<A, B> as common::
     {[@stop_split] [@expl:size_hint ensures] postcondition_once_size_hint'0 () self result}
       (! return {result}) ]
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   type tup2_Option_usize_Option_usize = { f0'0: t_Option_usize; f1'0: t_Option_usize }
   
   type tup2_Item_Item = { f0'1: t_Item; f1'1: t_Item'0 }
   
-  predicate produces_Zip_A_B (self: t_Zip_A_B) (visited: Seq.seq tup2_Item_Item) (tl: t_Zip_A_B) =
+  function produces_Zip_A_B (self: t_Zip_A_B) (visited: Seq.seq tup2_Item_Item) (tl: t_Zip_A_B) : bool =
     exists p1: Seq.seq t_Item, p2: Seq.seq t_Item'0. Seq.length p1 = Seq.length p2
       /\ Seq.length p2 = Seq.length visited
       /\ (forall i: int. 0 <= i /\ i < Seq.length visited
           -> Seq.get visited i = { f0'1 = Seq.get p1 i; f1'1 = Seq.get p2 i })
       /\ produces_A self.a p1 tl.a /\ produces_B self.b p2 tl.b
   
-  predicate resolve_Item (_1: t_Item)
+  function resolve_Item (_1: t_Item) : bool
   
-  predicate completed_Zip_A_B (self: MutBorrow.t t_Zip_A_B) =
+  function completed_Zip_A_B (self: MutBorrow.t t_Zip_A_B) : bool =
     completed_A (MutBorrow.borrow_logic self.current.a self.final.a (MutBorrow.inherit_id (MutBorrow.get_id self) 0))
       /\ self.current.b = self.final.b
     \/ (exists x: t_Item. produces_A self.current.a (Seq.singleton x) self.final.a

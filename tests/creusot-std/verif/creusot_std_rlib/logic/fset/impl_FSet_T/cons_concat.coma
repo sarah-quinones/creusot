@@ -7,9 +7,9 @@ use int.Int
 
 type t_T
 
-predicate contains_Seq_T [@inline:trivial] (self: Fset.fset (Seq.seq t_T)) (e: Seq.seq t_T) = Fset.mem e self
+function contains_Seq_T [@inline:trivial] (self: Fset.fset (Seq.seq t_T)) (e: Seq.seq t_T) : bool = Fset.mem e self
 
-meta "rewrite_def" predicate contains_Seq_T
+meta "rewrite_def" function contains_Seq_T
 
 function unions_Seq_T (self: Fset.fset (Seq.seq t_T)) (f: Map.map (Seq.seq t_T) (Fset.fset (Seq.seq t_T))) : Fset.fset (Seq.seq t_T)
 
@@ -27,9 +27,9 @@ axiom concat_T_spec:
   forall s: Fset.fset (Seq.seq t_T), t: Fset.fset (Seq.seq t_T) [concat_T s t]. forall xs: Seq.seq t_T. contains_Seq_T (concat_T s t) xs
       = (exists ys: Seq.seq t_T, zs: Seq.seq t_T. contains_Seq_T s ys /\ contains_Seq_T t zs /\ xs = Seq.(++) ys zs)
 
-predicate contains_T [@inline:trivial] (self: Fset.fset t_T) (e: t_T) = Fset.mem e self
+function contains_T [@inline:trivial] (self: Fset.fset t_T) (e: t_T) : bool = Fset.mem e self
 
-meta "rewrite_def" predicate contains_T
+meta "rewrite_def" function contains_T
 
 type t_RangeFrom_Int = { start: int }
 

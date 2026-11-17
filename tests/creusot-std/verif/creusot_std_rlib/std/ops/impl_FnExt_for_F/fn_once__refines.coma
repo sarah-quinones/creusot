@@ -6,11 +6,11 @@ type t_Args
 
 type t_Output
 
-predicate postcondition_once_F (self: t_F) (args: t_Args) (result: t_Output)
+function postcondition_once_F (self: t_F) (args: t_Args) (result: t_Output) : bool
 
-predicate postcondition_F (self: t_F) (args: t_Args) (result: t_Output)
+function postcondition_F (self: t_F) (args: t_Args) (result: t_Output) : bool
 
-predicate resolve_F (_1: t_F)
+function resolve_F (_1: t_F) : bool
 
 meta "compute_max_steps" 1000000
 

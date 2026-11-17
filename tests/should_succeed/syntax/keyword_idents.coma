@@ -13,9 +13,9 @@ module M_then
     pure': UInt64.t;
     raises': UInt64.t }
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function sum (k: t_Keywords) : int = match k with
       | {then' = then''0; theory' = theory''0; so' = so''0; begin' = begin''0; downto' = downto''0; partial' = partial''0; pure' = pure''0; raises' = raises''0} -> UInt64.t'int then''0

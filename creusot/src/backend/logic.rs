@@ -4,7 +4,7 @@ use crate::{
         logic::vcgen::{SelfCall, wp},
         signature::{LogicSignature, lower_logic_sig},
         term::{lower_pure, lower_pure_weakdep, lower_trigger},
-        ty::{self, translate_ty},
+        ty::translate_ty,
     },
     contracts_items::{Intrinsic, get_builtin, indirect_witness_name, is_inline, is_opaque},
     ctx::*,
@@ -63,7 +63,7 @@ pub(crate) fn translate_logic(ctx: &Why3Generator, def_id: DefId) -> Option<File
                 sig: Signature {
                     name,
                     attrs: vec![],
-                    retty: Some(translate_ty(ctx, &names, span, ty)),
+                    retty: translate_ty(ctx, &names, span, ty),
                     args: Box::new([]),
                 },
             });
@@ -76,11 +76,7 @@ pub(crate) fn translate_logic(ctx: &Why3Generator, def_id: DefId) -> Option<File
         let sig = sig.why_sig.clone();
         match ctx.item_type(def_id) {
             ItemType::Logic { .. } => {
-                let kind = if sig.retty == None {
-                    Some(DeclKind::Predicate)
-                } else {
-                    Some(DeclKind::Function)
-                };
+                let kind = Some(DeclKind::Function);
                 LogicDecl { sig, kind }
             }
             ItemType::Program | ItemType::Closure => LogicDecl { sig, kind: None },
@@ -165,7 +161,6 @@ pub(crate) fn lower_logical_defn<'tcx>(
         {
             let kw = match kind {
                 DeclKind::Constant => "constant",
-                DeclKind::Predicate => "predicate",
                 DeclKind::Function => "function",
             };
 
@@ -177,12 +172,9 @@ pub(crate) fn lower_logical_defn<'tcx>(
 
         let decl = match kind {
             DeclKind::Function => Decl::LogicDefn(LogicDefn { sig, body }),
-            DeclKind::Predicate => Decl::PredDecl(Predicate { sig, body }),
-            DeclKind::Constant => Decl::ConstantDecl(Constant {
-                name: sig.name,
-                type_: sig.retty.unwrap_or_else(|| ty::bool()),
-                body: Some(body),
-            }),
+            DeclKind::Constant => {
+                Decl::ConstantDecl(Constant { name: sig.name, type_: sig.retty, body: Some(body) })
+            }
         };
 
         decls.push(decl);

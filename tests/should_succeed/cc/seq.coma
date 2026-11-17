@@ -67,22 +67,22 @@ module M_f
     [ return (result: MutBorrow.t (MutBorrow.t UInt64.t)) -> {[@stop_split] [@expl:unwrap ensures] Some result = self}
       (! return {result}) ]
   
-  predicate resolve_refmut_refmut_usize [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t UInt64.t)) =
-    _1.final = _1.current
+  function resolve_refmut_refmut_usize [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t UInt64.t)) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_refmut_usize
+  meta "rewrite_def" function resolve_refmut_refmut_usize
   
-  predicate resolve_refmut_usize [@inline:trivial] (_1: MutBorrow.t UInt64.t) = _1.final = _1.current
+  function resolve_refmut_usize [@inline:trivial] (_1: MutBorrow.t UInt64.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_usize
+  meta "rewrite_def" function resolve_refmut_usize
   
-  predicate resolve_Seq_refmut_usize (self: Seq.seq (MutBorrow.t UInt64.t)) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> resolve_refmut_usize (Seq.get self i)
+  function resolve_Seq_refmut_usize (self: Seq.seq (MutBorrow.t UInt64.t)) : bool = forall i: int. 0 <= i
+        /\ i < Seq.length self -> resolve_refmut_usize (Seq.get self i)
   
-  predicate resolve_Seq_refmut_usize'0 [@inline:trivial] (_1: Seq.seq (MutBorrow.t UInt64.t)) =
+  function resolve_Seq_refmut_usize'0 [@inline:trivial] (_1: Seq.seq (MutBorrow.t UInt64.t)) : bool =
     resolve_Seq_refmut_usize _1
   
-  meta "rewrite_def" predicate resolve_Seq_refmut_usize'0
+  meta "rewrite_def" function resolve_Seq_refmut_usize'0
   
   let new_usize (x: UInt64.t) (return (x'0: UInt64.t)) = any
     [ return (result: UInt64.t) -> {[@stop_split] [@expl:new ensures] result = x} (! return {result}) ]
@@ -131,9 +131,9 @@ module M_g
   use seq.Seq
   use int.Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   type t_Range_Int = { start: int; end': int }
   
@@ -157,7 +157,7 @@ module M_g
   
   meta "rewrite_def" function deep_model_Int
   
-  predicate is_empty_log_RangeInclusive_Int (self: t_RangeInclusive_Int)
+  function is_empty_log_RangeInclusive_Int (self: t_RangeInclusive_Int) : bool
   
   axiom is_empty_log_RangeInclusive_Int_spec:
     forall self: t_RangeInclusive_Int [is_empty_log_RangeInclusive_Int self]. not is_empty_log_RangeInclusive_Int self

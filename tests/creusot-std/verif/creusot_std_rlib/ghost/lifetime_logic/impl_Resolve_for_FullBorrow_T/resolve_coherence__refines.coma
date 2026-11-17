@@ -4,25 +4,25 @@ type t_FullBorrow_T
 
 type t_T
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
 function cur_T (self: t_FullBorrow_T) : t_T
 
 function fin_FullBorrow_T (self: t_FullBorrow_T) : t_T
 
-predicate invariant_FullBorrow_T [@inline:trivial] (self: t_FullBorrow_T) =
-  inv_T (cur_T self) /\ inv_T (fin_FullBorrow_T self)
+function invariant_FullBorrow_T [@inline:trivial] (self: t_FullBorrow_T) : bool = inv_T (cur_T self)
+  /\ inv_T (fin_FullBorrow_T self)
 
-meta "rewrite_def" predicate invariant_FullBorrow_T
+meta "rewrite_def" function invariant_FullBorrow_T
 
-predicate inv_FullBorrow_T (_1: t_FullBorrow_T)
+function inv_FullBorrow_T (_1: t_FullBorrow_T) : bool
 
 axiom inv_axiom [@rewrite]: forall _1: t_FullBorrow_T [inv_FullBorrow_T _1]. inv_FullBorrow_T _1
     = invariant_FullBorrow_T _1
 
-predicate structural_resolve_FullBorrow_T (_1: t_FullBorrow_T)
+function structural_resolve_FullBorrow_T (_1: t_FullBorrow_T) : bool
 
-predicate resolve_FullBorrow_T (self: t_FullBorrow_T) = cur_T self = fin_FullBorrow_T self
+function resolve_FullBorrow_T (self: t_FullBorrow_T) : bool = cur_T self = fin_FullBorrow_T self
 
 meta "compute_max_steps" 1000000
 

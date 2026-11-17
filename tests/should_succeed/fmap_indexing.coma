@@ -6,9 +6,9 @@ module M_foo
   
   type t_FMap_Int_Int
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function len_Int (self: t_FMap_Int_Int) : int
   
@@ -28,9 +28,9 @@ module M_foo
   
   meta "rewrite_def" function lookup_Int
   
-  predicate contains_Int [@inline:trivial] (self: t_FMap_Int_Int) (k: int) = lookup_Int self k <> None
+  function contains_Int [@inline:trivial] (self: t_FMap_Int_Int) (k: int) : bool = lookup_Int self k <> None
   
-  meta "rewrite_def" predicate contains_Int
+  meta "rewrite_def" function contains_Int
   
   function add_Int (self: t_FMap_Int_Int) (k: int) (v: int) : t_FMap_Int_Int
   

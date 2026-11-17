@@ -6,37 +6,38 @@ use creusot.prelude.Any
 
 type t_T
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
 type t_Guarded_refmut_T_Mapping_T_bool = { inner: MutBorrow.t t_T; _guard: Map.map t_T bool; _initial: MutBorrow.t t_T }
 
-predicate invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) = inv_T self.current /\ inv_T self.final
+function invariant_refmut_T [@inline:trivial] (self: MutBorrow.t t_T) : bool = inv_T self.current /\ inv_T self.final
 
-meta "rewrite_def" predicate invariant_refmut_T
+meta "rewrite_def" function invariant_refmut_T
 
-predicate inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = invariant_refmut_T _1
+function inv_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = invariant_refmut_T _1
 
-meta "rewrite_def" predicate inv_refmut_T
+meta "rewrite_def" function inv_refmut_T
 
-predicate index_Mapping_T_bool [@inline:trivial] (self: Map.map t_T bool) (a: t_T) = Map.get self a
+function index_Mapping_T_bool [@inline:trivial] (self: Map.map t_T bool) (a: t_T) : bool = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_T_bool
+meta "rewrite_def" function index_Mapping_T_bool
 
-predicate guards_ref_Mapping_T_bool [@inline:trivial] (self: Map.map t_T bool) (x: t_T) = index_Mapping_T_bool self x
+function guards_ref_Mapping_T_bool [@inline:trivial] (self: Map.map t_T bool) (x: t_T) : bool =
+  index_Mapping_T_bool self x
 
-meta "rewrite_def" predicate guards_ref_Mapping_T_bool
+meta "rewrite_def" function guards_ref_Mapping_T_bool
 
-predicate guards_Mapping_T_bool [@inline:trivial] (self: Map.map t_T bool) (initial: MutBorrow.t t_T) (current': MutBorrow.t t_T) =
-  guards_ref_Mapping_T_bool self current'.current /\ initial.final = current'.final
+function guards_Mapping_T_bool [@inline:trivial] (self: Map.map t_T bool) (initial: MutBorrow.t t_T) (current': MutBorrow.t t_T) : bool
+ = guards_ref_Mapping_T_bool self current'.current /\ initial.final = current'.final
 
-meta "rewrite_def" predicate guards_Mapping_T_bool
+meta "rewrite_def" function guards_Mapping_T_bool
 
-predicate invariant_Guarded_refmut_T_Mapping_T_bool [@inline:trivial] (self: t_Guarded_refmut_T_Mapping_T_bool) =
+function invariant_Guarded_refmut_T_Mapping_T_bool [@inline:trivial] (self: t_Guarded_refmut_T_Mapping_T_bool) : bool =
   guards_Mapping_T_bool self._guard self._initial self.inner
 
-meta "rewrite_def" predicate invariant_Guarded_refmut_T_Mapping_T_bool
+meta "rewrite_def" function invariant_Guarded_refmut_T_Mapping_T_bool
 
-predicate inv_Guarded_refmut_T_Mapping_T_bool (_1: t_Guarded_refmut_T_Mapping_T_bool)
+function inv_Guarded_refmut_T_Mapping_T_bool (_1: t_Guarded_refmut_T_Mapping_T_bool) : bool
 
 axiom inv_axiom [@rewrite]:
   forall _1: t_Guarded_refmut_T_Mapping_T_bool [inv_Guarded_refmut_T_Mapping_T_bool _1]. inv_Guarded_refmut_T_Mapping_T_bool _1
@@ -57,9 +58,9 @@ let new_T (borrow: MutBorrow.t t_T) (guard: Map.map t_T bool) (return (x: t_Guar
     /\ ([@stop_split] [@expl:new ensures #2] guards_ref_Mapping_T_bool guard borrow.final)}
     (! return {result}) ]
 
-predicate resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) = _1.final = _1.current
+function resolve_refmut_T [@inline:trivial] (_1: MutBorrow.t t_T) : bool = _1.final = _1.current
 
-meta "rewrite_def" predicate resolve_refmut_T
+meta "rewrite_def" function resolve_refmut_T
 
 meta "compute_max_steps" 1000000
 

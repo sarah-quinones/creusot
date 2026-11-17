@@ -13,11 +13,11 @@ type t_Item
 
 type tup2_Seq_refmut_F_Seq_Item = { f0: Seq.seq (MutBorrow.t t_F); f1: Seq.seq t_Item }
 
-predicate postcondition_once_F (self: t_F) (args: t_Item) (result: t_B)
+function postcondition_once_F (self: t_F) (args: t_Item) (result: t_B) : bool
 
-predicate resolve_F (_1: t_F)
+function resolve_F (_1: t_F) : bool
 
-predicate postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B)
+function postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_B) : bool
 
 function fn_mut_once_F (self: t_F) (args: t_Item) (res: t_B) : ()
 
@@ -25,7 +25,7 @@ axiom fn_mut_once_F_spec:
   forall self: t_F, args: t_Item, res: t_B [postcondition_once_F self args res]. postcondition_once_F self args res
     = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
 
-predicate hist_inv_F (self: t_F) (result_state: t_F)
+function hist_inv_F (self: t_F) (result_state: t_F) : bool
 
 function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
 
@@ -47,7 +47,7 @@ function func_Map_I_F (self: t_Map_I_F) : t_F
 
 type t_I
 
-predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
 
 function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
 
@@ -60,7 +60,7 @@ axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.se
 
 function iter_Map_I_F (self: t_Map_I_F) : t_I
 
-predicate produces_Map_I_F [@inline:trivial] (self: t_Map_I_F) (visited: Seq.seq t_B) (succ: t_Map_I_F) =
+function produces_Map_I_F [@inline:trivial] (self: t_Map_I_F) (visited: Seq.seq t_B) (succ: t_Map_I_F) : bool =
   hist_inv_F (func_Map_I_F self) (func_Map_I_F succ)
   /\ (exists fs: Seq.seq (MutBorrow.t t_F). Seq.length fs = Seq.length visited
     /\ (exists s: Seq.seq t_Item [produces_I (iter_Map_I_F self) s (iter_Map_I_F succ)]. Seq.length s
@@ -76,7 +76,7 @@ predicate produces_Map_I_F [@inline:trivial] (self: t_Map_I_F) (visited: Seq.seq
         -> hist_inv_F (func_Map_I_F self) (Seq.get fs i).current
         /\ postcondition_mut_F (Seq.get fs i).current (Seq.get s i) (Seq.get fs i).final (Seq.get visited i))))
 
-meta "rewrite_def" predicate produces_Map_I_F
+meta "rewrite_def" function produces_Map_I_F
 
 function produces_trans_Map_I_F (a: t_Map_I_F) (ab: Seq.seq t_B) (b: t_Map_I_F) (bc: Seq.seq t_B) (c: t_Map_I_F) : () =
   ()
@@ -89,10 +89,10 @@ function produces_refl_Map_I_F (self: t_Map_I_F) : () = ()
 
 axiom produces_refl_Map_I_F_spec: forall self: t_Map_I_F. produces_Map_I_F self (Seq.empty: Seq.seq t_B) self
 
-predicate index_Mapping_tup2_Seq_refmut_F_Seq_Item_bool [@inline:trivial] (self: Map.map tup2_Seq_refmut_F_Seq_Item bool) (a: tup2_Seq_refmut_F_Seq_Item) =
-  Map.get self a
+function index_Mapping_tup2_Seq_refmut_F_Seq_Item_bool [@inline:trivial] (self: Map.map tup2_Seq_refmut_F_Seq_Item bool) (a: tup2_Seq_refmut_F_Seq_Item) : bool
+ = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_tup2_Seq_refmut_F_Seq_Item_bool
+meta "rewrite_def" function index_Mapping_tup2_Seq_refmut_F_Seq_Item_bool
 
 function such_that_tup2_Seq_refmut_F_Seq_Item (p: Map.map tup2_Seq_refmut_F_Seq_Item bool) : tup2_Seq_refmut_F_Seq_Item
 

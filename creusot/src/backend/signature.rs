@@ -162,11 +162,7 @@ pub(crate) fn lower_logic_sig<'tcx>(
         attrs.push(attr)
     }
 
-    let retty = if pre_sig.output.is_bool() {
-        None
-    } else {
-        Some(translate_ty(ctx, names, span, pre_sig.output))
-    };
+    let retty = translate_ty(ctx, names, span, pre_sig.output);
     let variant =
         pre_sig.contract.variant.as_ref().map(|term| lower_pure_spanned(ctx, names, term));
     let contract = lower_contract(ctx, names, &pre_sig.contract);

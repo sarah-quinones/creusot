@@ -7,17 +7,17 @@ module M_common__trait_ExactSizeIterator__is_empty
   
   type t_Self
   
-  predicate inv_Self (_1: t_Self)
+  function inv_Self (_1: t_Self) : bool
   
-  predicate invariant_ref_Self [@inline:trivial] (self: t_Self) = inv_Self self
+  function invariant_ref_Self [@inline:trivial] (self: t_Self) : bool = inv_Self self
   
-  meta "rewrite_def" predicate invariant_ref_Self
+  meta "rewrite_def" function invariant_ref_Self
   
-  predicate inv_ref_Self [@inline:trivial] (_1: t_Self) = invariant_ref_Self _1
+  function inv_ref_Self [@inline:trivial] (_1: t_Self) : bool = invariant_ref_Self _1
   
-  meta "rewrite_def" predicate inv_ref_Self
+  meta "rewrite_def" function inv_ref_Self
   
-  predicate precondition_len (self: ()) (args: t_Self)
+  function precondition_len (self: ()) (args: t_Self) : bool
   
   axiom precondition_fndef: forall args: t_Self [precondition_len () args]. (let self = args in inv_ref_Self self)
       -> precondition_len () args
@@ -28,7 +28,7 @@ module M_common__trait_ExactSizeIterator__is_empty
   
   type t_Item
   
-  predicate produces_Self (self: t_Self) (visited: Seq.seq t_Item) (o: t_Self)
+  function produces_Self (self: t_Self) (visited: Seq.seq t_Item) (o: t_Self) : bool
   
   function produces_trans_Self (a: t_Self) (ab: Seq.seq t_Item) (b: t_Self) (bc: Seq.seq t_Item) (c: t_Self) : ()
   
@@ -40,9 +40,9 @@ module M_common__trait_ExactSizeIterator__is_empty
   
   axiom produces_refl_Self_spec: forall self: t_Self. produces_Self self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_Self (self: MutBorrow.t t_Self)
+  function completed_Self (self: MutBorrow.t t_Self) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_Self, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -53,16 +53,16 @@ module M_common__trait_ExactSizeIterator__is_empty
         | None -> true
         end)
   
-  predicate precondition_size_hint (self: ()) (args: t_Self)
+  function precondition_size_hint (self: ()) (args: t_Self) : bool
   
   axiom precondition_fndef'0:
     forall args: t_Self [precondition_size_hint () args]. (let self = args in inv_ref_Self self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_Self (self: t_Self) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -71,15 +71,16 @@ module M_common__trait_ExactSizeIterator__is_empty
     {[@stop_split] [@expl:size_hint ensures] postcondition_once_size_hint () self result}
       (! return {result}) ]
   
-  predicate postcondition_len (self: ()) (args: t_Self) (result: UInt64.t)
+  function postcondition_len (self: ()) (args: t_Self) (result: UInt64.t) : bool
   
   axiom postcondition_fndef'0:
     forall args: t_Self, result: UInt64.t [postcondition_len () args result]. postcondition_len () args result
       -> (let self = args in postcondition_size_hint () self { f0 = result; f1 = Some result })
   
-  predicate postcondition_once_len (self: ()) (args: t_Self) (result: UInt64.t) = postcondition_len self args result
+  function postcondition_once_len (self: ()) (args: t_Self) (result: UInt64.t) : bool =
+    postcondition_len self args result
   
-  meta "rewrite_def" predicate postcondition_once_len
+  meta "rewrite_def" function postcondition_once_len
   
   let len_Self (self: t_Self) (return (x: UInt64.t)) = {[@stop_split] [@expl:len requires] precondition_len () self}
     any
@@ -117,7 +118,7 @@ module M_common__trait_ExactSizeIterator__len
   
   type t_Item
   
-  predicate produces_Self (self: t_Self) (visited: Seq.seq t_Item) (o: t_Self)
+  function produces_Self (self: t_Self) (visited: Seq.seq t_Item) (o: t_Self) : bool
   
   function produces_trans_Self (a: t_Self) (ab: Seq.seq t_Item) (b: t_Self) (bc: Seq.seq t_Item) (c: t_Self) : ()
   
@@ -129,9 +130,9 @@ module M_common__trait_ExactSizeIterator__len
   
   axiom produces_refl_Self_spec: forall self: t_Self. produces_Self self (Seq.empty: Seq.seq t_Item) self
   
-  predicate completed_Self (self: MutBorrow.t t_Self)
+  function completed_Self (self: MutBorrow.t t_Self) : bool
   
-  predicate postcondition_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize)
+  function postcondition_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) : bool
   
   axiom postcondition_fndef:
     forall args: t_Self, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -142,25 +143,25 @@ module M_common__trait_ExactSizeIterator__len
         | None -> true
         end)
   
-  predicate inv_Self (_1: t_Self)
+  function inv_Self (_1: t_Self) : bool
   
-  predicate invariant_ref_Self [@inline:trivial] (self: t_Self) = inv_Self self
+  function invariant_ref_Self [@inline:trivial] (self: t_Self) : bool = inv_Self self
   
-  meta "rewrite_def" predicate invariant_ref_Self
+  meta "rewrite_def" function invariant_ref_Self
   
-  predicate inv_ref_Self [@inline:trivial] (_1: t_Self) = invariant_ref_Self _1
+  function inv_ref_Self [@inline:trivial] (_1: t_Self) : bool = invariant_ref_Self _1
   
-  meta "rewrite_def" predicate inv_ref_Self
+  meta "rewrite_def" function inv_ref_Self
   
-  predicate precondition_size_hint (self: ()) (args: t_Self)
+  function precondition_size_hint (self: ()) (args: t_Self) : bool
   
   axiom precondition_fndef: forall args: t_Self [precondition_size_hint () args]. (let self = args in inv_ref_Self self)
       -> precondition_size_hint () args
   
-  predicate postcondition_once_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) =
+  function postcondition_once_size_hint (self: ()) (args: t_Self) (result: tup2_usize_Option_usize) : bool =
     postcondition_size_hint self args result
   
-  meta "rewrite_def" predicate postcondition_once_size_hint
+  meta "rewrite_def" function postcondition_once_size_hint
   
   let size_hint_Self (self: t_Self) (return (x: tup2_usize_Option_usize)) =
   {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}
@@ -250,17 +251,18 @@ module M_impl_ExactSizeIterator_for_Empty_T__size_hint_exact (* <Empty<T> as com
   
   type tup2_usize_Option_usize = { f0'0: UInt64.t; f1'0: t_Option_usize }
   
-  predicate postcondition_size_hint (self: ()) (args: t_Empty_T) (result: tup2_usize_Option_usize) =
+  function postcondition_size_hint (self: ()) (args: t_Empty_T) (result: tup2_usize_Option_usize) : bool =
     let self'0 = args in result = { f0'0 = (0: UInt64.t); f1'0 = Some (0: UInt64.t) }
   
-  meta "rewrite_def" predicate postcondition_size_hint
+  meta "rewrite_def" function postcondition_size_hint
   
   type t_T
   
-  predicate produces_Empty_T [@inline:trivial] (self: t_Empty_T) (visited: Seq.seq t_T) (o: t_Empty_T) =
-    visited = (Seq.empty: Seq.seq t_T) /\ self = o
+  function produces_Empty_T [@inline:trivial] (self: t_Empty_T) (visited: Seq.seq t_T) (o: t_Empty_T) : bool = visited
+      = (Seq.empty: Seq.seq t_T)
+    /\ self = o
   
-  meta "rewrite_def" predicate produces_Empty_T
+  meta "rewrite_def" function produces_Empty_T
   
   function produces_trans_Empty_T (a: t_Empty_T) (ab: Seq.seq t_T) (b: t_Empty_T) (bc: Seq.seq t_T) (c: t_Empty_T) : ()
    = ()
@@ -301,17 +303,18 @@ module M_impl_ExactSizeIterator_for_Empty_T__size_hint_exact__refines (* <Empty<
   
   type tup2_usize_Option_usize = { f0'0: UInt64.t; f1'0: t_Option_usize }
   
-  predicate postcondition_size_hint (self: ()) (args: t_Empty_T) (result: tup2_usize_Option_usize) =
+  function postcondition_size_hint (self: ()) (args: t_Empty_T) (result: tup2_usize_Option_usize) : bool =
     let self'0 = args in result = { f0'0 = (0: UInt64.t); f1'0 = Some (0: UInt64.t) }
   
-  meta "rewrite_def" predicate postcondition_size_hint
+  meta "rewrite_def" function postcondition_size_hint
   
   type t_T
   
-  predicate produces_Empty_T [@inline:trivial] (self: t_Empty_T) (visited: Seq.seq t_T) (o: t_Empty_T) =
-    visited = (Seq.empty: Seq.seq t_T) /\ self = o
+  function produces_Empty_T [@inline:trivial] (self: t_Empty_T) (visited: Seq.seq t_T) (o: t_Empty_T) : bool = visited
+      = (Seq.empty: Seq.seq t_T)
+    /\ self = o
   
-  meta "rewrite_def" predicate produces_Empty_T
+  meta "rewrite_def" function produces_Empty_T
   
   function produces_trans_Empty_T (a: t_Empty_T) (ab: Seq.seq t_T) (b: t_Empty_T) (bc: Seq.seq t_T) (c: t_Empty_T) : ()
    = ()
@@ -343,17 +346,17 @@ module M_impl_Iterator_for_Empty_T__next (* <Empty<T> as common::Iterator> *)
   
   type t_Empty_T = { f0: () }
   
-  predicate resolve_refmut_Empty_T [@inline:trivial] (_1: MutBorrow.t t_Empty_T) = _1.final = _1.current
+  function resolve_refmut_Empty_T [@inline:trivial] (_1: MutBorrow.t t_Empty_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Empty_T
+  meta "rewrite_def" function resolve_refmut_Empty_T
   
   type t_T
   
   type t_Option_T = None | Some t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_Option_T (_1: t_Option_T)
+  function inv_Option_T (_1: t_Option_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_T _1
       = match _1 with
@@ -361,12 +364,13 @@ module M_impl_Iterator_for_Empty_T__next (* <Empty<T> as common::Iterator> *)
         | Some f0'0 -> inv_T f0'0
         end
   
-  predicate completed_Empty_T (self: MutBorrow.t t_Empty_T) = resolve_refmut_Empty_T self
+  function completed_Empty_T (self: MutBorrow.t t_Empty_T) : bool = resolve_refmut_Empty_T self
   
-  predicate produces_Empty_T [@inline:trivial] (self: t_Empty_T) (visited: Seq.seq t_T) (o: t_Empty_T) =
-    visited = (Seq.empty: Seq.seq t_T) /\ self = o
+  function produces_Empty_T [@inline:trivial] (self: t_Empty_T) (visited: Seq.seq t_T) (o: t_Empty_T) : bool = visited
+      = (Seq.empty: Seq.seq t_T)
+    /\ self = o
   
-  meta "rewrite_def" predicate produces_Empty_T
+  meta "rewrite_def" function produces_Empty_T
   
   meta "compute_max_steps" 1000000
   
@@ -393,9 +397,9 @@ module M_impl_Iterator_for_Empty_T__next__refines (* <Empty<T> as common::Iterat
   
   type t_Option_T = None | Some t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_Option_T (_1: t_Option_T)
+  function inv_Option_T (_1: t_Option_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_T _1
       = match _1 with
@@ -403,16 +407,17 @@ module M_impl_Iterator_for_Empty_T__next__refines (* <Empty<T> as common::Iterat
         | Some f0'0 -> inv_T f0'0
         end
   
-  predicate resolve_refmut_Empty_T [@inline:trivial] (_1: MutBorrow.t t_Empty_T) = _1.final = _1.current
+  function resolve_refmut_Empty_T [@inline:trivial] (_1: MutBorrow.t t_Empty_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Empty_T
+  meta "rewrite_def" function resolve_refmut_Empty_T
   
-  predicate completed_Empty_T (self: MutBorrow.t t_Empty_T) = resolve_refmut_Empty_T self
+  function completed_Empty_T (self: MutBorrow.t t_Empty_T) : bool = resolve_refmut_Empty_T self
   
-  predicate produces_Empty_T [@inline:trivial] (self: t_Empty_T) (visited: Seq.seq t_T) (o: t_Empty_T) =
-    visited = (Seq.empty: Seq.seq t_T) /\ self = o
+  function produces_Empty_T [@inline:trivial] (self: t_Empty_T) (visited: Seq.seq t_T) (o: t_Empty_T) : bool = visited
+      = (Seq.empty: Seq.seq t_T)
+    /\ self = o
   
-  meta "rewrite_def" predicate produces_Empty_T
+  meta "rewrite_def" function produces_Empty_T
   
   meta "compute_max_steps" 1000000
   
@@ -436,10 +441,11 @@ module M_impl_Iterator_for_Empty_T__produces_refl (* <Empty<T> as common::Iterat
   
   type t_T
   
-  predicate produces_Empty_T [@inline:trivial] (self: t_Empty_T) (visited: Seq.seq t_T) (o: t_Empty_T) =
-    visited = (Seq.empty: Seq.seq t_T) /\ self = o
+  function produces_Empty_T [@inline:trivial] (self: t_Empty_T) (visited: Seq.seq t_T) (o: t_Empty_T) : bool = visited
+      = (Seq.empty: Seq.seq t_T)
+    /\ self = o
   
-  meta "rewrite_def" predicate produces_Empty_T
+  meta "rewrite_def" function produces_Empty_T
   
   meta "compute_max_steps" 1000000
   
@@ -459,10 +465,11 @@ module M_impl_Iterator_for_Empty_T__produces_refl__refines (* <Empty<T> as commo
   
   type t_T
   
-  predicate produces_Empty_T [@inline:trivial] (self: t_Empty_T) (visited: Seq.seq t_T) (o: t_Empty_T) =
-    visited = (Seq.empty: Seq.seq t_T) /\ self = o
+  function produces_Empty_T [@inline:trivial] (self: t_Empty_T) (visited: Seq.seq t_T) (o: t_Empty_T) : bool = visited
+      = (Seq.empty: Seq.seq t_T)
+    /\ self = o
   
-  meta "rewrite_def" predicate produces_Empty_T
+  meta "rewrite_def" function produces_Empty_T
   
   meta "compute_max_steps" 1000000
   
@@ -478,10 +485,11 @@ module M_impl_Iterator_for_Empty_T__produces_trans (* <Empty<T> as common::Itera
   
   type t_T
   
-  predicate produces_Empty_T [@inline:trivial] (self: t_Empty_T) (visited: Seq.seq t_T) (o: t_Empty_T) =
-    visited = (Seq.empty: Seq.seq t_T) /\ self = o
+  function produces_Empty_T [@inline:trivial] (self: t_Empty_T) (visited: Seq.seq t_T) (o: t_Empty_T) : bool = visited
+      = (Seq.empty: Seq.seq t_T)
+    /\ self = o
   
-  meta "rewrite_def" predicate produces_Empty_T
+  meta "rewrite_def" function produces_Empty_T
   
   meta "compute_max_steps" 1000000
   
@@ -509,10 +517,11 @@ module M_impl_Iterator_for_Empty_T__produces_trans__refines (* <Empty<T> as comm
   
   type t_T
   
-  predicate produces_Empty_T [@inline:trivial] (self: t_Empty_T) (visited: Seq.seq t_T) (o: t_Empty_T) =
-    visited = (Seq.empty: Seq.seq t_T) /\ self = o
+  function produces_Empty_T [@inline:trivial] (self: t_Empty_T) (visited: Seq.seq t_T) (o: t_Empty_T) : bool = visited
+      = (Seq.empty: Seq.seq t_T)
+    /\ self = o
   
-  meta "rewrite_def" predicate produces_Empty_T
+  meta "rewrite_def" function produces_Empty_T
   
   meta "compute_max_steps" 1000000
   
@@ -562,16 +571,17 @@ module M_impl_Iterator_for_Empty_T__size_hint__refines (* <Empty<T> as common::I
   
   type t_T
   
-  predicate produces_Empty_T [@inline:trivial] (self: t_Empty_T) (visited: Seq.seq t_T) (o: t_Empty_T) =
-    visited = (Seq.empty: Seq.seq t_T) /\ self = o
+  function produces_Empty_T [@inline:trivial] (self: t_Empty_T) (visited: Seq.seq t_T) (o: t_Empty_T) : bool = visited
+      = (Seq.empty: Seq.seq t_T)
+    /\ self = o
   
-  meta "rewrite_def" predicate produces_Empty_T
+  meta "rewrite_def" function produces_Empty_T
   
-  predicate resolve_refmut_Empty_T [@inline:trivial] (_1: MutBorrow.t t_Empty_T) = _1.final = _1.current
+  function resolve_refmut_Empty_T [@inline:trivial] (_1: MutBorrow.t t_Empty_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Empty_T
+  meta "rewrite_def" function resolve_refmut_Empty_T
   
-  predicate completed_Empty_T (self: MutBorrow.t t_Empty_T) = resolve_refmut_Empty_T self
+  function completed_Empty_T (self: MutBorrow.t t_Empty_T) : bool = resolve_refmut_Empty_T self
   
   meta "compute_max_steps" 1000000
   

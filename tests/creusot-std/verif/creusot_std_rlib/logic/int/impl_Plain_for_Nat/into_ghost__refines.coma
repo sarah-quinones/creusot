@@ -4,9 +4,9 @@ type t_Subset_NatInner
 
 type t_Nat = { f0: t_Subset_NatInner }
 
-predicate inv_Nat [@inline:trivial] (_1: t_Nat) = true
+function inv_Nat [@inline:trivial] (_1: t_Nat) : bool = true
 
-meta "rewrite_def" predicate inv_Nat
+meta "rewrite_def" function inv_Nat
 
 meta "compute_max_steps" 1000000
 

@@ -5,9 +5,9 @@ use int.Int
 
 type t_Option_Int = None | Some int
 
-predicate premise_Int [@inline:trivial] (self: int) (_2: int) (_3: int) = true
+function premise_Int [@inline:trivial] (self: int) (_2: int) (_3: int) : bool = true
 
-meta "rewrite_def" predicate premise_Int
+meta "rewrite_def" function premise_Int
 
 type t_Option_Option_Int = None'0 | Some'0 t_Option_Int
 

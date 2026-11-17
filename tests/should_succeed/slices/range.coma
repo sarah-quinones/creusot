@@ -10,7 +10,7 @@ module M_slice_range_inclusive
   
   type t_RangeInclusive_usize
   
-  predicate inv_RangeInclusive_usize (_1: t_RangeInclusive_usize)
+  function inv_RangeInclusive_usize (_1: t_RangeInclusive_usize) : bool
   
   function start_log_RangeInclusive_usize (self: t_RangeInclusive_usize) : UInt64.t
   
@@ -20,7 +20,7 @@ module M_slice_range_inclusive
   
   meta "rewrite_def" function deep_model_usize
   
-  predicate is_empty_log_RangeInclusive_usize (self: t_RangeInclusive_usize)
+  function is_empty_log_RangeInclusive_usize (self: t_RangeInclusive_usize) : bool
   
   axiom is_empty_log_RangeInclusive_usize_spec:
     forall self: t_RangeInclusive_usize [is_empty_log_RangeInclusive_usize self]. not is_empty_log_RangeInclusive_usize self
@@ -35,11 +35,11 @@ module M_slice_range_inclusive
       -> not is_empty_log_RangeInclusive_usize result)}
       (! return {result}) ]
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
-  predicate in_bounds_RangeInclusive_usize (self: t_RangeInclusive_usize) (seq: Seq.seq UInt32.t)
+  function in_bounds_RangeInclusive_usize (self: t_RangeInclusive_usize) (seq: Seq.seq UInt32.t) : bool
   
   axiom in_bounds_RangeInclusive_usize_spec:
     forall self: t_RangeInclusive_usize, seq: Seq.seq UInt32.t [in_bounds_RangeInclusive_usize self seq]. UInt64.t'int (end_log_RangeInclusive_usize self)
@@ -51,8 +51,8 @@ module M_slice_range_inclusive
     forall self: t_RangeInclusive_usize, seq: Seq.seq UInt32.t [in_bounds_RangeInclusive_usize self seq]. ge_log_Int (UInt64.t'int (end_log_RangeInclusive_usize self)) (Seq.length seq)
       -> not in_bounds_RangeInclusive_usize self seq
   
-  predicate has_value_RangeInclusive_usize (self: t_RangeInclusive_usize) (seq: Seq.seq UInt32.t) (out: Slice64.slice UInt32.t) =
-    if is_empty_log_RangeInclusive_usize self then
+  function has_value_RangeInclusive_usize (self: t_RangeInclusive_usize) (seq: Seq.seq UInt32.t) (out: Slice64.slice UInt32.t) : bool
+   = if is_empty_log_RangeInclusive_usize self then
       Slice64.view out = (Seq.empty: Seq.seq UInt32.t)
     else
       Seq.([..]) seq (UInt64.t'int (start_log_RangeInclusive_usize self)) (UInt64.t'int (end_log_RangeInclusive_usize self)
@@ -60,8 +60,8 @@ module M_slice_range_inclusive
       = Slice64.view out
   
   
-  predicate resolve_elswhere_RangeInclusive_usize (self: t_RangeInclusive_usize) (old': Seq.seq UInt32.t) (fin: Seq.seq UInt32.t) =
-    forall i: int. 0 <= i
+  function resolve_elswhere_RangeInclusive_usize (self: t_RangeInclusive_usize) (old': Seq.seq UInt32.t) (fin: Seq.seq UInt32.t) : bool
+   = forall i: int. 0 <= i
         /\ (i < UInt64.t'int (start_log_RangeInclusive_usize self)
           \/ UInt64.t'int (end_log_RangeInclusive_usize self) < i \/ is_empty_log_RangeInclusive_usize self)
         /\ i < Seq.length old' -> Seq.get old' i = Seq.get fin i
@@ -79,10 +79,10 @@ module M_slice_range_inclusive
       = Seq.length (Slice64.view self.current))}
       (! return {result}) ]
   
-  predicate resolve_refmut_slice_u32 [@inline:trivial] (_1: MutBorrow.t (Slice64.slice UInt32.t)) =
-    _1.final = _1.current
+  function resolve_refmut_slice_u32 [@inline:trivial] (_1: MutBorrow.t (Slice64.slice UInt32.t)) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_slice_u32
+  meta "rewrite_def" function resolve_refmut_slice_u32
   
   meta "compute_max_steps" 1000000
   

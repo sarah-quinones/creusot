@@ -3,9 +3,9 @@ module M_drop
   use creusot.int.UInt32
   use creusot.prelude.Any
   
-  predicate resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) = _1.final = _1.current
+  function resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_u32
+  meta "rewrite_def" function resolve_refmut_u32
   
   meta "compute_max_steps" 1000000
   
@@ -32,14 +32,14 @@ module M_drop_pair
   
   type tup2_refmut_u32_refmut_u32 = { f0: MutBorrow.t UInt32.t; f1: MutBorrow.t UInt32.t }
   
-  predicate resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) = _1.final = _1.current
+  function resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_u32
+  meta "rewrite_def" function resolve_refmut_u32
   
-  predicate resolve_tup2_refmut_u32_refmut_u32 [@inline:trivial] (_1: tup2_refmut_u32_refmut_u32) =
+  function resolve_tup2_refmut_u32_refmut_u32 [@inline:trivial] (_1: tup2_refmut_u32_refmut_u32) : bool =
     resolve_refmut_u32 _1.f0 /\ resolve_refmut_u32 _1.f1
   
-  meta "rewrite_def" predicate resolve_tup2_refmut_u32_refmut_u32
+  meta "rewrite_def" function resolve_tup2_refmut_u32_refmut_u32
   
   meta "compute_max_steps" 1000000
   
@@ -61,14 +61,14 @@ module M_drop_pair2
   
   type tup2_refmut_u32_refmut_u32 = { f0: MutBorrow.t UInt32.t; f1: MutBorrow.t UInt32.t }
   
-  predicate resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) = _1.final = _1.current
+  function resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_u32
+  meta "rewrite_def" function resolve_refmut_u32
   
-  predicate resolve_tup2_refmut_u32_refmut_u32 [@inline:trivial] (_1: tup2_refmut_u32_refmut_u32) =
+  function resolve_tup2_refmut_u32_refmut_u32 [@inline:trivial] (_1: tup2_refmut_u32_refmut_u32) : bool =
     resolve_refmut_u32 _1.f0 /\ resolve_refmut_u32 _1.f1
   
-  meta "rewrite_def" predicate resolve_tup2_refmut_u32_refmut_u32
+  meta "rewrite_def" function resolve_tup2_refmut_u32_refmut_u32
   
   meta "compute_max_steps" 1000000
   

@@ -1,7 +1,7 @@
 module M_f
-  predicate inv_never [@inline:trivial] (_1: ()) = false
+  function inv_never [@inline:trivial] (_1: ()) : bool = false
   
-  meta "rewrite_def" predicate inv_never
+  meta "rewrite_def" function inv_never
   
   meta "compute_max_steps" 1000000
   
@@ -14,9 +14,9 @@ end
 module M_g
   use creusot.prelude.Any
   
-  predicate inv_never [@inline:trivial] (_1: ()) = false
+  function inv_never [@inline:trivial] (_1: ()) : bool = false
   
-  meta "rewrite_def" predicate inv_never
+  meta "rewrite_def" function inv_never
   
   let f (return (x: ())) = any
     [ return (result: ()) -> {[@stop_split] [@expl:f result type invariant] inv_never result} (! return {result}) ]

@@ -22,7 +22,7 @@ module M_agreement
   
   axiom commutative_Ag_i32_spec: forall a: t_Ag_i32, b: t_Ag_i32. op_Ag_i32 a b = op_Ag_i32 b a
   
-  predicate incl_Ag_i32 (self: t_Ag_i32) (other: t_Ag_i32) = self.f0 = other.f0
+  function incl_Ag_i32 (self: t_Ag_i32) (other: t_Ag_i32) : bool = self.f0 = other.f0
   
   axiom incl_Ag_i32_spec: forall self: t_Ag_i32, other: t_Ag_i32 [incl_Ag_i32 self other]. incl_Ag_i32 self other
       = (exists factor: t_Ag_i32. op_Ag_i32 self factor = Some other)
@@ -48,14 +48,14 @@ module M_agreement
   axiom incl_op_Ag_i32_spec: forall self: t_Ag_i32, other: t_Ag_i32, comb: t_Ag_i32. op_Ag_i32 self other = Some comb
       -> incl_Ag_i32 self comb
   
-  predicate eq_Ag_i32 [@inline:trivial] (self: t_Ag_i32) (other: t_Ag_i32) = self = other
+  function eq_Ag_i32 [@inline:trivial] (self: t_Ag_i32) (other: t_Ag_i32) : bool = self = other
   
-  meta "rewrite_def" predicate eq_Ag_i32
+  meta "rewrite_def" function eq_Ag_i32
   
   axiom eq_Ag_i32_spec: forall self: t_Ag_i32, other: t_Ag_i32 [eq_Ag_i32 self other]. eq_Ag_i32 self other
       = (self = other)
   
-  predicate incl_eq_Ag_i32 (self: t_Ag_i32) (other: t_Ag_i32) = eq_Ag_i32 self other \/ incl_Ag_i32 self other
+  function incl_eq_Ag_i32 (self: t_Ag_i32) (other: t_Ag_i32) : bool = eq_Ag_i32 self other \/ incl_Ag_i32 self other
   
   function val_Ag_i32 (self: t_Resource_Ag_i32) : t_Ag_i32
   

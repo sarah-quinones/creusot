@@ -16,16 +16,16 @@ type t_Option_Sum_R1_R2 = None | Some t_Sum_R1_R2
 
 type tup2_Sum_R1_R2_Sum_R1_R2 = { f0'0: t_Sum_R1_R2; f1'0: t_Sum_R1_R2 }
 
-predicate premise_U (self: t_U) (from_auth: t_R1) (from_frag: t_R1)
+function premise_U (self: t_U) (from_auth: t_R1) (from_frag: t_R1) : bool
 
-predicate premise_SumLocalUpdateL_U [@inline:trivial] (self: t_SumLocalUpdateL_U) (from_auth: t_Sum_R1_R2) (from_frag: t_Sum_R1_R2) =
-  match { f0'0 = from_auth; f1'0 = from_frag } with
+function premise_SumLocalUpdateL_U [@inline:trivial] (self: t_SumLocalUpdateL_U) (from_auth: t_Sum_R1_R2) (from_frag: t_Sum_R1_R2) : bool
+ = match { f0'0 = from_auth; f1'0 = from_frag } with
     | {f0'0 = Left from_auth'0; f1'0 = Left from_frag'0} -> premise_U self.f0 from_auth'0 from_frag'0
     | {f0'0 = Right _; f1'0 = Right _} -> false
     | _ -> true
     end
 
-meta "rewrite_def" predicate premise_SumLocalUpdateL_U
+meta "rewrite_def" function premise_SumLocalUpdateL_U
 
 type t_Option_Option_Sum_R1_R2 = None'0 | Some'0 t_Option_Sum_R1_R2
 
@@ -46,7 +46,7 @@ function map_Option_R1 (self: t_Option_R1) (f: Map.map t_R1 t_Sum_R1_R2) : t_Opt
 
 function op_R1 (self: t_R1) (other: t_R1) : t_Option_R1
 
-predicate incl_R1 (self: t_R1) (other: t_R1)
+function incl_R1 (self: t_R1) (other: t_R1) : bool
 
 axiom incl_R1_spec: forall self: t_R1, other: t_R1 [incl_R1 self other]. incl_R1 self other
     = (exists factor: t_R1. op_R1 self factor = Some'1 other)
@@ -82,7 +82,7 @@ function map_Option_R2 (self: t_Option_R2) (f: Map.map t_R2 t_Sum_R1_R2) : t_Opt
 
 function op_R2 (self: t_R2) (other: t_R2) : t_Option_R2
 
-predicate incl_R2 (self: t_R2) (other: t_R2)
+function incl_R2 (self: t_R2) (other: t_R2) : bool
 
 axiom incl_R2_spec: forall self: t_R2, other: t_R2 [incl_R2 self other]. incl_R2 self other
     = (exists factor: t_R2. op_R2 self factor = Some'2 other)
@@ -136,10 +136,10 @@ type tup2_R1_R1 = { f0'2: t_R1; f1'2: t_R1 }
 
 function update_U (self: t_U) (from_auth: t_R1) (from_frag: t_R1) : tup2_R1_R1
 
-predicate index_Mapping_tup2_Sum_R1_R2_Sum_R1_R2_bool [@inline:trivial] (self: Map.map tup2_Sum_R1_R2_Sum_R1_R2 bool) (a: tup2_Sum_R1_R2_Sum_R1_R2) =
-  Map.get self a
+function index_Mapping_tup2_Sum_R1_R2_Sum_R1_R2_bool [@inline:trivial] (self: Map.map tup2_Sum_R1_R2_Sum_R1_R2 bool) (a: tup2_Sum_R1_R2_Sum_R1_R2) : bool
+ = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_tup2_Sum_R1_R2_Sum_R1_R2_bool
+meta "rewrite_def" function index_Mapping_tup2_Sum_R1_R2_Sum_R1_R2_bool
 
 function such_that_tup2_Sum_R1_R2_Sum_R1_R2 (p: Map.map tup2_Sum_R1_R2_Sum_R1_R2 bool) : tup2_Sum_R1_R2_Sum_R1_R2
 

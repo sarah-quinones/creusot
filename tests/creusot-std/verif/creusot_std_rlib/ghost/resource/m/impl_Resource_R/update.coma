@@ -7,9 +7,9 @@ use creusot.prelude.Any
 
 type t_U
 
-predicate inv_U (_1: t_U)
+function inv_U (_1: t_U) : bool
 
-predicate resolve_U (_1: t_U)
+function resolve_U (_1: t_U) : bool
 
 type t_Resource_R
 
@@ -23,13 +23,13 @@ meta "rewrite_def" function view_Resource_R
 
 type t_Choice
 
-predicate premise_U (self: t_U) (from: t_R)
+function premise_U (self: t_U) (from: t_R) : bool
 
 function update_U (self: t_U) (from: t_R) (ch: t_Choice) : t_R
 
-predicate contains_R [@inline:trivial] (self: Set.set t_R) (e: t_R) = Set.mem e self
+function contains_R [@inline:trivial] (self: Set.set t_R) (e: t_R) : bool = Set.mem e self
 
-meta "rewrite_def" predicate contains_R
+meta "rewrite_def" function contains_R
 
 constant any_Choice : t_Choice
 
@@ -37,7 +37,7 @@ type t_Option_R = None | Some t_R
 
 function op_R (self: t_R) (other: t_R) : t_Option_R
 
-predicate incl_R (self: t_R) (other: t_R)
+function incl_R (self: t_R) (other: t_R) : bool
 
 axiom incl_R_spec: forall self: t_R, other: t_R [incl_R self other]. incl_R self other
     = (exists factor: t_R. op_R self factor = Some other)
@@ -104,13 +104,13 @@ let update_raw_R (self: MutBorrow.t t_Resource_R) (target_s: Set.set t_R) (retur
     /\ ([@stop_split] [@expl:update_raw ensures #2] view_Resource_R self.final = result)}
     (! return {result}) ]
 
-predicate resolve_refmut_Resource_R [@inline:trivial] (_1: MutBorrow.t t_Resource_R) = _1.final = _1.current
+function resolve_refmut_Resource_R [@inline:trivial] (_1: MutBorrow.t t_Resource_R) : bool = _1.final = _1.current
 
-meta "rewrite_def" predicate resolve_refmut_Resource_R
+meta "rewrite_def" function resolve_refmut_Resource_R
 
-predicate index_Mapping_Choice_bool [@inline:trivial] (self: Map.map t_Choice bool) (a: t_Choice) = Map.get self a
+function index_Mapping_Choice_bool [@inline:trivial] (self: Map.map t_Choice bool) (a: t_Choice) : bool = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_Choice_bool
+meta "rewrite_def" function index_Mapping_Choice_bool
 
 function such_that_Choice (p: Map.map t_Choice bool) : t_Choice
 

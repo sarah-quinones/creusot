@@ -1,9 +1,9 @@
 module M_program
   use creusot.prelude.Any
   
-  predicate simple = true
+  constant simple: bool = true
   
-  predicate uses_simple = simple
+  constant uses_simple: bool = simple
   
   meta "compute_max_steps" 1000000
   

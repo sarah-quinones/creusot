@@ -1,8 +1,8 @@
 (* <logic::int::Int as ghost::Plain> *)
 
-predicate inv_Int [@inline:trivial] (_1: int) = true
+function inv_Int [@inline:trivial] (_1: int) : bool = true
 
-meta "rewrite_def" predicate inv_Int
+meta "rewrite_def" function inv_Int
 
 meta "compute_max_steps" 1000000
 

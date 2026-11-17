@@ -14,15 +14,14 @@ type t_Sum_R1_R2 = Left t_R1 | Right t_R2
 
 type t_Choice
 
-predicate premise_U (self: t_U) (from: t_R1)
+function premise_U (self: t_U) (from: t_R1) : bool
 
-predicate premise_SumUpdateL_U [@inline:trivial] (self: t_SumUpdateL_U) (from: t_Sum_R1_R2) =
-  match from with
+function premise_SumUpdateL_U [@inline:trivial] (self: t_SumUpdateL_U) (from: t_Sum_R1_R2) : bool = match from with
     | Left from'0 -> premise_U self.f0 from'0
     | Right _ -> false
     end
 
-meta "rewrite_def" predicate premise_SumUpdateL_U
+meta "rewrite_def" function premise_SumUpdateL_U
 
 type t_Option_Sum_R1_R2 = None | Some t_Sum_R1_R2
 
@@ -37,7 +36,7 @@ function map_Option_R1 (self: t_Option_R1) (f: Map.map t_R1 t_Sum_R1_R2) : t_Opt
 
 function op_R1 (self: t_R1) (other: t_R1) : t_Option_R1
 
-predicate incl_R1 (self: t_R1) (other: t_R1)
+function incl_R1 (self: t_R1) (other: t_R1) : bool
 
 axiom incl_R1_spec: forall self: t_R1, other: t_R1 [incl_R1 self other]. incl_R1 self other
     = (exists factor: t_R1. op_R1 self factor = Some'0 other)
@@ -73,7 +72,7 @@ function map_Option_R2 (self: t_Option_R2) (f: Map.map t_R2 t_Sum_R1_R2) : t_Opt
 
 function op_R2 (self: t_R2) (other: t_R2) : t_Option_R2
 
-predicate incl_R2 (self: t_R2) (other: t_R2)
+function incl_R2 (self: t_R2) (other: t_R2) : bool
 
 axiom incl_R2_spec: forall self: t_R2, other: t_R2 [incl_R2 self other]. incl_R2 self other
     = (exists factor: t_R2. op_R2 self factor = Some'1 other)
@@ -127,9 +126,9 @@ axiom frame_preserving_U_spec:
   forall self: t_U, from: t_R1, frame: t_R1 [frame_preserving_U self from frame]. premise_U self from
     -> op_R1 from frame <> None'0 -> op_R1 (update_U self from (frame_preserving_U self from frame)) frame <> None'0
 
-predicate index_Mapping_Choice_bool [@inline:trivial] (self: Map.map t_Choice bool) (a: t_Choice) = Map.get self a
+function index_Mapping_Choice_bool [@inline:trivial] (self: Map.map t_Choice bool) (a: t_Choice) : bool = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_Choice_bool
+meta "rewrite_def" function index_Mapping_Choice_bool
 
 function such_that_Choice (p: Map.map t_Choice bool) : t_Choice
 

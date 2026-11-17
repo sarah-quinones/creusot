@@ -1,5 +1,5 @@
 module M_forall
-  predicate invariant_WithInvariant (self: ()) = true
+  function invariant_WithInvariant (self: ()) : bool = true
   
   meta "compute_max_steps" 1000000
   

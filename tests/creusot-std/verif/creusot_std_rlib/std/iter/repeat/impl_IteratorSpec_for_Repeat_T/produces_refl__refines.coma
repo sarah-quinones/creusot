@@ -7,9 +7,9 @@ type t_Repeat_T
 
 type t_T
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate postcondition_clone (self: ()) (args: t_T) (result: t_T)
+function postcondition_clone (self: ()) (args: t_T) (result: t_T) : bool
 
 axiom postcondition_fndef:
   forall args: t_T, result: t_T [postcondition_clone () args result]. postcondition_clone () args result
@@ -17,8 +17,7 @@ axiom postcondition_fndef:
 
 function view_Repeat_T (self: t_Repeat_T) : t_T
 
-predicate produces_Repeat_T (self: t_Repeat_T) (visited: Seq.seq t_T) (o: t_Repeat_T) =
-  self = o
+function produces_Repeat_T (self: t_Repeat_T) (visited: Seq.seq t_T) (o: t_Repeat_T) : bool = self = o
   /\ (forall i: int. 0 <= i /\ i < Seq.length visited
     -> postcondition_clone () (view_Repeat_T self) (Seq.get visited i))
 

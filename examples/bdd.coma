@@ -10,17 +10,17 @@ module M_hashmap__impl_Hash_for_tup2_U_V__hash (* <(U, V) as hashmap::Hash> *)
   
   type tup2_U_V = { f0: t_U; f1: t_V }
   
-  predicate inv_U (_1: t_U)
+  function inv_U (_1: t_U) : bool
   
-  predicate invariant_ref_U [@inline:trivial] (self: t_U) = inv_U self
+  function invariant_ref_U [@inline:trivial] (self: t_U) : bool = inv_U self
   
-  meta "rewrite_def" predicate invariant_ref_U
+  meta "rewrite_def" function invariant_ref_U
   
-  predicate inv_ref_U [@inline:trivial] (_1: t_U) = invariant_ref_U _1
+  function inv_ref_U [@inline:trivial] (_1: t_U) : bool = invariant_ref_U _1
   
-  meta "rewrite_def" predicate inv_ref_U
+  meta "rewrite_def" function inv_ref_U
   
-  predicate precondition_hash (self: ()) (args: t_U)
+  function precondition_hash (self: ()) (args: t_U) : bool
   
   axiom precondition_fndef: forall args: t_U [precondition_hash () args]. (let self = args in inv_ref_U self)
       -> precondition_hash () args
@@ -35,32 +35,33 @@ module M_hashmap__impl_Hash_for_tup2_U_V__hash (* <(U, V) as hashmap::Hash> *)
   
   meta "rewrite_def" function deep_model_ref_U
   
-  predicate postcondition_hash (self: ()) (args: t_U) (result: UInt64.t)
+  function postcondition_hash (self: ()) (args: t_U) (result: UInt64.t) : bool
   
   axiom postcondition_fndef:
     forall args: t_U, result: UInt64.t [postcondition_hash () args result]. postcondition_hash () args result
       -> (let self = args in UInt64.t'int result = hash_log_U (deep_model_ref_U self))
   
-  predicate postcondition_once_hash (self: ()) (args: t_U) (result: UInt64.t) = postcondition_hash self args result
+  function postcondition_once_hash (self: ()) (args: t_U) (result: UInt64.t) : bool =
+    postcondition_hash self args result
   
-  meta "rewrite_def" predicate postcondition_once_hash
+  meta "rewrite_def" function postcondition_once_hash
   
   let hash_U (self: t_U) (return (x: UInt64.t)) = {[@stop_split] [@expl:hash requires] precondition_hash () self}
     any
     [ return (result: UInt64.t) -> {[@stop_split] [@expl:hash ensures] postcondition_once_hash () self result}
       (! return {result}) ]
   
-  predicate inv_V (_1: t_V)
+  function inv_V (_1: t_V) : bool
   
-  predicate invariant_ref_V [@inline:trivial] (self: t_V) = inv_V self
+  function invariant_ref_V [@inline:trivial] (self: t_V) : bool = inv_V self
   
-  meta "rewrite_def" predicate invariant_ref_V
+  meta "rewrite_def" function invariant_ref_V
   
-  predicate inv_ref_V [@inline:trivial] (_1: t_V) = invariant_ref_V _1
+  function inv_ref_V [@inline:trivial] (_1: t_V) : bool = invariant_ref_V _1
   
-  meta "rewrite_def" predicate inv_ref_V
+  meta "rewrite_def" function inv_ref_V
   
-  predicate precondition_hash'0 (self: ()) (args: t_V)
+  function precondition_hash'0 (self: ()) (args: t_V) : bool
   
   axiom precondition_fndef'0: forall args: t_V [precondition_hash'0 () args]. (let self = args in inv_ref_V self)
       -> precondition_hash'0 () args
@@ -75,15 +76,16 @@ module M_hashmap__impl_Hash_for_tup2_U_V__hash (* <(U, V) as hashmap::Hash> *)
   
   meta "rewrite_def" function deep_model_ref_V
   
-  predicate postcondition_hash'0 (self: ()) (args: t_V) (result: UInt64.t)
+  function postcondition_hash'0 (self: ()) (args: t_V) (result: UInt64.t) : bool
   
   axiom postcondition_fndef'0:
     forall args: t_V, result: UInt64.t [postcondition_hash'0 () args result]. postcondition_hash'0 () args result
       -> (let self = args in UInt64.t'int result = hash_log_V (deep_model_ref_V self))
   
-  predicate postcondition_once_hash'0 (self: ()) (args: t_V) (result: UInt64.t) = postcondition_hash'0 self args result
+  function postcondition_once_hash'0 (self: ()) (args: t_V) (result: UInt64.t) : bool =
+    postcondition_hash'0 self args result
   
-  meta "rewrite_def" predicate postcondition_once_hash'0
+  meta "rewrite_def" function postcondition_once_hash'0
   
   let hash_V (self: t_V) (return (x: UInt64.t)) = {[@stop_split] [@expl:hash requires] precondition_hash'0 () self}
     any
@@ -98,17 +100,17 @@ module M_hashmap__impl_Hash_for_tup2_U_V__hash (* <(U, V) as hashmap::Hash> *)
     [ return (result: UInt64.t) -> {[@stop_split] [@expl:wrapping_add ensures] result = UInt64.add self rhs}
       (! return {result}) ]
   
-  predicate inv_tup2_U_V [@inline:trivial] (_1: tup2_U_V) = inv_U _1.f0 /\ inv_V _1.f1
+  function inv_tup2_U_V [@inline:trivial] (_1: tup2_U_V) : bool = inv_U _1.f0 /\ inv_V _1.f1
   
-  meta "rewrite_def" predicate inv_tup2_U_V
+  meta "rewrite_def" function inv_tup2_U_V
   
-  predicate invariant_ref_tup2_U_V [@inline:trivial] (self: tup2_U_V) = inv_tup2_U_V self
+  function invariant_ref_tup2_U_V [@inline:trivial] (self: tup2_U_V) : bool = inv_tup2_U_V self
   
-  meta "rewrite_def" predicate invariant_ref_tup2_U_V
+  meta "rewrite_def" function invariant_ref_tup2_U_V
   
-  predicate inv_ref_tup2_U_V [@inline:trivial] (_1: tup2_U_V) = invariant_ref_tup2_U_V _1
+  function inv_ref_tup2_U_V [@inline:trivial] (_1: tup2_U_V) : bool = invariant_ref_tup2_U_V _1
   
-  meta "rewrite_def" predicate inv_ref_tup2_U_V
+  meta "rewrite_def" function inv_ref_tup2_U_V
   
   type tup2_DeepModelTy_DeepModelTy = { f0'0: t_DeepModelTy; f1'0: t_DeepModelTy'0 }
   
@@ -160,21 +162,21 @@ module M_hashmap__impl_Hash_for_tup2_U_V__hash__refines (* <(U, V) as hashmap::H
   
   type tup2_U_V = { f0: t_U; f1: t_V }
   
-  predicate inv_U (_1: t_U)
+  function inv_U (_1: t_U) : bool
   
-  predicate inv_V (_1: t_V)
+  function inv_V (_1: t_V) : bool
   
-  predicate inv_tup2_U_V [@inline:trivial] (_1: tup2_U_V) = inv_U _1.f0 /\ inv_V _1.f1
+  function inv_tup2_U_V [@inline:trivial] (_1: tup2_U_V) : bool = inv_U _1.f0 /\ inv_V _1.f1
   
-  meta "rewrite_def" predicate inv_tup2_U_V
+  meta "rewrite_def" function inv_tup2_U_V
   
-  predicate invariant_ref_tup2_U_V [@inline:trivial] (self: tup2_U_V) = inv_tup2_U_V self
+  function invariant_ref_tup2_U_V [@inline:trivial] (self: tup2_U_V) : bool = inv_tup2_U_V self
   
-  meta "rewrite_def" predicate invariant_ref_tup2_U_V
+  meta "rewrite_def" function invariant_ref_tup2_U_V
   
-  predicate inv_ref_tup2_U_V [@inline:trivial] (_1: tup2_U_V) = invariant_ref_tup2_U_V _1
+  function inv_ref_tup2_U_V [@inline:trivial] (_1: tup2_U_V) : bool = invariant_ref_tup2_U_V _1
   
-  meta "rewrite_def" predicate inv_ref_tup2_U_V
+  meta "rewrite_def" function inv_ref_tup2_U_V
   
   type t_DeepModelTy
   
@@ -221,9 +223,9 @@ module M_impl_Bdd__size (* Bdd<'arena> *)
   type t_Node = False' | True' | If UInt64.t t_Bdd t_Bdd
   with t_Bdd = { f0: t_Node; f1: UInt64.t }
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   meta "compute_max_steps" 1000000
   
@@ -281,13 +283,14 @@ module M_impl_Clone_for_Node__clone (* <Node<'arena> as std::clone::Clone> *)
   
   type tup2_Node_Node = { f0'0: t_Node; f1'0: t_Node }
   
-  predicate postcondition_clone (self: ()) (args: UInt64.t) (result: UInt64.t) = let self'0 = args in result = self'0
+  function postcondition_clone (self: ()) (args: UInt64.t) (result: UInt64.t) : bool = let self'0 = args in result
+    = self'0
   
-  meta "rewrite_def" predicate postcondition_clone
+  meta "rewrite_def" function postcondition_clone
   
-  predicate postcondition_clone'0 (self: ()) (args: t_Bdd) (result: t_Bdd) = let self'0 = args in result = self'0
+  function postcondition_clone'0 (self: ()) (args: t_Bdd) (result: t_Bdd) : bool = let self'0 = args in result = self'0
   
-  meta "rewrite_def" predicate postcondition_clone'0
+  meta "rewrite_def" function postcondition_clone'0
   
   meta "compute_max_steps" 1000000
   
@@ -375,7 +378,7 @@ module M_impl_Context__bdd_canonical (* Context<'arena> *)
   
   meta "rewrite_def" function view_Node
   
-  predicate is_valid_bdd (self: t_Context) (b: t_Bdd) =
+  function is_valid_bdd (self: t_Context) (b: t_Bdd) : bool =
     Map.get (view_MyHashMap_Node_Bdd self.hashcons) (view_Node b.f0) = Some b
   
   constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
@@ -386,8 +389,7 @@ module M_impl_Context__bdd_canonical (* Context<'arena> *)
       | {f0 = If v _ _; f1 = _} -> UInt64.t'int v
       end
   
-  predicate is_valid_node (self: t_Context) (n: t_Node) =
-    match n with
+  function is_valid_node (self: t_Context) (n: t_Node) : bool = match n with
       | True' -> true
       | False' -> true
       | If v childt childf -> childt.f0 <> childf.f0
@@ -401,8 +403,7 @@ module M_impl_Context__bdd_canonical (* Context<'arena> *)
   
   function view_MyHashMap_Bdd_Bdd (self: t_MyHashMap_Bdd_Bdd) : Map.map UInt64.t t_Option_Bdd
   
-  predicate interp (self: t_Bdd) (vars: Map.map UInt64.t bool) =
-    match self with
+  function interp (self: t_Bdd) (vars: Map.map UInt64.t bool) : bool = match self with
       | {f0 = True'; f1 = _} -> true
       | {f0 = False'; f1 = _} -> false
       | {f0 = If v childt childf; f1 = _} -> if Map.get vars v then interp childt vars else interp childf vars
@@ -412,7 +413,7 @@ module M_impl_Context__bdd_canonical (* Context<'arena> *)
   
   function view_MyHashMap_tup2_Bdd_Bdd_Bdd (self: t_MyHashMap_tup2_Bdd_Bdd_Bdd) : Map.map tup2_u64_u64 t_Option_Bdd
   
-  predicate invariant_Context [@inline:trivial] (self: t_Context) =
+  function invariant_Context [@inline:trivial] (self: t_Context) : bool =
     (forall n: t_NodeLog. match Map.get (view_MyHashMap_Node_Bdd self.hashcons) n with
           | Some b -> view_Node b.f0 = n
           /\ is_valid_node self b.f0
@@ -436,15 +437,15 @@ module M_impl_Context__bdd_canonical (* Context<'arena> *)
         /\ (leastvar a <= leastvar n \/ leastvar b <= leastvar n)
         end)
   
-  meta "rewrite_def" predicate invariant_Context
+  meta "rewrite_def" function invariant_Context
   
-  predicate inv_Context (_1: t_Context)
+  function inv_Context (_1: t_Context) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Context [inv_Context _1]. inv_Context _1 = invariant_Context _1
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function size (self: t_Bdd) : int = match self with
       | {f0 = True'; f1 = _} -> 0
@@ -454,9 +455,9 @@ module M_impl_Context__bdd_canonical (* Context<'arena> *)
   
   axiom size_spec: forall self: t_Bdd [size self]. ge_log_Int (size self) 0
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   function discr_valuation (self: t_Context) (a: t_Bdd) (b: t_Bdd) : Map.map UInt64.t bool
   
@@ -558,9 +559,9 @@ module M_impl_Context__discr_valuation (* Context<'arena> *)
     and_memo: t_MyHashMap_tup2_Bdd_Bdd_Bdd;
     cnt: t_PeanoInt }
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function size (self: t_Bdd) : int = match self with
       | {f0 = True'; f1 = _} -> 0
@@ -586,7 +587,7 @@ module M_impl_Context__discr_valuation (* Context<'arena> *)
   
   meta "rewrite_def" function view_Node
   
-  predicate is_valid_bdd (self: t_Context) (b: t_Bdd) =
+  function is_valid_bdd (self: t_Context) (b: t_Bdd) : bool =
     Map.get (view_MyHashMap_Node_Bdd self.hashcons) (view_Node b.f0) = Some b
   
   constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
@@ -597,8 +598,7 @@ module M_impl_Context__discr_valuation (* Context<'arena> *)
       | {f0 = If v _ _; f1 = _} -> UInt64.t'int v
       end
   
-  predicate is_valid_node (self: t_Context) (n: t_Node) =
-    match n with
+  function is_valid_node (self: t_Context) (n: t_Node) : bool = match n with
       | True' -> true
       | False' -> true
       | If v childt childf -> childt.f0 <> childf.f0
@@ -612,8 +612,7 @@ module M_impl_Context__discr_valuation (* Context<'arena> *)
   
   function view_MyHashMap_Bdd_Bdd (self: t_MyHashMap_Bdd_Bdd) : Map.map UInt64.t t_Option_Bdd
   
-  predicate interp (self: t_Bdd) (vars: Map.map UInt64.t bool) =
-    match self with
+  function interp (self: t_Bdd) (vars: Map.map UInt64.t bool) : bool = match self with
       | {f0 = True'; f1 = _} -> true
       | {f0 = False'; f1 = _} -> false
       | {f0 = If v childt childf; f1 = _} -> if Map.get vars v then interp childt vars else interp childf vars
@@ -623,7 +622,7 @@ module M_impl_Context__discr_valuation (* Context<'arena> *)
   
   function view_MyHashMap_tup2_Bdd_Bdd_Bdd (self: t_MyHashMap_tup2_Bdd_Bdd_Bdd) : Map.map tup2_u64_u64 t_Option_Bdd
   
-  predicate invariant_Context [@inline:trivial] (self: t_Context) =
+  function invariant_Context [@inline:trivial] (self: t_Context) : bool =
     (forall n: t_NodeLog. match Map.get (view_MyHashMap_Node_Bdd self.hashcons) n with
           | Some b -> view_Node b.f0 = n
           /\ is_valid_node self b.f0
@@ -647,9 +646,9 @@ module M_impl_Context__discr_valuation (* Context<'arena> *)
         /\ (leastvar a <= leastvar n \/ leastvar b <= leastvar n)
         end)
   
-  meta "rewrite_def" predicate invariant_Context
+  meta "rewrite_def" function invariant_Context
   
-  predicate inv_Context (_1: t_Context)
+  function inv_Context (_1: t_Context) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Context [inv_Context _1]. inv_Context _1 = invariant_Context _1
   
@@ -663,14 +662,14 @@ module M_impl_Context__discr_valuation (* Context<'arena> *)
     forall self: t_Context, a: t_Bdd, x: UInt64.t, v: Map.map UInt64.t bool, b: bool. inv_Context self
       -> is_valid_bdd self a -> UInt64.t'int x < leastvar a -> interp a v = interp a (Map.set v x b)
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
-  predicate well_founded_relation_Int [@inline:trivial] (self: int) (other: int) =
-    ge_log_Int self 0 /\ gt_log_Int self other
+  function well_founded_relation_Int [@inline:trivial] (self: int) (other: int) : bool = ge_log_Int self 0
+    /\ gt_log_Int self other
   
-  meta "rewrite_def" predicate well_founded_relation_Int
+  meta "rewrite_def" function well_founded_relation_Int
   
   meta "compute_max_steps" 1000000
   
@@ -813,7 +812,7 @@ module M_impl_Context__grows_is_valid_bdd (* Context<'arena> *)
   
   function view_MyHashMap_Node_Bdd (self: t_MyHashMap_Node_Bdd) : Map.map t_NodeLog t_Option_Bdd
   
-  predicate grows (self: MutBorrow.t t_Context) =
+  function grows (self: MutBorrow.t t_Context) : bool =
     UInt64.le (view_PeanoInt self.current.cnt) (view_PeanoInt self.final.cnt)
     /\ (forall n: t_NodeLog. match Map.get (view_MyHashMap_Node_Bdd self.current.hashcons) n with
         | Some b -> Map.get (view_MyHashMap_Node_Bdd self.final.hashcons) n = Some b
@@ -830,7 +829,7 @@ module M_impl_Context__grows_is_valid_bdd (* Context<'arena> *)
   
   meta "rewrite_def" function view_Node
   
-  predicate is_valid_bdd (self: t_Context) (b: t_Bdd) =
+  function is_valid_bdd (self: t_Context) (b: t_Bdd) : bool =
     Map.get (view_MyHashMap_Node_Bdd self.hashcons) (view_Node b.f0) = Some b
   
   meta "compute_max_steps" 1000000
@@ -882,7 +881,7 @@ module M_impl_Context__grows_trans (* Context<'arena> *)
   
   function view_MyHashMap_Node_Bdd (self: t_MyHashMap_Node_Bdd) : Map.map t_NodeLog t_Option_Bdd
   
-  predicate grows (self: MutBorrow.t t_Context) =
+  function grows (self: MutBorrow.t t_Context) : bool =
     UInt64.le (view_PeanoInt self.current.cnt) (view_PeanoInt self.final.cnt)
     /\ (forall n: t_NodeLog. match Map.get (view_MyHashMap_Node_Bdd self.current.hashcons) n with
         | Some b -> Map.get (view_MyHashMap_Node_Bdd self.final.hashcons) n = Some b
@@ -948,7 +947,7 @@ module M_impl_Context__set_irrelevent_var (* Context<'arena> *)
   
   meta "rewrite_def" function view_Node
   
-  predicate is_valid_bdd (self: t_Context) (b: t_Bdd) =
+  function is_valid_bdd (self: t_Context) (b: t_Bdd) : bool =
     Map.get (view_MyHashMap_Node_Bdd self.hashcons) (view_Node b.f0) = Some b
   
   constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
@@ -959,8 +958,7 @@ module M_impl_Context__set_irrelevent_var (* Context<'arena> *)
       | {f0 = If v _ _; f1 = _} -> UInt64.t'int v
       end
   
-  predicate is_valid_node (self: t_Context) (n: t_Node) =
-    match n with
+  function is_valid_node (self: t_Context) (n: t_Node) : bool = match n with
       | True' -> true
       | False' -> true
       | If v childt childf -> childt.f0 <> childf.f0
@@ -974,8 +972,7 @@ module M_impl_Context__set_irrelevent_var (* Context<'arena> *)
   
   function view_MyHashMap_Bdd_Bdd (self: t_MyHashMap_Bdd_Bdd) : Map.map UInt64.t t_Option_Bdd
   
-  predicate interp (self: t_Bdd) (vars: Map.map UInt64.t bool) =
-    match self with
+  function interp (self: t_Bdd) (vars: Map.map UInt64.t bool) : bool = match self with
       | {f0 = True'; f1 = _} -> true
       | {f0 = False'; f1 = _} -> false
       | {f0 = If v childt childf; f1 = _} -> if Map.get vars v then interp childt vars else interp childf vars
@@ -985,7 +982,7 @@ module M_impl_Context__set_irrelevent_var (* Context<'arena> *)
   
   function view_MyHashMap_tup2_Bdd_Bdd_Bdd (self: t_MyHashMap_tup2_Bdd_Bdd_Bdd) : Map.map tup2_u64_u64 t_Option_Bdd
   
-  predicate invariant_Context [@inline:trivial] (self: t_Context) =
+  function invariant_Context [@inline:trivial] (self: t_Context) : bool =
     (forall n: t_NodeLog. match Map.get (view_MyHashMap_Node_Bdd self.hashcons) n with
           | Some b -> view_Node b.f0 = n
           /\ is_valid_node self b.f0
@@ -1009,9 +1006,9 @@ module M_impl_Context__set_irrelevent_var (* Context<'arena> *)
         /\ (leastvar a <= leastvar n \/ leastvar b <= leastvar n)
         end)
   
-  meta "rewrite_def" predicate invariant_Context
+  meta "rewrite_def" function invariant_Context
   
-  predicate inv_Context (_1: t_Context)
+  function inv_Context (_1: t_Context) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Context [inv_Context _1]. inv_Context _1 = invariant_Context _1
   
@@ -1124,7 +1121,7 @@ module M_impl_Context_0__and (* Context<'arena> *)
   
   meta "rewrite_def" function view_Node
   
-  predicate is_valid_bdd (self: t_Context) (b: t_Bdd) =
+  function is_valid_bdd (self: t_Context) (b: t_Bdd) : bool =
     Map.get (view_MyHashMap_Node_Bdd self.hashcons) (view_Node b.f0) = Some'0 b
   
   constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
@@ -1135,8 +1132,7 @@ module M_impl_Context_0__and (* Context<'arena> *)
       | {f0 = If v _ _; f1 = _} -> UInt64.t'int v
       end
   
-  predicate is_valid_node (self: t_Context) (n: t_Node) =
-    match n with
+  function is_valid_node (self: t_Context) (n: t_Node) : bool = match n with
       | True' -> true
       | False' -> true
       | If v childt childf -> childt.f0 <> childf.f0
@@ -1150,14 +1146,13 @@ module M_impl_Context_0__and (* Context<'arena> *)
   
   function view_MyHashMap_Bdd_Bdd (self: t_MyHashMap_Bdd_Bdd) : Map.map UInt64.t t_Option_Bdd
   
-  predicate interp (self: t_Bdd) (vars: Map.map UInt64.t bool) =
-    match self with
+  function interp (self: t_Bdd) (vars: Map.map UInt64.t bool) : bool = match self with
       | {f0 = True'; f1 = _} -> true
       | {f0 = False'; f1 = _} -> false
       | {f0 = If v childt childf; f1 = _} -> if Map.get vars v then interp childt vars else interp childf vars
       end
   
-  predicate invariant_Context [@inline:trivial] (self: t_Context) =
+  function invariant_Context [@inline:trivial] (self: t_Context) : bool =
     (forall n: t_NodeLog. match Map.get (view_MyHashMap_Node_Bdd self.hashcons) n with
           | Some'0 b -> view_Node b.f0 = n
           /\ is_valid_node self b.f0
@@ -1181,24 +1176,24 @@ module M_impl_Context_0__and (* Context<'arena> *)
         /\ (leastvar a <= leastvar n \/ leastvar b <= leastvar n)
         end)
   
-  meta "rewrite_def" predicate invariant_Context
+  meta "rewrite_def" function invariant_Context
   
-  predicate inv_Context (_1: t_Context)
+  function inv_Context (_1: t_Context) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Context [inv_Context _1]. inv_Context _1 = invariant_Context _1
   
-  predicate invariant_refmut_Context [@inline:trivial] (self: MutBorrow.t t_Context) =
-    inv_Context self.current /\ inv_Context self.final
+  function invariant_refmut_Context [@inline:trivial] (self: MutBorrow.t t_Context) : bool = inv_Context self.current
+    /\ inv_Context self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Context
+  meta "rewrite_def" function invariant_refmut_Context
   
-  predicate inv_refmut_Context [@inline:trivial] (_1: MutBorrow.t t_Context) = invariant_refmut_Context _1
+  function inv_refmut_Context [@inline:trivial] (_1: MutBorrow.t t_Context) : bool = invariant_refmut_Context _1
   
-  meta "rewrite_def" predicate inv_refmut_Context
+  meta "rewrite_def" function inv_refmut_Context
   
-  predicate resolve_refmut_Context [@inline:trivial] (_1: MutBorrow.t t_Context) = _1.final = _1.current
+  function resolve_refmut_Context [@inline:trivial] (_1: MutBorrow.t t_Context) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Context
+  meta "rewrite_def" function resolve_refmut_Context
   
   let elim_If (_x: t_Node) (return (v: UInt64.t) (childt: t_Bdd) (childf: t_Bdd)) = any
     [ _k (v: UInt64.t) (childt: t_Bdd) (childf: t_Bdd) -> {If v childt childf = _x} (! return {v} {childt} {childf})
@@ -1225,9 +1220,9 @@ module M_impl_Context_0__and (* Context<'arena> *)
       = cmp_log_Int (deep_model_u64 self) (deep_model_u64 other)}
       (! return {result}) ]
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function size (self: t_Bdd) : int = match self with
       | {f0 = True'; f1 = _} -> 0
@@ -1237,7 +1232,7 @@ module M_impl_Context_0__and (* Context<'arena> *)
   
   axiom size_spec: forall self: t_Bdd [size self]. ge_log_Int (size self) 0
   
-  predicate grows (self: MutBorrow.t t_Context) =
+  function grows (self: MutBorrow.t t_Context) : bool =
     UInt64.le (view_PeanoInt self.current.cnt) (view_PeanoInt self.final.cnt)
     /\ (forall n: t_NodeLog. match Map.get (view_MyHashMap_Node_Bdd self.current.hashcons) n with
         | Some'0 b -> Map.get (view_MyHashMap_Node_Bdd self.final.hashcons) n = Some'0 b
@@ -1298,14 +1293,14 @@ module M_impl_Context_0__and (* Context<'arena> *)
         end}
       any) ]
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
-  predicate well_founded_relation_Int [@inline:trivial] (self: int) (other: int) =
-    ge_log_Int self 0 /\ gt_log_Int self other
+  function well_founded_relation_Int [@inline:trivial] (self: int) (other: int) : bool = ge_log_Int self 0
+    /\ gt_log_Int self other
   
-  meta "rewrite_def" predicate well_founded_relation_Int
+  meta "rewrite_def" function well_founded_relation_Int
   
   meta "compute_max_steps" 1000000
   
@@ -1535,7 +1530,7 @@ module M_impl_Context_0__false (* Context<'arena> *)
   
   meta "rewrite_def" function view_Node
   
-  predicate is_valid_bdd (self: t_Context) (b: t_Bdd) =
+  function is_valid_bdd (self: t_Context) (b: t_Bdd) : bool =
     Map.get (view_MyHashMap_Node_Bdd self.hashcons) (view_Node b.f0) = Some b
   
   constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
@@ -1546,8 +1541,7 @@ module M_impl_Context_0__false (* Context<'arena> *)
       | {f0 = If v _ _; f1 = _} -> UInt64.t'int v
       end
   
-  predicate is_valid_node (self: t_Context) (n: t_Node) =
-    match n with
+  function is_valid_node (self: t_Context) (n: t_Node) : bool = match n with
       | True' -> true
       | False' -> true
       | If v childt childf -> childt.f0 <> childf.f0
@@ -1561,8 +1555,7 @@ module M_impl_Context_0__false (* Context<'arena> *)
   
   function view_MyHashMap_Bdd_Bdd (self: t_MyHashMap_Bdd_Bdd) : Map.map UInt64.t t_Option_Bdd
   
-  predicate interp (self: t_Bdd) (vars: Map.map UInt64.t bool) =
-    match self with
+  function interp (self: t_Bdd) (vars: Map.map UInt64.t bool) : bool = match self with
       | {f0 = True'; f1 = _} -> true
       | {f0 = False'; f1 = _} -> false
       | {f0 = If v childt childf; f1 = _} -> if Map.get vars v then interp childt vars else interp childf vars
@@ -1572,7 +1565,7 @@ module M_impl_Context_0__false (* Context<'arena> *)
   
   function view_MyHashMap_tup2_Bdd_Bdd_Bdd (self: t_MyHashMap_tup2_Bdd_Bdd_Bdd) : Map.map tup2_u64_u64 t_Option_Bdd
   
-  predicate invariant_Context [@inline:trivial] (self: t_Context) =
+  function invariant_Context [@inline:trivial] (self: t_Context) : bool =
     (forall n: t_NodeLog. match Map.get (view_MyHashMap_Node_Bdd self.hashcons) n with
           | Some b -> view_Node b.f0 = n
           /\ is_valid_node self b.f0
@@ -1596,22 +1589,22 @@ module M_impl_Context_0__false (* Context<'arena> *)
         /\ (leastvar a <= leastvar n \/ leastvar b <= leastvar n)
         end)
   
-  meta "rewrite_def" predicate invariant_Context
+  meta "rewrite_def" function invariant_Context
   
-  predicate inv_Context (_1: t_Context)
+  function inv_Context (_1: t_Context) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Context [inv_Context _1]. inv_Context _1 = invariant_Context _1
   
-  predicate invariant_refmut_Context [@inline:trivial] (self: MutBorrow.t t_Context) =
-    inv_Context self.current /\ inv_Context self.final
+  function invariant_refmut_Context [@inline:trivial] (self: MutBorrow.t t_Context) : bool = inv_Context self.current
+    /\ inv_Context self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Context
+  meta "rewrite_def" function invariant_refmut_Context
   
-  predicate inv_refmut_Context [@inline:trivial] (_1: MutBorrow.t t_Context) = invariant_refmut_Context _1
+  function inv_refmut_Context [@inline:trivial] (_1: MutBorrow.t t_Context) : bool = invariant_refmut_Context _1
   
-  meta "rewrite_def" predicate inv_refmut_Context
+  meta "rewrite_def" function inv_refmut_Context
   
-  predicate grows (self: MutBorrow.t t_Context) =
+  function grows (self: MutBorrow.t t_Context) : bool =
     UInt64.le (view_PeanoInt self.current.cnt) (view_PeanoInt self.final.cnt)
     /\ (forall n: t_NodeLog. match Map.get (view_MyHashMap_Node_Bdd self.current.hashcons) n with
         | Some b -> Map.get (view_MyHashMap_Node_Bdd self.final.hashcons) n = Some b
@@ -1628,9 +1621,9 @@ module M_impl_Context_0__false (* Context<'arena> *)
       /\ ([@stop_split] [@expl:hashcons ensures #2] is_valid_bdd self.final result)}
       (! return {result}) ]
   
-  predicate resolve_refmut_Context [@inline:trivial] (_1: MutBorrow.t t_Context) = _1.final = _1.current
+  function resolve_refmut_Context [@inline:trivial] (_1: MutBorrow.t t_Context) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Context
+  meta "rewrite_def" function resolve_refmut_Context
   
   meta "compute_max_steps" 1000000
   
@@ -1718,9 +1711,9 @@ module M_impl_Context_0__hashcons (* Context<'arena> *)
     [ return (result: MutBorrow.t t_Node) -> {[@stop_split] [@expl:alloc ensures] result.current = val'}
       (! return {result}) ]
   
-  predicate resolve_refmut_Node [@inline:trivial] (_1: MutBorrow.t t_Node) = _1.final = _1.current
+  function resolve_refmut_Node [@inline:trivial] (_1: MutBorrow.t t_Node) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Node
+  meta "rewrite_def" function resolve_refmut_Node
   
   let add_Node (self: MutBorrow.t t_MyHashMap_Node_Bdd) (key: t_Node) (val': t_Bdd) (return (x: ())) = any
     [ return (result: ()) ->
@@ -1737,7 +1730,7 @@ module M_impl_Context_0__hashcons (* Context<'arena> *)
   
   meta "rewrite_def" function view_Node
   
-  predicate is_valid_bdd (self: t_Context) (b: t_Bdd) =
+  function is_valid_bdd (self: t_Context) (b: t_Bdd) : bool =
     Map.get (view_MyHashMap_Node_Bdd self.hashcons) (view_Node b.f0) = Some'0 b
   
   constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
@@ -1748,8 +1741,7 @@ module M_impl_Context_0__hashcons (* Context<'arena> *)
       | {f0 = If v _ _; f1 = _} -> UInt64.t'int v
       end
   
-  predicate is_valid_node (self: t_Context) (n: t_Node) =
-    match n with
+  function is_valid_node (self: t_Context) (n: t_Node) : bool = match n with
       | True' -> true
       | False' -> true
       | If v childt childf -> childt.f0 <> childf.f0
@@ -1763,8 +1755,7 @@ module M_impl_Context_0__hashcons (* Context<'arena> *)
   
   function view_MyHashMap_Bdd_Bdd (self: t_MyHashMap_Bdd_Bdd) : Map.map UInt64.t t_Option_Bdd
   
-  predicate interp (self: t_Bdd) (vars: Map.map UInt64.t bool) =
-    match self with
+  function interp (self: t_Bdd) (vars: Map.map UInt64.t bool) : bool = match self with
       | {f0 = True'; f1 = _} -> true
       | {f0 = False'; f1 = _} -> false
       | {f0 = If v childt childf; f1 = _} -> if Map.get vars v then interp childt vars else interp childf vars
@@ -1774,7 +1765,7 @@ module M_impl_Context_0__hashcons (* Context<'arena> *)
   
   function view_MyHashMap_tup2_Bdd_Bdd_Bdd (self: t_MyHashMap_tup2_Bdd_Bdd_Bdd) : Map.map tup2_u64_u64 t_Option_Bdd
   
-  predicate invariant_Context [@inline:trivial] (self: t_Context) =
+  function invariant_Context [@inline:trivial] (self: t_Context) : bool =
     (forall n: t_NodeLog. match Map.get (view_MyHashMap_Node_Bdd self.hashcons) n with
           | Some'0 b -> view_Node b.f0 = n
           /\ is_valid_node self b.f0
@@ -1798,24 +1789,24 @@ module M_impl_Context_0__hashcons (* Context<'arena> *)
         /\ (leastvar a <= leastvar n \/ leastvar b <= leastvar n)
         end)
   
-  meta "rewrite_def" predicate invariant_Context
+  meta "rewrite_def" function invariant_Context
   
-  predicate inv_Context (_1: t_Context)
+  function inv_Context (_1: t_Context) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Context [inv_Context _1]. inv_Context _1 = invariant_Context _1
   
-  predicate invariant_refmut_Context [@inline:trivial] (self: MutBorrow.t t_Context) =
-    inv_Context self.current /\ inv_Context self.final
+  function invariant_refmut_Context [@inline:trivial] (self: MutBorrow.t t_Context) : bool = inv_Context self.current
+    /\ inv_Context self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Context
+  meta "rewrite_def" function invariant_refmut_Context
   
-  predicate inv_refmut_Context [@inline:trivial] (_1: MutBorrow.t t_Context) = invariant_refmut_Context _1
+  function inv_refmut_Context [@inline:trivial] (_1: MutBorrow.t t_Context) : bool = invariant_refmut_Context _1
   
-  meta "rewrite_def" predicate inv_refmut_Context
+  meta "rewrite_def" function inv_refmut_Context
   
-  predicate resolve_refmut_Context [@inline:trivial] (_1: MutBorrow.t t_Context) = _1.final = _1.current
+  function resolve_refmut_Context [@inline:trivial] (_1: MutBorrow.t t_Context) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Context
+  meta "rewrite_def" function resolve_refmut_Context
   
   let elim_Some (_x: t_Option_ref_Bdd) (return (f0'2: t_Bdd)) = any
     [ _k (f0'2: t_Bdd) -> {Some f0'2 = _x} (! return {f0'2})
@@ -1825,7 +1816,7 @@ module M_impl_Context_0__hashcons (* Context<'arena> *)
         end}
       any) ]
   
-  predicate grows (self: MutBorrow.t t_Context) =
+  function grows (self: MutBorrow.t t_Context) : bool =
     UInt64.le (view_PeanoInt self.current.cnt) (view_PeanoInt self.final.cnt)
     /\ (forall n: t_NodeLog. match Map.get (view_MyHashMap_Node_Bdd self.current.hashcons) n with
         | Some'0 b -> Map.get (view_MyHashMap_Node_Bdd self.final.hashcons) n = Some'0 b
@@ -1955,7 +1946,7 @@ module M_impl_Context_0__new (* Context<'arena> *)
   
   meta "rewrite_def" function view_Node
   
-  predicate is_valid_bdd (self: t_Context) (b: t_Bdd) =
+  function is_valid_bdd (self: t_Context) (b: t_Bdd) : bool =
     Map.get (view_MyHashMap_Node_Bdd self.hashcons) (view_Node b.f0) = Some b
   
   constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
@@ -1966,8 +1957,7 @@ module M_impl_Context_0__new (* Context<'arena> *)
       | {f0 = If'0 v _ _; f1 = _} -> UInt64.t'int v
       end
   
-  predicate is_valid_node (self: t_Context) (n: t_Node) =
-    match n with
+  function is_valid_node (self: t_Context) (n: t_Node) : bool = match n with
       | True''0 -> true
       | False''0 -> true
       | If'0 v childt childf -> childt.f0 <> childf.f0
@@ -1979,14 +1969,13 @@ module M_impl_Context_0__new (* Context<'arena> *)
   
   meta "rewrite_def" function view_PeanoInt
   
-  predicate interp (self: t_Bdd) (vars: Map.map UInt64.t bool) =
-    match self with
+  function interp (self: t_Bdd) (vars: Map.map UInt64.t bool) : bool = match self with
       | {f0 = True''0; f1 = _} -> true
       | {f0 = False''0; f1 = _} -> false
       | {f0 = If'0 v childt childf; f1 = _} -> if Map.get vars v then interp childt vars else interp childf vars
       end
   
-  predicate invariant_Context [@inline:trivial] (self: t_Context) =
+  function invariant_Context [@inline:trivial] (self: t_Context) : bool =
     (forall n: t_NodeLog. match Map.get (view_MyHashMap_Node_Bdd self.hashcons) n with
           | Some b -> view_Node b.f0 = n
           /\ is_valid_node self b.f0
@@ -2010,9 +1999,9 @@ module M_impl_Context_0__new (* Context<'arena> *)
         /\ (leastvar a <= leastvar n \/ leastvar b <= leastvar n)
         end)
   
-  meta "rewrite_def" predicate invariant_Context
+  meta "rewrite_def" function invariant_Context
   
-  predicate inv_Context (_1: t_Context)
+  function inv_Context (_1: t_Context) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Context [inv_Context _1]. inv_Context _1 = invariant_Context _1
   
@@ -2100,7 +2089,7 @@ module M_impl_Context_0__node (* Context<'arena> *)
   
   meta "rewrite_def" function view_Node
   
-  predicate is_valid_bdd (self: t_Context) (b: t_Bdd) =
+  function is_valid_bdd (self: t_Context) (b: t_Bdd) : bool =
     Map.get (view_MyHashMap_Node_Bdd self.hashcons) (view_Node b.f0) = Some b
   
   constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
@@ -2111,8 +2100,7 @@ module M_impl_Context_0__node (* Context<'arena> *)
       | {f0 = If v _ _; f1 = _} -> UInt64.t'int v
       end
   
-  predicate is_valid_node (self: t_Context) (n: t_Node) =
-    match n with
+  function is_valid_node (self: t_Context) (n: t_Node) : bool = match n with
       | True' -> true
       | False' -> true
       | If v childt childf -> childt.f0 <> childf.f0
@@ -2126,8 +2114,7 @@ module M_impl_Context_0__node (* Context<'arena> *)
   
   function view_MyHashMap_Bdd_Bdd (self: t_MyHashMap_Bdd_Bdd) : Map.map UInt64.t t_Option_Bdd
   
-  predicate interp (self: t_Bdd) (vars: Map.map UInt64.t bool) =
-    match self with
+  function interp (self: t_Bdd) (vars: Map.map UInt64.t bool) : bool = match self with
       | {f0 = True'; f1 = _} -> true
       | {f0 = False'; f1 = _} -> false
       | {f0 = If v childt childf; f1 = _} -> if Map.get vars v then interp childt vars else interp childf vars
@@ -2137,7 +2124,7 @@ module M_impl_Context_0__node (* Context<'arena> *)
   
   function view_MyHashMap_tup2_Bdd_Bdd_Bdd (self: t_MyHashMap_tup2_Bdd_Bdd_Bdd) : Map.map tup2_u64_u64 t_Option_Bdd
   
-  predicate invariant_Context [@inline:trivial] (self: t_Context) =
+  function invariant_Context [@inline:trivial] (self: t_Context) : bool =
     (forall n: t_NodeLog. match Map.get (view_MyHashMap_Node_Bdd self.hashcons) n with
           | Some b -> view_Node b.f0 = n
           /\ is_valid_node self b.f0
@@ -2161,26 +2148,26 @@ module M_impl_Context_0__node (* Context<'arena> *)
         /\ (leastvar a <= leastvar n \/ leastvar b <= leastvar n)
         end)
   
-  meta "rewrite_def" predicate invariant_Context
+  meta "rewrite_def" function invariant_Context
   
-  predicate inv_Context (_1: t_Context)
+  function inv_Context (_1: t_Context) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Context [inv_Context _1]. inv_Context _1 = invariant_Context _1
   
-  predicate invariant_refmut_Context [@inline:trivial] (self: MutBorrow.t t_Context) =
-    inv_Context self.current /\ inv_Context self.final
+  function invariant_refmut_Context [@inline:trivial] (self: MutBorrow.t t_Context) : bool = inv_Context self.current
+    /\ inv_Context self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Context
+  meta "rewrite_def" function invariant_refmut_Context
   
-  predicate inv_refmut_Context [@inline:trivial] (_1: MutBorrow.t t_Context) = invariant_refmut_Context _1
+  function inv_refmut_Context [@inline:trivial] (_1: MutBorrow.t t_Context) : bool = invariant_refmut_Context _1
   
-  meta "rewrite_def" predicate inv_refmut_Context
+  meta "rewrite_def" function inv_refmut_Context
   
-  predicate resolve_refmut_Context [@inline:trivial] (_1: MutBorrow.t t_Context) = _1.final = _1.current
+  function resolve_refmut_Context [@inline:trivial] (_1: MutBorrow.t t_Context) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Context
+  meta "rewrite_def" function resolve_refmut_Context
   
-  predicate grows (self: MutBorrow.t t_Context) =
+  function grows (self: MutBorrow.t t_Context) : bool =
     UInt64.le (view_PeanoInt self.current.cnt) (view_PeanoInt self.final.cnt)
     /\ (forall n: t_NodeLog. match Map.get (view_MyHashMap_Node_Bdd self.current.hashcons) n with
         | Some b -> Map.get (view_MyHashMap_Node_Bdd self.final.hashcons) n = Some b
@@ -2312,7 +2299,7 @@ module M_impl_Context_0__not (* Context<'arena> *)
   
   meta "rewrite_def" function view_Node
   
-  predicate is_valid_bdd (self: t_Context) (b: t_Bdd) =
+  function is_valid_bdd (self: t_Context) (b: t_Bdd) : bool =
     Map.get (view_MyHashMap_Node_Bdd self.hashcons) (view_Node b.f0) = Some'0 b
   
   constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
@@ -2323,8 +2310,7 @@ module M_impl_Context_0__not (* Context<'arena> *)
       | {f0 = If v _ _; f1 = _} -> UInt64.t'int v
       end
   
-  predicate is_valid_node (self: t_Context) (n: t_Node) =
-    match n with
+  function is_valid_node (self: t_Context) (n: t_Node) : bool = match n with
       | True' -> true
       | False' -> true
       | If v childt childf -> childt.f0 <> childf.f0
@@ -2336,8 +2322,7 @@ module M_impl_Context_0__not (* Context<'arena> *)
   
   meta "rewrite_def" function view_PeanoInt
   
-  predicate interp (self: t_Bdd) (vars: Map.map UInt64.t bool) =
-    match self with
+  function interp (self: t_Bdd) (vars: Map.map UInt64.t bool) : bool = match self with
       | {f0 = True'; f1 = _} -> true
       | {f0 = False'; f1 = _} -> false
       | {f0 = If v childt childf; f1 = _} -> if Map.get vars v then interp childt vars else interp childf vars
@@ -2347,7 +2332,7 @@ module M_impl_Context_0__not (* Context<'arena> *)
   
   function view_MyHashMap_tup2_Bdd_Bdd_Bdd (self: t_MyHashMap_tup2_Bdd_Bdd_Bdd) : Map.map tup2_u64_u64 t_Option_Bdd
   
-  predicate invariant_Context [@inline:trivial] (self: t_Context) =
+  function invariant_Context [@inline:trivial] (self: t_Context) : bool =
     (forall n: t_NodeLog. match Map.get (view_MyHashMap_Node_Bdd self.hashcons) n with
           | Some'0 b -> view_Node b.f0 = n
           /\ is_valid_node self b.f0
@@ -2371,15 +2356,15 @@ module M_impl_Context_0__not (* Context<'arena> *)
         /\ (leastvar a <= leastvar n \/ leastvar b <= leastvar n)
         end)
   
-  meta "rewrite_def" predicate invariant_Context
+  meta "rewrite_def" function invariant_Context
   
-  predicate inv_Context (_1: t_Context)
+  function inv_Context (_1: t_Context) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Context [inv_Context _1]. inv_Context _1 = invariant_Context _1
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function size (self: t_Bdd) : int = match self with
       | {f0 = True'; f1 = _} -> 0
@@ -2389,16 +2374,16 @@ module M_impl_Context_0__not (* Context<'arena> *)
   
   axiom size_spec: forall self: t_Bdd [size self]. ge_log_Int (size self) 0
   
-  predicate invariant_refmut_Context [@inline:trivial] (self: MutBorrow.t t_Context) =
-    inv_Context self.current /\ inv_Context self.final
+  function invariant_refmut_Context [@inline:trivial] (self: MutBorrow.t t_Context) : bool = inv_Context self.current
+    /\ inv_Context self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Context
+  meta "rewrite_def" function invariant_refmut_Context
   
-  predicate inv_refmut_Context [@inline:trivial] (_1: MutBorrow.t t_Context) = invariant_refmut_Context _1
+  function inv_refmut_Context [@inline:trivial] (_1: MutBorrow.t t_Context) : bool = invariant_refmut_Context _1
   
-  meta "rewrite_def" predicate inv_refmut_Context
+  meta "rewrite_def" function inv_refmut_Context
   
-  predicate grows (self: MutBorrow.t t_Context) =
+  function grows (self: MutBorrow.t t_Context) : bool =
     UInt64.le (view_PeanoInt self.current.cnt) (view_PeanoInt self.final.cnt)
     /\ (forall n: t_NodeLog. match Map.get (view_MyHashMap_Node_Bdd self.current.hashcons) n with
         | Some'0 b -> Map.get (view_MyHashMap_Node_Bdd self.final.hashcons) n = Some'0 b
@@ -2453,9 +2438,9 @@ module M_impl_Context_0__not (* Context<'arena> *)
         = (if i = deep_model_Bdd key then Some'0 val' else Map.get (view_MyHashMap_Bdd_Bdd self.current) i)}
       (! return {result}) ]
   
-  predicate resolve_refmut_Context [@inline:trivial] (_1: MutBorrow.t t_Context) = _1.final = _1.current
+  function resolve_refmut_Context [@inline:trivial] (_1: MutBorrow.t t_Context) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Context
+  meta "rewrite_def" function resolve_refmut_Context
   
   let elim_Some (_x: t_Option_ref_Bdd) (return (f0'2: t_Bdd)) = any
     [ _k (f0'2: t_Bdd) -> {Some f0'2 = _x} (! return {f0'2})
@@ -2465,14 +2450,14 @@ module M_impl_Context_0__not (* Context<'arena> *)
         end}
       any) ]
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
-  predicate well_founded_relation_Int [@inline:trivial] (self: int) (other: int) =
-    ge_log_Int self 0 /\ gt_log_Int self other
+  function well_founded_relation_Int [@inline:trivial] (self: int) (other: int) : bool = ge_log_Int self 0
+    /\ gt_log_Int self other
   
-  meta "rewrite_def" predicate well_founded_relation_Int
+  meta "rewrite_def" function well_founded_relation_Int
   
   meta "compute_max_steps" 1000000
   
@@ -2617,7 +2602,7 @@ module M_impl_Context_0__true (* Context<'arena> *)
   
   meta "rewrite_def" function view_Node
   
-  predicate is_valid_bdd (self: t_Context) (b: t_Bdd) =
+  function is_valid_bdd (self: t_Context) (b: t_Bdd) : bool =
     Map.get (view_MyHashMap_Node_Bdd self.hashcons) (view_Node b.f0) = Some b
   
   constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
@@ -2628,8 +2613,7 @@ module M_impl_Context_0__true (* Context<'arena> *)
       | {f0 = If v _ _; f1 = _} -> UInt64.t'int v
       end
   
-  predicate is_valid_node (self: t_Context) (n: t_Node) =
-    match n with
+  function is_valid_node (self: t_Context) (n: t_Node) : bool = match n with
       | True' -> true
       | False' -> true
       | If v childt childf -> childt.f0 <> childf.f0
@@ -2643,8 +2627,7 @@ module M_impl_Context_0__true (* Context<'arena> *)
   
   function view_MyHashMap_Bdd_Bdd (self: t_MyHashMap_Bdd_Bdd) : Map.map UInt64.t t_Option_Bdd
   
-  predicate interp (self: t_Bdd) (vars: Map.map UInt64.t bool) =
-    match self with
+  function interp (self: t_Bdd) (vars: Map.map UInt64.t bool) : bool = match self with
       | {f0 = True'; f1 = _} -> true
       | {f0 = False'; f1 = _} -> false
       | {f0 = If v childt childf; f1 = _} -> if Map.get vars v then interp childt vars else interp childf vars
@@ -2654,7 +2637,7 @@ module M_impl_Context_0__true (* Context<'arena> *)
   
   function view_MyHashMap_tup2_Bdd_Bdd_Bdd (self: t_MyHashMap_tup2_Bdd_Bdd_Bdd) : Map.map tup2_u64_u64 t_Option_Bdd
   
-  predicate invariant_Context [@inline:trivial] (self: t_Context) =
+  function invariant_Context [@inline:trivial] (self: t_Context) : bool =
     (forall n: t_NodeLog. match Map.get (view_MyHashMap_Node_Bdd self.hashcons) n with
           | Some b -> view_Node b.f0 = n
           /\ is_valid_node self b.f0
@@ -2678,22 +2661,22 @@ module M_impl_Context_0__true (* Context<'arena> *)
         /\ (leastvar a <= leastvar n \/ leastvar b <= leastvar n)
         end)
   
-  meta "rewrite_def" predicate invariant_Context
+  meta "rewrite_def" function invariant_Context
   
-  predicate inv_Context (_1: t_Context)
+  function inv_Context (_1: t_Context) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Context [inv_Context _1]. inv_Context _1 = invariant_Context _1
   
-  predicate invariant_refmut_Context [@inline:trivial] (self: MutBorrow.t t_Context) =
-    inv_Context self.current /\ inv_Context self.final
+  function invariant_refmut_Context [@inline:trivial] (self: MutBorrow.t t_Context) : bool = inv_Context self.current
+    /\ inv_Context self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Context
+  meta "rewrite_def" function invariant_refmut_Context
   
-  predicate inv_refmut_Context [@inline:trivial] (_1: MutBorrow.t t_Context) = invariant_refmut_Context _1
+  function inv_refmut_Context [@inline:trivial] (_1: MutBorrow.t t_Context) : bool = invariant_refmut_Context _1
   
-  meta "rewrite_def" predicate inv_refmut_Context
+  meta "rewrite_def" function inv_refmut_Context
   
-  predicate grows (self: MutBorrow.t t_Context) =
+  function grows (self: MutBorrow.t t_Context) : bool =
     UInt64.le (view_PeanoInt self.current.cnt) (view_PeanoInt self.final.cnt)
     /\ (forall n: t_NodeLog. match Map.get (view_MyHashMap_Node_Bdd self.current.hashcons) n with
         | Some b -> Map.get (view_MyHashMap_Node_Bdd self.final.hashcons) n = Some b
@@ -2710,9 +2693,9 @@ module M_impl_Context_0__true (* Context<'arena> *)
       /\ ([@stop_split] [@expl:hashcons ensures #2] is_valid_bdd self.final result)}
       (! return {result}) ]
   
-  predicate resolve_refmut_Context [@inline:trivial] (_1: MutBorrow.t t_Context) = _1.final = _1.current
+  function resolve_refmut_Context [@inline:trivial] (_1: MutBorrow.t t_Context) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Context
+  meta "rewrite_def" function resolve_refmut_Context
   
   meta "compute_max_steps" 1000000
   
@@ -2786,7 +2769,7 @@ module M_impl_Context_0__v (* Context<'arena> *)
   
   meta "rewrite_def" function view_Node
   
-  predicate is_valid_bdd (self: t_Context) (b: t_Bdd) =
+  function is_valid_bdd (self: t_Context) (b: t_Bdd) : bool =
     Map.get (view_MyHashMap_Node_Bdd self.hashcons) (view_Node b.f0) = Some b
   
   constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
@@ -2797,8 +2780,7 @@ module M_impl_Context_0__v (* Context<'arena> *)
       | {f0 = If v _ _; f1 = _} -> UInt64.t'int v
       end
   
-  predicate is_valid_node (self: t_Context) (n: t_Node) =
-    match n with
+  function is_valid_node (self: t_Context) (n: t_Node) : bool = match n with
       | True' -> true
       | False' -> true
       | If v childt childf -> childt.f0 <> childf.f0
@@ -2812,8 +2794,7 @@ module M_impl_Context_0__v (* Context<'arena> *)
   
   function view_MyHashMap_Bdd_Bdd (self: t_MyHashMap_Bdd_Bdd) : Map.map UInt64.t t_Option_Bdd
   
-  predicate interp (self: t_Bdd) (vars: Map.map UInt64.t bool) =
-    match self with
+  function interp (self: t_Bdd) (vars: Map.map UInt64.t bool) : bool = match self with
       | {f0 = True'; f1 = _} -> true
       | {f0 = False'; f1 = _} -> false
       | {f0 = If v childt childf; f1 = _} -> if Map.get vars v then interp childt vars else interp childf vars
@@ -2823,7 +2804,7 @@ module M_impl_Context_0__v (* Context<'arena> *)
   
   function view_MyHashMap_tup2_Bdd_Bdd_Bdd (self: t_MyHashMap_tup2_Bdd_Bdd_Bdd) : Map.map tup2_u64_u64 t_Option_Bdd
   
-  predicate invariant_Context [@inline:trivial] (self: t_Context) =
+  function invariant_Context [@inline:trivial] (self: t_Context) : bool =
     (forall n: t_NodeLog. match Map.get (view_MyHashMap_Node_Bdd self.hashcons) n with
           | Some b -> view_Node b.f0 = n
           /\ is_valid_node self b.f0
@@ -2847,22 +2828,22 @@ module M_impl_Context_0__v (* Context<'arena> *)
         /\ (leastvar a <= leastvar n \/ leastvar b <= leastvar n)
         end)
   
-  meta "rewrite_def" predicate invariant_Context
+  meta "rewrite_def" function invariant_Context
   
-  predicate inv_Context (_1: t_Context)
+  function inv_Context (_1: t_Context) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Context [inv_Context _1]. inv_Context _1 = invariant_Context _1
   
-  predicate invariant_refmut_Context [@inline:trivial] (self: MutBorrow.t t_Context) =
-    inv_Context self.current /\ inv_Context self.final
+  function invariant_refmut_Context [@inline:trivial] (self: MutBorrow.t t_Context) : bool = inv_Context self.current
+    /\ inv_Context self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Context
+  meta "rewrite_def" function invariant_refmut_Context
   
-  predicate inv_refmut_Context [@inline:trivial] (_1: MutBorrow.t t_Context) = invariant_refmut_Context _1
+  function inv_refmut_Context [@inline:trivial] (_1: MutBorrow.t t_Context) : bool = invariant_refmut_Context _1
   
-  meta "rewrite_def" predicate inv_refmut_Context
+  meta "rewrite_def" function inv_refmut_Context
   
-  predicate grows (self: MutBorrow.t t_Context) =
+  function grows (self: MutBorrow.t t_Context) : bool =
     UInt64.le (view_PeanoInt self.current.cnt) (view_PeanoInt self.final.cnt)
     /\ (forall n: t_NodeLog. match Map.get (view_MyHashMap_Node_Bdd self.current.hashcons) n with
         | Some b -> Map.get (view_MyHashMap_Node_Bdd self.final.hashcons) n = Some b
@@ -2901,9 +2882,9 @@ module M_impl_Context_0__v (* Context<'arena> *)
       /\ ([@stop_split] [@expl:node ensures #3] UInt64.t'int x <= leastvar result)}
       (! return {result}) ]
   
-  predicate resolve_refmut_Context [@inline:trivial] (_1: MutBorrow.t t_Context) = _1.final = _1.current
+  function resolve_refmut_Context [@inline:trivial] (_1: MutBorrow.t t_Context) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Context
+  meta "rewrite_def" function resolve_refmut_Context
   
   meta "compute_max_steps" 1000000
   

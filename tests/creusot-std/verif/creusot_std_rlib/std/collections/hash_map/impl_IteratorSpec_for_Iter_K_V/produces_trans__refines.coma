@@ -14,9 +14,9 @@ type tup2_ref_K_ref_V = { f0: t_K; f1: t_V }
 
 type t_FMap_DeepModelTy_V
 
-predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
 
-meta "rewrite_def" predicate ge_log_Int
+meta "rewrite_def" function ge_log_Int
 
 function len_DeepModelTy (self: t_FMap_DeepModelTy_V) : int
 
@@ -25,8 +25,8 @@ axiom len_DeepModelTy_spec:
 
 function view_Iter_K_V (self: t_Iter_K_V) : t_FMap_DeepModelTy_V
 
-predicate contains_tup2_ref_K_ref_V (self: Seq.seq tup2_ref_K_ref_V) (x: tup2_ref_K_ref_V) =
-  exists i: int. 0 <= i /\ i < Seq.length self /\ Seq.get self i = x
+function contains_tup2_ref_K_ref_V (self: Seq.seq tup2_ref_K_ref_V) (x: tup2_ref_K_ref_V) : bool = exists i: int. 0 <= i
+    /\ i < Seq.length self /\ Seq.get self i = x
 
 type t_DeepModelTy
 
@@ -45,8 +45,8 @@ function deep_model_ref_K [@inline:trivial] (self: t_K) : t_DeepModelTy = deep_m
 
 meta "rewrite_def" function deep_model_ref_K
 
-predicate produces_Iter_K_V [@inline:trivial] (self: t_Iter_K_V) (visited: Seq.seq tup2_ref_K_ref_V) (o: t_Iter_K_V) =
-  len_DeepModelTy (view_Iter_K_V self) = Seq.length visited + len_DeepModelTy (view_Iter_K_V o)
+function produces_Iter_K_V [@inline:trivial] (self: t_Iter_K_V) (visited: Seq.seq tup2_ref_K_ref_V) (o: t_Iter_K_V) : bool
+ = len_DeepModelTy (view_Iter_K_V self) = Seq.length visited + len_DeepModelTy (view_Iter_K_V o)
   /\ (forall k: t_K, v: t_V. contains_tup2_ref_K_ref_V visited { f0 = k; f1 = v }
       -> lookup_DeepModelTy (view_Iter_K_V self) (deep_model_K k) = Some v
       /\ lookup_DeepModelTy (view_Iter_K_V o) (deep_model_K k) = None)
@@ -63,7 +63,7 @@ predicate produces_Iter_K_V [@inline:trivial] (self: t_Iter_K_V) (visited: Seq.s
       /\ i2 < Seq.length visited /\ deep_model_ref_K (Seq.get visited i1).f0 = deep_model_ref_K (Seq.get visited i2).f0
     -> i1 = i2)
 
-meta "rewrite_def" predicate produces_Iter_K_V
+meta "rewrite_def" function produces_Iter_K_V
 
 meta "compute_max_steps" 1000000
 

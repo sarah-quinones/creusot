@@ -38,9 +38,9 @@ let elim_Some (_x: t_Option_Ordering) (return (f0: t_Ordering)) = any
       end}
     any) ]
 
-predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
 
-meta "rewrite_def" predicate gt_log_Int
+meta "rewrite_def" function gt_log_Int
 
 function deep_model_ref_u32 [@inline:trivial] (self: UInt32.t) : int = deep_model_u32 self
 

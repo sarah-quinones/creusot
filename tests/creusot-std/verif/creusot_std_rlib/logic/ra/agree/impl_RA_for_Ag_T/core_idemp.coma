@@ -8,9 +8,9 @@ type t_Ag_T = { f0: t_T }
 
 type t_Option_Ag_T = None | Some t_Ag_T
 
-predicate index_Mapping_Ag_T_bool [@inline:trivial] (self: Map.map t_Ag_T bool) (a: t_Ag_T) = Map.get self a
+function index_Mapping_Ag_T_bool [@inline:trivial] (self: Map.map t_Ag_T bool) (a: t_Ag_T) : bool = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_Ag_T_bool
+meta "rewrite_def" function index_Mapping_Ag_T_bool
 
 function such_that_Ag_T (p: Map.map t_Ag_T bool) : t_Ag_T
 

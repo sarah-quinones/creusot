@@ -5,9 +5,9 @@ module M_filter_spec
   
   type t_T
   
-  predicate contains_T [@inline:trivial] (self: Fset.fset t_T) (e: t_T) = Fset.mem e self
+  function contains_T [@inline:trivial] (self: Fset.fset t_T) (e: t_T) : bool = Fset.mem e self
   
-  meta "rewrite_def" predicate contains_T
+  meta "rewrite_def" function contains_T
   
   meta "compute_max_steps" 1000000
   
@@ -26,9 +26,9 @@ module M_interval_spec
   use set.FsetInt
   use int.Int
   
-  predicate contains_Int [@inline:trivial] (self: Fset.fset int) (e: int) = Fset.mem e self
+  function contains_Int [@inline:trivial] (self: Fset.fset int) (e: int) : bool = Fset.mem e self
   
-  meta "rewrite_def" predicate contains_Int
+  meta "rewrite_def" function contains_Int
   
   meta "compute_max_steps" 1000000
   
@@ -48,17 +48,17 @@ module M_map_spec
   
   type t_U
   
-  predicate contains_U [@inline:trivial] (self: Fset.fset t_U) (e: t_U) = Fset.mem e self
+  function contains_U [@inline:trivial] (self: Fset.fset t_U) (e: t_U) : bool = Fset.mem e self
   
-  meta "rewrite_def" predicate contains_U
+  meta "rewrite_def" function contains_U
   
   type t_T
   
   function map_T (self: Fset.fset t_T) (f: Map.map t_T t_U) : Fset.fset t_U = Fset.map f self
   
-  predicate contains_T [@inline:trivial] (self: Fset.fset t_T) (e: t_T) = Fset.mem e self
+  function contains_T [@inline:trivial] (self: Fset.fset t_T) (e: t_T) : bool = Fset.mem e self
   
-  meta "rewrite_def" predicate contains_T
+  meta "rewrite_def" function contains_T
   
   meta "compute_max_steps" 1000000
   

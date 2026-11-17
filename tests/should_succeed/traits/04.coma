@@ -5,32 +5,32 @@ module M_user
   
   type tup2_ref_T_ref_T = { f0: t_T; f1: t_T }
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate precondition_func1 (self: ()) (args: tup2_ref_T_ref_T)
+  function precondition_func1 (self: ()) (args: tup2_ref_T_ref_T) : bool
   
   axiom precondition_fndef:
     forall args: tup2_ref_T_ref_T [precondition_func1 () args]. (let {f0 = self; f1 = o} = args in inv_ref_T self
         /\ inv_ref_T o) -> precondition_func1 () args
   
-  predicate postcondition_func1 (self: ()) (args: tup2_ref_T_ref_T) (result: bool)
+  function postcondition_func1 (self: ()) (args: tup2_ref_T_ref_T) (result: bool) : bool
   
   axiom postcondition_fndef:
     forall args: tup2_ref_T_ref_T, result: bool [postcondition_func1 () args result]. postcondition_func1 () args result
       -> (let {f0 = self; f1 = o} = args in true)
   
-  predicate postcondition_once_func1 (self: ()) (args: tup2_ref_T_ref_T) (result: bool) =
+  function postcondition_once_func1 (self: ()) (args: tup2_ref_T_ref_T) (result: bool) : bool =
     postcondition_func1 self args result
   
-  meta "rewrite_def" predicate postcondition_once_func1
+  meta "rewrite_def" function postcondition_once_func1
   
   let func1_T (self: t_T) (o: t_T) (return (x: bool)) =
   {[@stop_split] [@expl:func1 requires] precondition_func1 () { f0 = self; f1 = o }}
@@ -39,22 +39,22 @@ module M_user
                                                                                                   f1 = o } result}
       (! return {result}) ]
   
-  predicate precondition_func2 (self: ()) (args: tup2_ref_T_ref_T)
+  function precondition_func2 (self: ()) (args: tup2_ref_T_ref_T) : bool
   
   axiom precondition_fndef'0:
     forall args: tup2_ref_T_ref_T [precondition_func2 () args]. (let {f0 = self; f1 = o} = args in inv_ref_T self
         /\ inv_ref_T o) -> precondition_func2 () args
   
-  predicate postcondition_func2 (self: ()) (args: tup2_ref_T_ref_T) (result: bool)
+  function postcondition_func2 (self: ()) (args: tup2_ref_T_ref_T) (result: bool) : bool
   
   axiom postcondition_fndef'0:
     forall args: tup2_ref_T_ref_T, result: bool [postcondition_func2 () args result]. postcondition_func2 () args result
       -> (let {f0 = self; f1 = o} = args in true)
   
-  predicate postcondition_once_func2 (self: ()) (args: tup2_ref_T_ref_T) (result: bool) =
+  function postcondition_once_func2 (self: ()) (args: tup2_ref_T_ref_T) (result: bool) : bool =
     postcondition_func2 self args result
   
-  meta "rewrite_def" predicate postcondition_once_func2
+  meta "rewrite_def" function postcondition_once_func2
   
   let func2_T (self: t_T) (o: t_T) (return (x: bool)) =
   {[@stop_split] [@expl:func2 requires] precondition_func2 () { f0 = self; f1 = o }}
@@ -63,22 +63,22 @@ module M_user
                                                                                                   f1 = o } result}
       (! return {result}) ]
   
-  predicate precondition_func3 (self: ()) (args: tup2_ref_T_ref_T)
+  function precondition_func3 (self: ()) (args: tup2_ref_T_ref_T) : bool
   
   axiom precondition_fndef'1:
     forall args: tup2_ref_T_ref_T [precondition_func3 () args]. (let {f0 = self; f1 = o} = args in inv_ref_T self
         /\ inv_ref_T o) -> precondition_func3 () args
   
-  predicate postcondition_func3 (self: ()) (args: tup2_ref_T_ref_T) (result: bool)
+  function postcondition_func3 (self: ()) (args: tup2_ref_T_ref_T) (result: bool) : bool
   
   axiom postcondition_fndef'1:
     forall args: tup2_ref_T_ref_T, result: bool [postcondition_func3 () args result]. postcondition_func3 () args result
       -> (let {f0 = self; f1 = o} = args in true)
   
-  predicate postcondition_once_func3 (self: ()) (args: tup2_ref_T_ref_T) (result: bool) =
+  function postcondition_once_func3 (self: ()) (args: tup2_ref_T_ref_T) (result: bool) : bool =
     postcondition_func3 self args result
   
-  meta "rewrite_def" predicate postcondition_once_func3
+  meta "rewrite_def" function postcondition_once_func3
   
   let func3_T (self: t_T) (o: t_T) (return (x: bool)) =
   {[@stop_split] [@expl:func3 requires] precondition_func3 () { f0 = self; f1 = o }}

@@ -4,26 +4,26 @@ module M_dummy_swap
   
   type t_T
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate invariant_Box_T_Global (self: t_T) = inv_T self
+  function invariant_Box_T_Global (self: t_T) : bool = inv_T self
   
-  predicate inv_Box_T_Global [@inline:trivial] (_1: t_T) = invariant_Box_T_Global _1
+  function inv_Box_T_Global [@inline:trivial] (_1: t_T) : bool = invariant_Box_T_Global _1
   
-  meta "rewrite_def" predicate inv_Box_T_Global
+  meta "rewrite_def" function inv_Box_T_Global
   
-  predicate invariant_refmut_Box_T_Global [@inline:trivial] (self: MutBorrow.t t_T) =
+  function invariant_refmut_Box_T_Global [@inline:trivial] (self: MutBorrow.t t_T) : bool =
     inv_Box_T_Global self.current /\ inv_Box_T_Global self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Box_T_Global
+  meta "rewrite_def" function invariant_refmut_Box_T_Global
   
-  predicate inv_refmut_Box_T_Global [@inline:trivial] (_1: MutBorrow.t t_T) = invariant_refmut_Box_T_Global _1
+  function inv_refmut_Box_T_Global [@inline:trivial] (_1: MutBorrow.t t_T) : bool = invariant_refmut_Box_T_Global _1
   
-  meta "rewrite_def" predicate inv_refmut_Box_T_Global
+  meta "rewrite_def" function inv_refmut_Box_T_Global
   
-  predicate resolve_refmut_Box_T_Global [@inline:trivial] (_1: MutBorrow.t t_T) = _1.final = _1.current
+  function resolve_refmut_Box_T_Global [@inline:trivial] (_1: MutBorrow.t t_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Box_T_Global
+  meta "rewrite_def" function resolve_refmut_Box_T_Global
   
   meta "compute_max_steps" 1000000
   

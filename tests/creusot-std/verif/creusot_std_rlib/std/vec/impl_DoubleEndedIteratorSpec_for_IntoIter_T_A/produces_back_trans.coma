@@ -9,7 +9,7 @@ type t_T
 
 function view_IntoIter_T_A (self: t_IntoIter_T_A) : Seq.seq t_T
 
-predicate produces_back_IntoIter_T_A (self: t_IntoIter_T_A) (visited: Seq.seq t_T) (rhs: t_IntoIter_T_A) =
+function produces_back_IntoIter_T_A (self: t_IntoIter_T_A) (visited: Seq.seq t_T) (rhs: t_IntoIter_T_A) : bool =
   view_IntoIter_T_A self = Seq.(++) (view_IntoIter_T_A rhs) (Reverse.reverse visited)
 
 function reverse_concat_T (self: Seq.seq t_T) (other: Seq.seq t_T) : ()

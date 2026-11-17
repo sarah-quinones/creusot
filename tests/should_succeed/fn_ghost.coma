@@ -16,24 +16,24 @@ module M_foo
     [ return (result: t_FnGhostWrapper_closure0) -> {[@stop_split] [@expl:__new ensures] result.f0 = f}
       (! return {result}) ]
   
-  predicate precondition_closure0 (self: ()) (args: Int32.t) = let x = args in closure0'pre self x
+  function precondition_closure0 (self: ()) (args: Int32.t) : bool = let x = args in closure0'pre self x
   
-  meta "rewrite_def" predicate precondition_closure0
+  meta "rewrite_def" function precondition_closure0
   
-  predicate precondition_FnGhostWrapper_closure0 (self: t_FnGhostWrapper_closure0) (args: Int32.t) =
+  function precondition_FnGhostWrapper_closure0 (self: t_FnGhostWrapper_closure0) (args: Int32.t) : bool =
     precondition_closure0 self.f0 args
   
-  meta "rewrite_def" predicate precondition_FnGhostWrapper_closure0
+  meta "rewrite_def" function precondition_FnGhostWrapper_closure0
   
-  predicate postcondition_closure0 (self: ()) (args: Int32.t) (result: Int32.t) =
+  function postcondition_closure0 (self: ()) (args: Int32.t) (result: Int32.t) : bool =
     let x = args in closure0'post'return self x result
   
-  meta "rewrite_def" predicate postcondition_closure0
+  meta "rewrite_def" function postcondition_closure0
   
-  predicate postcondition_FnGhostWrapper_closure0 (self: t_FnGhostWrapper_closure0) (args: Int32.t) (result: Int32.t) =
-    postcondition_closure0 self.f0 args result
+  function postcondition_FnGhostWrapper_closure0 (self: t_FnGhostWrapper_closure0) (args: Int32.t) (result: Int32.t) : bool
+   = postcondition_closure0 self.f0 args result
   
-  meta "rewrite_def" predicate postcondition_FnGhostWrapper_closure0
+  meta "rewrite_def" function postcondition_FnGhostWrapper_closure0
   
   let takes_ghost_fn_FnGhostWrapper_closure0 (f: t_FnGhostWrapper_closure0) (return (x: Int32.t)) =
   {[@stop_split] [@expl:takes_ghost_fn requires] precondition_FnGhostWrapper_closure0 f (1: Int32.t)}
@@ -42,15 +42,15 @@ module M_foo
     {[@stop_split] [@expl:takes_ghost_fn ensures] postcondition_FnGhostWrapper_closure0 f (1: Int32.t) result}
       (! return {result}) ]
   
-  predicate postcondition_mut_closure0 (self: ()) (args: Int32.t) (result_state: ()) (result: Int32.t) =
+  function postcondition_mut_closure0 (self: ()) (args: Int32.t) (result_state: ()) (result: Int32.t) : bool =
     let x = args in closure0'post'return self x result /\ self = result_state
   
-  meta "rewrite_def" predicate postcondition_mut_closure0
+  meta "rewrite_def" function postcondition_mut_closure0
   
-  predicate postcondition_mut_FnGhostWrapper_closure0 (self: t_FnGhostWrapper_closure0) (args: Int32.t) (result_state: t_FnGhostWrapper_closure0) (result: Int32.t) =
-    postcondition_mut_closure0 self.f0 args result_state.f0 result
+  function postcondition_mut_FnGhostWrapper_closure0 (self: t_FnGhostWrapper_closure0) (args: Int32.t) (result_state: t_FnGhostWrapper_closure0) (result: Int32.t) : bool
+   = postcondition_mut_closure0 self.f0 args result_state.f0 result
   
-  meta "rewrite_def" predicate postcondition_mut_FnGhostWrapper_closure0
+  meta "rewrite_def" function postcondition_mut_FnGhostWrapper_closure0
   
   let takes_ghost_fnmut_FnGhostWrapper_closure0 (f: t_FnGhostWrapper_closure0) (return (x: Int32.t)) =
   {[@stop_split] [@expl:takes_ghost_fnmut requires] precondition_FnGhostWrapper_closure0 f (1: Int32.t)}
@@ -59,15 +59,15 @@ module M_foo
     {[@stop_split] [@expl:takes_ghost_fnmut ensures] exists f2: t_FnGhostWrapper_closure0. postcondition_mut_FnGhostWrapper_closure0 f (1: Int32.t) f2 result}
       (! return {result}) ]
   
-  predicate postcondition_once_closure0 (self: ()) (args: Int32.t) (result: Int32.t) =
+  function postcondition_once_closure0 (self: ()) (args: Int32.t) (result: Int32.t) : bool =
     let x = args in closure0'post'return self x result
   
-  meta "rewrite_def" predicate postcondition_once_closure0
+  meta "rewrite_def" function postcondition_once_closure0
   
-  predicate postcondition_once_FnGhostWrapper_closure0 (self: t_FnGhostWrapper_closure0) (args: Int32.t) (result: Int32.t) =
-    postcondition_once_closure0 self.f0 args result
+  function postcondition_once_FnGhostWrapper_closure0 (self: t_FnGhostWrapper_closure0) (args: Int32.t) (result: Int32.t) : bool
+   = postcondition_once_closure0 self.f0 args result
   
-  meta "rewrite_def" predicate postcondition_once_FnGhostWrapper_closure0
+  meta "rewrite_def" function postcondition_once_FnGhostWrapper_closure0
   
   let takes_ghost_fnonce_FnGhostWrapper_closure0 (f: t_FnGhostWrapper_closure0) (return (x: Int32.t)) =
   {[@stop_split] [@expl:takes_ghost_fnonce requires] precondition_FnGhostWrapper_closure0 f (1: Int32.t)}
@@ -115,23 +115,23 @@ module M_takes_ghost_fn
   
   type t_F
   
-  predicate inv_F (_1: t_F)
+  function inv_F (_1: t_F) : bool
   
-  predicate resolve_F (_1: t_F)
+  function resolve_F (_1: t_F) : bool
   
-  predicate invariant_ref_F [@inline:trivial] (self: t_F) = inv_F self
+  function invariant_ref_F [@inline:trivial] (self: t_F) : bool = inv_F self
   
-  meta "rewrite_def" predicate invariant_ref_F
+  meta "rewrite_def" function invariant_ref_F
   
-  predicate inv_ref_F [@inline:trivial] (_1: t_F) = invariant_ref_F _1
+  function inv_ref_F [@inline:trivial] (_1: t_F) : bool = invariant_ref_F _1
   
-  meta "rewrite_def" predicate inv_ref_F
+  meta "rewrite_def" function inv_ref_F
   
-  predicate precondition_F (self: t_F) (args: Int32.t)
+  function precondition_F (self: t_F) (args: Int32.t) : bool
   
-  predicate postcondition_once_F (self: t_F) (args: Int32.t) (result: Int32.t)
+  function postcondition_once_F (self: t_F) (args: Int32.t) (result: Int32.t) : bool
   
-  predicate postcondition_mut_F (self: t_F) (args: Int32.t) (result_state: t_F) (result: Int32.t)
+  function postcondition_mut_F (self: t_F) (args: Int32.t) (result_state: t_F) (result: Int32.t) : bool
   
   function fn_mut_once_F (self: t_F) (args: Int32.t) (res: Int32.t) : ()
   
@@ -139,7 +139,7 @@ module M_takes_ghost_fn
     forall self: t_F, args: Int32.t, res: Int32.t [postcondition_once_F self args res]. postcondition_once_F self args res
       = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
   
-  predicate hist_inv_F (self: t_F) (result_state: t_F)
+  function hist_inv_F (self: t_F) (result_state: t_F) : bool
   
   function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
   
@@ -162,7 +162,7 @@ module M_takes_ghost_fn
   axiom fn_hist_inv_F_spec: forall self: t_F, res_state: t_F [hist_inv_F self res_state]. hist_inv_F self res_state
       = (self = res_state)
   
-  predicate postcondition_F (self: t_F) (args: Int32.t) (result: Int32.t)
+  function postcondition_F (self: t_F) (args: Int32.t) (result: Int32.t) : bool
   
   function fn_once_F (self: t_F) (args: Int32.t) (res: Int32.t) : ()
   
@@ -207,23 +207,23 @@ module M_takes_ghost_fnmut
   
   type t_F
   
-  predicate inv_F (_1: t_F)
+  function inv_F (_1: t_F) : bool
   
-  predicate invariant_refmut_F [@inline:trivial] (self: MutBorrow.t t_F) = inv_F self.current /\ inv_F self.final
+  function invariant_refmut_F [@inline:trivial] (self: MutBorrow.t t_F) : bool = inv_F self.current /\ inv_F self.final
   
-  meta "rewrite_def" predicate invariant_refmut_F
+  meta "rewrite_def" function invariant_refmut_F
   
-  predicate inv_refmut_F [@inline:trivial] (_1: MutBorrow.t t_F) = invariant_refmut_F _1
+  function inv_refmut_F [@inline:trivial] (_1: MutBorrow.t t_F) : bool = invariant_refmut_F _1
   
-  meta "rewrite_def" predicate inv_refmut_F
+  meta "rewrite_def" function inv_refmut_F
   
-  predicate precondition_F (self: t_F) (args: Int32.t)
+  function precondition_F (self: t_F) (args: Int32.t) : bool
   
-  predicate postcondition_once_F (self: t_F) (args: Int32.t) (result: Int32.t)
+  function postcondition_once_F (self: t_F) (args: Int32.t) (result: Int32.t) : bool
   
-  predicate resolve_F (_1: t_F)
+  function resolve_F (_1: t_F) : bool
   
-  predicate postcondition_mut_F (self: t_F) (args: Int32.t) (result_state: t_F) (result: Int32.t)
+  function postcondition_mut_F (self: t_F) (args: Int32.t) (result_state: t_F) (result: Int32.t) : bool
   
   function fn_mut_once_F (self: t_F) (args: Int32.t) (res: Int32.t) : ()
   
@@ -231,7 +231,7 @@ module M_takes_ghost_fnmut
     forall self: t_F, args: Int32.t, res: Int32.t [postcondition_once_F self args res]. postcondition_once_F self args res
       = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
   
-  predicate hist_inv_F (self: t_F) (result_state: t_F)
+  function hist_inv_F (self: t_F) (result_state: t_F) : bool
   
   function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
   
@@ -288,11 +288,11 @@ module M_takes_ghost_fnonce
   
   type t_F
   
-  predicate inv_F (_1: t_F)
+  function inv_F (_1: t_F) : bool
   
-  predicate precondition_F (self: t_F) (args: Int32.t)
+  function precondition_F (self: t_F) (args: Int32.t) : bool
   
-  predicate postcondition_once_F (self: t_F) (args: Int32.t) (result: Int32.t)
+  function postcondition_once_F (self: t_F) (args: Int32.t) (result: Int32.t) : bool
   
   let call_once_F (self: t_F) (args: Int32.t) (return (x: Int32.t)) =
   {[@stop_split] [@expl:call_once_F requires] ([@stop_split] [@expl:call_once 'self' type invariant] inv_F self)

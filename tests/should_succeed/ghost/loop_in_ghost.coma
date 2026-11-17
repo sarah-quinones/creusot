@@ -3,13 +3,13 @@ module M_foo
   use creusot.prelude.Any
   use int.Int
   
-  predicate gt_log_u32 [@inline:trivial] (self: UInt32.t) (other: UInt32.t) = UInt32.lt other self
+  function gt_log_u32 [@inline:trivial] (self: UInt32.t) (other: UInt32.t) : bool = UInt32.lt other self
   
-  meta "rewrite_def" predicate gt_log_u32
+  meta "rewrite_def" function gt_log_u32
   
-  predicate well_founded_relation_u32 [@inline:trivial] (self: UInt32.t) (other: UInt32.t) = gt_log_u32 self other
+  function well_founded_relation_u32 [@inline:trivial] (self: UInt32.t) (other: UInt32.t) : bool = gt_log_u32 self other
   
-  meta "rewrite_def" predicate well_founded_relation_u32
+  meta "rewrite_def" function well_founded_relation_u32
   
   let new_u32 (x: UInt32.t) (return (x'0: UInt32.t)) = any
     [ return (result: UInt32.t) -> {[@stop_split] [@expl:new ensures] result = x} (! return {result}) ]

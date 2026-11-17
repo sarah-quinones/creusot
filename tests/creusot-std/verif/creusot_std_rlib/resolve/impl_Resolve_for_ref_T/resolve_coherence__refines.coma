@@ -2,19 +2,19 @@
 
 type t_T
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
 
-meta "rewrite_def" predicate invariant_ref_T
+meta "rewrite_def" function invariant_ref_T
 
-predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
 
-meta "rewrite_def" predicate inv_ref_T
+meta "rewrite_def" function inv_ref_T
 
-predicate structural_resolve_ref_T (_1: t_T) = true
+function structural_resolve_ref_T (_1: t_T) : bool = true
 
-predicate resolve_ref_T (self: t_T) = true
+function resolve_ref_T (self: t_T) : bool = true
 
 meta "compute_max_steps" 1000000
 

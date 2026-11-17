@@ -4,11 +4,11 @@ use int.Int
 
 type t_PositiveInner = { f0: int }
 
-predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
 
-meta "rewrite_def" predicate gt_log_Int
+meta "rewrite_def" function gt_log_Int
 
-predicate invariant_PositiveInner (self: t_PositiveInner) = gt_log_Int self.f0 0
+function invariant_PositiveInner (self: t_PositiveInner) : bool = gt_log_Int self.f0 0
 
 meta "compute_max_steps" 1000000
 

@@ -14,11 +14,11 @@ type t_Auth
 
 type t_Option_Auth = None'1 | Some'1 t_Auth
 
-predicate rel_R (a: t_Option_Auth) (f: t_Frag)
+function rel_R (a: t_Option_Auth) (f: t_Frag) : bool
 
 function op_Frag (self: t_Frag) (other: t_Frag) : t_Option_Frag
 
-predicate incl_Frag (self: t_Frag) (other: t_Frag)
+function incl_Frag (self: t_Frag) (other: t_Frag) : bool
 
 axiom incl_Frag_spec: forall self: t_Frag, other: t_Frag [incl_Frag self other]. incl_Frag self other
     = (exists factor: t_Frag. op_Frag self factor = Some'0 other)
@@ -78,7 +78,7 @@ axiom rel_mono_R_spec: forall a: t_Option_Auth, f1: t_Frag, f2: t_Frag. rel_R a 
 
 type t_ViewInner_R = { auth: t_Option_Auth; frag: t_Frag }
 
-predicate invariant_ViewInner_R (self: t_ViewInner_R) = rel_R self.auth self.frag
+function invariant_ViewInner_R (self: t_ViewInner_R) : bool = rel_R self.auth self.frag
 
 function inner_ViewInner_R (self: t_Subset_ViewInner_R) : t_ViewInner_R
 
@@ -130,7 +130,7 @@ constant self : t_View_R
 
 constant other : t_View_R
 
-predicate incl_View_R (self: t_View_R) (other: t_View_R)
+function incl_View_R (self: t_View_R) (other: t_View_R) : bool
 
 goal vc_incl_View_R: forall local. local = ()
     -> ([@stop_split] [@expl:frag ensures] rel_R (auth_R self) (frag_R self))

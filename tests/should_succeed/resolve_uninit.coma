@@ -3,9 +3,9 @@ module M_init_join
   use creusot.int.Int32
   use creusot.prelude.Any
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
   meta "compute_max_steps" 1000000
   
@@ -61,29 +61,30 @@ module M_maybe_uninit
   
   type t_T
   
-  predicate precondition_default (self: ()) (args: ())
+  function precondition_default (self: ()) (args: ()) : bool
   
   axiom precondition_fndef: forall args: () [precondition_default () args]. (let () = args in true)
       -> precondition_default () args
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate postcondition_default (self: ()) (args: ()) (result: t_T)
+  function postcondition_default (self: ()) (args: ()) (result: t_T) : bool
   
   axiom postcondition_fndef:
     forall args: (), result: t_T [postcondition_default () args result]. postcondition_default () args result
       -> (let () = args in inv_T result)
   
-  predicate postcondition_once_default (self: ()) (args: ()) (result: t_T) = postcondition_default self args result
+  function postcondition_once_default (self: ()) (args: ()) (result: t_T) : bool =
+    postcondition_default self args result
   
-  meta "rewrite_def" predicate postcondition_once_default
+  meta "rewrite_def" function postcondition_once_default
   
   let default_T (return (x: t_T)) = {[@stop_split] [@expl:default requires] precondition_default () ()}
     any
     [ return (result: t_T) -> {[@stop_split] [@expl:default ensures] postcondition_once_default () () result}
       (! return {result}) ]
   
-  predicate resolve_T (_1: t_T)
+  function resolve_T (_1: t_T) : bool
   
   meta "compute_max_steps" 1000000
   

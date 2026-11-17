@@ -7,9 +7,9 @@ module M_test_i8_add_example
   
   constant const_MIN: Int8.t = (-128: Int8.t)
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   constant const_MAX: Int8.t = (127: Int8.t)
   
@@ -32,9 +32,9 @@ module M_test_i8_add_example
     [ return (result: Int8.t) -> {[@stop_split] [@expl:wrapping_add ensures] result = Int8.add self rhs}
       (! return {result}) ]
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   let saturating_add (self: Int8.t) (rhs: Int8.t) (return (x: Int8.t)) = any
     [ return (result: Int8.t) ->
@@ -173,9 +173,9 @@ module M_test_i8_add_overflow_neg
   
   constant const_MIN: Int8.t = (-128: Int8.t)
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   constant const_MAX: Int8.t = (127: Int8.t)
   
@@ -195,9 +195,9 @@ module M_test_i8_add_overflow_neg
     [ return (result: Int8.t) -> {[@stop_split] [@expl:wrapping_add ensures] result = Int8.add self rhs}
       (! return {result}) ]
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   let saturating_add (self: Int8.t) (rhs: Int8.t) (return (x: Int8.t)) = any
     [ return (result: Int8.t) ->
@@ -284,9 +284,9 @@ module M_test_i8_add_overflow_pos
   
   constant const_MIN: Int8.t = (-128: Int8.t)
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   constant const_MAX: Int8.t = (127: Int8.t)
   
@@ -306,9 +306,9 @@ module M_test_i8_add_overflow_pos
     [ return (result: Int8.t) -> {[@stop_split] [@expl:wrapping_add ensures] result = Int8.add self rhs}
       (! return {result}) ]
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   let saturating_add (self: Int8.t) (rhs: Int8.t) (return (x: Int8.t)) = any
     [ return (result: Int8.t) ->
@@ -773,9 +773,9 @@ module M_test_i8_mul_example
   
   constant const_MIN: Int8.t = (-128: Int8.t)
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   constant const_MAX: Int8.t = (127: Int8.t)
   
@@ -798,9 +798,9 @@ module M_test_i8_mul_example
     [ return (result: Int8.t) -> {[@stop_split] [@expl:wrapping_mul ensures] result = Int8.mul self rhs}
       (! return {result}) ]
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   let saturating_mul (self: Int8.t) (rhs: Int8.t) (return (x: Int8.t)) = any
     [ return (result: Int8.t) ->
@@ -939,9 +939,9 @@ module M_test_i8_mul_zero
   
   constant const_MIN: Int8.t = (-128: Int8.t)
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   constant const_MAX: Int8.t = (127: Int8.t)
   
@@ -961,9 +961,9 @@ module M_test_i8_mul_zero
     [ return (result: Int8.t) -> {[@stop_split] [@expl:wrapping_mul ensures] result = Int8.mul self rhs}
       (! return {result}) ]
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   let saturating_mul (self: Int8.t) (rhs: Int8.t) (return (x: Int8.t)) = any
     [ return (result: Int8.t) ->
@@ -1041,17 +1041,17 @@ module M_test_i8_overflowing_add
   
   type tup2_i8_bool = { f0: Int8.t; f1: bool }
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int8.t = (-128: Int8.t)
   
   constant const_MAX: Int8.t = (127: Int8.t)
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   let overflowing_add (self: Int8.t) (rhs: Int8.t) (return (x: tup2_i8_bool)) = any
     [ return (result: tup2_i8_bool) ->
@@ -1121,17 +1121,17 @@ module M_test_i8_overflowing_mul
   
   type tup2_i8_bool = { f0: Int8.t; f1: bool }
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int8.t = (-128: Int8.t)
   
   constant const_MAX: Int8.t = (127: Int8.t)
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   let overflowing_mul (self: Int8.t) (rhs: Int8.t) (return (x: tup2_i8_bool)) = any
     [ return (result: tup2_i8_bool) ->
@@ -1201,17 +1201,17 @@ module M_test_i8_overflowing_sub
   
   type tup2_i8_bool = { f0: Int8.t; f1: bool }
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: Int8.t = (-128: Int8.t)
   
   constant const_MAX: Int8.t = (127: Int8.t)
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   let overflowing_sub (self: Int8.t) (rhs: Int8.t) (return (x: tup2_i8_bool)) = any
     [ return (result: tup2_i8_bool) ->
@@ -1283,9 +1283,9 @@ module M_test_i8_sub_example
   
   constant const_MIN: Int8.t = (-128: Int8.t)
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   constant const_MAX: Int8.t = (127: Int8.t)
   
@@ -1308,9 +1308,9 @@ module M_test_i8_sub_example
     [ return (result: Int8.t) -> {[@stop_split] [@expl:wrapping_sub ensures] result = Int8.sub self rhs}
       (! return {result}) ]
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   let saturating_sub (self: Int8.t) (rhs: Int8.t) (return (x: Int8.t)) = any
     [ return (result: Int8.t) ->
@@ -1452,9 +1452,9 @@ module M_test_i8_sub_overflow_neg
   
   constant const_MIN: Int8.t = (-128: Int8.t)
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   constant const_MAX: Int8.t = (127: Int8.t)
   
@@ -1474,9 +1474,9 @@ module M_test_i8_sub_overflow_neg
     [ return (result: Int8.t) -> {[@stop_split] [@expl:wrapping_sub ensures] result = Int8.sub self rhs}
       (! return {result}) ]
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   let saturating_sub (self: Int8.t) (rhs: Int8.t) (return (x: Int8.t)) = any
     [ return (result: Int8.t) ->
@@ -1567,9 +1567,9 @@ module M_test_i8_sub_overflow_pos
   
   constant const_MIN: Int8.t = (-128: Int8.t)
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   constant const_MAX: Int8.t = (127: Int8.t)
   
@@ -1589,9 +1589,9 @@ module M_test_i8_sub_overflow_pos
     [ return (result: Int8.t) -> {[@stop_split] [@expl:wrapping_sub ensures] result = Int8.sub self rhs}
       (! return {result}) ]
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   let saturating_sub (self: Int8.t) (rhs: Int8.t) (return (x: Int8.t)) = any
     [ return (result: Int8.t) ->
@@ -1722,9 +1722,9 @@ module M_test_u8_add_example
   
   constant const_MIN: UInt8.t = (0: UInt8.t)
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   constant const_MAX: UInt8.t = (255: UInt8.t)
   
@@ -1747,9 +1747,9 @@ module M_test_u8_add_example
     [ return (result: UInt8.t) -> {[@stop_split] [@expl:wrapping_add ensures] result = UInt8.add self rhs}
       (! return {result}) ]
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   let saturating_add (self: UInt8.t) (rhs: UInt8.t) (return (x: UInt8.t)) = any
     [ return (result: UInt8.t) ->
@@ -1858,9 +1858,9 @@ module M_test_u8_add_overflow
   
   constant const_MIN: UInt8.t = (0: UInt8.t)
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   constant const_MAX: UInt8.t = (255: UInt8.t)
   
@@ -1880,9 +1880,9 @@ module M_test_u8_add_overflow
     [ return (result: UInt8.t) -> {[@stop_split] [@expl:wrapping_add ensures] result = UInt8.add self rhs}
       (! return {result}) ]
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   let saturating_add (self: UInt8.t) (rhs: UInt8.t) (return (x: UInt8.t)) = any
     [ return (result: UInt8.t) ->
@@ -2242,9 +2242,9 @@ module M_test_u8_mul_example
   
   constant const_MIN: UInt8.t = (0: UInt8.t)
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   constant const_MAX: UInt8.t = (255: UInt8.t)
   
@@ -2267,9 +2267,9 @@ module M_test_u8_mul_example
     [ return (result: UInt8.t) -> {[@stop_split] [@expl:wrapping_mul ensures] result = UInt8.mul self rhs}
       (! return {result}) ]
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   let saturating_mul (self: UInt8.t) (rhs: UInt8.t) (return (x: UInt8.t)) = any
     [ return (result: UInt8.t) ->
@@ -2378,9 +2378,9 @@ module M_test_u8_mul_zero
   
   constant const_MIN: UInt8.t = (0: UInt8.t)
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   constant const_MAX: UInt8.t = (255: UInt8.t)
   
@@ -2400,9 +2400,9 @@ module M_test_u8_mul_zero
     [ return (result: UInt8.t) -> {[@stop_split] [@expl:wrapping_mul ensures] result = UInt8.mul self rhs}
       (! return {result}) ]
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   let saturating_mul (self: UInt8.t) (rhs: UInt8.t) (return (x: UInt8.t)) = any
     [ return (result: UInt8.t) ->
@@ -2480,17 +2480,17 @@ module M_test_u8_overflowing_add
   
   type tup2_u8_bool = { f0: UInt8.t; f1: bool }
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt8.t = (0: UInt8.t)
   
   constant const_MAX: UInt8.t = (255: UInt8.t)
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   let overflowing_add (self: UInt8.t) (rhs: UInt8.t) (return (x: tup2_u8_bool)) = any
     [ return (result: tup2_u8_bool) ->
@@ -2560,17 +2560,17 @@ module M_test_u8_overflowing_mul
   
   type tup2_u8_bool = { f0: UInt8.t; f1: bool }
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt8.t = (0: UInt8.t)
   
   constant const_MAX: UInt8.t = (255: UInt8.t)
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   let overflowing_mul (self: UInt8.t) (rhs: UInt8.t) (return (x: tup2_u8_bool)) = any
     [ return (result: tup2_u8_bool) ->
@@ -2640,17 +2640,17 @@ module M_test_u8_overflowing_sub
   
   type tup2_u8_bool = { f0: UInt8.t; f1: bool }
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   constant const_MIN: UInt8.t = (0: UInt8.t)
   
   constant const_MAX: UInt8.t = (255: UInt8.t)
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   let overflowing_sub (self: UInt8.t) (rhs: UInt8.t) (return (x: tup2_u8_bool)) = any
     [ return (result: tup2_u8_bool) ->
@@ -2722,9 +2722,9 @@ module M_test_u8_sub_example
   
   constant const_MIN: UInt8.t = (0: UInt8.t)
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   constant const_MAX: UInt8.t = (255: UInt8.t)
   
@@ -2747,9 +2747,9 @@ module M_test_u8_sub_example
     [ return (result: UInt8.t) -> {[@stop_split] [@expl:wrapping_sub ensures] result = UInt8.sub self rhs}
       (! return {result}) ]
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   let saturating_sub (self: UInt8.t) (rhs: UInt8.t) (return (x: UInt8.t)) = any
     [ return (result: UInt8.t) ->
@@ -2858,9 +2858,9 @@ module M_test_u8_sub_overflow
   
   constant const_MIN: UInt8.t = (0: UInt8.t)
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   constant const_MAX: UInt8.t = (255: UInt8.t)
   
@@ -2880,9 +2880,9 @@ module M_test_u8_sub_overflow
     [ return (result: UInt8.t) -> {[@stop_split] [@expl:wrapping_sub ensures] result = UInt8.sub self rhs}
       (! return {result}) ]
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   let saturating_sub (self: UInt8.t) (rhs: UInt8.t) (return (x: UInt8.t)) = any
     [ return (result: UInt8.t) ->

@@ -4,9 +4,9 @@ type t_T
 
 type t_Option_T = None | Some t_T
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate inv_Option_T (_1: t_Option_T)
+function inv_Option_T (_1: t_Option_T) : bool
 
 axiom inv_axiom [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_T _1
     = match _1 with
@@ -14,13 +14,13 @@ axiom inv_axiom [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_
       | Some f0 -> inv_T f0
       end
 
-predicate invariant_ref_Option_T [@inline:trivial] (self: t_Option_T) = inv_Option_T self
+function invariant_ref_Option_T [@inline:trivial] (self: t_Option_T) : bool = inv_Option_T self
 
-meta "rewrite_def" predicate invariant_ref_Option_T
+meta "rewrite_def" function invariant_ref_Option_T
 
-predicate inv_ref_Option_T [@inline:trivial] (_1: t_Option_T) = invariant_ref_Option_T _1
+function inv_ref_Option_T [@inline:trivial] (_1: t_Option_T) : bool = invariant_ref_Option_T _1
 
-meta "rewrite_def" predicate inv_ref_Option_T
+meta "rewrite_def" function inv_ref_Option_T
 
 meta "compute_max_steps" 1000000
 

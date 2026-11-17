@@ -4,9 +4,9 @@ module M_impl_List__lemma_sum_nonneg (* List *)
   
   type t_List = Cons UInt32.t t_List | Nil
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function sum (self: t_List) : int = match self with
       | Cons a l -> UInt32.t'int a + sum l
@@ -82,9 +82,9 @@ module M_impl_List__take_some (* List *)
   
   type t_List = Cons UInt32.t t_List | Nil
   
-  predicate resolve_refmut_List [@inline:trivial] (_1: MutBorrow.t t_List) = _1.final = _1.current
+  function resolve_refmut_List [@inline:trivial] (_1: MutBorrow.t t_List) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_List
+  meta "rewrite_def" function resolve_refmut_List
   
   let elim_Cons (_x: t_List) (return (f0: UInt32.t) (f1: t_List)) = any
     [ _k (f0: UInt32.t) (f1: t_List) -> {Cons f0 f1 = _x} (! return {f0} {f1})
@@ -94,9 +94,9 @@ module M_impl_List__take_some (* List *)
         end}
       any) ]
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function sum (self: t_List) : int = match self with
       | Cons a l -> UInt32.t'int a + sum l
@@ -112,13 +112,13 @@ module M_impl_List__take_some (* List *)
   
   let random (return (x: bool)) = any [ return (result: bool) -> (! return {result}) ]
   
-  predicate resolve_refmut_Box_List_Global [@inline:trivial] (_1: MutBorrow.t t_List) = _1.final = _1.current
+  function resolve_refmut_Box_List_Global [@inline:trivial] (_1: MutBorrow.t t_List) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Box_List_Global
+  meta "rewrite_def" function resolve_refmut_Box_List_Global
   
-  predicate resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) = _1.final = _1.current
+  function resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_u32
+  meta "rewrite_def" function resolve_refmut_u32
   
   let take_some (self: MutBorrow.t t_List) (return (x: MutBorrow.t UInt32.t)) = any
     [ return (result: MutBorrow.t UInt32.t) ->
@@ -234,9 +234,9 @@ module M_inc_some_list
       /\ ([@stop_split] [@expl:take_some ensures #1] UInt32.t'int result.current <= sum self.current)}
       (! return {result}) ]
   
-  predicate resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) = _1.final = _1.current
+  function resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_u32
+  meta "rewrite_def" function resolve_refmut_u32
   
   meta "compute_max_steps" 1000000
   

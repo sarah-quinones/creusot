@@ -4,9 +4,9 @@ use set.Fset
 
 type t_T
 
-predicate contains_T [@inline:trivial] (self: Fset.fset t_T) (e: t_T) = Fset.mem e self
+function contains_T [@inline:trivial] (self: Fset.fset t_T) (e: t_T) : bool = Fset.mem e self
 
-meta "rewrite_def" predicate contains_T
+meta "rewrite_def" function contains_T
 
 meta "compute_max_steps" 1000000
 
@@ -16,7 +16,7 @@ constant self : Fset.fset t_T
 
 constant other : Fset.fset t_T
 
-predicate ext_eq_T (self: Fset.fset t_T) (other: Fset.fset t_T)
+function ext_eq_T (self: Fset.fset t_T) (other: Fset.fset t_T) : bool
 
 goal vc_ext_eq_T: [@stop_split] [@expl:ext_eq ensures] (forall e: t_T. contains_T self e = contains_T other e)
   = (self = other)

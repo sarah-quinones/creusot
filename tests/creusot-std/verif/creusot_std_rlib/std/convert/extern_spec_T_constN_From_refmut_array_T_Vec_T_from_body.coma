@@ -7,57 +7,58 @@ use int.Int
 
 type t_T
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
 
-meta "rewrite_def" predicate invariant_ref_T
+meta "rewrite_def" function invariant_ref_T
 
-predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
 
-meta "rewrite_def" predicate inv_ref_T
+meta "rewrite_def" function inv_ref_T
 
-predicate invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) =
-  forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_T (Seq.get self i)
+function invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+    -> inv_ref_T (Seq.get self i)
 
-meta "rewrite_def" predicate invariant_Seq_T
+meta "rewrite_def" function invariant_Seq_T
 
-predicate inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Seq_T _1
+function inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Seq_T _1
 
-meta "rewrite_def" predicate inv_Seq_T
+meta "rewrite_def" function inv_Seq_T
 
 constant const_N : UInt64.t
 
-predicate invariant_array_T_n (self: Slice64.array t_T) =
-  inv_Seq_T (Slice64.view self) /\ Seq.length (Slice64.view self) = UInt64.t'int const_N
+function invariant_array_T_n (self: Slice64.array t_T) : bool = inv_Seq_T (Slice64.view self)
+  /\ Seq.length (Slice64.view self) = UInt64.t'int const_N
 
-predicate inv_array_T_n [@inline:trivial] (_1: Slice64.array t_T) = invariant_array_T_n _1
+function inv_array_T_n [@inline:trivial] (_1: Slice64.array t_T) : bool = invariant_array_T_n _1
 
-meta "rewrite_def" predicate inv_array_T_n
+meta "rewrite_def" function inv_array_T_n
 
-predicate invariant_refmut_array_T_n [@inline:trivial] (self: MutBorrow.t (Slice64.array t_T)) =
+function invariant_refmut_array_T_n [@inline:trivial] (self: MutBorrow.t (Slice64.array t_T)) : bool =
   inv_array_T_n self.current /\ inv_array_T_n self.final
 
-meta "rewrite_def" predicate invariant_refmut_array_T_n
+meta "rewrite_def" function invariant_refmut_array_T_n
 
-predicate inv_refmut_array_T_n [@inline:trivial] (_1: MutBorrow.t (Slice64.array t_T)) = invariant_refmut_array_T_n _1
+function inv_refmut_array_T_n [@inline:trivial] (_1: MutBorrow.t (Slice64.array t_T)) : bool =
+  invariant_refmut_array_T_n _1
 
-meta "rewrite_def" predicate inv_refmut_array_T_n
+meta "rewrite_def" function inv_refmut_array_T_n
 
-predicate invariant_slice_T (self: Slice64.slice t_T) = inv_Seq_T (Slice64.view self)
+function invariant_slice_T (self: Slice64.slice t_T) : bool = inv_Seq_T (Slice64.view self)
 
-predicate inv_slice_T [@inline:trivial] (_1: Slice64.slice t_T) = invariant_slice_T _1
+function inv_slice_T [@inline:trivial] (_1: Slice64.slice t_T) : bool = invariant_slice_T _1
 
-meta "rewrite_def" predicate inv_slice_T
+meta "rewrite_def" function inv_slice_T
 
-predicate invariant_refmut_slice_T [@inline:trivial] (self: MutBorrow.t (Slice64.slice t_T)) =
+function invariant_refmut_slice_T [@inline:trivial] (self: MutBorrow.t (Slice64.slice t_T)) : bool =
   inv_slice_T self.current /\ inv_slice_T self.final
 
-meta "rewrite_def" predicate invariant_refmut_slice_T
+meta "rewrite_def" function invariant_refmut_slice_T
 
-predicate inv_refmut_slice_T [@inline:trivial] (_1: MutBorrow.t (Slice64.slice t_T)) = invariant_refmut_slice_T _1
+function inv_refmut_slice_T [@inline:trivial] (_1: MutBorrow.t (Slice64.slice t_T)) : bool = invariant_refmut_slice_T _1
 
-meta "rewrite_def" predicate inv_refmut_slice_T
+meta "rewrite_def" function inv_refmut_slice_T
 
 let as_mut_slice_T (self: MutBorrow.t (Slice64.array t_T)) (return (x: MutBorrow.t (Slice64.slice t_T))) =
 {[@stop_split] [@expl:as_mut_slice 'self' type invariant] inv_refmut_array_T_n self}
@@ -79,26 +80,26 @@ function view_Vec_T_Global (self: t_Vec_T_Global) : Seq.seq t_T
 axiom view_Vec_T_Global_spec: forall self: t_Vec_T_Global [view_Vec_T_Global self]. Seq.length (view_Vec_T_Global self)
     <= UInt64.t'int const_MAX
 
-predicate invariant_Vec_T_Global (self: t_Vec_T_Global) = inv_Seq_T (view_Vec_T_Global self)
+function invariant_Vec_T_Global (self: t_Vec_T_Global) : bool = inv_Seq_T (view_Vec_T_Global self)
 
-predicate inv_Vec_T_Global (_1: t_Vec_T_Global)
+function inv_Vec_T_Global (_1: t_Vec_T_Global) : bool
 
 axiom inv_axiom: forall _1: t_Vec_T_Global [inv_Vec_T_Global _1]. inv_Vec_T_Global _1 -> invariant_Vec_T_Global _1
 
-predicate postcondition_clone (self: ()) (args: t_T) (result: t_T)
+function postcondition_clone (self: ()) (args: t_T) (result: t_T) : bool
 
 axiom postcondition_fndef:
   forall args: t_T, result: t_T [postcondition_clone () args result]. postcondition_clone () args result
     -> (let self = args in inv_T result)
 
-predicate precondition_clone (self: ()) (args: t_T)
+function precondition_clone (self: ()) (args: t_T) : bool
 
 axiom precondition_fndef: forall args: t_T [precondition_clone () args]. (let self = args in inv_ref_T self)
     -> precondition_clone () args
 
-predicate postcondition_once_clone (self: ()) (args: t_T) (result: t_T) = postcondition_clone self args result
+function postcondition_once_clone (self: ()) (args: t_T) (result: t_T) : bool = postcondition_clone self args result
 
-meta "rewrite_def" predicate postcondition_once_clone
+meta "rewrite_def" function postcondition_once_clone
 
 let clone_T (self: t_T) (return (x: t_T)) = {[@stop_split] [@expl:clone requires] precondition_clone () self}
   any
@@ -117,9 +118,9 @@ let from_Vec_T_Global (s: MutBorrow.t (Slice64.slice t_T)) (return (x: t_Vec_T_G
     /\ ([@stop_split] [@expl:from ensures #2] s.final = s.current)}
     (! return {result}) ]
 
-predicate resolve_refmut_array_T_n [@inline:trivial] (_1: MutBorrow.t (Slice64.array t_T)) = _1.final = _1.current
+function resolve_refmut_array_T_n [@inline:trivial] (_1: MutBorrow.t (Slice64.array t_T)) : bool = _1.final = _1.current
 
-meta "rewrite_def" predicate resolve_refmut_array_T_n
+meta "rewrite_def" function resolve_refmut_array_T_n
 
 meta "compute_max_steps" 1000000
 

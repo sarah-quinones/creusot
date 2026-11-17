@@ -6,14 +6,14 @@ type t_Option_Self = None | Some t_Self
 
 function op_Self (self: t_Self) (other: t_Self) : t_Option_Self
 
-predicate incl_Self (self: t_Self) (other: t_Self)
+function incl_Self (self: t_Self) (other: t_Self) : bool
 
 axiom incl_Self_spec: forall self: t_Self, other: t_Self [incl_Self self other]. incl_Self self other
     = (exists factor: t_Self. op_Self self factor = Some other)
 
-predicate index_Mapping_Self_bool [@inline:trivial] (self: Map.map t_Self bool) (a: t_Self) = Map.get self a
+function index_Mapping_Self_bool [@inline:trivial] (self: Map.map t_Self bool) (a: t_Self) : bool = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_Self_bool
+meta "rewrite_def" function index_Mapping_Self_bool
 
 function such_that_Self (p: Map.map t_Self bool) : t_Self
 

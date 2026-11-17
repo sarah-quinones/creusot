@@ -28,7 +28,7 @@ type tup3_Option_T1_Option_T2_Option_T3 = { f0'0: t_Option_T1; f1'0: t_Option_T2
 
 function op_T1 (self: t_T1) (other: t_T1) : t_Option_T1
 
-predicate incl_T1 (self: t_T1) (other: t_T1)
+function incl_T1 (self: t_T1) (other: t_T1) : bool
 
 axiom incl_T1_spec: forall self: t_T1, other: t_T1 [incl_T1 self other]. incl_T1 self other
     = (exists factor: t_T1. op_T1 self factor = Some'0 other)
@@ -57,7 +57,7 @@ axiom incl_op_T1_spec: forall self: t_T1, other: t_T1, comb: t_T1. op_T1 self ot
 
 function op_T2 (self: t_T2) (other: t_T2) : t_Option_T2
 
-predicate incl_T2 (self: t_T2) (other: t_T2)
+function incl_T2 (self: t_T2) (other: t_T2) : bool
 
 axiom incl_T2_spec: forall self: t_T2, other: t_T2 [incl_T2 self other]. incl_T2 self other
     = (exists factor: t_T2. op_T2 self factor = Some'1 other)
@@ -86,7 +86,7 @@ axiom incl_op_T2_spec: forall self: t_T2, other: t_T2, comb: t_T2. op_T2 self ot
 
 function op_T3 (self: t_T3) (other: t_T3) : t_Option_T3
 
-predicate incl_T3 (self: t_T3) (other: t_T3)
+function incl_T3 (self: t_T3) (other: t_T3) : bool
 
 axiom incl_T3_spec: forall self: t_T3, other: t_T3 [incl_T3 self other]. incl_T3 self other
     = (exists factor: t_T3. op_T3 self factor = Some'2 other)

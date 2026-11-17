@@ -2,15 +2,15 @@
 
 type t_R
 
-predicate premise_unit [@inline:trivial] (self: ()) (_2: t_R) = true
+function premise_unit [@inline:trivial] (self: ()) (_2: t_R) : bool = true
 
-meta "rewrite_def" predicate premise_unit
+meta "rewrite_def" function premise_unit
 
 type t_Option_R = None | Some t_R
 
 function op_R (self: t_R) (other: t_R) : t_Option_R
 
-predicate incl_R (self: t_R) (other: t_R)
+function incl_R (self: t_R) (other: t_R) : bool
 
 axiom incl_R_spec: forall self: t_R, other: t_R [incl_R self other]. incl_R self other
     = (exists factor: t_R. op_R self factor = Some other)

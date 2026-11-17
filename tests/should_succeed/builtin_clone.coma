@@ -13,14 +13,15 @@ module M_clone_closure
   
   meta "rewrite_def" predicate closure0'post'return
   
-  predicate postcondition_clone (self: ()) (args: UInt32.t) (result: UInt32.t) = let self'0 = args in result = self'0
+  function postcondition_clone (self: ()) (args: UInt32.t) (result: UInt32.t) : bool = let self'0 = args in result
+    = self'0
   
-  meta "rewrite_def" predicate postcondition_clone
+  meta "rewrite_def" function postcondition_clone
   
-  predicate postcondition_once_clone (self: ()) (args: UInt32.t) (result: UInt32.t) =
+  function postcondition_once_clone (self: ()) (args: UInt32.t) (result: UInt32.t) : bool =
     postcondition_clone self args result
   
-  meta "rewrite_def" predicate postcondition_once_clone
+  meta "rewrite_def" function postcondition_once_clone
   
   let clone_closure0 (self: closure0) (return (x: closure0)) = any
     [ return (result: closure0) ->
@@ -44,22 +45,24 @@ module M_clone_flat
   
   type tup2_u32_bool = { f0: UInt32.t; f1: bool }
   
-  predicate postcondition_clone (self: ()) (args: UInt32.t) (result: UInt32.t) = let self'0 = args in result = self'0
+  function postcondition_clone (self: ()) (args: UInt32.t) (result: UInt32.t) : bool = let self'0 = args in result
+    = self'0
   
-  meta "rewrite_def" predicate postcondition_clone
+  meta "rewrite_def" function postcondition_clone
   
-  predicate postcondition_once_clone (self: ()) (args: UInt32.t) (result: UInt32.t) =
+  function postcondition_once_clone (self: ()) (args: UInt32.t) (result: UInt32.t) : bool =
     postcondition_clone self args result
   
-  meta "rewrite_def" predicate postcondition_once_clone
+  meta "rewrite_def" function postcondition_once_clone
   
-  predicate postcondition_clone'0 (self: ()) (args: bool) (result: bool) = let self'0 = args in result = self'0
+  function postcondition_clone'0 (self: ()) (args: bool) (result: bool) : bool = let self'0 = args in result = self'0
   
-  meta "rewrite_def" predicate postcondition_clone'0
+  meta "rewrite_def" function postcondition_clone'0
   
-  predicate postcondition_once_clone'0 (self: ()) (args: bool) (result: bool) = postcondition_clone'0 self args result
+  function postcondition_once_clone'0 (self: ()) (args: bool) (result: bool) : bool =
+    postcondition_clone'0 self args result
   
-  meta "rewrite_def" predicate postcondition_once_clone'0
+  meta "rewrite_def" function postcondition_once_clone'0
   
   let clone_tup2_u32_bool (self: tup2_u32_bool) (return (x: tup2_u32_bool)) = any
     [ return (result: tup2_u32_bool) ->
@@ -86,41 +89,42 @@ module M_clone_generic
   
   type tup2_T_U = { f0: t_T; f1: t_U }
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_U (_1: t_U)
+  function inv_U (_1: t_U) : bool
   
-  predicate inv_tup2_T_U [@inline:trivial] (_1: tup2_T_U) = inv_T _1.f0 /\ inv_U _1.f1
+  function inv_tup2_T_U [@inline:trivial] (_1: tup2_T_U) : bool = inv_T _1.f0 /\ inv_U _1.f1
   
-  meta "rewrite_def" predicate inv_tup2_T_U
+  meta "rewrite_def" function inv_tup2_T_U
   
-  predicate resolve_T (_1: t_T)
+  function resolve_T (_1: t_T) : bool
   
-  predicate resolve_U (_1: t_U)
+  function resolve_U (_1: t_U) : bool
   
-  predicate resolve_tup2_T_U [@inline:trivial] (_1: tup2_T_U) = resolve_T _1.f0 /\ resolve_U _1.f1
+  function resolve_tup2_T_U [@inline:trivial] (_1: tup2_T_U) : bool = resolve_T _1.f0 /\ resolve_U _1.f1
   
-  meta "rewrite_def" predicate resolve_tup2_T_U
+  meta "rewrite_def" function resolve_tup2_T_U
   
-  predicate postcondition_clone (self: ()) (args: t_T) (result: t_T)
+  function postcondition_clone (self: ()) (args: t_T) (result: t_T) : bool
   
   axiom postcondition_fndef:
     forall args: t_T, result: t_T [postcondition_clone () args result]. postcondition_clone () args result
       -> (let self = args in inv_T result)
   
-  predicate postcondition_once_clone (self: ()) (args: t_T) (result: t_T) = postcondition_clone self args result
+  function postcondition_once_clone (self: ()) (args: t_T) (result: t_T) : bool = postcondition_clone self args result
   
-  meta "rewrite_def" predicate postcondition_once_clone
+  meta "rewrite_def" function postcondition_once_clone
   
-  predicate postcondition_clone'0 (self: ()) (args: t_U) (result: t_U)
+  function postcondition_clone'0 (self: ()) (args: t_U) (result: t_U) : bool
   
   axiom postcondition_fndef'0:
     forall args: t_U, result: t_U [postcondition_clone'0 () args result]. postcondition_clone'0 () args result
       -> (let self = args in inv_U result)
   
-  predicate postcondition_once_clone'0 (self: ()) (args: t_U) (result: t_U) = postcondition_clone'0 self args result
+  function postcondition_once_clone'0 (self: ()) (args: t_U) (result: t_U) : bool =
+    postcondition_clone'0 self args result
   
-  meta "rewrite_def" predicate postcondition_once_clone'0
+  meta "rewrite_def" function postcondition_once_clone'0
   
   let clone_tup2_T_U (self: tup2_T_U) (return (x: tup2_T_U)) = any
     [ return (result: tup2_T_U) ->
@@ -128,15 +132,15 @@ module M_clone_generic
       /\ ([@stop_split] [@expl:clone ensures #1] postcondition_once_clone'0 () self.f1 result.f1)}
       (! return {result}) ]
   
-  predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+  function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
   
-  meta "rewrite_def" predicate invariant_ref_T
+  meta "rewrite_def" function invariant_ref_T
   
-  predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+  function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
   
-  meta "rewrite_def" predicate inv_ref_T
+  meta "rewrite_def" function inv_ref_T
   
-  predicate precondition_clone (self: ()) (args: t_T)
+  function precondition_clone (self: ()) (args: t_T) : bool
   
   axiom precondition_fndef: forall args: t_T [precondition_clone () args]. (let self = args in inv_ref_T self)
       -> precondition_clone () args
@@ -146,15 +150,15 @@ module M_clone_generic
     [ return (result: t_T) -> {[@stop_split] [@expl:clone ensures] postcondition_once_clone () self result}
       (! return {result}) ]
   
-  predicate invariant_ref_U [@inline:trivial] (self: t_U) = inv_U self
+  function invariant_ref_U [@inline:trivial] (self: t_U) : bool = inv_U self
   
-  meta "rewrite_def" predicate invariant_ref_U
+  meta "rewrite_def" function invariant_ref_U
   
-  predicate inv_ref_U [@inline:trivial] (_1: t_U) = invariant_ref_U _1
+  function inv_ref_U [@inline:trivial] (_1: t_U) : bool = invariant_ref_U _1
   
-  meta "rewrite_def" predicate inv_ref_U
+  meta "rewrite_def" function inv_ref_U
   
-  predicate precondition_clone'0 (self: ()) (args: t_U)
+  function precondition_clone'0 (self: ()) (args: t_U) : bool
   
   axiom precondition_fndef'0: forall args: t_U [precondition_clone'0 () args]. (let self = args in inv_ref_U self)
       -> precondition_clone'0 () args
@@ -191,41 +195,44 @@ module M_clone_nested
   
   type tup2_tup2_u32_bool_u8 = { f0'0: tup2_u32_bool; f1'0: UInt8.t }
   
-  predicate postcondition_clone (self: ()) (args: UInt32.t) (result: UInt32.t) = let self'0 = args in result = self'0
+  function postcondition_clone (self: ()) (args: UInt32.t) (result: UInt32.t) : bool = let self'0 = args in result
+    = self'0
   
-  meta "rewrite_def" predicate postcondition_clone
+  meta "rewrite_def" function postcondition_clone
   
-  predicate postcondition_once_clone (self: ()) (args: UInt32.t) (result: UInt32.t) =
+  function postcondition_once_clone (self: ()) (args: UInt32.t) (result: UInt32.t) : bool =
     postcondition_clone self args result
   
-  meta "rewrite_def" predicate postcondition_once_clone
+  meta "rewrite_def" function postcondition_once_clone
   
-  predicate postcondition_clone'0 (self: ()) (args: bool) (result: bool) = let self'0 = args in result = self'0
+  function postcondition_clone'0 (self: ()) (args: bool) (result: bool) : bool = let self'0 = args in result = self'0
   
-  meta "rewrite_def" predicate postcondition_clone'0
+  meta "rewrite_def" function postcondition_clone'0
   
-  predicate postcondition_once_clone'0 (self: ()) (args: bool) (result: bool) = postcondition_clone'0 self args result
+  function postcondition_once_clone'0 (self: ()) (args: bool) (result: bool) : bool =
+    postcondition_clone'0 self args result
   
-  meta "rewrite_def" predicate postcondition_once_clone'0
+  meta "rewrite_def" function postcondition_once_clone'0
   
-  predicate postcondition_clone'1 (self: ()) (args: tup2_u32_bool) (result: tup2_u32_bool) =
+  function postcondition_clone'1 (self: ()) (args: tup2_u32_bool) (result: tup2_u32_bool) : bool =
     postcondition_once_clone () args.f0 result.f0 /\ postcondition_once_clone'0 () args.f1 result.f1
   
-  meta "rewrite_def" predicate postcondition_clone'1
+  meta "rewrite_def" function postcondition_clone'1
   
-  predicate postcondition_once_clone'1 (self: ()) (args: tup2_u32_bool) (result: tup2_u32_bool) =
+  function postcondition_once_clone'1 (self: ()) (args: tup2_u32_bool) (result: tup2_u32_bool) : bool =
     postcondition_clone'1 self args result
   
-  meta "rewrite_def" predicate postcondition_once_clone'1
+  meta "rewrite_def" function postcondition_once_clone'1
   
-  predicate postcondition_clone'2 (self: ()) (args: UInt8.t) (result: UInt8.t) = let self'0 = args in result = self'0
+  function postcondition_clone'2 (self: ()) (args: UInt8.t) (result: UInt8.t) : bool = let self'0 = args in result
+    = self'0
   
-  meta "rewrite_def" predicate postcondition_clone'2
+  meta "rewrite_def" function postcondition_clone'2
   
-  predicate postcondition_once_clone'2 (self: ()) (args: UInt8.t) (result: UInt8.t) =
+  function postcondition_once_clone'2 (self: ()) (args: UInt8.t) (result: UInt8.t) : bool =
     postcondition_clone'2 self args result
   
-  meta "rewrite_def" predicate postcondition_once_clone'2
+  meta "rewrite_def" function postcondition_once_clone'2
   
   let clone_tup2_tup2_u32_bool_u8 (self: tup2_tup2_u32_bool_u8) (return (x: tup2_tup2_u32_bool_u8)) = any
     [ return (result: tup2_tup2_u32_bool_u8) ->
@@ -249,14 +256,15 @@ module M_clone_one
   use creusot.int.UInt32
   use creusot.prelude.Any
   
-  predicate postcondition_clone (self: ()) (args: UInt32.t) (result: UInt32.t) = let self'0 = args in result = self'0
+  function postcondition_clone (self: ()) (args: UInt32.t) (result: UInt32.t) : bool = let self'0 = args in result
+    = self'0
   
-  meta "rewrite_def" predicate postcondition_clone
+  meta "rewrite_def" function postcondition_clone
   
-  predicate postcondition_once_clone (self: ()) (args: UInt32.t) (result: UInt32.t) =
+  function postcondition_once_clone (self: ()) (args: UInt32.t) (result: UInt32.t) : bool =
     postcondition_clone self args result
   
-  meta "rewrite_def" predicate postcondition_once_clone
+  meta "rewrite_def" function postcondition_once_clone
   
   let clone_tup1_u32 (self: UInt32.t) (return (x: UInt32.t)) = any
     [ return (result: UInt32.t) -> {[@stop_split] [@expl:clone ensures #0] postcondition_once_clone () self result}
@@ -277,22 +285,23 @@ module M_clone_ref_leaf
   
   type tup2_bool_ref_u32 = { f0: bool; f1: UInt32.t }
   
-  predicate postcondition_clone (self: ()) (args: bool) (result: bool) = let self'0 = args in result = self'0
+  function postcondition_clone (self: ()) (args: bool) (result: bool) : bool = let self'0 = args in result = self'0
   
-  meta "rewrite_def" predicate postcondition_clone
+  meta "rewrite_def" function postcondition_clone
   
-  predicate postcondition_once_clone (self: ()) (args: bool) (result: bool) = postcondition_clone self args result
+  function postcondition_once_clone (self: ()) (args: bool) (result: bool) : bool = postcondition_clone self args result
   
-  meta "rewrite_def" predicate postcondition_once_clone
+  meta "rewrite_def" function postcondition_once_clone
   
-  predicate postcondition_clone'0 (self: ()) (args: UInt32.t) (result: UInt32.t) = let self'0 = args in result = self'0
+  function postcondition_clone'0 (self: ()) (args: UInt32.t) (result: UInt32.t) : bool = let self'0 = args in result
+    = self'0
   
-  meta "rewrite_def" predicate postcondition_clone'0
+  meta "rewrite_def" function postcondition_clone'0
   
-  predicate postcondition_once_clone'0 (self: ()) (args: UInt32.t) (result: UInt32.t) =
+  function postcondition_once_clone'0 (self: ()) (args: UInt32.t) (result: UInt32.t) : bool =
     postcondition_clone'0 self args result
   
-  meta "rewrite_def" predicate postcondition_once_clone'0
+  meta "rewrite_def" function postcondition_once_clone'0
   
   let clone_tup2_bool_ref_u32 (self: tup2_bool_ref_u32) (return (x: tup2_bool_ref_u32)) = any
     [ return (result: tup2_bool_ref_u32) ->
@@ -328,32 +337,33 @@ module M_clone_tuple_with_closure
   
   type tup2_bool_closure0 = { f0: bool; f1: closure0 }
   
-  predicate postcondition_clone (self: ()) (args: bool) (result: bool) = let self'0 = args in result = self'0
+  function postcondition_clone (self: ()) (args: bool) (result: bool) : bool = let self'0 = args in result = self'0
   
-  meta "rewrite_def" predicate postcondition_clone
+  meta "rewrite_def" function postcondition_clone
   
-  predicate postcondition_once_clone (self: ()) (args: bool) (result: bool) = postcondition_clone self args result
+  function postcondition_once_clone (self: ()) (args: bool) (result: bool) : bool = postcondition_clone self args result
   
-  meta "rewrite_def" predicate postcondition_once_clone
+  meta "rewrite_def" function postcondition_once_clone
   
-  predicate postcondition_clone'0 (self: ()) (args: UInt32.t) (result: UInt32.t) = let self'0 = args in result = self'0
+  function postcondition_clone'0 (self: ()) (args: UInt32.t) (result: UInt32.t) : bool = let self'0 = args in result
+    = self'0
   
-  meta "rewrite_def" predicate postcondition_clone'0
+  meta "rewrite_def" function postcondition_clone'0
   
-  predicate postcondition_once_clone'0 (self: ()) (args: UInt32.t) (result: UInt32.t) =
+  function postcondition_once_clone'0 (self: ()) (args: UInt32.t) (result: UInt32.t) : bool =
     postcondition_clone'0 self args result
   
-  meta "rewrite_def" predicate postcondition_once_clone'0
+  meta "rewrite_def" function postcondition_once_clone'0
   
-  predicate postcondition_clone'1 (self: ()) (args: closure0) (result: closure0) =
+  function postcondition_clone'1 (self: ()) (args: closure0) (result: closure0) : bool =
     postcondition_once_clone'0 () args.c0 result.c0
   
-  meta "rewrite_def" predicate postcondition_clone'1
+  meta "rewrite_def" function postcondition_clone'1
   
-  predicate postcondition_once_clone'1 (self: ()) (args: closure0) (result: closure0) =
+  function postcondition_once_clone'1 (self: ()) (args: closure0) (result: closure0) : bool =
     postcondition_clone'1 self args result
   
-  meta "rewrite_def" predicate postcondition_once_clone'1
+  meta "rewrite_def" function postcondition_once_clone'1
   
   let clone_tup2_bool_closure0 (self: tup2_bool_closure0) (return (x: tup2_bool_closure0)) = any
     [ return (result: tup2_bool_closure0) ->
@@ -382,21 +392,21 @@ module M_clone_unit_leaf
   
   type tup2_bool_unit = { f0: bool; f1: () }
   
-  predicate postcondition_clone (self: ()) (args: bool) (result: bool) = let self'0 = args in result = self'0
+  function postcondition_clone (self: ()) (args: bool) (result: bool) : bool = let self'0 = args in result = self'0
   
-  meta "rewrite_def" predicate postcondition_clone
+  meta "rewrite_def" function postcondition_clone
   
-  predicate postcondition_once_clone (self: ()) (args: bool) (result: bool) = postcondition_clone self args result
+  function postcondition_once_clone (self: ()) (args: bool) (result: bool) : bool = postcondition_clone self args result
   
-  meta "rewrite_def" predicate postcondition_once_clone
+  meta "rewrite_def" function postcondition_once_clone
   
-  predicate postcondition_clone'0 (self: ()) (args: ()) (result: ()) = true
+  function postcondition_clone'0 (self: ()) (args: ()) (result: ()) : bool = true
   
-  meta "rewrite_def" predicate postcondition_clone'0
+  meta "rewrite_def" function postcondition_clone'0
   
-  predicate postcondition_once_clone'0 (self: ()) (args: ()) (result: ()) = postcondition_clone'0 self args result
+  function postcondition_once_clone'0 (self: ()) (args: ()) (result: ()) : bool = postcondition_clone'0 self args result
   
-  meta "rewrite_def" predicate postcondition_once_clone'0
+  meta "rewrite_def" function postcondition_once_clone'0
   
   let clone_tup2_bool_unit (self: tup2_bool_unit) (return (x: tup2_bool_unit)) = any
     [ return (result: tup2_bool_unit) ->

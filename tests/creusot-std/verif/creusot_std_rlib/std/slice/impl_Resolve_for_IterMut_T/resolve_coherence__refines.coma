@@ -6,9 +6,9 @@ use seq.Seq
 
 type t_IterMut_T
 
-predicate inv_IterMut_T (_1: t_IterMut_T)
+function inv_IterMut_T (_1: t_IterMut_T) : bool
 
-predicate structural_resolve_IterMut_T (_1: t_IterMut_T)
+function structural_resolve_IterMut_T (_1: t_IterMut_T) : bool
 
 type t_T
 
@@ -18,10 +18,10 @@ axiom view_IterMut_T_spec:
   forall self: t_IterMut_T [view_IterMut_T self]. Seq.length (Slice64.view (view_IterMut_T self).final)
     = Seq.length (Slice64.view (view_IterMut_T self).current)
 
-predicate resolve_IterMut_T [@inline:trivial] (self: t_IterMut_T) =
-  (view_IterMut_T self).current = (view_IterMut_T self).final
+function resolve_IterMut_T [@inline:trivial] (self: t_IterMut_T) : bool = (view_IterMut_T self).current
+  = (view_IterMut_T self).final
 
-meta "rewrite_def" predicate resolve_IterMut_T
+meta "rewrite_def" function resolve_IterMut_T
 
 meta "compute_max_steps" 1000000
 

@@ -33,7 +33,7 @@ module M_impl_laws
   
   meta "select_lsinst" "all"
   
-  predicate impl_laws
+  function impl_laws : bool
   
   goal vc_impl_laws: [@stop_split] [@expl:impl_laws ensures] (op_unit () () = op_unit () ()) = true
 end
@@ -54,7 +54,7 @@ module M_uses_op
   
   constant y : t_T
   
-  predicate uses_op_T (x: t_T) (y: t_T)
+  function uses_op_T (x: t_T) (y: t_T) : bool
   
   goal vc_uses_op_T: [@stop_split] [@expl:uses_op ensures] (op_T x y = op_T y x) = true
 end

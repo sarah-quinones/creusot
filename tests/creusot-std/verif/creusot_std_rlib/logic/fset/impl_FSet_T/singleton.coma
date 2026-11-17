@@ -4,9 +4,9 @@ use set.Fset
 
 type t_T
 
-predicate contains_T [@inline:trivial] (self: Fset.fset t_T) (e: t_T) = Fset.mem e self
+function contains_T [@inline:trivial] (self: Fset.fset t_T) (e: t_T) : bool = Fset.mem e self
 
-meta "rewrite_def" predicate contains_T
+meta "rewrite_def" function contains_T
 
 function add_T [@inline:trivial] (self: Fset.fset t_T) (e: t_T) : Fset.fset t_T = Fset.add e self
 

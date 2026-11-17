@@ -3,9 +3,9 @@ module M_breaks_inv
   use creusot.prelude.MutBorrow
   use creusot.prelude.Any
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
   meta "compute_max_steps" 1000000
   
@@ -28,21 +28,22 @@ module M_breaks_inv_ghost
     [ return (result: MutBorrow.t (MutBorrow.t Int32.t)) -> {[@stop_split] [@expl:deref_mut ensures] result = self}
       (! return {result}) ]
   
-  predicate resolve_refmut_refmut_i32 [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t Int32.t)) = _1.final = _1.current
+  function resolve_refmut_refmut_i32 [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t Int32.t)) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_refmut_i32
+  meta "rewrite_def" function resolve_refmut_refmut_i32
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
-  predicate resolve_Ghost_refmut_i32 [@inline:trivial] (self: MutBorrow.t Int32.t) = resolve_refmut_i32 self
+  function resolve_Ghost_refmut_i32 [@inline:trivial] (self: MutBorrow.t Int32.t) : bool = resolve_refmut_i32 self
   
-  meta "rewrite_def" predicate resolve_Ghost_refmut_i32
+  meta "rewrite_def" function resolve_Ghost_refmut_i32
   
-  predicate resolve_Ghost_refmut_i32'0 [@inline:trivial] (_1: MutBorrow.t Int32.t) = resolve_Ghost_refmut_i32 _1
+  function resolve_Ghost_refmut_i32'0 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = resolve_Ghost_refmut_i32 _1
   
-  meta "rewrite_def" predicate resolve_Ghost_refmut_i32'0
+  meta "rewrite_def" function resolve_Ghost_refmut_i32'0
   
   let new_unit (x: ()) (return (x'0: ())) = any
     [ return (result: ()) -> {[@stop_split] [@expl:new ensures] result = x} (! return {result}) ]
@@ -85,26 +86,26 @@ module M_example
     _guard: Map.map Int32.t bool;
     _initial: MutBorrow.t Int32.t }
   
-  predicate index_Mapping_i32_bool [@inline:trivial] (self: Map.map Int32.t bool) (a: Int32.t) = Map.get self a
+  function index_Mapping_i32_bool [@inline:trivial] (self: Map.map Int32.t bool) (a: Int32.t) : bool = Map.get self a
   
-  meta "rewrite_def" predicate index_Mapping_i32_bool
+  meta "rewrite_def" function index_Mapping_i32_bool
   
-  predicate guards_ref_Mapping_i32_bool [@inline:trivial] (self: Map.map Int32.t bool) (x: Int32.t) =
+  function guards_ref_Mapping_i32_bool [@inline:trivial] (self: Map.map Int32.t bool) (x: Int32.t) : bool =
     index_Mapping_i32_bool self x
   
-  meta "rewrite_def" predicate guards_ref_Mapping_i32_bool
+  meta "rewrite_def" function guards_ref_Mapping_i32_bool
   
-  predicate guards_Mapping_i32_bool [@inline:trivial] (self: Map.map Int32.t bool) (initial: MutBorrow.t Int32.t) (current': MutBorrow.t Int32.t) =
-    guards_ref_Mapping_i32_bool self current'.current /\ initial.final = current'.final
+  function guards_Mapping_i32_bool [@inline:trivial] (self: Map.map Int32.t bool) (initial: MutBorrow.t Int32.t) (current': MutBorrow.t Int32.t) : bool
+   = guards_ref_Mapping_i32_bool self current'.current /\ initial.final = current'.final
   
-  meta "rewrite_def" predicate guards_Mapping_i32_bool
+  meta "rewrite_def" function guards_Mapping_i32_bool
   
-  predicate invariant_Guarded_refmut_i32_Mapping_i32_bool [@inline:trivial] (self: t_Guarded_refmut_i32_Mapping_i32_bool) =
-    guards_Mapping_i32_bool self._guard self._initial self.inner
+  function invariant_Guarded_refmut_i32_Mapping_i32_bool [@inline:trivial] (self: t_Guarded_refmut_i32_Mapping_i32_bool) : bool
+   = guards_Mapping_i32_bool self._guard self._initial self.inner
   
-  meta "rewrite_def" predicate invariant_Guarded_refmut_i32_Mapping_i32_bool
+  meta "rewrite_def" function invariant_Guarded_refmut_i32_Mapping_i32_bool
   
-  predicate inv_Guarded_refmut_i32_Mapping_i32_bool (_1: t_Guarded_refmut_i32_Mapping_i32_bool)
+  function inv_Guarded_refmut_i32_Mapping_i32_bool (_1: t_Guarded_refmut_i32_Mapping_i32_bool) : bool
   
   axiom inv_axiom [@rewrite]:
     forall _1: t_Guarded_refmut_i32_Mapping_i32_bool [inv_Guarded_refmut_i32_Mapping_i32_bool _1]. inv_Guarded_refmut_i32_Mapping_i32_bool _1
@@ -133,9 +134,9 @@ module M_example
   {[@stop_split] [@expl:takes_guarded '_guarded' type invariant] inv_Guarded_refmut_i32_Mapping_i32_bool _guarded}
     any [ return (result: ()) -> (! return {result}) ]
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
   meta "compute_max_steps" 1000000
   
@@ -183,9 +184,9 @@ module M_ghostified
     [ return (result: MutBorrow.t Int32.t) -> {[@stop_split] [@expl:deref_mut ensures] result = self}
       (! return {result}) ]
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
   let new_refmut_i32 (x: MutBorrow.t Int32.t) (return (x'0: MutBorrow.t Int32.t)) = any
     [ return (result: MutBorrow.t Int32.t) -> {[@stop_split] [@expl:new ensures] result = x} (! return {result}) ]
@@ -199,26 +200,26 @@ module M_ghostified
     _guard: Map.map Int32.t bool;
     _initial: MutBorrow.t Int32.t }
   
-  predicate index_Mapping_i32_bool [@inline:trivial] (self: Map.map Int32.t bool) (a: Int32.t) = Map.get self a
+  function index_Mapping_i32_bool [@inline:trivial] (self: Map.map Int32.t bool) (a: Int32.t) : bool = Map.get self a
   
-  meta "rewrite_def" predicate index_Mapping_i32_bool
+  meta "rewrite_def" function index_Mapping_i32_bool
   
-  predicate guards_ref_Mapping_i32_bool [@inline:trivial] (self: Map.map Int32.t bool) (x: Int32.t) =
+  function guards_ref_Mapping_i32_bool [@inline:trivial] (self: Map.map Int32.t bool) (x: Int32.t) : bool =
     index_Mapping_i32_bool self x
   
-  meta "rewrite_def" predicate guards_ref_Mapping_i32_bool
+  meta "rewrite_def" function guards_ref_Mapping_i32_bool
   
-  predicate guards_Mapping_i32_bool [@inline:trivial] (self: Map.map Int32.t bool) (initial: MutBorrow.t Int32.t) (current': MutBorrow.t Int32.t) =
-    guards_ref_Mapping_i32_bool self current'.current /\ initial.final = current'.final
+  function guards_Mapping_i32_bool [@inline:trivial] (self: Map.map Int32.t bool) (initial: MutBorrow.t Int32.t) (current': MutBorrow.t Int32.t) : bool
+   = guards_ref_Mapping_i32_bool self current'.current /\ initial.final = current'.final
   
-  meta "rewrite_def" predicate guards_Mapping_i32_bool
+  meta "rewrite_def" function guards_Mapping_i32_bool
   
-  predicate invariant_Guarded_refmut_i32_Mapping_i32_bool [@inline:trivial] (self: t_Guarded_refmut_i32_Mapping_i32_bool) =
-    guards_Mapping_i32_bool self._guard self._initial self.inner
+  function invariant_Guarded_refmut_i32_Mapping_i32_bool [@inline:trivial] (self: t_Guarded_refmut_i32_Mapping_i32_bool) : bool
+   = guards_Mapping_i32_bool self._guard self._initial self.inner
   
-  meta "rewrite_def" predicate invariant_Guarded_refmut_i32_Mapping_i32_bool
+  meta "rewrite_def" function invariant_Guarded_refmut_i32_Mapping_i32_bool
   
-  predicate inv_Guarded_refmut_i32_Mapping_i32_bool (_1: t_Guarded_refmut_i32_Mapping_i32_bool)
+  function inv_Guarded_refmut_i32_Mapping_i32_bool (_1: t_Guarded_refmut_i32_Mapping_i32_bool) : bool
   
   axiom inv_axiom [@rewrite]:
     forall _1: t_Guarded_refmut_i32_Mapping_i32_bool [inv_Guarded_refmut_i32_Mapping_i32_bool _1]. inv_Guarded_refmut_i32_Mapping_i32_bool _1
@@ -240,15 +241,15 @@ module M_ghostified
       /\ ([@stop_split] [@expl:new ensures #2] guards_ref_Mapping_i32_bool guard borrow.final)}
       (! return {result}) ]
   
-  predicate invariant_Ghost_Guarded_refmut_i32_Mapping_i32_bool [@inline:trivial] (self: t_Guarded_refmut_i32_Mapping_i32_bool) =
-    inv_Guarded_refmut_i32_Mapping_i32_bool self
+  function invariant_Ghost_Guarded_refmut_i32_Mapping_i32_bool [@inline:trivial] (self: t_Guarded_refmut_i32_Mapping_i32_bool) : bool
+   = inv_Guarded_refmut_i32_Mapping_i32_bool self
   
-  meta "rewrite_def" predicate invariant_Ghost_Guarded_refmut_i32_Mapping_i32_bool
+  meta "rewrite_def" function invariant_Ghost_Guarded_refmut_i32_Mapping_i32_bool
   
-  predicate inv_Ghost_Guarded_refmut_i32_Mapping_i32_bool [@inline:trivial] (_1: t_Guarded_refmut_i32_Mapping_i32_bool) =
-    invariant_Ghost_Guarded_refmut_i32_Mapping_i32_bool _1
+  function inv_Ghost_Guarded_refmut_i32_Mapping_i32_bool [@inline:trivial] (_1: t_Guarded_refmut_i32_Mapping_i32_bool) : bool
+   = invariant_Ghost_Guarded_refmut_i32_Mapping_i32_bool _1
   
-  meta "rewrite_def" predicate inv_Ghost_Guarded_refmut_i32_Mapping_i32_bool
+  meta "rewrite_def" function inv_Ghost_Guarded_refmut_i32_Mapping_i32_bool
   
   let new_Guarded_refmut_i32_Mapping_i32_bool (x: t_Guarded_refmut_i32_Mapping_i32_bool)
     (return (x'0: t_Guarded_refmut_i32_Mapping_i32_bool)) =
@@ -259,26 +260,26 @@ module M_ghostified
       /\ ([@stop_split] [@expl:new ensures] result = x)}
       (! return {result}) ]
   
-  predicate invariant_refmut_Ghost_Guarded_refmut_i32_Mapping_i32_bool [@inline:trivial] (self: MutBorrow.t t_Guarded_refmut_i32_Mapping_i32_bool) =
-    inv_Ghost_Guarded_refmut_i32_Mapping_i32_bool self.current
+  function invariant_refmut_Ghost_Guarded_refmut_i32_Mapping_i32_bool [@inline:trivial] (self: MutBorrow.t t_Guarded_refmut_i32_Mapping_i32_bool) : bool
+   = inv_Ghost_Guarded_refmut_i32_Mapping_i32_bool self.current
     /\ inv_Ghost_Guarded_refmut_i32_Mapping_i32_bool self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Ghost_Guarded_refmut_i32_Mapping_i32_bool
+  meta "rewrite_def" function invariant_refmut_Ghost_Guarded_refmut_i32_Mapping_i32_bool
   
-  predicate inv_refmut_Ghost_Guarded_refmut_i32_Mapping_i32_bool [@inline:trivial] (_1: MutBorrow.t t_Guarded_refmut_i32_Mapping_i32_bool) =
-    invariant_refmut_Ghost_Guarded_refmut_i32_Mapping_i32_bool _1
+  function inv_refmut_Ghost_Guarded_refmut_i32_Mapping_i32_bool [@inline:trivial] (_1: MutBorrow.t t_Guarded_refmut_i32_Mapping_i32_bool) : bool
+   = invariant_refmut_Ghost_Guarded_refmut_i32_Mapping_i32_bool _1
   
-  meta "rewrite_def" predicate inv_refmut_Ghost_Guarded_refmut_i32_Mapping_i32_bool
+  meta "rewrite_def" function inv_refmut_Ghost_Guarded_refmut_i32_Mapping_i32_bool
   
-  predicate invariant_refmut_Guarded_refmut_i32_Mapping_i32_bool [@inline:trivial] (self: MutBorrow.t t_Guarded_refmut_i32_Mapping_i32_bool) =
-    inv_Guarded_refmut_i32_Mapping_i32_bool self.current /\ inv_Guarded_refmut_i32_Mapping_i32_bool self.final
+  function invariant_refmut_Guarded_refmut_i32_Mapping_i32_bool [@inline:trivial] (self: MutBorrow.t t_Guarded_refmut_i32_Mapping_i32_bool) : bool
+   = inv_Guarded_refmut_i32_Mapping_i32_bool self.current /\ inv_Guarded_refmut_i32_Mapping_i32_bool self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Guarded_refmut_i32_Mapping_i32_bool
+  meta "rewrite_def" function invariant_refmut_Guarded_refmut_i32_Mapping_i32_bool
   
-  predicate inv_refmut_Guarded_refmut_i32_Mapping_i32_bool [@inline:trivial] (_1: MutBorrow.t t_Guarded_refmut_i32_Mapping_i32_bool) =
-    invariant_refmut_Guarded_refmut_i32_Mapping_i32_bool _1
+  function inv_refmut_Guarded_refmut_i32_Mapping_i32_bool [@inline:trivial] (_1: MutBorrow.t t_Guarded_refmut_i32_Mapping_i32_bool) : bool
+   = invariant_refmut_Guarded_refmut_i32_Mapping_i32_bool _1
   
-  meta "rewrite_def" predicate inv_refmut_Guarded_refmut_i32_Mapping_i32_bool
+  meta "rewrite_def" function inv_refmut_Guarded_refmut_i32_Mapping_i32_bool
   
   let deref_mut_Ghost_Guarded_refmut_i32_Mapping_i32_bool (self: MutBorrow.t t_Guarded_refmut_i32_Mapping_i32_bool)
     (return (x: MutBorrow.t t_Guarded_refmut_i32_Mapping_i32_bool)) =
@@ -294,9 +295,10 @@ module M_ghostified
     [ return (result: MutBorrow.t (MutBorrow.t Int32.t)) -> {[@stop_split] [@expl:deref_mut ensures] result = self}
       (! return {result}) ]
   
-  predicate resolve_refmut_refmut_i32 [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t Int32.t)) = _1.final = _1.current
+  function resolve_refmut_refmut_i32 [@inline:trivial] (_1: MutBorrow.t (MutBorrow.t Int32.t)) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_refmut_i32
+  meta "rewrite_def" function resolve_refmut_refmut_i32
   
   function fin_Ghost_refmut_i32 [@inline:trivial] (self: MutBorrow.t Int32.t) : Int32.t = self.final
   
@@ -306,18 +308,18 @@ module M_ghostified
     [ return (result: ()) -> {[@stop_split] [@expl:breaks_inv_ghost ensures] fin_Ghost_refmut_i32 bor = (0: Int32.t)}
       (! return {result}) ]
   
-  predicate resolve_Ghost_refmut_i32 [@inline:trivial] (self: MutBorrow.t Int32.t) = resolve_refmut_i32 self
+  function resolve_Ghost_refmut_i32 [@inline:trivial] (self: MutBorrow.t Int32.t) : bool = resolve_refmut_i32 self
   
-  meta "rewrite_def" predicate resolve_Ghost_refmut_i32
+  meta "rewrite_def" function resolve_Ghost_refmut_i32
   
-  predicate resolve_Ghost_refmut_i32'0 [@inline:trivial] (_1: MutBorrow.t Int32.t) = resolve_Ghost_refmut_i32 _1
+  function resolve_Ghost_refmut_i32'0 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = resolve_Ghost_refmut_i32 _1
   
-  meta "rewrite_def" predicate resolve_Ghost_refmut_i32'0
+  meta "rewrite_def" function resolve_Ghost_refmut_i32'0
   
-  predicate resolve_refmut_Guarded_refmut_i32_Mapping_i32_bool [@inline:trivial] (_1: MutBorrow.t t_Guarded_refmut_i32_Mapping_i32_bool) =
-    _1.final = _1.current
+  function resolve_refmut_Guarded_refmut_i32_Mapping_i32_bool [@inline:trivial] (_1: MutBorrow.t t_Guarded_refmut_i32_Mapping_i32_bool) : bool
+   = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Guarded_refmut_i32_Mapping_i32_bool
+  meta "rewrite_def" function resolve_refmut_Guarded_refmut_i32_Mapping_i32_bool
   
   let new_unit (x: ()) (return (x'0: ())) = any
     [ return (result: ()) -> {[@stop_split] [@expl:new ensures] result = x} (! return {result}) ]
@@ -452,9 +454,9 @@ module M_impl_SumSmaller10__eq_5 (* SumSmaller10 *)
   
   type t_SumSmaller10 = { a: UInt32.t; b: UInt32.t }
   
-  predicate invariant_SumSmaller10 (self: t_SumSmaller10) = UInt32.t'int self.a + UInt32.t'int self.b <= 10
+  function invariant_SumSmaller10 (self: t_SumSmaller10) : bool = UInt32.t'int self.a + UInt32.t'int self.b <= 10
   
-  predicate inv_SumSmaller10 (_1: t_SumSmaller10)
+  function inv_SumSmaller10 (_1: t_SumSmaller10) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_SumSmaller10 [inv_SumSmaller10 _1]. inv_SumSmaller10 _1
       = invariant_SumSmaller10 _1
@@ -464,36 +466,37 @@ module M_impl_SumSmaller10__eq_5 (* SumSmaller10 *)
     _guard: Map.map UInt32.t bool;
     _initial: MutBorrow.t UInt32.t }
   
-  predicate invariant_refmut_SumSmaller10 [@inline:trivial] (self: MutBorrow.t t_SumSmaller10) =
+  function invariant_refmut_SumSmaller10 [@inline:trivial] (self: MutBorrow.t t_SumSmaller10) : bool =
     inv_SumSmaller10 self.current /\ inv_SumSmaller10 self.final
   
-  meta "rewrite_def" predicate invariant_refmut_SumSmaller10
+  meta "rewrite_def" function invariant_refmut_SumSmaller10
   
-  predicate inv_refmut_SumSmaller10 [@inline:trivial] (_1: MutBorrow.t t_SumSmaller10) =
+  function inv_refmut_SumSmaller10 [@inline:trivial] (_1: MutBorrow.t t_SumSmaller10) : bool =
     invariant_refmut_SumSmaller10 _1
   
-  meta "rewrite_def" predicate inv_refmut_SumSmaller10
+  meta "rewrite_def" function inv_refmut_SumSmaller10
   
-  predicate index_Mapping_u32_bool [@inline:trivial] (self: Map.map UInt32.t bool) (a'0: UInt32.t) = Map.get self a'0
+  function index_Mapping_u32_bool [@inline:trivial] (self: Map.map UInt32.t bool) (a'0: UInt32.t) : bool =
+    Map.get self a'0
   
-  meta "rewrite_def" predicate index_Mapping_u32_bool
+  meta "rewrite_def" function index_Mapping_u32_bool
   
-  predicate guards_ref_Mapping_u32_bool [@inline:trivial] (self: Map.map UInt32.t bool) (x: UInt32.t) =
+  function guards_ref_Mapping_u32_bool [@inline:trivial] (self: Map.map UInt32.t bool) (x: UInt32.t) : bool =
     index_Mapping_u32_bool self x
   
-  meta "rewrite_def" predicate guards_ref_Mapping_u32_bool
+  meta "rewrite_def" function guards_ref_Mapping_u32_bool
   
-  predicate guards_Mapping_u32_bool [@inline:trivial] (self: Map.map UInt32.t bool) (initial: MutBorrow.t UInt32.t) (current': MutBorrow.t UInt32.t) =
-    guards_ref_Mapping_u32_bool self current'.current /\ initial.final = current'.final
+  function guards_Mapping_u32_bool [@inline:trivial] (self: Map.map UInt32.t bool) (initial: MutBorrow.t UInt32.t) (current': MutBorrow.t UInt32.t) : bool
+   = guards_ref_Mapping_u32_bool self current'.current /\ initial.final = current'.final
   
-  meta "rewrite_def" predicate guards_Mapping_u32_bool
+  meta "rewrite_def" function guards_Mapping_u32_bool
   
-  predicate invariant_Guarded_refmut_u32_Mapping_u32_bool [@inline:trivial] (self: t_Guarded_refmut_u32_Mapping_u32_bool) =
-    guards_Mapping_u32_bool self._guard self._initial self.inner
+  function invariant_Guarded_refmut_u32_Mapping_u32_bool [@inline:trivial] (self: t_Guarded_refmut_u32_Mapping_u32_bool) : bool
+   = guards_Mapping_u32_bool self._guard self._initial self.inner
   
-  meta "rewrite_def" predicate invariant_Guarded_refmut_u32_Mapping_u32_bool
+  meta "rewrite_def" function invariant_Guarded_refmut_u32_Mapping_u32_bool
   
-  predicate inv_Guarded_refmut_u32_Mapping_u32_bool (_1: t_Guarded_refmut_u32_Mapping_u32_bool)
+  function inv_Guarded_refmut_u32_Mapping_u32_bool (_1: t_Guarded_refmut_u32_Mapping_u32_bool) : bool
   
   axiom inv_axiom'0 [@rewrite]:
     forall _1: t_Guarded_refmut_u32_Mapping_u32_bool [inv_Guarded_refmut_u32_Mapping_u32_bool _1]. inv_Guarded_refmut_u32_Mapping_u32_bool _1
@@ -517,19 +520,19 @@ module M_impl_SumSmaller10__eq_5 (* SumSmaller10 *)
       /\ ([@stop_split] [@expl:get_a_mut_5 ensures #3] self.final.a = result.inner.final)}
       (! return {result}) ]
   
-  predicate resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) = _1.final = _1.current
+  function resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_u32
+  meta "rewrite_def" function resolve_refmut_u32
   
-  predicate resolve_Guarded_refmut_u32_Mapping_u32_bool (_1: t_Guarded_refmut_u32_Mapping_u32_bool)
+  function resolve_Guarded_refmut_u32_Mapping_u32_bool (_1: t_Guarded_refmut_u32_Mapping_u32_bool) : bool
   
   axiom resolve_axiom [@rewrite]:
     forall _1: t_Guarded_refmut_u32_Mapping_u32_bool [resolve_Guarded_refmut_u32_Mapping_u32_bool _1]. resolve_Guarded_refmut_u32_Mapping_u32_bool _1
       = resolve_refmut_u32 _1.inner
   
-  predicate resolve_refmut_SumSmaller10 [@inline:trivial] (_1: MutBorrow.t t_SumSmaller10) = _1.final = _1.current
+  function resolve_refmut_SumSmaller10 [@inline:trivial] (_1: MutBorrow.t t_SumSmaller10) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_SumSmaller10
+  meta "rewrite_def" function resolve_refmut_SumSmaller10
   
   meta "compute_max_steps" 1000000
   
@@ -585,26 +588,27 @@ module M_impl_SumSmaller10__get_a_mut (* SumSmaller10 *)
     _guard: Map.map UInt32.t bool;
     _initial: MutBorrow.t UInt32.t }
   
-  predicate index_Mapping_u32_bool [@inline:trivial] (self: Map.map UInt32.t bool) (a'0: UInt32.t) = Map.get self a'0
+  function index_Mapping_u32_bool [@inline:trivial] (self: Map.map UInt32.t bool) (a'0: UInt32.t) : bool =
+    Map.get self a'0
   
-  meta "rewrite_def" predicate index_Mapping_u32_bool
+  meta "rewrite_def" function index_Mapping_u32_bool
   
-  predicate guards_ref_Mapping_u32_bool [@inline:trivial] (self: Map.map UInt32.t bool) (x: UInt32.t) =
+  function guards_ref_Mapping_u32_bool [@inline:trivial] (self: Map.map UInt32.t bool) (x: UInt32.t) : bool =
     index_Mapping_u32_bool self x
   
-  meta "rewrite_def" predicate guards_ref_Mapping_u32_bool
+  meta "rewrite_def" function guards_ref_Mapping_u32_bool
   
-  predicate guards_Mapping_u32_bool [@inline:trivial] (self: Map.map UInt32.t bool) (initial: MutBorrow.t UInt32.t) (current': MutBorrow.t UInt32.t) =
-    guards_ref_Mapping_u32_bool self current'.current /\ initial.final = current'.final
+  function guards_Mapping_u32_bool [@inline:trivial] (self: Map.map UInt32.t bool) (initial: MutBorrow.t UInt32.t) (current': MutBorrow.t UInt32.t) : bool
+   = guards_ref_Mapping_u32_bool self current'.current /\ initial.final = current'.final
   
-  meta "rewrite_def" predicate guards_Mapping_u32_bool
+  meta "rewrite_def" function guards_Mapping_u32_bool
   
-  predicate invariant_Guarded_refmut_u32_Mapping_u32_bool [@inline:trivial] (self: t_Guarded_refmut_u32_Mapping_u32_bool) =
-    guards_Mapping_u32_bool self._guard self._initial self.inner
+  function invariant_Guarded_refmut_u32_Mapping_u32_bool [@inline:trivial] (self: t_Guarded_refmut_u32_Mapping_u32_bool) : bool
+   = guards_Mapping_u32_bool self._guard self._initial self.inner
   
-  meta "rewrite_def" predicate invariant_Guarded_refmut_u32_Mapping_u32_bool
+  meta "rewrite_def" function invariant_Guarded_refmut_u32_Mapping_u32_bool
   
-  predicate inv_Guarded_refmut_u32_Mapping_u32_bool (_1: t_Guarded_refmut_u32_Mapping_u32_bool)
+  function inv_Guarded_refmut_u32_Mapping_u32_bool (_1: t_Guarded_refmut_u32_Mapping_u32_bool) : bool
   
   axiom inv_axiom [@rewrite]:
     forall _1: t_Guarded_refmut_u32_Mapping_u32_bool [inv_Guarded_refmut_u32_Mapping_u32_bool _1]. inv_Guarded_refmut_u32_Mapping_u32_bool _1
@@ -626,30 +630,30 @@ module M_impl_SumSmaller10__get_a_mut (* SumSmaller10 *)
       /\ ([@stop_split] [@expl:new ensures #2] guards_ref_Mapping_u32_bool guard borrow.final)}
       (! return {result}) ]
   
-  predicate resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) = _1.final = _1.current
+  function resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_u32
+  meta "rewrite_def" function resolve_refmut_u32
   
-  predicate invariant_SumSmaller10 (self: t_SumSmaller10) = UInt32.t'int self.a + UInt32.t'int self.b <= 10
+  function invariant_SumSmaller10 (self: t_SumSmaller10) : bool = UInt32.t'int self.a + UInt32.t'int self.b <= 10
   
-  predicate inv_SumSmaller10 (_1: t_SumSmaller10)
+  function inv_SumSmaller10 (_1: t_SumSmaller10) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_SumSmaller10 [inv_SumSmaller10 _1]. inv_SumSmaller10 _1
       = invariant_SumSmaller10 _1
   
-  predicate invariant_refmut_SumSmaller10 [@inline:trivial] (self: MutBorrow.t t_SumSmaller10) =
+  function invariant_refmut_SumSmaller10 [@inline:trivial] (self: MutBorrow.t t_SumSmaller10) : bool =
     inv_SumSmaller10 self.current /\ inv_SumSmaller10 self.final
   
-  meta "rewrite_def" predicate invariant_refmut_SumSmaller10
+  meta "rewrite_def" function invariant_refmut_SumSmaller10
   
-  predicate inv_refmut_SumSmaller10 [@inline:trivial] (_1: MutBorrow.t t_SumSmaller10) =
+  function inv_refmut_SumSmaller10 [@inline:trivial] (_1: MutBorrow.t t_SumSmaller10) : bool =
     invariant_refmut_SumSmaller10 _1
   
-  meta "rewrite_def" predicate inv_refmut_SumSmaller10
+  meta "rewrite_def" function inv_refmut_SumSmaller10
   
-  predicate resolve_refmut_SumSmaller10 [@inline:trivial] (_1: MutBorrow.t t_SumSmaller10) = _1.final = _1.current
+  function resolve_refmut_SumSmaller10 [@inline:trivial] (_1: MutBorrow.t t_SumSmaller10) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_SumSmaller10
+  meta "rewrite_def" function resolve_refmut_SumSmaller10
   
   meta "compute_max_steps" 1000000
   
@@ -693,9 +697,9 @@ module M_impl_SumSmaller10__get_a_mut_5 (* SumSmaller10 *)
   
   type t_SumSmaller10 = { a: UInt32.t; b: UInt32.t }
   
-  predicate invariant_SumSmaller10 (self: t_SumSmaller10) = UInt32.t'int self.a + UInt32.t'int self.b <= 10
+  function invariant_SumSmaller10 (self: t_SumSmaller10) : bool = UInt32.t'int self.a + UInt32.t'int self.b <= 10
   
-  predicate inv_SumSmaller10 (_1: t_SumSmaller10)
+  function inv_SumSmaller10 (_1: t_SumSmaller10) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_SumSmaller10 [inv_SumSmaller10 _1]. inv_SumSmaller10 _1
       = invariant_SumSmaller10 _1
@@ -705,36 +709,37 @@ module M_impl_SumSmaller10__get_a_mut_5 (* SumSmaller10 *)
     _guard: Map.map UInt32.t bool;
     _initial: MutBorrow.t UInt32.t }
   
-  predicate invariant_refmut_SumSmaller10 [@inline:trivial] (self: MutBorrow.t t_SumSmaller10) =
+  function invariant_refmut_SumSmaller10 [@inline:trivial] (self: MutBorrow.t t_SumSmaller10) : bool =
     inv_SumSmaller10 self.current /\ inv_SumSmaller10 self.final
   
-  meta "rewrite_def" predicate invariant_refmut_SumSmaller10
+  meta "rewrite_def" function invariant_refmut_SumSmaller10
   
-  predicate inv_refmut_SumSmaller10 [@inline:trivial] (_1: MutBorrow.t t_SumSmaller10) =
+  function inv_refmut_SumSmaller10 [@inline:trivial] (_1: MutBorrow.t t_SumSmaller10) : bool =
     invariant_refmut_SumSmaller10 _1
   
-  meta "rewrite_def" predicate inv_refmut_SumSmaller10
+  meta "rewrite_def" function inv_refmut_SumSmaller10
   
-  predicate index_Mapping_u32_bool [@inline:trivial] (self: Map.map UInt32.t bool) (a'0: UInt32.t) = Map.get self a'0
+  function index_Mapping_u32_bool [@inline:trivial] (self: Map.map UInt32.t bool) (a'0: UInt32.t) : bool =
+    Map.get self a'0
   
-  meta "rewrite_def" predicate index_Mapping_u32_bool
+  meta "rewrite_def" function index_Mapping_u32_bool
   
-  predicate guards_ref_Mapping_u32_bool [@inline:trivial] (self: Map.map UInt32.t bool) (x: UInt32.t) =
+  function guards_ref_Mapping_u32_bool [@inline:trivial] (self: Map.map UInt32.t bool) (x: UInt32.t) : bool =
     index_Mapping_u32_bool self x
   
-  meta "rewrite_def" predicate guards_ref_Mapping_u32_bool
+  meta "rewrite_def" function guards_ref_Mapping_u32_bool
   
-  predicate guards_Mapping_u32_bool [@inline:trivial] (self: Map.map UInt32.t bool) (initial: MutBorrow.t UInt32.t) (current': MutBorrow.t UInt32.t) =
-    guards_ref_Mapping_u32_bool self current'.current /\ initial.final = current'.final
+  function guards_Mapping_u32_bool [@inline:trivial] (self: Map.map UInt32.t bool) (initial: MutBorrow.t UInt32.t) (current': MutBorrow.t UInt32.t) : bool
+   = guards_ref_Mapping_u32_bool self current'.current /\ initial.final = current'.final
   
-  meta "rewrite_def" predicate guards_Mapping_u32_bool
+  meta "rewrite_def" function guards_Mapping_u32_bool
   
-  predicate invariant_Guarded_refmut_u32_Mapping_u32_bool [@inline:trivial] (self: t_Guarded_refmut_u32_Mapping_u32_bool) =
-    guards_Mapping_u32_bool self._guard self._initial self.inner
+  function invariant_Guarded_refmut_u32_Mapping_u32_bool [@inline:trivial] (self: t_Guarded_refmut_u32_Mapping_u32_bool) : bool
+   = guards_Mapping_u32_bool self._guard self._initial self.inner
   
-  meta "rewrite_def" predicate invariant_Guarded_refmut_u32_Mapping_u32_bool
+  meta "rewrite_def" function invariant_Guarded_refmut_u32_Mapping_u32_bool
   
-  predicate inv_Guarded_refmut_u32_Mapping_u32_bool (_1: t_Guarded_refmut_u32_Mapping_u32_bool)
+  function inv_Guarded_refmut_u32_Mapping_u32_bool (_1: t_Guarded_refmut_u32_Mapping_u32_bool) : bool
   
   axiom inv_axiom'0 [@rewrite]:
     forall _1: t_Guarded_refmut_u32_Mapping_u32_bool [inv_Guarded_refmut_u32_Mapping_u32_bool _1]. inv_Guarded_refmut_u32_Mapping_u32_bool _1
@@ -768,19 +773,19 @@ module M_impl_SumSmaller10__get_a_mut_5 (* SumSmaller10 *)
       /\ ([@stop_split] [@expl:new ensures #2] guards_ref_Mapping_u32_bool guard borrow.final)}
       (! return {result}) ]
   
-  predicate resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) = _1.final = _1.current
+  function resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_u32
+  meta "rewrite_def" function resolve_refmut_u32
   
-  predicate resolve_Guarded_refmut_u32_Mapping_u32_bool (_1: t_Guarded_refmut_u32_Mapping_u32_bool)
+  function resolve_Guarded_refmut_u32_Mapping_u32_bool (_1: t_Guarded_refmut_u32_Mapping_u32_bool) : bool
   
   axiom resolve_axiom [@rewrite]:
     forall _1: t_Guarded_refmut_u32_Mapping_u32_bool [resolve_Guarded_refmut_u32_Mapping_u32_bool _1]. resolve_Guarded_refmut_u32_Mapping_u32_bool _1
       = resolve_refmut_u32 _1.inner
   
-  predicate resolve_refmut_SumSmaller10 [@inline:trivial] (_1: MutBorrow.t t_SumSmaller10) = _1.final = _1.current
+  function resolve_refmut_SumSmaller10 [@inline:trivial] (_1: MutBorrow.t t_SumSmaller10) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_SumSmaller10
+  meta "rewrite_def" function resolve_refmut_SumSmaller10
   
   meta "compute_max_steps" 1000000
   
@@ -837,36 +842,36 @@ module M_takes_guarded
     _guard: Map.map Int32.t bool;
     _initial: MutBorrow.t Int32.t }
   
-  predicate index_Mapping_i32_bool [@inline:trivial] (self: Map.map Int32.t bool) (a: Int32.t) = Map.get self a
+  function index_Mapping_i32_bool [@inline:trivial] (self: Map.map Int32.t bool) (a: Int32.t) : bool = Map.get self a
   
-  meta "rewrite_def" predicate index_Mapping_i32_bool
+  meta "rewrite_def" function index_Mapping_i32_bool
   
-  predicate guards_ref_Mapping_i32_bool [@inline:trivial] (self: Map.map Int32.t bool) (x: Int32.t) =
+  function guards_ref_Mapping_i32_bool [@inline:trivial] (self: Map.map Int32.t bool) (x: Int32.t) : bool =
     index_Mapping_i32_bool self x
   
-  meta "rewrite_def" predicate guards_ref_Mapping_i32_bool
+  meta "rewrite_def" function guards_ref_Mapping_i32_bool
   
-  predicate guards_Mapping_i32_bool [@inline:trivial] (self: Map.map Int32.t bool) (initial: MutBorrow.t Int32.t) (current': MutBorrow.t Int32.t) =
-    guards_ref_Mapping_i32_bool self current'.current /\ initial.final = current'.final
+  function guards_Mapping_i32_bool [@inline:trivial] (self: Map.map Int32.t bool) (initial: MutBorrow.t Int32.t) (current': MutBorrow.t Int32.t) : bool
+   = guards_ref_Mapping_i32_bool self current'.current /\ initial.final = current'.final
   
-  meta "rewrite_def" predicate guards_Mapping_i32_bool
+  meta "rewrite_def" function guards_Mapping_i32_bool
   
-  predicate invariant_Guarded_refmut_i32_Mapping_i32_bool [@inline:trivial] (self: t_Guarded_refmut_i32_Mapping_i32_bool) =
-    guards_Mapping_i32_bool self._guard self._initial self.inner
+  function invariant_Guarded_refmut_i32_Mapping_i32_bool [@inline:trivial] (self: t_Guarded_refmut_i32_Mapping_i32_bool) : bool
+   = guards_Mapping_i32_bool self._guard self._initial self.inner
   
-  meta "rewrite_def" predicate invariant_Guarded_refmut_i32_Mapping_i32_bool
+  meta "rewrite_def" function invariant_Guarded_refmut_i32_Mapping_i32_bool
   
-  predicate inv_Guarded_refmut_i32_Mapping_i32_bool (_1: t_Guarded_refmut_i32_Mapping_i32_bool)
+  function inv_Guarded_refmut_i32_Mapping_i32_bool (_1: t_Guarded_refmut_i32_Mapping_i32_bool) : bool
   
   axiom inv_axiom [@rewrite]:
     forall _1: t_Guarded_refmut_i32_Mapping_i32_bool [inv_Guarded_refmut_i32_Mapping_i32_bool _1]. inv_Guarded_refmut_i32_Mapping_i32_bool _1
       = invariant_Guarded_refmut_i32_Mapping_i32_bool _1
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
-  predicate resolve_Guarded_refmut_i32_Mapping_i32_bool (_1: t_Guarded_refmut_i32_Mapping_i32_bool)
+  function resolve_Guarded_refmut_i32_Mapping_i32_bool (_1: t_Guarded_refmut_i32_Mapping_i32_bool) : bool
   
   axiom resolve_axiom [@rewrite]:
     forall _1: t_Guarded_refmut_i32_Mapping_i32_bool [resolve_Guarded_refmut_i32_Mapping_i32_bool _1]. resolve_Guarded_refmut_i32_Mapping_i32_bool _1

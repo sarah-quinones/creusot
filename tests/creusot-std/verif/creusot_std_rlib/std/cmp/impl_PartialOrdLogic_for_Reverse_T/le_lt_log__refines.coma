@@ -4,9 +4,9 @@ type t_T
 
 type t_Reverse_T = { f0: t_T }
 
-predicate lt_log_T (self: t_T) (other: t_T)
+function lt_log_T (self: t_T) (other: t_T) : bool
 
-predicate le_log_T (self: t_T) (other: t_T)
+function le_log_T (self: t_T) (other: t_T) : bool
 
 function le_lt_log_T (self: t_T) (other: t_T) : ()
 
@@ -20,13 +20,13 @@ function irreflexive_T (self: t_T) : ()
 
 axiom irreflexive_T_spec: forall self: t_T. not lt_log_T self self
 
-predicate le_log_Reverse_T [@inline:trivial] (self: t_Reverse_T) (o: t_Reverse_T) = le_log_T o.f0 self.f0
+function le_log_Reverse_T [@inline:trivial] (self: t_Reverse_T) (o: t_Reverse_T) : bool = le_log_T o.f0 self.f0
 
-meta "rewrite_def" predicate le_log_Reverse_T
+meta "rewrite_def" function le_log_Reverse_T
 
-predicate lt_log_Reverse_T [@inline:trivial] (self: t_Reverse_T) (o: t_Reverse_T) = lt_log_T o.f0 self.f0
+function lt_log_Reverse_T [@inline:trivial] (self: t_Reverse_T) (o: t_Reverse_T) : bool = lt_log_T o.f0 self.f0
 
-meta "rewrite_def" predicate lt_log_Reverse_T
+meta "rewrite_def" function lt_log_Reverse_T
 
 meta "compute_max_steps" 1000000
 

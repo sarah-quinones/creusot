@@ -3,11 +3,11 @@ module M_test1
   
   type t_F
   
-  predicate postcondition_once_F (self: t_F) (args: UInt32.t) (result: bool)
+  function postcondition_once_F (self: t_F) (args: UInt32.t) (result: bool) : bool
   
-  predicate resolve_F (_1: t_F)
+  function resolve_F (_1: t_F) : bool
   
-  predicate postcondition_mut_F (self: t_F) (args: UInt32.t) (result_state: t_F) (result: bool)
+  function postcondition_mut_F (self: t_F) (args: UInt32.t) (result_state: t_F) (result: bool) : bool
   
   function fn_mut_once_F (self: t_F) (args: UInt32.t) (res: bool) : ()
   
@@ -15,7 +15,7 @@ module M_test1
     forall self: t_F, args: UInt32.t, res: bool [postcondition_once_F self args res]. postcondition_once_F self args res
       = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
   
-  predicate hist_inv_F (self: t_F) (result_state: t_F)
+  function hist_inv_F (self: t_F) (result_state: t_F) : bool
   
   function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
   
@@ -38,7 +38,7 @@ module M_test1
   axiom fn_hist_inv_F_spec: forall self: t_F, res_state: t_F [hist_inv_F self res_state]. hist_inv_F self res_state
       = (self = res_state)
   
-  predicate postcondition_F (self: t_F) (args: UInt32.t) (result: bool)
+  function postcondition_F (self: t_F) (args: UInt32.t) (result: bool) : bool
   
   function fn_once_F (self: t_F) (args: UInt32.t) (res: bool) : ()
   
@@ -52,18 +52,19 @@ module M_test1
     forall self: t_F, args: UInt32.t, res_state: t_F, res: bool [postcondition_mut_F self args res_state res]. postcondition_mut_F self args res_state res
       = (postcondition_F self args res /\ self = res_state)
   
-  predicate postcondition_ref_F (self: t_F) (args: UInt32.t) (result: bool) = postcondition_F self args result
+  function postcondition_ref_F (self: t_F) (args: UInt32.t) (result: bool) : bool = postcondition_F self args result
   
-  meta "rewrite_def" predicate postcondition_ref_F
+  meta "rewrite_def" function postcondition_ref_F
   
-  predicate postcondition_mut_ref_F (self: t_F) (args: UInt32.t) (result_state: t_F) (result: bool) =
+  function postcondition_mut_ref_F (self: t_F) (args: UInt32.t) (result_state: t_F) (result: bool) : bool =
     postcondition_F self args result /\ self = result_state
   
-  meta "rewrite_def" predicate postcondition_mut_ref_F
+  meta "rewrite_def" function postcondition_mut_ref_F
   
-  predicate postcondition_once_ref_F (self: t_F) (args: UInt32.t) (result: bool) = postcondition_F self args result
+  function postcondition_once_ref_F (self: t_F) (args: UInt32.t) (result: bool) : bool =
+    postcondition_F self args result
   
-  meta "rewrite_def" predicate postcondition_once_ref_F
+  meta "rewrite_def" function postcondition_once_ref_F
   
   meta "compute_max_steps" 1000000
   
@@ -90,11 +91,11 @@ module M_test2
   
   type t_F
   
-  predicate postcondition_once_F (self: t_F) (args: UInt32.t) (result: bool)
+  function postcondition_once_F (self: t_F) (args: UInt32.t) (result: bool) : bool
   
-  predicate resolve_F (_1: t_F)
+  function resolve_F (_1: t_F) : bool
   
-  predicate postcondition_mut_F (self: t_F) (args: UInt32.t) (result_state: t_F) (result: bool)
+  function postcondition_mut_F (self: t_F) (args: UInt32.t) (result_state: t_F) (result: bool) : bool
   
   function fn_mut_once_F (self: t_F) (args: UInt32.t) (res: bool) : ()
   
@@ -102,7 +103,7 @@ module M_test2
     forall self: t_F, args: UInt32.t, res: bool [postcondition_once_F self args res]. postcondition_once_F self args res
       = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
   
-  predicate hist_inv_F (self: t_F) (result_state: t_F)
+  function hist_inv_F (self: t_F) (result_state: t_F) : bool
   
   function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
   
@@ -120,15 +121,15 @@ module M_test2
     forall self: t_F, args: UInt32.t, res_state: t_F, res: bool [postcondition_mut_F self args res_state res | hist_inv_F self res_state]. postcondition_mut_F self args res_state res
       -> hist_inv_F self res_state
   
-  predicate postcondition_mut_refmut_F (self: MutBorrow.t t_F) (args: UInt32.t) (result_state: MutBorrow.t t_F) (result: bool) =
-    postcondition_mut_F self.current args result_state.current result /\ self.final = result_state.final
+  function postcondition_mut_refmut_F (self: MutBorrow.t t_F) (args: UInt32.t) (result_state: MutBorrow.t t_F) (result: bool) : bool
+   = postcondition_mut_F self.current args result_state.current result /\ self.final = result_state.final
   
-  meta "rewrite_def" predicate postcondition_mut_refmut_F
+  meta "rewrite_def" function postcondition_mut_refmut_F
   
-  predicate postcondition_once_refmut_F (self: MutBorrow.t t_F) (args: UInt32.t) (result: bool) =
+  function postcondition_once_refmut_F (self: MutBorrow.t t_F) (args: UInt32.t) (result: bool) : bool =
     postcondition_mut_F self.current args self.final result
   
-  meta "rewrite_def" predicate postcondition_once_refmut_F
+  meta "rewrite_def" function postcondition_once_refmut_F
   
   meta "compute_max_steps" 1000000
   

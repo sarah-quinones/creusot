@@ -4,53 +4,53 @@ type t_T
 
 type t_U
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
 
-meta "rewrite_def" predicate invariant_ref_T
+meta "rewrite_def" function invariant_ref_T
 
-predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
 
-meta "rewrite_def" predicate inv_ref_T
+meta "rewrite_def" function inv_ref_T
 
-predicate precondition_as_ref (self: ()) (args: t_T)
+function precondition_as_ref (self: ()) (args: t_T) : bool
 
 axiom precondition_fndef: forall args: t_T [precondition_as_ref () args]. (let self = args in inv_ref_T self)
     -> precondition_as_ref () args
 
-predicate inv_U (_1: t_U)
+function inv_U (_1: t_U) : bool
 
-predicate invariant_ref_U [@inline:trivial] (self: t_U) = inv_U self
+function invariant_ref_U [@inline:trivial] (self: t_U) : bool = inv_U self
 
-meta "rewrite_def" predicate invariant_ref_U
+meta "rewrite_def" function invariant_ref_U
 
-predicate inv_ref_U [@inline:trivial] (_1: t_U) = invariant_ref_U _1
+function inv_ref_U [@inline:trivial] (_1: t_U) : bool = invariant_ref_U _1
 
-meta "rewrite_def" predicate inv_ref_U
+meta "rewrite_def" function inv_ref_U
 
-predicate postcondition_as_ref (self: ()) (args: t_T) (result: t_U)
+function postcondition_as_ref (self: ()) (args: t_T) (result: t_U) : bool
 
 axiom postcondition_fndef:
   forall args: t_T, result: t_U [postcondition_as_ref () args result]. postcondition_as_ref () args result
     -> (let self = args in inv_ref_U result)
 
-predicate postcondition_once_as_ref (self: ()) (args: t_T) (result: t_U) = postcondition_as_ref self args result
+function postcondition_once_as_ref (self: ()) (args: t_T) (result: t_U) : bool = postcondition_as_ref self args result
 
-meta "rewrite_def" predicate postcondition_once_as_ref
+meta "rewrite_def" function postcondition_once_as_ref
 
 let as_ref_T (self: t_T) (return (x: t_U)) = {[@stop_split] [@expl:as_ref requires] precondition_as_ref () self}
   any
   [ return (result: t_U) -> {[@stop_split] [@expl:as_ref ensures] postcondition_once_as_ref () self result}
     (! return {result}) ]
 
-predicate invariant_ref_ref_T [@inline:trivial] (self: t_T) = inv_ref_T self
+function invariant_ref_ref_T [@inline:trivial] (self: t_T) : bool = inv_ref_T self
 
-meta "rewrite_def" predicate invariant_ref_ref_T
+meta "rewrite_def" function invariant_ref_ref_T
 
-predicate inv_ref_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_ref_T _1
+function inv_ref_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_ref_T _1
 
-meta "rewrite_def" predicate inv_ref_ref_T
+meta "rewrite_def" function inv_ref_ref_T
 
 meta "compute_max_steps" 1000000
 

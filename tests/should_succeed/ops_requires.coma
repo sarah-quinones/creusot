@@ -5,26 +5,26 @@ module M_impl_SubLogic_for_Nat__sub_logic (* <Nat as creusot_std::logic::ops::Su
   
   type t_Nat'0 = { inner: t_Nat }
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function to_int (self: t_Nat) : int
   
   axiom to_int_spec: forall self: t_Nat [to_int self]. ge_log_Int (to_int self) 0
   
-  predicate le_log_Nat (self: t_Nat) (other: t_Nat) = to_int self <= to_int other
+  function le_log_Nat (self: t_Nat) (other: t_Nat) : bool = to_int self <= to_int other
   
-  predicate lt_log_Nat (self: t_Nat) (other: t_Nat) = to_int self < to_int other
+  function lt_log_Nat (self: t_Nat) (other: t_Nat) : bool = to_int self < to_int other
   
   function le_lt_log_Nat (self: t_Nat) (other: t_Nat) : ()
   
   axiom le_lt_log_Nat_spec: forall self: t_Nat, other: t_Nat. le_log_Nat self other
       = (lt_log_Nat self other \/ self = other)
   
-  predicate ge_log_Nat [@inline:trivial] (self: t_Nat) (other: t_Nat) = le_log_Nat other self
+  function ge_log_Nat [@inline:trivial] (self: t_Nat) (other: t_Nat) : bool = le_log_Nat other self
   
-  meta "rewrite_def" predicate ge_log_Nat
+  meta "rewrite_def" function ge_log_Nat
   
   function new (n: int) : t_Nat
   
@@ -51,15 +51,15 @@ module M_test_index
   
   type t_Seq = { inner: Seq.seq () }
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   type t_Nat
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function to_int (self: t_Nat) : int
   
@@ -93,9 +93,9 @@ module M_test_sub
   
   type t_Nat'0 = { inner: t_Nat }
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function to_int (self: t_Nat) : int
   
@@ -105,18 +105,18 @@ module M_test_sub
   
   axiom new_spec: forall n: int [new n]. ge_log_Int n 0 -> to_int (new n) = n
   
-  predicate le_log_Nat (self: t_Nat) (other: t_Nat) = to_int self <= to_int other
+  function le_log_Nat (self: t_Nat) (other: t_Nat) : bool = to_int self <= to_int other
   
-  predicate lt_log_Nat (self: t_Nat) (other: t_Nat) = to_int self < to_int other
+  function lt_log_Nat (self: t_Nat) (other: t_Nat) : bool = to_int self < to_int other
   
   function le_lt_log_Nat (self: t_Nat) (other: t_Nat) : ()
   
   axiom le_lt_log_Nat_spec: forall self: t_Nat, other: t_Nat. le_log_Nat self other
       = (lt_log_Nat self other \/ self = other)
   
-  predicate ge_log_Nat [@inline:trivial] (self: t_Nat) (other: t_Nat) = le_log_Nat other self
+  function ge_log_Nat [@inline:trivial] (self: t_Nat) (other: t_Nat) : bool = le_log_Nat other self
   
-  meta "rewrite_def" predicate ge_log_Nat
+  meta "rewrite_def" function ge_log_Nat
   
   function sub_Nat (self: t_Nat'0) (other: t_Nat'0) : t_Nat'0 = { inner = new (to_int self.inner - to_int other.inner) }
   

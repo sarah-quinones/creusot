@@ -12,9 +12,9 @@ module M_f
       = { f0'0 = x.f1'0; f1'0 = x.f0'0 }}
       (! return {result}) ]
   
-  predicate resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) = _1.final = _1.current
+  function resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_u32
+  meta "rewrite_def" function resolve_refmut_u32
   
   meta "compute_max_steps" 1000000
   
@@ -57,11 +57,11 @@ module M_swap
   
   type tup2_T_T = { f0: t_T; f1: t_T }
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_tup2_T_T [@inline:trivial] (_1: tup2_T_T) = inv_T _1.f0 /\ inv_T _1.f1
+  function inv_tup2_T_T [@inline:trivial] (_1: tup2_T_T) : bool = inv_T _1.f0 /\ inv_T _1.f1
   
-  meta "rewrite_def" predicate inv_tup2_T_T
+  meta "rewrite_def" function inv_tup2_T_T
   
   meta "compute_max_steps" 1000000
   

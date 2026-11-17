@@ -9,7 +9,7 @@ module M_sum_first_n_iter
   
   type t_RangeInclusive_usize
   
-  predicate inv_RangeInclusive_usize (_1: t_RangeInclusive_usize)
+  function inv_RangeInclusive_usize (_1: t_RangeInclusive_usize) : bool
   
   function start_log_RangeInclusive_usize (self: t_RangeInclusive_usize) : UInt64.t
   
@@ -19,7 +19,7 @@ module M_sum_first_n_iter
   
   meta "rewrite_def" function deep_model_usize
   
-  predicate is_empty_log_RangeInclusive_usize (self: t_RangeInclusive_usize)
+  function is_empty_log_RangeInclusive_usize (self: t_RangeInclusive_usize) : bool
   
   axiom is_empty_log_RangeInclusive_usize_spec:
     forall self: t_RangeInclusive_usize [is_empty_log_RangeInclusive_usize self]. not is_empty_log_RangeInclusive_usize self
@@ -36,13 +36,13 @@ module M_sum_first_n_iter
   
   type closure0 = { c0: MutBorrow.t UInt64.t }
   
-  predicate resolve_refmut_closure0 [@inline:trivial] (_1: MutBorrow.t closure0) = _1.final = _1.current
+  function resolve_refmut_closure0 [@inline:trivial] (_1: MutBorrow.t closure0) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_closure0
+  meta "rewrite_def" function resolve_refmut_closure0
   
   function triangular (n: int) : int = ComputerDivision.div (n * (n + 1)) 2
   
-  predicate hist_inv_closure0 (self: closure0) (result_state: closure0) = result_state.c0.final = self.c0.final
+  function hist_inv_closure0 (self: closure0) (result_state: closure0) : bool = result_state.c0.final = self.c0.final
   
   let closure0 [@coma:extspec] (self: MutBorrow.t closure0) (x: UInt64.t) (produced: Seq.seq UInt64.t)
     (return (x'0: ())) = bb0
@@ -74,8 +74,8 @@ module M_sum_first_n_iter
     forall r: t_RangeInclusive_usize [range_inclusive_len_usize r]. is_empty_log_RangeInclusive_usize r
       = (range_inclusive_len_usize r = 0)
   
-  predicate produces_RangeInclusive_usize (self: t_RangeInclusive_usize) (visited: Seq.seq UInt64.t) (o: t_RangeInclusive_usize) =
-    Seq.length visited = range_inclusive_len_usize self - range_inclusive_len_usize o
+  function produces_RangeInclusive_usize (self: t_RangeInclusive_usize) (visited: Seq.seq UInt64.t) (o: t_RangeInclusive_usize) : bool
+   = Seq.length visited = range_inclusive_len_usize self - range_inclusive_len_usize o
     /\ (is_empty_log_RangeInclusive_usize self -> is_empty_log_RangeInclusive_usize o)
     /\ (is_empty_log_RangeInclusive_usize o \/ end_log_RangeInclusive_usize self = end_log_RangeInclusive_usize o)
     /\ (forall i: int. 0 <= i /\ i < Seq.length visited
@@ -108,60 +108,60 @@ module M_sum_first_n_iter
     func: closure0;
     produced: Seq.seq UInt64.t }
   
-  predicate inv_usize [@inline:trivial] (_1: UInt64.t) = true
+  function inv_usize [@inline:trivial] (_1: UInt64.t) : bool = true
   
-  meta "rewrite_def" predicate inv_usize
+  meta "rewrite_def" function inv_usize
   
   type tup2_usize_Snapshot_Seq_usize = { f0: UInt64.t; f1: Seq.seq UInt64.t }
   
-  predicate precondition_closure0 (self: closure0) (args: tup2_usize_Snapshot_Seq_usize) =
+  function precondition_closure0 (self: closure0) (args: tup2_usize_Snapshot_Seq_usize) : bool =
     let {f0 = x; f1 = produced'0} = args in forall bor_self: MutBorrow.t closure0. bor_self.current = self
       -> closure0'pre bor_self x produced'0
   
-  meta "rewrite_def" predicate precondition_closure0
+  meta "rewrite_def" function precondition_closure0
   
-  predicate completed_RangeInclusive_usize (self: MutBorrow.t t_RangeInclusive_usize) =
+  function completed_RangeInclusive_usize (self: MutBorrow.t t_RangeInclusive_usize) : bool =
     is_empty_log_RangeInclusive_usize self.current /\ is_empty_log_RangeInclusive_usize self.final
   
-  predicate next_precondition_RangeInclusive_usize [@inline:trivial] (iter'0: t_RangeInclusive_usize) (func'0: closure0) (produced'0: Seq.seq UInt64.t) =
-    forall e: UInt64.t, i: t_RangeInclusive_usize. inv_usize e
+  function next_precondition_RangeInclusive_usize [@inline:trivial] (iter'0: t_RangeInclusive_usize) (func'0: closure0) (produced'0: Seq.seq UInt64.t) : bool
+   = forall e: UInt64.t, i: t_RangeInclusive_usize. inv_usize e
         /\ produces_RangeInclusive_usize iter'0 (Seq.singleton e) i
       -> precondition_closure0 func'0 { f0 = e; f1 = produced'0 }
   
-  meta "rewrite_def" predicate next_precondition_RangeInclusive_usize
+  meta "rewrite_def" function next_precondition_RangeInclusive_usize
   
-  predicate inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) = true
+  function inv_Seq_usize [@inline:trivial] (_1: Seq.seq UInt64.t) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_usize
+  meta "rewrite_def" function inv_Seq_usize
   
-  predicate inv_refmut_closure0 [@inline:trivial] (_1: MutBorrow.t closure0) = true
+  function inv_refmut_closure0 [@inline:trivial] (_1: MutBorrow.t closure0) : bool = true
   
-  meta "rewrite_def" predicate inv_refmut_closure0
+  meta "rewrite_def" function inv_refmut_closure0
   
-  predicate postcondition_mut_closure0 (self: closure0) (args: tup2_usize_Snapshot_Seq_usize) (result_state: closure0) (result: ()) =
-    let {f0 = x; f1 = produced'0} = args in exists bor_self: MutBorrow.t closure0. bor_self.current = self
+  function postcondition_mut_closure0 (self: closure0) (args: tup2_usize_Snapshot_Seq_usize) (result_state: closure0) (result: ()) : bool
+   = let {f0 = x; f1 = produced'0} = args in exists bor_self: MutBorrow.t closure0. bor_self.current = self
       /\ bor_self.final = result_state
       /\ closure0'post'return bor_self x produced'0 result /\ hist_inv_closure0 self result_state
   
-  meta "rewrite_def" predicate postcondition_mut_closure0
+  meta "rewrite_def" function postcondition_mut_closure0
   
-  predicate preservation_RangeInclusive_usize [@inline:trivial] (iter'0: t_RangeInclusive_usize) (func'0: closure0) =
+  function preservation_RangeInclusive_usize [@inline:trivial] (iter'0: t_RangeInclusive_usize) (func'0: closure0) : bool
+   =
     forall s: Seq.seq UInt64.t, e1: UInt64.t, e2: UInt64.t, f: MutBorrow.t closure0, b: (), i: t_RangeInclusive_usize. hist_inv_closure0 func'0 f.current
       -> inv_Seq_usize s /\ inv_usize e1 /\ inv_usize e2 /\ inv_refmut_closure0 f
       -> produces_RangeInclusive_usize iter'0 (Seq.snoc (Seq.snoc s e1) e2) i
       -> postcondition_mut_closure0 f.current { f0 = e1; f1 = s } f.final b
       -> precondition_closure0 f.final { f0 = e2; f1 = Seq.snoc s e1 }
   
-  meta "rewrite_def" predicate preservation_RangeInclusive_usize
+  meta "rewrite_def" function preservation_RangeInclusive_usize
   
-  predicate reinitialize_RangeInclusive_usize [@inline:trivial] =
-    forall iter'0: MutBorrow.t t_RangeInclusive_usize, func'0: closure0. completed_RangeInclusive_usize iter'0
-      -> next_precondition_RangeInclusive_usize iter'0.final func'0 (Seq.empty: Seq.seq UInt64.t)
-      /\ preservation_RangeInclusive_usize iter'0.final func'0
+  constant reinitialize_RangeInclusive_usize: bool = forall iter'0: MutBorrow.t t_RangeInclusive_usize, func'0: closure0. completed_RangeInclusive_usize iter'0
+    -> next_precondition_RangeInclusive_usize iter'0.final func'0 (Seq.empty: Seq.seq UInt64.t)
+    /\ preservation_RangeInclusive_usize iter'0.final func'0
   
-  meta "rewrite_def" predicate reinitialize_RangeInclusive_usize
+  meta "rewrite_def" constant reinitialize_RangeInclusive_usize
   
-  predicate preservation_inv_RangeInclusive_usize (iter'0: t_RangeInclusive_usize) (func'0: closure0) (produced'0: Seq.seq UInt64.t)
+  function preservation_inv_RangeInclusive_usize (iter'0: t_RangeInclusive_usize) (func'0: closure0) (produced'0: Seq.seq UInt64.t) : bool
   
   axiom preservation_inv_RangeInclusive_usize_spec:
     forall iter'0: t_RangeInclusive_usize, func'0: closure0, produced'0: Seq.seq UInt64.t [preservation_inv_RangeInclusive_usize iter'0 func'0 produced'0]. produced'0
@@ -169,12 +169,12 @@ module M_sum_first_n_iter
       -> preservation_inv_RangeInclusive_usize iter'0 func'0 produced'0
       = preservation_RangeInclusive_usize iter'0 func'0
   
-  predicate invariant_MapInv_RangeInclusive_usize_closure0 (self: t_MapInv_RangeInclusive_usize_closure0) =
+  function invariant_MapInv_RangeInclusive_usize_closure0 (self: t_MapInv_RangeInclusive_usize_closure0) : bool =
     reinitialize_RangeInclusive_usize
     /\ preservation_inv_RangeInclusive_usize self.iter self.func self.produced
     /\ next_precondition_RangeInclusive_usize self.iter self.func self.produced
   
-  predicate inv_MapInv_RangeInclusive_usize_closure0 (_1: t_MapInv_RangeInclusive_usize_closure0)
+  function inv_MapInv_RangeInclusive_usize_closure0 (_1: t_MapInv_RangeInclusive_usize_closure0) : bool
   
   axiom inv_axiom [@rewrite]:
     forall _1: t_MapInv_RangeInclusive_usize_closure0 [inv_MapInv_RangeInclusive_usize_closure0 _1]. inv_MapInv_RangeInclusive_usize_closure0 _1
@@ -194,15 +194,15 @@ module M_sum_first_n_iter
       = { iter = self; func = func'0; produced = Seq.empty: Seq.seq UInt64.t })}
       (! return {result}) ]
   
-  predicate precondition_into_iter (self: ()) (args: t_MapInv_RangeInclusive_usize_closure0) =
+  function precondition_into_iter (self: ()) (args: t_MapInv_RangeInclusive_usize_closure0) : bool =
     let self'0 = args in inv_MapInv_RangeInclusive_usize_closure0 self'0
   
-  meta "rewrite_def" predicate precondition_into_iter
+  meta "rewrite_def" function precondition_into_iter
   
-  predicate precondition_from_iter (self: ()) (args: t_MapInv_RangeInclusive_usize_closure0) =
+  function precondition_from_iter (self: ()) (args: t_MapInv_RangeInclusive_usize_closure0) : bool =
     let iter'0 = args in inv_MapInv_RangeInclusive_usize_closure0 iter'0 /\ precondition_into_iter () iter'0
   
-  meta "rewrite_def" predicate precondition_from_iter
+  meta "rewrite_def" function precondition_from_iter
   
   let into_iter_MapInv_RangeInclusive_usize_closure0 (self: t_MapInv_RangeInclusive_usize_closure0)
     (return (x: t_MapInv_RangeInclusive_usize_closure0)) =
@@ -213,13 +213,13 @@ module M_sum_first_n_iter
       /\ ([@stop_split] [@expl:into_iter ensures] result = self)}
       (! return {result}) ]
   
-  predicate postcondition_into_iter (self: ()) (args: t_MapInv_RangeInclusive_usize_closure0) (result: t_MapInv_RangeInclusive_usize_closure0) =
-    let self'0 = args in inv_MapInv_RangeInclusive_usize_closure0 result /\ result = self'0
+  function postcondition_into_iter (self: ()) (args: t_MapInv_RangeInclusive_usize_closure0) (result: t_MapInv_RangeInclusive_usize_closure0) : bool
+   = let self'0 = args in inv_MapInv_RangeInclusive_usize_closure0 result /\ result = self'0
   
-  meta "rewrite_def" predicate postcondition_into_iter
+  meta "rewrite_def" function postcondition_into_iter
   
-  predicate produces_MapInv_RangeInclusive_usize_closure0 [@inline:trivial] (self: t_MapInv_RangeInclusive_usize_closure0) (visited: Seq.seq ()) (succ: t_MapInv_RangeInclusive_usize_closure0) =
-    hist_inv_closure0 self.func succ.func
+  function produces_MapInv_RangeInclusive_usize_closure0 [@inline:trivial] (self: t_MapInv_RangeInclusive_usize_closure0) (visited: Seq.seq ()) (succ: t_MapInv_RangeInclusive_usize_closure0) : bool
+   = hist_inv_closure0 self.func succ.func
     /\ (exists fs: Seq.seq (MutBorrow.t closure0). Seq.length fs = Seq.length visited
       /\ (exists s: Seq.seq UInt64.t. Seq.length s = Seq.length visited
         /\ produces_RangeInclusive_usize self.iter s succ.iter
@@ -235,7 +235,7 @@ module M_sum_first_n_iter
           /\ postcondition_mut_closure0 (Seq.get fs i).current { f0 = Seq.get s i;
                                                                  f1 = Seq.(++) self.produced (Seq.([..]) s 0 i) } (Seq.get fs i).final (Seq.get visited i))))
   
-  meta "rewrite_def" predicate produces_MapInv_RangeInclusive_usize_closure0
+  meta "rewrite_def" function produces_MapInv_RangeInclusive_usize_closure0
   
   function produces_trans_MapInv_RangeInclusive_usize_closure0 (a: t_MapInv_RangeInclusive_usize_closure0) (ab: Seq.seq ()) (b: t_MapInv_RangeInclusive_usize_closure0) (bc: Seq.seq ()) (c: t_MapInv_RangeInclusive_usize_closure0) : ()
   
@@ -249,22 +249,22 @@ module M_sum_first_n_iter
   axiom produces_refl_MapInv_RangeInclusive_usize_closure0_spec:
     forall self: t_MapInv_RangeInclusive_usize_closure0. produces_MapInv_RangeInclusive_usize_closure0 self (Seq.empty: Seq.seq ()) self
   
-  predicate completed_MapInv_RangeInclusive_usize_closure0 (self: MutBorrow.t t_MapInv_RangeInclusive_usize_closure0) =
-    self.final.produced = (Seq.empty: Seq.seq UInt64.t)
+  function completed_MapInv_RangeInclusive_usize_closure0 (self: MutBorrow.t t_MapInv_RangeInclusive_usize_closure0) : bool
+   = self.final.produced = (Seq.empty: Seq.seq UInt64.t)
     /\ completed_RangeInclusive_usize (MutBorrow.borrow_logic self.current.iter self.final.iter (MutBorrow.inherit_id (MutBorrow.get_id self) 0))
     /\ self.current.func = self.final.func
   
-  predicate resolve_RangeInclusive_usize (_1: t_RangeInclusive_usize)
+  function resolve_RangeInclusive_usize (_1: t_RangeInclusive_usize) : bool
   
-  predicate resolve_refmut_usize [@inline:trivial] (_1: MutBorrow.t UInt64.t) = _1.final = _1.current
+  function resolve_refmut_usize [@inline:trivial] (_1: MutBorrow.t UInt64.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_usize
+  meta "rewrite_def" function resolve_refmut_usize
   
-  predicate resolve_closure0 [@inline:trivial] (_1: closure0) = resolve_refmut_usize _1.c0
+  function resolve_closure0 [@inline:trivial] (_1: closure0) : bool = resolve_refmut_usize _1.c0
   
-  meta "rewrite_def" predicate resolve_closure0
+  meta "rewrite_def" function resolve_closure0
   
-  predicate resolve_MapInv_RangeInclusive_usize_closure0 (_1: t_MapInv_RangeInclusive_usize_closure0)
+  function resolve_MapInv_RangeInclusive_usize_closure0 (_1: t_MapInv_RangeInclusive_usize_closure0) : bool
   
   axiom resolve_axiom [@rewrite]:
     forall _1: t_MapInv_RangeInclusive_usize_closure0 [resolve_MapInv_RangeInclusive_usize_closure0 _1]. resolve_MapInv_RangeInclusive_usize_closure0 _1
@@ -281,13 +281,13 @@ module M_sum_first_n_iter
         /\ resolve_MapInv_RangeInclusive_usize_closure0 done'.final}
       (! return {result}) ]
   
-  predicate postcondition_from_iter (self: ()) (args: t_MapInv_RangeInclusive_usize_closure0) (result: ()) =
+  function postcondition_from_iter (self: ()) (args: t_MapInv_RangeInclusive_usize_closure0) (result: ()) : bool =
     let iter'0 = args in exists into_iter: t_MapInv_RangeInclusive_usize_closure0, prod: Seq.seq (), done': MutBorrow.t t_MapInv_RangeInclusive_usize_closure0. postcondition_into_iter () iter'0 into_iter
       /\ produces_MapInv_RangeInclusive_usize_closure0 into_iter prod done'.current
       /\ completed_MapInv_RangeInclusive_usize_closure0 done'
       /\ resolve_MapInv_RangeInclusive_usize_closure0 done'.final
   
-  meta "rewrite_def" predicate postcondition_from_iter
+  meta "rewrite_def" function postcondition_from_iter
   
   let collect_MapInv_RangeInclusive_usize_closure0 (self: t_MapInv_RangeInclusive_usize_closure0) (return (x: ())) =
   {[@stop_split] [@expl:collect_MapInv_RangeInclusive_usize_closure0 requires] ([@stop_split] [@expl:collect 'self' type invariant] inv_MapInv_RangeInclusive_usize_closure0 self)

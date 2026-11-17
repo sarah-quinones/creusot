@@ -4,7 +4,7 @@ use creusot.prelude.Any
 
 type t_Arguments
 
-predicate inv_Arguments (_1: t_Arguments)
+function inv_Arguments (_1: t_Arguments) : bool
 
 let from_str (s: string) (return (x: t_Arguments)) = any
   [ return (result: t_Arguments) -> {[@stop_split] [@expl:from_str result type invariant] inv_Arguments result}
@@ -12,15 +12,15 @@ let from_str (s: string) (return (x: t_Arguments)) = any
 
 type t_T
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
 
-meta "rewrite_def" predicate invariant_ref_T
+meta "rewrite_def" function invariant_ref_T
 
-predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
 
-meta "rewrite_def" predicate inv_ref_T
+meta "rewrite_def" function inv_ref_T
 
 meta "compute_max_steps" 1000000
 

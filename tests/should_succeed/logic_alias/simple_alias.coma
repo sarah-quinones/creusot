@@ -8,7 +8,7 @@ module M_is_all_odd
   
   type t_Iter_i64
   
-  predicate inv_Iter_i64 (_1: t_Iter_i64)
+  function inv_Iter_i64 (_1: t_Iter_i64) : bool
   
   function view_Iter_i64 (self: t_Iter_i64) : Slice64.slice Int64.t
   
@@ -20,14 +20,14 @@ module M_is_all_odd
   
   type t_Option_ref_i64 = None | Some Int64.t
   
-  predicate invariant_refmut_Iter_i64 [@inline:trivial] (self: MutBorrow.t t_Iter_i64) =
-    inv_Iter_i64 self.current /\ inv_Iter_i64 self.final
+  function invariant_refmut_Iter_i64 [@inline:trivial] (self: MutBorrow.t t_Iter_i64) : bool = inv_Iter_i64 self.current
+    /\ inv_Iter_i64 self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Iter_i64
+  meta "rewrite_def" function invariant_refmut_Iter_i64
   
-  predicate inv_refmut_Iter_i64 [@inline:trivial] (_1: MutBorrow.t t_Iter_i64) = invariant_refmut_Iter_i64 _1
+  function inv_refmut_Iter_i64 [@inline:trivial] (_1: MutBorrow.t t_Iter_i64) : bool = invariant_refmut_Iter_i64 _1
   
-  meta "rewrite_def" predicate inv_refmut_Iter_i64
+  meta "rewrite_def" function inv_refmut_Iter_i64
   
   function index_slice_i64 [@inline:trivial] (self: Slice64.slice Int64.t) (ix: int) : Int64.t =
     Seq.get (Slice64.view self) ix
@@ -45,7 +45,7 @@ module M_is_all_odd
           /\ i < Seq.length (to_ref_seq_slice_i64 self)
         -> Seq.get (to_ref_seq_slice_i64 self) i = index_slice_i64 self i
   
-  predicate produces_Iter_i64 (self: t_Iter_i64) (visited: Seq.seq Int64.t) (tl: t_Iter_i64) =
+  function produces_Iter_i64 (self: t_Iter_i64) (visited: Seq.seq Int64.t) (tl: t_Iter_i64) : bool =
     to_ref_seq_slice_i64 (view_Iter_i64 self) = Seq.(++) visited (to_ref_seq_slice_i64 (view_Iter_i64 tl))
   
   function produces_trans_Iter_i64 (a: t_Iter_i64) (ab: Seq.seq Int64.t) (b: t_Iter_i64) (bc: Seq.seq Int64.t) (c: t_Iter_i64) : ()
@@ -58,12 +58,12 @@ module M_is_all_odd
   
   axiom produces_refl_Iter_i64_spec: forall self: t_Iter_i64. produces_Iter_i64 self (Seq.empty: Seq.seq Int64.t) self
   
-  predicate resolve_refmut_Iter_i64 [@inline:trivial] (_1: MutBorrow.t t_Iter_i64) = _1.final = _1.current
+  function resolve_refmut_Iter_i64 [@inline:trivial] (_1: MutBorrow.t t_Iter_i64) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Iter_i64
+  meta "rewrite_def" function resolve_refmut_Iter_i64
   
-  predicate completed_Iter_i64 (self: MutBorrow.t t_Iter_i64) =
-    resolve_refmut_Iter_i64 self /\ Slice64.view (view_Iter_i64 self.current) = (Seq.empty: Seq.seq Int64.t)
+  function completed_Iter_i64 (self: MutBorrow.t t_Iter_i64) : bool = resolve_refmut_Iter_i64 self
+    /\ Slice64.view (view_Iter_i64 self.current) = (Seq.empty: Seq.seq Int64.t)
   
   let next_Iter_i64 (self: MutBorrow.t t_Iter_i64) (return (x: t_Option_ref_i64)) =
   {[@stop_split] [@expl:next 'self' type invariant] inv_refmut_Iter_i64 self}
@@ -74,11 +74,11 @@ module M_is_all_odd
         end}
       (! return {result}) ]
   
-  predicate is_odd (a: Int64.t) = Int64.bw_and a (1: Int64.t) <> (0: Int64.t)
+  function is_odd (a: Int64.t) : bool = Int64.bw_and a (1: Int64.t) <> (0: Int64.t)
   
-  predicate inv_Seq_ref_i64 [@inline:trivial] (_1: Seq.seq Int64.t) = true
+  function inv_Seq_ref_i64 [@inline:trivial] (_1: Seq.seq Int64.t) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_ref_i64
+  meta "rewrite_def" function inv_Seq_ref_i64
   
   let elim_Some (_x: t_Option_ref_i64) (return (f0: Int64.t)) = any
     [ _k (f0: Int64.t) -> {Some f0 = _x} (! return {f0})
@@ -91,7 +91,7 @@ module M_is_all_odd
   let is_odd'0 (x: Int64.t) (return (x'0: bool)) = any
     [ return (result: bool) -> {[@stop_split] [@expl:is_odd ensures] result = is_odd x} (! return {result}) ]
   
-  predicate resolve_Iter_i64 (_1: t_Iter_i64)
+  function resolve_Iter_i64 (_1: t_Iter_i64) : bool
   
   meta "compute_max_steps" 1000000
   
@@ -161,7 +161,7 @@ module M_is_odd
   use creusot.int.Int64
   use creusot.prelude.Any
   
-  predicate is_odd (a: Int64.t) = Int64.bw_and a (1: Int64.t) <> (0: Int64.t)
+  function is_odd (a: Int64.t) : bool = Int64.bw_and a (1: Int64.t) <> (0: Int64.t)
   
   meta "compute_max_steps" 1000000
   

@@ -95,8 +95,7 @@ module M_impl_Expr__normalize (* Expr *)
         end}
       any) ]
   
-  predicate is_normalized (self: t_Expr) =
-    match self with
+  function is_normalized (self: t_Expr) : bool = match self with
       | IfThenElse c t e -> is_normalized c
       /\ is_normalized t
       /\ is_normalized e
@@ -163,8 +162,7 @@ module M_impl_Expr__simplify (* Expr *)
   
   type t_Expr = IfThenElse t_Expr t_Expr t_Expr | Var UInt64.t | True' | False'
   
-  predicate is_normalized (self: t_Expr) =
-    match self with
+  function is_normalized (self: t_Expr) : bool = match self with
       | IfThenElse c t e -> is_normalized c
       /\ is_normalized t
       /\ is_normalized e
@@ -181,15 +179,13 @@ module M_impl_Expr__simplify (* Expr *)
   
   function view_BTreeMap_usize_bool (self: t_BTreeMap_usize_bool) : Map.map int t_Option_bool
   
-  predicate does_not_contain (self: t_Expr) (vp: UInt64.t) =
-    match self with
+  function does_not_contain (self: t_Expr) (vp: UInt64.t) : bool = match self with
       | IfThenElse c t e -> does_not_contain c vp /\ does_not_contain t vp /\ does_not_contain e vp
       | Var v -> v <> vp
       | _ -> true
       end
   
-  predicate is_simplified (self: t_Expr) =
-    match self with
+  function is_simplified (self: t_Expr) : bool = match self with
       | IfThenElse c t e -> match c with
         | Var v -> does_not_contain t v /\ does_not_contain e v
         | c'0 -> is_simplified c'0 /\ is_simplified t /\ is_simplified e
@@ -275,8 +271,7 @@ module M_impl_Expr__simplify_helper (* Expr *)
         end}
       any) ]
   
-  predicate is_normalized (self: t_Expr) =
-    match self with
+  function is_normalized (self: t_Expr) : bool = match self with
       | IfThenElse c t e -> is_normalized c
       /\ is_normalized t
       /\ is_normalized e
@@ -289,15 +284,13 @@ module M_impl_Expr__simplify_helper (* Expr *)
       | False' -> true
       end
   
-  predicate does_not_contain (self: t_Expr) (vp: UInt64.t) =
-    match self with
+  function does_not_contain (self: t_Expr) (vp: UInt64.t) : bool = match self with
       | IfThenElse c t e -> does_not_contain c vp /\ does_not_contain t vp /\ does_not_contain e vp
       | Var v -> v <> vp
       | _ -> true
       end
   
-  predicate is_simplified (self: t_Expr) =
-    match self with
+  function is_simplified (self: t_Expr) : bool = match self with
       | IfThenElse c t e -> match c with
         | Var v -> does_not_contain t v /\ does_not_contain e v
         | c'0 -> is_simplified c'0 /\ is_simplified t /\ is_simplified e
@@ -432,8 +425,7 @@ module M_impl_Expr__transpose (* Expr *)
   let clone_Expr (self: t_Expr) (return (x: t_Expr)) = any
     [ return (result: t_Expr) -> {[@stop_split] [@expl:clone ensures] result = self} (! return {result}) ]
   
-  predicate is_normalized (self: t_Expr) =
-    match self with
+  function is_normalized (self: t_Expr) : bool = match self with
       | IfThenElse c t e -> is_normalized c
       /\ is_normalized t
       /\ is_normalized e

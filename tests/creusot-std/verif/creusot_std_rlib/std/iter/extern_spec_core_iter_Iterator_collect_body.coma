@@ -4,11 +4,11 @@ type t_Self_
 
 type t_B
 
-predicate inv_Self_ (_1: t_Self_)
+function inv_Self_ (_1: t_Self_) : bool
 
-predicate precondition_into_iter (self: ()) (args: t_Self_) = let self'0 = args in inv_Self_ self'0
+function precondition_into_iter (self: ()) (args: t_Self_) : bool = let self'0 = args in inv_Self_ self'0
 
-meta "rewrite_def" predicate precondition_into_iter
+meta "rewrite_def" function precondition_into_iter
 
 let into_iter_Self_ (self: t_Self_) (return (x: t_Self_)) =
 {[@stop_split] [@expl:into_iter 'self' type invariant] inv_Self_ self}
@@ -18,23 +18,23 @@ let into_iter_Self_ (self: t_Self_) (return (x: t_Self_)) =
     /\ ([@stop_split] [@expl:into_iter ensures] result = self)}
     (! return {result}) ]
 
-predicate precondition_from_iter (self: ()) (args: t_Self_)
+function precondition_from_iter (self: ()) (args: t_Self_) : bool
 
 axiom precondition_fndef: forall args: t_Self_ [precondition_from_iter () args]. (let iter = args in inv_Self_ iter
       /\ precondition_into_iter () iter) -> precondition_from_iter () args
 
-predicate inv_B (_1: t_B)
+function inv_B (_1: t_B) : bool
 
-predicate postcondition_from_iter (self: ()) (args: t_Self_) (result: t_B)
+function postcondition_from_iter (self: ()) (args: t_Self_) (result: t_B) : bool
 
 axiom postcondition_fndef:
   forall args: t_Self_, result: t_B [postcondition_from_iter () args result]. postcondition_from_iter () args result
     -> (let iter = args in inv_B result)
 
-predicate postcondition_once_from_iter (self: ()) (args: t_Self_) (result: t_B) =
+function postcondition_once_from_iter (self: ()) (args: t_Self_) (result: t_B) : bool =
   postcondition_from_iter self args result
 
-meta "rewrite_def" predicate postcondition_once_from_iter
+meta "rewrite_def" function postcondition_once_from_iter
 
 let from_iter_B (iter: t_Self_) (return (x: t_B)) =
 {[@stop_split] [@expl:from_iter requires] precondition_from_iter () iter}

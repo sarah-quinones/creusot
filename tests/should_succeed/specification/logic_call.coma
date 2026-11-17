@@ -2,7 +2,7 @@ module M_dummy
   use creusot.int.UInt32
   use creusot.prelude.Any
   
-  predicate reflexive_u32 (x: UInt32.t) = x = x
+  function reflexive_u32 (x: UInt32.t) : bool = x = x
   
   meta "compute_max_steps" 1000000
   

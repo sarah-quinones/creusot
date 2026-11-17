@@ -23,7 +23,7 @@ function map_Option_V (self: t_Option_V) (f: Map.map t_V t_Option_V) : t_Option_
 
 function op_V (self: t_V) (other: t_V) : t_Option_V
 
-predicate incl_V (self: t_V) (other: t_V)
+function incl_V (self: t_V) (other: t_V) : bool
 
 axiom incl_V_spec: forall self: t_V, other: t_V [incl_V self other]. incl_V self other
     = (exists factor: t_V. op_V self factor = Some'0 other)
@@ -85,9 +85,9 @@ axiom merge_K_spec:
         = Some'0 (index_Mapping_tup2_V_V_V f { f0'0 = x; f1'0 = y })
         end
 
-predicate index_Mapping_V_bool [@inline:trivial] (self: Map.map t_V bool) (a: t_V) = Map.get self a
+function index_Mapping_V_bool [@inline:trivial] (self: Map.map t_V bool) (a: t_V) : bool = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_V_bool
+meta "rewrite_def" function index_Mapping_V_bool
 
 function such_that_V (p: Map.map t_V bool) : t_V
 
@@ -114,9 +114,9 @@ function op_FMap_K_V (self: t_FMap_K_V) (other: t_FMap_K_V) : t_Option_FMap_K_V 
     None
 
 
-predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
 
-meta "rewrite_def" predicate ge_log_Int
+meta "rewrite_def" function ge_log_Int
 
 function len_K (self: t_FMap_K_V) : int
 
@@ -128,9 +128,10 @@ axiom empty_K_spec: len_K empty_K = 0
 
 axiom empty_K_spec'0: to_mapping_K empty_K = Const.const (None'0)
 
-predicate index_Mapping_FMap_K_V_bool [@inline:trivial] (self: Map.map t_FMap_K_V bool) (a: t_FMap_K_V) = Map.get self a
+function index_Mapping_FMap_K_V_bool [@inline:trivial] (self: Map.map t_FMap_K_V bool) (a: t_FMap_K_V) : bool =
+  Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_FMap_K_V_bool
+meta "rewrite_def" function index_Mapping_FMap_K_V_bool
 
 function such_that_FMap_K_V (p: Map.map t_FMap_K_V bool) : t_FMap_K_V
 
@@ -145,13 +146,13 @@ function unwrap_Option_FMap_K_V (self: t_Option_FMap_K_V) : t_FMap_K_V = match s
     | None -> any_FMap_K_V
     end
 
-predicate ext_eq_K (self: t_FMap_K_V) (other: t_FMap_K_V) = forall k: t_K. lookup_K self k = lookup_K other k
+function ext_eq_K (self: t_FMap_K_V) (other: t_FMap_K_V) : bool = forall k: t_K. lookup_K self k = lookup_K other k
 
 axiom ext_eq_K_spec: forall self: t_FMap_K_V, other: t_FMap_K_V [self = other]. ext_eq_K self other = (self = other)
 
-predicate contains_K [@inline:trivial] (self: t_FMap_K_V) (k: t_K) = lookup_K self k <> None'0
+function contains_K [@inline:trivial] (self: t_FMap_K_V) (k: t_K) : bool = lookup_K self k <> None'0
 
-meta "rewrite_def" predicate contains_K
+meta "rewrite_def" function contains_K
 
 function add_K (self: t_FMap_K_V) (k: t_K) (v: t_V) : t_FMap_K_V
 
@@ -163,15 +164,14 @@ axiom add_K_spec'0: forall self: t_FMap_K_V, k: t_K, v: t_V [add_K self k v]. le
 
 function singleton_K (k: t_K) (v: t_V) : t_FMap_K_V = add_K empty_K k v
 
-predicate cancelable_V (self: t_V)
+function cancelable_V (self: t_V) : bool
 
 axiom cancelable_V_spec: forall self: t_V [cancelable_V self]. cancelable_V self
     = (forall x: t_V, y: t_V. op_V self x <> None'0 -> op_V self x = op_V self y -> x = y)
 
 function core_V (self: t_V) : t_Option_V
 
-predicate cancelable_Option_V (self: t_Option_V) =
-  match self with
+function cancelable_Option_V (self: t_Option_V) : bool = match self with
     | None'0 -> true
     | Some'0 this -> cancelable_V this /\ core_V this = None'0
     end
@@ -186,7 +186,7 @@ meta "select_lsinst" "all"
 
 constant self : t_FMap_K_V
 
-predicate cancelable_FMap_K_V (self: t_FMap_K_V)
+function cancelable_FMap_K_V (self: t_FMap_K_V) : bool
 
 goal vc_cancelable_FMap_K_V: if forall x: t_FMap_K_V, y: t_FMap_K_V. op_FMap_K_V self x <> None
     -> op_FMap_K_V self x = op_FMap_K_V self y -> x = y then

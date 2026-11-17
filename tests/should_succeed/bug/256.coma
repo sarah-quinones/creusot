@@ -3,9 +3,9 @@ module M_bug_256
   
   type t_String
   
-  predicate inv_String (_1: t_String)
+  function inv_String (_1: t_String) : bool
   
-  predicate resolve_String (_1: t_String)
+  function resolve_String (_1: t_String) : bool
   
   meta "compute_max_steps" 1000000
   

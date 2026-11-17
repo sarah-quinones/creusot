@@ -4,15 +4,15 @@ use creusot.prelude.Any
 
 type t_T
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate invariant_Ghost_T [@inline:trivial] (self: t_T) = inv_T self
+function invariant_Ghost_T [@inline:trivial] (self: t_T) : bool = inv_T self
 
-meta "rewrite_def" predicate invariant_Ghost_T
+meta "rewrite_def" function invariant_Ghost_T
 
-predicate inv_Ghost_T [@inline:trivial] (_1: t_T) = invariant_Ghost_T _1
+function inv_Ghost_T [@inline:trivial] (_1: t_T) : bool = invariant_Ghost_T _1
 
-meta "rewrite_def" predicate inv_Ghost_T
+meta "rewrite_def" function inv_Ghost_T
 
 let into_ghost_T (self: t_T) (return (x: t_T)) = {[@stop_split] [@expl:into_ghost requires] inv_T self}
   any
@@ -21,21 +21,21 @@ let into_ghost_T (self: t_T) (return (x: t_T)) = {[@stop_split] [@expl:into_ghos
     /\ ([@stop_split] [@expl:into_ghost ensures] result = self)}
     (! return {result}) ]
 
-predicate invariant_ref_Ghost_T [@inline:trivial] (self: t_T) = inv_Ghost_T self
+function invariant_ref_Ghost_T [@inline:trivial] (self: t_T) : bool = inv_Ghost_T self
 
-meta "rewrite_def" predicate invariant_ref_Ghost_T
+meta "rewrite_def" function invariant_ref_Ghost_T
 
-predicate inv_ref_Ghost_T [@inline:trivial] (_1: t_T) = invariant_ref_Ghost_T _1
+function inv_ref_Ghost_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_Ghost_T _1
 
-meta "rewrite_def" predicate inv_ref_Ghost_T
+meta "rewrite_def" function inv_ref_Ghost_T
 
-predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
 
-meta "rewrite_def" predicate invariant_ref_T
+meta "rewrite_def" function invariant_ref_T
 
-predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
 
-meta "rewrite_def" predicate inv_ref_T
+meta "rewrite_def" function inv_ref_T
 
 let deref_Ghost_T (self: t_T) (return (x: t_T)) =
 {[@stop_split] [@expl:deref 'self' type invariant] inv_ref_Ghost_T self}
@@ -51,11 +51,11 @@ function view_NonZero_T [@inline:trivial] (self: t_T) : int = view_T self
 
 meta "rewrite_def" function view_NonZero_T
 
-predicate invariant_NonZero_T (self: t_T) = view_NonZero_T self <> 0 /\ inv_T self
+function invariant_NonZero_T (self: t_T) : bool = view_NonZero_T self <> 0 /\ inv_T self
 
-predicate inv_NonZero_T [@inline:trivial] (_1: t_T) = invariant_NonZero_T _1
+function inv_NonZero_T [@inline:trivial] (_1: t_T) : bool = invariant_NonZero_T _1
 
-meta "rewrite_def" predicate inv_NonZero_T
+meta "rewrite_def" function inv_NonZero_T
 
 let new_unchecked_T (n: t_T) (return (x: t_T)) =
 {[@stop_split] [@expl:new_unchecked_T requires] ([@stop_split] [@expl:new_unchecked 'n' type invariant] inv_T n)
@@ -66,13 +66,13 @@ let new_unchecked_T (n: t_T) (return (x: t_T)) =
     /\ ([@stop_split] [@expl:new_unchecked ensures] result = n)}
     (! return {result}) ]
 
-predicate invariant_Ghost_NonZero_T [@inline:trivial] (self: t_T) = inv_NonZero_T self
+function invariant_Ghost_NonZero_T [@inline:trivial] (self: t_T) : bool = inv_NonZero_T self
 
-meta "rewrite_def" predicate invariant_Ghost_NonZero_T
+meta "rewrite_def" function invariant_Ghost_NonZero_T
 
-predicate inv_Ghost_NonZero_T [@inline:trivial] (_1: t_T) = invariant_Ghost_NonZero_T _1
+function inv_Ghost_NonZero_T [@inline:trivial] (_1: t_T) : bool = invariant_Ghost_NonZero_T _1
 
-meta "rewrite_def" predicate inv_Ghost_NonZero_T
+meta "rewrite_def" function inv_Ghost_NonZero_T
 
 let new_NonZero_T (x: t_T) (return (x'0: t_T)) = {[@stop_split] [@expl:new 'x' type invariant] inv_NonZero_T x}
   any

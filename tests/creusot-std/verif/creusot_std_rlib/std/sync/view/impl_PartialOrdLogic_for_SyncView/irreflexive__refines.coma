@@ -2,7 +2,7 @@
 
 type t_SyncView
 
-predicate lt_log_SyncView (self: t_SyncView) (_2: t_SyncView)
+function lt_log_SyncView (self: t_SyncView) (_2: t_SyncView) : bool
 
 meta "compute_max_steps" 1000000
 

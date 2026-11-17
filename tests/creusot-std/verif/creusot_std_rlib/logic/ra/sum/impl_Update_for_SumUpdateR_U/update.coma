@@ -12,15 +12,14 @@ type t_Sum_V_R = Left t_V | Right t_R
 
 type t_Choice
 
-predicate premise_U (self: t_U) (from: t_R)
+function premise_U (self: t_U) (from: t_R) : bool
 
-predicate premise_SumUpdateR_U [@inline:trivial] (self: t_SumUpdateR_U) (from: t_Sum_V_R) =
-  match from with
+function premise_SumUpdateR_U [@inline:trivial] (self: t_SumUpdateR_U) (from: t_Sum_V_R) : bool = match from with
     | Right from'0 -> premise_U self.f0 from'0
     | Left _ -> false
     end
 
-meta "rewrite_def" predicate premise_SumUpdateR_U
+meta "rewrite_def" function premise_SumUpdateR_U
 
 function update_U (self: t_U) (from: t_R) (ch: t_Choice) : t_R
 

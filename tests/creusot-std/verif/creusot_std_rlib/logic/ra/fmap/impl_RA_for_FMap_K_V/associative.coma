@@ -27,7 +27,7 @@ function map_Option_V (self: t_Option_V) (f: Map.map t_V t_Option_V) : t_Option_
 
 function op_V (self: t_V) (other: t_V) : t_Option_V
 
-predicate incl_V (self: t_V) (other: t_V)
+function incl_V (self: t_V) (other: t_V) : bool
 
 axiom incl_V_spec: forall self: t_V, other: t_V [incl_V self other]. incl_V self other
     = (exists factor: t_V. op_V self factor = Some'0 other)
@@ -89,9 +89,9 @@ axiom merge_K_spec:
         = Some'0 (index_Mapping_tup2_V_V_V f { f0'0 = x; f1'0 = y })
         end
 
-predicate index_Mapping_V_bool [@inline:trivial] (self: Map.map t_V bool) (a: t_V) = Map.get self a
+function index_Mapping_V_bool [@inline:trivial] (self: Map.map t_V bool) (a: t_V) : bool = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_V_bool
+meta "rewrite_def" function index_Mapping_V_bool
 
 function such_that_V (p: Map.map t_V bool) : t_V
 
@@ -120,7 +120,7 @@ function op_FMap_K_V (self: t_FMap_K_V) (other: t_FMap_K_V) : t_Option_FMap_K_V 
 
 type tup2_Option_FMap_K_V_Option_FMap_K_V = { f0'1: t_Option_FMap_K_V; f1'1: t_Option_FMap_K_V }
 
-predicate ext_eq_K (self: t_FMap_K_V) (other: t_FMap_K_V) = forall k: t_K. lookup_K self k = lookup_K other k
+function ext_eq_K (self: t_FMap_K_V) (other: t_FMap_K_V) : bool = forall k: t_K. lookup_K self k = lookup_K other k
 
 axiom ext_eq_K_spec: forall self: t_FMap_K_V, other: t_FMap_K_V [self = other]. ext_eq_K self other = (self = other)
 

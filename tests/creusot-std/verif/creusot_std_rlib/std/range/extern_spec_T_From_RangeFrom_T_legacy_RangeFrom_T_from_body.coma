@@ -6,13 +6,13 @@ type t_RangeFrom_T = { start: t_T }
 
 type t_RangeFrom_T'0 = { start'0: t_T }
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate inv_RangeFrom_T (_1: t_RangeFrom_T)
+function inv_RangeFrom_T (_1: t_RangeFrom_T) : bool
 
 axiom inv_axiom [@rewrite]: forall _1: t_RangeFrom_T [inv_RangeFrom_T _1]. inv_RangeFrom_T _1 = inv_T _1.start
 
-predicate inv_RangeFrom_T'0 (_1: t_RangeFrom_T'0)
+function inv_RangeFrom_T'0 (_1: t_RangeFrom_T'0) : bool
 
 axiom inv_axiom'0 [@rewrite]: forall _1: t_RangeFrom_T'0 [inv_RangeFrom_T'0 _1]. inv_RangeFrom_T'0 _1 = inv_T _1.start'0
 

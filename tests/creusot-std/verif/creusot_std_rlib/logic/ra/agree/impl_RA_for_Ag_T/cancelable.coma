@@ -14,7 +14,7 @@ meta "select_lsinst" "all"
 
 constant self : t_Ag_T
 
-predicate cancelable_Ag_T (self: t_Ag_T)
+function cancelable_Ag_T (self: t_Ag_T) : bool
 
 goal vc_cancelable_Ag_T: [@stop_split] [@expl:cancelable ensures] true
   = (forall x: t_Ag_T, y: t_Ag_T. op_Ag_T self x <> None -> op_Ag_T self x = op_Ag_T self y -> x = y)

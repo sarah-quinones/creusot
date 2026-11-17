@@ -8,24 +8,24 @@ module M_call_omg
   
   type t_UsesArray = { f0: Slice64.array Int64.t }
   
-  predicate inv_Seq_i64 [@inline:trivial] (_1: Seq.seq Int64.t) = true
+  function inv_Seq_i64 [@inline:trivial] (_1: Seq.seq Int64.t) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_i64
+  meta "rewrite_def" function inv_Seq_i64
   
-  predicate invariant_array_i64_5 (self: Slice64.array Int64.t) =
-    inv_Seq_i64 (Slice64.view self) /\ Seq.length (Slice64.view self) = UInt64.t'int (5: UInt64.t)
+  function invariant_array_i64_5 (self: Slice64.array Int64.t) : bool = inv_Seq_i64 (Slice64.view self)
+    /\ Seq.length (Slice64.view self) = UInt64.t'int (5: UInt64.t)
   
-  predicate inv_array_i64_5 [@inline:trivial] (_1: Slice64.array Int64.t) = invariant_array_i64_5 _1
+  function inv_array_i64_5 [@inline:trivial] (_1: Slice64.array Int64.t) : bool = invariant_array_i64_5 _1
   
-  meta "rewrite_def" predicate inv_array_i64_5
+  meta "rewrite_def" function inv_array_i64_5
   
-  predicate inv_UsesArray (_1: t_UsesArray)
+  function inv_UsesArray (_1: t_UsesArray) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_UsesArray [inv_UsesArray _1]. inv_UsesArray _1 = inv_array_i64_5 _1.f0
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
   
@@ -64,24 +64,24 @@ module M_omg
   
   meta "rewrite_def" function index_array_i64_5
   
-  predicate inv_Seq_i64 [@inline:trivial] (_1: Seq.seq Int64.t) = true
+  function inv_Seq_i64 [@inline:trivial] (_1: Seq.seq Int64.t) : bool = true
   
-  meta "rewrite_def" predicate inv_Seq_i64
+  meta "rewrite_def" function inv_Seq_i64
   
-  predicate invariant_array_i64_5 (self: Slice64.array Int64.t) =
-    inv_Seq_i64 (Slice64.view self) /\ Seq.length (Slice64.view self) = UInt64.t'int (5: UInt64.t)
+  function invariant_array_i64_5 (self: Slice64.array Int64.t) : bool = inv_Seq_i64 (Slice64.view self)
+    /\ Seq.length (Slice64.view self) = UInt64.t'int (5: UInt64.t)
   
-  predicate inv_array_i64_5 [@inline:trivial] (_1: Slice64.array Int64.t) = invariant_array_i64_5 _1
+  function inv_array_i64_5 [@inline:trivial] (_1: Slice64.array Int64.t) : bool = invariant_array_i64_5 _1
   
-  meta "rewrite_def" predicate inv_array_i64_5
+  meta "rewrite_def" function inv_array_i64_5
   
-  predicate inv_UsesArray (_1: t_UsesArray)
+  function inv_UsesArray (_1: t_UsesArray) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_UsesArray [inv_UsesArray _1]. inv_UsesArray _1 = inv_array_i64_5 _1.f0
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
   

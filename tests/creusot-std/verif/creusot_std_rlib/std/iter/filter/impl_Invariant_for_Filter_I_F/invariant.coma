@@ -4,37 +4,38 @@ type t_Filter_I_F
 
 type t_I
 
-predicate inv_I (_1: t_I)
+function inv_I (_1: t_I) : bool
 
 function iter_Filter_I_F (self: t_Filter_I_F) : t_I
 
 type t_F
 
-predicate inv_F (_1: t_F)
+function inv_F (_1: t_F) : bool
 
 function func_Filter_I_F (self: t_Filter_I_F) : t_F
 
 type t_Item
 
-predicate inv_Item (_1: t_Item)
+function inv_Item (_1: t_Item) : bool
 
-predicate invariant_ref_Item [@inline:trivial] (self: t_Item) = inv_Item self
+function invariant_ref_Item [@inline:trivial] (self: t_Item) : bool = inv_Item self
 
-meta "rewrite_def" predicate invariant_ref_Item
+meta "rewrite_def" function invariant_ref_Item
 
-predicate inv_ref_Item [@inline:trivial] (_1: t_Item) = invariant_ref_Item _1
+function inv_ref_Item [@inline:trivial] (_1: t_Item) : bool = invariant_ref_Item _1
 
-meta "rewrite_def" predicate inv_ref_Item
+meta "rewrite_def" function inv_ref_Item
 
-predicate precondition_F (self: t_F) (args: t_Item)
+function precondition_F (self: t_F) (args: t_Item) : bool
 
-predicate no_precondition_ref_Item (_1: t_F) = forall f: t_F, i: t_Item. inv_F f /\ inv_ref_Item i -> precondition_F f i
+function no_precondition_ref_Item (_1: t_F) : bool = forall f: t_F, i: t_Item. inv_F f /\ inv_ref_Item i
+    -> precondition_F f i
 
-predicate postcondition_once_F (self: t_F) (args: t_Item) (result: bool)
+function postcondition_once_F (self: t_F) (args: t_Item) (result: bool) : bool
 
-predicate resolve_F (_1: t_F)
+function resolve_F (_1: t_F) : bool
 
-predicate postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: bool)
+function postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: bool) : bool
 
 function fn_mut_once_F (self: t_F) (args: t_Item) (res: bool) : ()
 
@@ -42,7 +43,7 @@ axiom fn_mut_once_F_spec:
   forall self: t_F, args: t_Item, res: bool [postcondition_once_F self args res]. postcondition_once_F self args res
     = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
 
-predicate hist_inv_F (self: t_F) (result_state: t_F)
+function hist_inv_F (self: t_F) (result_state: t_F) : bool
 
 function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
 
@@ -60,13 +61,12 @@ axiom postcondition_mut_hist_inv_F_spec:
   forall self: t_F, args: t_Item, res_state: t_F, res: bool [postcondition_mut_F self args res_state res | hist_inv_F self res_state]. postcondition_mut_F self args res_state res
     -> hist_inv_F self res_state
 
-predicate immutable_ref_Item (_1: t_F) = forall f: t_F, g: t_F. hist_inv_F f g -> f = g
+function immutable_ref_Item (_1: t_F) : bool = forall f: t_F, g: t_F. hist_inv_F f g -> f = g
 
-predicate precise_ref_Item (_1: t_F) =
-  forall f1: t_F, f2: t_F, i: t_Item. not (postcondition_mut_F f1 i f2 true /\ postcondition_mut_F f1 i f2 false)
+function precise_ref_Item (_1: t_F) : bool = forall f1: t_F, f2: t_F, i: t_Item. not (postcondition_mut_F f1 i f2 true
+    /\ postcondition_mut_F f1 i f2 false)
 
-predicate private_invariant_I (f: t_Filter_I_F) =
-  no_precondition_ref_Item (func_Filter_I_F f)
+function private_invariant_I (f: t_Filter_I_F) : bool = no_precondition_ref_Item (func_Filter_I_F f)
   /\ immutable_ref_Item (func_Filter_I_F f) /\ precise_ref_Item (func_Filter_I_F f)
 
 meta "compute_max_steps" 1000000
@@ -75,7 +75,7 @@ meta "select_lsinst" "all"
 
 constant self : t_Filter_I_F
 
-predicate invariant_Filter_I_F (self: t_Filter_I_F)
+function invariant_Filter_I_F (self: t_Filter_I_F) : bool
 
 goal vc_invariant_Filter_I_F: [@stop_split] [@expl:invariant ensures] inv_I (iter_Filter_I_F self)
     /\ inv_F (func_Filter_I_F self) /\ private_invariant_I self

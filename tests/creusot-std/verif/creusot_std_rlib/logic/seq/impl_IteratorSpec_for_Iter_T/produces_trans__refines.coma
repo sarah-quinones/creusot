@@ -8,10 +8,10 @@ type t_Iter_T = { f0: Seq.seq t_T }
 
 function view_Iter_T (self: t_Iter_T) : Seq.seq t_T = self.f0
 
-predicate produces_Iter_T [@inline:trivial] (self: t_Iter_T) (visited: Seq.seq t_T) (o: t_Iter_T) =
+function produces_Iter_T [@inline:trivial] (self: t_Iter_T) (visited: Seq.seq t_T) (o: t_Iter_T) : bool =
   view_Iter_T self = Seq.(++) visited (view_Iter_T o)
 
-meta "rewrite_def" predicate produces_Iter_T
+meta "rewrite_def" function produces_Iter_T
 
 meta "compute_max_steps" 1000000
 

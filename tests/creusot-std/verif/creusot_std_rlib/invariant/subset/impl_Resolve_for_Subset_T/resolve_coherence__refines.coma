@@ -2,25 +2,25 @@
 
 type t_Subset_T
 
-predicate inv_Subset_T [@inline:trivial] (_1: t_Subset_T) = true
+function inv_Subset_T [@inline:trivial] (_1: t_Subset_T) : bool = true
 
-meta "rewrite_def" predicate inv_Subset_T
+meta "rewrite_def" function inv_Subset_T
 
-predicate structural_resolve_Subset_T (_1: t_Subset_T)
+function structural_resolve_Subset_T (_1: t_Subset_T) : bool
 
 type t_T
 
-predicate resolve_T (_1: t_T)
+function resolve_T (_1: t_T) : bool
 
-predicate invariant_T (self: t_T)
+function invariant_T (self: t_T) : bool
 
 function inner_T (self: t_Subset_T) : t_T
 
 axiom inner_T_spec: forall self: t_Subset_T [inner_T self]. invariant_T (inner_T self)
 
-predicate resolve_Subset_T [@inline:trivial] (self: t_Subset_T) = resolve_T (inner_T self)
+function resolve_Subset_T [@inline:trivial] (self: t_Subset_T) : bool = resolve_T (inner_T self)
 
-meta "rewrite_def" predicate resolve_Subset_T
+meta "rewrite_def" function resolve_Subset_T
 
 meta "compute_max_steps" 1000000
 

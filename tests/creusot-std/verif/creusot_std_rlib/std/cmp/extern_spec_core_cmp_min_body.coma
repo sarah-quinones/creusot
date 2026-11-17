@@ -4,9 +4,9 @@ type t_T
 
 type tup2_T_T = { f0: t_T; f1: t_T }
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate precondition_min (self: ()) (args: tup2_T_T)
+function precondition_min (self: ()) (args: tup2_T_T) : bool
 
 axiom precondition_fndef:
   forall args: tup2_T_T [precondition_min () args]. (let {f0 = self; f1 = other} = args in inv_T self /\ inv_T other)
@@ -14,9 +14,9 @@ axiom precondition_fndef:
 
 type t_DeepModelTy
 
-predicate lt_log_DeepModelTy (self: t_DeepModelTy) (other: t_DeepModelTy)
+function lt_log_DeepModelTy (self: t_DeepModelTy) (other: t_DeepModelTy) : bool
 
-predicate le_log_DeepModelTy (self: t_DeepModelTy) (other: t_DeepModelTy)
+function le_log_DeepModelTy (self: t_DeepModelTy) (other: t_DeepModelTy) : bool
 
 function le_lt_log_DeepModelTy (self: t_DeepModelTy) (other: t_DeepModelTy) : ()
 
@@ -34,7 +34,7 @@ axiom irreflexive_DeepModelTy_spec: forall self: t_DeepModelTy. not lt_log_DeepM
 
 function deep_model_T (self: t_T) : t_DeepModelTy
 
-predicate postcondition_min (self: ()) (args: tup2_T_T) (result: t_T)
+function postcondition_min (self: ()) (args: tup2_T_T) (result: t_T) : bool
 
 axiom postcondition_fndef:
   forall args: tup2_T_T, result: t_T [postcondition_min () args result]. postcondition_min () args result
@@ -45,9 +45,9 @@ axiom postcondition_fndef:
     /\ (le_log_DeepModelTy (deep_model_T self) (deep_model_T other) -> result = self)
     /\ (lt_log_DeepModelTy (deep_model_T other) (deep_model_T self) -> result = other))
 
-predicate postcondition_once_min (self: ()) (args: tup2_T_T) (result: t_T) = postcondition_min self args result
+function postcondition_once_min (self: ()) (args: tup2_T_T) (result: t_T) : bool = postcondition_min self args result
 
-meta "rewrite_def" predicate postcondition_once_min
+meta "rewrite_def" function postcondition_once_min
 
 let min_T (self: t_T) (other: t_T) (return (x: t_T)) =
 {[@stop_split] [@expl:min requires] precondition_min () { f0 = self; f1 = other }}

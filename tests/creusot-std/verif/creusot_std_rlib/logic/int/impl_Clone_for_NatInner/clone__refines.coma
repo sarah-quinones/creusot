@@ -4,23 +4,23 @@ use int.Int
 
 type t_NatInner = { f0: int }
 
-predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
 
-meta "rewrite_def" predicate ge_log_Int
+meta "rewrite_def" function ge_log_Int
 
-predicate invariant_NatInner (self: t_NatInner) = ge_log_Int self.f0 0
+function invariant_NatInner (self: t_NatInner) : bool = ge_log_Int self.f0 0
 
-predicate inv_NatInner (_1: t_NatInner)
+function inv_NatInner (_1: t_NatInner) : bool
 
 axiom inv_axiom [@rewrite]: forall _1: t_NatInner [inv_NatInner _1]. inv_NatInner _1 = invariant_NatInner _1
 
-predicate invariant_ref_NatInner [@inline:trivial] (self: t_NatInner) = inv_NatInner self
+function invariant_ref_NatInner [@inline:trivial] (self: t_NatInner) : bool = inv_NatInner self
 
-meta "rewrite_def" predicate invariant_ref_NatInner
+meta "rewrite_def" function invariant_ref_NatInner
 
-predicate inv_ref_NatInner [@inline:trivial] (_1: t_NatInner) = invariant_ref_NatInner _1
+function inv_ref_NatInner [@inline:trivial] (_1: t_NatInner) : bool = invariant_ref_NatInner _1
 
-meta "rewrite_def" predicate inv_ref_NatInner
+meta "rewrite_def" function inv_ref_NatInner
 
 meta "compute_max_steps" 1000000
 

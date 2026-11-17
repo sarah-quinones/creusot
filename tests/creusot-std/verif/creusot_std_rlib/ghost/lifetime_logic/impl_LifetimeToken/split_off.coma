@@ -15,9 +15,9 @@ function val_PositiveReal (self: t_Resource_PositiveReal) : t_PositiveReal
 
 function frac (self: t_LifetimeToken) : t_PositiveReal = val_PositiveReal self.f0
 
-predicate gt_log_Real [@inline:trivial] (self: Real.real) (other: Real.real) = Real.(<) other self
+function gt_log_Real [@inline:trivial] (self: Real.real) (other: Real.real) : bool = Real.(<) other self
 
-meta "rewrite_def" predicate gt_log_Real
+meta "rewrite_def" function gt_log_Real
 
 function to_real (self: t_PositiveReal) : Real.real
 
@@ -60,7 +60,7 @@ function commutative_PositiveReal (a: t_PositiveReal) (b: t_PositiveReal) : ()
 axiom commutative_PositiveReal_spec: forall a: t_PositiveReal, b: t_PositiveReal. op_PositiveReal a b
     = op_PositiveReal b a
 
-predicate incl_PositiveReal (self: t_PositiveReal) (other: t_PositiveReal) =
+function incl_PositiveReal (self: t_PositiveReal) (other: t_PositiveReal) : bool =
   let r = Real.(<) (to_real self) (to_real other) in r
 
 axiom incl_PositiveReal_spec:
@@ -91,21 +91,21 @@ axiom incl_op_PositiveReal_spec:
   forall self: t_PositiveReal, other: t_PositiveReal, comb: t_PositiveReal. op_PositiveReal self other = Some comb
     -> incl_PositiveReal self comb
 
-predicate ext_eq (self: t_PositiveReal) (other: t_PositiveReal) = to_real self = to_real other
+function ext_eq (self: t_PositiveReal) (other: t_PositiveReal) : bool = to_real self = to_real other
 
 axiom ext_eq_spec: forall self: t_PositiveReal, other: t_PositiveReal [self = other]. ext_eq self other = (self = other)
 
-predicate eq_PositiveReal [@inline:trivial] (self: t_PositiveReal) (other: t_PositiveReal) = ext_eq self other
+function eq_PositiveReal [@inline:trivial] (self: t_PositiveReal) (other: t_PositiveReal) : bool = ext_eq self other
 
-meta "rewrite_def" predicate eq_PositiveReal
+meta "rewrite_def" function eq_PositiveReal
 
 axiom eq_PositiveReal_spec: forall self: t_PositiveReal, other: t_PositiveReal [self
     = other]. eq_PositiveReal self other = (self = other)
 
-predicate incl_eq_PositiveReal (self: t_PositiveReal) (other: t_PositiveReal) =
-  eq_PositiveReal self other \/ incl_PositiveReal self other
+function incl_eq_PositiveReal (self: t_PositiveReal) (other: t_PositiveReal) : bool = eq_PositiveReal self other
+  \/ incl_PositiveReal self other
 
-predicate incl_eq_op_PositiveReal (a: t_PositiveReal) (b: t_PositiveReal) (x: t_PositiveReal) =
+function incl_eq_op_PositiveReal (a: t_PositiveReal) (b: t_PositiveReal) (x: t_PositiveReal) : bool =
   match op_PositiveReal a b with
     | None -> false
     | Some ab -> incl_eq_PositiveReal ab x
@@ -132,14 +132,14 @@ let split_off_PositiveReal (self: MutBorrow.t t_Resource_PositiveReal) (r: t_Pos
     /\ ([@stop_split] [@expl:split_off ensures #2] view_Resource_PositiveReal result = r)}
     (! return {result}) ]
 
-predicate resolve_refmut_Resource_PositiveReal [@inline:trivial] (_1: MutBorrow.t t_Resource_PositiveReal) =
+function resolve_refmut_Resource_PositiveReal [@inline:trivial] (_1: MutBorrow.t t_Resource_PositiveReal) : bool =
   _1.final = _1.current
 
-meta "rewrite_def" predicate resolve_refmut_Resource_PositiveReal
+meta "rewrite_def" function resolve_refmut_Resource_PositiveReal
 
-predicate resolve_refmut_LifetimeToken [@inline:trivial] (_1: MutBorrow.t t_LifetimeToken) = _1.final = _1.current
+function resolve_refmut_LifetimeToken [@inline:trivial] (_1: MutBorrow.t t_LifetimeToken) : bool = _1.final = _1.current
 
-meta "rewrite_def" predicate resolve_refmut_LifetimeToken
+meta "rewrite_def" function resolve_refmut_LifetimeToken
 
 let new_Resource_PositiveReal (x: t_Resource_PositiveReal) (return (x'0: t_Resource_PositiveReal)) = any
   [ return (result: t_Resource_PositiveReal) -> {[@stop_split] [@expl:new ensures] result = x} (! return {result}) ]

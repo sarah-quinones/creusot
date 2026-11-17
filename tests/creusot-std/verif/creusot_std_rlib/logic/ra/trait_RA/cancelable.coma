@@ -10,7 +10,7 @@ meta "select_lsinst" "all"
 
 constant self : t_Self
 
-predicate cancelable_Self (self: t_Self)
+function cancelable_Self (self: t_Self) : bool
 
 goal vc_cancelable_Self: [@stop_split] [@expl:cancelable ensures] (forall x: t_Self, y: t_Self. op_Self self x <> None
       -> op_Self self x = op_Self self y -> x = y)

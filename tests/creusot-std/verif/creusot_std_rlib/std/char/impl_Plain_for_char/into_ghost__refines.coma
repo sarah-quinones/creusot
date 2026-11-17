@@ -2,9 +2,9 @@
 
 use creusot.prelude.Char
 
-predicate inv_char [@inline:trivial] (_1: Char.t) = true
+function inv_char [@inline:trivial] (_1: Char.t) : bool = true
 
-meta "rewrite_def" predicate inv_char
+meta "rewrite_def" function inv_char
 
 meta "compute_max_steps" 1000000
 

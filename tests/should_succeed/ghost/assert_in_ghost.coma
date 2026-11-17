@@ -36,9 +36,9 @@ module M_ghost_mutate
     [ return (result: MutBorrow.t tup2_i32_i32) -> {[@stop_split] [@expl:deref_mut ensures] result = self}
       (! return {result}) ]
   
-  predicate resolve_refmut_tup2_i32_i32 [@inline:trivial] (_1: MutBorrow.t tup2_i32_i32) = _1.final = _1.current
+  function resolve_refmut_tup2_i32_i32 [@inline:trivial] (_1: MutBorrow.t tup2_i32_i32) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_tup2_i32_i32
+  meta "rewrite_def" function resolve_refmut_tup2_i32_i32
   
   let new_unit (x: ()) (return (x'0: ())) = any
     [ return (result: ()) -> {[@stop_split] [@expl:new ensures] result = x} (! return {result}) ]

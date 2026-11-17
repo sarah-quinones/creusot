@@ -4,27 +4,27 @@ use set.Fset
 
 type t_T
 
-predicate contains_T [@inline:trivial] (self: Fset.fset t_T) (e: t_T) = Fset.mem e self
+function contains_T [@inline:trivial] (self: Fset.fset t_T) (e: t_T) : bool = Fset.mem e self
 
-meta "rewrite_def" predicate contains_T
+meta "rewrite_def" function contains_T
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate invariant_FSet_T [@inline:trivial] (self: Fset.fset t_T) = forall x: t_T. contains_T self x -> inv_T x
+function invariant_FSet_T [@inline:trivial] (self: Fset.fset t_T) : bool = forall x: t_T. contains_T self x -> inv_T x
 
-meta "rewrite_def" predicate invariant_FSet_T
+meta "rewrite_def" function invariant_FSet_T
 
-predicate inv_FSet_T [@inline:trivial] (_1: Fset.fset t_T) = invariant_FSet_T _1
+function inv_FSet_T [@inline:trivial] (_1: Fset.fset t_T) : bool = invariant_FSet_T _1
 
-meta "rewrite_def" predicate inv_FSet_T
+meta "rewrite_def" function inv_FSet_T
 
-predicate invariant_ref_FSet_T [@inline:trivial] (self: Fset.fset t_T) = inv_FSet_T self
+function invariant_ref_FSet_T [@inline:trivial] (self: Fset.fset t_T) : bool = inv_FSet_T self
 
-meta "rewrite_def" predicate invariant_ref_FSet_T
+meta "rewrite_def" function invariant_ref_FSet_T
 
-predicate inv_ref_FSet_T [@inline:trivial] (_1: Fset.fset t_T) = invariant_ref_FSet_T _1
+function inv_ref_FSet_T [@inline:trivial] (_1: Fset.fset t_T) : bool = invariant_ref_FSet_T _1
 
-meta "rewrite_def" predicate inv_ref_FSet_T
+meta "rewrite_def" function inv_ref_FSet_T
 
 meta "compute_max_steps" 1000000
 

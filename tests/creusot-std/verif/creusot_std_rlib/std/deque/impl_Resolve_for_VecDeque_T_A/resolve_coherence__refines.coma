@@ -8,24 +8,24 @@ type t_VecDeque_T_A
 
 type t_T
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate invariant_ref_T [@inline:trivial] (self: t_T) = inv_T self
+function invariant_ref_T [@inline:trivial] (self: t_T) : bool = inv_T self
 
-meta "rewrite_def" predicate invariant_ref_T
+meta "rewrite_def" function invariant_ref_T
 
-predicate inv_ref_T [@inline:trivial] (_1: t_T) = invariant_ref_T _1
+function inv_ref_T [@inline:trivial] (_1: t_T) : bool = invariant_ref_T _1
 
-meta "rewrite_def" predicate inv_ref_T
+meta "rewrite_def" function inv_ref_T
 
-predicate invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) =
-  forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_T (Seq.get self i)
+function invariant_Seq_T [@inline:trivial] (self: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+    -> inv_ref_T (Seq.get self i)
 
-meta "rewrite_def" predicate invariant_Seq_T
+meta "rewrite_def" function invariant_Seq_T
 
-predicate inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) = invariant_Seq_T _1
+function inv_Seq_T [@inline:trivial] (_1: Seq.seq t_T) : bool = invariant_Seq_T _1
 
-meta "rewrite_def" predicate inv_Seq_T
+meta "rewrite_def" function inv_Seq_T
 
 constant const_MAX: UInt64.t = (18446744073709551615: UInt64.t)
 
@@ -34,25 +34,25 @@ function view_VecDeque_T_A (self: t_VecDeque_T_A) : Seq.seq t_T
 axiom view_VecDeque_T_A_spec: forall self: t_VecDeque_T_A [view_VecDeque_T_A self]. Seq.length (view_VecDeque_T_A self)
     <= UInt64.t'int const_MAX
 
-predicate invariant_VecDeque_T_A (self: t_VecDeque_T_A) = inv_Seq_T (view_VecDeque_T_A self)
+function invariant_VecDeque_T_A (self: t_VecDeque_T_A) : bool = inv_Seq_T (view_VecDeque_T_A self)
 
-predicate inv_VecDeque_T_A (_1: t_VecDeque_T_A)
+function inv_VecDeque_T_A (_1: t_VecDeque_T_A) : bool
 
 axiom inv_axiom: forall _1: t_VecDeque_T_A [inv_VecDeque_T_A _1]. inv_VecDeque_T_A _1 -> invariant_VecDeque_T_A _1
 
-predicate structural_resolve_VecDeque_T_A (_1: t_VecDeque_T_A)
+function structural_resolve_VecDeque_T_A (_1: t_VecDeque_T_A) : bool
 
-predicate resolve_T (_1: t_T)
+function resolve_T (_1: t_T) : bool
 
 function index_VecDeque_T_A [@inline:trivial] (self: t_VecDeque_T_A) (ix: int) : t_T =
   Seq.get (view_VecDeque_T_A self) ix
 
 meta "rewrite_def" function index_VecDeque_T_A
 
-predicate resolve_VecDeque_T_A [@inline:trivial] (self: t_VecDeque_T_A) =
-  forall i: int. 0 <= i /\ i < Seq.length (view_VecDeque_T_A self) -> resolve_T (index_VecDeque_T_A self i)
+function resolve_VecDeque_T_A [@inline:trivial] (self: t_VecDeque_T_A) : bool = forall i: int. 0 <= i
+      /\ i < Seq.length (view_VecDeque_T_A self) -> resolve_T (index_VecDeque_T_A self i)
 
-meta "rewrite_def" predicate resolve_VecDeque_T_A
+meta "rewrite_def" function resolve_VecDeque_T_A
 
 meta "compute_max_steps" 1000000
 

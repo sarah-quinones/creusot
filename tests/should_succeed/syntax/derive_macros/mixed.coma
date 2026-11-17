@@ -7,78 +7,79 @@ module M_impl_Clone_for_Product_A_B__clone (* <Product<A, B> as std::clone::Clon
   
   type t_Product_A_B = { a: t_A; b: t_B }
   
-  predicate inv_A (_1: t_A)
+  function inv_A (_1: t_A) : bool
   
-  predicate invariant_ref_A [@inline:trivial] (self: t_A) = inv_A self
+  function invariant_ref_A [@inline:trivial] (self: t_A) : bool = inv_A self
   
-  meta "rewrite_def" predicate invariant_ref_A
+  meta "rewrite_def" function invariant_ref_A
   
-  predicate inv_ref_A [@inline:trivial] (_1: t_A) = invariant_ref_A _1
+  function inv_ref_A [@inline:trivial] (_1: t_A) : bool = invariant_ref_A _1
   
-  meta "rewrite_def" predicate inv_ref_A
+  meta "rewrite_def" function inv_ref_A
   
-  predicate precondition_clone (self: ()) (args: t_A)
+  function precondition_clone (self: ()) (args: t_A) : bool
   
   axiom precondition_fndef: forall args: t_A [precondition_clone () args]. (let self = args in inv_ref_A self)
       -> precondition_clone () args
   
-  predicate postcondition_clone (self: ()) (args: t_A) (result: t_A)
+  function postcondition_clone (self: ()) (args: t_A) (result: t_A) : bool
   
   axiom postcondition_fndef:
     forall args: t_A, result: t_A [postcondition_clone () args result]. postcondition_clone () args result
       -> (let self = args in inv_A result)
   
-  predicate postcondition_once_clone (self: ()) (args: t_A) (result: t_A) = postcondition_clone self args result
+  function postcondition_once_clone (self: ()) (args: t_A) (result: t_A) : bool = postcondition_clone self args result
   
-  meta "rewrite_def" predicate postcondition_once_clone
+  meta "rewrite_def" function postcondition_once_clone
   
   let clone_A (self: t_A) (return (x: t_A)) = {[@stop_split] [@expl:clone requires] precondition_clone () self}
     any
     [ return (result: t_A) -> {[@stop_split] [@expl:clone ensures] postcondition_once_clone () self result}
       (! return {result}) ]
   
-  predicate inv_B (_1: t_B)
+  function inv_B (_1: t_B) : bool
   
-  predicate invariant_ref_B [@inline:trivial] (self: t_B) = inv_B self
+  function invariant_ref_B [@inline:trivial] (self: t_B) : bool = inv_B self
   
-  meta "rewrite_def" predicate invariant_ref_B
+  meta "rewrite_def" function invariant_ref_B
   
-  predicate inv_ref_B [@inline:trivial] (_1: t_B) = invariant_ref_B _1
+  function inv_ref_B [@inline:trivial] (_1: t_B) : bool = invariant_ref_B _1
   
-  meta "rewrite_def" predicate inv_ref_B
+  meta "rewrite_def" function inv_ref_B
   
-  predicate precondition_clone'0 (self: ()) (args: t_B)
+  function precondition_clone'0 (self: ()) (args: t_B) : bool
   
   axiom precondition_fndef'0: forall args: t_B [precondition_clone'0 () args]. (let self = args in inv_ref_B self)
       -> precondition_clone'0 () args
   
-  predicate postcondition_clone'0 (self: ()) (args: t_B) (result: t_B)
+  function postcondition_clone'0 (self: ()) (args: t_B) (result: t_B) : bool
   
   axiom postcondition_fndef'0:
     forall args: t_B, result: t_B [postcondition_clone'0 () args result]. postcondition_clone'0 () args result
       -> (let self = args in inv_B result)
   
-  predicate postcondition_once_clone'0 (self: ()) (args: t_B) (result: t_B) = postcondition_clone'0 self args result
+  function postcondition_once_clone'0 (self: ()) (args: t_B) (result: t_B) : bool =
+    postcondition_clone'0 self args result
   
-  meta "rewrite_def" predicate postcondition_once_clone'0
+  meta "rewrite_def" function postcondition_once_clone'0
   
   let clone_B (self: t_B) (return (x: t_B)) = {[@stop_split] [@expl:clone requires] precondition_clone'0 () self}
     any
     [ return (result: t_B) -> {[@stop_split] [@expl:clone ensures] postcondition_once_clone'0 () self result}
       (! return {result}) ]
   
-  predicate inv_Product_A_B (_1: t_Product_A_B)
+  function inv_Product_A_B (_1: t_Product_A_B) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Product_A_B [inv_Product_A_B _1]. inv_Product_A_B _1
       = (inv_A _1.a /\ inv_B _1.b)
   
-  predicate invariant_ref_Product_A_B [@inline:trivial] (self: t_Product_A_B) = inv_Product_A_B self
+  function invariant_ref_Product_A_B [@inline:trivial] (self: t_Product_A_B) : bool = inv_Product_A_B self
   
-  meta "rewrite_def" predicate invariant_ref_Product_A_B
+  meta "rewrite_def" function invariant_ref_Product_A_B
   
-  predicate inv_ref_Product_A_B [@inline:trivial] (_1: t_Product_A_B) = invariant_ref_Product_A_B _1
+  function inv_ref_Product_A_B [@inline:trivial] (_1: t_Product_A_B) : bool = invariant_ref_Product_A_B _1
   
-  meta "rewrite_def" predicate inv_ref_Product_A_B
+  meta "rewrite_def" function inv_ref_Product_A_B
   
   meta "compute_max_steps" 1000000
   
@@ -113,73 +114,74 @@ module M_impl_Clone_for_Product_A_B__clone__refines (* <Product<A, B> as std::cl
   
   type t_Product_A_B = { a: t_A; b: t_B }
   
-  predicate inv_A (_1: t_A)
+  function inv_A (_1: t_A) : bool
   
-  predicate inv_B (_1: t_B)
+  function inv_B (_1: t_B) : bool
   
-  predicate inv_Product_A_B (_1: t_Product_A_B)
+  function inv_Product_A_B (_1: t_Product_A_B) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Product_A_B [inv_Product_A_B _1]. inv_Product_A_B _1
       = (inv_A _1.a /\ inv_B _1.b)
   
-  predicate invariant_ref_Product_A_B [@inline:trivial] (self: t_Product_A_B) = inv_Product_A_B self
+  function invariant_ref_Product_A_B [@inline:trivial] (self: t_Product_A_B) : bool = inv_Product_A_B self
   
-  meta "rewrite_def" predicate invariant_ref_Product_A_B
+  meta "rewrite_def" function invariant_ref_Product_A_B
   
-  predicate inv_ref_Product_A_B [@inline:trivial] (_1: t_Product_A_B) = invariant_ref_Product_A_B _1
+  function inv_ref_Product_A_B [@inline:trivial] (_1: t_Product_A_B) : bool = invariant_ref_Product_A_B _1
   
-  meta "rewrite_def" predicate inv_ref_Product_A_B
+  meta "rewrite_def" function inv_ref_Product_A_B
   
-  predicate postcondition_clone (self: ()) (args: t_A) (result: t_A)
+  function postcondition_clone (self: ()) (args: t_A) (result: t_A) : bool
   
   axiom postcondition_fndef:
     forall args: t_A, result: t_A [postcondition_clone () args result]. postcondition_clone () args result
       -> (let self = args in inv_A result)
   
-  predicate invariant_ref_A [@inline:trivial] (self: t_A) = inv_A self
+  function invariant_ref_A [@inline:trivial] (self: t_A) : bool = inv_A self
   
-  meta "rewrite_def" predicate invariant_ref_A
+  meta "rewrite_def" function invariant_ref_A
   
-  predicate inv_ref_A [@inline:trivial] (_1: t_A) = invariant_ref_A _1
+  function inv_ref_A [@inline:trivial] (_1: t_A) : bool = invariant_ref_A _1
   
-  meta "rewrite_def" predicate inv_ref_A
+  meta "rewrite_def" function inv_ref_A
   
-  predicate precondition_clone (self: ()) (args: t_A)
+  function precondition_clone (self: ()) (args: t_A) : bool
   
   axiom precondition_fndef: forall args: t_A [precondition_clone () args]. (let self = args in inv_ref_A self)
       -> precondition_clone () args
   
-  predicate postcondition_once_clone (self: ()) (args: t_A) (result: t_A) = postcondition_clone self args result
+  function postcondition_once_clone (self: ()) (args: t_A) (result: t_A) : bool = postcondition_clone self args result
   
-  meta "rewrite_def" predicate postcondition_once_clone
+  meta "rewrite_def" function postcondition_once_clone
   
   let clone_A (self: t_A) (return (x: t_A)) = {[@stop_split] [@expl:clone requires] precondition_clone () self}
     any
     [ return (result: t_A) -> {[@stop_split] [@expl:clone ensures] postcondition_once_clone () self result}
       (! return {result}) ]
   
-  predicate postcondition_clone'0 (self: ()) (args: t_B) (result: t_B)
+  function postcondition_clone'0 (self: ()) (args: t_B) (result: t_B) : bool
   
   axiom postcondition_fndef'0:
     forall args: t_B, result: t_B [postcondition_clone'0 () args result]. postcondition_clone'0 () args result
       -> (let self = args in inv_B result)
   
-  predicate invariant_ref_B [@inline:trivial] (self: t_B) = inv_B self
+  function invariant_ref_B [@inline:trivial] (self: t_B) : bool = inv_B self
   
-  meta "rewrite_def" predicate invariant_ref_B
+  meta "rewrite_def" function invariant_ref_B
   
-  predicate inv_ref_B [@inline:trivial] (_1: t_B) = invariant_ref_B _1
+  function inv_ref_B [@inline:trivial] (_1: t_B) : bool = invariant_ref_B _1
   
-  meta "rewrite_def" predicate inv_ref_B
+  meta "rewrite_def" function inv_ref_B
   
-  predicate precondition_clone'0 (self: ()) (args: t_B)
+  function precondition_clone'0 (self: ()) (args: t_B) : bool
   
   axiom precondition_fndef'0: forall args: t_B [precondition_clone'0 () args]. (let self = args in inv_ref_B self)
       -> precondition_clone'0 () args
   
-  predicate postcondition_once_clone'0 (self: ()) (args: t_B) (result: t_B) = postcondition_clone'0 self args result
+  function postcondition_once_clone'0 (self: ()) (args: t_B) (result: t_B) : bool =
+    postcondition_clone'0 self args result
   
-  meta "rewrite_def" predicate postcondition_once_clone'0
+  meta "rewrite_def" function postcondition_once_clone'0
   
   let clone_B (self: t_B) (return (x: t_B)) = {[@stop_split] [@expl:clone requires] precondition_clone'0 () self}
     any
@@ -216,30 +218,30 @@ module M_impl_Clone_for_Sum2_A_B__clone (* <Sum2<A, B> as std::clone::Clone> *)
   let clone_bool (self: bool) (return (x: bool)) = any
     [ return (result: bool) -> {[@stop_split] [@expl:clone ensures] result = self} (! return {result}) ]
   
-  predicate inv_B (_1: t_B)
+  function inv_B (_1: t_B) : bool
   
-  predicate invariant_ref_B [@inline:trivial] (self: t_B) = inv_B self
+  function invariant_ref_B [@inline:trivial] (self: t_B) : bool = inv_B self
   
-  meta "rewrite_def" predicate invariant_ref_B
+  meta "rewrite_def" function invariant_ref_B
   
-  predicate inv_ref_B [@inline:trivial] (_1: t_B) = invariant_ref_B _1
+  function inv_ref_B [@inline:trivial] (_1: t_B) : bool = invariant_ref_B _1
   
-  meta "rewrite_def" predicate inv_ref_B
+  meta "rewrite_def" function inv_ref_B
   
-  predicate precondition_clone (self: ()) (args: t_B)
+  function precondition_clone (self: ()) (args: t_B) : bool
   
   axiom precondition_fndef: forall args: t_B [precondition_clone () args]. (let self = args in inv_ref_B self)
       -> precondition_clone () args
   
-  predicate postcondition_clone (self: ()) (args: t_B) (result: t_B)
+  function postcondition_clone (self: ()) (args: t_B) (result: t_B) : bool
   
   axiom postcondition_fndef:
     forall args: t_B, result: t_B [postcondition_clone () args result]. postcondition_clone () args result
       -> (let self = args in inv_B result)
   
-  predicate postcondition_once_clone (self: ()) (args: t_B) (result: t_B) = postcondition_clone self args result
+  function postcondition_once_clone (self: ()) (args: t_B) (result: t_B) : bool = postcondition_clone self args result
   
-  meta "rewrite_def" predicate postcondition_once_clone
+  meta "rewrite_def" function postcondition_once_clone
   
   let clone_B (self: t_B) (return (x: t_B)) = {[@stop_split] [@expl:clone requires] precondition_clone () self}
     any
@@ -254,37 +256,38 @@ module M_impl_Clone_for_Sum2_A_B__clone (* <Sum2<A, B> as std::clone::Clone> *)
         end}
       any) ]
   
-  predicate inv_A (_1: t_A)
+  function inv_A (_1: t_A) : bool
   
-  predicate invariant_ref_A [@inline:trivial] (self: t_A) = inv_A self
+  function invariant_ref_A [@inline:trivial] (self: t_A) : bool = inv_A self
   
-  meta "rewrite_def" predicate invariant_ref_A
+  meta "rewrite_def" function invariant_ref_A
   
-  predicate inv_ref_A [@inline:trivial] (_1: t_A) = invariant_ref_A _1
+  function inv_ref_A [@inline:trivial] (_1: t_A) : bool = invariant_ref_A _1
   
-  meta "rewrite_def" predicate inv_ref_A
+  meta "rewrite_def" function inv_ref_A
   
-  predicate precondition_clone'0 (self: ()) (args: t_A)
+  function precondition_clone'0 (self: ()) (args: t_A) : bool
   
   axiom precondition_fndef'0: forall args: t_A [precondition_clone'0 () args]. (let self = args in inv_ref_A self)
       -> precondition_clone'0 () args
   
-  predicate postcondition_clone'0 (self: ()) (args: t_A) (result: t_A)
+  function postcondition_clone'0 (self: ()) (args: t_A) (result: t_A) : bool
   
   axiom postcondition_fndef'0:
     forall args: t_A, result: t_A [postcondition_clone'0 () args result]. postcondition_clone'0 () args result
       -> (let self = args in inv_A result)
   
-  predicate postcondition_once_clone'0 (self: ()) (args: t_A) (result: t_A) = postcondition_clone'0 self args result
+  function postcondition_once_clone'0 (self: ()) (args: t_A) (result: t_A) : bool =
+    postcondition_clone'0 self args result
   
-  meta "rewrite_def" predicate postcondition_once_clone'0
+  meta "rewrite_def" function postcondition_once_clone'0
   
   let clone_A (self: t_A) (return (x: t_A)) = {[@stop_split] [@expl:clone requires] precondition_clone'0 () self}
     any
     [ return (result: t_A) -> {[@stop_split] [@expl:clone ensures] postcondition_once_clone'0 () self result}
       (! return {result}) ]
   
-  predicate inv_Sum2_A_B (_1: t_Sum2_A_B)
+  function inv_Sum2_A_B (_1: t_Sum2_A_B) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Sum2_A_B [inv_Sum2_A_B _1]. inv_Sum2_A_B _1
       = match _1 with
@@ -292,19 +295,19 @@ module M_impl_Clone_for_Sum2_A_B__clone (* <Sum2<A, B> as std::clone::Clone> *)
         | Y a x -> inv_B x
         end
   
-  predicate invariant_ref_Sum2_A_B [@inline:trivial] (self: t_Sum2_A_B) = inv_Sum2_A_B self
+  function invariant_ref_Sum2_A_B [@inline:trivial] (self: t_Sum2_A_B) : bool = inv_Sum2_A_B self
   
-  meta "rewrite_def" predicate invariant_ref_Sum2_A_B
+  meta "rewrite_def" function invariant_ref_Sum2_A_B
   
-  predicate inv_ref_Sum2_A_B [@inline:trivial] (_1: t_Sum2_A_B) = invariant_ref_Sum2_A_B _1
+  function inv_ref_Sum2_A_B [@inline:trivial] (_1: t_Sum2_A_B) : bool = invariant_ref_Sum2_A_B _1
   
-  meta "rewrite_def" predicate inv_ref_Sum2_A_B
+  meta "rewrite_def" function inv_ref_Sum2_A_B
   
   type tup2_Sum2_A_B_Sum2_A_B = { f0: t_Sum2_A_B; f1: t_Sum2_A_B }
   
-  predicate postcondition_clone'1 (self: ()) (args: bool) (result: bool) = let self'0 = args in result = self'0
+  function postcondition_clone'1 (self: ()) (args: bool) (result: bool) : bool = let self'0 = args in result = self'0
   
-  meta "rewrite_def" predicate postcondition_clone'1
+  meta "rewrite_def" function postcondition_clone'1
   
   meta "compute_max_steps" 1000000
   
@@ -356,11 +359,11 @@ module M_impl_Clone_for_Sum2_A_B__clone__refines (* <Sum2<A, B> as std::clone::C
   
   type t_Sum2_A_B = X t_A | Y bool t_B
   
-  predicate inv_A (_1: t_A)
+  function inv_A (_1: t_A) : bool
   
-  predicate inv_B (_1: t_B)
+  function inv_B (_1: t_B) : bool
   
-  predicate inv_Sum2_A_B (_1: t_Sum2_A_B)
+  function inv_Sum2_A_B (_1: t_Sum2_A_B) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Sum2_A_B [inv_Sum2_A_B _1]. inv_Sum2_A_B _1
       = match _1 with
@@ -368,73 +371,74 @@ module M_impl_Clone_for_Sum2_A_B__clone__refines (* <Sum2<A, B> as std::clone::C
         | Y a x -> inv_B x
         end
   
-  predicate invariant_ref_Sum2_A_B [@inline:trivial] (self: t_Sum2_A_B) = inv_Sum2_A_B self
+  function invariant_ref_Sum2_A_B [@inline:trivial] (self: t_Sum2_A_B) : bool = inv_Sum2_A_B self
   
-  meta "rewrite_def" predicate invariant_ref_Sum2_A_B
+  meta "rewrite_def" function invariant_ref_Sum2_A_B
   
-  predicate inv_ref_Sum2_A_B [@inline:trivial] (_1: t_Sum2_A_B) = invariant_ref_Sum2_A_B _1
+  function inv_ref_Sum2_A_B [@inline:trivial] (_1: t_Sum2_A_B) : bool = invariant_ref_Sum2_A_B _1
   
-  meta "rewrite_def" predicate inv_ref_Sum2_A_B
+  meta "rewrite_def" function inv_ref_Sum2_A_B
   
   type tup2_Sum2_A_B_Sum2_A_B = { f0: t_Sum2_A_B; f1: t_Sum2_A_B }
   
-  predicate postcondition_clone (self: ()) (args: t_A) (result: t_A)
+  function postcondition_clone (self: ()) (args: t_A) (result: t_A) : bool
   
   axiom postcondition_fndef:
     forall args: t_A, result: t_A [postcondition_clone () args result]. postcondition_clone () args result
       -> (let self = args in inv_A result)
   
-  predicate invariant_ref_A [@inline:trivial] (self: t_A) = inv_A self
+  function invariant_ref_A [@inline:trivial] (self: t_A) : bool = inv_A self
   
-  meta "rewrite_def" predicate invariant_ref_A
+  meta "rewrite_def" function invariant_ref_A
   
-  predicate inv_ref_A [@inline:trivial] (_1: t_A) = invariant_ref_A _1
+  function inv_ref_A [@inline:trivial] (_1: t_A) : bool = invariant_ref_A _1
   
-  meta "rewrite_def" predicate inv_ref_A
+  meta "rewrite_def" function inv_ref_A
   
-  predicate precondition_clone (self: ()) (args: t_A)
+  function precondition_clone (self: ()) (args: t_A) : bool
   
   axiom precondition_fndef: forall args: t_A [precondition_clone () args]. (let self = args in inv_ref_A self)
       -> precondition_clone () args
   
-  predicate postcondition_once_clone (self: ()) (args: t_A) (result: t_A) = postcondition_clone self args result
+  function postcondition_once_clone (self: ()) (args: t_A) (result: t_A) : bool = postcondition_clone self args result
   
-  meta "rewrite_def" predicate postcondition_once_clone
+  meta "rewrite_def" function postcondition_once_clone
   
   let clone_A (self: t_A) (return (x: t_A)) = {[@stop_split] [@expl:clone requires] precondition_clone () self}
     any
     [ return (result: t_A) -> {[@stop_split] [@expl:clone ensures] postcondition_once_clone () self result}
       (! return {result}) ]
   
-  predicate postcondition_clone'0 (self: ()) (args: bool) (result: bool) = let self'0 = args in result = self'0
+  function postcondition_clone'0 (self: ()) (args: bool) (result: bool) : bool = let self'0 = args in result = self'0
   
-  meta "rewrite_def" predicate postcondition_clone'0
+  meta "rewrite_def" function postcondition_clone'0
   
   let clone_bool (self: bool) (return (x: bool)) = any
     [ return (result: bool) -> {[@stop_split] [@expl:clone ensures] result = self} (! return {result}) ]
   
-  predicate postcondition_clone'1 (self: ()) (args: t_B) (result: t_B)
+  function postcondition_clone'1 (self: ()) (args: t_B) (result: t_B) : bool
   
   axiom postcondition_fndef'0:
     forall args: t_B, result: t_B [postcondition_clone'1 () args result]. postcondition_clone'1 () args result
       -> (let self = args in inv_B result)
   
-  predicate invariant_ref_B [@inline:trivial] (self: t_B) = inv_B self
+  function invariant_ref_B [@inline:trivial] (self: t_B) : bool = inv_B self
   
-  meta "rewrite_def" predicate invariant_ref_B
+  meta "rewrite_def" function invariant_ref_B
   
-  predicate inv_ref_B [@inline:trivial] (_1: t_B) = invariant_ref_B _1
+  function inv_ref_B [@inline:trivial] (_1: t_B) : bool = invariant_ref_B _1
   
-  meta "rewrite_def" predicate inv_ref_B
+  meta "rewrite_def" function inv_ref_B
   
-  predicate precondition_clone'0 (self: ()) (args: t_B)
+  function precondition_clone'0 (self: ()) (args: t_B) : bool
   
   axiom precondition_fndef'0: forall args: t_B [precondition_clone'0 () args]. (let self = args in inv_ref_B self)
       -> precondition_clone'0 () args
   
-  predicate postcondition_once_clone'0 (self: ()) (args: t_B) (result: t_B) = postcondition_clone'1 self args result
+  function postcondition_once_clone'0 (self: ()) (args: t_B) (result: t_B) : bool =
+    postcondition_clone'1 self args result
   
-  meta "rewrite_def" predicate postcondition_once_clone'0
+  meta "rewrite_def" function postcondition_once_clone'0
   
   let clone_B (self: t_B) (return (x: t_B)) = {[@stop_split] [@expl:clone requires] precondition_clone'0 () self}
     any
@@ -471,30 +475,30 @@ module M_impl_Clone_for_Sum_A_B__clone (* <Sum<A, B> as std::clone::Clone> *)
         end}
       any) ]
   
-  predicate inv_B (_1: t_B)
+  function inv_B (_1: t_B) : bool
   
-  predicate invariant_ref_B [@inline:trivial] (self: t_B) = inv_B self
+  function invariant_ref_B [@inline:trivial] (self: t_B) : bool = inv_B self
   
-  meta "rewrite_def" predicate invariant_ref_B
+  meta "rewrite_def" function invariant_ref_B
   
-  predicate inv_ref_B [@inline:trivial] (_1: t_B) = invariant_ref_B _1
+  function inv_ref_B [@inline:trivial] (_1: t_B) : bool = invariant_ref_B _1
   
-  meta "rewrite_def" predicate inv_ref_B
+  meta "rewrite_def" function inv_ref_B
   
-  predicate precondition_clone (self: ()) (args: t_B)
+  function precondition_clone (self: ()) (args: t_B) : bool
   
   axiom precondition_fndef: forall args: t_B [precondition_clone () args]. (let self = args in inv_ref_B self)
       -> precondition_clone () args
   
-  predicate postcondition_clone (self: ()) (args: t_B) (result: t_B)
+  function postcondition_clone (self: ()) (args: t_B) (result: t_B) : bool
   
   axiom postcondition_fndef:
     forall args: t_B, result: t_B [postcondition_clone () args result]. postcondition_clone () args result
       -> (let self = args in inv_B result)
   
-  predicate postcondition_once_clone (self: ()) (args: t_B) (result: t_B) = postcondition_clone self args result
+  function postcondition_once_clone (self: ()) (args: t_B) (result: t_B) : bool = postcondition_clone self args result
   
-  meta "rewrite_def" predicate postcondition_once_clone
+  meta "rewrite_def" function postcondition_once_clone
   
   let clone_B (self: t_B) (return (x: t_B)) = {[@stop_split] [@expl:clone requires] precondition_clone () self}
     any
@@ -509,37 +513,38 @@ module M_impl_Clone_for_Sum_A_B__clone (* <Sum<A, B> as std::clone::Clone> *)
         end}
       any) ]
   
-  predicate inv_A (_1: t_A)
+  function inv_A (_1: t_A) : bool
   
-  predicate invariant_ref_A [@inline:trivial] (self: t_A) = inv_A self
+  function invariant_ref_A [@inline:trivial] (self: t_A) : bool = inv_A self
   
-  meta "rewrite_def" predicate invariant_ref_A
+  meta "rewrite_def" function invariant_ref_A
   
-  predicate inv_ref_A [@inline:trivial] (_1: t_A) = invariant_ref_A _1
+  function inv_ref_A [@inline:trivial] (_1: t_A) : bool = invariant_ref_A _1
   
-  meta "rewrite_def" predicate inv_ref_A
+  meta "rewrite_def" function inv_ref_A
   
-  predicate precondition_clone'0 (self: ()) (args: t_A)
+  function precondition_clone'0 (self: ()) (args: t_A) : bool
   
   axiom precondition_fndef'0: forall args: t_A [precondition_clone'0 () args]. (let self = args in inv_ref_A self)
       -> precondition_clone'0 () args
   
-  predicate postcondition_clone'0 (self: ()) (args: t_A) (result: t_A)
+  function postcondition_clone'0 (self: ()) (args: t_A) (result: t_A) : bool
   
   axiom postcondition_fndef'0:
     forall args: t_A, result: t_A [postcondition_clone'0 () args result]. postcondition_clone'0 () args result
       -> (let self = args in inv_A result)
   
-  predicate postcondition_once_clone'0 (self: ()) (args: t_A) (result: t_A) = postcondition_clone'0 self args result
+  function postcondition_once_clone'0 (self: ()) (args: t_A) (result: t_A) : bool =
+    postcondition_clone'0 self args result
   
-  meta "rewrite_def" predicate postcondition_once_clone'0
+  meta "rewrite_def" function postcondition_once_clone'0
   
   let clone_A (self: t_A) (return (x: t_A)) = {[@stop_split] [@expl:clone requires] precondition_clone'0 () self}
     any
     [ return (result: t_A) -> {[@stop_split] [@expl:clone ensures] postcondition_once_clone'0 () self result}
       (! return {result}) ]
   
-  predicate inv_Sum_A_B (_1: t_Sum_A_B)
+  function inv_Sum_A_B (_1: t_Sum_A_B) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Sum_A_B [inv_Sum_A_B _1]. inv_Sum_A_B _1
       = match _1 with
@@ -547,13 +552,13 @@ module M_impl_Clone_for_Sum_A_B__clone (* <Sum<A, B> as std::clone::Clone> *)
         | B b -> inv_B b
         end
   
-  predicate invariant_ref_Sum_A_B [@inline:trivial] (self: t_Sum_A_B) = inv_Sum_A_B self
+  function invariant_ref_Sum_A_B [@inline:trivial] (self: t_Sum_A_B) : bool = inv_Sum_A_B self
   
-  meta "rewrite_def" predicate invariant_ref_Sum_A_B
+  meta "rewrite_def" function invariant_ref_Sum_A_B
   
-  predicate inv_ref_Sum_A_B [@inline:trivial] (_1: t_Sum_A_B) = invariant_ref_Sum_A_B _1
+  function inv_ref_Sum_A_B [@inline:trivial] (_1: t_Sum_A_B) : bool = invariant_ref_Sum_A_B _1
   
-  meta "rewrite_def" predicate inv_ref_Sum_A_B
+  meta "rewrite_def" function inv_ref_Sum_A_B
   
   type tup2_Sum_A_B_Sum_A_B = { f0: t_Sum_A_B; f1: t_Sum_A_B }
   
@@ -601,11 +606,11 @@ module M_impl_Clone_for_Sum_A_B__clone__refines (* <Sum<A, B> as std::clone::Clo
   
   type t_Sum_A_B = A t_A | B t_B
   
-  predicate inv_A (_1: t_A)
+  function inv_A (_1: t_A) : bool
   
-  predicate inv_B (_1: t_B)
+  function inv_B (_1: t_B) : bool
   
-  predicate inv_Sum_A_B (_1: t_Sum_A_B)
+  function inv_Sum_A_B (_1: t_Sum_A_B) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Sum_A_B [inv_Sum_A_B _1]. inv_Sum_A_B _1
       = match _1 with
@@ -613,66 +618,67 @@ module M_impl_Clone_for_Sum_A_B__clone__refines (* <Sum<A, B> as std::clone::Clo
         | B b -> inv_B b
         end
   
-  predicate invariant_ref_Sum_A_B [@inline:trivial] (self: t_Sum_A_B) = inv_Sum_A_B self
+  function invariant_ref_Sum_A_B [@inline:trivial] (self: t_Sum_A_B) : bool = inv_Sum_A_B self
   
-  meta "rewrite_def" predicate invariant_ref_Sum_A_B
+  meta "rewrite_def" function invariant_ref_Sum_A_B
   
-  predicate inv_ref_Sum_A_B [@inline:trivial] (_1: t_Sum_A_B) = invariant_ref_Sum_A_B _1
+  function inv_ref_Sum_A_B [@inline:trivial] (_1: t_Sum_A_B) : bool = invariant_ref_Sum_A_B _1
   
-  meta "rewrite_def" predicate inv_ref_Sum_A_B
+  meta "rewrite_def" function inv_ref_Sum_A_B
   
   type tup2_Sum_A_B_Sum_A_B = { f0: t_Sum_A_B; f1: t_Sum_A_B }
   
-  predicate postcondition_clone (self: ()) (args: t_A) (result: t_A)
+  function postcondition_clone (self: ()) (args: t_A) (result: t_A) : bool
   
   axiom postcondition_fndef:
     forall args: t_A, result: t_A [postcondition_clone () args result]. postcondition_clone () args result
       -> (let self = args in inv_A result)
   
-  predicate invariant_ref_A [@inline:trivial] (self: t_A) = inv_A self
+  function invariant_ref_A [@inline:trivial] (self: t_A) : bool = inv_A self
   
-  meta "rewrite_def" predicate invariant_ref_A
+  meta "rewrite_def" function invariant_ref_A
   
-  predicate inv_ref_A [@inline:trivial] (_1: t_A) = invariant_ref_A _1
+  function inv_ref_A [@inline:trivial] (_1: t_A) : bool = invariant_ref_A _1
   
-  meta "rewrite_def" predicate inv_ref_A
+  meta "rewrite_def" function inv_ref_A
   
-  predicate precondition_clone (self: ()) (args: t_A)
+  function precondition_clone (self: ()) (args: t_A) : bool
   
   axiom precondition_fndef: forall args: t_A [precondition_clone () args]. (let self = args in inv_ref_A self)
       -> precondition_clone () args
   
-  predicate postcondition_once_clone (self: ()) (args: t_A) (result: t_A) = postcondition_clone self args result
+  function postcondition_once_clone (self: ()) (args: t_A) (result: t_A) : bool = postcondition_clone self args result
   
-  meta "rewrite_def" predicate postcondition_once_clone
+  meta "rewrite_def" function postcondition_once_clone
   
   let clone_A (self: t_A) (return (x: t_A)) = {[@stop_split] [@expl:clone requires] precondition_clone () self}
     any
     [ return (result: t_A) -> {[@stop_split] [@expl:clone ensures] postcondition_once_clone () self result}
       (! return {result}) ]
   
-  predicate postcondition_clone'0 (self: ()) (args: t_B) (result: t_B)
+  function postcondition_clone'0 (self: ()) (args: t_B) (result: t_B) : bool
   
   axiom postcondition_fndef'0:
     forall args: t_B, result: t_B [postcondition_clone'0 () args result]. postcondition_clone'0 () args result
       -> (let self = args in inv_B result)
   
-  predicate invariant_ref_B [@inline:trivial] (self: t_B) = inv_B self
+  function invariant_ref_B [@inline:trivial] (self: t_B) : bool = inv_B self
   
-  meta "rewrite_def" predicate invariant_ref_B
+  meta "rewrite_def" function invariant_ref_B
   
-  predicate inv_ref_B [@inline:trivial] (_1: t_B) = invariant_ref_B _1
+  function inv_ref_B [@inline:trivial] (_1: t_B) : bool = invariant_ref_B _1
   
-  meta "rewrite_def" predicate inv_ref_B
+  meta "rewrite_def" function inv_ref_B
   
-  predicate precondition_clone'0 (self: ()) (args: t_B)
+  function precondition_clone'0 (self: ()) (args: t_B) : bool
   
   axiom precondition_fndef'0: forall args: t_B [precondition_clone'0 () args]. (let self = args in inv_ref_B self)
       -> precondition_clone'0 () args
   
-  predicate postcondition_once_clone'0 (self: ()) (args: t_B) (result: t_B) = postcondition_clone'0 self args result
+  function postcondition_once_clone'0 (self: ()) (args: t_B) (result: t_B) : bool =
+    postcondition_clone'0 self args result
   
-  meta "rewrite_def" predicate postcondition_once_clone'0
+  meta "rewrite_def" function postcondition_once_clone'0
   
   let clone_B (self: t_B) (return (x: t_B)) = {[@stop_split] [@expl:clone requires] precondition_clone'0 () self}
     any
@@ -703,17 +709,17 @@ module M_impl_PartialEq_for_Product_A_B__eq (* <Product<A, B> as std::cmp::Parti
   
   type tup2_ref_A_ref_A = { f0: t_A; f1: t_A }
   
-  predicate inv_A (_1: t_A)
+  function inv_A (_1: t_A) : bool
   
-  predicate invariant_ref_A [@inline:trivial] (self: t_A) = inv_A self
+  function invariant_ref_A [@inline:trivial] (self: t_A) : bool = inv_A self
   
-  meta "rewrite_def" predicate invariant_ref_A
+  meta "rewrite_def" function invariant_ref_A
   
-  predicate inv_ref_A [@inline:trivial] (_1: t_A) = invariant_ref_A _1
+  function inv_ref_A [@inline:trivial] (_1: t_A) : bool = invariant_ref_A _1
   
-  meta "rewrite_def" predicate inv_ref_A
+  meta "rewrite_def" function inv_ref_A
   
-  predicate precondition_eq (self: ()) (args: tup2_ref_A_ref_A)
+  function precondition_eq (self: ()) (args: tup2_ref_A_ref_A) : bool
   
   axiom precondition_fndef:
     forall args: tup2_ref_A_ref_A [precondition_eq () args]. (let {f0 = self; f1 = other} = args in inv_ref_A self
@@ -727,15 +733,16 @@ module M_impl_PartialEq_for_Product_A_B__eq (* <Product<A, B> as std::cmp::Parti
   
   meta "rewrite_def" function deep_model_ref_A
   
-  predicate postcondition_eq (self: ()) (args: tup2_ref_A_ref_A) (result: bool)
+  function postcondition_eq (self: ()) (args: tup2_ref_A_ref_A) (result: bool) : bool
   
   axiom postcondition_fndef:
     forall args: tup2_ref_A_ref_A, result: bool [postcondition_eq () args result]. postcondition_eq () args result
       -> (let {f0 = self; f1 = other} = args in result = (deep_model_ref_A self = deep_model_ref_A other))
   
-  predicate postcondition_once_eq (self: ()) (args: tup2_ref_A_ref_A) (result: bool) = postcondition_eq self args result
+  function postcondition_once_eq (self: ()) (args: tup2_ref_A_ref_A) (result: bool) : bool =
+    postcondition_eq self args result
   
-  meta "rewrite_def" predicate postcondition_once_eq
+  meta "rewrite_def" function postcondition_once_eq
   
   let eq_A (self: t_A) (other: t_A) (return (x: bool)) =
   {[@stop_split] [@expl:eq requires] precondition_eq () { f0 = self; f1 = other }}
@@ -746,17 +753,17 @@ module M_impl_PartialEq_for_Product_A_B__eq (* <Product<A, B> as std::cmp::Parti
   
   type tup2_ref_B_ref_B = { f0'0: t_B; f1'0: t_B }
   
-  predicate inv_B (_1: t_B)
+  function inv_B (_1: t_B) : bool
   
-  predicate invariant_ref_B [@inline:trivial] (self: t_B) = inv_B self
+  function invariant_ref_B [@inline:trivial] (self: t_B) : bool = inv_B self
   
-  meta "rewrite_def" predicate invariant_ref_B
+  meta "rewrite_def" function invariant_ref_B
   
-  predicate inv_ref_B [@inline:trivial] (_1: t_B) = invariant_ref_B _1
+  function inv_ref_B [@inline:trivial] (_1: t_B) : bool = invariant_ref_B _1
   
-  meta "rewrite_def" predicate inv_ref_B
+  meta "rewrite_def" function inv_ref_B
   
-  predicate precondition_eq'0 (self: ()) (args: tup2_ref_B_ref_B)
+  function precondition_eq'0 (self: ()) (args: tup2_ref_B_ref_B) : bool
   
   axiom precondition_fndef'0:
     forall args: tup2_ref_B_ref_B [precondition_eq'0 () args]. (let {f0'0 = self; f1'0 = other} = args in inv_ref_B self
@@ -770,16 +777,16 @@ module M_impl_PartialEq_for_Product_A_B__eq (* <Product<A, B> as std::cmp::Parti
   
   meta "rewrite_def" function deep_model_ref_B
   
-  predicate postcondition_eq'0 (self: ()) (args: tup2_ref_B_ref_B) (result: bool)
+  function postcondition_eq'0 (self: ()) (args: tup2_ref_B_ref_B) (result: bool) : bool
   
   axiom postcondition_fndef'0:
     forall args: tup2_ref_B_ref_B, result: bool [postcondition_eq'0 () args result]. postcondition_eq'0 () args result
       -> (let {f0'0 = self; f1'0 = other} = args in result = (deep_model_ref_B self = deep_model_ref_B other))
   
-  predicate postcondition_once_eq'0 (self: ()) (args: tup2_ref_B_ref_B) (result: bool) =
+  function postcondition_once_eq'0 (self: ()) (args: tup2_ref_B_ref_B) (result: bool) : bool =
     postcondition_eq'0 self args result
   
-  meta "rewrite_def" predicate postcondition_once_eq'0
+  meta "rewrite_def" function postcondition_once_eq'0
   
   let eq_B (self: t_B) (other: t_B) (return (x: bool)) =
   {[@stop_split] [@expl:eq requires] precondition_eq'0 () { f0'0 = self; f1'0 = other }}
@@ -788,18 +795,18 @@ module M_impl_PartialEq_for_Product_A_B__eq (* <Product<A, B> as std::cmp::Parti
                                                                                               f1'0 = other } result}
       (! return {result}) ]
   
-  predicate inv_Product_A_B (_1: t_Product_A_B)
+  function inv_Product_A_B (_1: t_Product_A_B) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Product_A_B [inv_Product_A_B _1]. inv_Product_A_B _1
       = (inv_A _1.a /\ inv_B _1.b)
   
-  predicate invariant_ref_Product_A_B [@inline:trivial] (self: t_Product_A_B) = inv_Product_A_B self
+  function invariant_ref_Product_A_B [@inline:trivial] (self: t_Product_A_B) : bool = inv_Product_A_B self
   
-  meta "rewrite_def" predicate invariant_ref_Product_A_B
+  meta "rewrite_def" function invariant_ref_Product_A_B
   
-  predicate inv_ref_Product_A_B [@inline:trivial] (_1: t_Product_A_B) = invariant_ref_Product_A_B _1
+  function inv_ref_Product_A_B [@inline:trivial] (_1: t_Product_A_B) : bool = invariant_ref_Product_A_B _1
   
-  meta "rewrite_def" predicate inv_ref_Product_A_B
+  meta "rewrite_def" function inv_ref_Product_A_B
   
   type t_Product_DeepModelTy_DeepModelTy = { a'0: t_DeepModelTy; b'0: t_DeepModelTy'0 }
   
@@ -839,22 +846,22 @@ module M_impl_PartialEq_for_Product_A_B__eq__refines (* <Product<A, B> as std::c
   
   type t_Product_A_B = { a: t_A; b: t_B }
   
-  predicate inv_A (_1: t_A)
+  function inv_A (_1: t_A) : bool
   
-  predicate inv_B (_1: t_B)
+  function inv_B (_1: t_B) : bool
   
-  predicate inv_Product_A_B (_1: t_Product_A_B)
+  function inv_Product_A_B (_1: t_Product_A_B) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Product_A_B [inv_Product_A_B _1]. inv_Product_A_B _1
       = (inv_A _1.a /\ inv_B _1.b)
   
-  predicate invariant_ref_Product_A_B [@inline:trivial] (self: t_Product_A_B) = inv_Product_A_B self
+  function invariant_ref_Product_A_B [@inline:trivial] (self: t_Product_A_B) : bool = inv_Product_A_B self
   
-  meta "rewrite_def" predicate invariant_ref_Product_A_B
+  meta "rewrite_def" function invariant_ref_Product_A_B
   
-  predicate inv_ref_Product_A_B [@inline:trivial] (_1: t_Product_A_B) = invariant_ref_Product_A_B _1
+  function inv_ref_Product_A_B [@inline:trivial] (_1: t_Product_A_B) : bool = invariant_ref_Product_A_B _1
   
-  meta "rewrite_def" predicate inv_ref_Product_A_B
+  meta "rewrite_def" function inv_ref_Product_A_B
   
   type t_DeepModelTy
   
@@ -906,17 +913,17 @@ module M_impl_PartialEq_for_Sum_A_B__eq (* <Sum<A, B> as std::cmp::PartialEq> *)
   
   type tup2_ref_B_ref_B = { f0'0: t_B; f1'0: t_B }
   
-  predicate inv_B (_1: t_B)
+  function inv_B (_1: t_B) : bool
   
-  predicate invariant_ref_B [@inline:trivial] (self: t_B) = inv_B self
+  function invariant_ref_B [@inline:trivial] (self: t_B) : bool = inv_B self
   
-  meta "rewrite_def" predicate invariant_ref_B
+  meta "rewrite_def" function invariant_ref_B
   
-  predicate inv_ref_B [@inline:trivial] (_1: t_B) = invariant_ref_B _1
+  function inv_ref_B [@inline:trivial] (_1: t_B) : bool = invariant_ref_B _1
   
-  meta "rewrite_def" predicate inv_ref_B
+  meta "rewrite_def" function inv_ref_B
   
-  predicate precondition_eq (self: ()) (args: tup2_ref_B_ref_B)
+  function precondition_eq (self: ()) (args: tup2_ref_B_ref_B) : bool
   
   axiom precondition_fndef:
     forall args: tup2_ref_B_ref_B [precondition_eq () args]. (let {f0'0 = self; f1'0 = other} = args in inv_ref_B self
@@ -930,15 +937,16 @@ module M_impl_PartialEq_for_Sum_A_B__eq (* <Sum<A, B> as std::cmp::PartialEq> *)
   
   meta "rewrite_def" function deep_model_ref_B
   
-  predicate postcondition_eq (self: ()) (args: tup2_ref_B_ref_B) (result: bool)
+  function postcondition_eq (self: ()) (args: tup2_ref_B_ref_B) (result: bool) : bool
   
   axiom postcondition_fndef:
     forall args: tup2_ref_B_ref_B, result: bool [postcondition_eq () args result]. postcondition_eq () args result
       -> (let {f0'0 = self; f1'0 = other} = args in result = (deep_model_ref_B self = deep_model_ref_B other))
   
-  predicate postcondition_once_eq (self: ()) (args: tup2_ref_B_ref_B) (result: bool) = postcondition_eq self args result
+  function postcondition_once_eq (self: ()) (args: tup2_ref_B_ref_B) (result: bool) : bool =
+    postcondition_eq self args result
   
-  meta "rewrite_def" predicate postcondition_once_eq
+  meta "rewrite_def" function postcondition_once_eq
   
   let eq_B (self: t_B) (other: t_B) (return (x: bool)) =
   {[@stop_split] [@expl:eq requires] precondition_eq () { f0'0 = self; f1'0 = other }}
@@ -957,17 +965,17 @@ module M_impl_PartialEq_for_Sum_A_B__eq (* <Sum<A, B> as std::cmp::PartialEq> *)
   
   type tup2_ref_A_ref_A = { f0'1: t_A; f1'1: t_A }
   
-  predicate inv_A (_1: t_A)
+  function inv_A (_1: t_A) : bool
   
-  predicate invariant_ref_A [@inline:trivial] (self: t_A) = inv_A self
+  function invariant_ref_A [@inline:trivial] (self: t_A) : bool = inv_A self
   
-  meta "rewrite_def" predicate invariant_ref_A
+  meta "rewrite_def" function invariant_ref_A
   
-  predicate inv_ref_A [@inline:trivial] (_1: t_A) = invariant_ref_A _1
+  function inv_ref_A [@inline:trivial] (_1: t_A) : bool = invariant_ref_A _1
   
-  meta "rewrite_def" predicate inv_ref_A
+  meta "rewrite_def" function inv_ref_A
   
-  predicate precondition_eq'0 (self: ()) (args: tup2_ref_A_ref_A)
+  function precondition_eq'0 (self: ()) (args: tup2_ref_A_ref_A) : bool
   
   axiom precondition_fndef'0:
     forall args: tup2_ref_A_ref_A [precondition_eq'0 () args]. (let {f0'1 = self; f1'1 = other} = args in inv_ref_A self
@@ -981,16 +989,16 @@ module M_impl_PartialEq_for_Sum_A_B__eq (* <Sum<A, B> as std::cmp::PartialEq> *)
   
   meta "rewrite_def" function deep_model_ref_A
   
-  predicate postcondition_eq'0 (self: ()) (args: tup2_ref_A_ref_A) (result: bool)
+  function postcondition_eq'0 (self: ()) (args: tup2_ref_A_ref_A) (result: bool) : bool
   
   axiom postcondition_fndef'0:
     forall args: tup2_ref_A_ref_A, result: bool [postcondition_eq'0 () args result]. postcondition_eq'0 () args result
       -> (let {f0'1 = self; f1'1 = other} = args in result = (deep_model_ref_A self = deep_model_ref_A other))
   
-  predicate postcondition_once_eq'0 (self: ()) (args: tup2_ref_A_ref_A) (result: bool) =
+  function postcondition_once_eq'0 (self: ()) (args: tup2_ref_A_ref_A) (result: bool) : bool =
     postcondition_eq'0 self args result
   
-  meta "rewrite_def" predicate postcondition_once_eq'0
+  meta "rewrite_def" function postcondition_once_eq'0
   
   let eq_A (self: t_A) (other: t_A) (return (x: bool)) =
   {[@stop_split] [@expl:eq requires] precondition_eq'0 () { f0'1 = self; f1'1 = other }}
@@ -999,7 +1007,7 @@ module M_impl_PartialEq_for_Sum_A_B__eq (* <Sum<A, B> as std::cmp::PartialEq> *)
                                                                                               f1'1 = other } result}
       (! return {result}) ]
   
-  predicate inv_Sum_A_B (_1: t_Sum_A_B)
+  function inv_Sum_A_B (_1: t_Sum_A_B) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Sum_A_B [inv_Sum_A_B _1]. inv_Sum_A_B _1
       = match _1 with
@@ -1007,13 +1015,13 @@ module M_impl_PartialEq_for_Sum_A_B__eq (* <Sum<A, B> as std::cmp::PartialEq> *)
         | B b -> inv_B b
         end
   
-  predicate invariant_ref_Sum_A_B [@inline:trivial] (self: t_Sum_A_B) = inv_Sum_A_B self
+  function invariant_ref_Sum_A_B [@inline:trivial] (self: t_Sum_A_B) : bool = inv_Sum_A_B self
   
-  meta "rewrite_def" predicate invariant_ref_Sum_A_B
+  meta "rewrite_def" function invariant_ref_Sum_A_B
   
-  predicate inv_ref_Sum_A_B [@inline:trivial] (_1: t_Sum_A_B) = invariant_ref_Sum_A_B _1
+  function inv_ref_Sum_A_B [@inline:trivial] (_1: t_Sum_A_B) : bool = invariant_ref_Sum_A_B _1
   
-  meta "rewrite_def" predicate inv_ref_Sum_A_B
+  meta "rewrite_def" function inv_ref_Sum_A_B
   
   type t_Sum_DeepModelTy_DeepModelTy = A'0 t_DeepModelTy'0 | B'0 t_DeepModelTy
   
@@ -1076,11 +1084,11 @@ module M_impl_PartialEq_for_Sum_A_B__eq__refines (* <Sum<A, B> as std::cmp::Part
   
   type t_Sum_A_B = A t_A | B t_B
   
-  predicate inv_A (_1: t_A)
+  function inv_A (_1: t_A) : bool
   
-  predicate inv_B (_1: t_B)
+  function inv_B (_1: t_B) : bool
   
-  predicate inv_Sum_A_B (_1: t_Sum_A_B)
+  function inv_Sum_A_B (_1: t_Sum_A_B) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Sum_A_B [inv_Sum_A_B _1]. inv_Sum_A_B _1
       = match _1 with
@@ -1088,13 +1096,13 @@ module M_impl_PartialEq_for_Sum_A_B__eq__refines (* <Sum<A, B> as std::cmp::Part
         | B b -> inv_B b
         end
   
-  predicate invariant_ref_Sum_A_B [@inline:trivial] (self: t_Sum_A_B) = inv_Sum_A_B self
+  function invariant_ref_Sum_A_B [@inline:trivial] (self: t_Sum_A_B) : bool = inv_Sum_A_B self
   
-  meta "rewrite_def" predicate invariant_ref_Sum_A_B
+  meta "rewrite_def" function invariant_ref_Sum_A_B
   
-  predicate inv_ref_Sum_A_B [@inline:trivial] (_1: t_Sum_A_B) = invariant_ref_Sum_A_B _1
+  function inv_ref_Sum_A_B [@inline:trivial] (_1: t_Sum_A_B) : bool = invariant_ref_Sum_A_B _1
   
-  meta "rewrite_def" predicate inv_ref_Sum_A_B
+  meta "rewrite_def" function inv_ref_Sum_A_B
   
   type t_DeepModelTy
   

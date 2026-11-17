@@ -6,9 +6,9 @@ module M_adds_two
   
   type t_PredCell_u32
   
-  predicate index_Mapping_u32_bool [@inline:trivial] (self: Map.map UInt32.t bool) (a: UInt32.t) = Map.get self a
+  function index_Mapping_u32_bool [@inline:trivial] (self: Map.map UInt32.t bool) (a: UInt32.t) : bool = Map.get self a
   
-  meta "rewrite_def" predicate index_Mapping_u32_bool
+  meta "rewrite_def" function index_Mapping_u32_bool
   
   function view_PredCell_u32 (self: t_PredCell_u32) : Map.map UInt32.t bool
   

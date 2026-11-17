@@ -12,21 +12,21 @@ type t_F
 
 type t_Item
 
-predicate inv_Item (_1: t_Item)
+function inv_Item (_1: t_Item) : bool
 
-predicate precondition_F (self: t_F) (args: t_Item)
+function precondition_F (self: t_F) (args: t_Item) : bool
 
-predicate no_precondition_Item (f: t_F) = forall i: t_Item. inv_Item i -> precondition_F f i
+function no_precondition_Item (f: t_F) : bool = forall i: t_Item. inv_Item i -> precondition_F f i
 
 function func_FilterMap_I_F (self: t_FilterMap_I_F) : t_F
 
 type t_Option_B = None | Some t_B
 
-predicate postcondition_once_F (self: t_F) (args: t_Item) (result: t_Option_B)
+function postcondition_once_F (self: t_F) (args: t_Item) (result: t_Option_B) : bool
 
-predicate resolve_F (_1: t_F)
+function resolve_F (_1: t_F) : bool
 
-predicate postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_Option_B)
+function postcondition_mut_F (self: t_F) (args: t_Item) (result_state: t_F) (result: t_Option_B) : bool
 
 function fn_mut_once_F (self: t_F) (args: t_Item) (res: t_Option_B) : ()
 
@@ -34,7 +34,7 @@ axiom fn_mut_once_F_spec:
   forall self: t_F, args: t_Item, res: t_Option_B [postcondition_once_F self args res]. postcondition_once_F self args res
     = (exists res_state: t_F. postcondition_mut_F self args res_state res /\ resolve_F res_state)
 
-predicate hist_inv_F (self: t_F) (result_state: t_F)
+function hist_inv_F (self: t_F) (result_state: t_F) : bool
 
 function hist_inv_trans_F (self: t_F) (b: t_F) (c: t_F) : ()
 
@@ -52,19 +52,18 @@ axiom postcondition_mut_hist_inv_F_spec:
   forall self: t_F, args: t_Item, res_state: t_F, res: t_Option_B [postcondition_mut_F self args res_state res | hist_inv_F self res_state]. postcondition_mut_F self args res_state res
     -> hist_inv_F self res_state
 
-predicate immutable_Item (f: t_F) = forall g: t_F. hist_inv_F f g -> f = g
+function immutable_Item (f: t_F) : bool = forall g: t_F. hist_inv_F f g -> f = g
 
-predicate precise_Item (f1: t_F) =
+function precise_Item (f1: t_F) : bool =
   forall f2: t_F, i: t_Item. not ((exists b: t_B. postcondition_mut_F f1 i f2 (Some b))
     /\ postcondition_mut_F f1 i f2 (None))
 
-predicate private_invariant_B (f: t_FilterMap_I_F) =
-  no_precondition_Item (func_FilterMap_I_F f)
+function private_invariant_B (f: t_FilterMap_I_F) : bool = no_precondition_Item (func_FilterMap_I_F f)
   /\ immutable_Item (func_FilterMap_I_F f) /\ precise_Item (func_FilterMap_I_F f)
 
 type t_I
 
-predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
 
 function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
 
@@ -77,7 +76,7 @@ axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.se
 
 function iter_FilterMap_I_F (self: t_FilterMap_I_F) : t_I
 
-predicate produces_FilterMap_I_F (self: t_FilterMap_I_F) (visited: Seq.seq t_B) (succ: t_FilterMap_I_F) =
+function produces_FilterMap_I_F (self: t_FilterMap_I_F) (visited: Seq.seq t_B) (succ: t_FilterMap_I_F) : bool =
   private_invariant_B self
   -> hist_inv_F (func_FilterMap_I_F self) (func_FilterMap_I_F succ)
   /\ (exists s: Seq.seq t_Item, f: Map.map int int. produces_I (iter_FilterMap_I_F self) s (iter_FilterMap_I_F succ)

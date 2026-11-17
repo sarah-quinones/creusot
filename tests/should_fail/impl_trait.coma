@@ -14,36 +14,36 @@ module M_main
   
   type opaque
   
-  predicate inv_opaque (_1: opaque)
+  function inv_opaque (_1: opaque) : bool
   
   let returns_iterator (return (x: opaque)) = any
     [ return (result: opaque) -> {[@stop_split] [@expl:returns_iterator result type invariant] inv_opaque result}
       (! return {result}) ]
   
-  predicate resolve_opaque (_1: opaque)
+  function resolve_opaque (_1: opaque) : bool
   
-  predicate invariant_ref_opaque [@inline:trivial] (self: opaque) = inv_opaque self
+  function invariant_ref_opaque [@inline:trivial] (self: opaque) : bool = inv_opaque self
   
-  meta "rewrite_def" predicate invariant_ref_opaque
+  meta "rewrite_def" function invariant_ref_opaque
   
-  predicate inv_ref_opaque [@inline:trivial] (_1: opaque) = invariant_ref_opaque _1
+  function inv_ref_opaque [@inline:trivial] (_1: opaque) : bool = invariant_ref_opaque _1
   
-  meta "rewrite_def" predicate inv_ref_opaque
+  meta "rewrite_def" function inv_ref_opaque
   
-  predicate precondition_a (self: ()) (args: opaque)
+  function precondition_a (self: ()) (args: opaque) : bool
   
   axiom precondition_fndef: forall args: opaque [precondition_a () args]. (let self = args in inv_ref_opaque self)
       -> precondition_a () args
   
-  predicate postcondition_a (self: ()) (args: opaque) (result: bool)
+  function postcondition_a (self: ()) (args: opaque) (result: bool) : bool
   
   axiom postcondition_fndef:
     forall args: opaque, result: bool [postcondition_a () args result]. postcondition_a () args result
       -> (let self = args in true)
   
-  predicate postcondition_once_a (self: ()) (args: opaque) (result: bool) = postcondition_a self args result
+  function postcondition_once_a (self: ()) (args: opaque) (result: bool) : bool = postcondition_a self args result
   
-  meta "rewrite_def" predicate postcondition_once_a
+  meta "rewrite_def" function postcondition_once_a
   
   let a_opaque (self: opaque) (return (x: bool)) = {[@stop_split] [@expl:a requires] precondition_a () self}
     any

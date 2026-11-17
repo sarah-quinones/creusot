@@ -14,11 +14,11 @@ type t_Option_R = None | Some t_R
 
 function auth_AuthViewRel_R (self: t_View_AuthViewRel_R) : t_Option_R
 
-predicate premise_U (self: t_U) (from_auth: t_R) (from_frag: t_R)
+function premise_U (self: t_U) (from_auth: t_R) (from_frag: t_R) : bool
 
 function op_R (self: t_R) (other: t_R) : t_Option_R
 
-predicate incl_R (self: t_R) (other: t_R)
+function incl_R (self: t_R) (other: t_R) : bool
 
 axiom incl_R_spec: forall self: t_R, other: t_R [incl_R self other]. incl_R self other
     = (exists factor: t_R. op_R self factor = Some other)
@@ -63,8 +63,7 @@ constant incl_refl_R : ()
 
 axiom incl_refl_R_spec: forall x: t_R. incl_R x x
 
-predicate rel_AuthViewRel_R (a: t_Option_R) (f: t_R) =
-  match a with
+function rel_AuthViewRel_R (a: t_Option_R) (f: t_R) : bool = match a with
     | Some a'0 -> incl_R f a'0
     | None -> true
     end
@@ -87,21 +86,21 @@ function frag_AuthViewRel_R (self: t_View_AuthViewRel_R) : t_R
 axiom frag_AuthViewRel_R_spec:
   forall self: t_View_AuthViewRel_R [frag_AuthViewRel_R self]. rel_AuthViewRel_R (auth_AuthViewRel_R self) (frag_AuthViewRel_R self)
 
-predicate premise_AuthUpdate_U [@inline:trivial] (self: t_AuthUpdate_U) (from: t_View_AuthViewRel_R) =
+function premise_AuthUpdate_U [@inline:trivial] (self: t_AuthUpdate_U) (from: t_View_AuthViewRel_R) : bool =
   match auth_AuthViewRel_R from with
     | Some auth -> premise_U self.f0 auth (frag_AuthViewRel_R from)
     | None -> false
     end
 
-meta "rewrite_def" predicate premise_AuthUpdate_U
+meta "rewrite_def" function premise_AuthUpdate_U
 
 type tup2_R_R = { f0'0: t_R; f1'0: t_R }
 
 function update_U (self: t_U) (from_auth: t_R) (from_frag: t_R) : tup2_R_R
 
-predicate index_Mapping_R_bool [@inline:trivial] (self: Map.map t_R bool) (a: t_R) = Map.get self a
+function index_Mapping_R_bool [@inline:trivial] (self: Map.map t_R bool) (a: t_R) : bool = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_R_bool
+meta "rewrite_def" function index_Mapping_R_bool
 
 function such_that_R (p: Map.map t_R bool) : t_R
 

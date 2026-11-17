@@ -10,7 +10,7 @@ function op_Excl_T (self: t_Excl_T) (_other: t_Excl_T) : t_Option_Excl_T = None
 
 function core_Excl_T (self: t_Excl_T) : t_Option_Excl_T = None
 
-predicate incl_Excl_T (self: t_Excl_T) (other: t_Excl_T) = false
+function incl_Excl_T (self: t_Excl_T) (other: t_Excl_T) : bool = false
 
 axiom incl_Excl_T_spec: forall self: t_Excl_T, other: t_Excl_T [incl_Excl_T self other]. incl_Excl_T self other
     = (exists factor: t_Excl_T. op_Excl_T self factor = Some other)

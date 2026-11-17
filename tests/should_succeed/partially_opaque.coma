@@ -3,23 +3,23 @@ module M_f
   
   type t_S__private
   
-  predicate inv__private (x: t_S__private)
+  function inv__private (x: t_S__private) : bool
   
-  predicate resolve__private (x: t_S__private)
+  function resolve__private (x: t_S__private) : bool
   
   type t_A
   
   type t_S_A_B = { a: t_A; t_S__private: t_S__private }
   
-  predicate inv_A (_1: t_A)
+  function inv_A (_1: t_A) : bool
   
-  predicate inv_S_A_B (_1: t_S_A_B)
+  function inv_S_A_B (_1: t_S_A_B) : bool
   
   axiom inv_axiom: forall _1: t_S_A_B [inv_S_A_B _1]. inv_S_A_B _1 -> inv_A _1.a /\ inv__private _1.t_S__private
   
-  predicate resolve_A (_1: t_A)
+  function resolve_A (_1: t_A) : bool
   
-  predicate resolve_S_A_B (_1: t_S_A_B)
+  function resolve_S_A_B (_1: t_S_A_B) : bool
   
   axiom resolve_axiom [@rewrite]: forall _1: t_S_A_B [resolve_S_A_B _1]. resolve_S_A_B _1
       = (resolve_A _1.a /\ resolve__private _1.t_S__private)
@@ -50,27 +50,27 @@ module M_g
   
   type t_S_i32_B = { a: Int32.t; t_S__private: t_S__private }
   
-  predicate invariant_S_i32_B (self: t_S_i32_B) = ComputerDivision.mod (Int32.to_int self.a) 2 = 0
+  function invariant_S_i32_B (self: t_S_i32_B) : bool = ComputerDivision.mod (Int32.to_int self.a) 2 = 0
   
-  predicate inv__private (x: t_S__private)
+  function inv__private (x: t_S__private) : bool
   
-  predicate inv_S_i32_B (_1: t_S_i32_B)
+  function inv_S_i32_B (_1: t_S_i32_B) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_S_i32_B [inv_S_i32_B _1]. inv_S_i32_B _1
       = (invariant_S_i32_B _1 /\ inv__private _1.t_S__private)
   
-  predicate invariant_refmut_S_i32_B [@inline:trivial] (self: MutBorrow.t t_S_i32_B) =
-    inv_S_i32_B self.current /\ inv_S_i32_B self.final
+  function invariant_refmut_S_i32_B [@inline:trivial] (self: MutBorrow.t t_S_i32_B) : bool = inv_S_i32_B self.current
+    /\ inv_S_i32_B self.final
   
-  meta "rewrite_def" predicate invariant_refmut_S_i32_B
+  meta "rewrite_def" function invariant_refmut_S_i32_B
   
-  predicate inv_refmut_S_i32_B [@inline:trivial] (_1: MutBorrow.t t_S_i32_B) = invariant_refmut_S_i32_B _1
+  function inv_refmut_S_i32_B [@inline:trivial] (_1: MutBorrow.t t_S_i32_B) : bool = invariant_refmut_S_i32_B _1
   
-  meta "rewrite_def" predicate inv_refmut_S_i32_B
+  meta "rewrite_def" function inv_refmut_S_i32_B
   
-  predicate resolve_refmut_S_i32_B [@inline:trivial] (_1: MutBorrow.t t_S_i32_B) = _1.final = _1.current
+  function resolve_refmut_S_i32_B [@inline:trivial] (_1: MutBorrow.t t_S_i32_B) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_S_i32_B
+  meta "rewrite_def" function resolve_refmut_S_i32_B
   
   meta "compute_max_steps" 1000000
   

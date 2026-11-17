@@ -90,9 +90,9 @@ module M_impl_Authority_K_V__contains (* Authority<K, V> *)
   
   type t_Option_FMap_K_V = None'3 | Some'3 t_FMap_K_V
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function len_K (self: t_FMap_K_Ag_V) : int
   
@@ -109,7 +109,7 @@ module M_impl_Authority_K_V__contains (* Authority<K, V> *)
   axiom unit_FMap_K_Ag_V_spec:
     forall x: t_FMap_K_Ag_V [op_FMap_K_Ag_V x unit_FMap_K_Ag_V]. op_FMap_K_Ag_V x unit_FMap_K_Ag_V = Some'0 x
   
-  predicate incl_Ag_V (self: t_Ag_V) (other: t_Ag_V) = self.f0'1 = other.f0'1
+  function incl_Ag_V (self: t_Ag_V) (other: t_Ag_V) : bool = self.f0'1 = other.f0'1
   
   axiom incl_Ag_V_spec: forall self: t_Ag_V, other: t_Ag_V [incl_Ag_V self other]. incl_Ag_V self other
       = (exists factor: t_Ag_V. op_Ag_V self factor = Some'1 other)
@@ -134,16 +134,16 @@ module M_impl_Authority_K_V__contains (* Authority<K, V> *)
   axiom incl_op_Ag_V_spec: forall self: t_Ag_V, other: t_Ag_V, comb: t_Ag_V. op_Ag_V self other = Some'1 comb
       -> incl_Ag_V self comb
   
-  predicate eq_Ag_V [@inline:trivial] (self: t_Ag_V) (other: t_Ag_V) = self = other
+  function eq_Ag_V [@inline:trivial] (self: t_Ag_V) (other: t_Ag_V) : bool = self = other
   
-  meta "rewrite_def" predicate eq_Ag_V
+  meta "rewrite_def" function eq_Ag_V
   
   axiom eq_Ag_V_spec: forall self: t_Ag_V, other: t_Ag_V [eq_Ag_V self other]. eq_Ag_V self other = (self = other)
   
-  predicate incl_eq_Ag_V (self: t_Ag_V) (other: t_Ag_V) = eq_Ag_V self other \/ incl_Ag_V self other
+  function incl_eq_Ag_V (self: t_Ag_V) (other: t_Ag_V) : bool = eq_Ag_V self other \/ incl_Ag_V self other
   
-  predicate incl_Option_Ag_V (self: t_Option_Ag_V) (other: t_Option_Ag_V) =
-    match { f0'2 = self; f1'2 = other } with
+  function incl_Option_Ag_V (self: t_Option_Ag_V) (other: t_Option_Ag_V) : bool = match { f0'2 = self;
+                                                                                          f1'2 = other } with
       | {f0'2 = None'1} -> true
       | {f1'2 = None'1} -> false
       | {f0'2 = Some'1 x; f1'2 = Some'1 y} -> incl_eq_Ag_V x y
@@ -153,7 +153,7 @@ module M_impl_Authority_K_V__contains (* Authority<K, V> *)
     forall self: t_Option_Ag_V, other: t_Option_Ag_V [incl_Option_Ag_V self other]. incl_Option_Ag_V self other
       = (exists factor: t_Option_Ag_V. op_Option_Ag_V self factor = Some'2 other)
   
-  predicate incl_FMap_K_Ag_V (self: t_FMap_K_Ag_V) (other: t_FMap_K_Ag_V) =
+  function incl_FMap_K_Ag_V (self: t_FMap_K_Ag_V) (other: t_FMap_K_Ag_V) : bool =
     let r = forall k: t_K. incl_Option_Ag_V (lookup_K self k) (lookup_K other k) in r
   
   axiom incl_FMap_K_Ag_V_spec:
@@ -168,8 +168,7 @@ module M_impl_Authority_K_V__contains (* Authority<K, V> *)
   
   meta "rewrite_def" function lookup_K'0
   
-  predicate rel_MapRelation_K_V (a: t_Option_FMap_K_V) (f: t_FMap_K_Ag_V) =
-    match a with
+  function rel_MapRelation_K_V (a: t_Option_FMap_K_V) (f: t_FMap_K_Ag_V) : bool = match a with
       | Some'3 a'0 -> forall k: t_K. match lookup_K f k with
           | Some'1 {f0'1 = v} -> lookup_K'0 a'0 k = Some'4 v
           | _ -> true
@@ -227,7 +226,7 @@ module M_impl_Authority_K_V__contains (* Authority<K, V> *)
     forall a: t_View_MapRelation_K_V, b: t_View_MapRelation_K_V. op_View_MapRelation_K_V a b
       = op_View_MapRelation_K_V b a
   
-  predicate incl_View_MapRelation_K_V (self: t_View_MapRelation_K_V) (other: t_View_MapRelation_K_V) =
+  function incl_View_MapRelation_K_V (self: t_View_MapRelation_K_V) (other: t_View_MapRelation_K_V) : bool =
     let r = incl_FMap_K_Ag_V (frag_MapRelation_K_V self) (frag_MapRelation_K_V other)
     /\ (auth_MapRelation_K_V self = None'3 \/ auth_MapRelation_K_V self = auth_MapRelation_K_V other) in r
   
@@ -260,15 +259,15 @@ module M_impl_Authority_K_V__contains (* Authority<K, V> *)
     forall self: t_View_MapRelation_K_V, other: t_View_MapRelation_K_V, comb: t_View_MapRelation_K_V. op_View_MapRelation_K_V self other
         = Some comb -> incl_View_MapRelation_K_V self comb
   
-  predicate eq_View_MapRelation_K_V [@inline:trivial] (self: t_View_MapRelation_K_V) (other: t_View_MapRelation_K_V) =
-    auth_MapRelation_K_V self = auth_MapRelation_K_V other /\ frag_MapRelation_K_V self = frag_MapRelation_K_V other
+  function eq_View_MapRelation_K_V [@inline:trivial] (self: t_View_MapRelation_K_V) (other: t_View_MapRelation_K_V) : bool
+   = auth_MapRelation_K_V self = auth_MapRelation_K_V other /\ frag_MapRelation_K_V self = frag_MapRelation_K_V other
   
-  meta "rewrite_def" predicate eq_View_MapRelation_K_V
+  meta "rewrite_def" function eq_View_MapRelation_K_V
   
   axiom eq_View_MapRelation_K_V_spec: forall self: t_View_MapRelation_K_V, other: t_View_MapRelation_K_V [self
       = other]. eq_View_MapRelation_K_V self other = (self = other)
   
-  predicate incl_eq_View_MapRelation_K_V (self: t_View_MapRelation_K_V) (other: t_View_MapRelation_K_V) =
+  function incl_eq_View_MapRelation_K_V (self: t_View_MapRelation_K_V) (other: t_View_MapRelation_K_V) : bool =
     eq_View_MapRelation_K_V self other \/ incl_View_MapRelation_K_V self other
   
   function val_View_MapRelation_K_V (self: t_Resource_View_MapRelation_K_V) : t_View_MapRelation_K_V
@@ -293,30 +292,30 @@ module M_impl_Authority_K_V__contains (* Authority<K, V> *)
   
   function view_Fragment_K_V (self: t_Fragment_K_V) : tup2_K_V = { f0'4 = self.f1; f1'4 = self.f2 }
   
-  predicate invariant_Authority_K_V (self: t_Authority_K_V) =
+  function invariant_Authority_K_V (self: t_Authority_K_V) : bool =
     auth_MapRelation_K_V (view_Resource_View_MapRelation_K_V self.f0'0) <> None'3
   
-  predicate inv_Authority_K_V (_1: t_Authority_K_V)
+  function inv_Authority_K_V (_1: t_Authority_K_V) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Authority_K_V [inv_Authority_K_V _1]. inv_Authority_K_V _1
       = invariant_Authority_K_V _1
   
-  predicate invariant_ref_Authority_K_V [@inline:trivial] (self: t_Authority_K_V) = inv_Authority_K_V self
+  function invariant_ref_Authority_K_V [@inline:trivial] (self: t_Authority_K_V) : bool = inv_Authority_K_V self
   
-  meta "rewrite_def" predicate invariant_ref_Authority_K_V
+  meta "rewrite_def" function invariant_ref_Authority_K_V
   
-  predicate inv_ref_Authority_K_V [@inline:trivial] (_1: t_Authority_K_V) = invariant_ref_Authority_K_V _1
+  function inv_ref_Authority_K_V [@inline:trivial] (_1: t_Authority_K_V) : bool = invariant_ref_Authority_K_V _1
   
-  meta "rewrite_def" predicate inv_ref_Authority_K_V
+  meta "rewrite_def" function inv_ref_Authority_K_V
   
   function new_frag_MapRelation_K_V [@inline:trivial] (frag: t_FMap_K_Ag_V) : t_View_MapRelation_K_V =
     new_MapRelation_K_V (None'3) frag
   
   meta "rewrite_def" function new_frag_MapRelation_K_V
   
-  predicate contains_K [@inline:trivial] (self: t_FMap_K_Ag_V) (k: t_K) = lookup_K self k <> None'1
+  function contains_K [@inline:trivial] (self: t_FMap_K_Ag_V) (k: t_K) : bool = lookup_K self k <> None'1
   
-  meta "rewrite_def" predicate contains_K
+  meta "rewrite_def" function contains_K
   
   function add_K (self: t_FMap_K_Ag_V) (k: t_K) (v: t_Ag_V) : t_FMap_K_Ag_V
   
@@ -328,21 +327,21 @@ module M_impl_Authority_K_V__contains (* Authority<K, V> *)
   
   function singleton_K (k: t_K) (v: t_Ag_V) : t_FMap_K_Ag_V = add_K empty_K k v
   
-  predicate invariant_Fragment_K_V (self: t_Fragment_K_V) =
+  function invariant_Fragment_K_V (self: t_Fragment_K_V) : bool =
     incl_View_MapRelation_K_V (new_frag_MapRelation_K_V (singleton_K self.f1 { f0'1 = self.f2 })) (view_Resource_View_MapRelation_K_V self.f0)
   
-  predicate inv_Fragment_K_V (_1: t_Fragment_K_V)
+  function inv_Fragment_K_V (_1: t_Fragment_K_V) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Fragment_K_V [inv_Fragment_K_V _1]. inv_Fragment_K_V _1
       = invariant_Fragment_K_V _1
   
-  predicate invariant_ref_Fragment_K_V [@inline:trivial] (self: t_Fragment_K_V) = inv_Fragment_K_V self
+  function invariant_ref_Fragment_K_V [@inline:trivial] (self: t_Fragment_K_V) : bool = inv_Fragment_K_V self
   
-  meta "rewrite_def" predicate invariant_ref_Fragment_K_V
+  meta "rewrite_def" function invariant_ref_Fragment_K_V
   
-  predicate inv_ref_Fragment_K_V [@inline:trivial] (_1: t_Fragment_K_V) = invariant_ref_Fragment_K_V _1
+  function inv_ref_Fragment_K_V [@inline:trivial] (_1: t_Fragment_K_V) : bool = invariant_ref_Fragment_K_V _1
   
-  meta "rewrite_def" predicate inv_ref_Fragment_K_V
+  meta "rewrite_def" function inv_ref_Fragment_K_V
   
   function id_K (self: t_Authority_K_V) : t_Id = id_View_MapRelation_K_V self.f0'0
   
@@ -430,9 +429,9 @@ module M_impl_Authority_K_V__insert (* Authority<K, V> *)
   
   function to_mapping_K (self: t_FMap_K_V) : Map.map t_K t_Option_V
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function len_K (self: t_FMap_K_V) : int
   
@@ -442,9 +441,9 @@ module M_impl_Authority_K_V__insert (* Authority<K, V> *)
   
   meta "rewrite_def" function lookup_K
   
-  predicate contains_K [@inline:trivial] (self: t_FMap_K_V) (k: t_K) = lookup_K self k <> None'0
+  function contains_K [@inline:trivial] (self: t_FMap_K_V) (k: t_K) : bool = lookup_K self k <> None'0
   
-  meta "rewrite_def" predicate contains_K
+  meta "rewrite_def" function contains_K
   
   function add_K (self: t_FMap_K_V) (k: t_K) (v: t_V) : t_FMap_K_V
   
@@ -470,9 +469,9 @@ module M_impl_Authority_K_V__insert (* Authority<K, V> *)
   
   meta "rewrite_def" function lookup_K'0
   
-  predicate contains_K'0 [@inline:trivial] (self: t_FMap_K_Ag_V) (k: t_K) = lookup_K'0 self k <> None'1
+  function contains_K'0 [@inline:trivial] (self: t_FMap_K_Ag_V) (k: t_K) : bool = lookup_K'0 self k <> None'1
   
-  meta "rewrite_def" predicate contains_K'0
+  meta "rewrite_def" function contains_K'0
   
   function add_K'0 (self: t_FMap_K_Ag_V) (k: t_K) (v: t_Ag_V) : t_FMap_K_Ag_V
   
@@ -550,7 +549,7 @@ module M_impl_Authority_K_V__insert (* Authority<K, V> *)
   axiom unit_FMap_K_Ag_V_spec:
     forall x: t_FMap_K_Ag_V [op_FMap_K_Ag_V x unit_FMap_K_Ag_V]. op_FMap_K_Ag_V x unit_FMap_K_Ag_V = Some'2 x
   
-  predicate incl_Ag_V (self: t_Ag_V) (other: t_Ag_V) = self.f0'0 = other.f0'0
+  function incl_Ag_V (self: t_Ag_V) (other: t_Ag_V) : bool = self.f0'0 = other.f0'0
   
   axiom incl_Ag_V_spec: forall self: t_Ag_V, other: t_Ag_V [incl_Ag_V self other]. incl_Ag_V self other
       = (exists factor: t_Ag_V. op_Ag_V self factor = Some'1 other)
@@ -575,16 +574,16 @@ module M_impl_Authority_K_V__insert (* Authority<K, V> *)
   axiom incl_op_Ag_V_spec: forall self: t_Ag_V, other: t_Ag_V, comb: t_Ag_V. op_Ag_V self other = Some'1 comb
       -> incl_Ag_V self comb
   
-  predicate eq_Ag_V [@inline:trivial] (self: t_Ag_V) (other: t_Ag_V) = self = other
+  function eq_Ag_V [@inline:trivial] (self: t_Ag_V) (other: t_Ag_V) : bool = self = other
   
-  meta "rewrite_def" predicate eq_Ag_V
+  meta "rewrite_def" function eq_Ag_V
   
   axiom eq_Ag_V_spec: forall self: t_Ag_V, other: t_Ag_V [eq_Ag_V self other]. eq_Ag_V self other = (self = other)
   
-  predicate incl_eq_Ag_V (self: t_Ag_V) (other: t_Ag_V) = eq_Ag_V self other \/ incl_Ag_V self other
+  function incl_eq_Ag_V (self: t_Ag_V) (other: t_Ag_V) : bool = eq_Ag_V self other \/ incl_Ag_V self other
   
-  predicate incl_Option_Ag_V (self: t_Option_Ag_V) (other: t_Option_Ag_V) =
-    match { f0'2 = self; f1'2 = other } with
+  function incl_Option_Ag_V (self: t_Option_Ag_V) (other: t_Option_Ag_V) : bool = match { f0'2 = self;
+                                                                                          f1'2 = other } with
       | {f0'2 = None'1} -> true
       | {f1'2 = None'1} -> false
       | {f0'2 = Some'1 x; f1'2 = Some'1 y} -> incl_eq_Ag_V x y
@@ -594,15 +593,14 @@ module M_impl_Authority_K_V__insert (* Authority<K, V> *)
     forall self: t_Option_Ag_V, other: t_Option_Ag_V [incl_Option_Ag_V self other]. incl_Option_Ag_V self other
       = (exists factor: t_Option_Ag_V. op_Option_Ag_V self factor = Some'3 other)
   
-  predicate incl_FMap_K_Ag_V (self: t_FMap_K_Ag_V) (other: t_FMap_K_Ag_V) =
+  function incl_FMap_K_Ag_V (self: t_FMap_K_Ag_V) (other: t_FMap_K_Ag_V) : bool =
     let r = forall k: t_K. incl_Option_Ag_V (lookup_K'0 self k) (lookup_K'0 other k) in r
   
   axiom incl_FMap_K_Ag_V_spec:
     forall self: t_FMap_K_Ag_V, other: t_FMap_K_Ag_V [incl_FMap_K_Ag_V self other]. incl_FMap_K_Ag_V self other
       = (exists factor: t_FMap_K_Ag_V. op_FMap_K_Ag_V self factor = Some'2 other)
   
-  predicate rel_MapRelation_K_V (a: t_Option_FMap_K_V) (f: t_FMap_K_Ag_V) =
-    match a with
+  function rel_MapRelation_K_V (a: t_Option_FMap_K_V) (f: t_FMap_K_Ag_V) : bool = match a with
       | Some a'0 -> forall k: t_K. match lookup_K'0 f k with
           | Some'1 {f0'0 = v} -> lookup_K a'0 k = Some'0 v
           | _ -> true
@@ -625,15 +623,15 @@ module M_impl_Authority_K_V__insert (* Authority<K, V> *)
     forall a: t_Option_FMap_K_V, f1: t_FMap_K_Ag_V, f2: t_FMap_K_Ag_V. rel_MapRelation_K_V a f1
       -> incl_FMap_K_Ag_V f2 f1 -> rel_MapRelation_K_V a f2
   
-  predicate premise_ViewUpdateInsert_MapRelation_K_V [@inline:trivial] (self: t_ViewUpdateInsert_MapRelation_K_V) (from: t_View_MapRelation_K_V) =
-    auth_MapRelation_K_V from <> None
+  function premise_ViewUpdateInsert_MapRelation_K_V [@inline:trivial] (self: t_ViewUpdateInsert_MapRelation_K_V) (from: t_View_MapRelation_K_V) : bool
+   = auth_MapRelation_K_V from <> None
     /\ (forall f: t_FMap_K_Ag_V. rel_MapRelation_K_V (auth_MapRelation_K_V from) f
       -> match op_FMap_K_Ag_V self.f1'1 f with
         | Some'2 ff -> rel_MapRelation_K_V (Some (self.f0'1)) ff
         | None'2 -> false
         end)
   
-  meta "rewrite_def" predicate premise_ViewUpdateInsert_MapRelation_K_V
+  meta "rewrite_def" function premise_ViewUpdateInsert_MapRelation_K_V
   
   type t_Id
   
@@ -704,7 +702,7 @@ module M_impl_Authority_K_V__insert (* Authority<K, V> *)
     forall a: t_View_MapRelation_K_V, b: t_View_MapRelation_K_V. op_View_MapRelation_K_V a b
       = op_View_MapRelation_K_V b a
   
-  predicate incl_View_MapRelation_K_V (self: t_View_MapRelation_K_V) (other: t_View_MapRelation_K_V) =
+  function incl_View_MapRelation_K_V (self: t_View_MapRelation_K_V) (other: t_View_MapRelation_K_V) : bool =
     let r = incl_FMap_K_Ag_V (frag_MapRelation_K_V self) (frag_MapRelation_K_V other)
     /\ (auth_MapRelation_K_V self = None \/ auth_MapRelation_K_V self = auth_MapRelation_K_V other) in r
   
@@ -737,19 +735,19 @@ module M_impl_Authority_K_V__insert (* Authority<K, V> *)
     forall self: t_View_MapRelation_K_V, other: t_View_MapRelation_K_V, comb: t_View_MapRelation_K_V. op_View_MapRelation_K_V self other
         = Some'4 comb -> incl_View_MapRelation_K_V self comb
   
-  predicate eq_View_MapRelation_K_V [@inline:trivial] (self: t_View_MapRelation_K_V) (other: t_View_MapRelation_K_V) =
-    auth_MapRelation_K_V self = auth_MapRelation_K_V other /\ frag_MapRelation_K_V self = frag_MapRelation_K_V other
+  function eq_View_MapRelation_K_V [@inline:trivial] (self: t_View_MapRelation_K_V) (other: t_View_MapRelation_K_V) : bool
+   = auth_MapRelation_K_V self = auth_MapRelation_K_V other /\ frag_MapRelation_K_V self = frag_MapRelation_K_V other
   
-  meta "rewrite_def" predicate eq_View_MapRelation_K_V
+  meta "rewrite_def" function eq_View_MapRelation_K_V
   
   axiom eq_View_MapRelation_K_V_spec: forall self: t_View_MapRelation_K_V, other: t_View_MapRelation_K_V [self
       = other]. eq_View_MapRelation_K_V self other = (self = other)
   
-  predicate incl_eq_View_MapRelation_K_V (self: t_View_MapRelation_K_V) (other: t_View_MapRelation_K_V) =
+  function incl_eq_View_MapRelation_K_V (self: t_View_MapRelation_K_V) (other: t_View_MapRelation_K_V) : bool =
     eq_View_MapRelation_K_V self other \/ incl_View_MapRelation_K_V self other
   
-  predicate incl_eq_op_View_MapRelation_K_V (a: t_View_MapRelation_K_V) (b: t_View_MapRelation_K_V) (x: t_View_MapRelation_K_V) =
-    match op_View_MapRelation_K_V a b with
+  function incl_eq_op_View_MapRelation_K_V (a: t_View_MapRelation_K_V) (b: t_View_MapRelation_K_V) (x: t_View_MapRelation_K_V) : bool
+   = match op_View_MapRelation_K_V a b with
       | None'4 -> false
       | Some'4 ab -> incl_eq_View_MapRelation_K_V ab x
       end
@@ -766,34 +764,35 @@ module M_impl_Authority_K_V__insert (* Authority<K, V> *)
       /\ ([@stop_split] [@expl:split_off ensures #2] view_Resource_View_MapRelation_K_V result = r)}
       (! return {result}) ]
   
-  predicate invariant_Authority_K_V (self: t_Authority_K_V) =
+  function invariant_Authority_K_V (self: t_Authority_K_V) : bool =
     auth_MapRelation_K_V (view_Resource_View_MapRelation_K_V self.f0) <> None
   
-  predicate inv_Authority_K_V (_1: t_Authority_K_V)
+  function inv_Authority_K_V (_1: t_Authority_K_V) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Authority_K_V [inv_Authority_K_V _1]. inv_Authority_K_V _1
       = invariant_Authority_K_V _1
   
-  predicate invariant_refmut_Authority_K_V [@inline:trivial] (self: MutBorrow.t t_Authority_K_V) =
+  function invariant_refmut_Authority_K_V [@inline:trivial] (self: MutBorrow.t t_Authority_K_V) : bool =
     inv_Authority_K_V self.current /\ inv_Authority_K_V self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Authority_K_V
+  meta "rewrite_def" function invariant_refmut_Authority_K_V
   
-  predicate inv_refmut_Authority_K_V [@inline:trivial] (_1: MutBorrow.t t_Authority_K_V) =
+  function inv_refmut_Authority_K_V [@inline:trivial] (_1: MutBorrow.t t_Authority_K_V) : bool =
     invariant_refmut_Authority_K_V _1
   
-  meta "rewrite_def" predicate inv_refmut_Authority_K_V
+  meta "rewrite_def" function inv_refmut_Authority_K_V
   
-  predicate resolve_refmut_Authority_K_V [@inline:trivial] (_1: MutBorrow.t t_Authority_K_V) = _1.final = _1.current
+  function resolve_refmut_Authority_K_V [@inline:trivial] (_1: MutBorrow.t t_Authority_K_V) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Authority_K_V
+  meta "rewrite_def" function resolve_refmut_Authority_K_V
   
   type t_Fragment_K_V = { f0'4: t_Resource_View_MapRelation_K_V; f1'4: t_K; f2'4: t_V }
   
-  predicate invariant_Fragment_K_V (self: t_Fragment_K_V) =
+  function invariant_Fragment_K_V (self: t_Fragment_K_V) : bool =
     incl_View_MapRelation_K_V (new_frag_MapRelation_K_V (singleton_K self.f1'4 { f0'0 = self.f2'4 })) (view_Resource_View_MapRelation_K_V self.f0'4)
   
-  predicate inv_Fragment_K_V (_1: t_Fragment_K_V)
+  function inv_Fragment_K_V (_1: t_Fragment_K_V) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Fragment_K_V [inv_Fragment_K_V _1]. inv_Fragment_K_V _1
       = invariant_Fragment_K_V _1
@@ -881,9 +880,9 @@ module M_impl_Authority_K_V__new (* Authority<K, V> *)
   
   type t_FMap_K_V
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function len_K (self: t_FMap_K_V) : int
   
@@ -982,7 +981,7 @@ module M_impl_Authority_K_V__new (* Authority<K, V> *)
   axiom unit_FMap_K_Ag_V_spec:
     forall x: t_FMap_K_Ag_V [op_FMap_K_Ag_V x unit_FMap_K_Ag_V]. op_FMap_K_Ag_V x unit_FMap_K_Ag_V = Some'1 x
   
-  predicate incl_Ag_V (self: t_Ag_V) (other: t_Ag_V) = self.f0 = other.f0
+  function incl_Ag_V (self: t_Ag_V) (other: t_Ag_V) : bool = self.f0 = other.f0
   
   axiom incl_Ag_V_spec: forall self: t_Ag_V, other: t_Ag_V [incl_Ag_V self other]. incl_Ag_V self other
       = (exists factor: t_Ag_V. op_Ag_V self factor = Some'2 other)
@@ -1007,16 +1006,16 @@ module M_impl_Authority_K_V__new (* Authority<K, V> *)
   axiom incl_op_Ag_V_spec: forall self: t_Ag_V, other: t_Ag_V, comb: t_Ag_V. op_Ag_V self other = Some'2 comb
       -> incl_Ag_V self comb
   
-  predicate eq_Ag_V [@inline:trivial] (self: t_Ag_V) (other: t_Ag_V) = self = other
+  function eq_Ag_V [@inline:trivial] (self: t_Ag_V) (other: t_Ag_V) : bool = self = other
   
-  meta "rewrite_def" predicate eq_Ag_V
+  meta "rewrite_def" function eq_Ag_V
   
   axiom eq_Ag_V_spec: forall self: t_Ag_V, other: t_Ag_V [eq_Ag_V self other]. eq_Ag_V self other = (self = other)
   
-  predicate incl_eq_Ag_V (self: t_Ag_V) (other: t_Ag_V) = eq_Ag_V self other \/ incl_Ag_V self other
+  function incl_eq_Ag_V (self: t_Ag_V) (other: t_Ag_V) : bool = eq_Ag_V self other \/ incl_Ag_V self other
   
-  predicate incl_Option_Ag_V (self: t_Option_Ag_V) (other: t_Option_Ag_V) =
-    match { f0'0 = self; f1'0 = other } with
+  function incl_Option_Ag_V (self: t_Option_Ag_V) (other: t_Option_Ag_V) : bool = match { f0'0 = self;
+                                                                                          f1'0 = other } with
       | {f0'0 = None'2} -> true
       | {f1'0 = None'2} -> false
       | {f0'0 = Some'2 x; f1'0 = Some'2 y} -> incl_eq_Ag_V x y
@@ -1026,7 +1025,7 @@ module M_impl_Authority_K_V__new (* Authority<K, V> *)
     forall self: t_Option_Ag_V, other: t_Option_Ag_V [incl_Option_Ag_V self other]. incl_Option_Ag_V self other
       = (exists factor: t_Option_Ag_V. op_Option_Ag_V self factor = Some'3 other)
   
-  predicate incl_FMap_K_Ag_V (self: t_FMap_K_Ag_V) (other: t_FMap_K_Ag_V) =
+  function incl_FMap_K_Ag_V (self: t_FMap_K_Ag_V) (other: t_FMap_K_Ag_V) : bool =
     let r = forall k: t_K. incl_Option_Ag_V (lookup_K self k) (lookup_K other k) in r
   
   axiom incl_FMap_K_Ag_V_spec:
@@ -1037,8 +1036,7 @@ module M_impl_Authority_K_V__new (* Authority<K, V> *)
   
   meta "rewrite_def" function lookup_K'0
   
-  predicate rel_MapRelation_K_V (a: t_Option_FMap_K_V) (f: t_FMap_K_Ag_V) =
-    match a with
+  function rel_MapRelation_K_V (a: t_Option_FMap_K_V) (f: t_FMap_K_Ag_V) : bool = match a with
       | Some'0 a'0 -> forall k: t_K. match lookup_K f k with
           | Some'2 {f0 = v} -> lookup_K'0 a'0 k = Some v
           | _ -> true
@@ -1104,21 +1102,21 @@ module M_impl_Authority_K_V__new (* Authority<K, V> *)
   
   type t_Authority_K_V = { f0'1: t_Resource_View_MapRelation_K_V }
   
-  predicate invariant_Authority_K_V (self: t_Authority_K_V) =
+  function invariant_Authority_K_V (self: t_Authority_K_V) : bool =
     auth_MapRelation_K_V (view_Resource_View_MapRelation_K_V self.f0'1) <> None'0
   
-  predicate inv_Authority_K_V (_1: t_Authority_K_V)
+  function inv_Authority_K_V (_1: t_Authority_K_V) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Authority_K_V [inv_Authority_K_V _1]. inv_Authority_K_V _1
       = invariant_Authority_K_V _1
   
-  predicate invariant_Ghost_Authority_K_V [@inline:trivial] (self: t_Authority_K_V) = inv_Authority_K_V self
+  function invariant_Ghost_Authority_K_V [@inline:trivial] (self: t_Authority_K_V) : bool = inv_Authority_K_V self
   
-  meta "rewrite_def" predicate invariant_Ghost_Authority_K_V
+  meta "rewrite_def" function invariant_Ghost_Authority_K_V
   
-  predicate inv_Ghost_Authority_K_V [@inline:trivial] (_1: t_Authority_K_V) = invariant_Ghost_Authority_K_V _1
+  function inv_Ghost_Authority_K_V [@inline:trivial] (_1: t_Authority_K_V) : bool = invariant_Ghost_Authority_K_V _1
   
-  meta "rewrite_def" predicate inv_Ghost_Authority_K_V
+  meta "rewrite_def" function inv_Ghost_Authority_K_V
   
   let new_Authority_K_V (x: t_Authority_K_V) (return (x'0: t_Authority_K_V)) =
   {[@stop_split] [@expl:new 'x' type invariant] inv_Authority_K_V x}
@@ -1252,9 +1250,9 @@ module M_impl_Clone_for_Fragment_K_V__clone (* <Fragment<K, V> as std::clone::Cl
   
   type t_Option_FMap_K_V = None'3 | Some'3 t_FMap_K_V
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function len_K (self: t_FMap_K_Ag_V) : int
   
@@ -1271,7 +1269,7 @@ module M_impl_Clone_for_Fragment_K_V__clone (* <Fragment<K, V> as std::clone::Cl
   axiom unit_FMap_K_Ag_V_spec:
     forall x: t_FMap_K_Ag_V [op_FMap_K_Ag_V x unit_FMap_K_Ag_V]. op_FMap_K_Ag_V x unit_FMap_K_Ag_V = Some'0 x
   
-  predicate incl_Ag_V (self: t_Ag_V) (other: t_Ag_V) = self.f0'0 = other.f0'0
+  function incl_Ag_V (self: t_Ag_V) (other: t_Ag_V) : bool = self.f0'0 = other.f0'0
   
   axiom incl_Ag_V_spec: forall self: t_Ag_V, other: t_Ag_V [incl_Ag_V self other]. incl_Ag_V self other
       = (exists factor: t_Ag_V. op_Ag_V self factor = Some'1 other)
@@ -1296,16 +1294,16 @@ module M_impl_Clone_for_Fragment_K_V__clone (* <Fragment<K, V> as std::clone::Cl
   axiom incl_op_Ag_V_spec: forall self: t_Ag_V, other: t_Ag_V, comb: t_Ag_V. op_Ag_V self other = Some'1 comb
       -> incl_Ag_V self comb
   
-  predicate eq_Ag_V [@inline:trivial] (self: t_Ag_V) (other: t_Ag_V) = self = other
+  function eq_Ag_V [@inline:trivial] (self: t_Ag_V) (other: t_Ag_V) : bool = self = other
   
-  meta "rewrite_def" predicate eq_Ag_V
+  meta "rewrite_def" function eq_Ag_V
   
   axiom eq_Ag_V_spec: forall self: t_Ag_V, other: t_Ag_V [eq_Ag_V self other]. eq_Ag_V self other = (self = other)
   
-  predicate incl_eq_Ag_V (self: t_Ag_V) (other: t_Ag_V) = eq_Ag_V self other \/ incl_Ag_V self other
+  function incl_eq_Ag_V (self: t_Ag_V) (other: t_Ag_V) : bool = eq_Ag_V self other \/ incl_Ag_V self other
   
-  predicate incl_Option_Ag_V (self: t_Option_Ag_V) (other: t_Option_Ag_V) =
-    match { f0'1 = self; f1'1 = other } with
+  function incl_Option_Ag_V (self: t_Option_Ag_V) (other: t_Option_Ag_V) : bool = match { f0'1 = self;
+                                                                                          f1'1 = other } with
       | {f0'1 = None'1} -> true
       | {f1'1 = None'1} -> false
       | {f0'1 = Some'1 x; f1'1 = Some'1 y} -> incl_eq_Ag_V x y
@@ -1315,7 +1313,7 @@ module M_impl_Clone_for_Fragment_K_V__clone (* <Fragment<K, V> as std::clone::Cl
     forall self: t_Option_Ag_V, other: t_Option_Ag_V [incl_Option_Ag_V self other]. incl_Option_Ag_V self other
       = (exists factor: t_Option_Ag_V. op_Option_Ag_V self factor = Some'2 other)
   
-  predicate incl_FMap_K_Ag_V (self: t_FMap_K_Ag_V) (other: t_FMap_K_Ag_V) =
+  function incl_FMap_K_Ag_V (self: t_FMap_K_Ag_V) (other: t_FMap_K_Ag_V) : bool =
     let r = forall k: t_K. incl_Option_Ag_V (lookup_K self k) (lookup_K other k) in r
   
   axiom incl_FMap_K_Ag_V_spec:
@@ -1330,8 +1328,7 @@ module M_impl_Clone_for_Fragment_K_V__clone (* <Fragment<K, V> as std::clone::Cl
   
   meta "rewrite_def" function lookup_K'0
   
-  predicate rel_MapRelation_K_V (a: t_Option_FMap_K_V) (f: t_FMap_K_Ag_V) =
-    match a with
+  function rel_MapRelation_K_V (a: t_Option_FMap_K_V) (f: t_FMap_K_Ag_V) : bool = match a with
       | Some'3 a'0 -> forall k: t_K. match lookup_K f k with
           | Some'1 {f0'0 = v} -> lookup_K'0 a'0 k = Some'4 v
           | _ -> true
@@ -1446,7 +1443,7 @@ module M_impl_Clone_for_Fragment_K_V__clone (* <Fragment<K, V> as std::clone::Cl
       = core_View_MapRelation_K_V (view_Resource_View_MapRelation_K_V self))}
       (! return {result}) ]
   
-  predicate incl_View_MapRelation_K_V (self: t_View_MapRelation_K_V) (other: t_View_MapRelation_K_V) =
+  function incl_View_MapRelation_K_V (self: t_View_MapRelation_K_V) (other: t_View_MapRelation_K_V) : bool =
     let r = incl_FMap_K_Ag_V (frag_MapRelation_K_V self) (frag_MapRelation_K_V other)
     /\ (auth_MapRelation_K_V self = None'3 \/ auth_MapRelation_K_V self = auth_MapRelation_K_V other) in r
   
@@ -1454,9 +1451,9 @@ module M_impl_Clone_for_Fragment_K_V__clone (* <Fragment<K, V> as std::clone::Cl
     forall self: t_View_MapRelation_K_V, other: t_View_MapRelation_K_V [incl_View_MapRelation_K_V self other]. incl_View_MapRelation_K_V self other
       = (exists factor: t_View_MapRelation_K_V. op_View_MapRelation_K_V self factor = Some other)
   
-  predicate contains_K [@inline:trivial] (self: t_FMap_K_Ag_V) (k: t_K) = lookup_K self k <> None'1
+  function contains_K [@inline:trivial] (self: t_FMap_K_Ag_V) (k: t_K) : bool = lookup_K self k <> None'1
   
-  meta "rewrite_def" predicate contains_K
+  meta "rewrite_def" function contains_K
   
   function add_K (self: t_FMap_K_Ag_V) (k: t_K) (v: t_Ag_V) : t_FMap_K_Ag_V
   
@@ -1468,21 +1465,21 @@ module M_impl_Clone_for_Fragment_K_V__clone (* <Fragment<K, V> as std::clone::Cl
   
   function singleton_K (k: t_K) (v: t_Ag_V) : t_FMap_K_Ag_V = add_K empty_K k v
   
-  predicate invariant_Fragment_K_V (self: t_Fragment_K_V) =
+  function invariant_Fragment_K_V (self: t_Fragment_K_V) : bool =
     incl_View_MapRelation_K_V (new_frag_MapRelation_K_V (singleton_K self.f1 { f0'0 = self.f2 })) (view_Resource_View_MapRelation_K_V self.f0)
   
-  predicate inv_Fragment_K_V (_1: t_Fragment_K_V)
+  function inv_Fragment_K_V (_1: t_Fragment_K_V) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Fragment_K_V [inv_Fragment_K_V _1]. inv_Fragment_K_V _1
       = invariant_Fragment_K_V _1
   
-  predicate invariant_ref_Fragment_K_V [@inline:trivial] (self: t_Fragment_K_V) = inv_Fragment_K_V self
+  function invariant_ref_Fragment_K_V [@inline:trivial] (self: t_Fragment_K_V) : bool = inv_Fragment_K_V self
   
-  meta "rewrite_def" predicate invariant_ref_Fragment_K_V
+  meta "rewrite_def" function invariant_ref_Fragment_K_V
   
-  predicate inv_ref_Fragment_K_V [@inline:trivial] (_1: t_Fragment_K_V) = invariant_ref_Fragment_K_V _1
+  function inv_ref_Fragment_K_V [@inline:trivial] (_1: t_Fragment_K_V) : bool = invariant_ref_Fragment_K_V _1
   
-  meta "rewrite_def" predicate inv_ref_Fragment_K_V
+  meta "rewrite_def" function inv_ref_Fragment_K_V
   
   type tup2_K_V = { f0'4: t_K; f1'4: t_V }
   
@@ -1592,9 +1589,9 @@ module M_impl_Clone_for_Fragment_K_V__clone__refines (* <Fragment<K, V> as std::
   
   type t_Option_FMap_K_V = None'3 | Some'3 t_FMap_K_V
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function len_K (self: t_FMap_K_Ag_V) : int
   
@@ -1611,7 +1608,7 @@ module M_impl_Clone_for_Fragment_K_V__clone__refines (* <Fragment<K, V> as std::
   axiom unit_FMap_K_Ag_V_spec:
     forall x: t_FMap_K_Ag_V [op_FMap_K_Ag_V x unit_FMap_K_Ag_V]. op_FMap_K_Ag_V x unit_FMap_K_Ag_V = Some'0 x
   
-  predicate incl_Ag_V (self: t_Ag_V) (other: t_Ag_V) = self.f0'0 = other.f0'0
+  function incl_Ag_V (self: t_Ag_V) (other: t_Ag_V) : bool = self.f0'0 = other.f0'0
   
   axiom incl_Ag_V_spec: forall self: t_Ag_V, other: t_Ag_V [incl_Ag_V self other]. incl_Ag_V self other
       = (exists factor: t_Ag_V. op_Ag_V self factor = Some'1 other)
@@ -1636,16 +1633,16 @@ module M_impl_Clone_for_Fragment_K_V__clone__refines (* <Fragment<K, V> as std::
   axiom incl_op_Ag_V_spec: forall self: t_Ag_V, other: t_Ag_V, comb: t_Ag_V. op_Ag_V self other = Some'1 comb
       -> incl_Ag_V self comb
   
-  predicate eq_Ag_V [@inline:trivial] (self: t_Ag_V) (other: t_Ag_V) = self = other
+  function eq_Ag_V [@inline:trivial] (self: t_Ag_V) (other: t_Ag_V) : bool = self = other
   
-  meta "rewrite_def" predicate eq_Ag_V
+  meta "rewrite_def" function eq_Ag_V
   
   axiom eq_Ag_V_spec: forall self: t_Ag_V, other: t_Ag_V [eq_Ag_V self other]. eq_Ag_V self other = (self = other)
   
-  predicate incl_eq_Ag_V (self: t_Ag_V) (other: t_Ag_V) = eq_Ag_V self other \/ incl_Ag_V self other
+  function incl_eq_Ag_V (self: t_Ag_V) (other: t_Ag_V) : bool = eq_Ag_V self other \/ incl_Ag_V self other
   
-  predicate incl_Option_Ag_V (self: t_Option_Ag_V) (other: t_Option_Ag_V) =
-    match { f0'1 = self; f1'1 = other } with
+  function incl_Option_Ag_V (self: t_Option_Ag_V) (other: t_Option_Ag_V) : bool = match { f0'1 = self;
+                                                                                          f1'1 = other } with
       | {f0'1 = None'1} -> true
       | {f1'1 = None'1} -> false
       | {f0'1 = Some'1 x; f1'1 = Some'1 y} -> incl_eq_Ag_V x y
@@ -1655,7 +1652,7 @@ module M_impl_Clone_for_Fragment_K_V__clone__refines (* <Fragment<K, V> as std::
     forall self: t_Option_Ag_V, other: t_Option_Ag_V [incl_Option_Ag_V self other]. incl_Option_Ag_V self other
       = (exists factor: t_Option_Ag_V. op_Option_Ag_V self factor = Some'2 other)
   
-  predicate incl_FMap_K_Ag_V (self: t_FMap_K_Ag_V) (other: t_FMap_K_Ag_V) =
+  function incl_FMap_K_Ag_V (self: t_FMap_K_Ag_V) (other: t_FMap_K_Ag_V) : bool =
     let r = forall k: t_K. incl_Option_Ag_V (lookup_K self k) (lookup_K other k) in r
   
   axiom incl_FMap_K_Ag_V_spec:
@@ -1670,8 +1667,7 @@ module M_impl_Clone_for_Fragment_K_V__clone__refines (* <Fragment<K, V> as std::
   
   meta "rewrite_def" function lookup_K'0
   
-  predicate rel_MapRelation_K_V (a: t_Option_FMap_K_V) (f: t_FMap_K_Ag_V) =
-    match a with
+  function rel_MapRelation_K_V (a: t_Option_FMap_K_V) (f: t_FMap_K_Ag_V) : bool = match a with
       | Some'3 a'0 -> forall k: t_K. match lookup_K f k with
           | Some'1 {f0'0 = v} -> lookup_K'0 a'0 k = Some'4 v
           | _ -> true
@@ -1729,7 +1725,7 @@ module M_impl_Clone_for_Fragment_K_V__clone__refines (* <Fragment<K, V> as std::
     forall a: t_View_MapRelation_K_V, b: t_View_MapRelation_K_V. op_View_MapRelation_K_V a b
       = op_View_MapRelation_K_V b a
   
-  predicate incl_View_MapRelation_K_V (self: t_View_MapRelation_K_V) (other: t_View_MapRelation_K_V) =
+  function incl_View_MapRelation_K_V (self: t_View_MapRelation_K_V) (other: t_View_MapRelation_K_V) : bool =
     let r = incl_FMap_K_Ag_V (frag_MapRelation_K_V self) (frag_MapRelation_K_V other)
     /\ (auth_MapRelation_K_V self = None'3 \/ auth_MapRelation_K_V self = auth_MapRelation_K_V other) in r
   
@@ -1742,9 +1738,9 @@ module M_impl_Clone_for_Fragment_K_V__clone__refines (* <Fragment<K, V> as std::
   
   meta "rewrite_def" function new_frag_MapRelation_K_V
   
-  predicate contains_K [@inline:trivial] (self: t_FMap_K_Ag_V) (k: t_K) = lookup_K self k <> None'1
+  function contains_K [@inline:trivial] (self: t_FMap_K_Ag_V) (k: t_K) : bool = lookup_K self k <> None'1
   
-  meta "rewrite_def" predicate contains_K
+  meta "rewrite_def" function contains_K
   
   function add_K (self: t_FMap_K_Ag_V) (k: t_K) (v: t_Ag_V) : t_FMap_K_Ag_V
   
@@ -1763,21 +1759,21 @@ module M_impl_Clone_for_Fragment_K_V__clone__refines (* <Fragment<K, V> as std::
   
   meta "rewrite_def" function view_Resource_View_MapRelation_K_V
   
-  predicate invariant_Fragment_K_V (self: t_Fragment_K_V) =
+  function invariant_Fragment_K_V (self: t_Fragment_K_V) : bool =
     incl_View_MapRelation_K_V (new_frag_MapRelation_K_V (singleton_K self.f1 { f0'0 = self.f2 })) (view_Resource_View_MapRelation_K_V self.f0)
   
-  predicate inv_Fragment_K_V (_1: t_Fragment_K_V)
+  function inv_Fragment_K_V (_1: t_Fragment_K_V) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Fragment_K_V [inv_Fragment_K_V _1]. inv_Fragment_K_V _1
       = invariant_Fragment_K_V _1
   
-  predicate invariant_ref_Fragment_K_V [@inline:trivial] (self: t_Fragment_K_V) = inv_Fragment_K_V self
+  function invariant_ref_Fragment_K_V [@inline:trivial] (self: t_Fragment_K_V) : bool = inv_Fragment_K_V self
   
-  meta "rewrite_def" predicate invariant_ref_Fragment_K_V
+  meta "rewrite_def" function invariant_ref_Fragment_K_V
   
-  predicate inv_ref_Fragment_K_V [@inline:trivial] (_1: t_Fragment_K_V) = invariant_ref_Fragment_K_V _1
+  function inv_ref_Fragment_K_V [@inline:trivial] (_1: t_Fragment_K_V) : bool = invariant_ref_Fragment_K_V _1
   
-  meta "rewrite_def" predicate inv_ref_Fragment_K_V
+  meta "rewrite_def" function inv_ref_Fragment_K_V
   
   type tup2_K_V = { f0'3: t_K; f1'3: t_V }
   
@@ -1823,8 +1819,7 @@ module M_impl_ViewRel_for_MapRelation_K_V__rel_mono (* <MapRelation<K, V> as cre
   
   meta "rewrite_def" function lookup_K'0
   
-  predicate rel_MapRelation_K_V (a: t_Option_FMap_K_V) (f: t_FMap_K_Ag_V) =
-    match a with
+  function rel_MapRelation_K_V (a: t_Option_FMap_K_V) (f: t_FMap_K_Ag_V) : bool = match a with
       | Some a'0 -> forall k: t_K. match lookup_K f k with
           | Some'0 {f0 = v} -> lookup_K'0 a'0 k = Some'1 v
           | _ -> true
@@ -1880,7 +1875,7 @@ module M_impl_ViewRel_for_MapRelation_K_V__rel_mono (* <MapRelation<K, V> as cre
   
   axiom commutative_FMap_K_Ag_V_spec: forall a: t_FMap_K_Ag_V, b: t_FMap_K_Ag_V. op_FMap_K_Ag_V a b = op_FMap_K_Ag_V b a
   
-  predicate incl_Ag_V (self: t_Ag_V) (other: t_Ag_V) = self.f0 = other.f0
+  function incl_Ag_V (self: t_Ag_V) (other: t_Ag_V) : bool = self.f0 = other.f0
   
   axiom incl_Ag_V_spec: forall self: t_Ag_V, other: t_Ag_V [incl_Ag_V self other]. incl_Ag_V self other
       = (exists factor: t_Ag_V. op_Ag_V self factor = Some'0 other)
@@ -1905,16 +1900,16 @@ module M_impl_ViewRel_for_MapRelation_K_V__rel_mono (* <MapRelation<K, V> as cre
   axiom incl_op_Ag_V_spec: forall self: t_Ag_V, other: t_Ag_V, comb: t_Ag_V. op_Ag_V self other = Some'0 comb
       -> incl_Ag_V self comb
   
-  predicate eq_Ag_V [@inline:trivial] (self: t_Ag_V) (other: t_Ag_V) = self = other
+  function eq_Ag_V [@inline:trivial] (self: t_Ag_V) (other: t_Ag_V) : bool = self = other
   
-  meta "rewrite_def" predicate eq_Ag_V
+  meta "rewrite_def" function eq_Ag_V
   
   axiom eq_Ag_V_spec: forall self: t_Ag_V, other: t_Ag_V [eq_Ag_V self other]. eq_Ag_V self other = (self = other)
   
-  predicate incl_eq_Ag_V (self: t_Ag_V) (other: t_Ag_V) = eq_Ag_V self other \/ incl_Ag_V self other
+  function incl_eq_Ag_V (self: t_Ag_V) (other: t_Ag_V) : bool = eq_Ag_V self other \/ incl_Ag_V self other
   
-  predicate incl_Option_Ag_V (self: t_Option_Ag_V) (other: t_Option_Ag_V) =
-    match { f0'0 = self; f1'0 = other } with
+  function incl_Option_Ag_V (self: t_Option_Ag_V) (other: t_Option_Ag_V) : bool = match { f0'0 = self;
+                                                                                          f1'0 = other } with
       | {f0'0 = None'0} -> true
       | {f1'0 = None'0} -> false
       | {f0'0 = Some'0 x; f1'0 = Some'0 y} -> incl_eq_Ag_V x y
@@ -1924,7 +1919,7 @@ module M_impl_ViewRel_for_MapRelation_K_V__rel_mono (* <MapRelation<K, V> as cre
     forall self: t_Option_Ag_V, other: t_Option_Ag_V [incl_Option_Ag_V self other]. incl_Option_Ag_V self other
       = (exists factor: t_Option_Ag_V. op_Option_Ag_V self factor = Some'3 other)
   
-  predicate incl_FMap_K_Ag_V (self: t_FMap_K_Ag_V) (other: t_FMap_K_Ag_V) =
+  function incl_FMap_K_Ag_V (self: t_FMap_K_Ag_V) (other: t_FMap_K_Ag_V) : bool =
     let r = forall k: t_K. incl_Option_Ag_V (lookup_K self k) (lookup_K other k) in r
   
   axiom incl_FMap_K_Ag_V_spec:
@@ -1977,8 +1972,7 @@ module M_impl_ViewRel_for_MapRelation_K_V__rel_mono__refines (* <MapRelation<K, 
   
   meta "rewrite_def" function lookup_K'0
   
-  predicate rel_MapRelation_K_V (a: t_Option_FMap_K_V) (f: t_FMap_K_Ag_V) =
-    match a with
+  function rel_MapRelation_K_V (a: t_Option_FMap_K_V) (f: t_FMap_K_Ag_V) : bool = match a with
       | Some a'0 -> forall k: t_K. match lookup_K f k with
           | Some'0 {f0 = v} -> lookup_K'0 a'0 k = Some'1 v
           | _ -> true
@@ -2034,7 +2028,7 @@ module M_impl_ViewRel_for_MapRelation_K_V__rel_mono__refines (* <MapRelation<K, 
   
   axiom commutative_FMap_K_Ag_V_spec: forall a: t_FMap_K_Ag_V, b: t_FMap_K_Ag_V. op_FMap_K_Ag_V a b = op_FMap_K_Ag_V b a
   
-  predicate incl_Ag_V (self: t_Ag_V) (other: t_Ag_V) = self.f0 = other.f0
+  function incl_Ag_V (self: t_Ag_V) (other: t_Ag_V) : bool = self.f0 = other.f0
   
   axiom incl_Ag_V_spec: forall self: t_Ag_V, other: t_Ag_V [incl_Ag_V self other]. incl_Ag_V self other
       = (exists factor: t_Ag_V. op_Ag_V self factor = Some'0 other)
@@ -2059,16 +2053,16 @@ module M_impl_ViewRel_for_MapRelation_K_V__rel_mono__refines (* <MapRelation<K, 
   axiom incl_op_Ag_V_spec: forall self: t_Ag_V, other: t_Ag_V, comb: t_Ag_V. op_Ag_V self other = Some'0 comb
       -> incl_Ag_V self comb
   
-  predicate eq_Ag_V [@inline:trivial] (self: t_Ag_V) (other: t_Ag_V) = self = other
+  function eq_Ag_V [@inline:trivial] (self: t_Ag_V) (other: t_Ag_V) : bool = self = other
   
-  meta "rewrite_def" predicate eq_Ag_V
+  meta "rewrite_def" function eq_Ag_V
   
   axiom eq_Ag_V_spec: forall self: t_Ag_V, other: t_Ag_V [eq_Ag_V self other]. eq_Ag_V self other = (self = other)
   
-  predicate incl_eq_Ag_V (self: t_Ag_V) (other: t_Ag_V) = eq_Ag_V self other \/ incl_Ag_V self other
+  function incl_eq_Ag_V (self: t_Ag_V) (other: t_Ag_V) : bool = eq_Ag_V self other \/ incl_Ag_V self other
   
-  predicate incl_Option_Ag_V (self: t_Option_Ag_V) (other: t_Option_Ag_V) =
-    match { f0'0 = self; f1'0 = other } with
+  function incl_Option_Ag_V (self: t_Option_Ag_V) (other: t_Option_Ag_V) : bool = match { f0'0 = self;
+                                                                                          f1'0 = other } with
       | {f0'0 = None'0} -> true
       | {f1'0 = None'0} -> false
       | {f0'0 = Some'0 x; f1'0 = Some'0 y} -> incl_eq_Ag_V x y
@@ -2078,7 +2072,7 @@ module M_impl_ViewRel_for_MapRelation_K_V__rel_mono__refines (* <MapRelation<K, 
     forall self: t_Option_Ag_V, other: t_Option_Ag_V [incl_Option_Ag_V self other]. incl_Option_Ag_V self other
       = (exists factor: t_Option_Ag_V. op_Option_Ag_V self factor = Some'3 other)
   
-  predicate incl_FMap_K_Ag_V (self: t_FMap_K_Ag_V) (other: t_FMap_K_Ag_V) =
+  function incl_FMap_K_Ag_V (self: t_FMap_K_Ag_V) (other: t_FMap_K_Ag_V) : bool =
     let r = forall k: t_K. incl_Option_Ag_V (lookup_K self k) (lookup_K other k) in r
   
   axiom incl_FMap_K_Ag_V_spec:
@@ -2125,8 +2119,7 @@ module M_impl_ViewRel_for_MapRelation_K_V__rel_none (* <MapRelation<K, V> as cre
   
   meta "rewrite_def" function lookup_K'0
   
-  predicate rel_MapRelation_K_V (a: t_Option_FMap_K_V) (f: t_FMap_K_Ag_V) =
-    match a with
+  function rel_MapRelation_K_V (a: t_Option_FMap_K_V) (f: t_FMap_K_Ag_V) : bool = match a with
       | Some a'0 -> forall k: t_K. match lookup_K f k with
           | Some'0 {f0 = v} -> lookup_K'0 a'0 k = Some'1 v
           | _ -> true
@@ -2178,8 +2171,7 @@ module M_impl_ViewRel_for_MapRelation_K_V__rel_none__refines (* <MapRelation<K, 
   
   meta "rewrite_def" function lookup_K'0
   
-  predicate rel_MapRelation_K_V (a: t_Option_FMap_K_V) (f: t_FMap_K_Ag_V) =
-    match a with
+  function rel_MapRelation_K_V (a: t_Option_FMap_K_V) (f: t_FMap_K_Ag_V) : bool = match a with
       | Some a'0 -> forall k: t_K. match lookup_K f k with
           | Some'0 {f0 = v} -> lookup_K'0 a'0 k = Some'1 v
           | _ -> true
@@ -2227,8 +2219,7 @@ module M_impl_ViewRel_for_MapRelation_K_V__rel_unit (* <MapRelation<K, V> as cre
   
   meta "rewrite_def" function lookup_K'0
   
-  predicate rel_MapRelation_K_V (a: t_Option_FMap_K_V) (f: t_FMap_K_Ag_V) =
-    match a with
+  function rel_MapRelation_K_V (a: t_Option_FMap_K_V) (f: t_FMap_K_Ag_V) : bool = match a with
       | Some a'0 -> forall k: t_K. match lookup_K f k with
           | Some'0 {f0 = v} -> lookup_K'0 a'0 k = Some'1 v
           | _ -> true
@@ -2284,9 +2275,9 @@ module M_impl_ViewRel_for_MapRelation_K_V__rel_unit (* <MapRelation<K, V> as cre
   
   axiom commutative_FMap_K_Ag_V_spec: forall a: t_FMap_K_Ag_V, b: t_FMap_K_Ag_V. op_FMap_K_Ag_V a b = op_FMap_K_Ag_V b a
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function len_K (self: t_FMap_K_Ag_V) : int
   
@@ -2346,8 +2337,7 @@ module M_impl_ViewRel_for_MapRelation_K_V__rel_unit__refines (* <MapRelation<K, 
   
   meta "rewrite_def" function lookup_K'0
   
-  predicate rel_MapRelation_K_V (a: t_Option_FMap_K_V) (f: t_FMap_K_Ag_V) =
-    match a with
+  function rel_MapRelation_K_V (a: t_Option_FMap_K_V) (f: t_FMap_K_Ag_V) : bool = match a with
       | Some a'0 -> forall k: t_K. match lookup_K f k with
           | Some'0 {f0 = v} -> lookup_K'0 a'0 k = Some'1 v
           | _ -> true
@@ -2403,9 +2393,9 @@ module M_impl_ViewRel_for_MapRelation_K_V__rel_unit__refines (* <MapRelation<K, 
   
   axiom commutative_FMap_K_Ag_V_spec: forall a: t_FMap_K_Ag_V, b: t_FMap_K_Ag_V. op_FMap_K_Ag_V a b = op_FMap_K_Ag_V b a
   
-  predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+  function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
   
-  meta "rewrite_def" predicate ge_log_Int
+  meta "rewrite_def" function ge_log_Int
   
   function len_K (self: t_FMap_K_Ag_V) : int
   

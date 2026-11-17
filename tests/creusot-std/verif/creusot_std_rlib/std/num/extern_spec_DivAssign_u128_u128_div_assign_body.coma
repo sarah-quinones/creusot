@@ -4,9 +4,9 @@ use creusot.prelude.Any
 use int.ComputerDivision
 use int.Int
 
-predicate resolve_refmut_u128 [@inline:trivial] (_1: MutBorrow.t UInt128.t) = _1.final = _1.current
+function resolve_refmut_u128 [@inline:trivial] (_1: MutBorrow.t UInt128.t) : bool = _1.final = _1.current
 
-meta "rewrite_def" predicate resolve_refmut_u128
+meta "rewrite_def" function resolve_refmut_u128
 
 constant const_MIN: UInt128.t = (0: UInt128.t)
 

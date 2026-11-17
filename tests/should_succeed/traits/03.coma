@@ -36,15 +36,15 @@ module M_impl_C_for_u32__h (* <u32 as C> *)
   
   type t_G
   
-  predicate inv_G (_1: t_G)
+  function inv_G (_1: t_G) : bool
   
-  predicate invariant_ref_G [@inline:trivial] (self: t_G) = inv_G self
+  function invariant_ref_G [@inline:trivial] (self: t_G) : bool = inv_G self
   
-  meta "rewrite_def" predicate invariant_ref_G
+  meta "rewrite_def" function invariant_ref_G
   
-  predicate inv_ref_G [@inline:trivial] (_1: t_G) = invariant_ref_G _1
+  function inv_ref_G [@inline:trivial] (_1: t_G) : bool = invariant_ref_G _1
   
-  meta "rewrite_def" predicate inv_ref_G
+  meta "rewrite_def" function inv_ref_G
   
   meta "compute_max_steps" 1000000
   
@@ -58,15 +58,15 @@ end
 module M_impl_C_for_u32__h__refines (* <u32 as C> *)
   type t_G
   
-  predicate inv_G (_1: t_G)
+  function inv_G (_1: t_G) : bool
   
-  predicate invariant_ref_G [@inline:trivial] (self: t_G) = inv_G self
+  function invariant_ref_G [@inline:trivial] (self: t_G) : bool = inv_G self
   
-  meta "rewrite_def" predicate invariant_ref_G
+  meta "rewrite_def" function invariant_ref_G
   
-  predicate inv_ref_G [@inline:trivial] (_1: t_G) = invariant_ref_G _1
+  function inv_ref_G [@inline:trivial] (_1: t_G) : bool = invariant_ref_G _1
   
-  meta "rewrite_def" predicate inv_ref_G
+  meta "rewrite_def" function inv_ref_G
   
   meta "compute_max_steps" 1000000
   

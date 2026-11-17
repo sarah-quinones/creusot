@@ -4,13 +4,13 @@ module M_dec
   use creusot.prelude.Any
   use int.Int
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   constant const_MIN: Int32.t = (-2147483648: Int32.t)
   
@@ -38,9 +38,9 @@ module M_destruct
   
   type tup2_NonZero_refmut_NonZero = { f0'0: t_NonZero; f1'0: MutBorrow.t t_NonZero }
   
-  predicate invariant_NonZero (self: t_NonZero) = Int32.to_int self.f0 <> 0
+  function invariant_NonZero (self: t_NonZero) : bool = Int32.to_int self.f0 <> 0
   
-  predicate inv_NonZero (_1: t_NonZero)
+  function inv_NonZero (_1: t_NonZero) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_NonZero [inv_NonZero _1]. inv_NonZero _1 = invariant_NonZero _1
   
@@ -52,27 +52,27 @@ module M_destruct
     [ return (result: ()) -> {[@stop_split] [@expl:inc ensures] Int32.to_int x.final = Int32.to_int x.current + 1}
       (! return {result}) ]
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
-  predicate invariant_refmut_NonZero [@inline:trivial] (self: MutBorrow.t t_NonZero) =
-    inv_NonZero self.current /\ inv_NonZero self.final
+  function invariant_refmut_NonZero [@inline:trivial] (self: MutBorrow.t t_NonZero) : bool = inv_NonZero self.current
+    /\ inv_NonZero self.final
   
-  meta "rewrite_def" predicate invariant_refmut_NonZero
+  meta "rewrite_def" function invariant_refmut_NonZero
   
-  predicate inv_refmut_NonZero [@inline:trivial] (_1: MutBorrow.t t_NonZero) = invariant_refmut_NonZero _1
+  function inv_refmut_NonZero [@inline:trivial] (_1: MutBorrow.t t_NonZero) : bool = invariant_refmut_NonZero _1
   
-  meta "rewrite_def" predicate inv_refmut_NonZero
+  meta "rewrite_def" function inv_refmut_NonZero
   
-  predicate resolve_refmut_NonZero [@inline:trivial] (_1: MutBorrow.t t_NonZero) = _1.final = _1.current
+  function resolve_refmut_NonZero [@inline:trivial] (_1: MutBorrow.t t_NonZero) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_NonZero
+  meta "rewrite_def" function resolve_refmut_NonZero
   
-  predicate inv_tup2_NonZero_refmut_NonZero [@inline:trivial] (_1: tup2_NonZero_refmut_NonZero) =
+  function inv_tup2_NonZero_refmut_NonZero [@inline:trivial] (_1: tup2_NonZero_refmut_NonZero) : bool =
     inv_NonZero _1.f0'0 /\ inv_refmut_NonZero _1.f1'0
   
-  meta "rewrite_def" predicate inv_tup2_NonZero_refmut_NonZero
+  meta "rewrite_def" function inv_tup2_NonZero_refmut_NonZero
   
   meta "compute_max_steps" 1000000
   
@@ -113,24 +113,24 @@ module M_frozen_dead
   
   type t_NonZero = { f0: Int32.t }
   
-  predicate invariant_NonZero (self: t_NonZero) = Int32.to_int self.f0 <> 0
+  function invariant_NonZero (self: t_NonZero) : bool = Int32.to_int self.f0 <> 0
   
-  predicate inv_NonZero (_1: t_NonZero)
+  function inv_NonZero (_1: t_NonZero) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_NonZero [inv_NonZero _1]. inv_NonZero _1 = invariant_NonZero _1
   
-  predicate invariant_refmut_NonZero [@inline:trivial] (self: MutBorrow.t t_NonZero) =
-    inv_NonZero self.current /\ inv_NonZero self.final
+  function invariant_refmut_NonZero [@inline:trivial] (self: MutBorrow.t t_NonZero) : bool = inv_NonZero self.current
+    /\ inv_NonZero self.final
   
-  meta "rewrite_def" predicate invariant_refmut_NonZero
+  meta "rewrite_def" function invariant_refmut_NonZero
   
-  predicate inv_refmut_NonZero [@inline:trivial] (_1: MutBorrow.t t_NonZero) = invariant_refmut_NonZero _1
+  function inv_refmut_NonZero [@inline:trivial] (_1: MutBorrow.t t_NonZero) : bool = invariant_refmut_NonZero _1
   
-  meta "rewrite_def" predicate inv_refmut_NonZero
+  meta "rewrite_def" function inv_refmut_NonZero
   
-  predicate resolve_refmut_NonZero [@inline:trivial] (_1: MutBorrow.t t_NonZero) = _1.final = _1.current
+  function resolve_refmut_NonZero [@inline:trivial] (_1: MutBorrow.t t_NonZero) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_NonZero
+  meta "rewrite_def" function resolve_refmut_NonZero
   
   constant const_MAX: Int32.t = (2147483647: Int32.t)
   
@@ -140,9 +140,9 @@ module M_frozen_dead
     [ return (result: ()) -> {[@stop_split] [@expl:inc ensures] Int32.to_int x.final = Int32.to_int x.current + 1}
       (! return {result}) ]
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
   meta "compute_max_steps" 1000000
   
@@ -190,20 +190,20 @@ module M_hard
   
   type t_NonZero = { f0: Int32.t }
   
-  predicate invariant_NonZero (self: t_NonZero) = Int32.to_int self.f0 <> 0
+  function invariant_NonZero (self: t_NonZero) : bool = Int32.to_int self.f0 <> 0
   
-  predicate inv_NonZero (_1: t_NonZero)
+  function inv_NonZero (_1: t_NonZero) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_NonZero [inv_NonZero _1]. inv_NonZero _1 = invariant_NonZero _1
   
-  predicate invariant_refmut_NonZero [@inline:trivial] (self: MutBorrow.t t_NonZero) =
-    inv_NonZero self.current /\ inv_NonZero self.final
+  function invariant_refmut_NonZero [@inline:trivial] (self: MutBorrow.t t_NonZero) : bool = inv_NonZero self.current
+    /\ inv_NonZero self.final
   
-  meta "rewrite_def" predicate invariant_refmut_NonZero
+  meta "rewrite_def" function invariant_refmut_NonZero
   
-  predicate inv_refmut_NonZero [@inline:trivial] (_1: MutBorrow.t t_NonZero) = invariant_refmut_NonZero _1
+  function inv_refmut_NonZero [@inline:trivial] (_1: MutBorrow.t t_NonZero) : bool = invariant_refmut_NonZero _1
   
-  meta "rewrite_def" predicate inv_refmut_NonZero
+  meta "rewrite_def" function inv_refmut_NonZero
   
   let inner_mut (self: MutBorrow.t t_NonZero) (return (x: MutBorrow.t Int32.t)) =
   {[@stop_split] [@expl:inner_mut 'self' type invariant] inv_refmut_NonZero self}
@@ -222,13 +222,13 @@ module M_hard
     [ return (result: ()) -> {[@stop_split] [@expl:inc ensures] Int32.to_int x.final = Int32.to_int x.current + 1}
       (! return {result}) ]
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
-  predicate resolve_refmut_NonZero [@inline:trivial] (_1: MutBorrow.t t_NonZero) = _1.final = _1.current
+  function resolve_refmut_NonZero [@inline:trivial] (_1: MutBorrow.t t_NonZero) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_NonZero
+  meta "rewrite_def" function resolve_refmut_NonZero
   
   meta "compute_max_steps" 1000000
   
@@ -267,28 +267,28 @@ module M_impl_NonZero__inner_mut (* NonZero *)
   
   type t_NonZero = { f0: Int32.t }
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
-  predicate invariant_NonZero (self: t_NonZero) = Int32.to_int self.f0 <> 0
+  function invariant_NonZero (self: t_NonZero) : bool = Int32.to_int self.f0 <> 0
   
-  predicate inv_NonZero (_1: t_NonZero)
+  function inv_NonZero (_1: t_NonZero) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_NonZero [inv_NonZero _1]. inv_NonZero _1 = invariant_NonZero _1
   
-  predicate invariant_refmut_NonZero [@inline:trivial] (self: MutBorrow.t t_NonZero) =
-    inv_NonZero self.current /\ inv_NonZero self.final
+  function invariant_refmut_NonZero [@inline:trivial] (self: MutBorrow.t t_NonZero) : bool = inv_NonZero self.current
+    /\ inv_NonZero self.final
   
-  meta "rewrite_def" predicate invariant_refmut_NonZero
+  meta "rewrite_def" function invariant_refmut_NonZero
   
-  predicate inv_refmut_NonZero [@inline:trivial] (_1: MutBorrow.t t_NonZero) = invariant_refmut_NonZero _1
+  function inv_refmut_NonZero [@inline:trivial] (_1: MutBorrow.t t_NonZero) : bool = invariant_refmut_NonZero _1
   
-  meta "rewrite_def" predicate inv_refmut_NonZero
+  meta "rewrite_def" function inv_refmut_NonZero
   
-  predicate resolve_refmut_NonZero [@inline:trivial] (_1: MutBorrow.t t_NonZero) = _1.final = _1.current
+  function resolve_refmut_NonZero [@inline:trivial] (_1: MutBorrow.t t_NonZero) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_NonZero
+  meta "rewrite_def" function resolve_refmut_NonZero
   
   meta "compute_max_steps" 1000000
   
@@ -326,9 +326,9 @@ module M_impl_NonZero__new (* NonZero *)
   
   type t_NonZero = { f0: Int32.t }
   
-  predicate invariant_NonZero (self: t_NonZero) = Int32.to_int self.f0 <> 0
+  function invariant_NonZero (self: t_NonZero) : bool = Int32.to_int self.f0 <> 0
   
-  predicate inv_NonZero (_1: t_NonZero)
+  function inv_NonZero (_1: t_NonZero) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_NonZero [inv_NonZero _1]. inv_NonZero _1 = invariant_NonZero _1
   
@@ -361,13 +361,13 @@ module M_impl_SumTo10__foo (* SumTo10 *)
     [ return (result: ()) -> {[@stop_split] [@expl:inc ensures] Int32.to_int x.final = Int32.to_int x.current + 1}
       (! return {result}) ]
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   constant const_MIN: Int32.t = (-2147483648: Int32.t)
   
@@ -377,24 +377,24 @@ module M_impl_SumTo10__foo (* SumTo10 *)
     [ return (result: ()) -> {[@stop_split] [@expl:dec ensures] Int32.to_int x.final = Int32.to_int x.current - 1}
       (! return {result}) ]
   
-  predicate invariant_SumTo10 (self: t_SumTo10) = Int32.to_int self.a + Int32.to_int self.b = 10
+  function invariant_SumTo10 (self: t_SumTo10) : bool = Int32.to_int self.a + Int32.to_int self.b = 10
   
-  predicate inv_SumTo10 (_1: t_SumTo10)
+  function inv_SumTo10 (_1: t_SumTo10) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_SumTo10 [inv_SumTo10 _1]. inv_SumTo10 _1 = invariant_SumTo10 _1
   
-  predicate invariant_refmut_SumTo10 [@inline:trivial] (self: MutBorrow.t t_SumTo10) =
-    inv_SumTo10 self.current /\ inv_SumTo10 self.final
+  function invariant_refmut_SumTo10 [@inline:trivial] (self: MutBorrow.t t_SumTo10) : bool = inv_SumTo10 self.current
+    /\ inv_SumTo10 self.final
   
-  meta "rewrite_def" predicate invariant_refmut_SumTo10
+  meta "rewrite_def" function invariant_refmut_SumTo10
   
-  predicate inv_refmut_SumTo10 [@inline:trivial] (_1: MutBorrow.t t_SumTo10) = invariant_refmut_SumTo10 _1
+  function inv_refmut_SumTo10 [@inline:trivial] (_1: MutBorrow.t t_SumTo10) : bool = invariant_refmut_SumTo10 _1
   
-  meta "rewrite_def" predicate inv_refmut_SumTo10
+  meta "rewrite_def" function inv_refmut_SumTo10
   
-  predicate resolve_refmut_SumTo10 [@inline:trivial] (_1: MutBorrow.t t_SumTo10) = _1.final = _1.current
+  function resolve_refmut_SumTo10 [@inline:trivial] (_1: MutBorrow.t t_SumTo10) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_SumTo10
+  meta "rewrite_def" function resolve_refmut_SumTo10
   
   meta "compute_max_steps" 1000000
   
@@ -437,9 +437,9 @@ module M_inc
   use creusot.prelude.Any
   use int.Int
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
   constant const_MAX: Int32.t = (2147483647: Int32.t)
   
@@ -467,9 +467,9 @@ module M_partial_move
   
   type tup2_NonZero_refmut_NonZero = { f0'0: t_NonZero; f1'0: MutBorrow.t t_NonZero }
   
-  predicate invariant_NonZero (self: t_NonZero) = Int32.to_int self.f0 <> 0
+  function invariant_NonZero (self: t_NonZero) : bool = Int32.to_int self.f0 <> 0
   
-  predicate inv_NonZero (_1: t_NonZero)
+  function inv_NonZero (_1: t_NonZero) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_NonZero [inv_NonZero _1]. inv_NonZero _1 = invariant_NonZero _1
   
@@ -481,27 +481,27 @@ module M_partial_move
     [ return (result: ()) -> {[@stop_split] [@expl:inc ensures] Int32.to_int x.final = Int32.to_int x.current + 1}
       (! return {result}) ]
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
-  predicate invariant_refmut_NonZero [@inline:trivial] (self: MutBorrow.t t_NonZero) =
-    inv_NonZero self.current /\ inv_NonZero self.final
+  function invariant_refmut_NonZero [@inline:trivial] (self: MutBorrow.t t_NonZero) : bool = inv_NonZero self.current
+    /\ inv_NonZero self.final
   
-  meta "rewrite_def" predicate invariant_refmut_NonZero
+  meta "rewrite_def" function invariant_refmut_NonZero
   
-  predicate inv_refmut_NonZero [@inline:trivial] (_1: MutBorrow.t t_NonZero) = invariant_refmut_NonZero _1
+  function inv_refmut_NonZero [@inline:trivial] (_1: MutBorrow.t t_NonZero) : bool = invariant_refmut_NonZero _1
   
-  meta "rewrite_def" predicate inv_refmut_NonZero
+  meta "rewrite_def" function inv_refmut_NonZero
   
-  predicate resolve_refmut_NonZero [@inline:trivial] (_1: MutBorrow.t t_NonZero) = _1.final = _1.current
+  function resolve_refmut_NonZero [@inline:trivial] (_1: MutBorrow.t t_NonZero) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_NonZero
+  meta "rewrite_def" function resolve_refmut_NonZero
   
-  predicate inv_tup2_NonZero_refmut_NonZero [@inline:trivial] (_1: tup2_NonZero_refmut_NonZero) =
+  function inv_tup2_NonZero_refmut_NonZero [@inline:trivial] (_1: tup2_NonZero_refmut_NonZero) : bool =
     inv_NonZero _1.f0'0 /\ inv_refmut_NonZero _1.f1'0
   
-  meta "rewrite_def" predicate inv_tup2_NonZero_refmut_NonZero
+  meta "rewrite_def" function inv_tup2_NonZero_refmut_NonZero
   
   meta "compute_max_steps" 1000000
   
@@ -549,28 +549,28 @@ module M_simple
     [ return (result: ()) -> {[@stop_split] [@expl:inc ensures] Int32.to_int x.final = Int32.to_int x.current + 1}
       (! return {result}) ]
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
-  predicate invariant_NonZero (self: t_NonZero) = Int32.to_int self.f0 <> 0
+  function invariant_NonZero (self: t_NonZero) : bool = Int32.to_int self.f0 <> 0
   
-  predicate inv_NonZero (_1: t_NonZero)
+  function inv_NonZero (_1: t_NonZero) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_NonZero [inv_NonZero _1]. inv_NonZero _1 = invariant_NonZero _1
   
-  predicate invariant_refmut_NonZero [@inline:trivial] (self: MutBorrow.t t_NonZero) =
-    inv_NonZero self.current /\ inv_NonZero self.final
+  function invariant_refmut_NonZero [@inline:trivial] (self: MutBorrow.t t_NonZero) : bool = inv_NonZero self.current
+    /\ inv_NonZero self.final
   
-  meta "rewrite_def" predicate invariant_refmut_NonZero
+  meta "rewrite_def" function invariant_refmut_NonZero
   
-  predicate inv_refmut_NonZero [@inline:trivial] (_1: MutBorrow.t t_NonZero) = invariant_refmut_NonZero _1
+  function inv_refmut_NonZero [@inline:trivial] (_1: MutBorrow.t t_NonZero) : bool = invariant_refmut_NonZero _1
   
-  meta "rewrite_def" predicate inv_refmut_NonZero
+  meta "rewrite_def" function inv_refmut_NonZero
   
-  predicate resolve_refmut_NonZero [@inline:trivial] (_1: MutBorrow.t t_NonZero) = _1.final = _1.current
+  function resolve_refmut_NonZero [@inline:trivial] (_1: MutBorrow.t t_NonZero) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_NonZero
+  meta "rewrite_def" function resolve_refmut_NonZero
   
   meta "compute_max_steps" 1000000
   
@@ -605,9 +605,9 @@ module M_tuple
   
   type t_NonZero = { f0: Int32.t }
   
-  predicate invariant_NonZero (self: t_NonZero) = Int32.to_int self.f0 <> 0
+  function invariant_NonZero (self: t_NonZero) : bool = Int32.to_int self.f0 <> 0
   
-  predicate inv_NonZero (_1: t_NonZero)
+  function inv_NonZero (_1: t_NonZero) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_NonZero [inv_NonZero _1]. inv_NonZero _1 = invariant_NonZero _1
   
@@ -621,32 +621,32 @@ module M_tuple
     [ return (result: ()) -> {[@stop_split] [@expl:inc ensures] Int32.to_int x.final = Int32.to_int x.current + 1}
       (! return {result}) ]
   
-  predicate resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) = _1.final = _1.current
+  function resolve_refmut_i32 [@inline:trivial] (_1: MutBorrow.t Int32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_i32
+  meta "rewrite_def" function resolve_refmut_i32
   
-  predicate invariant_refmut_NonZero [@inline:trivial] (self: MutBorrow.t t_NonZero) =
-    inv_NonZero self.current /\ inv_NonZero self.final
+  function invariant_refmut_NonZero [@inline:trivial] (self: MutBorrow.t t_NonZero) : bool = inv_NonZero self.current
+    /\ inv_NonZero self.final
   
-  meta "rewrite_def" predicate invariant_refmut_NonZero
+  meta "rewrite_def" function invariant_refmut_NonZero
   
-  predicate inv_refmut_NonZero [@inline:trivial] (_1: MutBorrow.t t_NonZero) = invariant_refmut_NonZero _1
+  function inv_refmut_NonZero [@inline:trivial] (_1: MutBorrow.t t_NonZero) : bool = invariant_refmut_NonZero _1
   
-  meta "rewrite_def" predicate inv_refmut_NonZero
+  meta "rewrite_def" function inv_refmut_NonZero
   
-  predicate inv_tup2_NonZero_refmut_NonZero [@inline:trivial] (_1: tup2_NonZero_refmut_NonZero) =
+  function inv_tup2_NonZero_refmut_NonZero [@inline:trivial] (_1: tup2_NonZero_refmut_NonZero) : bool =
     inv_NonZero _1.f0'0 /\ inv_refmut_NonZero _1.f1'0
   
-  meta "rewrite_def" predicate inv_tup2_NonZero_refmut_NonZero
+  meta "rewrite_def" function inv_tup2_NonZero_refmut_NonZero
   
-  predicate resolve_refmut_NonZero [@inline:trivial] (_1: MutBorrow.t t_NonZero) = _1.final = _1.current
+  function resolve_refmut_NonZero [@inline:trivial] (_1: MutBorrow.t t_NonZero) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_NonZero
+  meta "rewrite_def" function resolve_refmut_NonZero
   
-  predicate resolve_tup2_NonZero_refmut_NonZero [@inline:trivial] (_1: tup2_NonZero_refmut_NonZero) =
+  function resolve_tup2_NonZero_refmut_NonZero [@inline:trivial] (_1: tup2_NonZero_refmut_NonZero) : bool =
     resolve_refmut_NonZero _1.f1'0
   
-  meta "rewrite_def" predicate resolve_tup2_NonZero_refmut_NonZero
+  meta "rewrite_def" function resolve_tup2_NonZero_refmut_NonZero
   
   meta "compute_max_steps" 1000000
   

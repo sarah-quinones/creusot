@@ -11,9 +11,9 @@ type t_Option_usize = None | Some UInt64.t
 
 type tup2_usize_Option_usize = { f0: UInt64.t; f1: t_Option_usize }
 
-predicate gt_log_usize [@inline:trivial] (self: UInt64.t) (other: UInt64.t) = UInt64.lt other self
+function gt_log_usize [@inline:trivial] (self: UInt64.t) (other: UInt64.t) : bool = UInt64.lt other self
 
-meta "rewrite_def" predicate gt_log_usize
+meta "rewrite_def" function gt_log_usize
 
 function n_Take_I (self: t_Take_I) : UInt64.t
 
@@ -21,7 +21,7 @@ type t_I
 
 type t_Item
 
-predicate produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I)
+function produces_I (self: t_I) (visited: Seq.seq t_Item) (o: t_I) : bool
 
 function produces_trans_I (a: t_I) (ab: Seq.seq t_Item) (b: t_I) (bc: Seq.seq t_Item) (c: t_I) : ()
 
@@ -32,9 +32,9 @@ function produces_refl_I (self: t_I) : ()
 
 axiom produces_refl_I_spec: forall self: t_I. produces_I self (Seq.empty: Seq.seq t_Item) self
 
-predicate completed_I (self: MutBorrow.t t_I)
+function completed_I (self: MutBorrow.t t_I) : bool
 
-predicate postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize)
+function postcondition_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool
 
 axiom postcondition_fndef:
   forall args: t_I, result: tup2_usize_Option_usize [postcondition_size_hint () args result]. postcondition_size_hint () args result
@@ -47,11 +47,11 @@ axiom postcondition_fndef:
 
 function iter_Take_I (self: t_Take_I) : t_I
 
-predicate ge_log_usize [@inline:trivial] (self: UInt64.t) (other: UInt64.t) = UInt64.le other self
+function ge_log_usize [@inline:trivial] (self: UInt64.t) (other: UInt64.t) : bool = UInt64.le other self
 
-meta "rewrite_def" predicate ge_log_usize
+meta "rewrite_def" function ge_log_usize
 
-predicate postcondition_size_hint'0 (self: ()) (args: t_Take_I) (result: tup2_usize_Option_usize) =
+function postcondition_size_hint'0 (self: ()) (args: t_Take_I) (result: tup2_usize_Option_usize) : bool =
   let self'0 = args in (gt_log_usize (n_Take_I self'0) (0: UInt64.t)
     -> (exists r: tup2_usize_Option_usize. postcondition_size_hint () (iter_Take_I self'0) r
       /\ (UInt64.le r.f0 (n_Take_I self'0) -> result.f0 = r.f0)
@@ -63,43 +63,43 @@ predicate postcondition_size_hint'0 (self: ()) (args: t_Take_I) (result: tup2_us
         end))
   /\ (n_Take_I self'0 = (0: UInt64.t) -> result = { f0 = (0: UInt64.t); f1 = Some (0: UInt64.t) })
 
-meta "rewrite_def" predicate postcondition_size_hint'0
+meta "rewrite_def" function postcondition_size_hint'0
 
-predicate inv_I (_1: t_I)
+function inv_I (_1: t_I) : bool
 
-predicate invariant_Take_I [@inline:trivial] (self: t_Take_I) = inv_I (iter_Take_I self)
+function invariant_Take_I [@inline:trivial] (self: t_Take_I) : bool = inv_I (iter_Take_I self)
 
-meta "rewrite_def" predicate invariant_Take_I
+meta "rewrite_def" function invariant_Take_I
 
-predicate inv_Take_I (_1: t_Take_I)
+function inv_Take_I (_1: t_Take_I) : bool
 
 axiom inv_axiom: forall _1: t_Take_I [inv_Take_I _1]. inv_Take_I _1 -> invariant_Take_I _1
 
-predicate invariant_ref_Take_I [@inline:trivial] (self: t_Take_I) = inv_Take_I self
+function invariant_ref_Take_I [@inline:trivial] (self: t_Take_I) : bool = inv_Take_I self
 
-meta "rewrite_def" predicate invariant_ref_Take_I
+meta "rewrite_def" function invariant_ref_Take_I
 
-predicate inv_ref_Take_I [@inline:trivial] (_1: t_Take_I) = invariant_ref_Take_I _1
+function inv_ref_Take_I [@inline:trivial] (_1: t_Take_I) : bool = invariant_ref_Take_I _1
 
-meta "rewrite_def" predicate inv_ref_Take_I
+meta "rewrite_def" function inv_ref_Take_I
 
-predicate invariant_ref_I [@inline:trivial] (self: t_I) = inv_I self
+function invariant_ref_I [@inline:trivial] (self: t_I) : bool = inv_I self
 
-meta "rewrite_def" predicate invariant_ref_I
+meta "rewrite_def" function invariant_ref_I
 
-predicate inv_ref_I [@inline:trivial] (_1: t_I) = invariant_ref_I _1
+function inv_ref_I [@inline:trivial] (_1: t_I) : bool = invariant_ref_I _1
 
-meta "rewrite_def" predicate inv_ref_I
+meta "rewrite_def" function inv_ref_I
 
-predicate precondition_size_hint (self: ()) (args: t_I)
+function precondition_size_hint (self: ()) (args: t_I) : bool
 
 axiom precondition_fndef: forall args: t_I [precondition_size_hint () args]. (let self = args in inv_ref_I self)
     -> precondition_size_hint () args
 
-predicate postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) =
+function postcondition_once_size_hint (self: ()) (args: t_I) (result: tup2_usize_Option_usize) : bool =
   postcondition_size_hint self args result
 
-meta "rewrite_def" predicate postcondition_once_size_hint
+meta "rewrite_def" function postcondition_once_size_hint
 
 let size_hint_I (self: t_I) (return (x: tup2_usize_Option_usize)) =
 {[@stop_split] [@expl:size_hint requires] precondition_size_hint () self}

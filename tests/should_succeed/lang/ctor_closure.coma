@@ -6,9 +6,9 @@ module M_g
   
   type t_Option_A = None | Some t_A
   
-  predicate inv_A (_1: t_A)
+  function inv_A (_1: t_A) : bool
   
-  predicate inv_Option_A (_1: t_Option_A)
+  function inv_Option_A (_1: t_Option_A) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Option_A [inv_Option_A _1]. inv_Option_A _1
       = match _1 with
@@ -21,11 +21,11 @@ module M_g
   
   type t_Option_Option_A = None'0 | Some'0 t_Option_A
   
-  predicate precondition_Some (self: ()) (args: t_A) = let _1 = args in c_Some'pre _1
+  function precondition_Some (self: ()) (args: t_A) : bool = let _1 = args in c_Some'pre _1
   
-  meta "rewrite_def" predicate precondition_Some
+  meta "rewrite_def" function precondition_Some
   
-  predicate inv_Option_Option_A (_1: t_Option_Option_A)
+  function inv_Option_Option_A (_1: t_Option_Option_A) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Option_Option_A [inv_Option_Option_A _1]. inv_Option_Option_A _1
       = match _1 with
@@ -33,18 +33,19 @@ module M_g
         | Some'0 f0 -> inv_Option_A f0
         end
   
-  predicate resolve_Some [@inline:trivial] (_1: ()) = true
+  function resolve_Some [@inline:trivial] (_1: ()) : bool = true
   
-  meta "rewrite_def" predicate resolve_Some
+  meta "rewrite_def" function resolve_Some
   
-  predicate postcondition_Some (self: ()) (args: t_A) (result: t_Option_A) =
+  function postcondition_Some (self: ()) (args: t_A) (result: t_Option_A) : bool =
     let _1 = args in c_Some'post'return _1 result
   
-  meta "rewrite_def" predicate postcondition_Some
+  meta "rewrite_def" function postcondition_Some
   
-  predicate postcondition_once_Some (self: ()) (args: t_A) (result: t_Option_A) = postcondition_Some self args result
+  function postcondition_once_Some (self: ()) (args: t_A) (result: t_Option_A) : bool =
+    postcondition_Some self args result
   
-  meta "rewrite_def" predicate postcondition_once_Some
+  meta "rewrite_def" function postcondition_once_Some
   
   let map_A (self: t_Option_A) (f: ()) (return (x: t_Option_Option_A)) =
   {[@stop_split] [@expl:map_A requires] ([@stop_split] [@expl:map 'self' type invariant] inv_Option_A self)
@@ -101,13 +102,13 @@ module M_i
   
   type t_T2_A_B = { f0: t_A; f1: t_B }
   
-  predicate invariant_T2_A_B (self: t_T2_A_B)
+  function invariant_T2_A_B (self: t_T2_A_B) : bool
   
-  predicate inv_A (_1: t_A)
+  function inv_A (_1: t_A) : bool
   
-  predicate inv_B (_1: t_B)
+  function inv_B (_1: t_B) : bool
   
-  predicate inv_T2_A_B (_1: t_T2_A_B)
+  function inv_T2_A_B (_1: t_T2_A_B) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_T2_A_B [inv_T2_A_B _1]. inv_T2_A_B _1
       = (invariant_T2_A_B _1 /\ inv_A _1.f0 /\ inv_B _1.f1)
@@ -140,11 +141,11 @@ module M_some_post
   
   type t_T2_A_A = { f0'0: t_A; f1'0: t_A }
   
-  predicate invariant_T2_A_A (self: t_T2_A_A)
+  function invariant_T2_A_A (self: t_T2_A_A) : bool
   
-  predicate inv_A (_1: t_A)
+  function inv_A (_1: t_A) : bool
   
-  predicate inv_T2_A_A (_1: t_T2_A_A)
+  function inv_T2_A_A (_1: t_T2_A_A) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_T2_A_A [inv_T2_A_A _1]. inv_T2_A_A _1
       = (invariant_T2_A_A _1 /\ inv_A _1.f0'0 /\ inv_A _1.f1'0)
@@ -153,9 +154,9 @@ module M_some_post
   {[@expl:T2 type invariant] inv_T2_A_A { f0'0 = _1; f1'0 = _2 }}
     return {{ f0'0 = _1; f1'0 = _2 }}
   
-  predicate precondition_T2 (self: ()) (args: tup2_A_A) = let {f0 = _1; f1 = _2} = args in c_T2'pre _1 _2
+  function precondition_T2 (self: ()) (args: tup2_A_A) : bool = let {f0 = _1; f1 = _2} = args in c_T2'pre _1 _2
   
-  meta "rewrite_def" predicate precondition_T2
+  meta "rewrite_def" function precondition_T2
   
   meta "compute_max_steps" 1000000
   

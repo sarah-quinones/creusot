@@ -29,7 +29,7 @@ constant self : t_FMap_K_V
 
 constant other : t_FMap_K_V
 
-predicate ext_eq_K (self: t_FMap_K_V) (other: t_FMap_K_V)
+function ext_eq_K (self: t_FMap_K_V) (other: t_FMap_K_V) : bool
 
 goal vc_ext_eq_K: [@stop_split] [@expl:ext_eq ensures] (forall k: t_K. lookup_K self k = lookup_K other k)
   = (self = other)

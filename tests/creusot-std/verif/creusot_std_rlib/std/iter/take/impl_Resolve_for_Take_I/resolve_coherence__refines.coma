@@ -2,19 +2,19 @@
 
 type t_Take_I
 
-predicate inv_Take_I (_1: t_Take_I)
+function inv_Take_I (_1: t_Take_I) : bool
 
-predicate structural_resolve_Take_I (_1: t_Take_I)
+function structural_resolve_Take_I (_1: t_Take_I) : bool
 
 type t_I
 
-predicate resolve_I (_1: t_I)
+function resolve_I (_1: t_I) : bool
 
 function iter_Take_I (self: t_Take_I) : t_I
 
-predicate resolve_Take_I [@inline:trivial] (self: t_Take_I) = resolve_I (iter_Take_I self)
+function resolve_Take_I [@inline:trivial] (self: t_Take_I) : bool = resolve_I (iter_Take_I self)
 
-meta "rewrite_def" predicate resolve_Take_I
+meta "rewrite_def" function resolve_Take_I
 
 meta "compute_max_steps" 1000000
 

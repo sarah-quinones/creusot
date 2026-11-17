@@ -2,7 +2,7 @@
 
 type t_T
 
-predicate resolve_ref_T (self: t_T) = true
+function resolve_ref_T (self: t_T) : bool = true
 
 meta "compute_max_steps" 1000000
 

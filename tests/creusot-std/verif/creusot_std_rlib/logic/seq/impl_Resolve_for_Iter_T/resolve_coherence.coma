@@ -7,21 +7,22 @@ type t_T
 
 type t_Iter_T = { f0: Seq.seq t_T }
 
-predicate resolve_T (_1: t_T)
+function resolve_T (_1: t_T) : bool
 
-predicate resolve_Seq_T (self: Seq.seq t_T) = forall i: int. 0 <= i /\ i < Seq.length self -> resolve_T (Seq.get self i)
+function resolve_Seq_T (self: Seq.seq t_T) : bool = forall i: int. 0 <= i /\ i < Seq.length self
+    -> resolve_T (Seq.get self i)
 
-predicate resolve_Seq_T'0 [@inline:trivial] (_1: Seq.seq t_T) = resolve_Seq_T _1
+function resolve_Seq_T'0 [@inline:trivial] (_1: Seq.seq t_T) : bool = resolve_Seq_T _1
 
-meta "rewrite_def" predicate resolve_Seq_T'0
+meta "rewrite_def" function resolve_Seq_T'0
 
-predicate structural_resolve_Iter_T (_1: t_Iter_T) = resolve_Seq_T'0 _1.f0
+function structural_resolve_Iter_T (_1: t_Iter_T) : bool = resolve_Seq_T'0 _1.f0
 
 function view_Iter_T (self: t_Iter_T) : Seq.seq t_T = self.f0
 
-predicate resolve_Iter_T [@inline:trivial] (self: t_Iter_T) = resolve_Seq_T'0 (view_Iter_T self)
+function resolve_Iter_T [@inline:trivial] (self: t_Iter_T) : bool = resolve_Seq_T'0 (view_Iter_T self)
 
-meta "rewrite_def" predicate resolve_Iter_T
+meta "rewrite_def" function resolve_Iter_T
 
 meta "compute_max_steps" 1000000
 

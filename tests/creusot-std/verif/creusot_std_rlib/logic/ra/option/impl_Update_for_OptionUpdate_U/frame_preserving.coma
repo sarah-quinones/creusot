@@ -12,15 +12,14 @@ type t_Option_R = None | Some t_R
 
 type t_Choice
 
-predicate premise_U (self: t_U) (from: t_R)
+function premise_U (self: t_U) (from: t_R) : bool
 
-predicate premise_OptionUpdate_U [@inline:trivial] (self: t_OptionUpdate_U) (from: t_Option_R) =
-  match from with
+function premise_OptionUpdate_U [@inline:trivial] (self: t_OptionUpdate_U) (from: t_Option_R) : bool = match from with
     | Some from'0 -> premise_U self.f0 from'0
     | None -> false
     end
 
-meta "rewrite_def" predicate premise_OptionUpdate_U
+meta "rewrite_def" function premise_OptionUpdate_U
 
 type t_Option_Option_R = None'0 | Some'0 t_Option_R
 
@@ -33,7 +32,7 @@ function map_Option_R (self: t_Option_R) (f: Map.map t_R t_Option_R) : t_Option_
 
 function op_R (self: t_R) (other: t_R) : t_Option_R
 
-predicate incl_R (self: t_R) (other: t_R)
+function incl_R (self: t_R) (other: t_R) : bool
 
 axiom incl_R_spec: forall self: t_R, other: t_R [incl_R self other]. incl_R self other
     = (exists factor: t_R. op_R self factor = Some other)
@@ -81,9 +80,9 @@ function update_OptionUpdate_U [@inline:trivial] (self: t_OptionUpdate_U) (from:
 
 meta "rewrite_def" function update_OptionUpdate_U
 
-predicate index_Mapping_R_bool [@inline:trivial] (self: Map.map t_R bool) (a: t_R) = Map.get self a
+function index_Mapping_R_bool [@inline:trivial] (self: Map.map t_R bool) (a: t_R) : bool = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_R_bool
+meta "rewrite_def" function index_Mapping_R_bool
 
 function such_that_R (p: Map.map t_R bool) : t_R
 
@@ -103,9 +102,9 @@ axiom frame_preserving_U_spec:
   forall self: t_U, from: t_R, frame: t_R [frame_preserving_U self from frame]. premise_U self from
     -> op_R from frame <> None -> op_R (update_U self from (frame_preserving_U self from frame)) frame <> None
 
-predicate index_Mapping_Choice_bool [@inline:trivial] (self: Map.map t_Choice bool) (a: t_Choice) = Map.get self a
+function index_Mapping_Choice_bool [@inline:trivial] (self: Map.map t_Choice bool) (a: t_Choice) : bool = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_Choice_bool
+meta "rewrite_def" function index_Mapping_Choice_bool
 
 function such_that_Choice (p: Map.map t_Choice bool) : t_Choice
 

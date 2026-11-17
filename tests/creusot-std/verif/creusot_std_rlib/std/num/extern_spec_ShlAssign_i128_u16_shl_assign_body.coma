@@ -5,9 +5,9 @@ use creusot.prelude.Any
 use creusot.int.UInt64
 use creusot.int.UInt32
 
-predicate resolve_refmut_u16 [@inline:trivial] (_1: MutBorrow.t UInt16.t) = _1.final = _1.current
+function resolve_refmut_u16 [@inline:trivial] (_1: MutBorrow.t UInt16.t) : bool = _1.final = _1.current
 
-meta "rewrite_def" predicate resolve_refmut_u16
+meta "rewrite_def" function resolve_refmut_u16
 
 constant const_BITS: UInt32.t = (16: UInt32.t)
 

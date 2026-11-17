@@ -4,9 +4,9 @@ use creusot.prelude.MutBorrow
 use creusot.prelude.Any
 use creusot.int.UInt64
 
-predicate resolve_refmut_isize [@inline:trivial] (_1: MutBorrow.t Int64.t) = _1.final = _1.current
+function resolve_refmut_isize [@inline:trivial] (_1: MutBorrow.t Int64.t) : bool = _1.final = _1.current
 
-meta "rewrite_def" predicate resolve_refmut_isize
+meta "rewrite_def" function resolve_refmut_isize
 
 constant const_BITS: UInt32.t = (64: UInt32.t)
 

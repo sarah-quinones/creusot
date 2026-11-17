@@ -30,17 +30,17 @@ module M_all_zero
         end}
       any) ]
   
-  predicate resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) = _1.final = _1.current
+  function resolve_refmut_u32 [@inline:trivial] (_1: MutBorrow.t UInt32.t) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_u32
+  meta "rewrite_def" function resolve_refmut_u32
   
-  predicate resolve_refmut_List [@inline:trivial] (_1: MutBorrow.t t_List) = _1.final = _1.current
+  function resolve_refmut_List [@inline:trivial] (_1: MutBorrow.t t_List) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_List
+  meta "rewrite_def" function resolve_refmut_List
   
-  predicate resolve_refmut_Box_List_Global [@inline:trivial] (_1: MutBorrow.t t_List) = _1.final = _1.current
+  function resolve_refmut_Box_List_Global [@inline:trivial] (_1: MutBorrow.t t_List) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Box_List_Global
+  meta "rewrite_def" function resolve_refmut_Box_List_Global
   
   meta "compute_max_steps" 1000000
   

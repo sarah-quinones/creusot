@@ -21,9 +21,9 @@ module M_uses_invariant
   
   type t_Once_T = { f0: t_Option_T }
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_Option_T (_1: t_Option_T)
+  function inv_Option_T (_1: t_Option_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_T _1
       = match _1 with
@@ -31,14 +31,14 @@ module M_uses_invariant
         | Some f0'0 -> inv_T f0'0
         end
   
-  predicate invariant_refmut_Option_T [@inline:trivial] (self: MutBorrow.t t_Option_T) =
-    inv_Option_T self.current /\ inv_Option_T self.final
+  function invariant_refmut_Option_T [@inline:trivial] (self: MutBorrow.t t_Option_T) : bool = inv_Option_T self.current
+    /\ inv_Option_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Option_T
+  meta "rewrite_def" function invariant_refmut_Option_T
   
-  predicate inv_refmut_Option_T [@inline:trivial] (_1: MutBorrow.t t_Option_T) = invariant_refmut_Option_T _1
+  function inv_refmut_Option_T [@inline:trivial] (_1: MutBorrow.t t_Option_T) : bool = invariant_refmut_Option_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Option_T
+  meta "rewrite_def" function inv_refmut_Option_T
   
   let take_T (self: MutBorrow.t t_Option_T) (return (x: t_Option_T)) =
   {[@stop_split] [@expl:take 'self' type invariant] inv_refmut_Option_T self}
@@ -48,9 +48,9 @@ module M_uses_invariant
       /\ ([@stop_split] [@expl:take ensures] result = self.current /\ self.final = None)}
       (! return {result}) ]
   
-  predicate resolve_T (_1: t_T)
+  function resolve_T (_1: t_T) : bool
   
-  predicate resolve_Option_T (_1: t_Option_T)
+  function resolve_Option_T (_1: t_Option_T) : bool
   
   axiom resolve_axiom [@rewrite]: forall _1: t_Option_T [resolve_Option_T _1]. resolve_Option_T _1
       = match _1 with
@@ -58,24 +58,24 @@ module M_uses_invariant
         | Some x0 -> resolve_T x0
         end
   
-  predicate inv_Once_T (_1: t_Once_T)
+  function inv_Once_T (_1: t_Once_T) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Once_T [inv_Once_T _1]. inv_Once_T _1 = inv_Option_T _1.f0
   
-  predicate invariant_refmut_Once_T [@inline:trivial] (self: MutBorrow.t t_Once_T) =
-    inv_Once_T self.current /\ inv_Once_T self.final
+  function invariant_refmut_Once_T [@inline:trivial] (self: MutBorrow.t t_Once_T) : bool = inv_Once_T self.current
+    /\ inv_Once_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Once_T
+  meta "rewrite_def" function invariant_refmut_Once_T
   
-  predicate inv_refmut_Once_T [@inline:trivial] (_1: MutBorrow.t t_Once_T) = invariant_refmut_Once_T _1
+  function inv_refmut_Once_T [@inline:trivial] (_1: MutBorrow.t t_Once_T) : bool = invariant_refmut_Once_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Once_T
+  meta "rewrite_def" function inv_refmut_Once_T
   
-  predicate resolve_refmut_Once_T [@inline:trivial] (_1: MutBorrow.t t_Once_T) = _1.final = _1.current
+  function resolve_refmut_Once_T [@inline:trivial] (_1: MutBorrow.t t_Once_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Once_T
+  meta "rewrite_def" function resolve_refmut_Once_T
   
-  predicate invariant_Once_T (self: t_Once_T) = true
+  function invariant_Once_T (self: t_Once_T) : bool = true
   
   meta "compute_max_steps" 1000000
   

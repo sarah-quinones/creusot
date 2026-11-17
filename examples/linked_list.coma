@@ -7,7 +7,7 @@ module M_impl_List_T__new (* List<T> *)
   use map.Map
   use int.Int
   
-  predicate is_null_ptr_Link_T (self: Opaque.ptr) = Ptr.addr_logic_u64 self = (0: UInt64.t)
+  function is_null_ptr_Link_T (self: Opaque.ptr) : bool = Ptr.addr_logic_u64 self = (0: UInt64.t)
   
   let null_Link_T (return (x: Opaque.ptr)) = any
     [ return (result: Opaque.ptr) -> {[@stop_split] [@expl:null ensures] is_null_ptr_Link_T result}
@@ -21,64 +21,65 @@ module M_impl_List_T__new (* List<T> *)
   
   type t_Link_T = { value: t_T; next: Opaque.ptr }
   
-  predicate metadata_matches_Link_T [@inline:trivial] (_value: t_Link_T) (_metadata: ()) = true
+  function metadata_matches_Link_T [@inline:trivial] (_value: t_Link_T) (_metadata: ()) : bool = true
   
-  meta "rewrite_def" predicate metadata_matches_Link_T
+  meta "rewrite_def" function metadata_matches_Link_T
   
   function val_unsized_ptr_Link_T (self: t_Perm_ptr_Link_T) : t_Link_T
   
   function metadata_Link_T (_1: Opaque.ptr) : ()
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_Link_T (_1: t_Link_T)
+  function inv_Link_T (_1: t_Link_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Link_T [inv_Link_T _1]. inv_Link_T _1 = inv_T _1.value
   
-  predicate invariant_ref_Link_T [@inline:trivial] (self: t_Link_T) = inv_Link_T self
+  function invariant_ref_Link_T [@inline:trivial] (self: t_Link_T) : bool = inv_Link_T self
   
-  meta "rewrite_def" predicate invariant_ref_Link_T
+  meta "rewrite_def" function invariant_ref_Link_T
   
-  predicate inv_ref_Link_T [@inline:trivial] (_1: t_Link_T) = invariant_ref_Link_T _1
+  function inv_ref_Link_T [@inline:trivial] (_1: t_Link_T) : bool = invariant_ref_Link_T _1
   
-  meta "rewrite_def" predicate inv_ref_Link_T
+  meta "rewrite_def" function inv_ref_Link_T
   
-  predicate invariant_Perm_ptr_Link_T (self: t_Perm_ptr_Link_T) =
-    not is_null_ptr_Link_T (ward_ptr_Link_T self)
+  function invariant_Perm_ptr_Link_T (self: t_Perm_ptr_Link_T) : bool = not is_null_ptr_Link_T (ward_ptr_Link_T self)
     /\ metadata_matches_Link_T (val_unsized_ptr_Link_T self) (metadata_Link_T (ward_ptr_Link_T self))
     /\ inv_ref_Link_T (val_unsized_ptr_Link_T self)
   
-  predicate inv_Perm_ptr_Link_T (_1: t_Perm_ptr_Link_T)
+  function inv_Perm_ptr_Link_T (_1: t_Perm_ptr_Link_T) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Perm_ptr_Link_T [inv_Perm_ptr_Link_T _1]. inv_Perm_ptr_Link_T _1
       = invariant_Perm_ptr_Link_T _1
   
-  predicate invariant_ref_Perm_ptr_Link_T [@inline:trivial] (self: t_Perm_ptr_Link_T) = inv_Perm_ptr_Link_T self
+  function invariant_ref_Perm_ptr_Link_T [@inline:trivial] (self: t_Perm_ptr_Link_T) : bool = inv_Perm_ptr_Link_T self
   
-  meta "rewrite_def" predicate invariant_ref_Perm_ptr_Link_T
+  meta "rewrite_def" function invariant_ref_Perm_ptr_Link_T
   
-  predicate inv_ref_Perm_ptr_Link_T [@inline:trivial] (_1: t_Perm_ptr_Link_T) = invariant_ref_Perm_ptr_Link_T _1
+  function inv_ref_Perm_ptr_Link_T [@inline:trivial] (_1: t_Perm_ptr_Link_T) : bool = invariant_ref_Perm_ptr_Link_T _1
   
-  meta "rewrite_def" predicate inv_ref_Perm_ptr_Link_T
+  meta "rewrite_def" function inv_ref_Perm_ptr_Link_T
   
-  predicate invariant_Seq_Perm_ptr_Link_T [@inline:trivial] (self: Seq.seq t_Perm_ptr_Link_T) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_Perm_ptr_Link_T (Seq.get self i)
+  function invariant_Seq_Perm_ptr_Link_T [@inline:trivial] (self: Seq.seq t_Perm_ptr_Link_T) : bool = forall i: int. 0
+          <= i
+        /\ i < Seq.length self -> inv_ref_Perm_ptr_Link_T (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_Perm_ptr_Link_T
+  meta "rewrite_def" function invariant_Seq_Perm_ptr_Link_T
   
-  predicate inv_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: Seq.seq t_Perm_ptr_Link_T) = invariant_Seq_Perm_ptr_Link_T _1
+  function inv_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: Seq.seq t_Perm_ptr_Link_T) : bool =
+    invariant_Seq_Perm_ptr_Link_T _1
   
-  meta "rewrite_def" predicate inv_Seq_Perm_ptr_Link_T
+  meta "rewrite_def" function inv_Seq_Perm_ptr_Link_T
   
-  predicate invariant_Ghost_Seq_Perm_ptr_Link_T [@inline:trivial] (self: Seq.seq t_Perm_ptr_Link_T) =
+  function invariant_Ghost_Seq_Perm_ptr_Link_T [@inline:trivial] (self: Seq.seq t_Perm_ptr_Link_T) : bool =
     inv_Seq_Perm_ptr_Link_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_Seq_Perm_ptr_Link_T
+  meta "rewrite_def" function invariant_Ghost_Seq_Perm_ptr_Link_T
   
-  predicate inv_Ghost_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: Seq.seq t_Perm_ptr_Link_T) =
+  function inv_Ghost_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: Seq.seq t_Perm_ptr_Link_T) : bool =
     invariant_Ghost_Seq_Perm_ptr_Link_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_Seq_Perm_ptr_Link_T
+  meta "rewrite_def" function inv_Ghost_Seq_Perm_ptr_Link_T
   
   let new_Perm_ptr_Link_T (return (x: Seq.seq t_Perm_ptr_Link_T)) = any
     [ return (result: Seq.seq t_Perm_ptr_Link_T) ->
@@ -88,16 +89,17 @@ module M_impl_List_T__new (* List<T> *)
   
   type t_List_T = { first: Opaque.ptr; last: Opaque.ptr; seq: Seq.seq t_Perm_ptr_Link_T }
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   function val_ptr_Link_T [@inline:trivial] (self: t_Perm_ptr_Link_T) : t_Link_T = val_unsized_ptr_Link_T self
   
   meta "rewrite_def" function val_ptr_Link_T
   
-  predicate invariant_List_T [@inline:trivial] (self: t_List_T) =
-    self.seq = (Seq.empty: Seq.seq t_Perm_ptr_Link_T) /\ is_null_ptr_Link_T self.first /\ is_null_ptr_Link_T self.last
+  function invariant_List_T [@inline:trivial] (self: t_List_T) : bool = self.seq
+        = (Seq.empty: Seq.seq t_Perm_ptr_Link_T)
+      /\ is_null_ptr_Link_T self.first /\ is_null_ptr_Link_T self.last
     \/ gt_log_Int (Seq.length self.seq) 0
     /\ self.first = ward_ptr_Link_T (Seq.get self.seq 0)
     /\ self.last = ward_ptr_Link_T (Seq.get self.seq (Seq.length self.seq - 1))
@@ -105,9 +107,9 @@ module M_impl_List_T__new (* List<T> *)
         -> (val_ptr_Link_T (Seq.get self.seq i)).next = ward_ptr_Link_T (Seq.get self.seq (i + 1)))
     /\ is_null_ptr_Link_T (val_ptr_Link_T (Seq.get self.seq (Seq.length self.seq - 1))).next
   
-  meta "rewrite_def" predicate invariant_List_T
+  meta "rewrite_def" function invariant_List_T
   
-  predicate inv_List_T (_1: t_List_T)
+  function inv_List_T (_1: t_List_T) : bool
   
   axiom inv_axiom'1 [@rewrite]: forall _1: t_List_T [inv_List_T _1]. inv_List_T _1
       = (invariant_List_T _1 /\ inv_Ghost_Seq_Perm_ptr_Link_T _1.seq)
@@ -166,15 +168,15 @@ module M_impl_List_T__pop_front (* List<T> *)
   
   type t_List_T = { first: Opaque.ptr; last: Opaque.ptr; seq: Seq.seq t_Perm_ptr_Link_T }
   
-  predicate is_null_ptr_Link_T (self: Opaque.ptr) = Ptr.addr_logic_u64 self = (0: UInt64.t)
+  function is_null_ptr_Link_T (self: Opaque.ptr) : bool = Ptr.addr_logic_u64 self = (0: UInt64.t)
   
   let is_null_Link_T (self: Opaque.ptr) (return (x: bool)) = any
     [ return (result: bool) -> {[@stop_split] [@expl:is_null ensures] result = is_null_ptr_Link_T self}
       (! return {result}) ]
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   function ward_ptr_Link_T (self: t_Perm_ptr_Link_T) : Opaque.ptr
   
@@ -188,8 +190,9 @@ module M_impl_List_T__pop_front (* List<T> *)
   
   meta "rewrite_def" function val_ptr_Link_T
   
-  predicate invariant_List_T [@inline:trivial] (self: t_List_T) =
-    self.seq = (Seq.empty: Seq.seq t_Perm_ptr_Link_T) /\ is_null_ptr_Link_T self.first /\ is_null_ptr_Link_T self.last
+  function invariant_List_T [@inline:trivial] (self: t_List_T) : bool = self.seq
+        = (Seq.empty: Seq.seq t_Perm_ptr_Link_T)
+      /\ is_null_ptr_Link_T self.first /\ is_null_ptr_Link_T self.last
     \/ gt_log_Int (Seq.length self.seq) 0
     /\ self.first = ward_ptr_Link_T (Seq.get self.seq 0)
     /\ self.last = ward_ptr_Link_T (Seq.get self.seq (Seq.length self.seq - 1))
@@ -197,104 +200,105 @@ module M_impl_List_T__pop_front (* List<T> *)
         -> (val_ptr_Link_T (Seq.get self.seq i)).next = ward_ptr_Link_T (Seq.get self.seq (i + 1)))
     /\ is_null_ptr_Link_T (val_ptr_Link_T (Seq.get self.seq (Seq.length self.seq - 1))).next
   
-  meta "rewrite_def" predicate invariant_List_T
+  meta "rewrite_def" function invariant_List_T
   
-  predicate metadata_matches_Link_T [@inline:trivial] (_value: t_Link_T) (_metadata: ()) = true
+  function metadata_matches_Link_T [@inline:trivial] (_value: t_Link_T) (_metadata: ()) : bool = true
   
-  meta "rewrite_def" predicate metadata_matches_Link_T
+  meta "rewrite_def" function metadata_matches_Link_T
   
   function metadata_Link_T (_1: Opaque.ptr) : ()
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_Link_T (_1: t_Link_T)
+  function inv_Link_T (_1: t_Link_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Link_T [inv_Link_T _1]. inv_Link_T _1 = inv_T _1.value
   
-  predicate invariant_ref_Link_T [@inline:trivial] (self: t_Link_T) = inv_Link_T self
+  function invariant_ref_Link_T [@inline:trivial] (self: t_Link_T) : bool = inv_Link_T self
   
-  meta "rewrite_def" predicate invariant_ref_Link_T
+  meta "rewrite_def" function invariant_ref_Link_T
   
-  predicate inv_ref_Link_T [@inline:trivial] (_1: t_Link_T) = invariant_ref_Link_T _1
+  function inv_ref_Link_T [@inline:trivial] (_1: t_Link_T) : bool = invariant_ref_Link_T _1
   
-  meta "rewrite_def" predicate inv_ref_Link_T
+  meta "rewrite_def" function inv_ref_Link_T
   
-  predicate invariant_Perm_ptr_Link_T (self: t_Perm_ptr_Link_T) =
-    not is_null_ptr_Link_T (ward_ptr_Link_T self)
+  function invariant_Perm_ptr_Link_T (self: t_Perm_ptr_Link_T) : bool = not is_null_ptr_Link_T (ward_ptr_Link_T self)
     /\ metadata_matches_Link_T (val_unsized_ptr_Link_T self) (metadata_Link_T (ward_ptr_Link_T self))
     /\ inv_ref_Link_T (val_unsized_ptr_Link_T self)
   
-  predicate inv_Perm_ptr_Link_T (_1: t_Perm_ptr_Link_T)
+  function inv_Perm_ptr_Link_T (_1: t_Perm_ptr_Link_T) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Perm_ptr_Link_T [inv_Perm_ptr_Link_T _1]. inv_Perm_ptr_Link_T _1
       = invariant_Perm_ptr_Link_T _1
   
-  predicate invariant_ref_Perm_ptr_Link_T [@inline:trivial] (self: t_Perm_ptr_Link_T) = inv_Perm_ptr_Link_T self
+  function invariant_ref_Perm_ptr_Link_T [@inline:trivial] (self: t_Perm_ptr_Link_T) : bool = inv_Perm_ptr_Link_T self
   
-  meta "rewrite_def" predicate invariant_ref_Perm_ptr_Link_T
+  meta "rewrite_def" function invariant_ref_Perm_ptr_Link_T
   
-  predicate inv_ref_Perm_ptr_Link_T [@inline:trivial] (_1: t_Perm_ptr_Link_T) = invariant_ref_Perm_ptr_Link_T _1
+  function inv_ref_Perm_ptr_Link_T [@inline:trivial] (_1: t_Perm_ptr_Link_T) : bool = invariant_ref_Perm_ptr_Link_T _1
   
-  meta "rewrite_def" predicate inv_ref_Perm_ptr_Link_T
+  meta "rewrite_def" function inv_ref_Perm_ptr_Link_T
   
-  predicate invariant_Seq_Perm_ptr_Link_T [@inline:trivial] (self: Seq.seq t_Perm_ptr_Link_T) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_Perm_ptr_Link_T (Seq.get self i)
+  function invariant_Seq_Perm_ptr_Link_T [@inline:trivial] (self: Seq.seq t_Perm_ptr_Link_T) : bool = forall i: int. 0
+          <= i
+        /\ i < Seq.length self -> inv_ref_Perm_ptr_Link_T (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_Perm_ptr_Link_T
+  meta "rewrite_def" function invariant_Seq_Perm_ptr_Link_T
   
-  predicate inv_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: Seq.seq t_Perm_ptr_Link_T) = invariant_Seq_Perm_ptr_Link_T _1
+  function inv_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: Seq.seq t_Perm_ptr_Link_T) : bool =
+    invariant_Seq_Perm_ptr_Link_T _1
   
-  meta "rewrite_def" predicate inv_Seq_Perm_ptr_Link_T
+  meta "rewrite_def" function inv_Seq_Perm_ptr_Link_T
   
-  predicate invariant_Ghost_Seq_Perm_ptr_Link_T [@inline:trivial] (self: Seq.seq t_Perm_ptr_Link_T) =
+  function invariant_Ghost_Seq_Perm_ptr_Link_T [@inline:trivial] (self: Seq.seq t_Perm_ptr_Link_T) : bool =
     inv_Seq_Perm_ptr_Link_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_Seq_Perm_ptr_Link_T
+  meta "rewrite_def" function invariant_Ghost_Seq_Perm_ptr_Link_T
   
-  predicate inv_Ghost_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: Seq.seq t_Perm_ptr_Link_T) =
+  function inv_Ghost_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: Seq.seq t_Perm_ptr_Link_T) : bool =
     invariant_Ghost_Seq_Perm_ptr_Link_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_Seq_Perm_ptr_Link_T
+  meta "rewrite_def" function inv_Ghost_Seq_Perm_ptr_Link_T
   
-  predicate inv_List_T (_1: t_List_T)
+  function inv_List_T (_1: t_List_T) : bool
   
   axiom inv_axiom'1 [@rewrite]: forall _1: t_List_T [inv_List_T _1]. inv_List_T _1
       = (invariant_List_T _1 /\ inv_Ghost_Seq_Perm_ptr_Link_T _1.seq)
   
-  predicate invariant_refmut_List_T [@inline:trivial] (self: MutBorrow.t t_List_T) =
-    inv_List_T self.current /\ inv_List_T self.final
+  function invariant_refmut_List_T [@inline:trivial] (self: MutBorrow.t t_List_T) : bool = inv_List_T self.current
+    /\ inv_List_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_List_T
+  meta "rewrite_def" function invariant_refmut_List_T
   
-  predicate inv_refmut_List_T [@inline:trivial] (_1: MutBorrow.t t_List_T) = invariant_refmut_List_T _1
+  function inv_refmut_List_T [@inline:trivial] (_1: MutBorrow.t t_List_T) : bool = invariant_refmut_List_T _1
   
-  meta "rewrite_def" predicate inv_refmut_List_T
+  meta "rewrite_def" function inv_refmut_List_T
   
-  predicate resolve_refmut_List_T [@inline:trivial] (_1: MutBorrow.t t_List_T) = _1.final = _1.current
+  function resolve_refmut_List_T [@inline:trivial] (_1: MutBorrow.t t_List_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_List_T
+  meta "rewrite_def" function resolve_refmut_List_T
   
   type t_Option_T = None | Some t_T
   
-  predicate invariant_refmut_Ghost_Seq_Perm_ptr_Link_T [@inline:trivial] (self: MutBorrow.t (Seq.seq t_Perm_ptr_Link_T)) =
-    inv_Ghost_Seq_Perm_ptr_Link_T self.current /\ inv_Ghost_Seq_Perm_ptr_Link_T self.final
+  function invariant_refmut_Ghost_Seq_Perm_ptr_Link_T [@inline:trivial] (self: MutBorrow.t (Seq.seq t_Perm_ptr_Link_T)) : bool
+   = inv_Ghost_Seq_Perm_ptr_Link_T self.current /\ inv_Ghost_Seq_Perm_ptr_Link_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Ghost_Seq_Perm_ptr_Link_T
+  meta "rewrite_def" function invariant_refmut_Ghost_Seq_Perm_ptr_Link_T
   
-  predicate inv_refmut_Ghost_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: MutBorrow.t (Seq.seq t_Perm_ptr_Link_T)) =
+  function inv_refmut_Ghost_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: MutBorrow.t (Seq.seq t_Perm_ptr_Link_T)) : bool =
     invariant_refmut_Ghost_Seq_Perm_ptr_Link_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Ghost_Seq_Perm_ptr_Link_T
+  meta "rewrite_def" function inv_refmut_Ghost_Seq_Perm_ptr_Link_T
   
-  predicate invariant_refmut_Seq_Perm_ptr_Link_T [@inline:trivial] (self: MutBorrow.t (Seq.seq t_Perm_ptr_Link_T)) =
-    inv_Seq_Perm_ptr_Link_T self.current /\ inv_Seq_Perm_ptr_Link_T self.final
+  function invariant_refmut_Seq_Perm_ptr_Link_T [@inline:trivial] (self: MutBorrow.t (Seq.seq t_Perm_ptr_Link_T)) : bool
+   = inv_Seq_Perm_ptr_Link_T self.current /\ inv_Seq_Perm_ptr_Link_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Seq_Perm_ptr_Link_T
+  meta "rewrite_def" function invariant_refmut_Seq_Perm_ptr_Link_T
   
-  predicate inv_refmut_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: MutBorrow.t (Seq.seq t_Perm_ptr_Link_T)) =
+  function inv_refmut_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: MutBorrow.t (Seq.seq t_Perm_ptr_Link_T)) : bool =
     invariant_refmut_Seq_Perm_ptr_Link_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Seq_Perm_ptr_Link_T
+  meta "rewrite_def" function inv_refmut_Seq_Perm_ptr_Link_T
   
   let deref_mut_Ghost_Seq_Perm_ptr_Link_T (self: MutBorrow.t (Seq.seq t_Perm_ptr_Link_T))
     (return (x: MutBorrow.t (Seq.seq t_Perm_ptr_Link_T))) =
@@ -307,7 +311,7 @@ module M_impl_List_T__pop_front (* List<T> *)
   
   type t_Option_Perm_ptr_Link_T = None'0 | Some'0 t_Perm_ptr_Link_T
   
-  predicate inv_Option_Perm_ptr_Link_T (_1: t_Option_Perm_ptr_Link_T)
+  function inv_Option_Perm_ptr_Link_T (_1: t_Option_Perm_ptr_Link_T) : bool
   
   axiom inv_axiom'2 [@rewrite]:
     forall _1: t_Option_Perm_ptr_Link_T [inv_Option_Perm_ptr_Link_T _1]. inv_Option_Perm_ptr_Link_T _1
@@ -340,10 +344,10 @@ module M_impl_List_T__pop_front (* List<T> *)
         end)}
       (! return {result}) ]
   
-  predicate resolve_refmut_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: MutBorrow.t (Seq.seq t_Perm_ptr_Link_T)) =
+  function resolve_refmut_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: MutBorrow.t (Seq.seq t_Perm_ptr_Link_T)) : bool =
     _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Seq_Perm_ptr_Link_T
+  meta "rewrite_def" function resolve_refmut_Seq_Perm_ptr_Link_T
   
   let unwrap_Perm_ptr_Link_T (self: t_Option_Perm_ptr_Link_T) (return (x: t_Perm_ptr_Link_T)) =
   {[@stop_split] [@expl:unwrap_Perm_ptr_Link_T requires] ([@stop_split] [@expl:unwrap 'self' type invariant] inv_Option_Perm_ptr_Link_T self)
@@ -354,13 +358,14 @@ module M_impl_List_T__pop_front (* List<T> *)
       /\ ([@stop_split] [@expl:unwrap ensures] Some'0 result = self)}
       (! return {result}) ]
   
-  predicate invariant_Ghost_Perm_ptr_Link_T [@inline:trivial] (self: t_Perm_ptr_Link_T) = inv_Perm_ptr_Link_T self
+  function invariant_Ghost_Perm_ptr_Link_T [@inline:trivial] (self: t_Perm_ptr_Link_T) : bool = inv_Perm_ptr_Link_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_Perm_ptr_Link_T
+  meta "rewrite_def" function invariant_Ghost_Perm_ptr_Link_T
   
-  predicate inv_Ghost_Perm_ptr_Link_T [@inline:trivial] (_1: t_Perm_ptr_Link_T) = invariant_Ghost_Perm_ptr_Link_T _1
+  function inv_Ghost_Perm_ptr_Link_T [@inline:trivial] (_1: t_Perm_ptr_Link_T) : bool =
+    invariant_Ghost_Perm_ptr_Link_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_Perm_ptr_Link_T
+  meta "rewrite_def" function inv_Ghost_Perm_ptr_Link_T
   
   let new_Perm_ptr_Link_T (x: t_Perm_ptr_Link_T) (return (x'0: t_Perm_ptr_Link_T)) =
   {[@stop_split] [@expl:new 'x' type invariant] inv_Perm_ptr_Link_T x}
@@ -370,11 +375,11 @@ module M_impl_List_T__pop_front (* List<T> *)
       /\ ([@stop_split] [@expl:new ensures] result = x)}
       (! return {result}) ]
   
-  predicate invariant_Box_Link_T_Global (self: t_Link_T) = inv_Link_T self
+  function invariant_Box_Link_T_Global (self: t_Link_T) : bool = inv_Link_T self
   
-  predicate inv_Box_Link_T_Global [@inline:trivial] (_1: t_Link_T) = invariant_Box_Link_T_Global _1
+  function inv_Box_Link_T_Global [@inline:trivial] (_1: t_Link_T) : bool = invariant_Box_Link_T_Global _1
   
-  meta "rewrite_def" predicate inv_Box_Link_T_Global
+  meta "rewrite_def" function inv_Box_Link_T_Global
   
   let to_box_Link_T (ptr: Opaque.ptr) (own: t_Perm_ptr_Link_T) (return (x: t_Link_T)) =
   {[@stop_split] [@expl:to_box_Link_T requires] ([@stop_split] [@expl:to_box 'own' type invariant] inv_Ghost_Perm_ptr_Link_T own)
@@ -385,13 +390,13 @@ module M_impl_List_T__pop_front (* List<T> *)
       /\ ([@stop_split] [@expl:to_box ensures] result = val_unsized_ptr_Link_T own)}
       (! return {result}) ]
   
-  predicate is_null_ptr_Link_T'0 (self: Opaque.ptr) = Ptr.addr_logic_u64 self = (0: UInt64.t)
+  function is_null_ptr_Link_T'0 (self: Opaque.ptr) : bool = Ptr.addr_logic_u64 self = (0: UInt64.t)
   
   let null_mut_Link_T (return (x: Opaque.ptr)) = any
     [ return (result: Opaque.ptr) -> {[@stop_split] [@expl:null_mut ensures] is_null_ptr_Link_T'0 result}
       (! return {result}) ]
   
-  predicate inv_Option_T (_1: t_Option_T)
+  function inv_Option_T (_1: t_Option_T) : bool
   
   axiom inv_axiom'3 [@rewrite]: forall _1: t_Option_T [inv_Option_T _1]. inv_Option_T _1
       = match _1 with
@@ -514,7 +519,7 @@ module M_impl_List_T__push_back (* List<T> *)
   use map.Map
   use int.Int
   
-  predicate is_null_ptr_Link_T (self: Opaque.ptr) = Ptr.addr_logic_u64 self = (0: UInt64.t)
+  function is_null_ptr_Link_T (self: Opaque.ptr) : bool = Ptr.addr_logic_u64 self = (0: UInt64.t)
   
   let null_Link_T (return (x: Opaque.ptr)) = any
     [ return (result: Opaque.ptr) -> {[@stop_split] [@expl:null ensures] is_null_ptr_Link_T result}
@@ -528,58 +533,58 @@ module M_impl_List_T__push_back (* List<T> *)
   
   type tup2_ptr_Link_T_Ghost_Perm_ptr_Link_T = { f0: Opaque.ptr; f1: t_Perm_ptr_Link_T }
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_Link_T (_1: t_Link_T)
+  function inv_Link_T (_1: t_Link_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Link_T [inv_Link_T _1]. inv_Link_T _1 = inv_T _1.value
   
-  predicate invariant_Box_Link_T_Global (self: t_Link_T) = inv_Link_T self
+  function invariant_Box_Link_T_Global (self: t_Link_T) : bool = inv_Link_T self
   
-  predicate inv_Box_Link_T_Global [@inline:trivial] (_1: t_Link_T) = invariant_Box_Link_T_Global _1
+  function inv_Box_Link_T_Global [@inline:trivial] (_1: t_Link_T) : bool = invariant_Box_Link_T_Global _1
   
-  meta "rewrite_def" predicate inv_Box_Link_T_Global
+  meta "rewrite_def" function inv_Box_Link_T_Global
   
   function ward_ptr_Link_T (self: t_Perm_ptr_Link_T) : Opaque.ptr
   
-  predicate metadata_matches_Link_T [@inline:trivial] (_value: t_Link_T) (_metadata: ()) = true
+  function metadata_matches_Link_T [@inline:trivial] (_value: t_Link_T) (_metadata: ()) : bool = true
   
-  meta "rewrite_def" predicate metadata_matches_Link_T
+  meta "rewrite_def" function metadata_matches_Link_T
   
   function val_unsized_ptr_Link_T (self: t_Perm_ptr_Link_T) : t_Link_T
   
   function metadata_Link_T (_1: Opaque.ptr) : ()
   
-  predicate invariant_ref_Link_T [@inline:trivial] (self: t_Link_T) = inv_Link_T self
+  function invariant_ref_Link_T [@inline:trivial] (self: t_Link_T) : bool = inv_Link_T self
   
-  meta "rewrite_def" predicate invariant_ref_Link_T
+  meta "rewrite_def" function invariant_ref_Link_T
   
-  predicate inv_ref_Link_T [@inline:trivial] (_1: t_Link_T) = invariant_ref_Link_T _1
+  function inv_ref_Link_T [@inline:trivial] (_1: t_Link_T) : bool = invariant_ref_Link_T _1
   
-  meta "rewrite_def" predicate inv_ref_Link_T
+  meta "rewrite_def" function inv_ref_Link_T
   
-  predicate invariant_Perm_ptr_Link_T (self: t_Perm_ptr_Link_T) =
-    not is_null_ptr_Link_T (ward_ptr_Link_T self)
+  function invariant_Perm_ptr_Link_T (self: t_Perm_ptr_Link_T) : bool = not is_null_ptr_Link_T (ward_ptr_Link_T self)
     /\ metadata_matches_Link_T (val_unsized_ptr_Link_T self) (metadata_Link_T (ward_ptr_Link_T self))
     /\ inv_ref_Link_T (val_unsized_ptr_Link_T self)
   
-  predicate inv_Perm_ptr_Link_T (_1: t_Perm_ptr_Link_T)
+  function inv_Perm_ptr_Link_T (_1: t_Perm_ptr_Link_T) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Perm_ptr_Link_T [inv_Perm_ptr_Link_T _1]. inv_Perm_ptr_Link_T _1
       = invariant_Perm_ptr_Link_T _1
   
-  predicate invariant_Ghost_Perm_ptr_Link_T [@inline:trivial] (self: t_Perm_ptr_Link_T) = inv_Perm_ptr_Link_T self
+  function invariant_Ghost_Perm_ptr_Link_T [@inline:trivial] (self: t_Perm_ptr_Link_T) : bool = inv_Perm_ptr_Link_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_Perm_ptr_Link_T
+  meta "rewrite_def" function invariant_Ghost_Perm_ptr_Link_T
   
-  predicate inv_Ghost_Perm_ptr_Link_T [@inline:trivial] (_1: t_Perm_ptr_Link_T) = invariant_Ghost_Perm_ptr_Link_T _1
+  function inv_Ghost_Perm_ptr_Link_T [@inline:trivial] (_1: t_Perm_ptr_Link_T) : bool =
+    invariant_Ghost_Perm_ptr_Link_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_Perm_ptr_Link_T
+  meta "rewrite_def" function inv_Ghost_Perm_ptr_Link_T
   
-  predicate inv_tup2_ptr_Link_T_Ghost_Perm_ptr_Link_T [@inline:trivial] (_1: tup2_ptr_Link_T_Ghost_Perm_ptr_Link_T) =
-    inv_Ghost_Perm_ptr_Link_T _1.f1
+  function inv_tup2_ptr_Link_T_Ghost_Perm_ptr_Link_T [@inline:trivial] (_1: tup2_ptr_Link_T_Ghost_Perm_ptr_Link_T) : bool
+   = inv_Ghost_Perm_ptr_Link_T _1.f1
   
-  meta "rewrite_def" predicate inv_tup2_ptr_Link_T_Ghost_Perm_ptr_Link_T
+  meta "rewrite_def" function inv_tup2_ptr_Link_T_Ghost_Perm_ptr_Link_T
   
   let from_box_Link_T (val': t_Link_T) (return (x: tup2_ptr_Link_T_Ghost_Perm_ptr_Link_T)) =
   {[@stop_split] [@expl:from_box 'val' type invariant] inv_Box_Link_T_Global val'}
@@ -596,52 +601,54 @@ module M_impl_List_T__push_back (* List<T> *)
     [ return (result: bool) -> {[@stop_split] [@expl:is_null ensures] result = is_null_ptr_Link_T self}
       (! return {result}) ]
   
-  predicate invariant_ref_Perm_ptr_Link_T [@inline:trivial] (self: t_Perm_ptr_Link_T) = inv_Perm_ptr_Link_T self
+  function invariant_ref_Perm_ptr_Link_T [@inline:trivial] (self: t_Perm_ptr_Link_T) : bool = inv_Perm_ptr_Link_T self
   
-  meta "rewrite_def" predicate invariant_ref_Perm_ptr_Link_T
+  meta "rewrite_def" function invariant_ref_Perm_ptr_Link_T
   
-  predicate inv_ref_Perm_ptr_Link_T [@inline:trivial] (_1: t_Perm_ptr_Link_T) = invariant_ref_Perm_ptr_Link_T _1
+  function inv_ref_Perm_ptr_Link_T [@inline:trivial] (_1: t_Perm_ptr_Link_T) : bool = invariant_ref_Perm_ptr_Link_T _1
   
-  meta "rewrite_def" predicate inv_ref_Perm_ptr_Link_T
+  meta "rewrite_def" function inv_ref_Perm_ptr_Link_T
   
-  predicate invariant_Seq_Perm_ptr_Link_T [@inline:trivial] (self: Seq.seq t_Perm_ptr_Link_T) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_Perm_ptr_Link_T (Seq.get self i)
+  function invariant_Seq_Perm_ptr_Link_T [@inline:trivial] (self: Seq.seq t_Perm_ptr_Link_T) : bool = forall i: int. 0
+          <= i
+        /\ i < Seq.length self -> inv_ref_Perm_ptr_Link_T (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_Perm_ptr_Link_T
+  meta "rewrite_def" function invariant_Seq_Perm_ptr_Link_T
   
-  predicate inv_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: Seq.seq t_Perm_ptr_Link_T) = invariant_Seq_Perm_ptr_Link_T _1
+  function inv_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: Seq.seq t_Perm_ptr_Link_T) : bool =
+    invariant_Seq_Perm_ptr_Link_T _1
   
-  meta "rewrite_def" predicate inv_Seq_Perm_ptr_Link_T
+  meta "rewrite_def" function inv_Seq_Perm_ptr_Link_T
   
-  predicate invariant_Ghost_Seq_Perm_ptr_Link_T [@inline:trivial] (self: Seq.seq t_Perm_ptr_Link_T) =
+  function invariant_Ghost_Seq_Perm_ptr_Link_T [@inline:trivial] (self: Seq.seq t_Perm_ptr_Link_T) : bool =
     inv_Seq_Perm_ptr_Link_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_Seq_Perm_ptr_Link_T
+  meta "rewrite_def" function invariant_Ghost_Seq_Perm_ptr_Link_T
   
-  predicate inv_Ghost_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: Seq.seq t_Perm_ptr_Link_T) =
+  function inv_Ghost_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: Seq.seq t_Perm_ptr_Link_T) : bool =
     invariant_Ghost_Seq_Perm_ptr_Link_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_Seq_Perm_ptr_Link_T
+  meta "rewrite_def" function inv_Ghost_Seq_Perm_ptr_Link_T
   
-  predicate invariant_ref_Ghost_Seq_Perm_ptr_Link_T [@inline:trivial] (self: Seq.seq t_Perm_ptr_Link_T) =
+  function invariant_ref_Ghost_Seq_Perm_ptr_Link_T [@inline:trivial] (self: Seq.seq t_Perm_ptr_Link_T) : bool =
     inv_Ghost_Seq_Perm_ptr_Link_T self
   
-  meta "rewrite_def" predicate invariant_ref_Ghost_Seq_Perm_ptr_Link_T
+  meta "rewrite_def" function invariant_ref_Ghost_Seq_Perm_ptr_Link_T
   
-  predicate inv_ref_Ghost_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: Seq.seq t_Perm_ptr_Link_T) =
+  function inv_ref_Ghost_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: Seq.seq t_Perm_ptr_Link_T) : bool =
     invariant_ref_Ghost_Seq_Perm_ptr_Link_T _1
   
-  meta "rewrite_def" predicate inv_ref_Ghost_Seq_Perm_ptr_Link_T
+  meta "rewrite_def" function inv_ref_Ghost_Seq_Perm_ptr_Link_T
   
-  predicate invariant_ref_Seq_Perm_ptr_Link_T [@inline:trivial] (self: Seq.seq t_Perm_ptr_Link_T) =
+  function invariant_ref_Seq_Perm_ptr_Link_T [@inline:trivial] (self: Seq.seq t_Perm_ptr_Link_T) : bool =
     inv_Seq_Perm_ptr_Link_T self
   
-  meta "rewrite_def" predicate invariant_ref_Seq_Perm_ptr_Link_T
+  meta "rewrite_def" function invariant_ref_Seq_Perm_ptr_Link_T
   
-  predicate inv_ref_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: Seq.seq t_Perm_ptr_Link_T) =
+  function inv_ref_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: Seq.seq t_Perm_ptr_Link_T) : bool =
     invariant_ref_Seq_Perm_ptr_Link_T _1
   
-  meta "rewrite_def" predicate inv_ref_Seq_Perm_ptr_Link_T
+  meta "rewrite_def" function inv_ref_Seq_Perm_ptr_Link_T
   
   let deref_Ghost_Seq_Perm_ptr_Link_T (self: Seq.seq t_Perm_ptr_Link_T) (return (x: Seq.seq t_Perm_ptr_Link_T)) =
   {[@stop_split] [@expl:deref 'self' type invariant] inv_ref_Ghost_Seq_Perm_ptr_Link_T self}
@@ -664,25 +671,25 @@ module M_impl_List_T__push_back (* List<T> *)
   let sub_Int (self: int) (other: int) (return (x: int)) = any
     [ return (result: int) -> {[@stop_split] [@expl:sub ensures] result = self - other} (! return {result}) ]
   
-  predicate invariant_refmut_Ghost_Seq_Perm_ptr_Link_T [@inline:trivial] (self: MutBorrow.t (Seq.seq t_Perm_ptr_Link_T)) =
-    inv_Ghost_Seq_Perm_ptr_Link_T self.current /\ inv_Ghost_Seq_Perm_ptr_Link_T self.final
+  function invariant_refmut_Ghost_Seq_Perm_ptr_Link_T [@inline:trivial] (self: MutBorrow.t (Seq.seq t_Perm_ptr_Link_T)) : bool
+   = inv_Ghost_Seq_Perm_ptr_Link_T self.current /\ inv_Ghost_Seq_Perm_ptr_Link_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Ghost_Seq_Perm_ptr_Link_T
+  meta "rewrite_def" function invariant_refmut_Ghost_Seq_Perm_ptr_Link_T
   
-  predicate inv_refmut_Ghost_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: MutBorrow.t (Seq.seq t_Perm_ptr_Link_T)) =
+  function inv_refmut_Ghost_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: MutBorrow.t (Seq.seq t_Perm_ptr_Link_T)) : bool =
     invariant_refmut_Ghost_Seq_Perm_ptr_Link_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Ghost_Seq_Perm_ptr_Link_T
+  meta "rewrite_def" function inv_refmut_Ghost_Seq_Perm_ptr_Link_T
   
-  predicate invariant_refmut_Seq_Perm_ptr_Link_T [@inline:trivial] (self: MutBorrow.t (Seq.seq t_Perm_ptr_Link_T)) =
-    inv_Seq_Perm_ptr_Link_T self.current /\ inv_Seq_Perm_ptr_Link_T self.final
+  function invariant_refmut_Seq_Perm_ptr_Link_T [@inline:trivial] (self: MutBorrow.t (Seq.seq t_Perm_ptr_Link_T)) : bool
+   = inv_Seq_Perm_ptr_Link_T self.current /\ inv_Seq_Perm_ptr_Link_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Seq_Perm_ptr_Link_T
+  meta "rewrite_def" function invariant_refmut_Seq_Perm_ptr_Link_T
   
-  predicate inv_refmut_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: MutBorrow.t (Seq.seq t_Perm_ptr_Link_T)) =
+  function inv_refmut_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: MutBorrow.t (Seq.seq t_Perm_ptr_Link_T)) : bool =
     invariant_refmut_Seq_Perm_ptr_Link_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Seq_Perm_ptr_Link_T
+  meta "rewrite_def" function inv_refmut_Seq_Perm_ptr_Link_T
   
   let deref_mut_Ghost_Seq_Perm_ptr_Link_T (self: MutBorrow.t (Seq.seq t_Perm_ptr_Link_T))
     (return (x: MutBorrow.t (Seq.seq t_Perm_ptr_Link_T))) =
@@ -695,17 +702,17 @@ module M_impl_List_T__push_back (* List<T> *)
   
   type t_Option_refmut_Perm_ptr_Link_T = None | Some (MutBorrow.t t_Perm_ptr_Link_T)
   
-  predicate invariant_refmut_Perm_ptr_Link_T [@inline:trivial] (self: MutBorrow.t t_Perm_ptr_Link_T) =
+  function invariant_refmut_Perm_ptr_Link_T [@inline:trivial] (self: MutBorrow.t t_Perm_ptr_Link_T) : bool =
     inv_Perm_ptr_Link_T self.current /\ inv_Perm_ptr_Link_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Perm_ptr_Link_T
+  meta "rewrite_def" function invariant_refmut_Perm_ptr_Link_T
   
-  predicate inv_refmut_Perm_ptr_Link_T [@inline:trivial] (_1: MutBorrow.t t_Perm_ptr_Link_T) =
+  function inv_refmut_Perm_ptr_Link_T [@inline:trivial] (_1: MutBorrow.t t_Perm_ptr_Link_T) : bool =
     invariant_refmut_Perm_ptr_Link_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Perm_ptr_Link_T
+  meta "rewrite_def" function inv_refmut_Perm_ptr_Link_T
   
-  predicate inv_Option_refmut_Perm_ptr_Link_T (_1: t_Option_refmut_Perm_ptr_Link_T)
+  function inv_Option_refmut_Perm_ptr_Link_T (_1: t_Option_refmut_Perm_ptr_Link_T) : bool
   
   axiom inv_axiom'1 [@rewrite]:
     forall _1: t_Option_refmut_Perm_ptr_Link_T [inv_Option_refmut_Perm_ptr_Link_T _1]. inv_Option_refmut_Perm_ptr_Link_T _1
@@ -754,24 +761,25 @@ module M_impl_List_T__push_back (* List<T> *)
       /\ ([@stop_split] [@expl:unwrap ensures] Some result = self)}
       (! return {result}) ]
   
-  predicate resolve_refmut_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: MutBorrow.t (Seq.seq t_Perm_ptr_Link_T)) =
+  function resolve_refmut_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: MutBorrow.t (Seq.seq t_Perm_ptr_Link_T)) : bool =
     _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Seq_Perm_ptr_Link_T
+  meta "rewrite_def" function resolve_refmut_Seq_Perm_ptr_Link_T
   
-  predicate resolve_refmut_Perm_ptr_Link_T [@inline:trivial] (_1: MutBorrow.t t_Perm_ptr_Link_T) = _1.final = _1.current
+  function resolve_refmut_Perm_ptr_Link_T [@inline:trivial] (_1: MutBorrow.t t_Perm_ptr_Link_T) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Perm_ptr_Link_T
+  meta "rewrite_def" function resolve_refmut_Perm_ptr_Link_T
   
-  predicate invariant_Ghost_refmut_Perm_ptr_Link_T [@inline:trivial] (self: MutBorrow.t t_Perm_ptr_Link_T) =
+  function invariant_Ghost_refmut_Perm_ptr_Link_T [@inline:trivial] (self: MutBorrow.t t_Perm_ptr_Link_T) : bool =
     inv_refmut_Perm_ptr_Link_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_refmut_Perm_ptr_Link_T
+  meta "rewrite_def" function invariant_Ghost_refmut_Perm_ptr_Link_T
   
-  predicate inv_Ghost_refmut_Perm_ptr_Link_T [@inline:trivial] (_1: MutBorrow.t t_Perm_ptr_Link_T) =
+  function inv_Ghost_refmut_Perm_ptr_Link_T [@inline:trivial] (_1: MutBorrow.t t_Perm_ptr_Link_T) : bool =
     invariant_Ghost_refmut_Perm_ptr_Link_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_refmut_Perm_ptr_Link_T
+  meta "rewrite_def" function inv_Ghost_refmut_Perm_ptr_Link_T
   
   let new_refmut_Perm_ptr_Link_T (x: MutBorrow.t t_Perm_ptr_Link_T) (return (x'0: MutBorrow.t t_Perm_ptr_Link_T)) =
   {[@stop_split] [@expl:new 'x' type invariant] inv_refmut_Perm_ptr_Link_T x}
@@ -781,14 +789,14 @@ module M_impl_List_T__push_back (* List<T> *)
       /\ ([@stop_split] [@expl:new ensures] result = x)}
       (! return {result}) ]
   
-  predicate invariant_refmut_Link_T [@inline:trivial] (self: MutBorrow.t t_Link_T) =
-    inv_Link_T self.current /\ inv_Link_T self.final
+  function invariant_refmut_Link_T [@inline:trivial] (self: MutBorrow.t t_Link_T) : bool = inv_Link_T self.current
+    /\ inv_Link_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Link_T
+  meta "rewrite_def" function invariant_refmut_Link_T
   
-  predicate inv_refmut_Link_T [@inline:trivial] (_1: MutBorrow.t t_Link_T) = invariant_refmut_Link_T _1
+  function inv_refmut_Link_T [@inline:trivial] (_1: MutBorrow.t t_Link_T) : bool = invariant_refmut_Link_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Link_T
+  meta "rewrite_def" function inv_refmut_Link_T
   
   function fin_Ghost_refmut_Perm_ptr_Link_T [@inline:trivial] (self: MutBorrow.t t_Perm_ptr_Link_T) : t_Perm_ptr_Link_T
    = self.final
@@ -808,9 +816,9 @@ module M_impl_List_T__push_back (* List<T> *)
       = result.final)}
       (! return {result}) ]
   
-  predicate resolve_refmut_Link_T [@inline:trivial] (_1: MutBorrow.t t_Link_T) = _1.final = _1.current
+  function resolve_refmut_Link_T [@inline:trivial] (_1: MutBorrow.t t_Link_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Link_T
+  meta "rewrite_def" function resolve_refmut_Link_T
   
   let into_inner_Perm_ptr_Link_T (self: t_Perm_ptr_Link_T) (return (x: t_Perm_ptr_Link_T)) =
   {[@stop_split] [@expl:into_inner 'self' type invariant] inv_Ghost_Perm_ptr_Link_T self}
@@ -828,16 +836,17 @@ module M_impl_List_T__push_back (* List<T> *)
     [ return (result: ()) -> {[@stop_split] [@expl:push_back ensures] self.final = Seq.snoc self.current x}
       (! return {result}) ]
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
   function val_ptr_Link_T [@inline:trivial] (self: t_Perm_ptr_Link_T) : t_Link_T = val_unsized_ptr_Link_T self
   
   meta "rewrite_def" function val_ptr_Link_T
   
-  predicate invariant_List_T [@inline:trivial] (self: t_List_T) =
-    self.seq = (Seq.empty: Seq.seq t_Perm_ptr_Link_T) /\ is_null_ptr_Link_T self.first /\ is_null_ptr_Link_T self.last
+  function invariant_List_T [@inline:trivial] (self: t_List_T) : bool = self.seq
+        = (Seq.empty: Seq.seq t_Perm_ptr_Link_T)
+      /\ is_null_ptr_Link_T self.first /\ is_null_ptr_Link_T self.last
     \/ gt_log_Int (Seq.length self.seq) 0
     /\ self.first = ward_ptr_Link_T (Seq.get self.seq 0)
     /\ self.last = ward_ptr_Link_T (Seq.get self.seq (Seq.length self.seq - 1))
@@ -845,25 +854,25 @@ module M_impl_List_T__push_back (* List<T> *)
         -> (val_ptr_Link_T (Seq.get self.seq i)).next = ward_ptr_Link_T (Seq.get self.seq (i + 1)))
     /\ is_null_ptr_Link_T (val_ptr_Link_T (Seq.get self.seq (Seq.length self.seq - 1))).next
   
-  meta "rewrite_def" predicate invariant_List_T
+  meta "rewrite_def" function invariant_List_T
   
-  predicate inv_List_T (_1: t_List_T)
+  function inv_List_T (_1: t_List_T) : bool
   
   axiom inv_axiom'2 [@rewrite]: forall _1: t_List_T [inv_List_T _1]. inv_List_T _1
       = (invariant_List_T _1 /\ inv_Ghost_Seq_Perm_ptr_Link_T _1.seq)
   
-  predicate invariant_refmut_List_T [@inline:trivial] (self: MutBorrow.t t_List_T) =
-    inv_List_T self.current /\ inv_List_T self.final
+  function invariant_refmut_List_T [@inline:trivial] (self: MutBorrow.t t_List_T) : bool = inv_List_T self.current
+    /\ inv_List_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_List_T
+  meta "rewrite_def" function invariant_refmut_List_T
   
-  predicate inv_refmut_List_T [@inline:trivial] (_1: MutBorrow.t t_List_T) = invariant_refmut_List_T _1
+  function inv_refmut_List_T [@inline:trivial] (_1: MutBorrow.t t_List_T) : bool = invariant_refmut_List_T _1
   
-  meta "rewrite_def" predicate inv_refmut_List_T
+  meta "rewrite_def" function inv_refmut_List_T
   
-  predicate resolve_refmut_List_T [@inline:trivial] (_1: MutBorrow.t t_List_T) = _1.final = _1.current
+  function resolve_refmut_List_T [@inline:trivial] (_1: MutBorrow.t t_List_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_List_T
+  meta "rewrite_def" function resolve_refmut_List_T
   
   let new_unit (x: ()) (return (x'0: ())) = any
     [ return (result: ()) -> {[@stop_split] [@expl:new ensures] result = x} (! return {result}) ]
@@ -1047,54 +1056,54 @@ module M_impl_List_T__push_front (* List<T> *)
   
   type tup2_ptr_Link_T_Ghost_Perm_ptr_Link_T = { f0: Opaque.ptr; f1: t_Perm_ptr_Link_T }
   
-  predicate inv_T (_1: t_T)
+  function inv_T (_1: t_T) : bool
   
-  predicate inv_Link_T (_1: t_Link_T)
+  function inv_Link_T (_1: t_Link_T) : bool
   
   axiom inv_axiom [@rewrite]: forall _1: t_Link_T [inv_Link_T _1]. inv_Link_T _1 = inv_T _1.value
   
-  predicate is_null_ptr_Link_T (self: Opaque.ptr) = Ptr.addr_logic_u64 self = (0: UInt64.t)
+  function is_null_ptr_Link_T (self: Opaque.ptr) : bool = Ptr.addr_logic_u64 self = (0: UInt64.t)
   
   function ward_ptr_Link_T (self: t_Perm_ptr_Link_T) : Opaque.ptr
   
-  predicate metadata_matches_Link_T [@inline:trivial] (_value: t_Link_T) (_metadata: ()) = true
+  function metadata_matches_Link_T [@inline:trivial] (_value: t_Link_T) (_metadata: ()) : bool = true
   
-  meta "rewrite_def" predicate metadata_matches_Link_T
+  meta "rewrite_def" function metadata_matches_Link_T
   
   function val_unsized_ptr_Link_T (self: t_Perm_ptr_Link_T) : t_Link_T
   
   function metadata_Link_T (_1: Opaque.ptr) : ()
   
-  predicate invariant_ref_Link_T [@inline:trivial] (self: t_Link_T) = inv_Link_T self
+  function invariant_ref_Link_T [@inline:trivial] (self: t_Link_T) : bool = inv_Link_T self
   
-  meta "rewrite_def" predicate invariant_ref_Link_T
+  meta "rewrite_def" function invariant_ref_Link_T
   
-  predicate inv_ref_Link_T [@inline:trivial] (_1: t_Link_T) = invariant_ref_Link_T _1
+  function inv_ref_Link_T [@inline:trivial] (_1: t_Link_T) : bool = invariant_ref_Link_T _1
   
-  meta "rewrite_def" predicate inv_ref_Link_T
+  meta "rewrite_def" function inv_ref_Link_T
   
-  predicate invariant_Perm_ptr_Link_T (self: t_Perm_ptr_Link_T) =
-    not is_null_ptr_Link_T (ward_ptr_Link_T self)
+  function invariant_Perm_ptr_Link_T (self: t_Perm_ptr_Link_T) : bool = not is_null_ptr_Link_T (ward_ptr_Link_T self)
     /\ metadata_matches_Link_T (val_unsized_ptr_Link_T self) (metadata_Link_T (ward_ptr_Link_T self))
     /\ inv_ref_Link_T (val_unsized_ptr_Link_T self)
   
-  predicate inv_Perm_ptr_Link_T (_1: t_Perm_ptr_Link_T)
+  function inv_Perm_ptr_Link_T (_1: t_Perm_ptr_Link_T) : bool
   
   axiom inv_axiom'0 [@rewrite]: forall _1: t_Perm_ptr_Link_T [inv_Perm_ptr_Link_T _1]. inv_Perm_ptr_Link_T _1
       = invariant_Perm_ptr_Link_T _1
   
-  predicate invariant_Ghost_Perm_ptr_Link_T [@inline:trivial] (self: t_Perm_ptr_Link_T) = inv_Perm_ptr_Link_T self
+  function invariant_Ghost_Perm_ptr_Link_T [@inline:trivial] (self: t_Perm_ptr_Link_T) : bool = inv_Perm_ptr_Link_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_Perm_ptr_Link_T
+  meta "rewrite_def" function invariant_Ghost_Perm_ptr_Link_T
   
-  predicate inv_Ghost_Perm_ptr_Link_T [@inline:trivial] (_1: t_Perm_ptr_Link_T) = invariant_Ghost_Perm_ptr_Link_T _1
+  function inv_Ghost_Perm_ptr_Link_T [@inline:trivial] (_1: t_Perm_ptr_Link_T) : bool =
+    invariant_Ghost_Perm_ptr_Link_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_Perm_ptr_Link_T
+  meta "rewrite_def" function inv_Ghost_Perm_ptr_Link_T
   
-  predicate inv_tup2_ptr_Link_T_Ghost_Perm_ptr_Link_T [@inline:trivial] (_1: tup2_ptr_Link_T_Ghost_Perm_ptr_Link_T) =
-    inv_Ghost_Perm_ptr_Link_T _1.f1
+  function inv_tup2_ptr_Link_T_Ghost_Perm_ptr_Link_T [@inline:trivial] (_1: tup2_ptr_Link_T_Ghost_Perm_ptr_Link_T) : bool
+   = inv_Ghost_Perm_ptr_Link_T _1.f1
   
-  meta "rewrite_def" predicate inv_tup2_ptr_Link_T_Ghost_Perm_ptr_Link_T
+  meta "rewrite_def" function inv_tup2_ptr_Link_T_Ghost_Perm_ptr_Link_T
   
   function val_ptr_Link_T [@inline:trivial] (self: t_Perm_ptr_Link_T) : t_Link_T = val_unsized_ptr_Link_T self
   
@@ -1112,52 +1121,54 @@ module M_impl_List_T__push_front (* List<T> *)
     [ return (result: bool) -> {[@stop_split] [@expl:is_null ensures] result = is_null_ptr_Link_T self}
       (! return {result}) ]
   
-  predicate invariant_ref_Perm_ptr_Link_T [@inline:trivial] (self: t_Perm_ptr_Link_T) = inv_Perm_ptr_Link_T self
+  function invariant_ref_Perm_ptr_Link_T [@inline:trivial] (self: t_Perm_ptr_Link_T) : bool = inv_Perm_ptr_Link_T self
   
-  meta "rewrite_def" predicate invariant_ref_Perm_ptr_Link_T
+  meta "rewrite_def" function invariant_ref_Perm_ptr_Link_T
   
-  predicate inv_ref_Perm_ptr_Link_T [@inline:trivial] (_1: t_Perm_ptr_Link_T) = invariant_ref_Perm_ptr_Link_T _1
+  function inv_ref_Perm_ptr_Link_T [@inline:trivial] (_1: t_Perm_ptr_Link_T) : bool = invariant_ref_Perm_ptr_Link_T _1
   
-  meta "rewrite_def" predicate inv_ref_Perm_ptr_Link_T
+  meta "rewrite_def" function inv_ref_Perm_ptr_Link_T
   
-  predicate invariant_Seq_Perm_ptr_Link_T [@inline:trivial] (self: Seq.seq t_Perm_ptr_Link_T) =
-    forall i: int. 0 <= i /\ i < Seq.length self -> inv_ref_Perm_ptr_Link_T (Seq.get self i)
+  function invariant_Seq_Perm_ptr_Link_T [@inline:trivial] (self: Seq.seq t_Perm_ptr_Link_T) : bool = forall i: int. 0
+          <= i
+        /\ i < Seq.length self -> inv_ref_Perm_ptr_Link_T (Seq.get self i)
   
-  meta "rewrite_def" predicate invariant_Seq_Perm_ptr_Link_T
+  meta "rewrite_def" function invariant_Seq_Perm_ptr_Link_T
   
-  predicate inv_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: Seq.seq t_Perm_ptr_Link_T) = invariant_Seq_Perm_ptr_Link_T _1
+  function inv_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: Seq.seq t_Perm_ptr_Link_T) : bool =
+    invariant_Seq_Perm_ptr_Link_T _1
   
-  meta "rewrite_def" predicate inv_Seq_Perm_ptr_Link_T
+  meta "rewrite_def" function inv_Seq_Perm_ptr_Link_T
   
-  predicate invariant_Ghost_Seq_Perm_ptr_Link_T [@inline:trivial] (self: Seq.seq t_Perm_ptr_Link_T) =
+  function invariant_Ghost_Seq_Perm_ptr_Link_T [@inline:trivial] (self: Seq.seq t_Perm_ptr_Link_T) : bool =
     inv_Seq_Perm_ptr_Link_T self
   
-  meta "rewrite_def" predicate invariant_Ghost_Seq_Perm_ptr_Link_T
+  meta "rewrite_def" function invariant_Ghost_Seq_Perm_ptr_Link_T
   
-  predicate inv_Ghost_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: Seq.seq t_Perm_ptr_Link_T) =
+  function inv_Ghost_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: Seq.seq t_Perm_ptr_Link_T) : bool =
     invariant_Ghost_Seq_Perm_ptr_Link_T _1
   
-  meta "rewrite_def" predicate inv_Ghost_Seq_Perm_ptr_Link_T
+  meta "rewrite_def" function inv_Ghost_Seq_Perm_ptr_Link_T
   
-  predicate invariant_refmut_Ghost_Seq_Perm_ptr_Link_T [@inline:trivial] (self: MutBorrow.t (Seq.seq t_Perm_ptr_Link_T)) =
-    inv_Ghost_Seq_Perm_ptr_Link_T self.current /\ inv_Ghost_Seq_Perm_ptr_Link_T self.final
+  function invariant_refmut_Ghost_Seq_Perm_ptr_Link_T [@inline:trivial] (self: MutBorrow.t (Seq.seq t_Perm_ptr_Link_T)) : bool
+   = inv_Ghost_Seq_Perm_ptr_Link_T self.current /\ inv_Ghost_Seq_Perm_ptr_Link_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Ghost_Seq_Perm_ptr_Link_T
+  meta "rewrite_def" function invariant_refmut_Ghost_Seq_Perm_ptr_Link_T
   
-  predicate inv_refmut_Ghost_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: MutBorrow.t (Seq.seq t_Perm_ptr_Link_T)) =
+  function inv_refmut_Ghost_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: MutBorrow.t (Seq.seq t_Perm_ptr_Link_T)) : bool =
     invariant_refmut_Ghost_Seq_Perm_ptr_Link_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Ghost_Seq_Perm_ptr_Link_T
+  meta "rewrite_def" function inv_refmut_Ghost_Seq_Perm_ptr_Link_T
   
-  predicate invariant_refmut_Seq_Perm_ptr_Link_T [@inline:trivial] (self: MutBorrow.t (Seq.seq t_Perm_ptr_Link_T)) =
-    inv_Seq_Perm_ptr_Link_T self.current /\ inv_Seq_Perm_ptr_Link_T self.final
+  function invariant_refmut_Seq_Perm_ptr_Link_T [@inline:trivial] (self: MutBorrow.t (Seq.seq t_Perm_ptr_Link_T)) : bool
+   = inv_Seq_Perm_ptr_Link_T self.current /\ inv_Seq_Perm_ptr_Link_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_Seq_Perm_ptr_Link_T
+  meta "rewrite_def" function invariant_refmut_Seq_Perm_ptr_Link_T
   
-  predicate inv_refmut_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: MutBorrow.t (Seq.seq t_Perm_ptr_Link_T)) =
+  function inv_refmut_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: MutBorrow.t (Seq.seq t_Perm_ptr_Link_T)) : bool =
     invariant_refmut_Seq_Perm_ptr_Link_T _1
   
-  meta "rewrite_def" predicate inv_refmut_Seq_Perm_ptr_Link_T
+  meta "rewrite_def" function inv_refmut_Seq_Perm_ptr_Link_T
   
   let deref_mut_Ghost_Seq_Perm_ptr_Link_T (self: MutBorrow.t (Seq.seq t_Perm_ptr_Link_T))
     (return (x: MutBorrow.t (Seq.seq t_Perm_ptr_Link_T))) =
@@ -1189,17 +1200,18 @@ module M_impl_List_T__push_front (* List<T> *)
     [ return (result: ()) -> {[@stop_split] [@expl:push_front ensures] self.final = cons_Perm_ptr_Link_T self.current x}
       (! return {result}) ]
   
-  predicate resolve_refmut_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: MutBorrow.t (Seq.seq t_Perm_ptr_Link_T)) =
+  function resolve_refmut_Seq_Perm_ptr_Link_T [@inline:trivial] (_1: MutBorrow.t (Seq.seq t_Perm_ptr_Link_T)) : bool =
     _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_Seq_Perm_ptr_Link_T
+  meta "rewrite_def" function resolve_refmut_Seq_Perm_ptr_Link_T
   
-  predicate gt_log_Int [@inline:trivial] (self: int) (other: int) = other < self
+  function gt_log_Int [@inline:trivial] (self: int) (other: int) : bool = other < self
   
-  meta "rewrite_def" predicate gt_log_Int
+  meta "rewrite_def" function gt_log_Int
   
-  predicate invariant_List_T [@inline:trivial] (self: t_List_T) =
-    self.seq = (Seq.empty: Seq.seq t_Perm_ptr_Link_T) /\ is_null_ptr_Link_T self.first /\ is_null_ptr_Link_T self.last
+  function invariant_List_T [@inline:trivial] (self: t_List_T) : bool = self.seq
+        = (Seq.empty: Seq.seq t_Perm_ptr_Link_T)
+      /\ is_null_ptr_Link_T self.first /\ is_null_ptr_Link_T self.last
     \/ gt_log_Int (Seq.length self.seq) 0
     /\ self.first = ward_ptr_Link_T (Seq.get self.seq 0)
     /\ self.last = ward_ptr_Link_T (Seq.get self.seq (Seq.length self.seq - 1))
@@ -1207,25 +1219,25 @@ module M_impl_List_T__push_front (* List<T> *)
         -> (val_ptr_Link_T (Seq.get self.seq i)).next = ward_ptr_Link_T (Seq.get self.seq (i + 1)))
     /\ is_null_ptr_Link_T (val_ptr_Link_T (Seq.get self.seq (Seq.length self.seq - 1))).next
   
-  meta "rewrite_def" predicate invariant_List_T
+  meta "rewrite_def" function invariant_List_T
   
-  predicate inv_List_T (_1: t_List_T)
+  function inv_List_T (_1: t_List_T) : bool
   
   axiom inv_axiom'1 [@rewrite]: forall _1: t_List_T [inv_List_T _1]. inv_List_T _1
       = (invariant_List_T _1 /\ inv_Ghost_Seq_Perm_ptr_Link_T _1.seq)
   
-  predicate invariant_refmut_List_T [@inline:trivial] (self: MutBorrow.t t_List_T) =
-    inv_List_T self.current /\ inv_List_T self.final
+  function invariant_refmut_List_T [@inline:trivial] (self: MutBorrow.t t_List_T) : bool = inv_List_T self.current
+    /\ inv_List_T self.final
   
-  meta "rewrite_def" predicate invariant_refmut_List_T
+  meta "rewrite_def" function invariant_refmut_List_T
   
-  predicate inv_refmut_List_T [@inline:trivial] (_1: MutBorrow.t t_List_T) = invariant_refmut_List_T _1
+  function inv_refmut_List_T [@inline:trivial] (_1: MutBorrow.t t_List_T) : bool = invariant_refmut_List_T _1
   
-  meta "rewrite_def" predicate inv_refmut_List_T
+  meta "rewrite_def" function inv_refmut_List_T
   
-  predicate resolve_refmut_List_T [@inline:trivial] (_1: MutBorrow.t t_List_T) = _1.final = _1.current
+  function resolve_refmut_List_T [@inline:trivial] (_1: MutBorrow.t t_List_T) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_List_T
+  meta "rewrite_def" function resolve_refmut_List_T
   
   let new_unit (x: ()) (return (x'0: ())) = any
     [ return (result: ()) -> {[@stop_split] [@expl:new ensures] result = x} (! return {result}) ]

@@ -15,7 +15,7 @@ module M_test2
   
   type t_X
   
-  predicate inv_X (_1: t_X)
+  function inv_X (_1: t_X) : bool
   
   meta "compute_max_steps" 1000000
   

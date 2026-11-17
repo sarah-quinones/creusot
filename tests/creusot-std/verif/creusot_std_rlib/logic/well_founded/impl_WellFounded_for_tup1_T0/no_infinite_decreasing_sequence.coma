@@ -5,16 +5,16 @@ use int.Int
 
 type t_T0
 
-predicate ge_log_Int [@inline:trivial] (self: int) (other: int) = other <= self
+function ge_log_Int [@inline:trivial] (self: int) (other: int) : bool = other <= self
 
-meta "rewrite_def" predicate ge_log_Int
+meta "rewrite_def" function ge_log_Int
 
-predicate well_founded_relation_T0 (self: t_T0) (other: t_T0)
+function well_founded_relation_T0 (self: t_T0) (other: t_T0) : bool
 
-predicate well_founded_relation_tup1_T0 [@inline:trivial] (self: t_T0) (other: t_T0) =
+function well_founded_relation_tup1_T0 [@inline:trivial] (self: t_T0) (other: t_T0) : bool =
   well_founded_relation_T0 self other
 
-meta "rewrite_def" predicate well_founded_relation_tup1_T0
+meta "rewrite_def" function well_founded_relation_tup1_T0
 
 function index_Mapping_Int_tup1_T0 [@inline:trivial] (self: Map.map int t_T0) (a: int) : t_T0 = Map.get self a
 
@@ -22,9 +22,9 @@ meta "rewrite_def" function index_Mapping_Int_tup1_T0
 
 type t_Option_Int = None | Some int
 
-predicate index_Mapping_Int_bool [@inline:trivial] (self: Map.map int bool) (a: int) = Map.get self a
+function index_Mapping_Int_bool [@inline:trivial] (self: Map.map int bool) (a: int) : bool = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_Int_bool
+meta "rewrite_def" function index_Mapping_Int_bool
 
 function such_that_Int (p: Map.map int bool) : int
 
@@ -46,14 +46,14 @@ type tup2_T0_unit = { f0: t_T0; f1: () }
 
 function tuple_to_pair_tup1_T0 (self: t_T0) : tup2_T0_unit = { f0 = self; f1 = () }
 
-predicate well_founded_relation_unit [@inline:trivial] (self: ()) (_2: ()) = false
+function well_founded_relation_unit [@inline:trivial] (self: ()) (_2: ()) : bool = false
 
-meta "rewrite_def" predicate well_founded_relation_unit
+meta "rewrite_def" function well_founded_relation_unit
 
-predicate well_founded_relation_tup2_T0_unit [@inline:trivial] (self: tup2_T0_unit) (other: tup2_T0_unit) =
+function well_founded_relation_tup2_T0_unit [@inline:trivial] (self: tup2_T0_unit) (other: tup2_T0_unit) : bool =
   well_founded_relation_T0 self.f0 other.f0 \/ self.f0 = other.f0 /\ well_founded_relation_unit self.f1 other.f1
 
-meta "rewrite_def" predicate well_founded_relation_tup2_T0_unit
+meta "rewrite_def" function well_founded_relation_tup2_T0_unit
 
 function index_Mapping_Int_tup2_T0_unit [@inline:trivial] (self: Map.map int tup2_T0_unit) (a: int) : tup2_T0_unit =
   Map.get self a
@@ -111,9 +111,9 @@ axiom extract_nth_T0_spec'0: forall s: Map.map int tup2_T0_unit, i: int [extract
     -> (let prev = extract_nth_T0 s (i - 1) in prev < extract_nth_T0 s i
     /\ well_founded_relation_T0 (index_Mapping_Int_tup2_T0_unit s prev).f0 (index_Mapping_Int_tup2_T0_unit s (extract_nth_T0 s i)).f0)
 
-predicate index_Mapping_T0_bool [@inline:trivial] (self: Map.map t_T0 bool) (a: t_T0) = Map.get self a
+function index_Mapping_T0_bool [@inline:trivial] (self: Map.map t_T0 bool) (a: t_T0) : bool = Map.get self a
 
-meta "rewrite_def" predicate index_Mapping_T0_bool
+meta "rewrite_def" function index_Mapping_T0_bool
 
 function such_that_T0 (p: Map.map t_T0 bool) : t_T0
 

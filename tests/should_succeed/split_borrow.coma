@@ -9,9 +9,10 @@ module M_f
   
   let z (return (x: bool)) = any [ return (result: bool) -> (! return {result}) ]
   
-  predicate resolve_refmut_tup2_MyInt_MyInt [@inline:trivial] (_1: MutBorrow.t tup2_MyInt_MyInt) = _1.final = _1.current
+  function resolve_refmut_tup2_MyInt_MyInt [@inline:trivial] (_1: MutBorrow.t tup2_MyInt_MyInt) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_tup2_MyInt_MyInt
+  meta "rewrite_def" function resolve_refmut_tup2_MyInt_MyInt
   
   meta "compute_max_steps" 1000000
   
@@ -53,13 +54,14 @@ module M_g
   
   type tup2_MyInt_MyInt = { f0'0: t_MyInt; f1'0: t_MyInt }
   
-  predicate resolve_refmut_MyInt [@inline:trivial] (_1: MutBorrow.t t_MyInt) = _1.final = _1.current
+  function resolve_refmut_MyInt [@inline:trivial] (_1: MutBorrow.t t_MyInt) : bool = _1.final = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_MyInt
+  meta "rewrite_def" function resolve_refmut_MyInt
   
-  predicate resolve_refmut_tup2_MyInt_MyInt [@inline:trivial] (_1: MutBorrow.t tup2_MyInt_MyInt) = _1.final = _1.current
+  function resolve_refmut_tup2_MyInt_MyInt [@inline:trivial] (_1: MutBorrow.t tup2_MyInt_MyInt) : bool = _1.final
+    = _1.current
   
-  meta "rewrite_def" predicate resolve_refmut_tup2_MyInt_MyInt
+  meta "rewrite_def" function resolve_refmut_tup2_MyInt_MyInt
   
   meta "compute_max_steps" 1000000
   

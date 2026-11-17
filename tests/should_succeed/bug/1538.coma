@@ -7,7 +7,7 @@ module M_baz
   
   constant foo : t_Foo
   
-  predicate baz (foo: t_Foo)
+  function baz (foo: t_Foo) : bool
   
   goal vc_baz: [@stop_split] [@expl:baz ensures] (forall _x: (). foo.bar = ()) = true
 end

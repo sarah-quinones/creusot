@@ -2,23 +2,23 @@
 
 type t_T
 
-predicate inv_T (_1: t_T)
+function inv_T (_1: t_T) : bool
 
-predicate invariant_Ghost_T [@inline:trivial] (self: t_T) = inv_T self
+function invariant_Ghost_T [@inline:trivial] (self: t_T) : bool = inv_T self
 
-meta "rewrite_def" predicate invariant_Ghost_T
+meta "rewrite_def" function invariant_Ghost_T
 
-predicate inv_Ghost_T [@inline:trivial] (_1: t_T) = invariant_Ghost_T _1
+function inv_Ghost_T [@inline:trivial] (_1: t_T) : bool = invariant_Ghost_T _1
 
-meta "rewrite_def" predicate inv_Ghost_T
+meta "rewrite_def" function inv_Ghost_T
 
-predicate structural_resolve_Ghost_T (_1: t_T)
+function structural_resolve_Ghost_T (_1: t_T) : bool
 
-predicate resolve_T (_1: t_T)
+function resolve_T (_1: t_T) : bool
 
-predicate resolve_Ghost_T [@inline:trivial] (self: t_T) = resolve_T self
+function resolve_Ghost_T [@inline:trivial] (self: t_T) : bool = resolve_T self
 
-meta "rewrite_def" predicate resolve_Ghost_T
+meta "rewrite_def" function resolve_Ghost_T
 
 meta "compute_max_steps" 1000000
 

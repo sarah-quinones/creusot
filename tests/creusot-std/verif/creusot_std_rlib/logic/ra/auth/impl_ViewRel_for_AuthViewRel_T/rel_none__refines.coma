@@ -6,7 +6,7 @@ type t_Option_T = None | Some t_T
 
 function op_T (self: t_T) (other: t_T) : t_Option_T
 
-predicate incl_T (self: t_T) (other: t_T)
+function incl_T (self: t_T) (other: t_T) : bool
 
 axiom incl_T_spec: forall self: t_T, other: t_T [incl_T self other]. incl_T self other
     = (exists factor: t_T. op_T self factor = Some other)
@@ -33,8 +33,7 @@ function incl_op_T (self: t_T) (other: t_T) (comb: t_T) : ()
 
 axiom incl_op_T_spec: forall self: t_T, other: t_T, comb: t_T. op_T self other = Some comb -> incl_T self comb
 
-predicate rel_AuthViewRel_T (a: t_Option_T) (f: t_T) =
-  match a with
+function rel_AuthViewRel_T (a: t_Option_T) (f: t_T) : bool = match a with
     | Some a'0 -> incl_T f a'0
     | None -> true
     end
