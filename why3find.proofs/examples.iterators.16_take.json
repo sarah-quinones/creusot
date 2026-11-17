@@ -1,0 +1,59 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "M_common__trait_ExactSizeIterator__is_empty": {
+      "vc_is_empty_Self": { "prover": "alt-ergo@", "time": 0.016 },
+      "vc_len_Self": { "prover": "alt-ergo@", "time": 0.013 },
+      "vc_size_hint_Self": { "prover": "alt-ergo@", "time": 0.01 }
+    },
+    "M_common__trait_ExactSizeIterator__len": {
+      "vc_eq_Option_usize": { "prover": "alt-ergo@", "time": 0.011 },
+      "vc_len_Self": { "prover": "alt-ergo@", "time": 0.013 },
+      "vc_size_hint_Self": { "prover": "alt-ergo@", "time": 0.011 }
+    },
+    "M_impl_ExactSizeIterator_for_Take_I__size_hint_exact": {
+      "vc_size_hint_I": { "prover": "alt-ergo@", "time": 0.009 },
+      "vc_size_hint_Take_I": { "prover": "alt-ergo@", "time": 0.009 },
+      "vc_size_hint_exact_Take_I": { "prover": "alt-ergo@", "time": 0.017 }
+    },
+    "M_impl_ExactSizeIterator_for_Take_I__size_hint_exact__refines": {
+      "refines": { "prover": "alt-ergo@", "time": 0.011 },
+      "vc_size_hint_I": { "prover": "alt-ergo@", "time": 0.009 },
+      "vc_size_hint_Take_I": { "prover": "alt-ergo@", "time": 0.009 }
+    },
+    "M_impl_Iterator_for_Take_I__next": {
+      "vc_next_I": { "prover": "cvc5@", "time": 0.004 },
+      "vc_next_Take_I": { "prover": "cvc5@", "time": 0.025 }
+    },
+    "M_impl_Iterator_for_Take_I__next__refines": {
+      "refines": { "prover": "cvc5@", "time": 0.004 }
+    },
+    "M_impl_Iterator_for_Take_I__produces_refl": {
+      "vc_produces_refl_Take_I": { "prover": "cvc5@", "time": 0.008 }
+    },
+    "M_impl_Iterator_for_Take_I__produces_refl__refines": {
+      "refines": { "prover": "cvc5@", "time": 0.006 }
+    },
+    "M_impl_Iterator_for_Take_I__produces_trans": {
+      "vc_produces_trans_Take_I": { "prover": "cvc5@", "time": 0.012 }
+    },
+    "M_impl_Iterator_for_Take_I__produces_trans__refines": {
+      "refines": { "prover": "cvc5@", "time": 0.007 }
+    },
+    "M_impl_Iterator_for_Take_I__size_hint": {
+      "vc_elim_Some": { "prover": "alt-ergo@", "time": 0.014 },
+      "vc_min_usize": { "prover": "alt-ergo@", "time": 0.014 },
+      "vc_size_hint_I": { "prover": "alt-ergo@", "time": 0.012 },
+      "vc_size_hint_Take_I": { "prover": "cvc5@", "time": 0.023 }
+    },
+    "M_impl_Iterator_for_Take_I__size_hint__refines": {
+      "refines": { "prover": "alt-ergo@", "time": 0.031 },
+      "vc_size_hint_I": { "prover": "alt-ergo@", "time": 0.011 }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "M_f1": { "vc_f1'0": { "prover": "cvc5@", "time": 0.003 } },
+    "M_f2": { "vc_f2": { "prover": "cvc5@", "time": 0.003 } },
+    "M_f3": { "vc_f3": { "prover": "cvc5@", "time": 0.003 } },
+    "M_f4": { "vc_f4": { "prover": "cvc5@", "time": 0.003 } },
+    "M_g": { "vc_g": { "prover": "cvc5@", "time": 0.006 } }
+  }
+}

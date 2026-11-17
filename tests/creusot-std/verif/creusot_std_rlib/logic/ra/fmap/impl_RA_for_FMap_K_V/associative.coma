@@ -140,8 +140,9 @@ goal vc_associative_FMap_K_V: match { f0'1 = op_FMap_K_V a b; f1'1 = op_FMap_K_V
     | {f0'1 = Some ab; f1'1 = Some bc} -> match { f0'1 = op_FMap_K_V ab c; f1'1 = op_FMap_K_V a bc } with
       | {f0'1 = Some x; f1'1 = Some y} -> ([@stop_split] [@expl:ext_eq ensures] ext_eq_K x y = (x = y))
       -> ext_eq_K x y
-      && ([@stop_split] [@expl:associative ensures] and_then_Option_FMap_K_V (op_FMap_K_V a b) (fun (ab'0: t_FMap_K_V) -> op_FMap_K_V ab'0 c)
-      = and_then_Option_FMap_K_V (op_FMap_K_V b c) (fun (bc'0: t_FMap_K_V) -> op_FMap_K_V a bc'0))
+      && (forall local. local = ()
+        -> ([@stop_split] [@expl:associative ensures] and_then_Option_FMap_K_V (op_FMap_K_V a b) (fun (ab'0: t_FMap_K_V) -> op_FMap_K_V ab'0 c)
+        = and_then_Option_FMap_K_V (op_FMap_K_V b c) (fun (bc'0: t_FMap_K_V) -> op_FMap_K_V a bc'0)))
       | _ -> [@stop_split] [@expl:associative ensures] and_then_Option_FMap_K_V (op_FMap_K_V a b) (fun (ab'0: t_FMap_K_V) -> op_FMap_K_V ab'0 c)
       = and_then_Option_FMap_K_V (op_FMap_K_V b c) (fun (bc'0: t_FMap_K_V) -> op_FMap_K_V a bc'0)
       end

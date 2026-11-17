@@ -1,0 +1,26 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "Coma": {
+      "vc_concat_empty_T": {
+        "tactic": "split_vc",
+        "children": [
+          { "prover": "alt-ergo@", "time": 0.015 },
+          { "prover": "alt-ergo@", "time": 0.013 },
+          {
+            "tactic": "split_vc",
+            "children": [
+              { "prover": "alt-ergo@", "time": 0.024 },
+              { "prover": "cvc5@", "time": 0.072 }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

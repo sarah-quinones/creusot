@@ -51,7 +51,11 @@ constant x : Seq.seq t_T
 function snoc_flatten_T (self: Seq.seq (Seq.seq t_T)) (x: Seq.seq t_T) : ()
 
 goal vc_snoc_flatten_T: Seq.snoc self x = Seq.(++) self (Seq.singleton x)
-  && (([@stop_split] [@expl:concat_flatten ensures] flatten_T (Seq.(++) self (Seq.singleton x))
-    = Seq.(++) (flatten_T self) (flatten_T (Seq.singleton x)))
-  -> ([@stop_split] [@expl:singleton_flatten ensures] flatten_T (Seq.singleton x) = x)
-  -> ([@stop_split] [@expl:snoc_flatten ensures] flatten_T (Seq.snoc self x) = Seq.(++) (flatten_T self) x))
+  && (forall local. local = ()
+    -> (forall local'0. local'0 = ()
+      -> ([@stop_split] [@expl:concat_flatten ensures] flatten_T (Seq.(++) self (Seq.singleton x))
+        = Seq.(++) (flatten_T self) (flatten_T (Seq.singleton x)))
+      -> (forall local'1. local'1 = concat_flatten_T self (Seq.singleton x)
+        -> ([@stop_split] [@expl:singleton_flatten ensures] flatten_T (Seq.singleton x) = x)
+        -> (forall local'2. local'2 = singleton_flatten_T x
+          -> ([@stop_split] [@expl:snoc_flatten ensures] flatten_T (Seq.snoc self x) = Seq.(++) (flatten_T self) x)))))

@@ -105,27 +105,35 @@ goal vc_lt_log_total_Seq_T: if gt_log_Int (Seq.length self) 0 then
         /\ (([@stop_split] [@expl:lt_log_total ensures] lt_log_Seq_T (index_Seq_T self { start = 1 }) (index_Seq_T other { start = 1 })
           \/ index_Seq_T self { start = 1 } = index_Seq_T other { start = 1 }
           \/ lt_log_Seq_T (index_Seq_T other { start = 1 }) (index_Seq_T self { start = 1 }))
-        -> ([@stop_split] [@expl:lt_log_tail requires] ([@stop_split] [@expl:lt_log_tail requires #0] gt_log_Int (Seq.length self) 0
-            /\ gt_log_Int (Seq.length other) 0)
-          /\ ([@stop_split] [@expl:lt_log_tail requires #1] Seq.get self 0 = Seq.get other 0))
-        /\ (([@stop_split] [@expl:lt_log_tail ensures] lt_log_Seq_T self other
-          = lt_log_Seq_T (index_Seq_T self { start = 1 }) (index_Seq_T other { start = 1 }))
-        -> ([@stop_split] [@expl:lt_log_tail requires] ([@stop_split] [@expl:lt_log_tail requires #0] gt_log_Int (Seq.length other) 0
-            /\ gt_log_Int (Seq.length self) 0)
-          /\ ([@stop_split] [@expl:lt_log_tail requires #1] Seq.get other 0 = Seq.get self 0))
-        /\ (([@stop_split] [@expl:lt_log_tail ensures] lt_log_Seq_T other self
-          = lt_log_Seq_T (index_Seq_T other { start = 1 }) (index_Seq_T self { start = 1 }))
-        -> (forall i: int. 0 < i /\ i < Seq.length self
-            -> Seq.get self i = Seq.get (index_Seq_T self { start = 1 }) (i - 1))
-        && (forall i: int. 0 < i /\ i < Seq.length other
-            -> Seq.get other i = Seq.get (index_Seq_T other { start = 1 }) (i - 1))
-        && ([@stop_split] [@expl:lt_log_total ensures] lt_log_Seq_T self other
-        \/ self = other \/ lt_log_Seq_T other self))))
+        -> (forall local. local = lt_log_total_Seq_T (index_Seq_T self { start = 1 }) (index_Seq_T other { start = 1 })
+          -> ([@stop_split] [@expl:lt_log_tail requires] ([@stop_split] [@expl:lt_log_tail requires #0] gt_log_Int (Seq.length self) 0
+              /\ gt_log_Int (Seq.length other) 0)
+            /\ ([@stop_split] [@expl:lt_log_tail requires #1] Seq.get self 0 = Seq.get other 0))
+          /\ (([@stop_split] [@expl:lt_log_tail ensures] lt_log_Seq_T self other
+            = lt_log_Seq_T (index_Seq_T self { start = 1 }) (index_Seq_T other { start = 1 }))
+          -> (forall local'0. local'0 = lt_log_tail_T self other
+            -> ([@stop_split] [@expl:lt_log_tail requires] ([@stop_split] [@expl:lt_log_tail requires #0] gt_log_Int (Seq.length other) 0
+                /\ gt_log_Int (Seq.length self) 0)
+              /\ ([@stop_split] [@expl:lt_log_tail requires #1] Seq.get other 0 = Seq.get self 0))
+            /\ (([@stop_split] [@expl:lt_log_tail ensures] lt_log_Seq_T other self
+              = lt_log_Seq_T (index_Seq_T other { start = 1 }) (index_Seq_T self { start = 1 }))
+            -> (forall local'1. local'1 = lt_log_tail_T other self
+              -> (forall i: int. 0 < i /\ i < Seq.length self
+                  -> Seq.get self i = Seq.get (index_Seq_T self { start = 1 }) (i - 1))
+              && (forall local'2. local'2 = ()
+                -> (forall local'3. local'3 = ()
+                  -> (forall i: int. 0 < i /\ i < Seq.length other
+                      -> Seq.get other i = Seq.get (index_Seq_T other { start = 1 }) (i - 1))
+                  && (forall local'4. local'4 = ()
+                    -> (forall local'5. local'5 = ()
+                      -> ([@stop_split] [@expl:lt_log_total ensures] lt_log_Seq_T self other
+                      \/ self = other \/ lt_log_Seq_T other self)))))))))))
       else
         ([@stop_split] [@expl:lt_log_total ensures] lt_log_T (Seq.get self 0) (Seq.get other 0)
           \/ Seq.get self 0 = Seq.get other 0 \/ lt_log_T (Seq.get other 0) (Seq.get self 0))
-        -> ([@stop_split] [@expl:lt_log_total ensures] lt_log_Seq_T self other
-        \/ self = other \/ lt_log_Seq_T other self)
+        -> (forall local. local = lt_log_total_T (Seq.get self 0) (Seq.get other 0)
+          -> ([@stop_split] [@expl:lt_log_total ensures] lt_log_Seq_T self other
+          \/ self = other \/ lt_log_Seq_T other self))
     
     else
       [@stop_split] [@expl:lt_log_total ensures] lt_log_Seq_T self other \/ self = other \/ lt_log_Seq_T other self

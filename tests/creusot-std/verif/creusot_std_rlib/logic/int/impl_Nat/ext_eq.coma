@@ -38,6 +38,7 @@ constant other : t_Nat
 
 predicate ext_eq (self: t_Nat) (other: t_Nat)
 
-goal vc_ext_eq: ([@stop_split] [@expl:to_int ensures] ge_log_Int (to_int self) 0)
-  -> ([@stop_split] [@expl:to_int ensures] ge_log_Int (to_int other) 0)
-  -> ([@stop_split] [@expl:ext_eq ensures] (to_int self = to_int other) = (self = other))
+goal vc_ext_eq: forall local. local = ()
+    -> ([@stop_split] [@expl:to_int ensures] ge_log_Int (to_int self) 0)
+    -> ([@stop_split] [@expl:to_int ensures] ge_log_Int (to_int other) 0)
+    -> ([@stop_split] [@expl:ext_eq ensures] (to_int self = to_int other) = (self = other))

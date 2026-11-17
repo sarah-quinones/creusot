@@ -45,6 +45,15 @@ pub struct CreusotArgs {
     /// Directory where cross-crate information for `#[erasure]` checks is stored.
     #[clap(long)]
     pub erasure_check_dir: Option<PathBuf>,
+
+    #[clap(long, value_enum, default_value_t=TriggerMode::Auto, verbatim_doc_comment)]
+    pub triggers: TriggerMode,
+}
+
+#[derive(Clone, Copy, Debug, ValueEnum, Serialize, Deserialize)]
+pub enum TriggerMode {
+    Auto,
+    Manual,
 }
 
 #[derive(Clone, Copy, Debug, ValueEnum, Serialize, Deserialize)]
@@ -130,6 +139,7 @@ pub struct Options {
     pub span_mode: SpanMode,
     pub erasure_check: ErasureCheck,
     pub erasure_check_dir: Option<PathBuf>,
+    pub triggers: TriggerMode,
 }
 
 #[derive(Debug, Clone)]
@@ -185,6 +195,7 @@ impl CreusotArgs {
             prefix: Vec::new(), // to be set in callbacks::ToWhy::set_output_dir
             erasure_check: self.erasure_check,
             erasure_check_dir: self.erasure_check_dir,
+            triggers: self.triggers,
         })
     }
 }

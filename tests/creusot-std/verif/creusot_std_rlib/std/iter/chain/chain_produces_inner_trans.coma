@@ -85,4 +85,6 @@ function chain_produces_inner_trans_A (x: t_Chain_A_B) (visited_a_xy: Seq.seq t_
 goal vc_chain_produces_inner_trans_A: chain_produces_inner_A x visited_a_xy visited_b_xy y
   -> chain_produces_inner_A y visited_a_yz visited_b_yz z
   -> Seq.(++) (Seq.empty: Seq.seq t_Item) (Seq.empty: Seq.seq t_Item) = (Seq.empty: Seq.seq t_Item)
-  && ([@stop_split] [@expl:chain_produces_inner_trans ensures] chain_produces_inner_A x (Seq.(++) visited_a_xy visited_a_yz) (Seq.(++) visited_b_xy visited_b_yz) z)
+  && (forall local. local = ()
+    -> (forall local'0. local'0 = ()
+      -> ([@stop_split] [@expl:chain_produces_inner_trans ensures] chain_produces_inner_A x (Seq.(++) visited_a_xy visited_a_yz) (Seq.(++) visited_b_xy visited_b_yz) z)))

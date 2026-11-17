@@ -46,10 +46,22 @@ constant p : Map.map tup2_K_V bool
 
 function filter_K (self: t_FMap_K_V) (p: Map.map tup2_K_V bool) : t_FMap_K_V
 
+<<<<<<< HEAD
 goal vc_filter_K:
   forall f: Map.map tup2_K_V t_Option_V. (forall _0: tup2_K_V [f _0]. let {f0 = k; f1 = v} = _0 in if index_Mapping_tup2_K_V_bool p { f0 = k;
                                                                                                                                       f1 = v } then
           Some v = f _0
+=======
+goal vc_filter_K: (forall _0: tup2_K_V. forall local. local = _0 -> true)
+  && (([@stop_split] [@expl:filter_map ensures] forall k: t_K [lookup_K (filter_map_K self (fun (_0: tup2_K_V) -> let {f0 = k'0; f1 = v} = _0 in if index_Mapping_tup2_K_V_bool p { f0 = k'0;
+                                                                                                                                                                                    f1 = v } then
+        Some v
+      else
+        None
+      )) k]. lookup_K (filter_map_K self (fun (_0: tup2_K_V) -> let {f0 = k'0; f1 = v} = _0 in if index_Mapping_tup2_K_V_bool p { f0 = k'0;
+                                                                                                                                  f1 = v } then
+          Some v
+>>>>>>> 6de4f8bb0 (let -> forall(eq implies body))
         else
           None = f _0
       )
@@ -63,3 +75,16 @@ goal vc_filter_K:
         | None -> None
         | Some v -> if index_Mapping_tup2_K_V_bool p { f0 = k; f1 = v } then Some v else None
         end)
+<<<<<<< HEAD
+=======
+  -> (let result = filter_map_K self (fun (_0: tup2_K_V) -> let {f0 = k; f1 = v} = _0 in if index_Mapping_tup2_K_V_bool p { f0 = k;
+                                                                                                                            f1 = v } then
+    Some v
+  else
+    None
+  ) in [@stop_split] [@expl:filter ensures] forall k: t_K [lookup_K result k]. lookup_K result k
+    = match lookup_K self k with
+      | None -> None
+      | Some v -> if index_Mapping_tup2_K_V_bool p { f0 = k; f1 = v } then Some v else None
+      end))
+>>>>>>> 6de4f8bb0 (let -> forall(eq implies body))

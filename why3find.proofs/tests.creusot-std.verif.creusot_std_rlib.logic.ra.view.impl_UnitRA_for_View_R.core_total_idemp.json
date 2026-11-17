@@ -1,0 +1,24 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "Coma": {
+      "vc_core_total_idemp_View_R": {
+        "tactic": "split_vc",
+        "children": [
+          {
+            "tactic": "split_vc",
+            "children": [
+              { "prover": "cvc5@", "time": 0.019 },
+              { "prover": "cvc4@", "time": 0.044 }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

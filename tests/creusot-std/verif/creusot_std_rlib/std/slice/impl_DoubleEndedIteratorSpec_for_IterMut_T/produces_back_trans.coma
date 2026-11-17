@@ -67,4 +67,6 @@ goal vc_produces_back_trans_IterMut_T: produces_back_IterMut_T a ab b
   -> produces_back_IterMut_T b bc c
   -> ([@stop_split] [@expl:reverse_concat ensures] Reverse.reverse (Seq.(++) ab bc)
     = Seq.(++) (Reverse.reverse bc) (Reverse.reverse ab))
-  -> ([@stop_split] [@expl:produces_back_trans ensures] produces_back_IterMut_T a (Seq.(++) ab bc) c)
+  -> (forall local. local = reverse_concat_refmut_T ab bc
+    -> (forall local'0. local'0 = ()
+      -> ([@stop_split] [@expl:produces_back_trans ensures] produces_back_IterMut_T a (Seq.(++) ab bc) c)))

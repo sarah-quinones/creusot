@@ -514,7 +514,7 @@ impl Exp {
         } else {
             Exp::Quant(
                 Quant::Forall,
-                bound.collect(),
+                bound.map(|(i, t)| (i, Some(t))).collect(),
                 trigger.into_iter().collect(),
                 Box::new(body),
             )
@@ -539,7 +539,7 @@ impl Exp {
         } else {
             Exp::Quant(
                 Quant::Exists,
-                bound.collect(),
+                bound.map(|(i, t)| (i, Some(t))).collect(),
                 trigger.into_iter().collect(),
                 Box::new(body),
             )

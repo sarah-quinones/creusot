@@ -104,10 +104,11 @@ constant other : t_View_R
 
 predicate eq_View_R (self: t_View_R) (other: t_View_R)
 
-goal vc_eq_View_R: if auth_R self = auth_R other then
-    ([@stop_split] [@expl:frag ensures] rel_R (auth_R self) (frag_R self))
-    -> ([@stop_split] [@expl:frag ensures] rel_R (auth_R other) (frag_R other))
-    -> ([@stop_split] [@expl:eq ensures] (frag_R self = frag_R other) = (self = other))
-  else
-    [@stop_split] [@expl:eq ensures] false = (self = other)
-  
+goal vc_eq_View_R: forall local. local = ()
+    -> (if auth_R self = auth_R other then
+      ([@stop_split] [@expl:frag ensures] rel_R (auth_R self) (frag_R self))
+      -> ([@stop_split] [@expl:frag ensures] rel_R (auth_R other) (frag_R other))
+      -> ([@stop_split] [@expl:eq ensures] (frag_R self = frag_R other) = (self = other))
+    else
+      [@stop_split] [@expl:eq ensures] false = (self = other)
+    )

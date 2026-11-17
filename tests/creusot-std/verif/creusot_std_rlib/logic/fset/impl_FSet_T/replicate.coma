@@ -84,21 +84,26 @@ function replicate_T (self: Fset.fset t_T) (n: int) : Fset.fset (Seq.seq t_T)
 goal vc_replicate_T: ge_log_Int n 0
   -> (if n = 0 then
     (forall xs: Seq.seq t_T. Seq.length xs = 0 -> xs = (Seq.empty: Seq.seq t_T))
-    && (([@stop_split] [@expl:singleton ensures] forall y: Seq.seq t_T. contains_Seq_T (singleton_Seq_T (Seq.empty: Seq.seq t_T)) y
-        = ((Seq.empty: Seq.seq t_T) = y))
-    -> ([@stop_split] [@expl:replicate ensures] forall xs: Seq.seq t_T. contains_Seq_T (singleton_Seq_T (Seq.empty: Seq.seq t_T)) xs
-      = (Seq.length xs = n /\ (forall x: t_T. contains_T xs x -> contains_T'0 self x))))
+    && (forall local. local = ()
+      -> (forall local'0. local'0 = ()
+        -> ([@stop_split] [@expl:singleton ensures] forall y: Seq.seq t_T. contains_Seq_T (singleton_Seq_T (Seq.empty: Seq.seq t_T)) y
+            = ((Seq.empty: Seq.seq t_T) = y))
+        -> ([@stop_split] [@expl:replicate ensures] forall xs: Seq.seq t_T. contains_Seq_T (singleton_Seq_T (Seq.empty: Seq.seq t_T)) xs
+          = (Seq.length xs = n /\ (forall x: t_T. contains_T xs x -> contains_T'0 self x)))))
   else
     (forall xs: Seq.seq t_T, i: int. 0 < i /\ i < Seq.length xs -> Seq.get xs i = Seq.get (tail_T xs) (i - 1))
-    && (([@stop_split] [@expl:replicate requires] ge_log_Int (n - 1) 0)
-      /\ ([@expl:variant decreases] well_founded_relation_Int n (n - 1)))
-    /\ (([@stop_split] [@expl:replicate ensures] forall xs: Seq.seq t_T. contains_Seq_T (replicate_T self (n - 1)) xs
-        = (Seq.length xs = n - 1 /\ (forall x: t_T. contains_T xs x -> contains_T'0 self x)))
-    -> ([@stop_split] [@expl:cons ensures] forall xs: Seq.seq t_T. contains_Seq_T (cons_T'0 self (replicate_T self (n
-          - 1))) xs
-        = (0 < Seq.length xs
-        /\ contains_T'0 self (Seq.get xs 0) /\ contains_Seq_T (replicate_T self (n - 1)) (tail_T xs)))
-    -> ([@stop_split] [@expl:replicate ensures] forall xs: Seq.seq t_T. contains_Seq_T (cons_T'0 self (replicate_T self (n
-        - 1))) xs
-      = (Seq.length xs = n /\ (forall x: t_T. contains_T xs x -> contains_T'0 self x))))
+    && (forall local. local = ()
+      -> (forall local'0. local'0 = ()
+        -> (([@stop_split] [@expl:replicate requires] ge_log_Int (n - 1) 0)
+          /\ ([@expl:variant decreases] well_founded_relation_Int n (n - 1)))
+        /\ (([@stop_split] [@expl:replicate ensures] forall xs: Seq.seq t_T. contains_Seq_T (replicate_T self (n
+              - 1)) xs
+            = (Seq.length xs = n - 1 /\ (forall x: t_T. contains_T xs x -> contains_T'0 self x)))
+        -> ([@stop_split] [@expl:cons ensures] forall xs: Seq.seq t_T. contains_Seq_T (cons_T'0 self (replicate_T self (n
+              - 1))) xs
+            = (0 < Seq.length xs
+            /\ contains_T'0 self (Seq.get xs 0) /\ contains_Seq_T (replicate_T self (n - 1)) (tail_T xs)))
+        -> ([@stop_split] [@expl:replicate ensures] forall xs: Seq.seq t_T. contains_Seq_T (cons_T'0 self (replicate_T self (n
+            - 1))) xs
+          = (Seq.length xs = n /\ (forall x: t_T. contains_T xs x -> contains_T'0 self x))))))
   )

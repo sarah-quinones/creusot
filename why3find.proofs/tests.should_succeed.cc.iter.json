@@ -1,0 +1,118 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "M_test_filter": {
+      "vc_closure0": { "prover": "cvc5@", "time": 0.005 },
+      "vc_eq_Option_ref_bool": { "prover": "cvc5@", "time": 0.006 },
+      "vc_filter_Iter_bool": { "prover": "cvc5@", "time": 0.005 },
+      "vc_iter_bool": { "prover": "cvc5@", "time": 0.005 },
+      "vc_next_Filter_Iter_bool_closure0": {
+        "prover": "cvc5@",
+        "time": 0.007
+      },
+      "vc_test_filter": {
+        "tactic": "compute_specified",
+        "children": [
+          {
+            "tactic": "split_vc",
+            "children": [
+              { "prover": "z3@", "time": 0.018 },
+              { "prover": "alt-ergo@", "time": 0.018 },
+              { "prover": "cvc4@", "time": 0.099 },
+              { "prover": "alt-ergo@", "time": 0.014 },
+              { "prover": "alt-ergo@", "time": 0.016 },
+              {
+                "tactic": "split_vc",
+                "children": [
+                  {
+                    "tactic": "split_vc",
+                    "children": [ { "prover": "cvc4@", "time": 0.387 } ]
+                  }
+                ]
+              },
+              { "prover": "alt-ergo@", "time": 0.015 },
+              { "prover": "alt-ergo@", "time": 0.019 },
+              {
+                "tactic": "split_vc",
+                "children": [
+                  {
+                    "tactic": "split_vc",
+                    "children": [ { "prover": "cvc4@", "time": 1.2 } ]
+                  }
+                ]
+              },
+              { "prover": "alt-ergo@", "time": 0.02 },
+              { "prover": "alt-ergo@", "time": 0.017 },
+              { "prover": "alt-ergo@", "time": 0.017 },
+              { "prover": "alt-ergo@", "time": 0.016 },
+              { "prover": "alt-ergo@", "time": 0.014 },
+              { "prover": "alt-ergo@", "time": 0.014 },
+              { "prover": "alt-ergo@", "time": 0.018 },
+              { "prover": "alt-ergo@", "time": 0.016 },
+              { "prover": "alt-ergo@", "time": 0.018 },
+              { "prover": "alt-ergo@", "time": 0.016 }
+            ]
+          }
+        ]
+      }
+    },
+    "M_test_filter_map": {
+      "vc_closure0": { "prover": "cvc5@", "time": 0.004 },
+      "vc_eq_Option_bool": { "prover": "cvc5@", "time": 0.006 },
+      "vc_filter_map_Iter_bool": { "prover": "cvc5@", "time": 0.003 },
+      "vc_iter_bool": { "prover": "cvc5@", "time": 0.005 },
+      "vc_next_FilterMap_Iter_bool_closure0": {
+        "prover": "cvc5@",
+        "time": 0.006
+      },
+      "vc_test_filter_map": {
+        "tactic": "compute_specified",
+        "children": [
+          {
+            "tactic": "split_vc",
+            "children": [
+              { "prover": "z3@", "time": 0.014 },
+              { "prover": "alt-ergo@", "time": 0.011 },
+              { "prover": "cvc4@", "time": 0.093 },
+              { "prover": "alt-ergo@", "time": 0.012 },
+              { "prover": "alt-ergo@", "time": 0.019 },
+              { "prover": "cvc4@", "time": 0.423 },
+              { "prover": "alt-ergo@", "time": 0.012 },
+              { "prover": "alt-ergo@", "time": 0.014 },
+              {
+                "tactic": "split_vc",
+                "children": [
+                  {
+                    "tactic": "split_vc",
+                    "children": [ { "prover": "cvc4@", "time": 0.511 } ]
+                  }
+                ]
+              },
+              { "prover": "alt-ergo@", "time": 0.019 },
+              { "prover": "alt-ergo@", "time": 0.014 },
+              { "prover": "alt-ergo@", "time": 0.016 },
+              { "prover": "alt-ergo@", "time": 0.015 },
+              { "prover": "alt-ergo@", "time": 0.017 },
+              { "prover": "alt-ergo@", "time": 0.016 },
+              { "prover": "alt-ergo@", "time": 0.013 },
+              { "prover": "alt-ergo@", "time": 0.012 },
+              { "prover": "alt-ergo@", "time": 0.017 },
+              { "prover": "alt-ergo@", "time": 0.018 }
+            ]
+          }
+        ]
+      }
+    },
+    "M_test_mut_ref": {
+      "vc_eq_Option_ref_i32": { "prover": "cvc5@", "time": 0.004 },
+      "vc_iter_i32": { "prover": "cvc5@", "time": 0.004 },
+      "vc_next_Iter_i32": { "prover": "cvc5@", "time": 0.004 },
+      "vc_test_mut_ref": { "prover": "z3@", "time": 0.039 }
+    }
+  }
+}

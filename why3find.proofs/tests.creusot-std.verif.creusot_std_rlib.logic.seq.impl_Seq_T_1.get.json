@@ -1,0 +1,19 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "Coma": {
+      "vc_as_refs_T": { "prover": "alt-ergo@", "time": 0.013 },
+      "vc_extract_ref_T": { "prover": "alt-ergo@", "time": 0.023 },
+      "vc_get_T": { "prover": "alt-ergo@", "time": 0.018 },
+      "vc_le_Int": { "prover": "alt-ergo@", "time": 0.017 },
+      "vc_len_T": { "prover": "alt-ergo@", "time": 0.018 },
+      "vc_lt_Int": { "prover": "alt-ergo@", "time": 0.018 },
+      "vc_sub_Int": { "prover": "alt-ergo@", "time": 0.017 }
+    }
+  }
+}

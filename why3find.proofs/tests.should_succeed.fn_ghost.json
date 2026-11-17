@@ -1,0 +1,39 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "M_foo": {
+      "vc___new_closure0": { "prover": "cvc5@", "time": 0.002 },
+      "vc_closure0": { "prover": "cvc5@", "time": 0.004 },
+      "vc_foo": { "prover": "cvc5@", "time": 0.006 },
+      "vc_takes_ghost_fn_FnGhostWrapper_closure0": {
+        "prover": "cvc5@",
+        "time": 0.003
+      },
+      "vc_takes_ghost_fnmut_FnGhostWrapper_closure0": {
+        "prover": "cvc5@",
+        "time": 0.004
+      },
+      "vc_takes_ghost_fnonce_FnGhostWrapper_closure0": {
+        "prover": "cvc5@",
+        "time": 0.003
+      }
+    },
+    "M_takes_ghost_fn": {
+      "vc_call_F": { "prover": "cvc5@", "time": 0.004 },
+      "vc_takes_ghost_fn_F": { "prover": "cvc5@", "time": 0.004 }
+    },
+    "M_takes_ghost_fnmut": {
+      "vc_call_mut_F": { "prover": "cvc5@", "time": 0.002 },
+      "vc_takes_ghost_fnmut_F": { "prover": "cvc5@", "time": 0.006 }
+    },
+    "M_takes_ghost_fnonce": {
+      "vc_call_once_F": { "prover": "cvc5@", "time": 0.003 },
+      "vc_takes_ghost_fnonce_F": { "prover": "cvc5@", "time": 0.003 }
+    }
+  }
+}

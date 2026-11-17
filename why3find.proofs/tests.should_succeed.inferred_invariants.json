@@ -1,0 +1,30 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "M_f": { "vc_f_T": { "prover": "cvc5@", "time": 0.003 } },
+    "M_nested_borrows": {
+      "vc_nested_borrows": { "prover": "cvc5@", "time": 0.01 },
+      "vc_replace_refmut_i32": { "prover": "cvc5@", "time": 0.004 }
+    },
+    "M_nested_loops": {
+      "vc_nested_loops": { "prover": "cvc5@", "time": 0.007 }
+    },
+    "M_simple": {
+      "vc_f_T": { "prover": "cvc5@", "time": 0.002 },
+      "vc_simple_T": { "prover": "cvc5@", "time": 0.005 }
+    },
+    "M_swapper": { "vc_swapper_T": { "prover": "cvc5@", "time": 0.007 } },
+    "M_temp_move": { "vc_temp_move_T": { "prover": "cvc5@", "time": 0.004 } },
+    "M_tuple": { "vc_tuple_T": { "prover": "cvc5@", "time": 0.003 } },
+    "M_y": {
+      "vc_index_mut_Vec_i32_Global": { "prover": "cvc5@", "time": 0.005 },
+      "vc_len_i32": { "prover": "cvc5@", "time": 0.004 },
+      "vc_y": { "prover": "cvc5@", "time": 0.015 }
+    }
+  }
+}

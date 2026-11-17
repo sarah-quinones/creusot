@@ -1,0 +1,31 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "M_caller": {
+      "vc_caller": { "prover": "cvc5@", "time": 0.006 },
+      "vc_closure0": { "prover": "cvc5@", "time": 0.005 },
+      "vc_fn_once_user_closure0": { "prover": "cvc5@", "time": 0.003 }
+    },
+    "M_fn_once_user": {
+      "vc_call_once_F": { "prover": "cvc5@", "time": 0.004 },
+      "vc_fn_once_user_F": { "prover": "cvc5@", "time": 0.004 }
+    },
+    "M_weaken_2_std": {
+      "vc_weaken_2_std_A": { "prover": "cvc5@", "time": 0.006 },
+      "vc_weaken_3_std_A": { "prover": "cvc5@", "time": 0.004 }
+    },
+    "M_weaken_3_std": {
+      "vc_call_once_F": { "prover": "cvc5@", "time": 0.004 },
+      "vc_weaken_3_std_A": { "prover": "cvc5@", "time": 0.003 }
+    },
+    "M_weaken_std": {
+      "vc_weaken_2_std_A": { "prover": "cvc5@", "time": 0.002 },
+      "vc_weaken_std_A": { "prover": "cvc5@", "time": 0.004 }
+    }
+  }
+}

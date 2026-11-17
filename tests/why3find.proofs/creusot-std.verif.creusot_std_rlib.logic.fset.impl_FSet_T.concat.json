@@ -1,5 +1,10 @@
 {
-  "profile": [],
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
   "proofs": {
     "Coma": {
       "vc_concat_T": {
@@ -11,8 +16,13 @@
               {
                 "tactic": "split_vc",
                 "children": [
+<<<<<<<< HEAD:tests/why3find.proofs/creusot-std.verif.creusot_std_rlib.logic.fset.impl_FSet_T.concat.json
                   { "prover": "alt-ergo", "time": 0.023 },
                   { "prover": "alt-ergo", "time": 0.02 }
+========
+                  { "prover": "cvc5@", "time": 0.024 },
+                  { "prover": "alt-ergo@", "time": 0.02 }
+>>>>>>>> 6de4f8bb0 (let -> forall(eq implies body)):why3find.proofs/tests.creusot-std.verif.creusot_std_rlib.logic.fset.impl_FSet_T.concat.json
                 ]
               }
             ]

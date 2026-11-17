@@ -1,0 +1,21 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "M_change_capacity": {
+      "vc_change_capacity_T": { "prover": "cvc5@", "time": 0.009 },
+      "vc_reserve_T": { "prover": "cvc5@", "time": 0.004 },
+      "vc_reserve_exact_T": { "prover": "cvc5@", "time": 0.004 },
+      "vc_shrink_to_T": { "prover": "cvc5@", "time": 0.004 },
+      "vc_shrink_to_fit_T": { "prover": "cvc5@", "time": 0.004 }
+    },
+    "M_clear_vec": {
+      "vc_clear_T": { "prover": "cvc5@", "time": 0.004 },
+      "vc_clear_vec_T": { "prover": "cvc5@", "time": 0.007 }
+    }
+  }
+}

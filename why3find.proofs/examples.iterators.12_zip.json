@@ -1,0 +1,66 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "M_common__trait_ExactSizeIterator__is_empty": {
+      "vc_is_empty_Self": { "prover": "alt-ergo@", "time": 0.016 },
+      "vc_len_Self": { "prover": "alt-ergo@", "time": 0.013 },
+      "vc_size_hint_Self": { "prover": "alt-ergo@", "time": 0.01 }
+    },
+    "M_common__trait_ExactSizeIterator__len": {
+      "vc_eq_Option_usize": { "prover": "alt-ergo@", "time": 0.011 },
+      "vc_len_Self": { "prover": "alt-ergo@", "time": 0.013 },
+      "vc_size_hint_Self": { "prover": "alt-ergo@", "time": 0.011 }
+    },
+    "M_impl_ExactSizeIterator_for_Zip_A_B__size_hint_exact": {
+      "vc_size_hint_A": { "prover": "alt-ergo@", "time": 0.015 },
+      "vc_size_hint_B": { "prover": "alt-ergo@", "time": 0.013 },
+      "vc_size_hint_Zip_A_B": { "prover": "alt-ergo@", "time": 0.013 },
+      "vc_size_hint_exact_Zip_A_B": { "prover": "alt-ergo@", "time": 0.025 }
+    },
+    "M_impl_ExactSizeIterator_for_Zip_A_B__size_hint_exact__refines": {
+      "refines": { "prover": "alt-ergo@", "time": 0.014 },
+      "vc_size_hint_A": { "prover": "alt-ergo@", "time": 0.015 },
+      "vc_size_hint_B": { "prover": "alt-ergo@", "time": 0.013 },
+      "vc_size_hint_Zip_A_B": { "prover": "alt-ergo@", "time": 0.013 }
+    },
+    "M_impl_Iterator_for_Zip_A_B__next": {
+      "vc_elim_Some": { "prover": "cvc5@", "time": 0.004 },
+      "vc_elim_Some'0": { "prover": "cvc5@", "time": 0.007 },
+      "vc_next_A": { "prover": "cvc5@", "time": 0.004 },
+      "vc_next_B": { "prover": "cvc5@", "time": 0.007 },
+      "vc_next_Zip_A_B": { "prover": "z3@", "time": 0.044 }
+    },
+    "M_impl_Iterator_for_Zip_A_B__next__refines": {
+      "refines": { "prover": "cvc5@", "time": 0.003 }
+    },
+    "M_impl_Iterator_for_Zip_A_B__produces_refl": {
+      "vc_produces_refl_Zip_A_B": { "prover": "cvc5@", "time": 0.01 }
+    },
+    "M_impl_Iterator_for_Zip_A_B__produces_refl__refines": {
+      "refines": { "prover": "cvc5@", "time": 0.005 }
+    },
+    "M_impl_Iterator_for_Zip_A_B__produces_trans": {
+      "vc_produces_trans_Zip_A_B": { "prover": "cvc5@", "time": 0.103 }
+    },
+    "M_impl_Iterator_for_Zip_A_B__produces_trans__refines": {
+      "refines": { "prover": "cvc5@", "time": 0.009 }
+    },
+    "M_impl_Iterator_for_Zip_A_B__size_hint": {
+      "vc_elim_Some": { "prover": "alt-ergo@", "time": 0.014 },
+      "vc_min_usize": { "prover": "alt-ergo@", "time": 0.014 },
+      "vc_size_hint_A": { "prover": "alt-ergo@", "time": 0.01 },
+      "vc_size_hint_B": { "prover": "alt-ergo@", "time": 0.015 },
+      "vc_size_hint_Zip_A_B": { "prover": "z3@", "time": 0.021 }
+    },
+    "M_impl_Iterator_for_Zip_A_B__size_hint__refines": {
+      "refines": { "prover": "alt-ergo@", "time": 0.076 },
+      "vc_size_hint_A": { "prover": "alt-ergo@", "time": 0.013 },
+      "vc_size_hint_B": { "prover": "alt-ergo@", "time": 0.017 }
+    }
+  }
+}

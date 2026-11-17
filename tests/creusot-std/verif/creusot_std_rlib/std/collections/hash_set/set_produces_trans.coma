@@ -58,8 +58,13 @@ function set_produces_trans_T (a: t_I) (ab: Seq.seq t_T) (b: t_I) (bc: Seq.seq t
 
 goal vc_set_produces_trans_T: set_produces_T a ab b
   -> set_produces_T b bc c
-  -> (forall i: int, x: t_T. Seq.length ab <= i
-        /\ (if 0 <= i /\ i < Seq.length (Seq.(++) ab bc) then Some (Seq.get (Seq.(++) ab bc) i) else None) = Some x
-      -> contains_T bc x)
-  && (forall i: int. 0 <= i /\ i < Seq.length bc -> Seq.get bc i = Seq.get (Seq.(++) ab bc) (Seq.length ab + i))
-  && ([@stop_split] [@expl:set_produces_trans ensures] set_produces_T a (Seq.(++) ab bc) c)
+  -> (forall local. local = ()
+    -> (forall i: int, x: t_T. Seq.length ab <= i
+          /\ (if 0 <= i /\ i < Seq.length (Seq.(++) ab bc) then Some (Seq.get (Seq.(++) ab bc) i) else None) = Some x
+        -> contains_T bc x)
+    && (forall local'0. local'0 = ()
+      -> (forall local'1. local'1 = ()
+        -> (forall i: int. 0 <= i /\ i < Seq.length bc -> Seq.get bc i = Seq.get (Seq.(++) ab bc) (Seq.length ab + i))
+        && (forall local'2. local'2 = ()
+          -> (forall local'3. local'3 = ()
+            -> ([@stop_split] [@expl:set_produces_trans ensures] set_produces_T a (Seq.(++) ab bc) c))))))

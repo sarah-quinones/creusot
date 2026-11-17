@@ -1,0 +1,12 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "M_bug_256": { "vc_bug_256": { "prover": "cvc5@", "time": 0.004 } },
+    "M_u8_safe": { "vc_u8_safe": { "prover": "cvc5@", "time": 0.004 } }
+  }
+}

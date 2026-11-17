@@ -1,0 +1,57 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "Coma": {
+      "vc_associative_View_R": {
+        "tactic": "split_vc",
+        "children": [
+          { "prover": "alt-ergo@", "time": 0.027 },
+          { "prover": "alt-ergo@", "time": 0.179 },
+          { "prover": "alt-ergo@", "time": 0.164 },
+          { "prover": "alt-ergo@", "time": 0.345 },
+          { "prover": "z3@", "time": 0.016 },
+          { "prover": "alt-ergo@", "time": 0.329 },
+          { "prover": "z3@", "time": 0.016 },
+          { "prover": "alt-ergo@", "time": 0.327 },
+          { "prover": "alt-ergo@", "time": 0.212 },
+          { "prover": "z3@", "time": 0.016 },
+          { "prover": "z3@", "time": 0.016 },
+          { "prover": "alt-ergo@", "time": 0.324 },
+          { "prover": "alt-ergo@", "time": 0.172 },
+          { "prover": "alt-ergo@", "time": 0.301 },
+          { "prover": "z3@", "time": 0.017 },
+          { "prover": "z3@", "time": 0.016 },
+          { "prover": "alt-ergo@", "time": 0.135 },
+          { "prover": "z3@", "time": 0.009 },
+          { "prover": "alt-ergo@", "time": 0.182 },
+          { "prover": "alt-ergo@", "time": 0.333 },
+          { "prover": "alt-ergo@", "time": 0.232 },
+          { "prover": "cvc5@", "time": 0.049 },
+          { "prover": "z3@", "time": 0.017 },
+          { "prover": "alt-ergo@", "time": 0.131 },
+          { "prover": "alt-ergo@", "time": 0.127 },
+          { "prover": "z3@", "time": 0.021 },
+          { "prover": "z3@", "time": 0.013 },
+          { "prover": "z3@", "time": 0.017 },
+          { "prover": "alt-ergo@", "time": 0.307 },
+          { "prover": "z3@", "time": 0.013 },
+          { "prover": "cvc5@", "time": 0.035 },
+          { "prover": "alt-ergo@", "time": 0.139 },
+          { "prover": "cvc5@", "time": 0.028 },
+          { "prover": "z3@", "time": 0.017 },
+          { "prover": "z3@", "time": 0.053 },
+          { "prover": "z3@", "time": 0.014 },
+          { "prover": "alt-ergo@", "time": 0.022 },
+          { "prover": "z3@", "time": 0.016 },
+          { "prover": "z3@", "time": 0.022 },
+          { "prover": "z3@", "time": 0.014 }
+        ]
+      }
+    }
+  }
+}

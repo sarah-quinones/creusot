@@ -3741,8 +3741,9 @@ module M_impl_Map_I_F__produces_one_invariant (* Map<I, F> *)
     -> postcondition_mut_F f.current { f0 = e; f1 = self.produced } f.final r
     -> (forall s: Seq.seq t_Item, e1: t_Item, e2: t_Item, i: t_I. produces_I iter'0 (Seq.snoc (Seq.snoc s e1) e2) i
         -> produces_I self.iter (Seq.snoc (Seq.snoc (Seq.(++) (Seq.singleton e) s) e1) e2) i)
-    && ([@stop_split] [@expl:produces_one_invariant_I ensures] ([@stop_split] [@expl:produces_one_invariant ensures #0] preservation_inv_I iter'0 f.final (Seq.snoc self.produced e))
-    /\ ([@stop_split] [@expl:produces_one_invariant ensures #1] next_precondition_I iter'0 f.final (Seq.snoc self.produced e)))
+    && (forall local. local = ()
+      -> ([@stop_split] [@expl:produces_one_invariant_I ensures] ([@stop_split] [@expl:produces_one_invariant ensures #0] preservation_inv_I iter'0 f.final (Seq.snoc self.produced e))
+      /\ ([@stop_split] [@expl:produces_one_invariant ensures #1] next_precondition_I iter'0 f.final (Seq.snoc self.produced e))))
 end
 module M_increment
   use creusot.prelude.MutBorrow

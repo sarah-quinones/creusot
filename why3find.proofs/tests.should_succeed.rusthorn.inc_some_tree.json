@@ -1,0 +1,29 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "M_impl_Tree__lemma_sum_nonneg": {
+      "vc_lemma_sum_nonneg": { "prover": "cvc5@", "time": 0.006 }
+    },
+    "M_impl_Tree__sum_x": {
+      "vc_elim_Node": { "prover": "cvc5@", "time": 0.004 },
+      "vc_sum_x": { "prover": "cvc5@", "time": 0.003 },
+      "vc_sum_x'0": { "prover": "alt-ergo@", "time": 0.043 }
+    },
+    "M_impl_Tree__take_some": {
+      "vc_elim_Node": { "prover": "cvc5@", "time": 0.004 },
+      "vc_random": { "prover": "cvc5@", "time": 0.005 },
+      "vc_take_some": { "prover": "cvc5@", "time": 0.004 },
+      "vc_take_some'0": { "prover": "alt-ergo@", "time": 0.044 }
+    },
+    "M_inc_some_tree": {
+      "vc_inc_some_tree": { "prover": "cvc5@", "time": 0.015 },
+      "vc_sum_x": { "prover": "cvc5@", "time": 0.003 },
+      "vc_take_some": { "prover": "cvc5@", "time": 0.003 }
+    }
+  }
+}

@@ -67,12 +67,16 @@ constant c : t_PositiveReal
 
 function associative_PositiveReal (a: t_PositiveReal) (b: t_PositiveReal) (c: t_PositiveReal) : ()
 
-goal vc_associative_PositiveReal: ([@stop_split] [@expl:unwrap_logic requires] op_PositiveReal a b <> None)
-  /\ (let ab = unwrap_Option_PositiveReal (op_PositiveReal a b) in ([@stop_split] [@expl:unwrap_logic requires] op_PositiveReal b c
-    <> None)
-  /\ (let bc = unwrap_Option_PositiveReal (op_PositiveReal b c) in ([@stop_split] [@expl:unwrap_logic requires] op_PositiveReal ab c
-    <> None)
-  /\ ([@stop_split] [@expl:unwrap_logic requires] op_PositiveReal a bc <> None)
-  /\ unwrap_Option_PositiveReal (op_PositiveReal ab c) = unwrap_Option_PositiveReal (op_PositiveReal a bc)
-  && ([@stop_split] [@expl:associative ensures] and_then_Option_PositiveReal (op_PositiveReal a b) (fun (ab'0: t_PositiveReal) -> op_PositiveReal ab'0 c)
-  = and_then_Option_PositiveReal (op_PositiveReal b c) (fun (bc'0: t_PositiveReal) -> op_PositiveReal a bc'0))))
+goal vc_associative_PositiveReal: forall local. local = ()
+    -> ([@stop_split] [@expl:unwrap_logic requires] op_PositiveReal a b <> None)
+    /\ (forall ab. ab = unwrap_Option_PositiveReal (op_PositiveReal a b)
+      -> (let ab = ab in ([@stop_split] [@expl:unwrap_logic requires] op_PositiveReal b c <> None)
+      /\ (forall bc. bc = unwrap_Option_PositiveReal (op_PositiveReal b c)
+        -> (let bc = bc in ([@stop_split] [@expl:unwrap_logic requires] op_PositiveReal ab c <> None)
+        /\ (forall ab_c. ab_c = unwrap_Option_PositiveReal (op_PositiveReal ab c)
+          -> ([@stop_split] [@expl:unwrap_logic requires] op_PositiveReal a bc <> None)
+          /\ (forall a_bc. a_bc = unwrap_Option_PositiveReal (op_PositiveReal a bc)
+            -> ab_c = a_bc
+            && (forall local'0. local'0 = ()
+              -> ([@stop_split] [@expl:associative ensures] and_then_Option_PositiveReal (op_PositiveReal a b) (fun (ab'0: t_PositiveReal) -> op_PositiveReal ab'0 c)
+              = and_then_Option_PositiveReal (op_PositiveReal b c) (fun (bc'0: t_PositiveReal) -> op_PositiveReal a bc'0)))))))))

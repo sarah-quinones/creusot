@@ -194,10 +194,13 @@ function frame_preserving_FMapInsertLocalUpdate_K_V (self: t_FMapInsertLocalUpda
 
 goal vc_frame_preserving_FMapInsertLocalUpdate_K_V: premise_FMapInsertLocalUpdate_K_V self from_auth from_frag
   -> op_Option_FMap_K_V (Some from_frag) frame = Some'1 (Some from_auth)
-  -> (let {f0'3 = to_auth; f1'3 = to_frag} = update_FMapInsertLocalUpdate_K_V self from_auth from_frag in match op_Option_FMap_K_V (Some to_frag) frame with
-    | Some'1 (Some x) -> ([@stop_split] [@expl:ext_eq ensures] ext_eq_K to_auth x = (to_auth = x))
-    -> ext_eq_K to_auth x
-    && ([@stop_split] [@expl:frame_preserving ensures] let {f0'3 = to_auth'0; f1'3 = to_frag'0} = update_FMapInsertLocalUpdate_K_V self from_auth from_frag in op_Option_FMap_K_V (Some to_frag'0) frame
-    = Some'1 (Some to_auth'0))
-    | _ -> false
-    end)
+  -> (forall local. local = update_FMapInsertLocalUpdate_K_V self from_auth from_frag
+    -> (let {f0'3 = to_auth; f1'3 = to_frag} = local in match op_Option_FMap_K_V (Some to_frag) frame with
+      | Some'1 (Some x) -> ([@stop_split] [@expl:ext_eq ensures] ext_eq_K to_auth x = (to_auth = x))
+      -> ext_eq_K to_auth x
+      && (forall local'0. local'0 = ()
+        -> (forall local'1. local'1 = ()
+          -> ([@stop_split] [@expl:frame_preserving ensures] let {f0'3 = to_auth'0; f1'3 = to_frag'0} = update_FMapInsertLocalUpdate_K_V self from_auth from_frag in op_Option_FMap_K_V (Some to_frag'0) frame
+          = Some'1 (Some to_auth'0))))
+      | _ -> false
+      end))

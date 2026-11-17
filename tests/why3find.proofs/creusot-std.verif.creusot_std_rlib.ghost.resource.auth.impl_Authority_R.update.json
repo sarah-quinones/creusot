@@ -1,5 +1,10 @@
 {
-  "profile": [],
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
   "proofs": {
     "Coma": {
       "vc_join_in_View_AuthViewRel_R": {
@@ -20,15 +25,15 @@
           {
             "tactic": "split_vc",
             "children": [
-              { "prover": "alt-ergo", "time": 0.029 },
-              { "prover": "z3", "time": 0.012 },
-              { "prover": "z3", "time": 0.023 },
-              { "prover": "z3", "time": 0.015 },
-              { "prover": "cvc5", "time": 0.093 },
-              { "prover": "cvc5", "time": 0.056 },
-              { "prover": "z3", "time": 0.051 },
-              { "prover": "alt-ergo", "time": 0.037 },
-              { "prover": "z3", "time": 0.145 }
+              { "prover": "alt-ergo@", "time": 0.012 },
+              { "prover": "z3@", "time": 0.012 },
+              { "prover": "z3@", "time": 0.016 },
+              { "prover": "z3@", "time": 0.014 },
+              { "prover": "cvc5@", "time": 0.029 },
+              { "prover": "cvc5@", "time": 0.02 },
+              { "prover": "z3@", "time": 0.014 },
+              { "prover": "alt-ergo@", "time": 0.014 },
+              { "prover": "z3@", "time": 0.046 }
             ]
           }
         ]
@@ -38,8 +43,8 @@
         "children": []
       },
       "vc_valid_op_lemma_View_AuthViewRel_R": {
-        "prover": "alt-ergo",
-        "time": 0.031
+        "prover": "alt-ergo@",
+        "time": 0.012
       },
       "vc_weaken_View_AuthViewRel_R": {
         "tactic": "compute_specified",

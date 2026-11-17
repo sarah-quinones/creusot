@@ -1,0 +1,31 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "M_test_instant": {
+      "vc_add_Instant": { "prover": "cvc5@", "time": 0.005 },
+      "vc_checked_add": { "prover": "cvc5@", "time": 0.004 },
+      "vc_checked_duration_since": { "prover": "cvc5@", "time": 0.006 },
+      "vc_checked_sub": { "prover": "cvc5@", "time": 0.006 },
+      "vc_duration_since": { "prover": "cvc5@", "time": 0.006 },
+      "vc_elapsed": { "prover": "cvc5@", "time": 0.003 },
+      "vc_eq_Duration": { "prover": "cvc5@", "time": 0.006 },
+      "vc_eq_Instant": { "prover": "cvc5@", "time": 0.005 },
+      "vc_from_secs": { "prover": "cvc5@", "time": 0.005 },
+      "vc_ge_Duration": { "prover": "cvc5@", "time": 0.004 },
+      "vc_gt_Duration": { "prover": "cvc5@", "time": 0.006 },
+      "vc_is_none_Duration": { "prover": "cvc5@", "time": 0.004 },
+      "vc_is_some_Duration": { "prover": "cvc5@", "time": 0.004 },
+      "vc_now": { "prover": "cvc5@", "time": 0.004 },
+      "vc_saturating_duration_since": { "prover": "cvc5@", "time": 0.004 },
+      "vc_sub_Instant": { "prover": "cvc5@", "time": 0.006 },
+      "vc_sub_Instant'0": { "prover": "cvc5@", "time": 0.006 },
+      "vc_test_instant": { "prover": "cvc5@", "time": 0.034 },
+      "vc_unwrap_Instant": { "prover": "cvc5@", "time": 0.004 }
+    }
+  }
+}

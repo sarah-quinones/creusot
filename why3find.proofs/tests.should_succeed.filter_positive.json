@@ -1,0 +1,27 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "M_lemma_num_of_pos_increasing": {
+      "vc_lemma_num_of_pos_increasing": { "prover": "cvc5@", "time": 0.009 }
+    },
+    "M_lemma_num_of_pos_strictly_increasing": {
+      "vc_lemma_num_of_pos_strictly_increasing": {
+        "prover": "cvc5@",
+        "time": 0.006
+      }
+    },
+    "M_m": {
+      "vc_from_elem_i32": { "prover": "cvc5@", "time": 0.004 },
+      "vc_index_Vec_i32_Global": { "prover": "cvc5@", "time": 0.005 },
+      "vc_index_mut_Vec_i32_Global": { "prover": "cvc5@", "time": 0.003 },
+      "vc_len_i32": { "prover": "cvc5@", "time": 0.006 },
+      "vc_m": { "prover": "z3@", "time": 0.02 }
+    },
+    "M_num_of_pos": { "vc_num_of_pos": { "prover": "cvc5@", "time": 0.002 } }
+  }
+}

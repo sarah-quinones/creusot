@@ -237,8 +237,9 @@ module M_impl_Bdd__size (* Bdd<'arena> *)
       | {f0 = True'; f1 = _} -> [@stop_split] [@expl:size ensures] ge_log_Int 0 0
       | {f0 = False'; f1 = _} -> [@stop_split] [@expl:size ensures] ge_log_Int 0 0
       | {f0 = If _ childt childf; f1 = _} -> ([@stop_split] [@expl:size ensures] ge_log_Int (size childt) 0)
-      -> ([@stop_split] [@expl:size ensures] ge_log_Int (size childf) 0)
-      -> ([@stop_split] [@expl:size ensures] ge_log_Int (1 + size childt + size childf) 0)
+      -> (forall ht. ht = size childt
+        -> ([@stop_split] [@expl:size ensures] ge_log_Int (size childf) 0)
+        -> (forall hf. hf = size childf -> ([@stop_split] [@expl:size ensures] ge_log_Int (1 + ht + hf) 0)))
       end
 end
 module M_impl_Clone_for_Bdd__clone (* <Bdd<'arena> as std::clone::Clone> *)
@@ -524,7 +525,8 @@ module M_impl_Context__bdd_canonical (* Context<'arena> *)
         /\ ([@stop_split] [@expl:discr_valuation requires #2] is_valid_bdd self b)
         /\ ([@stop_split] [@expl:discr_valuation requires #3] a <> b))
       /\ (([@stop_split] [@expl:discr_valuation ensures] interp a (discr_valuation self a b)
-        <> interp b (discr_valuation self a b)) -> ([@stop_split] [@expl:bdd_canonical ensures] a = b))
+        <> interp b (discr_valuation self a b))
+      -> (forall local. local = discr_valuation self a b -> ([@stop_split] [@expl:bdd_canonical ensures] a = b)))
     else
       [@stop_split] [@expl:bdd_canonical ensures] a = b
     )
@@ -686,93 +688,94 @@ module M_impl_Context__discr_valuation (* Context<'arena> *)
     -> is_valid_bdd self a
     -> is_valid_bdd self b
     -> a <> b
-    -> (if leastvar a < leastvar b then
-      match a with
-        | {f0 = If v childt childf; f1 = _} -> if childf <> b then
-          (([@stop_split] [@expl:discr_valuation requires] ([@stop_split] [@expl:discr_valuation requires #0] inv_Context self)
-              /\ ([@stop_split] [@expl:discr_valuation requires #1] is_valid_bdd self childf)
-              /\ ([@stop_split] [@expl:discr_valuation requires #2] is_valid_bdd self b)
-              /\ ([@stop_split] [@expl:discr_valuation requires #3] childf <> b))
-            /\ ([@expl:variant decreases] well_founded_relation_Int (size a + size b) (size childf + size b)))
-          /\ (([@stop_split] [@expl:discr_valuation ensures] interp childf (discr_valuation self childf b)
-            <> interp b (discr_valuation self childf b))
-          -> (let result = Map.set (discr_valuation self childf b) v false in [@stop_split] [@expl:discr_valuation ensures] interp a result
-          <> interp b result))
-        else
-          (([@stop_split] [@expl:discr_valuation requires] ([@stop_split] [@expl:discr_valuation requires #0] inv_Context self)
-              /\ ([@stop_split] [@expl:discr_valuation requires #1] is_valid_bdd self childt)
-              /\ ([@stop_split] [@expl:discr_valuation requires #2] is_valid_bdd self b)
-              /\ ([@stop_split] [@expl:discr_valuation requires #3] childt <> b))
-            /\ ([@expl:variant decreases] well_founded_relation_Int (size a + size b) (size childt + size b)))
-          /\ (([@stop_split] [@expl:discr_valuation ensures] interp childt (discr_valuation self childt b)
-            <> interp b (discr_valuation self childt b))
-          -> (let result = Map.set (discr_valuation self childt b) v true in [@stop_split] [@expl:discr_valuation ensures] interp a result
-          <> interp b result))
-        
-        | _ -> let result = Const.const true in [@stop_split] [@expl:discr_valuation ensures] interp a result
-        <> interp b result
-        end
-    else
-      if gt_log_Int (leastvar a) (leastvar b) then
-        match b with
-          | {f0 = If v childt childf; f1 = _} -> if childf <> a then
+    -> (forall local. local = ()
+      -> (if leastvar a < leastvar b then
+        match a with
+          | {f0 = If v childt childf; f1 = _} -> if childf <> b then
             (([@stop_split] [@expl:discr_valuation requires] ([@stop_split] [@expl:discr_valuation requires #0] inv_Context self)
-                /\ ([@stop_split] [@expl:discr_valuation requires #1] is_valid_bdd self a)
-                /\ ([@stop_split] [@expl:discr_valuation requires #2] is_valid_bdd self childf)
-                /\ ([@stop_split] [@expl:discr_valuation requires #3] a <> childf))
-              /\ ([@expl:variant decreases] well_founded_relation_Int (size a + size b) (size a + size childf)))
-            /\ (([@stop_split] [@expl:discr_valuation ensures] interp a (discr_valuation self a childf)
-              <> interp childf (discr_valuation self a childf))
-            -> (let result = Map.set (discr_valuation self a childf) v false in [@stop_split] [@expl:discr_valuation ensures] interp a result
+                /\ ([@stop_split] [@expl:discr_valuation requires #1] is_valid_bdd self childf)
+                /\ ([@stop_split] [@expl:discr_valuation requires #2] is_valid_bdd self b)
+                /\ ([@stop_split] [@expl:discr_valuation requires #3] childf <> b))
+              /\ ([@expl:variant decreases] well_founded_relation_Int (size a + size b) (size childf + size b)))
+            /\ (([@stop_split] [@expl:discr_valuation ensures] interp childf (discr_valuation self childf b)
+              <> interp b (discr_valuation self childf b))
+            -> (let result = Map.set (discr_valuation self childf b) v false in [@stop_split] [@expl:discr_valuation ensures] interp a result
             <> interp b result))
           else
             (([@stop_split] [@expl:discr_valuation requires] ([@stop_split] [@expl:discr_valuation requires #0] inv_Context self)
-                /\ ([@stop_split] [@expl:discr_valuation requires #1] is_valid_bdd self a)
-                /\ ([@stop_split] [@expl:discr_valuation requires #2] is_valid_bdd self childt)
-                /\ ([@stop_split] [@expl:discr_valuation requires #3] a <> childt))
-              /\ ([@expl:variant decreases] well_founded_relation_Int (size a + size b) (size a + size childt)))
-            /\ (([@stop_split] [@expl:discr_valuation ensures] interp a (discr_valuation self a childt)
-              <> interp childt (discr_valuation self a childt))
-            -> (let result = Map.set (discr_valuation self a childt) v true in [@stop_split] [@expl:discr_valuation ensures] interp a result
+                /\ ([@stop_split] [@expl:discr_valuation requires #1] is_valid_bdd self childt)
+                /\ ([@stop_split] [@expl:discr_valuation requires #2] is_valid_bdd self b)
+                /\ ([@stop_split] [@expl:discr_valuation requires #3] childt <> b))
+              /\ ([@expl:variant decreases] well_founded_relation_Int (size a + size b) (size childt + size b)))
+            /\ (([@stop_split] [@expl:discr_valuation ensures] interp childt (discr_valuation self childt b)
+              <> interp b (discr_valuation self childt b))
+            -> (let result = Map.set (discr_valuation self childt b) v true in [@stop_split] [@expl:discr_valuation ensures] interp a result
             <> interp b result))
           
           | _ -> let result = Const.const true in [@stop_split] [@expl:discr_valuation ensures] interp a result
           <> interp b result
           end
       else
-        match a with
-          | {f0 = If v childta childfa; f1 = _} -> match b with
-            | {f0 = If _ childtb childfb; f1 = _} -> if childfa <> childfb then
+        if gt_log_Int (leastvar a) (leastvar b) then
+          match b with
+            | {f0 = If v childt childf; f1 = _} -> if childf <> a then
               (([@stop_split] [@expl:discr_valuation requires] ([@stop_split] [@expl:discr_valuation requires #0] inv_Context self)
-                  /\ ([@stop_split] [@expl:discr_valuation requires #1] is_valid_bdd self childfa)
-                  /\ ([@stop_split] [@expl:discr_valuation requires #2] is_valid_bdd self childfb)
-                  /\ ([@stop_split] [@expl:discr_valuation requires #3] childfa <> childfb))
-                /\ ([@expl:variant decreases] well_founded_relation_Int (size a + size b) (size childfa
-                + size childfb)))
-              /\ (([@stop_split] [@expl:discr_valuation ensures] interp childfa (discr_valuation self childfa childfb)
-                <> interp childfb (discr_valuation self childfa childfb))
-              -> (let result = Map.set (discr_valuation self childfa childfb) v false in [@stop_split] [@expl:discr_valuation ensures] interp a result
+                  /\ ([@stop_split] [@expl:discr_valuation requires #1] is_valid_bdd self a)
+                  /\ ([@stop_split] [@expl:discr_valuation requires #2] is_valid_bdd self childf)
+                  /\ ([@stop_split] [@expl:discr_valuation requires #3] a <> childf))
+                /\ ([@expl:variant decreases] well_founded_relation_Int (size a + size b) (size a + size childf)))
+              /\ (([@stop_split] [@expl:discr_valuation ensures] interp a (discr_valuation self a childf)
+                <> interp childf (discr_valuation self a childf))
+              -> (let result = Map.set (discr_valuation self a childf) v false in [@stop_split] [@expl:discr_valuation ensures] interp a result
               <> interp b result))
             else
               (([@stop_split] [@expl:discr_valuation requires] ([@stop_split] [@expl:discr_valuation requires #0] inv_Context self)
-                  /\ ([@stop_split] [@expl:discr_valuation requires #1] is_valid_bdd self childta)
-                  /\ ([@stop_split] [@expl:discr_valuation requires #2] is_valid_bdd self childtb)
-                  /\ ([@stop_split] [@expl:discr_valuation requires #3] childta <> childtb))
-                /\ ([@expl:variant decreases] well_founded_relation_Int (size a + size b) (size childta
-                + size childtb)))
-              /\ (([@stop_split] [@expl:discr_valuation ensures] interp childta (discr_valuation self childta childtb)
-                <> interp childtb (discr_valuation self childta childtb))
-              -> (let result = Map.set (discr_valuation self childta childtb) v true in [@stop_split] [@expl:discr_valuation ensures] interp a result
+                  /\ ([@stop_split] [@expl:discr_valuation requires #1] is_valid_bdd self a)
+                  /\ ([@stop_split] [@expl:discr_valuation requires #2] is_valid_bdd self childt)
+                  /\ ([@stop_split] [@expl:discr_valuation requires #3] a <> childt))
+                /\ ([@expl:variant decreases] well_founded_relation_Int (size a + size b) (size a + size childt)))
+              /\ (([@stop_split] [@expl:discr_valuation ensures] interp a (discr_valuation self a childt)
+                <> interp childt (discr_valuation self a childt))
+              -> (let result = Map.set (discr_valuation self a childt) v true in [@stop_split] [@expl:discr_valuation ensures] interp a result
               <> interp b result))
             
             | _ -> let result = Const.const true in [@stop_split] [@expl:discr_valuation ensures] interp a result
             <> interp b result
             end
-          | _ -> let result = Const.const true in [@stop_split] [@expl:discr_valuation ensures] interp a result
-          <> interp b result
-          end
-    
-    )
+        else
+          match a with
+            | {f0 = If v childta childfa; f1 = _} -> match b with
+              | {f0 = If _ childtb childfb; f1 = _} -> if childfa <> childfb then
+                (([@stop_split] [@expl:discr_valuation requires] ([@stop_split] [@expl:discr_valuation requires #0] inv_Context self)
+                    /\ ([@stop_split] [@expl:discr_valuation requires #1] is_valid_bdd self childfa)
+                    /\ ([@stop_split] [@expl:discr_valuation requires #2] is_valid_bdd self childfb)
+                    /\ ([@stop_split] [@expl:discr_valuation requires #3] childfa <> childfb))
+                  /\ ([@expl:variant decreases] well_founded_relation_Int (size a + size b) (size childfa
+                  + size childfb)))
+                /\ (([@stop_split] [@expl:discr_valuation ensures] interp childfa (discr_valuation self childfa childfb)
+                  <> interp childfb (discr_valuation self childfa childfb))
+                -> (let result = Map.set (discr_valuation self childfa childfb) v false in [@stop_split] [@expl:discr_valuation ensures] interp a result
+                <> interp b result))
+              else
+                (([@stop_split] [@expl:discr_valuation requires] ([@stop_split] [@expl:discr_valuation requires #0] inv_Context self)
+                    /\ ([@stop_split] [@expl:discr_valuation requires #1] is_valid_bdd self childta)
+                    /\ ([@stop_split] [@expl:discr_valuation requires #2] is_valid_bdd self childtb)
+                    /\ ([@stop_split] [@expl:discr_valuation requires #3] childta <> childtb))
+                  /\ ([@expl:variant decreases] well_founded_relation_Int (size a + size b) (size childta
+                  + size childtb)))
+                /\ (([@stop_split] [@expl:discr_valuation ensures] interp childta (discr_valuation self childta childtb)
+                  <> interp childtb (discr_valuation self childta childtb))
+                -> (let result = Map.set (discr_valuation self childta childtb) v true in [@stop_split] [@expl:discr_valuation ensures] interp a result
+                <> interp b result))
+              
+              | _ -> let result = Const.const true in [@stop_split] [@expl:discr_valuation ensures] interp a result
+              <> interp b result
+              end
+            | _ -> let result = Const.const true in [@stop_split] [@expl:discr_valuation ensures] interp a result
+            <> interp b result
+            end
+      
+      ))
 end
 module M_impl_Context__grows_is_valid_bdd (* Context<'arena> *)
   use creusot.prelude.MutBorrow
@@ -1036,11 +1039,13 @@ module M_impl_Context__set_irrelevent_var (* Context<'arena> *)
         /\ ([@stop_split] [@expl:set_irrelevent_var requires #1] is_valid_bdd self childt)
         /\ ([@stop_split] [@expl:set_irrelevent_var requires #2] UInt64.t'int x < leastvar childt))
       /\ (([@stop_split] [@expl:set_irrelevent_var ensures] interp childt v = interp childt (Map.set v x b))
-      -> ([@stop_split] [@expl:set_irrelevent_var requires] ([@stop_split] [@expl:set_irrelevent_var requires #0] inv_Context self)
-        /\ ([@stop_split] [@expl:set_irrelevent_var requires #1] is_valid_bdd self childf)
-        /\ ([@stop_split] [@expl:set_irrelevent_var requires #2] UInt64.t'int x < leastvar childf))
-      /\ (([@stop_split] [@expl:set_irrelevent_var ensures] interp childf v = interp childf (Map.set v x b))
-      -> ([@stop_split] [@expl:set_irrelevent_var ensures] interp a v = interp a (Map.set v x b))))
+      -> (forall local. local = set_irrelevent_var self childt x v b
+        -> ([@stop_split] [@expl:set_irrelevent_var requires] ([@stop_split] [@expl:set_irrelevent_var requires #0] inv_Context self)
+          /\ ([@stop_split] [@expl:set_irrelevent_var requires #1] is_valid_bdd self childf)
+          /\ ([@stop_split] [@expl:set_irrelevent_var requires #2] UInt64.t'int x < leastvar childf))
+        /\ (([@stop_split] [@expl:set_irrelevent_var ensures] interp childf v = interp childf (Map.set v x b))
+        -> (forall local'0. local'0 = set_irrelevent_var self childf x v b
+          -> ([@stop_split] [@expl:set_irrelevent_var ensures] interp a v = interp a (Map.set v x b))))))
       | _ -> [@stop_split] [@expl:set_irrelevent_var ensures] interp a v = interp a (Map.set v x b)
       end
 end

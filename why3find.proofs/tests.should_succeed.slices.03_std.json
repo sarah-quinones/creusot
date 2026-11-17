@@ -1,0 +1,125 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "M_check_iter": {
+      "vc_check_iter": {
+        "tactic": "compute_specified",
+        "children": [
+          {
+            "tactic": "split_vc",
+            "children": [
+              { "prover": "alt-ergo@", "time": 0.011 },
+              { "prover": "alt-ergo@", "time": 0.023 },
+              { "prover": "alt-ergo@", "time": 0.036 },
+              { "prover": "alt-ergo@", "time": 0.013 },
+              { "prover": "alt-ergo@", "time": 0.028 },
+              { "prover": "alt-ergo@", "time": 0.038 },
+              { "prover": "alt-ergo@", "time": 0.044 },
+              { "prover": "alt-ergo@", "time": 0.014 },
+              { "prover": "alt-ergo@", "time": 0.021 },
+              {
+                "tactic": "split_vc",
+                "children": [ { "prover": "z3@", "time": 0.261 } ]
+              },
+              { "prover": "alt-ergo@", "time": 0.015 },
+              { "prover": "alt-ergo@", "time": 0.034 },
+              {
+                "tactic": "split_vc",
+                "children": [ { "prover": "z3@", "time": 0.364 } ]
+              },
+              { "prover": "alt-ergo@", "time": 0.017 },
+              { "prover": "alt-ergo@", "time": 0.032 },
+              {
+                "tactic": "split_vc",
+                "children": [ { "prover": "z3@", "time": 0.463 } ]
+              },
+              { "prover": "alt-ergo@", "time": 0.017 },
+              { "prover": "alt-ergo@", "time": 0.041 },
+              {
+                "tactic": "split_vc",
+                "children": [ { "prover": "z3@", "time": 0.599 } ]
+              },
+              { "prover": "alt-ergo@", "time": 0.011 },
+              { "prover": "alt-ergo@", "time": 0.014 },
+              { "prover": "alt-ergo@", "time": 0.016 },
+              { "prover": "alt-ergo@", "time": 0.015 },
+              { "prover": "alt-ergo@", "time": 0.015 },
+              { "prover": "alt-ergo@", "time": 0.015 },
+              { "prover": "alt-ergo@", "time": 0.013 }
+            ]
+          }
+        ]
+      },
+      "vc_deref_Vec_i32_Global": { "prover": "alt-ergo@", "time": 0.01 },
+      "vc_into_vec_i32": { "prover": "alt-ergo@", "time": 0.01 },
+      "vc_iter_i32": { "prover": "alt-ergo@", "time": 0.014 },
+      "vc_next_Iter_i32": { "prover": "alt-ergo@", "time": 0.008 },
+      "vc_next_back_Iter_i32": { "prover": "alt-ergo@", "time": 0.008 },
+      "vc_size_hint_Iter_i32": { "prover": "alt-ergo@", "time": 0.01 },
+      "vc_unwrap_ref_i32": { "prover": "alt-ergo@", "time": 0.008 }
+    },
+    "M_check_iter_as_slice": {
+      "vc_as_slice_i32": { "prover": "alt-ergo@", "time": 0.014 },
+      "vc_check_iter_as_slice": {
+        "tactic": "compute_specified",
+        "children": [ { "prover": "alt-ergo@", "time": 0.049 } ]
+      },
+      "vc_iter_i32": { "prover": "alt-ergo@", "time": 0.013 },
+      "vc_next_Iter_i32": { "prover": "alt-ergo@", "time": 0.01 }
+    },
+    "M_check_iter_mut": {
+      "vc_check_iter_mut": {
+        "tactic": "compute_specified",
+        "children": [
+          {
+            "tactic": "split_vc",
+            "children": [
+              { "prover": "alt-ergo@", "time": 0.012 },
+              { "prover": "alt-ergo@", "time": 0.018 },
+              { "prover": "alt-ergo@", "time": 0.049 },
+              { "prover": "alt-ergo@", "time": 0.019 },
+              { "prover": "alt-ergo@", "time": 0.031 },
+              { "prover": "alt-ergo@", "time": 0.051 },
+              { "prover": "alt-ergo@", "time": 0.016 },
+              { "prover": "alt-ergo@", "time": 0.034 },
+              {
+                "tactic": "split_vc",
+                "children": [ { "prover": "alt-ergo@", "time": 0.307 } ]
+              },
+              { "prover": "alt-ergo@", "time": 0.013 },
+              { "prover": "alt-ergo@", "time": 0.038 },
+              {
+                "tactic": "split_vc",
+                "children": [ { "prover": "alt-ergo@", "time": 0.368 } ]
+              },
+              { "prover": "alt-ergo@", "time": 0.012 },
+              { "prover": "alt-ergo@", "time": 0.018 },
+              { "prover": "alt-ergo@", "time": 0.019 },
+              { "prover": "alt-ergo@", "time": 0.016 },
+              { "prover": "alt-ergo@", "time": 0.018 }
+            ]
+          }
+        ]
+      },
+      "vc_deref_mut_Vec_i32_Global": { "prover": "alt-ergo@", "time": 0.01 },
+      "vc_into_vec_i32": { "prover": "alt-ergo@", "time": 0.01 },
+      "vc_iter_mut_i32": { "prover": "alt-ergo@", "time": 0.011 },
+      "vc_next_IterMut_i32": { "prover": "alt-ergo@", "time": 0.012 },
+      "vc_next_back_IterMut_i32": { "prover": "alt-ergo@", "time": 0.015 },
+      "vc_size_hint_IterMut_i32": { "prover": "alt-ergo@", "time": 0.013 },
+      "vc_unwrap_refmut_i32": { "prover": "alt-ergo@", "time": 0.015 }
+    },
+    "M_check_iter_mut_as_slice": {
+      "vc_as_slice_i32": { "prover": "alt-ergo@", "time": 0.011 },
+      "vc_check_iter_mut_as_slice": { "prover": "cvc4@", "time": 0.323 },
+      "vc_iter_mut_i32": { "prover": "alt-ergo@", "time": 0.011 },
+      "vc_next_IterMut_i32": { "prover": "alt-ergo@", "time": 0.007 },
+      "vc_unwrap_refmut_i32": { "prover": "alt-ergo@", "time": 0.007 }
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "M_all_ldz": {
+      "vc_all_ldz": { "prover": "alt-ergo@", "time": 0.141 },
+      "vc_leading_zeros": { "prover": "alt-ergo@", "time": 0.013 },
+      "vc_len_u64": { "prover": "alt-ergo@", "time": 0.013 }
+    },
+    "M_boolvec_to_bitvec": {
+      "vc_boolvec_to_bitvec": {
+        "tactic": "compute_specified",
+        "children": [
+          {
+            "tactic": "split_vc",
+            "children": [
+              { "prover": "alt-ergo@", "time": 0.026 },
+              { "prover": "alt-ergo@", "time": 0.068 },
+              { "prover": "z3@", "time": 0.07 },
+              { "prover": "alt-ergo@", "time": 0.042 },
+              { "prover": "cvc4@", "time": 0.034 },
+              { "prover": "cvc4@", "time": 0.036 },
+              { "prover": "alt-ergo@", "time": 0.025 },
+              { "prover": "alt-ergo@", "time": 0.027 },
+              {
+                "tactic": "split_vc",
+                "children": [
+                  { "prover": "z3@", "time": 0.216 },
+                  { "prover": "z3@", "time": 0.205 }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "vc_len_bool": { "prover": "alt-ergo@", "time": 0.007 }
+    }
+  }
+}

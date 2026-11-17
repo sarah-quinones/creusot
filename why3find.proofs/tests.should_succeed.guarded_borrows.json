@@ -1,0 +1,112 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "M_breaks_inv": {
+      "vc_breaks_inv": { "prover": "alt-ergo@", "time": 0.015 }
+    },
+    "M_breaks_inv_ghost": {
+      "vc_breaks_inv_ghost": { "prover": "alt-ergo@", "time": 0.013 },
+      "vc_deref_mut_Ghost_refmut_i32": {
+        "prover": "alt-ergo@",
+        "time": 0.013
+      },
+      "vc_new_unit": { "prover": "alt-ergo@", "time": 0.014 }
+    },
+    "M_example": {
+      "vc_breaks_inv": { "prover": "alt-ergo@", "time": 0.013 },
+      "vc_example": { "prover": "alt-ergo@", "time": 0.012 },
+      "vc_new_i32": { "prover": "alt-ergo@", "time": 0.013 },
+      "vc_takes_guarded": { "prover": "alt-ergo@", "time": 0.013 }
+    },
+    "M_ghostified": {
+      "vc_breaks_inv_ghost": { "prover": "alt-ergo@", "time": 0.011 },
+      "vc_deref_mut_Ghost_Guarded_refmut_i32_Mapping_i32_bool": {
+        "prover": "alt-ergo@",
+        "time": 0.014
+      },
+      "vc_deref_mut_Ghost_i32": { "prover": "alt-ergo@", "time": 0.01 },
+      "vc_deref_mut_Ghost_refmut_i32": {
+        "prover": "alt-ergo@",
+        "time": 0.014
+      },
+      "vc_ghostified": { "prover": "alt-ergo@", "time": 0.025 },
+      "vc_into_inner_Guarded_refmut_i32_Mapping_i32_bool": {
+        "prover": "alt-ergo@",
+        "time": 0.012
+      },
+      "vc_into_inner_refmut_i32": { "prover": "alt-ergo@", "time": 0.012 },
+      "vc_new_Guarded_refmut_i32_Mapping_i32_bool": {
+        "prover": "alt-ergo@",
+        "time": 0.013
+      },
+      "vc_new_i32": { "prover": "alt-ergo@", "time": 0.01 },
+      "vc_new_i32'0": { "prover": "alt-ergo@", "time": 0.013 },
+      "vc_new_refmut_i32": { "prover": "alt-ergo@", "time": 0.012 },
+      "vc_new_unit": { "prover": "alt-ergo@", "time": 0.012 },
+      "vc_takes_guarded": { "prover": "alt-ergo@", "time": 0.012 }
+    },
+    "M_impl_SumSmaller10__eq_5": {
+      "vc_eq_5": {
+        "tactic": "compute_specified",
+        "children": [
+          {
+            "tactic": "split_vc",
+            "children": [
+              { "prover": "alt-ergo@", "time": 0.017 },
+              { "prover": "alt-ergo@", "time": 0.014 },
+              { "prover": "alt-ergo@", "time": 0.013 },
+              { "prover": "alt-ergo@", "time": 0.014 },
+              {
+                "tactic": "split_vc",
+                "children": [
+                  { "prover": "alt-ergo@", "time": 0.012 },
+                  { "prover": "alt-ergo@", "time": 0.011 }
+                ]
+              },
+              { "prover": "alt-ergo@", "time": 0.012 }
+            ]
+          }
+        ]
+      },
+      "vc_get_a_mut_5": { "prover": "alt-ergo@", "time": 0.015 }
+    },
+    "M_impl_SumSmaller10__get_a_mut": {
+      "vc_get_a_mut": { "prover": "alt-ergo@", "time": 0.024 },
+      "vc_new_u32": { "prover": "alt-ergo@", "time": 0.011 }
+    },
+    "M_impl_SumSmaller10__get_a_mut_5": {
+      "vc_get_a_mut": { "prover": "alt-ergo@", "time": 0.015 },
+      "vc_get_a_mut_5": {
+        "tactic": "compute_specified",
+        "children": [
+          {
+            "tactic": "split_vc",
+            "children": [
+              { "prover": "alt-ergo@", "time": 0.014 },
+              { "prover": "alt-ergo@", "time": 0.013 },
+              { "prover": "alt-ergo@", "time": 0.016 },
+              { "prover": "alt-ergo@", "time": 0.016 },
+              {
+                "tactic": "split_vc",
+                "children": [
+                  { "prover": "alt-ergo@", "time": 0.014 },
+                  { "prover": "alt-ergo@", "time": 0.012 }
+                ]
+              },
+              { "prover": "alt-ergo@", "time": 0.012 }
+            ]
+          }
+        ]
+      },
+      "vc_new_u32": { "prover": "alt-ergo@", "time": 0.015 }
+    },
+    "M_takes_guarded": {
+      "vc_takes_guarded": { "prover": "alt-ergo@", "time": 0.01 }
+    }
+  }
+}

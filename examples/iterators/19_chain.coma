@@ -327,7 +327,9 @@ module M_impl_Chain_A_B__produces_inner_trans (* Chain<A, B> *)
   goal vc_produces_inner_trans_A: produces_inner_A x visited_a_xy visited_b_xy y
     -> produces_inner_A y visited_a_yz visited_b_yz z
     -> Seq.(++) (Seq.empty: Seq.seq t_Item) (Seq.empty: Seq.seq t_Item) = (Seq.empty: Seq.seq t_Item)
-    && ([@stop_split] [@expl:produces_inner_trans ensures] produces_inner_A x (Seq.(++) visited_a_xy visited_a_yz) (Seq.(++) visited_b_xy visited_b_yz) z)
+    && (forall local. local = ()
+      -> (forall local'0. local'0 = ()
+        -> ([@stop_split] [@expl:produces_inner_trans ensures] produces_inner_A x (Seq.(++) visited_a_xy visited_a_yz) (Seq.(++) visited_b_xy visited_b_yz) z)))
 end
 module M_impl_Chain_A_B_0__produces_inner_back_trans (* Chain<A, B> *)
   use seq.Seq
@@ -552,7 +554,9 @@ module M_impl_Chain_A_B_0__produces_inner_back_trans (* Chain<A, B> *)
   goal vc_produces_inner_back_trans_A: produces_inner_back_A x visited_a_xy visited_b_xy y
     -> produces_inner_back_A y visited_a_yz visited_b_yz z
     -> Seq.(++) (Seq.empty: Seq.seq t_Item) (Seq.empty: Seq.seq t_Item) = (Seq.empty: Seq.seq t_Item)
-    && ([@stop_split] [@expl:produces_inner_back_trans ensures] produces_inner_back_A x (Seq.(++) visited_a_xy visited_a_yz) (Seq.(++) visited_b_xy visited_b_yz) z)
+    && (forall local. local = ()
+      -> (forall local'0. local'0 = ()
+        -> ([@stop_split] [@expl:produces_inner_back_trans ensures] produces_inner_back_A x (Seq.(++) visited_a_xy visited_a_yz) (Seq.(++) visited_b_xy visited_b_yz) z)))
 end
 module M_impl_DoubleEndedIterator_for_Chain_A_B__next_back (* <Chain<A, B> as common::DoubleEndedIterator> *)
   use creusot.prelude.MutBorrow

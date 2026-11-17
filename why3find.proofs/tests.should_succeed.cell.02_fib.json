@@ -1,0 +1,46 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "M_fib": { "vc_fib": { "prover": "cvc5@", "time": 0.003 } },
+    "M_fib_memo": {
+      "vc_elim_Some": { "prover": "cvc5@", "time": 0.004 },
+      "vc_fib_memo": { "tactic": "compute_specified", "children": [] },
+      "vc_fib_memo'0": {
+        "tactic": "compute_specified",
+        "children": [
+          {
+            "tactic": "split_vc",
+            "children": [
+              { "prover": "alt-ergo@", "time": 0.026 },
+              { "prover": "cvc5@", "time": 0.039 },
+              { "prover": "alt-ergo@", "time": 0.018 },
+              { "prover": "cvc4@", "time": 0.043 },
+              { "prover": "alt-ergo@", "time": 0.024 },
+              { "prover": "alt-ergo@", "time": 0.181 },
+              { "prover": "cvc4@", "time": 0.077 },
+              { "prover": "alt-ergo@", "time": 0.043 },
+              { "prover": "alt-ergo@", "time": 0.112 },
+              { "prover": "alt-ergo@", "time": 0.024 },
+              { "prover": "cvc5@", "time": 0.056 },
+              { "prover": "alt-ergo@", "time": 0.021 }
+            ]
+          }
+        ]
+      },
+      "vc_get_Option_usize": { "prover": "cvc5@", "time": 0.004 },
+      "vc_index_Vec_PredCell_Option_usize_Global": {
+        "prover": "cvc5@",
+        "time": 0.003
+      },
+      "vc_set_Option_usize": { "prover": "cvc5@", "time": 0.003 }
+    },
+    "M_lemma_fib_bound": {
+      "vc_lemma_fib_bound": { "prover": "cvc5@", "time": 0.045 }
+    }
+  }
+}

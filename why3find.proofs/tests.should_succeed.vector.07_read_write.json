@@ -1,0 +1,16 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "M_read_write": {
+      "vc_eq_T": { "prover": "cvc5@", "time": 0.005 },
+      "vc_index_Vec_T_Global": { "prover": "cvc5@", "time": 0.005 },
+      "vc_index_mut_Vec_T_Global": { "prover": "cvc5@", "time": 0.005 },
+      "vc_read_write_T": { "prover": "cvc5@", "time": 0.01 }
+    }
+  }
+}

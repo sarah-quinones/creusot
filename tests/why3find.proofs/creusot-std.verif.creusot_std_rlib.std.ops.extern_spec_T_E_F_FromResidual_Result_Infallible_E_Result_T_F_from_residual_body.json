@@ -1,11 +1,16 @@
 {
-  "profile": [],
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
   "proofs": {
     "Coma": {
       "vc_elim_Err": { "tactic": "compute_specified", "children": [] },
       "vc_extern_spec_T_E_F_FromResidual_Result_Infallible_E_Result_T_F_from_residual_body_T": {
-        "prover": "alt-ergo",
-        "time": 0.019
+        "prover": "alt-ergo@",
+        "time": 0.016
       },
       "vc_from_F": { "tactic": "compute_specified", "children": [] }
     }

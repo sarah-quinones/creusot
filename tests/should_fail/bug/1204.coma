@@ -37,5 +37,5 @@ module M_wrong
   
   function wrong : ()
   
-  goal vc_wrong: [@stop_split] [@expl:wrong ensures] false
+  goal vc_wrong: [@stop_split] [@expl:evil requires] false
 end

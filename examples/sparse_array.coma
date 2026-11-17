@@ -1081,7 +1081,9 @@ module M_impl_Sparse_T__lemma_permutation (* Sparse<T, SIZE> *)
           <= lemma_permutation_aux_T self (Fset.empty: Fset.fset int) i i
         /\ lemma_permutation_aux_T self (Fset.empty: Fset.fset int) i i < UInt64.t'int const_SIZE)
       /\ ([@stop_split] [@expl:lemma_permutation_aux ensures #1] UInt64.t'int (index_array_usize_n self.back (lemma_permutation_aux_T self (Fset.empty: Fset.fset int) i i))
-      = i)) -> ([@stop_split] [@expl:lemma_permutation ensures] is_elt_T self i))
+      = i))
+    -> (forall local. local = lemma_permutation_aux_T self (Fset.empty: Fset.fset int) i i
+      -> ([@stop_split] [@expl:lemma_permutation ensures] is_elt_T self i)))
 end
 module M_impl_Sparse_T__lemma_permutation_aux (* Sparse<T, SIZE> *)
   use creusot.int.UInt64
@@ -1222,33 +1224,34 @@ module M_impl_Sparse_T__lemma_permutation_aux (* Sparse<T, SIZE> *)
             -> 0 <= x /\ x < UInt64.t'int const_SIZE)
         /\ ([@stop_split] [@expl:bounded_fset_len requires #1] ge_log_Int (UInt64.t'int const_SIZE) 0))
       /\ (([@stop_split] [@expl:bounded_fset_len ensures] Fset.cardinal seen <= UInt64.t'int const_SIZE)
-      -> (([@stop_split] [@expl:lemma_permutation_aux requires] ([@stop_split] [@expl:lemma_permutation_aux requires #0] inv_Sparse_T self)
-          /\ ([@stop_split] [@expl:lemma_permutation_aux requires #1] self.n = const_SIZE)
-          /\ ([@stop_split] [@expl:lemma_permutation_aux requires #2] 0
-              <= UInt64.t'int (index_array_usize_n self.back cur)
-            /\ UInt64.t'int (index_array_usize_n self.back cur) < UInt64.t'int const_SIZE)
-          /\ ([@stop_split] [@expl:lemma_permutation_aux requires #3] forall k: int. contains_Int (add_Int seen cur) k
-              -> 0 <= k
-              /\ k < UInt64.t'int const_SIZE
-              /\ (k = i \/ contains_Int (add_Int seen cur) (UInt64.t'int (index_array_usize_n self.idx k))))
-          /\ ([@stop_split] [@expl:lemma_permutation_aux requires #4] i
-              = UInt64.t'int (index_array_usize_n self.back cur)
-            \/ contains_Int (add_Int seen cur) i
-            /\ contains_Int (add_Int seen cur) (UInt64.t'int (index_array_usize_n self.idx (UInt64.t'int (index_array_usize_n self.back cur)))))
-          /\ ([@stop_split] [@expl:lemma_permutation_aux requires #5] not contains_Int (add_Int seen cur) (UInt64.t'int (index_array_usize_n self.back cur))))
-        /\ ([@expl:variant decreases] well_founded_relation_Int (UInt64.t'int const_SIZE
-        - Fset.cardinal seen) (UInt64.t'int const_SIZE - Fset.cardinal (add_Int seen cur))))
-      /\ (([@stop_split] [@expl:lemma_permutation_aux ensures] ([@stop_split] [@expl:lemma_permutation_aux ensures #0] 0
-            <= lemma_permutation_aux_T self (add_Int seen cur) i (UInt64.t'int (index_array_usize_n self.back cur))
-          /\ lemma_permutation_aux_T self (add_Int seen cur) i (UInt64.t'int (index_array_usize_n self.back cur))
-          < UInt64.t'int const_SIZE)
-        /\ ([@stop_split] [@expl:lemma_permutation_aux ensures #1] UInt64.t'int (index_array_usize_n self.back (lemma_permutation_aux_T self (add_Int seen cur) i (UInt64.t'int (index_array_usize_n self.back cur))))
-        = i))
-      -> (let result = lemma_permutation_aux_T self (add_Int seen cur) i (UInt64.t'int (index_array_usize_n self.back cur)) in [@stop_split] [@expl:lemma_permutation_aux_T ensures] ([@stop_split] [@expl:lemma_permutation_aux ensures #0] 0
-          <= result
-        /\ result < UInt64.t'int const_SIZE)
-      /\ ([@stop_split] [@expl:lemma_permutation_aux ensures #1] UInt64.t'int (index_array_usize_n self.back result)
-      = i))))
+      -> (forall local. local = bounded_fset_len_T seen (UInt64.t'int const_SIZE)
+        -> (([@stop_split] [@expl:lemma_permutation_aux requires] ([@stop_split] [@expl:lemma_permutation_aux requires #0] inv_Sparse_T self)
+            /\ ([@stop_split] [@expl:lemma_permutation_aux requires #1] self.n = const_SIZE)
+            /\ ([@stop_split] [@expl:lemma_permutation_aux requires #2] 0
+                <= UInt64.t'int (index_array_usize_n self.back cur)
+              /\ UInt64.t'int (index_array_usize_n self.back cur) < UInt64.t'int const_SIZE)
+            /\ ([@stop_split] [@expl:lemma_permutation_aux requires #3] forall k: int. contains_Int (add_Int seen cur) k
+                -> 0 <= k
+                /\ k < UInt64.t'int const_SIZE
+                /\ (k = i \/ contains_Int (add_Int seen cur) (UInt64.t'int (index_array_usize_n self.idx k))))
+            /\ ([@stop_split] [@expl:lemma_permutation_aux requires #4] i
+                = UInt64.t'int (index_array_usize_n self.back cur)
+              \/ contains_Int (add_Int seen cur) i
+              /\ contains_Int (add_Int seen cur) (UInt64.t'int (index_array_usize_n self.idx (UInt64.t'int (index_array_usize_n self.back cur)))))
+            /\ ([@stop_split] [@expl:lemma_permutation_aux requires #5] not contains_Int (add_Int seen cur) (UInt64.t'int (index_array_usize_n self.back cur))))
+          /\ ([@expl:variant decreases] well_founded_relation_Int (UInt64.t'int const_SIZE
+          - Fset.cardinal seen) (UInt64.t'int const_SIZE - Fset.cardinal (add_Int seen cur))))
+        /\ (([@stop_split] [@expl:lemma_permutation_aux ensures] ([@stop_split] [@expl:lemma_permutation_aux ensures #0] 0
+              <= lemma_permutation_aux_T self (add_Int seen cur) i (UInt64.t'int (index_array_usize_n self.back cur))
+            /\ lemma_permutation_aux_T self (add_Int seen cur) i (UInt64.t'int (index_array_usize_n self.back cur))
+            < UInt64.t'int const_SIZE)
+          /\ ([@stop_split] [@expl:lemma_permutation_aux ensures #1] UInt64.t'int (index_array_usize_n self.back (lemma_permutation_aux_T self (add_Int seen cur) i (UInt64.t'int (index_array_usize_n self.back cur))))
+          = i))
+        -> (let result = lemma_permutation_aux_T self (add_Int seen cur) i (UInt64.t'int (index_array_usize_n self.back cur)) in [@stop_split] [@expl:lemma_permutation_aux_T ensures] ([@stop_split] [@expl:lemma_permutation_aux ensures #0] 0
+            <= result
+          /\ result < UInt64.t'int const_SIZE)
+        /\ ([@stop_split] [@expl:lemma_permutation_aux ensures #1] UInt64.t'int (index_array_usize_n self.back result)
+        = i)))))
     )
 end
 module M_impl_Sparse_T__set (* Sparse<T, SIZE> *)

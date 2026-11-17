@@ -144,66 +144,72 @@ function produces_trans_Map_I_F (a: t_Map_I_F) (ab: Seq.seq t_B) (b: t_Map_I_F) 
 
 goal vc_produces_trans_Map_I_F: produces_Map_I_F a ab b
   -> produces_Map_I_F b bc c
-  -> (let ac = Seq.(++) ab bc in ([@stop_split] [@expl:produces_instantiate_existential requires] produces_Map_I_F a ab b)
-  /\ (([@stop_split] [@expl:produces_instantiate_existential ensures] Seq.length (produces_instantiate_existential_I a ab b).f0
-      = Seq.length ab
-    /\ Seq.length (produces_instantiate_existential_I a ab b).f1 = Seq.length ab
-    /\ produces_I (iter_Map_I_F a) (produces_instantiate_existential_I a ab b).f1 (iter_Map_I_F b)
-    /\ (forall i: int. 1 <= i /\ i < Seq.length (produces_instantiate_existential_I a ab b).f0
-        -> (Seq.get (produces_instantiate_existential_I a ab b).f0 (i - 1)).final
-        = (Seq.get (produces_instantiate_existential_I a ab b).f0 i).current)
-    /\ (if Seq.length ab = 0 then
-        func_Map_I_F a = func_Map_I_F b
-      else
-        (Seq.get (produces_instantiate_existential_I a ab b).f0 0).current = func_Map_I_F a
-        /\ (Seq.get (produces_instantiate_existential_I a ab b).f0 (Seq.length ab - 1)).final = func_Map_I_F b
-      )
-    /\ (forall i: int. 0 <= i /\ i < Seq.length ab
-      -> hist_inv_F (func_Map_I_F a) (Seq.get (produces_instantiate_existential_I a ab b).f0 i).current
-      /\ postcondition_mut_F (Seq.get (produces_instantiate_existential_I a ab b).f0 i).current (Seq.get (produces_instantiate_existential_I a ab b).f1 i) (Seq.get (produces_instantiate_existential_I a ab b).f0 i).final (Seq.get ab i)))
-  -> (let {f0 = fsab; f1 = sab} = produces_instantiate_existential_I a ab b in ([@stop_split] [@expl:produces_instantiate_existential requires] produces_Map_I_F b bc c)
-  /\ (([@stop_split] [@expl:produces_instantiate_existential ensures] Seq.length (produces_instantiate_existential_I b bc c).f0
-      = Seq.length bc
-    /\ Seq.length (produces_instantiate_existential_I b bc c).f1 = Seq.length bc
-    /\ produces_I (iter_Map_I_F b) (produces_instantiate_existential_I b bc c).f1 (iter_Map_I_F c)
-    /\ (forall i: int. 1 <= i /\ i < Seq.length (produces_instantiate_existential_I b bc c).f0
-        -> (Seq.get (produces_instantiate_existential_I b bc c).f0 (i - 1)).final
-        = (Seq.get (produces_instantiate_existential_I b bc c).f0 i).current)
-    /\ (if Seq.length bc = 0 then
-        func_Map_I_F b = func_Map_I_F c
-      else
-        (Seq.get (produces_instantiate_existential_I b bc c).f0 0).current = func_Map_I_F b
-        /\ (Seq.get (produces_instantiate_existential_I b bc c).f0 (Seq.length bc - 1)).final = func_Map_I_F c
-      )
-    /\ (forall i: int. 0 <= i /\ i < Seq.length bc
-      -> hist_inv_F (func_Map_I_F b) (Seq.get (produces_instantiate_existential_I b bc c).f0 i).current
-      /\ postcondition_mut_F (Seq.get (produces_instantiate_existential_I b bc c).f0 i).current (Seq.get (produces_instantiate_existential_I b bc c).f1 i) (Seq.get (produces_instantiate_existential_I b bc c).f0 i).final (Seq.get bc i)))
-  -> (let {f0 = fsbc; f1 = sbc} = produces_instantiate_existential_I b bc c in let fs = Seq.(++) fsab fsbc in let s = Seq.(++) sab sbc in if forall i: int. 1
-        <= i
-      /\ i < Seq.length fs -> (Seq.get fs (i - 1)).final = (Seq.get fs i).current then
-    if Seq.length ac = 0 then
-      if func_Map_I_F a = func_Map_I_F c then
-        (forall i: int. 0 <= i /\ i < Seq.length ac
-            -> hist_inv_F (func_Map_I_F a) (Seq.get fs i).current
-            /\ postcondition_mut_F (Seq.get fs i).current (Seq.get s i) (Seq.get fs i).final (Seq.get ac i))
-        && ([@stop_split] [@expl:produces_trans ensures] produces_Map_I_F a (Seq.(++) ab bc) c)
-      else
-        false
-    
-    else
-      if (Seq.get fs 0).current = func_Map_I_F a then
-        if (Seq.get fs (Seq.length ac - 1)).final = func_Map_I_F c then
-          (forall i: int. 0 <= i /\ i < Seq.length ac
-              -> hist_inv_F (func_Map_I_F a) (Seq.get fs i).current
-              /\ postcondition_mut_F (Seq.get fs i).current (Seq.get s i) (Seq.get fs i).final (Seq.get ac i))
-          && ([@stop_split] [@expl:produces_trans ensures] produces_Map_I_F a (Seq.(++) ab bc) c)
+  -> (forall ac. ac = Seq.(++) ab bc
+    -> (let ac = ac in ([@stop_split] [@expl:produces_instantiate_existential requires] produces_Map_I_F a ab b)
+    /\ (([@stop_split] [@expl:produces_instantiate_existential ensures] Seq.length (produces_instantiate_existential_I a ab b).f0
+        = Seq.length ab
+      /\ Seq.length (produces_instantiate_existential_I a ab b).f1 = Seq.length ab
+      /\ produces_I (iter_Map_I_F a) (produces_instantiate_existential_I a ab b).f1 (iter_Map_I_F b)
+      /\ (forall i: int. 1 <= i /\ i < Seq.length (produces_instantiate_existential_I a ab b).f0
+          -> (Seq.get (produces_instantiate_existential_I a ab b).f0 (i - 1)).final
+          = (Seq.get (produces_instantiate_existential_I a ab b).f0 i).current)
+      /\ (if Seq.length ab = 0 then
+          func_Map_I_F a = func_Map_I_F b
         else
-          false
-      
-      else
-        false
-    
-  
-  else
-    false
-  )))))
+          (Seq.get (produces_instantiate_existential_I a ab b).f0 0).current = func_Map_I_F a
+          /\ (Seq.get (produces_instantiate_existential_I a ab b).f0 (Seq.length ab - 1)).final = func_Map_I_F b
+        )
+      /\ (forall i: int. 0 <= i /\ i < Seq.length ab
+        -> hist_inv_F (func_Map_I_F a) (Seq.get (produces_instantiate_existential_I a ab b).f0 i).current
+        /\ postcondition_mut_F (Seq.get (produces_instantiate_existential_I a ab b).f0 i).current (Seq.get (produces_instantiate_existential_I a ab b).f1 i) (Seq.get (produces_instantiate_existential_I a ab b).f0 i).final (Seq.get ab i)))
+    -> (forall local. local = produces_instantiate_existential_I a ab b
+      -> (let {f0 = fsab; f1 = sab} = local in ([@stop_split] [@expl:produces_instantiate_existential requires] produces_Map_I_F b bc c)
+      /\ (([@stop_split] [@expl:produces_instantiate_existential ensures] Seq.length (produces_instantiate_existential_I b bc c).f0
+          = Seq.length bc
+        /\ Seq.length (produces_instantiate_existential_I b bc c).f1 = Seq.length bc
+        /\ produces_I (iter_Map_I_F b) (produces_instantiate_existential_I b bc c).f1 (iter_Map_I_F c)
+        /\ (forall i: int. 1 <= i /\ i < Seq.length (produces_instantiate_existential_I b bc c).f0
+            -> (Seq.get (produces_instantiate_existential_I b bc c).f0 (i - 1)).final
+            = (Seq.get (produces_instantiate_existential_I b bc c).f0 i).current)
+        /\ (if Seq.length bc = 0 then
+            func_Map_I_F b = func_Map_I_F c
+          else
+            (Seq.get (produces_instantiate_existential_I b bc c).f0 0).current = func_Map_I_F b
+            /\ (Seq.get (produces_instantiate_existential_I b bc c).f0 (Seq.length bc - 1)).final = func_Map_I_F c
+          )
+        /\ (forall i: int. 0 <= i /\ i < Seq.length bc
+          -> hist_inv_F (func_Map_I_F b) (Seq.get (produces_instantiate_existential_I b bc c).f0 i).current
+          /\ postcondition_mut_F (Seq.get (produces_instantiate_existential_I b bc c).f0 i).current (Seq.get (produces_instantiate_existential_I b bc c).f1 i) (Seq.get (produces_instantiate_existential_I b bc c).f0 i).final (Seq.get bc i)))
+      -> (forall local'0. local'0 = produces_instantiate_existential_I b bc c
+        -> (let {f0 = fsbc; f1 = sbc} = local'0 in forall fs. fs = Seq.(++) fsab fsbc
+          -> (let fs = fs in forall s. s = Seq.(++) sab sbc
+            -> (let s = s in if forall i: int. 1 <= i /\ i < Seq.length fs
+              -> (Seq.get fs (i - 1)).final = (Seq.get fs i).current then
+              if Seq.length ac = 0 then
+                if func_Map_I_F a = func_Map_I_F c then
+                  (forall i: int. 0 <= i /\ i < Seq.length ac
+                      -> hist_inv_F (func_Map_I_F a) (Seq.get fs i).current
+                      /\ postcondition_mut_F (Seq.get fs i).current (Seq.get s i) (Seq.get fs i).final (Seq.get ac i))
+                  && (forall local'1. local'1 = ()
+                    -> ([@stop_split] [@expl:produces_trans ensures] produces_Map_I_F a (Seq.(++) ab bc) c))
+                else
+                  false
+              
+              else
+                if (Seq.get fs 0).current = func_Map_I_F a then
+                  if (Seq.get fs (Seq.length ac - 1)).final = func_Map_I_F c then
+                    (forall i: int. 0 <= i /\ i < Seq.length ac
+                        -> hist_inv_F (func_Map_I_F a) (Seq.get fs i).current
+                        /\ postcondition_mut_F (Seq.get fs i).current (Seq.get s i) (Seq.get fs i).final (Seq.get ac i))
+                    && (forall local'1. local'1 = ()
+                      -> ([@stop_split] [@expl:produces_trans ensures] produces_Map_I_F a (Seq.(++) ab bc) c))
+                  else
+                    false
+                
+                else
+                  false
+              
+            
+            else
+              false
+            ))))))))))

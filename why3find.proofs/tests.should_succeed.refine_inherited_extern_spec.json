@@ -1,0 +1,22 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "M_f": {
+      "vc_f": { "prover": "alt-ergo@", "time": 0.014 },
+      "vc_from_iter_S": { "prover": "alt-ergo@", "time": 0.012 },
+      "vc_into_iter_array_unit_1": { "prover": "alt-ergo@", "time": 0.012 }
+    },
+    "M_impl_FromIterator_for_S__from_iter": {
+      "vc_from_iter_S": { "prover": "alt-ergo@", "time": 0.009 }
+    },
+    "M_impl_FromIterator_for_S__from_iter__refines": {
+      "refines": { "prover": "alt-ergo@", "time": 0.006 },
+      "vc_into_iter_I": { "prover": "alt-ergo@", "time": 0.009 }
+    }
+  }
+}

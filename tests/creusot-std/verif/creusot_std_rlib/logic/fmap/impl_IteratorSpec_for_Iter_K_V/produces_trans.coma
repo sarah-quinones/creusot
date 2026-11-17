@@ -69,11 +69,18 @@ function produces_trans_Iter_K_V (a: t_Iter_K_V) (ab: Seq.seq tup2_K_V) (b: t_It
 
 goal vc_produces_trans_Iter_K_V: produces_Iter_K_V a ab b
   -> produces_Iter_K_V b bc c
-  -> (let ac = Seq.(++) ab bc in (forall x: tup2_K_V. contains_tup2_K_V ab x -> contains_tup2_K_V ac x)
-  && (forall i: int. 0 <= i /\ i < Seq.length bc -> Seq.get ac (i + Seq.length ab) = Seq.get bc i)
-  && (forall k: t_K. (forall i: int. 0 <= i /\ i < Seq.length ac -> (Seq.get ac i).f0'0 <> k)
-      -> (forall i: int. 0 <= i /\ i < Seq.length ab -> (Seq.get ab i).f0'0 <> k)
-      /\ (forall i: int. 0 <= i /\ i < Seq.length bc -> (Seq.get bc i).f0'0 <> k)
-      /\ lookup_K (view_Iter_K_V a) k = lookup_K (view_Iter_K_V b) k
-      /\ lookup_K (view_Iter_K_V b) k = lookup_K (view_Iter_K_V c) k)
-  && ([@stop_split] [@expl:produces_trans ensures] produces_Iter_K_V a (Seq.(++) ab bc) c))
+  -> (forall ac. ac = Seq.(++) ab bc
+    -> (let ac = ac in (forall x: tup2_K_V. contains_tup2_K_V ab x -> contains_tup2_K_V ac x)
+    && (forall local. local = ()
+      -> (forall local'0. local'0 = ()
+        -> (forall i: int. 0 <= i /\ i < Seq.length bc -> Seq.get ac (i + Seq.length ab) = Seq.get bc i)
+        && (forall local'1. local'1 = ()
+          -> (forall local'2. local'2 = ()
+            -> (forall k: t_K. (forall i: int. 0 <= i /\ i < Seq.length ac -> (Seq.get ac i).f0'0 <> k)
+                -> (forall i: int. 0 <= i /\ i < Seq.length ab -> (Seq.get ab i).f0'0 <> k)
+                /\ (forall i: int. 0 <= i /\ i < Seq.length bc -> (Seq.get bc i).f0'0 <> k)
+                /\ lookup_K (view_Iter_K_V a) k = lookup_K (view_Iter_K_V b) k
+                /\ lookup_K (view_Iter_K_V b) k = lookup_K (view_Iter_K_V c) k)
+            && (forall local'3. local'3 = ()
+              -> (forall local'4. local'4 = ()
+                -> ([@stop_split] [@expl:produces_trans ensures] produces_Iter_K_V a (Seq.(++) ab bc) c)))))))))

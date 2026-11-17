@@ -1,5 +1,10 @@
 {
-  "profile": [],
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
   "proofs": {
     "Coma": {
       "vc_deref_Ghost_T": { "tactic": "compute_specified", "children": [] },
@@ -13,10 +18,10 @@
           {
             "tactic": "split_vc",
             "children": [
-              { "prover": "alt-ergo", "time": 0.03 },
-              { "prover": "alt-ergo", "time": 0.019 },
-              { "prover": "alt-ergo", "time": 0.026 },
-              { "prover": "alt-ergo", "time": 0.037 }
+              { "prover": "alt-ergo@", "time": 0.019 },
+              { "prover": "alt-ergo@", "time": 0.015 },
+              { "prover": "alt-ergo@", "time": 0.016 },
+              { "prover": "alt-ergo@", "time": 0.011 }
             ]
           }
         ]

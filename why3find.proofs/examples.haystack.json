@@ -1,0 +1,24 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "M_search": {
+      "vc_elim_Some": { "prover": "cvc5@", "time": 0.004 },
+      "vc_index_Vec_u8_Global'0": { "prover": "cvc5@", "time": 0.004 },
+      "vc_into_iter_RangeInclusive_usize": {
+        "prover": "cvc5@",
+        "time": 0.002
+      },
+      "vc_into_iter_Range_usize": { "prover": "cvc5@", "time": 0.006 },
+      "vc_len_u8": { "prover": "cvc5@", "time": 0.005 },
+      "vc_new_usize": { "prover": "cvc5@", "time": 0.002 },
+      "vc_next_RangeInclusive_usize": { "prover": "cvc5@", "time": 0.007 },
+      "vc_next_Range_usize": { "prover": "cvc5@", "time": 0.006 },
+      "vc_search": { "prover": "z3@", "time": 0.373 }
+    }
+  }
+}

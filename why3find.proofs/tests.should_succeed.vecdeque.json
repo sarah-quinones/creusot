@@ -1,0 +1,30 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "M_index_mut_keeps_the_rest": {
+      "vc_index_mut_VecDeque_u32_Global": {
+        "prover": "alt-ergo@",
+        "time": 0.011
+      },
+      "vc_index_mut_keeps_the_rest": { "prover": "alt-ergo@", "time": 0.008 }
+    },
+    "M_test_deque": {
+      "vc_clear_u32": { "prover": "cvc5@", "time": 0.006 },
+      "vc_eq_Option_u32": { "prover": "cvc5@", "time": 0.006 },
+      "vc_is_empty_u32": { "prover": "cvc5@", "time": 0.005 },
+      "vc_len_u32": { "prover": "cvc5@", "time": 0.005 },
+      "vc_new_u32": { "prover": "cvc5@", "time": 0.005 },
+      "vc_pop_back_u32": { "prover": "cvc5@", "time": 0.006 },
+      "vc_pop_front_u32": { "prover": "cvc5@", "time": 0.005 },
+      "vc_push_back_u32": { "prover": "cvc5@", "time": 0.006 },
+      "vc_push_front_u32": { "prover": "alt-ergo@", "time": 0.011 },
+      "vc_test_deque": { "prover": "z3@", "time": 0.028 },
+      "vc_with_capacity_u32": { "prover": "cvc5@", "time": 0.005 }
+    }
+  }
+}

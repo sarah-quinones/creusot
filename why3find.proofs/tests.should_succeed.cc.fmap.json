@@ -1,0 +1,29 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "M_resolves": {
+      "vc_elim_Some": { "prover": "cvc5@", "time": 0.007 },
+      "vc_insert_refmut_usize": { "prover": "alt-ergo@", "time": 0.013 },
+      "vc_into_inner_FMap_refmut_usize_refmut_usize": {
+        "prover": "cvc5@",
+        "time": 0.003
+      },
+      "vc_into_iter_FMap_refmut_usize_refmut_usize": {
+        "prover": "cvc5@",
+        "time": 0.006
+      },
+      "vc_new_refmut_usize": { "prover": "cvc5@", "time": 0.003 },
+      "vc_new_usize": { "prover": "alt-ergo@", "time": 0.007 },
+      "vc_next_Iter_refmut_usize_refmut_usize": {
+        "prover": "alt-ergo@",
+        "time": 0.01
+      },
+      "vc_resolves": { "prover": "alt-ergo@", "time": 0.156 }
+    }
+  }
+}

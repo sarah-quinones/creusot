@@ -1,0 +1,86 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "M_call_fn": {
+      "vc_call_F": { "prover": "cvc5@", "time": 0.004 },
+      "vc_call_fn_F": { "prover": "cvc5@", "time": 0.004 }
+    },
+    "M_call_fnmut": {
+      "vc_call_fnmut_F": { "prover": "cvc5@", "time": 0.005 },
+      "vc_call_mut_F": { "prover": "cvc5@", "time": 0.002 }
+    },
+    "M_call_fnonce": {
+      "vc_call_fnonce_F": { "prover": "cvc5@", "time": 0.006 },
+      "vc_call_once_F": { "prover": "cvc5@", "time": 0.003 }
+    },
+    "M_test1": {
+      "vc_call_fn_ref_F": { "prover": "cvc5@", "time": 0.004 },
+      "vc_test1_F": { "prover": "cvc5@", "time": 0.005 }
+    },
+    "M_test10": {
+      "vc_call_fnmut_refmut_F": { "prover": "cvc5@", "time": 0.003 },
+      "vc_test10_F": { "prover": "cvc5@", "time": 0.006 }
+    },
+    "M_test11": {
+      "vc_call_fnonce_Box_F_Global": { "prover": "cvc5@", "time": 0.004 },
+      "vc_test11_F": { "prover": "cvc5@", "time": 0.006 }
+    },
+    "M_test12": {
+      "vc_call_fnonce_refmut_F": { "prover": "cvc5@", "time": 0.005 },
+      "vc_test12_F": { "prover": "cvc5@", "time": 0.008 }
+    },
+    "M_test13": {
+      "vc_call_fnonce_Box_F_Global": { "prover": "cvc5@", "time": 0.004 },
+      "vc_test13_F": { "prover": "cvc5@", "time": 0.003 }
+    },
+    "M_test14": {
+      "vc_call_fnmut_F": { "prover": "cvc5@", "time": 0.004 },
+      "vc_test14_F": { "prover": "cvc5@", "time": 0.005 }
+    },
+    "M_test15": {
+      "vc_call_fnonce_F": { "prover": "cvc5@", "time": 0.003 },
+      "vc_test15_F": { "prover": "cvc5@", "time": 0.005 }
+    },
+    "M_test16": {
+      "vc_call_fnonce_F": { "prover": "cvc5@", "time": 0.003 },
+      "vc_test16_F": { "prover": "cvc5@", "time": 0.005 }
+    },
+    "M_test2": {
+      "vc_call_fn_Box_F_Global": { "prover": "cvc5@", "time": 0.004 },
+      "vc_test2_F": { "prover": "cvc5@", "time": 0.005 }
+    },
+    "M_test3": {
+      "vc_call_fnmut_ref_F": { "prover": "cvc5@", "time": 0.006 },
+      "vc_test3_F": { "prover": "cvc5@", "time": 0.006 }
+    },
+    "M_test4": {
+      "vc_call_fnmut_Box_F_Global": { "prover": "cvc5@", "time": 0.005 },
+      "vc_test4_F": { "prover": "cvc5@", "time": 0.005 }
+    },
+    "M_test5": {
+      "vc_call_fnmut_refmut_F": { "prover": "cvc5@", "time": 0.003 },
+      "vc_test5_F": { "prover": "cvc5@", "time": 0.009 }
+    },
+    "M_test6": {
+      "vc_call_fnonce_ref_F": { "prover": "cvc5@", "time": 0.004 },
+      "vc_test6_F": { "prover": "cvc5@", "time": 0.005 }
+    },
+    "M_test7": {
+      "vc_call_fnonce_Box_F_Global": { "prover": "cvc5@", "time": 0.004 },
+      "vc_test7_F": { "prover": "cvc5@", "time": 0.005 }
+    },
+    "M_test8": {
+      "vc_call_fnonce_refmut_F": { "prover": "cvc5@", "time": 0.005 },
+      "vc_test8_F": { "prover": "cvc5@", "time": 0.008 }
+    },
+    "M_test9": {
+      "vc_call_fnmut_Box_F_Global": { "prover": "cvc5@", "time": 0.005 },
+      "vc_test9_F": { "prover": "cvc5@", "time": 0.003 }
+    }
+  }
+}

@@ -1,0 +1,149 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "M_hashset_difference": {
+      "vc_collect_Copied_Difference_T_RandomState_Global": {
+        "prover": "cvc5@",
+        "time": 0.004
+      },
+      "vc_copied_Difference_T_RandomState_Global": {
+        "prover": "cvc5@",
+        "time": 0.004
+      },
+      "vc_difference_T": { "prover": "cvc5@", "time": 0.005 },
+      "vc_from_iter_HashSet_T_RandomState_Global": {
+        "prover": "alt-ergo@",
+        "time": 0.014
+      },
+      "vc_hashset_difference_T": { "prover": "alt-ergo@", "time": 0.111 },
+      "vc_into_iter_Copied_Difference_T_RandomState_Global": {
+        "prover": "alt-ergo@",
+        "time": 0.009
+      }
+    },
+    "M_hashset_intersection": {
+      "vc_collect_Copied_Intersection_T_RandomState_Global": {
+        "prover": "cvc5@",
+        "time": 0.004
+      },
+      "vc_copied_Intersection_T_RandomState_Global": {
+        "prover": "cvc5@",
+        "time": 0.004
+      },
+      "vc_from_iter_HashSet_T_RandomState_Global": {
+        "prover": "alt-ergo@",
+        "time": 0.014
+      },
+      "vc_hashset_intersection_T": { "prover": "alt-ergo@", "time": 0.053 },
+      "vc_intersection_T": { "prover": "cvc5@", "time": 0.005 },
+      "vc_into_iter_Copied_Intersection_T_RandomState_Global": {
+        "prover": "alt-ergo@",
+        "time": 0.009
+      }
+    },
+    "M_roundtrip_hashmap_into_iter": {
+      "vc_collect_IntoIter_K_V_Global": { "prover": "cvc5@", "time": 0.007 },
+      "vc_from_iter_HashMap_K_V_RandomState_Global": {
+        "prover": "alt-ergo@",
+        "time": 0.018
+      },
+      "vc_into_iter_HashMap_K_V_RandomState_Global": {
+        "prover": "cvc5@",
+        "time": 0.004
+      },
+      "vc_into_iter_IntoIter_K_V_Global": {
+        "prover": "alt-ergo@",
+        "time": 0.014
+      },
+      "vc_roundtrip_hashmap_into_iter_K": {
+        "tactic": "compute_specified",
+        "children": [
+          {
+            "tactic": "split_vc",
+            "children": [
+              { "prover": "alt-ergo@", "time": 0.017 },
+              { "prover": "alt-ergo@", "time": 0.017 },
+              { "prover": "z3@", "time": 0.025 },
+              { "prover": "z3@", "time": 0.022 },
+              { "prover": "z3@", "time": 0.024 },
+              { "prover": "z3@", "time": 0.023 },
+              { "prover": "cvc5@", "time": 0.013 }
+            ]
+          }
+        ]
+      }
+    },
+    "M_roundtrip_hashmap_iter": {
+      "vc_collect_Iter_K_V": { "prover": "cvc5@", "time": 0.007 },
+      "vc_from_iter_HashMap_ref_K_ref_V_RandomState_Global": {
+        "prover": "alt-ergo@",
+        "time": 0.015
+      },
+      "vc_into_iter_Iter_K_V": { "prover": "alt-ergo@", "time": 0.013 },
+      "vc_iter_K": { "prover": "cvc5@", "time": 0.003 },
+      "vc_roundtrip_hashmap_iter_K": {
+        "tactic": "compute_specified",
+        "children": [ { "prover": "z3@", "time": 0.044 } ]
+      }
+    },
+    "M_roundtrip_hashmap_iter_mut": {
+      "vc_collect_IterMut_K_V": { "prover": "cvc5@", "time": 0.008 },
+      "vc_from_iter_HashMap_ref_K_refmut_V_RandomState_Global": {
+        "prover": "alt-ergo@",
+        "time": 0.015
+      },
+      "vc_into_iter_IterMut_K_V": { "prover": "alt-ergo@", "time": 0.01 },
+      "vc_iter_mut_K": { "prover": "cvc5@", "time": 0.003 },
+      "vc_roundtrip_hashmap_iter_mut_K": {
+        "tactic": "compute_specified",
+        "children": [
+          {
+            "tactic": "split_vc",
+            "children": [
+              { "prover": "alt-ergo@", "time": 0.016 },
+              { "prover": "alt-ergo@", "time": 0.017 },
+              { "prover": "z3@", "time": 0.029 },
+              { "prover": "z3@", "time": 0.032 },
+              { "prover": "alt-ergo@", "time": 0.019 },
+              { "prover": "alt-ergo@", "time": 0.014 }
+            ]
+          }
+        ]
+      }
+    },
+    "M_roundtrip_hashset_into_iter": {
+      "vc_collect_IntoIter_T_Global": { "prover": "cvc5@", "time": 0.005 },
+      "vc_from_iter_HashSet_T_RandomState_Global": {
+        "prover": "alt-ergo@",
+        "time": 0.012
+      },
+      "vc_into_iter_HashSet_T_RandomState_Global": {
+        "prover": "cvc5@",
+        "time": 0.004
+      },
+      "vc_into_iter_IntoIter_T_Global": {
+        "prover": "alt-ergo@",
+        "time": 0.012
+      },
+      "vc_roundtrip_hashset_into_iter_T": {
+        "prover": "cvc5@",
+        "time": 0.032
+      }
+    },
+    "M_roundtrip_hashset_iter": {
+      "vc_collect_Iter_T": { "prover": "cvc5@", "time": 0.006 },
+      "vc_from_iter_HashSet_ref_T_RandomState_Global": {
+        "prover": "alt-ergo@",
+        "time": 0.007
+      },
+      "vc_into_iter_Iter_T": { "prover": "alt-ergo@", "time": 0.008 },
+      "vc_iter_T": { "prover": "cvc5@", "time": 0.005 },
+      "vc_roundtrip_hashset_iter_T": { "prover": "cvc5@", "time": 0.029 }
+    }
+  }
+}

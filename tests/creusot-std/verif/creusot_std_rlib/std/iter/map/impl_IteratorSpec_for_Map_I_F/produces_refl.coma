@@ -86,4 +86,5 @@ constant self : t_Map_I_F
 function produces_refl_Map_I_F (self: t_Map_I_F) : ()
 
 goal vc_produces_refl_Map_I_F: Seq.length (Seq.empty: Seq.seq (MutBorrow.t t_F)) = Seq.length (Seq.empty: Seq.seq t_B)
-  && ([@stop_split] [@expl:produces_refl ensures] produces_Map_I_F self (Seq.empty: Seq.seq t_B) self)
+  && (forall local. local = ()
+    -> ([@stop_split] [@expl:produces_refl ensures] produces_Map_I_F self (Seq.empty: Seq.seq t_B) self))

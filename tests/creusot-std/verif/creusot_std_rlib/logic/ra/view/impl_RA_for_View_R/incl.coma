@@ -132,73 +132,100 @@ constant other : t_View_R
 
 predicate incl_View_R (self: t_View_R) (other: t_View_R)
 
-goal vc_incl_View_R: ([@stop_split] [@expl:frag ensures] rel_R (auth_R self) (frag_R self))
-  -> ([@stop_split] [@expl:frag ensures] rel_R (auth_R other) (frag_R other))
-  -> ([@stop_split] [@expl:incl ensures] incl_Frag (frag_R self) (frag_R other)
-    = (exists factor: t_Frag. op_Frag (frag_R self) factor = Some'0 (frag_R other)))
-  -> (if incl_Frag (frag_R self) (frag_R other) then
-    if auth_R self = None'1 then
-      let r = true in if r then
-        (forall frag'0: t_Frag. ([@stop_split] [@expl:frag ensures] rel_R (auth_R self) (frag_R self))
-            -> ([@stop_split] [@expl:frag ensures] rel_R (auth_R other) (frag_R other))
-            -> (if op_Frag (frag_R self) frag'0 = Some'0 (frag_R other) then
-              match auth_R self with
-                | Some'1 _ -> [@stop_split] [@expl:new requires] rel_R (None'1) frag'0
-                | None'1 -> [@stop_split] [@expl:new requires] rel_R (auth_R other) frag'0
-                end
-            else
-              true
-            ))
-        /\ (forall frag'0: t_Frag. op_Frag (frag_R self) frag'0 = Some'0 (frag_R other)
-            -> (let factor_auth = match auth_R self with
-              | Some'1 _ -> None'1
-              | None'1 -> auth_R other
-              end in op_View_R self (new_R factor_auth frag'0) = Some other))
-        && ([@stop_split] [@expl:incl ensures] r = (exists factor: t_View_R. op_View_R self factor = Some other))
-      else
-        [@stop_split] [@expl:incl ensures] r = (exists factor: t_View_R. op_View_R self factor = Some other)
-    
-    else
-      let r = auth_R self = auth_R other in if r then
-        (forall frag'0: t_Frag. ([@stop_split] [@expl:frag ensures] rel_R (auth_R self) (frag_R self))
-            -> ([@stop_split] [@expl:frag ensures] rel_R (auth_R other) (frag_R other))
-            -> (if op_Frag (frag_R self) frag'0 = Some'0 (frag_R other) then
-              match auth_R self with
-                | Some'1 _ -> [@stop_split] [@expl:new requires] rel_R (None'1) frag'0
-                | None'1 -> [@stop_split] [@expl:new requires] rel_R (auth_R other) frag'0
-                end
-            else
-              true
-            ))
-        /\ (forall frag'0: t_Frag. op_Frag (frag_R self) frag'0 = Some'0 (frag_R other)
-            -> (let factor_auth = match auth_R self with
-              | Some'1 _ -> None'1
-              | None'1 -> auth_R other
-              end in op_View_R self (new_R factor_auth frag'0) = Some other))
-        && ([@stop_split] [@expl:incl ensures] r = (exists factor: t_View_R. op_View_R self factor = Some other))
-      else
-        [@stop_split] [@expl:incl ensures] r = (exists factor: t_View_R. op_View_R self factor = Some other)
-    
-  
-  else
-    let r = false in if r then
-      (forall frag'0: t_Frag. ([@stop_split] [@expl:frag ensures] rel_R (auth_R self) (frag_R self))
-          -> ([@stop_split] [@expl:frag ensures] rel_R (auth_R other) (frag_R other))
-          -> (if op_Frag (frag_R self) frag'0 = Some'0 (frag_R other) then
-            match auth_R self with
-              | Some'1 _ -> [@stop_split] [@expl:new requires] rel_R (None'1) frag'0
-              | None'1 -> [@stop_split] [@expl:new requires] rel_R (auth_R other) frag'0
-              end
+goal vc_incl_View_R: forall local. local = ()
+    -> ([@stop_split] [@expl:frag ensures] rel_R (auth_R self) (frag_R self))
+    -> ([@stop_split] [@expl:frag ensures] rel_R (auth_R other) (frag_R other))
+    -> ([@stop_split] [@expl:incl ensures] incl_Frag (frag_R self) (frag_R other)
+      = (exists factor: t_Frag. op_Frag (frag_R self) factor = Some'0 (frag_R other)))
+    -> (if incl_Frag (frag_R self) (frag_R other) then
+      if auth_R self = None'1 then
+        forall r. r
+          -> (let r = r in if r then
+            (forall frag'0: t_Frag. ([@stop_split] [@expl:frag ensures] rel_R (auth_R self) (frag_R self))
+                -> ([@stop_split] [@expl:frag ensures] rel_R (auth_R other) (frag_R other))
+                -> (if op_Frag (frag_R self) frag'0 = Some'0 (frag_R other) then
+                  match auth_R self with
+                    | Some'1 _ -> forall factor_auth. factor_auth = None'1
+                      -> ([@stop_split] [@expl:new requires] rel_R factor_auth frag'0)
+                    | None'1 -> forall factor_auth. factor_auth = auth_R other
+                      -> ([@stop_split] [@expl:new requires] rel_R factor_auth frag'0)
+                    end
+                else
+                  true
+                ))
+            /\ (forall frag'0: t_Frag. op_Frag (frag_R self) frag'0 = Some'0 (frag_R other)
+                -> (let factor_auth = match auth_R self with
+                  | Some'1 _ -> None'1
+                  | None'1 -> auth_R other
+                  end in op_View_R self (new_R factor_auth frag'0) = Some other))
+            && (forall local'0. local'0 = ()
+              -> (forall local'1. local'1 = ()
+                -> ([@stop_split] [@expl:incl ensures] r
+                = (exists factor: t_View_R. op_View_R self factor = Some other))))
           else
-            true
-          ))
-      /\ (forall frag'0: t_Frag. op_Frag (frag_R self) frag'0 = Some'0 (frag_R other)
-          -> (let factor_auth = match auth_R self with
-            | Some'1 _ -> None'1
-            | None'1 -> auth_R other
-            end in op_View_R self (new_R factor_auth frag'0) = Some other))
-      && ([@stop_split] [@expl:incl ensures] r = (exists factor: t_View_R. op_View_R self factor = Some other))
+            forall local'0. local'0 = ()
+              -> (forall local'1. local'1 = ()
+                -> ([@stop_split] [@expl:incl ensures] r
+                = (exists factor: t_View_R. op_View_R self factor = Some other)))
+          )
+      else
+        forall r. r = (auth_R self = auth_R other)
+          -> (let r = r in if r then
+            (forall frag'0: t_Frag. ([@stop_split] [@expl:frag ensures] rel_R (auth_R self) (frag_R self))
+                -> ([@stop_split] [@expl:frag ensures] rel_R (auth_R other) (frag_R other))
+                -> (if op_Frag (frag_R self) frag'0 = Some'0 (frag_R other) then
+                  match auth_R self with
+                    | Some'1 _ -> forall factor_auth. factor_auth = None'1
+                      -> ([@stop_split] [@expl:new requires] rel_R factor_auth frag'0)
+                    | None'1 -> forall factor_auth. factor_auth = auth_R other
+                      -> ([@stop_split] [@expl:new requires] rel_R factor_auth frag'0)
+                    end
+                else
+                  true
+                ))
+            /\ (forall frag'0: t_Frag. op_Frag (frag_R self) frag'0 = Some'0 (frag_R other)
+                -> (let factor_auth = match auth_R self with
+                  | Some'1 _ -> None'1
+                  | None'1 -> auth_R other
+                  end in op_View_R self (new_R factor_auth frag'0) = Some other))
+            && (forall local'0. local'0 = ()
+              -> (forall local'1. local'1 = ()
+                -> ([@stop_split] [@expl:incl ensures] r
+                = (exists factor: t_View_R. op_View_R self factor = Some other))))
+          else
+            forall local'0. local'0 = ()
+              -> (forall local'1. local'1 = ()
+                -> ([@stop_split] [@expl:incl ensures] r
+                = (exists factor: t_View_R. op_View_R self factor = Some other)))
+          )
+    
     else
-      [@stop_split] [@expl:incl ensures] r = (exists factor: t_View_R. op_View_R self factor = Some other)
-  
-  )
+      forall r. r = false
+        -> (let r = r in if r then
+          (forall frag'0: t_Frag. ([@stop_split] [@expl:frag ensures] rel_R (auth_R self) (frag_R self))
+              -> ([@stop_split] [@expl:frag ensures] rel_R (auth_R other) (frag_R other))
+              -> (if op_Frag (frag_R self) frag'0 = Some'0 (frag_R other) then
+                match auth_R self with
+                  | Some'1 _ -> forall factor_auth. factor_auth = None'1
+                    -> ([@stop_split] [@expl:new requires] rel_R factor_auth frag'0)
+                  | None'1 -> forall factor_auth. factor_auth = auth_R other
+                    -> ([@stop_split] [@expl:new requires] rel_R factor_auth frag'0)
+                  end
+              else
+                true
+              ))
+          /\ (forall frag'0: t_Frag. op_Frag (frag_R self) frag'0 = Some'0 (frag_R other)
+              -> (let factor_auth = match auth_R self with
+                | Some'1 _ -> None'1
+                | None'1 -> auth_R other
+                end in op_View_R self (new_R factor_auth frag'0) = Some other))
+          && (forall local'0. local'0 = ()
+            -> (forall local'1. local'1 = ()
+              -> ([@stop_split] [@expl:incl ensures] r
+              = (exists factor: t_View_R. op_View_R self factor = Some other))))
+        else
+          forall local'0. local'0 = ()
+            -> (forall local'1. local'1 = ()
+              -> ([@stop_split] [@expl:incl ensures] r = (exists factor: t_View_R. op_View_R self factor = Some other)))
+        )
+    )

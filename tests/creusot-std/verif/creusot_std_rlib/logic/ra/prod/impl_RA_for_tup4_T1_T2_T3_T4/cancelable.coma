@@ -192,56 +192,60 @@ goal vc_cancelable_tup4_T1_T2_T3_T4: (forall v1: t_T1, v2: t_T2, v3: t_T3, v4: t
         -> op_T1 self.f0 y <> None'0
         -> op_tup4_T1_T2_T3_T4 self { f0 = x; f1 = v2; f2 = v3; f3 = v4 }
           = op_tup4_T1_T2_T3_T4 self { f0 = y; f1 = v2; f2 = v3; f3 = v4 } -> x = y))
-  && (if forall v1: t_T1. op_T1 self.f0 v1 = None'0 then
-    [@stop_split] [@expl:cancelable ensures] true
-    = (forall x: tup4_T1_T2_T3_T4, y: tup4_T1_T2_T3_T4. op_tup4_T1_T2_T3_T4 self x <> None
-      -> op_tup4_T1_T2_T3_T4 self x = op_tup4_T1_T2_T3_T4 self y -> x = y)
-  else
-    if forall v2: t_T2. op_T2 self.f1 v2 = None'1 then
-      [@stop_split] [@expl:cancelable ensures] true
-      = (forall x: tup4_T1_T2_T3_T4, y: tup4_T1_T2_T3_T4. op_tup4_T1_T2_T3_T4 self x <> None
-        -> op_tup4_T1_T2_T3_T4 self x = op_tup4_T1_T2_T3_T4 self y -> x = y)
-    else
-      if forall v3: t_T3. op_T3 self.f2 v3 = None'2 then
+  && (forall local. local = ()
+    -> (forall local'0. local'0 = ()
+      -> (if forall v1: t_T1. op_T1 self.f0 v1 = None'0 then
         [@stop_split] [@expl:cancelable ensures] true
         = (forall x: tup4_T1_T2_T3_T4, y: tup4_T1_T2_T3_T4. op_tup4_T1_T2_T3_T4 self x <> None
           -> op_tup4_T1_T2_T3_T4 self x = op_tup4_T1_T2_T3_T4 self y -> x = y)
       else
-        if forall v4: t_T4. op_T4 self.f3 v4 = None'3 then
+        if forall v2: t_T2. op_T2 self.f1 v2 = None'1 then
           [@stop_split] [@expl:cancelable ensures] true
           = (forall x: tup4_T1_T2_T3_T4, y: tup4_T1_T2_T3_T4. op_tup4_T1_T2_T3_T4 self x <> None
             -> op_tup4_T1_T2_T3_T4 self x = op_tup4_T1_T2_T3_T4 self y -> x = y)
         else
-          ([@stop_split] [@expl:cancelable ensures] cancelable_T1 self.f0
-            = (forall x: t_T1, y: t_T1. op_T1 self.f0 x <> None'0 -> op_T1 self.f0 x = op_T1 self.f0 y -> x = y))
-          -> (if cancelable_T1 self.f0 then
-            ([@stop_split] [@expl:cancelable ensures] cancelable_T2 self.f1
-              = (forall x: t_T2, y: t_T2. op_T2 self.f1 x <> None'1 -> op_T2 self.f1 x = op_T2 self.f1 y -> x = y))
-            -> (if cancelable_T2 self.f1 then
-              ([@stop_split] [@expl:cancelable ensures] cancelable_T3 self.f2
-                = (forall x: t_T3, y: t_T3. op_T3 self.f2 x <> None'2 -> op_T3 self.f2 x = op_T3 self.f2 y -> x = y))
-              -> (if cancelable_T3 self.f2 then
-                ([@stop_split] [@expl:cancelable ensures] cancelable_T4 self.f3
-                  = (forall x: t_T4, y: t_T4. op_T4 self.f3 x <> None'3 -> op_T4 self.f3 x = op_T4 self.f3 y -> x = y))
-                -> ([@stop_split] [@expl:cancelable ensures] cancelable_T4 self.f3
-                = (forall x: tup4_T1_T2_T3_T4, y: tup4_T1_T2_T3_T4. op_tup4_T1_T2_T3_T4 self x <> None
-                  -> op_tup4_T1_T2_T3_T4 self x = op_tup4_T1_T2_T3_T4 self y -> x = y))
+          if forall v3: t_T3. op_T3 self.f2 v3 = None'2 then
+            [@stop_split] [@expl:cancelable ensures] true
+            = (forall x: tup4_T1_T2_T3_T4, y: tup4_T1_T2_T3_T4. op_tup4_T1_T2_T3_T4 self x <> None
+              -> op_tup4_T1_T2_T3_T4 self x = op_tup4_T1_T2_T3_T4 self y -> x = y)
+          else
+            if forall v4: t_T4. op_T4 self.f3 v4 = None'3 then
+              [@stop_split] [@expl:cancelable ensures] true
+              = (forall x: tup4_T1_T2_T3_T4, y: tup4_T1_T2_T3_T4. op_tup4_T1_T2_T3_T4 self x <> None
+                -> op_tup4_T1_T2_T3_T4 self x = op_tup4_T1_T2_T3_T4 self y -> x = y)
+            else
+              ([@stop_split] [@expl:cancelable ensures] cancelable_T1 self.f0
+                = (forall x: t_T1, y: t_T1. op_T1 self.f0 x <> None'0 -> op_T1 self.f0 x = op_T1 self.f0 y -> x = y))
+              -> (if cancelable_T1 self.f0 then
+                ([@stop_split] [@expl:cancelable ensures] cancelable_T2 self.f1
+                  = (forall x: t_T2, y: t_T2. op_T2 self.f1 x <> None'1 -> op_T2 self.f1 x = op_T2 self.f1 y -> x = y))
+                -> (if cancelable_T2 self.f1 then
+                  ([@stop_split] [@expl:cancelable ensures] cancelable_T3 self.f2
+                    = (forall x: t_T3, y: t_T3. op_T3 self.f2 x <> None'2
+                      -> op_T3 self.f2 x = op_T3 self.f2 y -> x = y))
+                  -> (if cancelable_T3 self.f2 then
+                    ([@stop_split] [@expl:cancelable ensures] cancelable_T4 self.f3
+                      = (forall x: t_T4, y: t_T4. op_T4 self.f3 x <> None'3
+                        -> op_T4 self.f3 x = op_T4 self.f3 y -> x = y))
+                    -> ([@stop_split] [@expl:cancelable ensures] cancelable_T4 self.f3
+                    = (forall x: tup4_T1_T2_T3_T4, y: tup4_T1_T2_T3_T4. op_tup4_T1_T2_T3_T4 self x <> None
+                      -> op_tup4_T1_T2_T3_T4 self x = op_tup4_T1_T2_T3_T4 self y -> x = y))
+                  else
+                    [@stop_split] [@expl:cancelable ensures] false
+                    = (forall x: tup4_T1_T2_T3_T4, y: tup4_T1_T2_T3_T4. op_tup4_T1_T2_T3_T4 self x <> None
+                      -> op_tup4_T1_T2_T3_T4 self x = op_tup4_T1_T2_T3_T4 self y -> x = y)
+                  )
+                else
+                  [@stop_split] [@expl:cancelable ensures] false
+                  = (forall x: tup4_T1_T2_T3_T4, y: tup4_T1_T2_T3_T4. op_tup4_T1_T2_T3_T4 self x <> None
+                    -> op_tup4_T1_T2_T3_T4 self x = op_tup4_T1_T2_T3_T4 self y -> x = y)
+                )
               else
                 [@stop_split] [@expl:cancelable ensures] false
                 = (forall x: tup4_T1_T2_T3_T4, y: tup4_T1_T2_T3_T4. op_tup4_T1_T2_T3_T4 self x <> None
                   -> op_tup4_T1_T2_T3_T4 self x = op_tup4_T1_T2_T3_T4 self y -> x = y)
               )
-            else
-              [@stop_split] [@expl:cancelable ensures] false
-              = (forall x: tup4_T1_T2_T3_T4, y: tup4_T1_T2_T3_T4. op_tup4_T1_T2_T3_T4 self x <> None
-                -> op_tup4_T1_T2_T3_T4 self x = op_tup4_T1_T2_T3_T4 self y -> x = y)
-            )
-          else
-            [@stop_split] [@expl:cancelable ensures] false
-            = (forall x: tup4_T1_T2_T3_T4, y: tup4_T1_T2_T3_T4. op_tup4_T1_T2_T3_T4 self x <> None
-              -> op_tup4_T1_T2_T3_T4 self x = op_tup4_T1_T2_T3_T4 self y -> x = y)
-          )
+          
+        
       
-    
-  
-  )
+      )))

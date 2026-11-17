@@ -403,10 +403,25 @@ impl<'tcx, N: Namer<'tcx>> VCGenCtx<'_, 'tcx, N> {
                 scrut.match_(arms)
             }),
             // VC(let P = A in B, Q) = VC(A, |a| let P = a in VC(B, Q))
+            // VC(let P = A in B, Q) = VC(A, |a| forall<x> x = a -> let P = x in VC(B, Q))
             TermKind::Let { pattern, arg, body } => self.build_wp(arg, &|arg| {
                 let pattern = self.lower_pat(pattern);
+                let local = if let why3::exp::Pattern::VarP(local) = pattern {
+                    local
+                } else {
+                    Ident::fresh_local("local")
+                };
+
                 let body = self.build_wp(body, k);
-                Exp::let_pat(pattern, arg, body)
+                Exp::Quant(
+                    why3::exp::Quant::Forall,
+                    Box::new([(local, None)]),
+                    Box::new([]),
+                    Box::new(Exp::Impl(
+                        Box::new(Exp::eq(Exp::var(local), arg)),
+                        Box::new(Exp::let_pat(pattern, Exp::var(local), body)),
+                    )),
+                )
             }),
             // VC(A.f, Q) = VC(A, |a| Q(a.f))
             TermKind::Projection { lhs, idx } => {

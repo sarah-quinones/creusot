@@ -1,5 +1,10 @@
 {
-  "profile": [],
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
   "proofs": {
     "Coma": {
       "vc_into_inner_Resource_PositiveReal": {
@@ -10,7 +15,7 @@
         "tactic": "compute_specified",
         "children": []
       },
-      "vc_split": { "prover": "cvc5", "time": 0.029 },
+      "vc_split": { "prover": "cvc5@", "time": 0.01 },
       "vc_split_PositiveReal": {
         "tactic": "compute_specified",
         "children": []

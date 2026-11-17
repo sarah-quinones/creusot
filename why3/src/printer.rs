@@ -837,9 +837,13 @@ impl Print for Exp {
                 let mut res = kind.append(alloc.intersperse(
                     binders.iter().map(|(b, t)| {
                         scope.bind_value(*b);
-                        b.pretty_value_name(alloc, scope)
-                            .append(": ")
-                            .append(t.pretty(alloc, scope))
+                        let res = b.pretty_value_name(alloc, scope);
+
+                        if let Some(t) = t {
+                            res.append(": ").append(t.pretty(alloc, scope))
+                        } else {
+                            res
+                        }
                     }),
                     ", ",
                 ));

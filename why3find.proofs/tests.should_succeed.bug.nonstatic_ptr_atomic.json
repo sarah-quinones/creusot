@@ -1,0 +1,42 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "M_f": {
+      "vc___new_closure1": { "prover": "alt-ergo@", "time": 0.011 },
+      "vc_closure1": { "prover": "alt-ergo@", "time": 0.012 },
+      "vc_deref_Ghost_Perm_AtomicPtr_T": {
+        "prover": "alt-ergo@",
+        "time": 0.012
+      },
+      "vc_deref_mut_Ghost_SyncView": { "prover": "alt-ergo@", "time": 0.012 },
+      "vc_f_T": { "prover": "alt-ergo@", "time": 0.015 },
+      "vc_load_T": { "prover": "alt-ergo@", "time": 0.012 },
+      "vc_new": { "prover": "alt-ergo@", "time": 0.012 },
+      "vc_new_FnGhostWrapper_closure1": {
+        "prover": "alt-ergo@",
+        "time": 0.011
+      },
+      "vc_shoot_load_AtomicPtr_T": { "prover": "alt-ergo@", "time": 0.011 }
+    },
+    "M_g": {
+      "vc___new_closure1": { "prover": "alt-ergo@", "time": 0.012 },
+      "vc_closure1": { "prover": "alt-ergo@", "time": 0.014 },
+      "vc_deref_Ghost_Perm_AtomicPtr_T": {
+        "prover": "alt-ergo@",
+        "time": 0.012
+      },
+      "vc_g_T": { "prover": "alt-ergo@", "time": 0.011 },
+      "vc_load_T": { "prover": "alt-ergo@", "time": 0.013 },
+      "vc_new_FnGhostWrapper_closure1": {
+        "prover": "alt-ergo@",
+        "time": 0.012
+      },
+      "vc_shoot_load_AtomicPtr_T": { "prover": "alt-ergo@", "time": 0.014 }
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "M_peek": {
+      "vc_len_u8": { "prover": "cvc5@", "time": 0.006 },
+      "vc_peek": { "prover": "cvc5@", "time": 0.013 },
+      "vc_peek_bit_array8": { "prover": "cvc5@", "time": 0.006 },
+      "vc_poke_bit_64": { "prover": "cvc5@", "time": 0.006 }
+    },
+    "M_peek_64bit": { "vc_peek_64bit": { "prover": "cvc5@", "time": 0.006 } },
+    "M_peek_bit_array8": {
+      "vc_elim_Some": { "prover": "cvc5@", "time": 0.005 },
+      "vc_get_u8": { "prover": "cvc5@", "time": 0.005 },
+      "vc_peek_bit_array8": { "prover": "cvc5@", "time": 0.017 },
+      "vc_peek_bit_u8": { "prover": "cvc5@", "time": 0.005 }
+    },
+    "M_peek_bit_u8": {
+      "vc_peek_bit_u8": { "prover": "cvc5@", "time": 0.007 }
+    },
+    "M_peekthenpoke": {
+      "vc_peek": { "prover": "cvc5@", "time": 0.006 },
+      "vc_peekthenpoke": { "prover": "cvc5@", "time": 0.005 },
+      "vc_poke": { "prover": "cvc5@", "time": 0.006 }
+    },
+    "M_poke": {
+      "vc_len_u8": { "prover": "cvc5@", "time": 0.006 },
+      "vc_peek_64bit": { "prover": "cvc5@", "time": 0.007 },
+      "vc_poke": { "prover": "cvc5@", "time": 0.028 },
+      "vc_poke_8bit_array": { "prover": "cvc5@", "time": 0.007 }
+    },
+    "M_poke_8bit": { "vc_poke_8bit": { "prover": "cvc5@", "time": 0.007 } },
+    "M_poke_8bit_array": {
+      "vc_poke_8bit": { "prover": "cvc5@", "time": 0.005 },
+      "vc_poke_8bit_array": { "prover": "cvc5@", "time": 0.017 }
+    },
+    "M_poke_bit_64": {
+      "vc_poke_bit_64": { "prover": "cvc5@", "time": 0.006 }
+    },
+    "M_pokethenpeek": {
+      "vc_peek": { "prover": "cvc5@", "time": 0.006 },
+      "vc_poke": { "prover": "cvc5@", "time": 0.004 },
+      "vc_pokethenpeek": { "prover": "cvc5@", "time": 0.008 }
+    }
+  }
+}

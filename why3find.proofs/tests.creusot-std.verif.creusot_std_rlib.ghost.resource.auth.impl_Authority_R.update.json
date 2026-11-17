@@ -1,0 +1,55 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "Coma": {
+      "vc_join_in_View_AuthViewRel_R": {
+        "tactic": "compute_specified",
+        "children": []
+      },
+      "vc_split_off_View_AuthViewRel_R": {
+        "tactic": "compute_specified",
+        "children": []
+      },
+      "vc_take_View_AuthViewRel_R": {
+        "tactic": "compute_specified",
+        "children": []
+      },
+      "vc_update_R": {
+        "tactic": "compute_specified",
+        "children": [
+          {
+            "tactic": "split_vc",
+            "children": [
+              { "prover": "alt-ergo@", "time": 0.012 },
+              { "prover": "z3@", "time": 0.012 },
+              { "prover": "z3@", "time": 0.016 },
+              { "prover": "z3@", "time": 0.014 },
+              { "prover": "cvc5@", "time": 0.029 },
+              { "prover": "cvc5@", "time": 0.02 },
+              { "prover": "z3@", "time": 0.014 },
+              { "prover": "alt-ergo@", "time": 0.014 },
+              { "prover": "z3@", "time": 0.046 }
+            ]
+          }
+        ]
+      },
+      "vc_update_View_AuthViewRel_R": {
+        "tactic": "compute_specified",
+        "children": []
+      },
+      "vc_valid_op_lemma_View_AuthViewRel_R": {
+        "prover": "alt-ergo@",
+        "time": 0.012
+      },
+      "vc_weaken_View_AuthViewRel_R": {
+        "tactic": "compute_specified",
+        "children": []
+      }
+    }
+  }
+}

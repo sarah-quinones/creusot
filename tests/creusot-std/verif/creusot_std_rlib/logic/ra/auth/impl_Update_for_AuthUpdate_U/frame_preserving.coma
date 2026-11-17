@@ -221,18 +221,22 @@ function frame_preserving_AuthUpdate_U (self: t_AuthUpdate_U) (from: t_View_Auth
 goal vc_frame_preserving_AuthUpdate_U: premise_AuthUpdate_U self from
   -> op_View_AuthViewRel_R from frame <> None'0
   -> ([@stop_split] [@expl:unwrap_logic requires] auth_AuthViewRel_R from <> None)
-  /\ (let auth = unwrap_Option_R (auth_AuthViewRel_R from) in ([@stop_split] [@expl:unwrap_logic requires] op_View_AuthViewRel_R from frame
-    <> None'0)
-  /\ (([@stop_split] [@expl:frag ensures] rel_AuthViewRel_R (auth_AuthViewRel_R (unwrap_Option_View_AuthViewRel_R (op_View_AuthViewRel_R from frame))) (frag_AuthViewRel_R (unwrap_Option_View_AuthViewRel_R (op_View_AuthViewRel_R from frame))))
-  -> (let x = frag_AuthViewRel_R (unwrap_Option_View_AuthViewRel_R (op_View_AuthViewRel_R from frame)) in ([@stop_split] [@expl:factor requires] incl_R x auth)
-  /\ (([@stop_split] [@expl:factor ensures] op_R x (factor_R auth x) = Some auth)
-  -> (let y = factor_R auth x in ([@stop_split] [@expl:frag ensures] rel_AuthViewRel_R (auth_AuthViewRel_R frame) (frag_AuthViewRel_R frame))
-  -> ([@stop_split] [@expl:unwrap_logic requires] op_R (frag_AuthViewRel_R frame) y <> None)
-  /\ (let f = unwrap_Option_R (op_R (frag_AuthViewRel_R frame) y) in ([@stop_split] [@expl:frag ensures] rel_AuthViewRel_R (auth_AuthViewRel_R from) (frag_AuthViewRel_R from))
-  -> ([@stop_split] [@expl:frame_preserving requires] ([@stop_split] [@expl:frame_preserving requires #0] premise_U self.f0 auth (frag_AuthViewRel_R from))
-    /\ ([@stop_split] [@expl:frame_preserving requires #1] op_Option_R (Some (frag_AuthViewRel_R from)) (Some f)
-    = Some'1 (Some auth)))
-  /\ (([@stop_split] [@expl:frame_preserving ensures] let {f0'1 = to_auth; f1'1 = to_frag} = update_U self.f0 auth (frag_AuthViewRel_R from) in op_Option_R (Some to_frag) (Some f)
-    = Some'1 (Some to_auth))
-  -> ([@stop_split] [@expl:frame_preserving ensures] op_View_AuthViewRel_R (update_AuthUpdate_U self from ()) frame
-  <> None'0))))))))
+  /\ (forall auth. auth = unwrap_Option_R (auth_AuthViewRel_R from)
+    -> (let auth = auth in ([@stop_split] [@expl:unwrap_logic requires] op_View_AuthViewRel_R from frame <> None'0)
+    /\ (([@stop_split] [@expl:frag ensures] rel_AuthViewRel_R (auth_AuthViewRel_R (unwrap_Option_View_AuthViewRel_R (op_View_AuthViewRel_R from frame))) (frag_AuthViewRel_R (unwrap_Option_View_AuthViewRel_R (op_View_AuthViewRel_R from frame))))
+    -> (forall x. x = frag_AuthViewRel_R (unwrap_Option_View_AuthViewRel_R (op_View_AuthViewRel_R from frame))
+      -> (let x = x in ([@stop_split] [@expl:factor requires] incl_R x auth)
+      /\ (([@stop_split] [@expl:factor ensures] op_R x (factor_R auth x) = Some auth)
+      -> (forall y. y = factor_R auth x
+        -> (let y = y in ([@stop_split] [@expl:frag ensures] rel_AuthViewRel_R (auth_AuthViewRel_R frame) (frag_AuthViewRel_R frame))
+        -> ([@stop_split] [@expl:unwrap_logic requires] op_R (frag_AuthViewRel_R frame) y <> None)
+        /\ (forall f. f = unwrap_Option_R (op_R (frag_AuthViewRel_R frame) y)
+          -> (let f = f in ([@stop_split] [@expl:frag ensures] rel_AuthViewRel_R (auth_AuthViewRel_R from) (frag_AuthViewRel_R from))
+          -> ([@stop_split] [@expl:frame_preserving requires] ([@stop_split] [@expl:frame_preserving requires #0] premise_U self.f0 auth (frag_AuthViewRel_R from))
+            /\ ([@stop_split] [@expl:frame_preserving requires #1] op_Option_R (Some (frag_AuthViewRel_R from)) (Some f)
+            = Some'1 (Some auth)))
+          /\ (([@stop_split] [@expl:frame_preserving ensures] let {f0'1 = to_auth; f1'1 = to_frag} = update_U self.f0 auth (frag_AuthViewRel_R from) in op_Option_R (Some to_frag) (Some f)
+            = Some'1 (Some to_auth))
+          -> (forall local. local = frame_preserving_U self.f0 auth (frag_AuthViewRel_R from) (Some f)
+            -> ([@stop_split] [@expl:frame_preserving ensures] op_View_AuthViewRel_R (update_AuthUpdate_U self from ()) frame
+            <> None'0)))))))))))))

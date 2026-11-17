@@ -94,5 +94,6 @@ constant other : t_FMap_K_V
 
 predicate eq_FMap_K_V (self: t_FMap_K_V) (other: t_FMap_K_V)
 
-goal vc_eq_FMap_K_V: [@stop_split] [@expl:eq ensures] (forall k: t_K. eq_Option_V (lookup_K self k) (lookup_K other k))
-  = (self = other)
+goal vc_eq_FMap_K_V: forall local. local = ()
+    -> ([@stop_split] [@expl:eq ensures] (forall k: t_K. eq_Option_V (lookup_K self k) (lookup_K other k))
+    = (self = other))

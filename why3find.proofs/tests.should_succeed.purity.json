@@ -1,0 +1,22 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "M_calls_f": {
+      "vc_calls_f": { "prover": "cvc5@", "time": 0.004 },
+      "vc_f_i32": { "prover": "cvc5@", "time": 0.003 }
+    },
+    "M_clone_id": {
+      "vc_clone_Id": { "prover": "cvc5@", "time": 0.004 },
+      "vc_clone_id": { "prover": "cvc5@", "time": 0.003 }
+    },
+    "M_impl_Foo_for_i32__f": {
+      "vc_f_i32": { "prover": "cvc5@", "time": 0.004 }
+    },
+    "M_result": { "vc_result": { "prover": "cvc5@", "time": 0.003 } }
+  }
+}

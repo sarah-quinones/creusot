@@ -1,0 +1,33 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "Coma": {
+      "vc_cancelable_Sum_R1_R2": {
+        "tactic": "split_vc",
+        "children": [
+          { "prover": "alt-ergo@", "time": 0.042 },
+          {
+            "tactic": "split_vc",
+            "children": [
+              { "prover": "z3@", "time": 0.014 },
+              { "prover": "alt-ergo@", "time": 0.181 }
+            ]
+          },
+          { "prover": "alt-ergo@", "time": 0.028 },
+          {
+            "tactic": "split_vc",
+            "children": [
+              { "prover": "z3@", "time": 0.014 },
+              { "prover": "alt-ergo@", "time": 0.174 }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

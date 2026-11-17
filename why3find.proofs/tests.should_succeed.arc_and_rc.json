@@ -1,0 +1,27 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "M_arc": {
+      "vc_arc": {
+        "tactic": "compute_specified",
+        "children": [ { "prover": "alt-ergo@", "time": 0.019 } ]
+      },
+      "vc_as_ref_Arc_i32_Global": { "prover": "cvc5@", "time": 0.006 },
+      "vc_clone_Arc_i32_Global": { "prover": "cvc5@", "time": 0.006 },
+      "vc_new_i32": { "prover": "cvc5@", "time": 0.007 },
+      "vc_ptr_eq_i32": { "prover": "cvc5@", "time": 0.008 }
+    },
+    "M_rc": {
+      "vc_as_ref_Rc_i32_Global": { "prover": "cvc5@", "time": 0.007 },
+      "vc_clone_Rc_i32_Global": { "prover": "cvc5@", "time": 0.007 },
+      "vc_new_i32": { "prover": "cvc5@", "time": 0.006 },
+      "vc_ptr_eq_i32": { "prover": "cvc5@", "time": 0.004 },
+      "vc_rc": { "prover": "cvc5@", "time": 0.009 }
+    }
+  }
+}

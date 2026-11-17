@@ -1,0 +1,142 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "M_all_zero": {
+      "vc_all_zero": { "prover": "alt-ergo@", "time": 0.104 },
+      "vc_deref_mut_Vec_usize_Global": { "prover": "cvc5@", "time": 0.004 },
+      "vc_elim_Some": { "prover": "cvc5@", "time": 0.005 },
+      "vc_into_iter_IterMut_usize": { "prover": "cvc5@", "time": 0.004 },
+      "vc_iter_mut_usize": { "prover": "cvc5@", "time": 0.004 },
+      "vc_next_IterMut_usize": { "prover": "cvc5@", "time": 0.005 }
+    },
+    "M_counter": {
+      "vc_closure0": { "prover": "cvc5@", "time": 0.003 },
+      "vc_collect_MapInv_Iter_u32_closure0": {
+        "prover": "cvc5@",
+        "time": 0.008
+      },
+      "vc_counter": {
+        "tactic": "compute_specified",
+        "children": [
+          {
+            "tactic": "split_vc",
+            "children": [
+              { "prover": "alt-ergo@", "time": 0.099 },
+              { "prover": "alt-ergo@", "time": 0.017 },
+              { "prover": "alt-ergo@", "time": 0.072 },
+              { "prover": "z3@", "time": 0.121 },
+              { "prover": "z3@", "time": 0.105 }
+            ]
+          }
+        ]
+      },
+      "vc_deref_Vec_u32_Global": { "prover": "cvc5@", "time": 0.004 },
+      "vc_from_iter_Vec_u32_Global": { "prover": "alt-ergo@", "time": 0.02 },
+      "vc_into_iter_MapInv_Iter_u32_closure0": {
+        "prover": "alt-ergo@",
+        "time": 0.015
+      },
+      "vc_iter_u32": { "prover": "cvc5@", "time": 0.003 },
+      "vc_map_inv_Iter_u32": { "prover": "cvc5@", "time": 0.005 }
+    },
+    "M_enumerate_range": {
+      "vc_elim_Some": { "prover": "cvc5@", "time": 0.003 },
+      "vc_enumerate_Range_usize": { "prover": "cvc5@", "time": 0.006 },
+      "vc_enumerate_range": { "prover": "z3@", "time": 0.075 },
+      "vc_into_iter_Enumerate_Range_usize": {
+        "prover": "cvc5@",
+        "time": 0.006
+      },
+      "vc_next_Enumerate_Range_usize": { "prover": "cvc5@", "time": 0.006 }
+    },
+    "M_my_reverse": {
+      "vc_elim_Some": { "prover": "cvc5@", "time": 0.008 },
+      "vc_into_iter_Range_usize": { "prover": "cvc5@", "time": 0.007 },
+      "vc_into_iter_Zip_Range_usize_Range_usize": {
+        "prover": "cvc5@",
+        "time": 0.007
+      },
+      "vc_len_T": { "prover": "cvc5@", "time": 0.009 },
+      "vc_my_reverse_T": {
+        "tactic": "compute_specified",
+        "children": [
+          {
+            "tactic": "split_vc",
+            "children": [
+              { "prover": "alt-ergo@", "time": 0.013 },
+              { "prover": "alt-ergo@", "time": 0.015 },
+              { "prover": "alt-ergo@", "time": 0.015 },
+              { "prover": "alt-ergo@", "time": 0.012 },
+              { "prover": "alt-ergo@", "time": 0.017 },
+              { "prover": "alt-ergo@", "time": 0.014 },
+              { "prover": "alt-ergo@", "time": 0.021 },
+              { "prover": "alt-ergo@", "time": 0.018 },
+              { "prover": "alt-ergo@", "time": 0.027 },
+              { "prover": "alt-ergo@", "time": 0.017 },
+              { "prover": "z3@", "time": 0.046 },
+              { "prover": "alt-ergo@", "time": 0.019 },
+              { "prover": "z3@", "time": 0.058 },
+              { "prover": "z3@", "time": 0.055 },
+              { "prover": "z3@", "time": 0.054 },
+              { "prover": "cvc4@", "time": 0.165 },
+              { "prover": "cvc5@", "time": 0.104 },
+              { "prover": "alt-ergo@", "time": 0.05 },
+              { "prover": "alt-ergo@", "time": 0.023 },
+              { "prover": "alt-ergo@", "time": 0.021 },
+              { "prover": "alt-ergo@", "time": 0.021 },
+              { "prover": "alt-ergo@", "time": 0.026 },
+              { "prover": "alt-ergo@", "time": 0.025 },
+              { "prover": "z3@", "time": 0.104 },
+              { "prover": "cvc5@", "time": 0.121 },
+              { "prover": "cvc5@", "time": 0.141 },
+              { "prover": "alt-ergo@", "time": 0.019 },
+              { "prover": "alt-ergo@", "time": 0.023 },
+              { "prover": "alt-ergo@", "time": 0.021 },
+              { "prover": "alt-ergo@", "time": 0.018 },
+              { "prover": "alt-ergo@", "time": 0.02 },
+              { "prover": "alt-ergo@", "time": 0.097 },
+              { "prover": "alt-ergo@", "time": 0.022 },
+              { "prover": "alt-ergo@", "time": 0.022 }
+            ]
+          }
+        ]
+      },
+      "vc_next_Zip_Range_usize_Range_usize": {
+        "prover": "cvc5@",
+        "time": 0.01
+      },
+      "vc_swap_T": { "prover": "cvc5@", "time": 0.008 },
+      "vc_zip_Range_usize": { "prover": "cvc5@", "time": 0.007 }
+    },
+    "M_skip_take": {
+      "vc_next_Skip_Take_I": { "prover": "cvc5@", "time": 0.006 },
+      "vc_skip_Take_I": { "prover": "cvc5@", "time": 0.003 },
+      "vc_skip_take_I": { "prover": "cvc5@", "time": 0.021 },
+      "vc_take_I": { "prover": "cvc5@", "time": 0.003 }
+    },
+    "M_slice_iter": {
+      "vc_elim_Some": { "prover": "cvc5@", "time": 0.004 },
+      "vc_into_iter_Iter_T": { "prover": "cvc5@", "time": 0.004 },
+      "vc_iter_T": { "prover": "cvc5@", "time": 0.004 },
+      "vc_next_Iter_T": { "prover": "cvc5@", "time": 0.005 },
+      "vc_slice_iter_T": { "prover": "cvc5@", "time": 0.064 }
+    },
+    "M_sum_range": {
+      "vc_elim_Some": { "prover": "cvc5@", "time": 0.004 },
+      "vc_into_iter_Range_isize": { "prover": "cvc5@", "time": 0.003 },
+      "vc_next_Range_isize": { "prover": "cvc5@", "time": 0.005 },
+      "vc_sum_range": { "prover": "cvc5@", "time": 0.028 }
+    },
+    "M_vec_iter": {
+      "vc_elim_Some": { "prover": "cvc5@", "time": 0.006 },
+      "vc_into_iter_ref_Vec_T_Global": { "prover": "cvc5@", "time": 0.007 },
+      "vc_next_Iter_T": { "prover": "cvc5@", "time": 0.004 },
+      "vc_vec_iter_T": { "prover": "cvc5@", "time": 0.069 }
+    }
+  }
+}

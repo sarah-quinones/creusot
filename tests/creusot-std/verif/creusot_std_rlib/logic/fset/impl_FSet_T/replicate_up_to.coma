@@ -94,10 +94,12 @@ function replicate_up_to_T (self: Fset.fset t_T) (n: int) : Fset.fset (Seq.seq t
 goal vc_replicate_up_to_T: ge_log_Int n 0
   -> (if n = 0 then
     (forall xs: Seq.seq t_T. Seq.length xs = 0 -> xs = (Seq.empty: Seq.seq t_T))
-    && (([@stop_split] [@expl:singleton ensures] forall y: Seq.seq t_T. contains_Seq_T (singleton_Seq_T (Seq.empty: Seq.seq t_T)) y
-        = ((Seq.empty: Seq.seq t_T) = y))
-    -> ([@stop_split] [@expl:replicate_up_to ensures] forall xs: Seq.seq t_T. contains_Seq_T (singleton_Seq_T (Seq.empty: Seq.seq t_T)) xs
-      = (Seq.length xs <= n /\ (forall x: t_T. contains_T xs x -> contains_T'0 self x))))
+    && (forall local. local = ()
+      -> (forall local'0. local'0 = ()
+        -> ([@stop_split] [@expl:singleton ensures] forall y: Seq.seq t_T. contains_Seq_T (singleton_Seq_T (Seq.empty: Seq.seq t_T)) y
+            = ((Seq.empty: Seq.seq t_T) = y))
+        -> ([@stop_split] [@expl:replicate_up_to ensures] forall xs: Seq.seq t_T. contains_Seq_T (singleton_Seq_T (Seq.empty: Seq.seq t_T)) xs
+          = (Seq.length xs <= n /\ (forall x: t_T. contains_T xs x -> contains_T'0 self x)))))
   else
     (([@stop_split] [@expl:replicate_up_to requires] ge_log_Int (n - 1) 0)
       /\ ([@expl:variant decreases] well_founded_relation_Int n (n - 1)))

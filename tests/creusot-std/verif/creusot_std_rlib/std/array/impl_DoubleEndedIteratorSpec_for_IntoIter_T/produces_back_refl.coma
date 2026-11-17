@@ -32,4 +32,6 @@ function produces_back_refl_IntoIter_T (self: t_IntoIter_T) : ()
 
 goal vc_produces_back_refl_IntoIter_T:
   ([@stop_split] [@expl:reverse_empty ensures] Reverse.reverse (Seq.empty: Seq.seq t_T) = (Seq.empty: Seq.seq t_T))
-  -> ([@stop_split] [@expl:produces_back_refl ensures] produces_back_IntoIter_T self (Seq.empty: Seq.seq t_T) self)
+  -> (forall local. local = reverse_empty_T
+    -> (forall local'0. local'0 = ()
+      -> ([@stop_split] [@expl:produces_back_refl ensures] produces_back_IntoIter_T self (Seq.empty: Seq.seq t_T) self)))

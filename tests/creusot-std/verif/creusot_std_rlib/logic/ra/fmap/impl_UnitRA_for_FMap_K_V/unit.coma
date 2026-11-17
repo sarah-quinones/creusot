@@ -164,7 +164,9 @@ goal vc_unit_FMap_K_V:
         /\ ([@stop_split] [@expl:empty ensures #1] to_mapping_K empty_K = Const.const (None'0)))
       -> ([@stop_split] [@expl:unwrap_logic requires] op_FMap_K_V x empty_K <> None))
   /\ (forall x: t_FMap_K_V. ext_eq_K (unwrap_Option_FMap_K_V (op_FMap_K_V x empty_K)) x)
-  && (([@stop_split] [@expl:empty ensures] ([@stop_split] [@expl:empty ensures #0] len_K empty_K = 0)
-    /\ ([@stop_split] [@expl:empty ensures #1] to_mapping_K empty_K = Const.const (None'0)))
-  -> (let result = empty_K in [@stop_split] [@expl:unit ensures] forall x: t_FMap_K_V [op_FMap_K_V x result]. op_FMap_K_V x result
-    = Some x))
+  && (forall local. local = ()
+    -> (forall local'0. local'0 = ()
+      -> ([@stop_split] [@expl:empty ensures] ([@stop_split] [@expl:empty ensures #0] len_K empty_K = 0)
+        /\ ([@stop_split] [@expl:empty ensures #1] to_mapping_K empty_K = Const.const (None'0)))
+      -> (let result = empty_K in [@stop_split] [@expl:unit ensures] forall x: t_FMap_K_V [op_FMap_K_V x result]. op_FMap_K_V x result
+        = Some x)))

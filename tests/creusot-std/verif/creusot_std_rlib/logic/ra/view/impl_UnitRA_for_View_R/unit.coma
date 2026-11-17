@@ -138,8 +138,8 @@ meta "select_lsinst" "all"
 
 function unit_View_R : t_View_R
 
-goal vc_unit_View_R: ([@stop_split] [@expl:unit ensures] forall x: t_Frag [op_Frag x unit_Frag]. op_Frag x unit_Frag
-      = Some'0 x)
-  -> ([@stop_split] [@expl:new_frag requires] rel_R (None'1) unit_Frag)
-  /\ (let result = new_frag_R unit_Frag in [@stop_split] [@expl:unit ensures] forall x: t_View_R [op_View_R x result]. op_View_R x result
-    = Some x)
+goal vc_unit_View_R: forall local. local = ()
+    -> ([@stop_split] [@expl:unit ensures] forall x: t_Frag [op_Frag x unit_Frag]. op_Frag x unit_Frag = Some'0 x)
+    -> ([@stop_split] [@expl:new_frag requires] rel_R (None'1) unit_Frag)
+    /\ (let result = new_frag_R unit_Frag in [@stop_split] [@expl:unit ensures] forall x: t_View_R [op_View_R x result]. op_View_R x result
+      = Some x)

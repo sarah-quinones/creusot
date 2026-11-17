@@ -1006,6 +1006,7 @@ module M_impl_Iterator_for_Skip_I__produces_trans (* <Skip<I> as common::Iterato
     -> produces_Skip_I b bc c
     -> (forall s1: Seq.seq t_Item, s2: Seq.seq t_Item, s3: Seq.seq t_Item. Seq.(++) s1 (Seq.(++) s2 s3)
         = Seq.(++) (Seq.(++) s1 s2) s3)
+<<<<<<< HEAD
     && (forall s: Seq.seq t_Item. Seq.(++) (Seq.empty: Seq.seq t_Item) s = s)
     && (if ab <> (Seq.empty: Seq.seq t_Item) then
       forall f: Map.map (Seq.seq t_Item) bool. (forall s: Seq.seq t_Item [f s]. if Seq.length s = 0 then
@@ -1020,6 +1021,32 @@ module M_impl_Iterator_for_Skip_I__produces_trans (* <Skip<I> as common::Iterato
     else
       [@stop_split] [@expl:produces_trans ensures] produces_Skip_I a (Seq.(++) ab bc) c
     )
+=======
+    && (forall local. local = ()
+      -> (forall local'0. local'0 = ()
+        -> (forall s: Seq.seq t_Item. Seq.(++) (Seq.empty: Seq.seq t_Item) s = s)
+        && (forall local'1. local'1 = ()
+          -> (forall local'2. local'2 = ()
+            -> (if ab <> (Seq.empty: Seq.seq t_Item) then
+              ([@stop_split] [@expl:such_that requires] exists x: Seq.seq t_Item. index_Mapping_Seq_Item_bool (fun (s: Seq.seq t_Item) -> Seq.length s
+                    = 0
+                  /\ produces_I b.iter (Seq.(++) s bc) c.iter) x)
+              /\ (([@stop_split] [@expl:such_that ensures] index_Mapping_Seq_Item_bool (fun (s: Seq.seq t_Item) -> Seq.length s
+                  = 0
+                /\ produces_I b.iter (Seq.(++) s bc) c.iter) (such_that_Seq_Item (fun (s: Seq.seq t_Item) -> Seq.length s
+                  = 0
+                /\ produces_I b.iter (Seq.(++) s bc) c.iter)))
+              -> (forall s. s
+                  = such_that_Seq_Item (fun (s'0: Seq.seq t_Item) -> Seq.length s'0 = 0
+                  /\ produces_I b.iter (Seq.(++) s'0 bc) c.iter)
+                -> Seq.(++) s bc = bc
+                && (forall local'3. local'3 = ()
+                  -> (forall local'4. local'4 = ()
+                    -> ([@stop_split] [@expl:produces_trans ensures] produces_Skip_I a (Seq.(++) ab bc) c)))))
+            else
+              [@stop_split] [@expl:produces_trans ensures] produces_Skip_I a (Seq.(++) ab bc) c
+            )))))
+>>>>>>> 6de4f8bb0 (let -> forall(eq implies body))
 end
 module M_impl_Iterator_for_Skip_I__produces_trans__refines (* <Skip<I> as common::Iterator> *)
   use creusot.int.UInt64

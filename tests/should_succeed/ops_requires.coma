@@ -128,7 +128,8 @@ module M_test_sub
   
   goal vc_test_sub: ([@stop_split] [@expl:new requires] ge_log_Int 1 0)
     /\ (([@stop_split] [@expl:new ensures] to_int (new 1) = 1)
-    -> ([@stop_split] [@expl:new requires] ge_log_Int 0 0)
-    /\ (([@stop_split] [@expl:new ensures] to_int (new 0) = 0)
-    -> ([@stop_split] [@expl:sub_logic requires] ge_log_Nat { inner = new 1 }.inner { inner = new 0 }.inner)))
+    -> (forall a. a = { inner = new 1 }
+      -> ([@stop_split] [@expl:new requires] ge_log_Int 0 0)
+      /\ (([@stop_split] [@expl:new ensures] to_int (new 0) = 0)
+      -> (forall b. b = { inner = new 0 } -> ([@stop_split] [@expl:sub_logic requires] ge_log_Nat a.inner b.inner)))))
 end

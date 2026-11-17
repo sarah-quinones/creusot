@@ -44,17 +44,24 @@ constant other : t_PositiveReal
 
 predicate incl_PositiveReal (self: t_PositiveReal) (other: t_PositiveReal)
 
-goal vc_incl_PositiveReal: ([@stop_split] [@expl:to_real ensures] gt_log_Real (to_real self) (FromInt.from_int 0))
-  -> ([@stop_split] [@expl:to_real ensures] gt_log_Real (to_real other) (FromInt.from_int 0))
-  -> (let r = Real.(<) (to_real self) (to_real other) in if r then
-    ([@stop_split] [@expl:to_real ensures] gt_log_Real (to_real other) (FromInt.from_int 0))
+goal vc_incl_PositiveReal: forall local. local = ()
     -> ([@stop_split] [@expl:to_real ensures] gt_log_Real (to_real self) (FromInt.from_int 0))
-    -> ([@stop_split] [@expl:new requires] gt_log_Real (Real.(-) (to_real other) (to_real self)) (FromInt.from_int 0))
-    /\ (([@stop_split] [@expl:new ensures] to_real (new (Real.(-) (to_real other) (to_real self)))
-      = Real.(-) (to_real other) (to_real self))
-    -> op_PositiveReal self (new (Real.(-) (to_real other) (to_real self))) = Some other
-    && ([@stop_split] [@expl:incl ensures] r
-    = (exists factor: t_PositiveReal. op_PositiveReal self factor = Some other)))
-  else
-    [@stop_split] [@expl:incl ensures] r = (exists factor: t_PositiveReal. op_PositiveReal self factor = Some other)
-  )
+    -> ([@stop_split] [@expl:to_real ensures] gt_log_Real (to_real other) (FromInt.from_int 0))
+    -> (forall r. r = Real.(<) (to_real self) (to_real other)
+      -> (let r = r in if r then
+        ([@stop_split] [@expl:to_real ensures] gt_log_Real (to_real other) (FromInt.from_int 0))
+        -> ([@stop_split] [@expl:to_real ensures] gt_log_Real (to_real self) (FromInt.from_int 0))
+        -> ([@stop_split] [@expl:new requires] gt_log_Real (Real.(-) (to_real other) (to_real self)) (FromInt.from_int 0))
+        /\ (([@stop_split] [@expl:new ensures] to_real (new (Real.(-) (to_real other) (to_real self)))
+          = Real.(-) (to_real other) (to_real self))
+        -> op_PositiveReal self (new (Real.(-) (to_real other) (to_real self))) = Some other
+        && (forall local'0. local'0 = ()
+          -> (forall local'1. local'1 = ()
+            -> ([@stop_split] [@expl:incl ensures] r
+            = (exists factor: t_PositiveReal. op_PositiveReal self factor = Some other)))))
+      else
+        forall local'0. local'0 = ()
+          -> (forall local'1. local'1 = ()
+            -> ([@stop_split] [@expl:incl ensures] r
+            = (exists factor: t_PositiveReal. op_PositiveReal self factor = Some other)))
+      ))

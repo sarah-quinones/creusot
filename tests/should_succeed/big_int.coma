@@ -14,7 +14,14 @@ module M_foo
   
   function foo : ()
   
-  goal vc_foo:
-    let i = 99114423091819531172504291514877162636065 in let j = 99114423091819531172504291514877162636065 in i = j
-    && gt_log_Int i (UInt128.t'int const_MAX) && gt_log_Int j (UInt128.t'int const_MAX)
+  goal vc_foo: forall i. i = 99114423091819531172504291514877162636065
+      -> (let i = i in forall j. j = 99114423091819531172504291514877162636065
+        -> (let j = j in i = j
+        && (forall local. local = ()
+          -> (forall local'0. local'0 = ()
+            -> gt_log_Int i (UInt128.t'int const_MAX)
+            && (forall local'1. local'1 = ()
+              -> (forall local'2. local'2 = ()
+                -> gt_log_Int j (UInt128.t'int const_MAX)
+                && (forall local'3. local'3 = () -> (forall local'4. local'4 = () -> true))))))))
 end

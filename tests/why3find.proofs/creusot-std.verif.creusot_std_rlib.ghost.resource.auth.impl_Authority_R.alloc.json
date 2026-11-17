@@ -1,8 +1,13 @@
 {
-  "profile": [],
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
   "proofs": {
     "Coma": {
-      "vc_alloc_R": { "prover": "alt-ergo", "time": 0.015 },
+      "vc_alloc_R": { "prover": "alt-ergo@", "time": 0.012 },
       "vc_alloc_View_AuthViewRel_R": {
         "tactic": "compute_specified",
         "children": []

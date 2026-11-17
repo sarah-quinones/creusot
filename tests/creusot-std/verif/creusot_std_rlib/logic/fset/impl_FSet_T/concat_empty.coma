@@ -45,7 +45,12 @@ constant s : Fset.fset (Seq.seq t_T)
 function concat_empty_T (s: Fset.fset (Seq.seq t_T)) : ()
 
 goal vc_concat_empty_T: (forall xs: Seq.seq t_T. Seq.(++) xs (Seq.empty: Seq.seq t_T) = xs)
-  && (forall xs: Seq.seq t_T. Seq.(++) (Seq.empty: Seq.seq t_T) xs = xs)
-  && ([@stop_split] [@expl:concat_empty_T ensures] ([@stop_split] [@expl:concat_empty ensures #0] concat_T (singleton_Seq_T (Seq.empty: Seq.seq t_T)) s
-    = s)
-  /\ ([@stop_split] [@expl:concat_empty ensures #1] concat_T s (singleton_Seq_T (Seq.empty: Seq.seq t_T)) = s))
+  && (forall local. local = ()
+    -> (forall local'0. local'0 = ()
+      -> (forall xs: Seq.seq t_T. Seq.(++) (Seq.empty: Seq.seq t_T) xs = xs)
+      && (forall local'1. local'1 = ()
+        -> (forall local'2. local'2 = ()
+          -> ([@stop_split] [@expl:concat_empty_T ensures] ([@stop_split] [@expl:concat_empty ensures #0] concat_T (singleton_Seq_T (Seq.empty: Seq.seq t_T)) s
+            = s)
+          /\ ([@stop_split] [@expl:concat_empty ensures #1] concat_T s (singleton_Seq_T (Seq.empty: Seq.seq t_T))
+          = s))))))

@@ -1,0 +1,131 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "M_D": { "vc_const_D_def": { "prover": "alt-ergo@", "time": 0.01 } },
+    "M_PEANOS": {
+      "vc_const_PEANOS_def": { "prover": "alt-ergo@", "time": 0.01 }
+    },
+    "M_abstract_const": {
+      "vc_abstract_const": {
+        "tactic": "split_vc",
+        "children": [
+          {
+            "tactic": "split_vc",
+            "children": [
+              { "prover": "alt-ergo@", "time": 0.008 },
+              { "prover": "alt-ergo@", "time": 0.009 }
+            ]
+          }
+        ]
+      }
+    },
+    "M_add_one": { "vc_add_one": { "prover": "cvc5@", "time": 0.007 } },
+    "M_add_one_2": {
+      "vc_add_one": { "prover": "alt-ergo@", "time": 0.01 },
+      "vc_add_one_2": { "prover": "cvc5@", "time": 0.003 }
+    },
+    "M_array": {
+      "vc_array": { "prover": "cvc5@", "time": 0.01 },
+      "vc_len_i32": { "prover": "cvc5@", "time": 0.003 },
+      "vc_set_X": { "prover": "alt-ergo@", "time": 0.013 },
+      "vc_set_Y": { "prover": "alt-ergo@", "time": 0.013 }
+    },
+    "M_array__X": {
+      "vc_const_X_def": { "prover": "alt-ergo@", "time": 0.012 }
+    },
+    "M_array__Y": {
+      "vc_const_Y_def": { "prover": "alt-ergo@", "time": 0.011 }
+    },
+    "M_array_param": {
+      "vc_array_param": { "prover": "cvc5@", "time": 0.008 },
+      "vc_len_u32": { "prover": "cvc5@", "time": 0.004 }
+    },
+    "M_fn_pointer_test": {
+      "vc_fn_pointer_test": { "prover": "cvc5@", "time": 0.002 },
+      "vc_some_fn_pointer": { "prover": "cvc5@", "time": 0.004 }
+    },
+    "M_foo": { "vc_foo": { "prover": "cvc5@", "time": 0.002 } },
+    "M_impl_Clone_for_Peano__clone": {
+      "vc_clone_Peano": { "prover": "cvc5@", "time": 0.003 },
+      "vc_clone_ref_Peano": { "prover": "cvc5@", "time": 0.002 },
+      "vc_elim_S": { "prover": "cvc5@", "time": 0.002 }
+    },
+    "M_inline_tuple": {
+      "vc_inline_tuple": { "prover": "cvc5@", "time": 0.004 }
+    },
+    "M_is_zst": {
+      "vc_is_zst_T": { "prover": "alt-ergo@", "time": 0.009 },
+      "vc_set_IS_ZST": { "prover": "cvc5@", "time": 0.002 },
+      "vc_set_SIZE": { "prover": "cvc5@", "time": 0.004 },
+      "vc_size_of_T'0": { "prover": "alt-ergo@", "time": 0.014 }
+    },
+    "M_is_zst_z": {
+      "vc_is_zst_Z": { "prover": "cvc5@", "time": 0.002 },
+      "vc_is_zst_z": { "prover": "cvc5@", "time": 0.005 },
+      "vc_set_IS_ZST": { "prover": "alt-ergo@", "time": 0.012 },
+      "vc_set_SIZE": { "prover": "alt-ergo@", "time": 0.008 },
+      "vc_size_of_Z'0": { "prover": "alt-ergo@", "time": 0.012 }
+    },
+    "M_max_entries_capacity": {
+      "vc_max_entries_capacity": { "prover": "cvc5@", "time": 0.004 }
+    },
+    "M_nat": { "vc_nat_N": { "prover": "cvc5@", "time": 0.003 } },
+    "M_nat_i": {
+      "vc_nat_I_T_U": { "prover": "cvc5@", "time": 0.003 },
+      "vc_nat_i_T": { "prover": "cvc5@", "time": 0.004 },
+      "vc_set_VALUE": { "prover": "alt-ergo@", "time": 0.014 }
+    },
+    "M_nat_i2": {
+      "vc_nat_i2_T": { "prover": "cvc5@", "time": 0.003 },
+      "vc_set_VALUE": { "prover": "alt-ergo@", "time": 0.014 }
+    },
+    "M_nat_i3": {
+      "vc_nat_i3_T": {
+        "tactic": "split_vc",
+        "children": [
+          { "prover": "alt-ergo@", "time": 0.007 },
+          { "prover": "alt-ergo@", "time": 0.011 }
+        ]
+      },
+      "vc_set_VALUE": { "prover": "cvc5@", "time": 0.004 }
+    },
+    "M_nat_i3_logic": {
+      "vc_set_VALUE": { "prover": "cvc5@", "time": 0.003 },
+      "vc_vc_nat_i3_T": {
+        "tactic": "split_vc",
+        "children": [
+          { "prover": "alt-ergo@", "time": 0.015 },
+          { "prover": "alt-ergo@", "time": 0.013 }
+        ]
+      }
+    },
+    "M_s__C": { "vc_const_C_def": { "prover": "z3@", "time": 0.003 } },
+    "M_some_fn_pointer": {
+      "vc_some_fn_pointer": { "prover": "cvc5@", "time": 0.003 }
+    },
+    "M_str": {
+      "vc_set_STR": { "prover": "cvc5@", "time": 0.002 },
+      "vc_str": { "prover": "cvc5@", "time": 0.002 }
+    },
+    "M_trait_Parent__child": {
+      "vc_child_Self": { "prover": "cvc5@", "time": 0.005 }
+    },
+    "M_tuple": { "vc_tuple": { "prover": "cvc5@", "time": 0.005 } },
+    "M_zero": {
+      "vc_set_PEANOS": { "prover": "alt-ergo@", "time": 0.015 },
+      "vc_zero": {
+        "tactic": "split_vc",
+        "children": [
+          { "prover": "alt-ergo@", "time": 0.011 },
+          { "prover": "alt-ergo@", "time": 0.009 },
+          { "prover": "alt-ergo@", "time": 0.015 }
+        ]
+      }
+    }
+  }
+}

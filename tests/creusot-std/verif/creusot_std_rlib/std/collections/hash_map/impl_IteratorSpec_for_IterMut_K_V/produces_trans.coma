@@ -85,4 +85,5 @@ function produces_trans_IterMut_K_V (a: t_IterMut_K_V) (ab: Seq.seq tup2_ref_K_r
 goal vc_produces_trans_IterMut_K_V: produces_IterMut_K_V a ab b
   -> produces_IterMut_K_V b bc c
   -> (forall i: int. 0 <= i /\ i < Seq.length bc -> Seq.get bc i = Seq.get (Seq.(++) ab bc) (Seq.length ab + i))
-  && ([@stop_split] [@expl:produces_trans ensures] produces_IterMut_K_V a (Seq.(++) ab bc) c)
+  && (forall local. local = ()
+    -> ([@stop_split] [@expl:produces_trans ensures] produces_IterMut_K_V a (Seq.(++) ab bc) c))

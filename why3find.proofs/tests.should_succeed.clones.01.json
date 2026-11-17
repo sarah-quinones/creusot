@@ -1,0 +1,19 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "M_func1": { "vc_func1": { "prover": "cvc5@", "time": 0.004 } },
+    "M_func2": {
+      "vc_func1": { "prover": "cvc5@", "time": 0.003 },
+      "vc_func2": { "prover": "cvc5@", "time": 0.004 }
+    },
+    "M_func3": {
+      "vc_func2": { "prover": "cvc5@", "time": 0.003 },
+      "vc_func3": { "prover": "cvc5@", "time": 0.004 }
+    }
+  }
+}

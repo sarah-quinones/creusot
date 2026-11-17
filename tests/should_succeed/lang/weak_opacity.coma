@@ -18,5 +18,8 @@ module M_g
   
   function g : int
   
-  goal vc_g: ([@stop_split] [@expl:f ensures] f = 1) -> f = 1 && ([@stop_split] [@expl:g ensures] 2 = 2)
+  goal vc_g: ([@stop_split] [@expl:f ensures] f = 1)
+    -> f = 1
+    && (forall local. local = ()
+      -> (forall local'0. local'0 = () -> (forall local'1. local'1 = () -> ([@stop_split] [@expl:g ensures] 2 = 2))))
 end

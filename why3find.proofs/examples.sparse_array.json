@@ -1,0 +1,47 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "M_create": { "vc_create_T": { "prover": "cvc5@", "time": 0.026 } },
+    "M_f": {
+      "vc_create_i32": { "prover": "cvc5@", "time": 0.005 },
+      "vc_create_i32'0": { "prover": "cvc5@", "time": 0.006 },
+      "vc_f": { "prover": "z3@", "time": 0.025 },
+      "vc_get_i32": { "prover": "cvc5@", "time": 0.006 },
+      "vc_get_i32'0": { "prover": "cvc5@", "time": 0.007 },
+      "vc_set_i32": { "prover": "cvc5@", "time": 0.007 },
+      "vc_set_i32'0": { "prover": "cvc5@", "time": 0.002 }
+    },
+    "M_impl_Resolve_for_Sparse_T__resolve_coherence": {
+      "vc_resolve_coherence_Sparse_T": { "prover": "cvc5@", "time": 0.02 }
+    },
+    "M_impl_Resolve_for_Sparse_T__resolve_coherence__refines": {
+      "refines": { "prover": "cvc5@", "time": 0.01 }
+    },
+    "M_impl_Sparse_T__bounded_fset_len": {
+      "vc_bounded_fset_len_T": { "prover": "cvc5@", "time": 0.011 }
+    },
+    "M_impl_Sparse_T__get": {
+      "vc_get_T": { "prover": "cvc5@", "time": 0.021 }
+    },
+    "M_impl_Sparse_T__lemma_permutation": {
+      "vc_lemma_permutation_T": { "prover": "cvc5@", "time": 0.022 }
+    },
+    "M_impl_Sparse_T__lemma_permutation_aux": {
+      "vc_lemma_permutation_aux_T": { "prover": "alt-ergo@", "time": 0.043 }
+    },
+    "M_impl_Sparse_T__set": {
+      "vc_set_T": {
+        "tactic": "compute_specified",
+        "children": [ { "prover": "z3@", "time": 0.139 } ]
+      }
+    },
+    "M_impl_View_for_Sparse_T__view": {
+      "vc_view_Sparse_T": { "prover": "cvc5@", "time": 0.008 }
+    }
+  }
+}

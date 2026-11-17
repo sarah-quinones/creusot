@@ -1,0 +1,43 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "M_test_result": {
+      "vc_and_i32": { "prover": "cvc5@", "time": 0.005 },
+      "vc_as_mut_i32": { "prover": "cvc5@", "time": 0.004 },
+      "vc_as_ref_i32": { "prover": "cvc5@", "time": 0.003 },
+      "vc_cloned_i32": { "prover": "cvc5@", "time": 0.003 },
+      "vc_cloned_i32'0": { "prover": "cvc5@", "time": 0.003 },
+      "vc_copied_i32": { "prover": "cvc5@", "time": 0.005 },
+      "vc_copied_i32'0": { "prover": "cvc5@", "time": 0.003 },
+      "vc_default_i32": { "prover": "cvc5@", "time": 0.005 },
+      "vc_err_i32": { "prover": "cvc5@", "time": 0.004 },
+      "vc_is_err_i32": { "prover": "cvc5@", "time": 0.005 },
+      "vc_is_none_Result_i32_i32": { "prover": "cvc5@", "time": 0.006 },
+      "vc_is_none_i32": { "prover": "cvc5@", "time": 0.004 },
+      "vc_is_ok_i32": { "prover": "cvc5@", "time": 0.005 },
+      "vc_ok_i32": { "prover": "cvc5@", "time": 0.004 },
+      "vc_or_i32": { "prover": "cvc5@", "time": 0.005 },
+      "vc_test_result": { "prover": "z3@", "time": 0.061 },
+      "vc_transpose_i32": { "prover": "cvc5@", "time": 0.006 },
+      "vc_unwrap_Result_i32_i32": { "prover": "cvc5@", "time": 0.006 },
+      "vc_unwrap_err_i32": { "prover": "cvc5@", "time": 0.005 },
+      "vc_unwrap_err_i32'0": { "prover": "cvc5@", "time": 0.005 },
+      "vc_unwrap_err_i32'1": { "prover": "cvc5@", "time": 0.003 },
+      "vc_unwrap_err_ref_i32": { "prover": "cvc5@", "time": 0.003 },
+      "vc_unwrap_err_refmut_i32": { "prover": "cvc5@", "time": 0.005 },
+      "vc_unwrap_i32": { "prover": "cvc5@", "time": 0.004 },
+      "vc_unwrap_i32'0": { "prover": "cvc5@", "time": 0.005 },
+      "vc_unwrap_i32'1": { "prover": "cvc5@", "time": 0.005 },
+      "vc_unwrap_i32'2": { "prover": "cvc5@", "time": 0.003 },
+      "vc_unwrap_or_default_i32": { "prover": "cvc5@", "time": 0.005 },
+      "vc_unwrap_or_i32": { "prover": "cvc5@", "time": 0.005 },
+      "vc_unwrap_ref_i32": { "prover": "cvc5@", "time": 0.003 },
+      "vc_unwrap_refmut_i32": { "prover": "cvc5@", "time": 0.004 }
+    }
+  }
+}

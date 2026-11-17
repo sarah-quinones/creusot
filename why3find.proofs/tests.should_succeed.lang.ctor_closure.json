@@ -1,0 +1,27 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "M_g": {
+      "vc_c_Some": { "prover": "alt-ergo@", "time": 0.008 },
+      "vc_g_A": { "prover": "alt-ergo@", "time": 0.022 },
+      "vc_map_A": { "prover": "alt-ergo@", "time": 0.01 }
+    },
+    "M_h": {
+      "vc_c_T0": { "prover": "alt-ergo@", "time": 0.014 },
+      "vc_h": { "prover": "alt-ergo@", "time": 0.011 }
+    },
+    "M_i": {
+      "vc_c_T2": { "prover": "alt-ergo@", "time": 0.017 },
+      "vc_i_A": { "prover": "alt-ergo@", "time": 0.013 }
+    },
+    "M_some_post": {
+      "vc_c_T2": { "prover": "alt-ergo@", "time": 0.013 },
+      "vc_some_post_A": { "prover": "alt-ergo@", "time": 0.013 }
+    }
+  }
+}

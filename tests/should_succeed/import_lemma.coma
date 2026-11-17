@@ -75,5 +75,6 @@ module M_trait_Axiom__lemma_all_good
   function lemma_all_good_Self (seed: int) : ()
   
   goal vc_lemma_all_good_Self: ([@stop_split] [@expl:lemma_all_good ensures] is_secure (gen_key seed))
-    -> ([@stop_split] [@expl:lemma_all_good ensures] is_secure (gen_key seed))
+    -> (forall local. local = lemma_all_good seed
+      -> ([@stop_split] [@expl:lemma_all_good ensures] is_secure (gen_key seed)))
 end

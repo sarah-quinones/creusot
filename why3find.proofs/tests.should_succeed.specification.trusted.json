@@ -1,0 +1,40 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "M_carnation": {
+      "vc_carnation": { "prover": "alt-ergo@", "time": 0.011 },
+      "vc_elim_Branch": { "prover": "alt-ergo@", "time": 0.012 },
+      "vc_rose_Rose_Box_Carnation_Global": {
+        "prover": "alt-ergo@",
+        "time": 0.012
+      }
+    },
+    "M_innocent_victim": {
+      "vc_im_out_of_control": { "prover": "cvc5@", "time": 0.006 },
+      "vc_innocent_victim": { "prover": "cvc5@", "time": 0.005 },
+      "vc_my_unverified_code": { "prover": "cvc5@", "time": 0.006 }
+    },
+    "M_rose": {
+      "vc_elim_Some": { "prover": "alt-ergo@", "time": 0.013 },
+      "vc_into_iter_Vec_Rose_T_Global": {
+        "prover": "alt-ergo@",
+        "time": 0.015
+      },
+      "vc_next_IntoIter_Rose_T_Global": {
+        "prover": "alt-ergo@",
+        "time": 0.013
+      },
+      "vc_rose_T": { "prover": "alt-ergo@", "time": 0.013 },
+      "vc_rose_T'0": { "prover": "alt-ergo@", "time": 0.017 }
+    },
+    "M_victim_of_lie": {
+      "vc_lie": { "prover": "cvc5@", "time": 0.006 },
+      "vc_victim_of_lie": { "prover": "cvc5@", "time": 0.002 }
+    }
+  }
+}

@@ -104,14 +104,18 @@ predicate incl_Sum_R1_R2 (self: t_Sum_R1_R2) (other: t_Sum_R1_R2)
 goal vc_incl_Sum_R1_R2: match { f0 = self; f1 = other } with
     | {f0 = Left x; f1 = Left y} -> (forall factor: t_R1. op_R1 x factor = Some'0 y
         -> op_Sum_R1_R2 self (Left factor) = Some other)
-    && (([@stop_split] [@expl:incl ensures] incl_R1 x y = (exists factor: t_R1. op_R1 x factor = Some'0 y))
-    -> ([@stop_split] [@expl:incl ensures] incl_R1 x y
-    = (exists factor: t_Sum_R1_R2. op_Sum_R1_R2 self factor = Some other)))
+    && (forall local. local = ()
+      -> (forall local'0. local'0 = ()
+        -> ([@stop_split] [@expl:incl ensures] incl_R1 x y = (exists factor: t_R1. op_R1 x factor = Some'0 y))
+        -> ([@stop_split] [@expl:incl ensures] incl_R1 x y
+        = (exists factor: t_Sum_R1_R2. op_Sum_R1_R2 self factor = Some other))))
     | {f0 = Right x; f1 = Right y} -> (forall factor: t_R2. op_R2 x factor = Some'1 y
         -> op_Sum_R1_R2 self (Right factor) = Some other)
-    && (([@stop_split] [@expl:incl ensures] incl_R2 x y = (exists factor: t_R2. op_R2 x factor = Some'1 y))
-    -> ([@stop_split] [@expl:incl ensures] incl_R2 x y
-    = (exists factor: t_Sum_R1_R2. op_Sum_R1_R2 self factor = Some other)))
+    && (forall local. local = ()
+      -> (forall local'0. local'0 = ()
+        -> ([@stop_split] [@expl:incl ensures] incl_R2 x y = (exists factor: t_R2. op_R2 x factor = Some'1 y))
+        -> ([@stop_split] [@expl:incl ensures] incl_R2 x y
+        = (exists factor: t_Sum_R1_R2. op_Sum_R1_R2 self factor = Some other))))
     | _ -> [@stop_split] [@expl:incl ensures] false
     = (exists factor: t_Sum_R1_R2. op_Sum_R1_R2 self factor = Some other)
     end

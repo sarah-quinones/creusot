@@ -8,7 +8,10 @@ extern crate rustc_session;
 extern crate log;
 
 use creusot::callbacks::*;
-use creusot_args::{CREUSOT_RUSTC_ARGS, options::CreusotArgs};
+use creusot_args::{
+    CREUSOT_RUSTC_ARGS,
+    options::{CreusotArgs, TriggerMode},
+};
 use rustc_driver::run_compiler;
 use rustc_session::{EarlyDiagCtxt, config::ErrorOutputType};
 use std::env;
@@ -76,6 +79,14 @@ fn setup_plugin() {
         for &arg in CREUSOT_RUSTC_ARGS {
             args.push(arg.to_owned());
         }
+
+        let trigger = match opts.triggers {
+            TriggerMode::Auto => "auto",
+            TriggerMode::Manual => "manual",
+        };
+        args.push("--cfg".to_owned());
+        args.push(format!("trigger=\"{trigger}\""));
+
         debug!("creusot args={:?}", args);
         run_compiler(&args, &mut ToWhy::new(opts))
     } else {

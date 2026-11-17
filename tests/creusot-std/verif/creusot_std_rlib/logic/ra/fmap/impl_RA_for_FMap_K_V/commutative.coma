@@ -130,7 +130,9 @@ function commutative_FMap_K_V (a: t_FMap_K_V) (b: t_FMap_K_V) : ()
 
 goal vc_commutative_FMap_K_V: match { f0'1 = op_FMap_K_V a b; f1'1 = op_FMap_K_V b a } with
     | {f0'1 = Some ab; f1'1 = Some ba} -> ([@stop_split] [@expl:ext_eq ensures] ext_eq_K ab ba = (ab = ba))
-    -> ext_eq_K ab ba && ([@stop_split] [@expl:commutative ensures] op_FMap_K_V a b = op_FMap_K_V b a)
-    | {f0'1 = None; f1'1 = None} -> [@stop_split] [@expl:commutative ensures] op_FMap_K_V a b = op_FMap_K_V b a
+    -> ext_eq_K ab ba
+    && (forall local. local = () -> ([@stop_split] [@expl:commutative ensures] op_FMap_K_V a b = op_FMap_K_V b a))
+    | {f0'1 = None; f1'1 = None} -> forall local. local = ()
+      -> ([@stop_split] [@expl:commutative ensures] op_FMap_K_V a b = op_FMap_K_V b a)
     | _ -> false
     end

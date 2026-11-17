@@ -1,0 +1,27 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "Coma": {
+      "vc_branch_Option_tup2_ref_slice_T_ref_slice_T": {
+        "prover": "alt-ergo@",
+        "time": 0.015
+      },
+      "vc_elim_Break": { "prover": "alt-ergo@", "time": 0.015 },
+      "vc_elim_Continue": { "prover": "alt-ergo@", "time": 0.015 },
+      "vc_extern_spec_T__slice_T_split_first_body_T": {
+        "prover": "alt-ergo@",
+        "time": 0.066
+      },
+      "vc_from_residual_Option_tup2_ref_T_ref_slice_T": {
+        "prover": "alt-ergo@",
+        "time": 0.015
+      },
+      "vc_split_at_checked_T": { "prover": "alt-ergo@", "time": 0.014 }
+    }
+  }
+}

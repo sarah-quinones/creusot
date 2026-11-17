@@ -43,7 +43,8 @@ meta "select_lsinst" "all"
 
 function unit_Nat : t_Nat
 
-goal vc_unit_Nat: ([@stop_split] [@expl:new requires] ge_log_Int 0 0)
-  /\ (([@stop_split] [@expl:new ensures] to_int (new 0) = 0)
-  -> (let result = new 0 in [@stop_split] [@expl:unit ensures] forall x: t_Nat [op_Nat x result]. op_Nat x result
-    = Some x))
+goal vc_unit_Nat: forall local. local = ()
+    -> ([@stop_split] [@expl:new requires] ge_log_Int 0 0)
+    /\ (([@stop_split] [@expl:new ensures] to_int (new 0) = 0)
+    -> (let result = new 0 in [@stop_split] [@expl:unit ensures] forall x: t_Nat [op_Nat x result]. op_Nat x result
+      = Some x))

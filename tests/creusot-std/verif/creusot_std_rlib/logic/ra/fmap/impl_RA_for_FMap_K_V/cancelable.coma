@@ -198,24 +198,38 @@ goal vc_cancelable_FMap_K_V: if forall x: t_FMap_K_V, y: t_FMap_K_V. op_FMap_K_V
                   | None'0 -> ([@stop_split] [@expl:empty ensures] ([@stop_split] [@expl:empty ensures #0] len_K empty_K
                       = 0)
                     /\ ([@stop_split] [@expl:empty ensures #1] to_mapping_K empty_K = Const.const (None'0)))
-                  -> (let fx = empty_K in match y with
-                    | None'0 -> ([@stop_split] [@expl:empty ensures] ([@stop_split] [@expl:empty ensures #0] len_K empty_K
-                        = 0)
-                      /\ ([@stop_split] [@expl:empty ensures #1] to_mapping_K empty_K = Const.const (None'0)))
-                    -> ([@stop_split] [@expl:unwrap_logic requires] op_FMap_K_V self fx <> None)
-                    /\ ([@stop_split] [@expl:unwrap_logic requires] op_FMap_K_V self empty_K <> None)
-                    | Some'0 y'0 -> ([@stop_split] [@expl:unwrap_logic requires] op_FMap_K_V self fx <> None)
-                    /\ ([@stop_split] [@expl:unwrap_logic requires] op_FMap_K_V self (singleton_K k y'0) <> None)
-                    end)
-                  | Some'0 x'0 -> let fx = singleton_K k x'0 in match y with
-                    | None'0 -> ([@stop_split] [@expl:empty ensures] ([@stop_split] [@expl:empty ensures #0] len_K empty_K
-                        = 0)
-                      /\ ([@stop_split] [@expl:empty ensures #1] to_mapping_K empty_K = Const.const (None'0)))
-                    -> ([@stop_split] [@expl:unwrap_logic requires] op_FMap_K_V self fx <> None)
-                    /\ ([@stop_split] [@expl:unwrap_logic requires] op_FMap_K_V self empty_K <> None)
-                    | Some'0 y'0 -> ([@stop_split] [@expl:unwrap_logic requires] op_FMap_K_V self fx <> None)
-                    /\ ([@stop_split] [@expl:unwrap_logic requires] op_FMap_K_V self (singleton_K k y'0) <> None)
-                    end
+                  -> (forall fx. fx = empty_K
+                    -> (let fx = fx in match y with
+                      | None'0 -> ([@stop_split] [@expl:empty ensures] ([@stop_split] [@expl:empty ensures #0] len_K empty_K
+                          = 0)
+                        /\ ([@stop_split] [@expl:empty ensures #1] to_mapping_K empty_K = Const.const (None'0)))
+                      -> (forall fy. fy = empty_K
+                        -> (let fy = fy in ([@stop_split] [@expl:unwrap_logic requires] op_FMap_K_V self fx <> None)
+                        /\ (forall opx. opx = unwrap_Option_FMap_K_V (op_FMap_K_V self fx)
+                          -> ([@stop_split] [@expl:unwrap_logic requires] op_FMap_K_V self fy <> None)
+                          /\ (forall opy. opy = unwrap_Option_FMap_K_V (op_FMap_K_V self fy) -> true))))
+                      | Some'0 y'0 -> forall fy. fy = singleton_K k y'0
+                        -> (let fy = fy in ([@stop_split] [@expl:unwrap_logic requires] op_FMap_K_V self fx <> None)
+                        /\ (forall opx. opx = unwrap_Option_FMap_K_V (op_FMap_K_V self fx)
+                          -> ([@stop_split] [@expl:unwrap_logic requires] op_FMap_K_V self fy <> None)
+                          /\ (forall opy. opy = unwrap_Option_FMap_K_V (op_FMap_K_V self fy) -> true)))
+                      end))
+                  | Some'0 x'0 -> forall fx. fx = singleton_K k x'0
+                    -> (let fx = fx in match y with
+                      | None'0 -> ([@stop_split] [@expl:empty ensures] ([@stop_split] [@expl:empty ensures #0] len_K empty_K
+                          = 0)
+                        /\ ([@stop_split] [@expl:empty ensures #1] to_mapping_K empty_K = Const.const (None'0)))
+                      -> (forall fy. fy = empty_K
+                        -> (let fy = fy in ([@stop_split] [@expl:unwrap_logic requires] op_FMap_K_V self fx <> None)
+                        /\ (forall opx. opx = unwrap_Option_FMap_K_V (op_FMap_K_V self fx)
+                          -> ([@stop_split] [@expl:unwrap_logic requires] op_FMap_K_V self fy <> None)
+                          /\ (forall opy. opy = unwrap_Option_FMap_K_V (op_FMap_K_V self fy) -> true))))
+                      | Some'0 y'0 -> forall fy. fy = singleton_K k y'0
+                        -> (let fy = fy in ([@stop_split] [@expl:unwrap_logic requires] op_FMap_K_V self fx <> None)
+                        /\ (forall opx. opx = unwrap_Option_FMap_K_V (op_FMap_K_V self fx)
+                          -> ([@stop_split] [@expl:unwrap_logic requires] op_FMap_K_V self fy <> None)
+                          /\ (forall opy. opy = unwrap_Option_FMap_K_V (op_FMap_K_V self fy) -> true)))
+                      end)
                   end
               else
                 true
@@ -237,27 +251,39 @@ goal vc_cancelable_FMap_K_V: if forall x: t_FMap_K_V, y: t_FMap_K_V. op_FMap_K_V
               end in let opx = unwrap_Option_FMap_K_V (op_FMap_K_V self fx) in let opy = unwrap_Option_FMap_K_V (op_FMap_K_V self fy) in ext_eq_K opx opy
             /\ (opx = opy -> fx = fy))
           end)
-    && (if forall k: t_K. cancelable_Option_V (lookup_K self k) then
-      (forall x: t_FMap_K_V, y: t_FMap_K_V. op_FMap_K_V self x <> None
-          -> op_FMap_K_V self x = op_FMap_K_V self y -> ext_eq_K x y)
-      && ([@stop_split] [@expl:cancelable ensures] (forall k: t_K. cancelable_Option_V (lookup_K self k))
-      = (forall x: t_FMap_K_V, y: t_FMap_K_V. op_FMap_K_V self x <> None
-        -> op_FMap_K_V self x = op_FMap_K_V self y -> x = y))
-    else
-      [@stop_split] [@expl:cancelable ensures] (forall k: t_K. cancelable_Option_V (lookup_K self k))
-      = (forall x: t_FMap_K_V, y: t_FMap_K_V. op_FMap_K_V self x <> None
-        -> op_FMap_K_V self x = op_FMap_K_V self y -> x = y)
-    )
+    && (forall local. local = ()
+      -> (forall local'0. local'0 = ()
+        -> (if forall k: t_K. cancelable_Option_V (lookup_K self k) then
+          (forall x: t_FMap_K_V, y: t_FMap_K_V. op_FMap_K_V self x <> None
+              -> op_FMap_K_V self x = op_FMap_K_V self y -> ext_eq_K x y)
+          && (forall local'1. local'1 = ()
+            -> (forall local'2. local'2 = ()
+              -> ([@stop_split] [@expl:cancelable ensures] (forall k: t_K. cancelable_Option_V (lookup_K self k))
+              = (forall x: t_FMap_K_V, y: t_FMap_K_V. op_FMap_K_V self x <> None
+                -> op_FMap_K_V self x = op_FMap_K_V self y -> x = y))))
+        else
+          forall local'1. local'1 = ()
+            -> (forall local'2. local'2 = ()
+              -> ([@stop_split] [@expl:cancelable ensures] (forall k: t_K. cancelable_Option_V (lookup_K self k))
+              = (forall x: t_FMap_K_V, y: t_FMap_K_V. op_FMap_K_V self x <> None
+                -> op_FMap_K_V self x = op_FMap_K_V self y -> x = y)))
+        )))
   else
-    if forall k: t_K. cancelable_Option_V (lookup_K self k) then
-      (forall x: t_FMap_K_V, y: t_FMap_K_V. op_FMap_K_V self x <> None
-          -> op_FMap_K_V self x = op_FMap_K_V self y -> ext_eq_K x y)
-      && ([@stop_split] [@expl:cancelable ensures] (forall k: t_K. cancelable_Option_V (lookup_K self k))
-      = (forall x: t_FMap_K_V, y: t_FMap_K_V. op_FMap_K_V self x <> None
-        -> op_FMap_K_V self x = op_FMap_K_V self y -> x = y))
-    else
-      [@stop_split] [@expl:cancelable ensures] (forall k: t_K. cancelable_Option_V (lookup_K self k))
-      = (forall x: t_FMap_K_V, y: t_FMap_K_V. op_FMap_K_V self x <> None
-        -> op_FMap_K_V self x = op_FMap_K_V self y -> x = y)
-  
+    forall local. local = ()
+      -> (forall local'0. local'0 = ()
+        -> (if forall k: t_K. cancelable_Option_V (lookup_K self k) then
+          (forall x: t_FMap_K_V, y: t_FMap_K_V. op_FMap_K_V self x <> None
+              -> op_FMap_K_V self x = op_FMap_K_V self y -> ext_eq_K x y)
+          && (forall local'1. local'1 = ()
+            -> (forall local'2. local'2 = ()
+              -> ([@stop_split] [@expl:cancelable ensures] (forall k: t_K. cancelable_Option_V (lookup_K self k))
+              = (forall x: t_FMap_K_V, y: t_FMap_K_V. op_FMap_K_V self x <> None
+                -> op_FMap_K_V self x = op_FMap_K_V self y -> x = y))))
+        else
+          forall local'1. local'1 = ()
+            -> (forall local'2. local'2 = ()
+              -> ([@stop_split] [@expl:cancelable ensures] (forall k: t_K. cancelable_Option_V (lookup_K self k))
+              = (forall x: t_FMap_K_V, y: t_FMap_K_V. op_FMap_K_V self x <> None
+                -> op_FMap_K_V self x = op_FMap_K_V self y -> x = y)))
+        ))
   

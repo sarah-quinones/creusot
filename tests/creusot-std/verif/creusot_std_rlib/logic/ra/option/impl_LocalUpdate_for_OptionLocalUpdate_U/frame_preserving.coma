@@ -145,22 +145,24 @@ function frame_preserving_OptionLocalUpdate_U (self: t_OptionLocalUpdate_U) (fro
 goal vc_frame_preserving_OptionLocalUpdate_U: premise_OptionLocalUpdate_U self from_auth from_frag
   -> op_Option_Option_R (Some'0 from_frag) frame = Some'1 (Some'0 from_auth)
   -> match frame with
-    | None'0 -> let frame'0 = None in ([@stop_split] [@expl:unwrap_logic requires] from_auth <> None)
-    /\ ([@stop_split] [@expl:unwrap_logic requires] from_frag <> None)
-    /\ ([@stop_split] [@expl:frame_preserving requires] ([@stop_split] [@expl:frame_preserving requires #0] premise_U self.f0 (unwrap_Option_R from_auth) (unwrap_Option_R from_frag))
-      /\ ([@stop_split] [@expl:frame_preserving requires #1] op_Option_R (Some (unwrap_Option_R from_frag)) frame'0
-      = Some'0 (Some (unwrap_Option_R from_auth))))
-    /\ (([@stop_split] [@expl:frame_preserving ensures] let {f0'2 = to_auth; f1'2 = to_frag} = update_U self.f0 (unwrap_Option_R from_auth) (unwrap_Option_R from_frag) in op_Option_R (Some to_frag) frame'0
-      = Some'0 (Some to_auth))
-    -> ([@stop_split] [@expl:frame_preserving ensures] let {f0'0 = to_auth; f1'0 = to_frag} = update_OptionLocalUpdate_U self from_auth from_frag in op_Option_Option_R (Some'0 to_frag) frame
-    = Some'1 (Some'0 to_auth)))
-    | Some'0 f -> let frame'0 = f in ([@stop_split] [@expl:unwrap_logic requires] from_auth <> None)
-    /\ ([@stop_split] [@expl:unwrap_logic requires] from_frag <> None)
-    /\ ([@stop_split] [@expl:frame_preserving requires] ([@stop_split] [@expl:frame_preserving requires #0] premise_U self.f0 (unwrap_Option_R from_auth) (unwrap_Option_R from_frag))
-      /\ ([@stop_split] [@expl:frame_preserving requires #1] op_Option_R (Some (unwrap_Option_R from_frag)) frame'0
-      = Some'0 (Some (unwrap_Option_R from_auth))))
-    /\ (([@stop_split] [@expl:frame_preserving ensures] let {f0'2 = to_auth; f1'2 = to_frag} = update_U self.f0 (unwrap_Option_R from_auth) (unwrap_Option_R from_frag) in op_Option_R (Some to_frag) frame'0
-      = Some'0 (Some to_auth))
-    -> ([@stop_split] [@expl:frame_preserving ensures] let {f0'0 = to_auth; f1'0 = to_frag} = update_OptionLocalUpdate_U self from_auth from_frag in op_Option_Option_R (Some'0 to_frag) frame
-    = Some'1 (Some'0 to_auth)))
+    | None'0 -> forall frame'0. frame'0 = None
+      -> (let frame'0 = frame'0 in ([@stop_split] [@expl:unwrap_logic requires] from_auth <> None)
+      /\ ([@stop_split] [@expl:unwrap_logic requires] from_frag <> None)
+      /\ ([@stop_split] [@expl:frame_preserving requires] ([@stop_split] [@expl:frame_preserving requires #0] premise_U self.f0 (unwrap_Option_R from_auth) (unwrap_Option_R from_frag))
+        /\ ([@stop_split] [@expl:frame_preserving requires #1] op_Option_R (Some (unwrap_Option_R from_frag)) frame'0
+        = Some'0 (Some (unwrap_Option_R from_auth))))
+      /\ (([@stop_split] [@expl:frame_preserving ensures] let {f0'2 = to_auth; f1'2 = to_frag} = update_U self.f0 (unwrap_Option_R from_auth) (unwrap_Option_R from_frag) in op_Option_R (Some to_frag) frame'0
+        = Some'0 (Some to_auth))
+      -> ([@stop_split] [@expl:frame_preserving ensures] let {f0'0 = to_auth; f1'0 = to_frag} = update_OptionLocalUpdate_U self from_auth from_frag in op_Option_Option_R (Some'0 to_frag) frame
+      = Some'1 (Some'0 to_auth))))
+    | Some'0 f -> forall frame'0. frame'0 = f
+      -> (let frame'0 = frame'0 in ([@stop_split] [@expl:unwrap_logic requires] from_auth <> None)
+      /\ ([@stop_split] [@expl:unwrap_logic requires] from_frag <> None)
+      /\ ([@stop_split] [@expl:frame_preserving requires] ([@stop_split] [@expl:frame_preserving requires #0] premise_U self.f0 (unwrap_Option_R from_auth) (unwrap_Option_R from_frag))
+        /\ ([@stop_split] [@expl:frame_preserving requires #1] op_Option_R (Some (unwrap_Option_R from_frag)) frame'0
+        = Some'0 (Some (unwrap_Option_R from_auth))))
+      /\ (([@stop_split] [@expl:frame_preserving ensures] let {f0'2 = to_auth; f1'2 = to_frag} = update_U self.f0 (unwrap_Option_R from_auth) (unwrap_Option_R from_frag) in op_Option_R (Some to_frag) frame'0
+        = Some'0 (Some to_auth))
+      -> ([@stop_split] [@expl:frame_preserving ensures] let {f0'0 = to_auth; f1'0 = to_frag} = update_OptionLocalUpdate_U self from_auth from_frag in op_Option_Option_R (Some'0 to_frag) frame
+      = Some'1 (Some'0 to_auth))))
     end

@@ -1,0 +1,38 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "M_knapsack01_dyn": {
+      "vc_from_elem_Vec_usize_Global": { "prover": "cvc5@", "time": 0.005 },
+      "vc_from_elem_usize": { "prover": "cvc5@", "time": 0.004 },
+      "vc_index_Vec_Item_Name_Global": {
+        "prover": "alt-ergo@",
+        "time": 0.011
+      },
+      "vc_index_Vec_Vec_usize_Global_Global'0": {
+        "prover": "cvc5@",
+        "time": 0.004
+      },
+      "vc_index_Vec_usize_Global'0": { "prover": "cvc5@", "time": 0.003 },
+      "vc_index_mut_Vec_Vec_usize_Global_Global": {
+        "prover": "cvc5@",
+        "time": 0.004
+      },
+      "vc_index_mut_Vec_usize_Global": { "prover": "cvc5@", "time": 0.004 },
+      "vc_knapsack01_dyn_Name": {
+        "tactic": "compute_specified",
+        "children": [ { "prover": "z3@", "time": 0.178 } ]
+      },
+      "vc_len_Item_Name": { "prover": "cvc5@", "time": 0.003 },
+      "vc_max": { "prover": "cvc5@", "time": 0.003 },
+      "vc_push_ref_Item_Name": { "prover": "cvc5@", "time": 0.005 },
+      "vc_with_capacity_ref_Item_Name": { "prover": "cvc5@", "time": 0.006 }
+    },
+    "M_m": { "vc_m_Name": { "prover": "cvc5@", "time": 0.007 } },
+    "M_max": { "vc_max": { "prover": "cvc5@", "time": 0.008 } }
+  }
+}

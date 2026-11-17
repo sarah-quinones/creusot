@@ -1,0 +1,28 @@
+{
+  "profile": [
+    { "prover": "cvc4@", "size": 45, "time": 0.432 },
+    { "prover": "cvc5@", "size": 47, "time": 0.541 },
+    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
+    { "prover": "z3@", "size": 33, "time": 0.793 }
+  ],
+  "proofs": {
+    "M_impl_Clone_for_IsZero__clone": {
+      "vc_clone_IsZero": { "prover": "cvc5@", "time": 0.005 },
+      "vc_clone_i32": { "prover": "cvc5@", "time": 0.005 }
+    },
+    "M_impl_Clone_for_IsZero__clone__refines": {
+      "refines": { "prover": "cvc5@", "time": 0.003 },
+      "vc_clone_i32": { "prover": "cvc5@", "time": 0.003 }
+    },
+    "M_test_open_inv_param": {
+      "vc_test_open_inv_param": { "prover": "cvc5@", "time": 0.005 }
+    },
+    "M_test_open_inv_param_call": {
+      "vc_test_open_inv_param": { "prover": "cvc5@", "time": 0.005 },
+      "vc_test_open_inv_param_call": { "prover": "cvc5@", "time": 0.005 }
+    },
+    "M_test_open_inv_result": {
+      "vc_test_open_inv_result": { "prover": "cvc5@", "time": 0.005 }
+    }
+  }
+}

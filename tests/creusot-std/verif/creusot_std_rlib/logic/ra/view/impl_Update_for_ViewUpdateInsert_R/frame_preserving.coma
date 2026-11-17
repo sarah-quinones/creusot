@@ -157,4 +157,6 @@ function frame_preserving_ViewUpdateInsert_R (self: t_ViewUpdateInsert_R) (from:
 goal vc_frame_preserving_ViewUpdateInsert_R: premise_ViewUpdateInsert_R self from
   -> op_View_R from frame <> None'1
   -> rel_R (Some (self.f0)) self.f1
-  && ([@stop_split] [@expl:frame_preserving ensures] op_View_R (update_ViewUpdateInsert_R self from ()) frame <> None'1)
+  && (forall local. local = ()
+    -> ([@stop_split] [@expl:frame_preserving ensures] op_View_R (update_ViewUpdateInsert_R self from ()) frame
+    <> None'1))
