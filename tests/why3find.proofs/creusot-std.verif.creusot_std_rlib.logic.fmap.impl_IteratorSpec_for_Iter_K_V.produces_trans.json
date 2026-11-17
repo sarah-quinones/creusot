@@ -8,13 +8,13 @@
           {
             "tactic": "split_vc",
             "children": [
-              { "prover": "alt-ergo", "time": 0.197 },
-              { "prover": "alt-ergo", "time": 0.011 },
-              { "prover": "alt-ergo", "time": 0.168 },
-              { "prover": "alt-ergo", "time": 0.019 },
-              { "prover": "alt-ergo", "time": 0.081 },
-              { "prover": "alt-ergo", "time": 0.01 },
-              { "prover": "z3", "time": 0.009 }
+              { "prover": "alt-ergo", "time": 0.089 },
+              { "prover": "alt-ergo", "time": 0.012 },
+              { "prover": "alt-ergo", "time": 0.106 },
+              { "prover": "alt-ergo", "time": 0.016 },
+              { "prover": "alt-ergo", "time": 0.107 },
+              { "prover": "alt-ergo", "time": 0.014 },
+              { "prover": "z3", "time": 0.01 }
             ]
           }
         ]

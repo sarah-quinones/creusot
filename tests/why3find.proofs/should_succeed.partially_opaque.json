@@ -1,7 +1,7 @@
 {
   "profile": [],
   "proofs": {
-    "M_f": { "vc_f_A": { "prover": "cvc5", "time": 0.01 } },
-    "M_g": { "vc_g_B": { "prover": "cvc5", "time": 0.012 } }
+    "M_f": { "vc_f_A": { "prover": "alt-ergo", "time": 0.019 } },
+    "M_g": { "vc_g_B": { "prover": "alt-ergo", "time": 0.02 } }
   }
 }

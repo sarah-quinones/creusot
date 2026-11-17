@@ -2,8 +2,8 @@
   "profile": [],
   "proofs": {
     "M_trait_Trait__goo": {
-      "vc_f_Self": { "prover": "cvc5", "time": 0.012 },
-      "vc_goo_Self": { "prover": "cvc5", "time": 0.013 }
+      "vc_f_Self": { "prover": "alt-ergo", "time": 0.014 },
+      "vc_goo_Self": { "prover": "alt-ergo", "time": 0.01 }
     }
   }
 }

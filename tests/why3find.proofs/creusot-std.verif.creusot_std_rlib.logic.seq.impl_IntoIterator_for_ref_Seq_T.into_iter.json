@@ -2,11 +2,8 @@
   "profile": [],
   "proofs": {
     "Coma": {
-      "vc_as_refs_T": { "tactic": "compute_specified", "children": [] },
-      "vc_into_iter_ref_Seq_T": {
-        "tactic": "compute_specified",
-        "children": []
-      }
+      "vc_as_refs_T": { "prover": "alt-ergo", "time": 0.012 },
+      "vc_into_iter_ref_Seq_T": { "prover": "alt-ergo", "time": 0.017 }
     }
   }
 }

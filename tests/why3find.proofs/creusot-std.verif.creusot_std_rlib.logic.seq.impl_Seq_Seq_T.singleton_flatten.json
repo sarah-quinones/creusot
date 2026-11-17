@@ -2,7 +2,7 @@
   "profile": [],
   "proofs": {
     "Coma": {
-      "vc_singleton_flatten_T": { "prover": "alt-ergo", "time": 0.057 }
+      "vc_singleton_flatten_T": { "prover": "alt-ergo", "time": 0.018 }
     }
   }
 }

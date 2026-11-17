@@ -2259,11 +2259,13 @@ module M_parallel_add
       | s27 = new_unit {_20} (fun (_x: ()) -> [ &_19 <- _x ] s28)
       | s28 = any
         [ any_ (_dest: int) ->
-        (! -{exists f: Map.map int bool. (forall t: int [f t]. contains_Int (val_AtomicI32 own'0) t = f t)
+        (! -{exists f: Map.map int bool. (forall t: int [Map.get f t]. contains_Int (val_AtomicI32 own'0) t
+                = Map.get f t)
             /\ ([@stop_split] [@expl:such_that ensures] index_Mapping_Int_bool f (such_that_Int f))
             /\ _dest = such_that_Int f}-
           [ &timestamp <- _dest ] s29) ]
-        [ _ck -> (! {forall f: Map.map int bool. (forall t: int [f t]. contains_Int (val_AtomicI32 own'0) t = f t)
+        [ _ck -> (! {forall f: Map.map int bool. (forall t: int [Map.get f t]. contains_Int (val_AtomicI32 own'0) t
+                = Map.get f t)
             -> ([@stop_split] [@expl:such_that requires] exists x'0: int. index_Mapping_Int_bool f x'0)}
           any) ]
       | s29 = into_inner_Perm_AtomicI32 {own'0} (fun (_x: t_Perm_AtomicI32) -> [ &_37 <- _x ] s30)

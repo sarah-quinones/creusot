@@ -4,7 +4,7 @@
     "Coma": {
       "vc_lt_log_tail_T": {
         "tactic": "compute_specified",
-        "children": [ { "prover": "cvc4", "time": 0.297 } ]
+        "children": [ { "prover": "cvc4", "time": 0.257 } ]
       }
     }
   }

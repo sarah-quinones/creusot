@@ -2,13 +2,10 @@
   "profile": [],
   "proofs": {
     "Coma": {
-      "vc_dummy_R": { "tactic": "compute_specified", "children": [] },
-      "vc_join_R": { "tactic": "compute_specified", "children": [] },
-      "vc_join_in_R": { "prover": "alt-ergo", "time": 0.013 },
-      "vc_replace_Resource_R": {
-        "tactic": "compute_specified",
-        "children": []
-      }
+      "vc_dummy_R": { "prover": "alt-ergo", "time": 0.012 },
+      "vc_join_R": { "prover": "alt-ergo", "time": 0.01 },
+      "vc_join_in_R": { "prover": "alt-ergo", "time": 0.009 },
+      "vc_replace_Resource_R": { "prover": "alt-ergo", "time": 0.011 }
     }
   }
 }

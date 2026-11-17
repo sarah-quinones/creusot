@@ -6,7 +6,6 @@ pub fn const_true<T>(_: T) -> bool {
 }
 
 #[logic(indirect)]
-#[requires(const_true(x))]
 #[ensures(const_true(x))]
 pub fn id<T>(x: T) -> T {
     x
@@ -34,19 +33,19 @@ use opaque::*;
 #[logic]
 #[requires(true)]
 pub fn test() {
-    let t = id(|_: Int| {});
+    let t = |_: Int| {};
 
     #[trigger(t[i])]
     |i: Int| {
-        id(f_def(2 * i));
-        id(f_def(2 * i + 1));
+        f_def(2 * i);
+        f_def(2 * i + 1);
     };
 
-    let a = id(t[0]);
-    let a = id(t[1]);
-    let a = id(t[2]);
-    let a = id(t[3]);
-    let a = id(t[4]);
-    let a = id(t[5]);
+    id(t[0]);
+    id(t[1]);
+    id(t[2]);
+    id(t[3]);
+    id(t[4]);
+    id(t[5]);
     proof_assert!(f(23) == f(-1));
 }

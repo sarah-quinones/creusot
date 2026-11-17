@@ -2,7 +2,7 @@
   "profile": [],
   "proofs": {
     "Coma": {
-      "vc_sub_offset_ptr_T": { "prover": "alt-ergo", "time": 0.012 }
+      "vc_sub_offset_ptr_T": { "prover": "alt-ergo", "time": 0.011 }
     }
   }
 }

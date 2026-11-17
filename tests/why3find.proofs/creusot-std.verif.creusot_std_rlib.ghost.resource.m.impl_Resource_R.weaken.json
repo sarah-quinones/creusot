@@ -2,8 +2,8 @@
   "profile": [],
   "proofs": {
     "Coma": {
-      "vc_split_off_R": { "tactic": "compute_specified", "children": [] },
-      "vc_weaken_R": { "prover": "alt-ergo", "time": 0.011 }
+      "vc_split_off_R": { "prover": "alt-ergo", "time": 0.013 },
+      "vc_weaken_R": { "prover": "alt-ergo", "time": 0.018 }
     }
   }
 }

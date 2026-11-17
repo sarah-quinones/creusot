@@ -2,12 +2,12 @@
   "profile": [],
   "proofs": {
     "Coma": {
-      "vc_elim_Some": { "tactic": "compute_specified", "children": [] },
+      "vc_elim_Some": { "prover": "alt-ergo", "time": 0.009 },
       "vc_extern_spec_PartialOrd_i8_i8_gt_body": {
         "prover": "alt-ergo",
         "time": 0.018
       },
-      "vc_partial_cmp_i8": { "tactic": "compute_specified", "children": [] }
+      "vc_partial_cmp_i8": { "prover": "alt-ergo", "time": 0.008 }
     }
   }
 }

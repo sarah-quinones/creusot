@@ -2,12 +2,12 @@
   "profile": [],
   "proofs": {
     "Coma": {
-      "vc_align_of_T'0": { "tactic": "compute_specified", "children": [] },
+      "vc_align_of_T'0": { "prover": "alt-ergo", "time": 0.013 },
       "vc_extern_spec_T__ptrconst_T_is_aligned_body_T": {
         "prover": "alt-ergo",
-        "time": 0.016
+        "time": 0.009
       },
-      "vc_is_aligned_to_T": { "tactic": "compute_specified", "children": [] }
+      "vc_is_aligned_to_T": { "prover": "alt-ergo", "time": 0.014 }
     }
   }
 }

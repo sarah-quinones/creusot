@@ -6,10 +6,7 @@
         "prover": "alt-ergo",
         "time": 0.008
       },
-      "vc_rem_assign_usize": {
-        "tactic": "compute_specified",
-        "children": []
-      }
+      "vc_rem_assign_usize": { "prover": "alt-ergo", "time": 0.015 }
     }
   }
 }

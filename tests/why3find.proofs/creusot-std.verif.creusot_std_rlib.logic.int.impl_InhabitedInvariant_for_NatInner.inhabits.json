@@ -2,7 +2,7 @@
   "profile": [],
   "proofs": {
     "Coma": {
-      "vc_inhabits_NatInner": { "prover": "alt-ergo", "time": 0.008 }
+      "vc_inhabits_NatInner": { "prover": "alt-ergo", "time": 0.01 }
     }
   }
 }

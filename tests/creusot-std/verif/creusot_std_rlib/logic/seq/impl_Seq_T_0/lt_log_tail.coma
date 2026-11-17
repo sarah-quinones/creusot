@@ -100,42 +100,33 @@ goal vc_lt_log_tail_T: gt_log_Int (Seq.length self) 0 /\ gt_log_Int (Seq.length 
       else
         true
     )
-<<<<<<< HEAD
-  /\ (forall f: Map.map int (). (forall i: int [f i]. if 0 <= i then
+  /\ (forall f: Map.map int (). (forall i: int [Map.get f i]. if 0 <= i then
           if i < Seq.length self then
             if i < Seq.length other then
               if forall j: int. 0 <= j /\ j < i -> Seq.get self j = Seq.get other j then
                 if lt_log_T (Seq.get self i) (Seq.get other i) then
                   (forall j: int. 0 <= j /\ j < i - 1
                       -> Seq.get (index_Seq_T self { start = 1 }) j = Seq.get (index_Seq_T other { start = 1 }) j)
-                  /\ lt_log_T (Seq.get (index_Seq_T self { start = 1 }) (i
-                    - 1)) (Seq.get (index_Seq_T other { start = 1 }) (i - 1))
-                  /\ () = f i
+                  /\ (exists local. local = ()
+                    /\ (exists local'0. local'0 = ()
+                      /\ lt_log_T (Seq.get (index_Seq_T self { start = 1 }) (i
+                        - 1)) (Seq.get (index_Seq_T other { start = 1 }) (i - 1))
+                      /\ (exists local'1. local'1 = () /\ (exists local'2. local'2 = () /\ () = Map.get f i))))
                 else
-                  () = f i
+                  () = Map.get f i
               
               else
-                () = f i
+                () = Map.get f i
             
             else
-              () = f i
+              () = Map.get f i
           
           else
-            () = f i
+            () = Map.get f i
         
         else
-          () = f i
-=======
-  && (forall local. local
-      = (fun (i: int) -> if 0 <= i
-      /\ i < Seq.length self
-      /\ i < Seq.length other
-      /\ (forall j: int. 0 <= j /\ j < i -> Seq.get self j = Seq.get other j)
-      /\ lt_log_T (Seq.get self i) (Seq.get other i) then
-        ()
-      else
-        ()
->>>>>>> 6de4f8bb0 (let -> forall(eq implies body))
+          () = Map.get f i
       )
-    -> ([@stop_split] [@expl:lt_log_tail ensures] lt_log_Seq_T self other
-    = lt_log_Seq_T (index_Seq_T self { start = 1 }) (index_Seq_T other { start = 1 })))
+    -> (forall local. local = f
+      -> ([@stop_split] [@expl:lt_log_tail ensures] lt_log_Seq_T self other
+      = lt_log_Seq_T (index_Seq_T self { start = 1 }) (index_Seq_T other { start = 1 }))))

@@ -1,20 +1,12 @@
 {
-  "profile": [
-    { "prover": "cvc4@", "size": 45, "time": 0.432 },
-    { "prover": "cvc5@", "size": 47, "time": 0.541 },
-    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
-    { "prover": "z3@", "size": 33, "time": 0.793 }
-  ],
+  "profile": [],
   "proofs": {
     "Coma": {
-      "vc_into_ghost_Int": { "tactic": "compute_specified", "children": [] },
-      "vc_into_ghost_Positive": { "prover": "z3@", "time": 0.005 },
-      "vc_into_inner_Int": { "tactic": "compute_specified", "children": [] },
-      "vc_new_Positive": { "tactic": "compute_specified", "children": [] },
-      "vc_new_PositiveInner'0": {
-        "tactic": "compute_specified",
-        "children": []
-      }
+      "vc_into_ghost_Int": { "prover": "alt-ergo", "time": 0.014 },
+      "vc_into_ghost_Positive": { "prover": "z3", "time": 0.005 },
+      "vc_into_inner_Int": { "prover": "alt-ergo", "time": 0.013 },
+      "vc_new_Positive": { "prover": "alt-ergo", "time": 0.014 },
+      "vc_new_PositiveInner'0": { "prover": "alt-ergo", "time": 0.013 }
     }
   }
 }

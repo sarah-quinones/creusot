@@ -1,8 +1,6 @@
 {
   "profile": [],
   "proofs": {
-    "Coma": {
-      "vc_new_frag_R": { "tactic": "compute_specified", "children": [] }
-    }
+    "Coma": { "vc_new_frag_R": { "prover": "alt-ergo", "time": 0.008 } }
   }
 }

@@ -2,9 +2,9 @@
   "profile": [],
   "proofs": {
     "M_rev": {
-      "vc_elim_Cons": { "prover": "cvc5", "time": 0.006 },
-      "vc_replace_List_T": { "prover": "cvc5", "time": 0.006 },
-      "vc_rev_T": { "prover": "cvc5", "time": 0.006 }
+      "vc_elim_Cons": { "prover": "alt-ergo", "time": 0.016 },
+      "vc_replace_List_T": { "prover": "alt-ergo", "time": 0.016 },
+      "vc_rev_T": { "prover": "alt-ergo", "time": 0.037 }
     }
   }
 }

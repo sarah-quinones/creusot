@@ -4,10 +4,10 @@
     "Coma": {
       "vc_produces_back_refl_Chain_A_B": {
         "tactic": "compute_specified",
-        "children": [ { "prover": "z3", "time": 0.035 } ]
+        "children": [ { "prover": "z3", "time": 0.016 } ]
       },
-      "vc_size_hint_A": { "tactic": "compute_specified", "children": [] },
-      "vc_size_hint_B": { "tactic": "compute_specified", "children": [] }
+      "vc_size_hint_A": { "prover": "alt-ergo", "time": 0.013 },
+      "vc_size_hint_B": { "prover": "alt-ergo", "time": 0.012 }
     }
   }
 }

@@ -2,10 +2,10 @@
   "profile": [],
   "proofs": {
     "Coma": {
-      "vc_add_assign_i128": { "tactic": "compute_specified", "children": [] },
+      "vc_add_assign_i128": { "prover": "alt-ergo", "time": 0.011 },
       "vc_extern_spec_AddAssign__ref_i128_i128_add_assign_body": {
         "prover": "alt-ergo",
-        "time": 0.015
+        "time": 0.008
       }
     }
   }

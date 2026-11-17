@@ -1,22 +1,14 @@
 {
-  "profile": [
-    { "prover": "cvc4@", "size": 45, "time": 0.432 },
-    { "prover": "cvc5@", "size": 47, "time": 0.541 },
-    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
-    { "prover": "z3@", "size": 33, "time": 0.793 }
-  ],
+  "profile": [],
   "proofs": {
     "Coma": {
-      "vc_as_slice_T": { "tactic": "compute_specified", "children": [] },
-      "vc_clone_T": { "tactic": "compute_specified", "children": [] },
+      "vc_as_slice_T": { "prover": "alt-ergo", "time": 0.01 },
+      "vc_clone_T": { "prover": "alt-ergo", "time": 0.009 },
       "vc_extern_spec_T__constN_From__ref__array_T_Vec_T_from_body_T": {
-        "prover": "alt-ergo@",
-        "time": 0.019
+        "prover": "alt-ergo",
+        "time": 0.01
       },
-      "vc_from_Vec_T_Global": {
-        "tactic": "compute_specified",
-        "children": []
-      }
+      "vc_from_Vec_T_Global": { "prover": "alt-ergo", "time": 0.011 }
     }
   }
 }

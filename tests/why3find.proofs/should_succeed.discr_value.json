@@ -1,11 +1,11 @@
 {
   "profile": [],
   "proofs": {
-    "M_logic": { "vc_logic": { "prover": "alt-ergo", "time": 0.026 } },
-    "M_program": { "vc_program": { "prover": "alt-ergo", "time": 0.031 } },
+    "M_logic": { "vc_logic": { "prover": "alt-ergo", "time": 0.023 } },
+    "M_program": { "vc_program": { "prover": "alt-ergo", "time": 0.02 } },
     "M_use_intrinsic": {
-      "vc_discriminant_value_T'0": { "prover": "alt-ergo", "time": 0.011 },
-      "vc_use_intrinsic_T": { "prover": "alt-ergo", "time": 0.007 }
+      "vc_discriminant_value_T'0": { "prover": "alt-ergo", "time": 0.01 },
+      "vc_use_intrinsic_T": { "prover": "alt-ergo", "time": 0.006 }
     }
   }
 }

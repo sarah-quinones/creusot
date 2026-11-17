@@ -1,19 +1,11 @@
 {
-  "profile": [
-    { "prover": "cvc4@", "size": 45, "time": 0.432 },
-    { "prover": "cvc5@", "size": 47, "time": 0.541 },
-    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
-    { "prover": "z3@", "size": 33, "time": 0.793 }
-  ],
+  "profile": [],
   "proofs": {
     "Coma": {
-      "refines": { "tactic": "compute_specified", "children": [] },
-      "vc_size_hint_A": { "tactic": "compute_specified", "children": [] },
-      "vc_size_hint_B": { "tactic": "compute_specified", "children": [] },
-      "vc_size_hint_Chain_A_B": {
-        "tactic": "compute_specified",
-        "children": []
-      }
+      "refines": { "prover": "alt-ergo", "time": 0.015 },
+      "vc_size_hint_A": { "prover": "alt-ergo", "time": 0.013 },
+      "vc_size_hint_B": { "prover": "alt-ergo", "time": 0.012 },
+      "vc_size_hint_Chain_A_B": { "prover": "alt-ergo", "time": 0.012 }
     }
   }
 }

@@ -4,7 +4,7 @@
     "Coma": {
       "vc_produces_trans_Enumerate_I": {
         "prover": "alt-ergo",
-        "time": 0.029
+        "time": 0.023
       }
     }
   }

@@ -4,9 +4,9 @@
     "Coma": {
       "vc_extern_spec_Add_Wrapping_isize_Wrapping_isize_add_body": {
         "prover": "alt-ergo",
-        "time": 0.011
+        "time": 0.008
       },
-      "vc_wrapping_add": { "prover": "alt-ergo", "time": 0.011 }
+      "vc_wrapping_add": { "prover": "alt-ergo", "time": 0.01 }
     }
   }
 }

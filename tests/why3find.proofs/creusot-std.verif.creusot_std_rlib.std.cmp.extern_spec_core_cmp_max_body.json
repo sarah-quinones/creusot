@@ -4,9 +4,9 @@
     "Coma": {
       "vc_extern_spec_core_cmp_max_body_T": {
         "prover": "alt-ergo",
-        "time": 0.012
+        "time": 0.009
       },
-      "vc_max_T": { "tactic": "compute_specified", "children": [] }
+      "vc_max_T": { "prover": "alt-ergo", "time": 0.008 }
     }
   }
 }

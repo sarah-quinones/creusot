@@ -2,7 +2,15 @@
   "profile": [],
   "proofs": {
     "Coma": {
-      "vc_core_is_maximal_idemp_Option_T": { "prover": "z3", "time": 0.011 }
+      "vc_core_is_maximal_idemp_Option_T": {
+        "tactic": "split_vc",
+        "children": [
+          { "prover": "alt-ergo", "time": 0.047 },
+          { "prover": "alt-ergo", "time": 0.048 },
+          { "prover": "alt-ergo", "time": 0.01 },
+          { "prover": "alt-ergo", "time": 0.051 }
+        ]
+      }
     }
   }
 }

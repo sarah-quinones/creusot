@@ -2,13 +2,13 @@
   "profile": [],
   "proofs": {
     "M_id": {
-      "vc_from_iter_Vec_A_Global": { "prover": "alt-ergo", "time": 0.011 },
-      "vc_id_A": { "prover": "alt-ergo", "time": 0.016 },
+      "vc_from_iter_Vec_A_Global": { "prover": "alt-ergo", "time": 0.01 },
+      "vc_id_A": { "prover": "alt-ergo", "time": 0.014 },
       "vc_into_iter_IntoIter_A_Global": {
         "prover": "alt-ergo",
-        "time": 0.013
+        "time": 0.006
       },
-      "vc_into_iter_Vec_A_Global": { "prover": "alt-ergo", "time": 0.017 }
+      "vc_into_iter_Vec_A_Global": { "prover": "alt-ergo", "time": 0.009 }
     }
   }
 }

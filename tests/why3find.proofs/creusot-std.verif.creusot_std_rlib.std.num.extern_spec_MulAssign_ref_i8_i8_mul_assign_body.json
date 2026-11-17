@@ -6,7 +6,7 @@
         "prover": "alt-ergo",
         "time": 0.01
       },
-      "vc_mul_assign_i8": { "tactic": "compute_specified", "children": [] }
+      "vc_mul_assign_i8": { "prover": "alt-ergo", "time": 0.009 }
     }
   }
 }

@@ -3,8 +3,8 @@
   "proofs": {
     "Coma": {
       "vc_no_infinite_decreasing_sequence_unit": {
-        "tactic": "compute_specified",
-        "children": []
+        "prover": "alt-ergo",
+        "time": 0.008
       }
     }
   }

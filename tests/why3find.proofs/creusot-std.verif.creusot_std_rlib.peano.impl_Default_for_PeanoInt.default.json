@@ -2,11 +2,8 @@
   "profile": [],
   "proofs": {
     "Coma": {
-      "vc_default_PeanoInt": {
-        "tactic": "compute_specified",
-        "children": []
-      },
-      "vc_default_u64": { "tactic": "compute_specified", "children": [] }
+      "vc_default_PeanoInt": { "prover": "alt-ergo", "time": 0.012 },
+      "vc_default_u64": { "prover": "alt-ergo", "time": 0.006 }
     }
   }
 }

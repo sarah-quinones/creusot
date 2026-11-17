@@ -2,7 +2,7 @@
   "profile": [],
   "proofs": {
     "Coma": {
-      "vc_lt_log_total_bool": { "prover": "alt-ergo", "time": 0.003 }
+      "vc_lt_log_total_bool": { "prover": "alt-ergo", "time": 0.01 }
     }
   }
 }

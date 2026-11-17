@@ -4,9 +4,9 @@
     "Coma": {
       "vc_extern_spec_T_U_Into_U_T_into_body_T": {
         "prover": "alt-ergo",
-        "time": 0.006
+        "time": 0.009
       },
-      "vc_from_U": { "tactic": "compute_specified", "children": [] }
+      "vc_from_U": { "prover": "alt-ergo", "time": 0.012 }
     }
   }
 }

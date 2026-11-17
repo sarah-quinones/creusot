@@ -2,23 +2,23 @@
   "profile": [],
   "proofs": {
     "M_test_instant": {
-      "vc_checked_add": { "prover": "cvc5", "time": 0.011 },
-      "vc_checked_duration_since": { "prover": "cvc5", "time": 0.02 },
-      "vc_checked_sub": { "prover": "cvc5", "time": 0.023 },
-      "vc_duration_since": { "prover": "cvc5", "time": 0.022 },
-      "vc_elapsed": { "prover": "cvc5", "time": 0.01 },
-      "vc_elim_Some": { "prover": "alt-ergo", "time": 0.015 },
-      "vc_eq_Duration": { "prover": "cvc5", "time": 0.015 },
-      "vc_eq_Option_Instant": { "prover": "alt-ergo", "time": 0.018 },
-      "vc_from_secs": { "prover": "cvc5", "time": 0.02 },
-      "vc_ge_Duration": { "prover": "cvc5", "time": 0.01 },
-      "vc_gt_Duration": { "prover": "cvc5", "time": 0.017 },
-      "vc_is_none_Duration": { "prover": "cvc5", "time": 0.014 },
-      "vc_is_some_Duration": { "prover": "cvc5", "time": 0.012 },
-      "vc_now": { "prover": "cvc5", "time": 0.021 },
-      "vc_saturating_duration_since": { "prover": "cvc5", "time": 0.017 },
-      "vc_sub_Instant": { "prover": "cvc5", "time": 0.013 },
-      "vc_test_instant": { "prover": "cvc5", "time": 0.089 }
+      "vc_checked_add": { "prover": "alt-ergo", "time": 0.009 },
+      "vc_checked_duration_since": { "prover": "alt-ergo", "time": 0.009 },
+      "vc_checked_sub": { "prover": "alt-ergo", "time": 0.011 },
+      "vc_duration_since": { "prover": "alt-ergo", "time": 0.008 },
+      "vc_elapsed": { "prover": "alt-ergo", "time": 0.009 },
+      "vc_elim_Some": { "prover": "alt-ergo", "time": 0.008 },
+      "vc_eq_Duration": { "prover": "alt-ergo", "time": 0.01 },
+      "vc_eq_Option_Instant": { "prover": "alt-ergo", "time": 0.008 },
+      "vc_from_secs": { "prover": "alt-ergo", "time": 0.01 },
+      "vc_ge_Duration": { "prover": "alt-ergo", "time": 0.012 },
+      "vc_gt_Duration": { "prover": "alt-ergo", "time": 0.009 },
+      "vc_is_none_Duration": { "prover": "alt-ergo", "time": 0.014 },
+      "vc_is_some_Duration": { "prover": "alt-ergo", "time": 0.013 },
+      "vc_now": { "prover": "alt-ergo", "time": 0.011 },
+      "vc_saturating_duration_since": { "prover": "alt-ergo", "time": 0.011 },
+      "vc_sub_Instant": { "prover": "alt-ergo", "time": 0.013 },
+      "vc_test_instant": { "prover": "alt-ergo", "time": 0.192 }
     }
   }
 }

@@ -4,10 +4,10 @@
     "Coma": {
       "vc_extern_spec_core_cmp_Ord_clamp_body_Self_": {
         "prover": "alt-ergo",
-        "time": 0.012
+        "time": 0.013
       },
-      "vc_gt_Self_": { "tactic": "compute_specified", "children": [] },
-      "vc_lt_Self_": { "tactic": "compute_specified", "children": [] }
+      "vc_gt_Self_": { "prover": "alt-ergo", "time": 0.012 },
+      "vc_lt_Self_": { "prover": "alt-ergo", "time": 0.015 }
     }
   }
 }

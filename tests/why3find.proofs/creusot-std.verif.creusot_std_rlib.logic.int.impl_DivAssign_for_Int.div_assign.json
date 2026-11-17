@@ -2,8 +2,8 @@
   "profile": [],
   "proofs": {
     "Coma": {
-      "vc_div_Int": { "tactic": "compute_specified", "children": [] },
-      "vc_div_assign_Int": { "tactic": "compute_specified", "children": [] }
+      "vc_div_Int": { "prover": "alt-ergo", "time": 0.009 },
+      "vc_div_assign_Int": { "prover": "alt-ergo", "time": 0.011 }
     }
   }
 }

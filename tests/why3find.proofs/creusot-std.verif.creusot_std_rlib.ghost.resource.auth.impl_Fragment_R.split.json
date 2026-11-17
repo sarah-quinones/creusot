@@ -2,11 +2,8 @@
   "profile": [],
   "proofs": {
     "Coma": {
-      "vc_split_R": { "prover": "cvc5", "time": 0.084 },
-      "vc_split_View_AuthViewRel_R": {
-        "tactic": "compute_specified",
-        "children": []
-      }
+      "vc_split_R": { "prover": "z3", "time": 0.051 },
+      "vc_split_View_AuthViewRel_R": { "prover": "alt-ergo", "time": 0.015 }
     }
   }
 }

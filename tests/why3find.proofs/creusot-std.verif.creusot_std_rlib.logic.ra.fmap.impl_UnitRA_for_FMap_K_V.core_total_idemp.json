@@ -8,11 +8,11 @@
           {
             "tactic": "split_vc",
             "children": [
-              { "prover": "cvc5", "time": 0.025 },
-              { "prover": "cvc5", "time": 0.141 },
-              { "prover": "cvc5", "time": 0.028 },
-              { "prover": "cvc5", "time": 0.433 },
-              { "prover": "cvc5", "time": 0.058 }
+              { "prover": "alt-ergo", "time": 0.196 },
+              { "prover": "cvc5", "time": 0.136 },
+              { "prover": "cvc5", "time": 0.019 },
+              { "prover": "cvc5", "time": 0.479 },
+              { "prover": "cvc5", "time": 0.062 }
             ]
           }
         ]

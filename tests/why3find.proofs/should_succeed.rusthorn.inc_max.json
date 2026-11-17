@@ -2,9 +2,9 @@
   "profile": [],
   "proofs": {
     "M_inc_max": {
-      "vc_inc_max": { "prover": "cvc5", "time": 0.016 },
-      "vc_take_max": { "prover": "cvc5", "time": 0.015 }
+      "vc_inc_max": { "prover": "alt-ergo", "time": 0.023 },
+      "vc_take_max": { "prover": "alt-ergo", "time": 0.007 }
     },
-    "M_take_max": { "vc_take_max": { "prover": "cvc5", "time": 0.011 } }
+    "M_take_max": { "vc_take_max": { "prover": "alt-ergo", "time": 0.022 } }
   }
 }

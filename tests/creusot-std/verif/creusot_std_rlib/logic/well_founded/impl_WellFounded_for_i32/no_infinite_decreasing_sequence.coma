@@ -53,8 +53,9 @@ constant s : Map.map int Int32.t
 function no_infinite_decreasing_sequence_i32 (s: Map.map int Int32.t) : int
 
 goal vc_no_infinite_decreasing_sequence_i32:
-  forall f: Map.map int int. (forall i: int [f i]. Int32.to_int (index_Mapping_Int_i32 s i) - Int32.to_int const_MIN
-        = f i)
+  forall f: Map.map int int. (forall i: int [Map.get f i]. Int32.to_int (index_Mapping_Int_i32 s i)
+          - Int32.to_int const_MIN
+        = Map.get f i)
     -> ([@stop_split] [@expl:no_infinite_decreasing_sequence ensures] ([@stop_split] [@expl:no_infinite_decreasing_sequence ensures #0] ge_log_Int (no_infinite_decreasing_sequence_Int f) 0)
       /\ ([@stop_split] [@expl:no_infinite_decreasing_sequence ensures #1] not well_founded_relation_Int (index_Mapping_Int_Int f (no_infinite_decreasing_sequence_Int f)) (index_Mapping_Int_Int f (no_infinite_decreasing_sequence_Int f
       + 1))))

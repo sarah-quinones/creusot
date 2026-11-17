@@ -324,17 +324,22 @@ impl<'tcx, N: Namer<'tcx>> VCGenCtx<'_, 'tcx, N> {
                 } else {
                     Exp::mk_true()
                 };
+                let get = self.names.in_pre(PreMod::Map, "get");
 
                 let f = Ident::fresh_local("f");
                 let mut post_body = VCGenCtx { vcgen: self.vcgen, safety: false }
-                    .build_wp(&body.term, &|exp| exp.neq(Exp::var(f).app([Exp::var(arg.0)])));
+                    .build_wp(&body.term, &|exp| {
+                        exp.neq(Exp::qvar(get.clone()).app([Exp::var(f), Exp::var(arg.0)]))
+                    });
                 post_body.smart_not();
                 let post = Exp::forall_trig(
                     [(arg.0, self.ty(arg_ty, t.span))],
                     body.triggers
                         .iter()
                         .map(|trig| lower_trigger(self.ctx, self.names, trig))
-                        .chain([Trigger(Box::new([Exp::var(f).app([Exp::var(arg.0)])]))]),
+                        .chain([Trigger(Box::new([
+                            Exp::qvar(get.clone()).app([Exp::var(f), Exp::var(arg.0)])
+                        ]))]),
                     post_body,
                 );
                 let post_all =

@@ -2,10 +2,7 @@
   "profile": [],
   "proofs": {
     "Coma": {
-      "vc_core_total_idemp_Int": {
-        "tactic": "compute_specified",
-        "children": []
-      }
+      "vc_core_total_idemp_Int": { "prover": "alt-ergo", "time": 0.015 }
     }
   }
 }

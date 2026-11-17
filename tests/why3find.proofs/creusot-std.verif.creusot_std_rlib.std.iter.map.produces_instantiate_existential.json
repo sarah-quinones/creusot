@@ -7,10 +7,7 @@
         "children": [
           {
             "tactic": "split_vc",
-            "children": [
-              { "prover": "cvc5", "time": 0.05 },
-              { "prover": "alt-ergo", "time": 0.047 }
-            ]
+            "children": [ null, { "prover": "z3", "time": 0.013 } ]
           }
         ]
       }

@@ -2,8 +2,8 @@
   "profile": [],
   "proofs": {
     "Coma": {
-      "vc_eq_Id": { "tactic": "compute_specified", "children": [] },
-      "vc_ne_Id": { "prover": "alt-ergo", "time": 0.012 }
+      "vc_eq_Id": { "prover": "alt-ergo", "time": 0.011 },
+      "vc_ne_Id": { "prover": "alt-ergo", "time": 0.013 }
     }
   }
 }

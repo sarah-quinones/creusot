@@ -3,10 +3,10 @@
   "proofs": {
     "Coma": {
       "vc_extern_spec_Mul__ref_i8_i8_mul_body": {
-        "tactic": "compute_specified",
-        "children": []
+        "prover": "alt-ergo",
+        "time": 0.011
       },
-      "vc_mul_i8": { "tactic": "compute_specified", "children": [] }
+      "vc_mul_i8": { "prover": "alt-ergo", "time": 0.009 }
     }
   }
 }

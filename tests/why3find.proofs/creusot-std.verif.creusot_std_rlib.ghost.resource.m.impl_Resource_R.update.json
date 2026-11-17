@@ -8,18 +8,18 @@
           {
             "tactic": "split_vc",
             "children": [
-              { "prover": "alt-ergo", "time": 0.037 },
-              { "prover": "alt-ergo", "time": 0.037 },
-              { "prover": "cvc5", "time": 0.541 },
-              { "prover": "alt-ergo", "time": 0.036 },
-              { "prover": "alt-ergo", "time": 0.045 },
-              { "prover": "alt-ergo", "time": 0.034 },
-              { "prover": "alt-ergo", "time": 0.039 }
+              { "prover": "alt-ergo", "time": 0.011 },
+              { "prover": "alt-ergo", "time": 0.011 },
+              { "prover": "z3", "time": 0.218 },
+              { "prover": "alt-ergo", "time": 0.012 },
+              { "prover": "alt-ergo", "time": 0.017 },
+              { "prover": "alt-ergo", "time": 0.01 },
+              { "prover": "alt-ergo", "time": 0.008 }
             ]
           }
         ]
       },
-      "vc_update_raw_R": { "tactic": "compute_specified", "children": [] }
+      "vc_update_raw_R": { "prover": "alt-ergo", "time": 0.014 }
     }
   }
 }

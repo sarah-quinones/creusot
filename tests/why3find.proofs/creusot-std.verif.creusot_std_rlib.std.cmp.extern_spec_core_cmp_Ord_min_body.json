@@ -3,29 +3,10 @@
   "proofs": {
     "Coma": {
       "vc_extern_spec_core_cmp_Ord_min_body_Self_": {
-        "tactic": "compute_specified",
-        "children": [
-          {
-            "tactic": "split_vc",
-            "children": [
-              { "prover": "alt-ergo", "time": 0.019 },
-              {
-                "tactic": "split_vc",
-                "children": [
-                  { "prover": "alt-ergo", "time": 0.014 },
-                  { "prover": "alt-ergo", "time": 0.021 },
-                  { "prover": "alt-ergo", "time": 0.018 },
-                  { "prover": "alt-ergo", "time": 0.014 }
-                ]
-              },
-              { "prover": "alt-ergo", "time": 0.022 },
-              { "prover": "alt-ergo", "time": 0.022 },
-              { "prover": "alt-ergo", "time": 0.016 }
-            ]
-          }
-        ]
+        "prover": "alt-ergo",
+        "time": 0.019
       },
-      "vc_le_Self_": { "prover": "alt-ergo", "time": 0.008 }
+      "vc_le_Self_": { "prover": "alt-ergo", "time": 0.009 }
     }
   }
 }

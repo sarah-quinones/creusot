@@ -1,4 +1,6 @@
 {
   "profile": [],
-  "proofs": { "M_foo": { "vc_foo_T": { "prover": "cvc5", "time": 0.023 } } }
+  "proofs": {
+    "M_foo": { "vc_foo_T": { "prover": "alt-ergo", "time": 0.01 } }
+  }
 }

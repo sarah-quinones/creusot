@@ -4,12 +4,9 @@
     "Coma": {
       "vc_extern_spec_SubAssign__ref_isize_isize_sub_assign_body": {
         "prover": "alt-ergo",
-        "time": 0.018
+        "time": 0.009
       },
-      "vc_sub_assign_isize": {
-        "tactic": "compute_specified",
-        "children": []
-      }
+      "vc_sub_assign_isize": { "prover": "alt-ergo", "time": 0.01 }
     }
   }
 }

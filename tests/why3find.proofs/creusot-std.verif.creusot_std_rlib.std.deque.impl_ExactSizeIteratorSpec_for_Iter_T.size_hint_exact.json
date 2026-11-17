@@ -2,11 +2,8 @@
   "profile": [],
   "proofs": {
     "Coma": {
-      "vc_size_hint_Iter_T": {
-        "tactic": "compute_specified",
-        "children": []
-      },
-      "vc_size_hint_exact_Iter_T": { "prover": "alt-ergo", "time": 0.01 }
+      "vc_size_hint_Iter_T": { "prover": "alt-ergo", "time": 0.008 },
+      "vc_size_hint_exact_Iter_T": { "prover": "alt-ergo", "time": 0.007 }
     }
   }
 }

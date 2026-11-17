@@ -1,8 +1,6 @@
 {
   "profile": [],
   "proofs": {
-    "Coma": {
-      "vc_le_lt_log_f32": { "tactic": "compute_specified", "children": [] }
-    }
+    "Coma": { "vc_le_lt_log_f32": { "prover": "alt-ergo", "time": 0.027 } }
   }
 }

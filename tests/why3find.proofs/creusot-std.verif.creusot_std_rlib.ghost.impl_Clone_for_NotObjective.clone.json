@@ -2,10 +2,7 @@
   "profile": [],
   "proofs": {
     "Coma": {
-      "vc_clone_NotObjective": {
-        "tactic": "compute_specified",
-        "children": []
-      }
+      "vc_clone_NotObjective": { "prover": "alt-ergo", "time": 0.01 }
     }
   }
 }

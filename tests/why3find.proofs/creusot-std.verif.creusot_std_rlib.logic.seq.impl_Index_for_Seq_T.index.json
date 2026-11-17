@@ -2,9 +2,9 @@
   "profile": [],
   "proofs": {
     "Coma": {
-      "vc_get_T": { "prover": "alt-ergo", "time": 0.026 },
-      "vc_index_Seq_T": { "prover": "alt-ergo", "time": 0.047 },
-      "vc_unwrap_ref_T": { "tactic": "compute_specified", "children": [] }
+      "vc_get_T": { "prover": "alt-ergo", "time": 0.006 },
+      "vc_index_Seq_T": { "prover": "alt-ergo", "time": 0.007 },
+      "vc_unwrap_ref_T": { "prover": "alt-ergo", "time": 0.006 }
     }
   }
 }

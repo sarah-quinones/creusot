@@ -103,15 +103,16 @@ constant other : t_FMap_K_V
 function total_op_K (self: t_FMap_K_V) (other: t_FMap_K_V) : t_FMap_K_V
 
 goal vc_total_op_K: (forall k: t_K. op_Option_V (lookup_K self k) (lookup_K other k) <> None'0)
-<<<<<<< HEAD
-  -> (forall _0: tup2_V_V. let {f0'0 = x; f1'0 = y} = _0 in match op_V x y with
-        | Some r -> true
-        | _ -> true
-        end)
-  /\ (forall f: Map.map tup2_V_V t_V. (forall _0: tup2_V_V [f _0]. let {f0'0 = x; f1'0 = y} = _0 in match op_V x y with
-          | Some r -> r = f _0
-          | _ -> any_V = f _0
-          end)
+  -> (forall _0: tup2_V_V. forall local. local = _0
+        -> (let {f0'0 = x; f1'0 = y} = local in match op_V x y with
+          | Some r -> true
+          | _ -> true
+          end))
+  /\ (forall f: Map.map tup2_V_V t_V. (forall _0: tup2_V_V [Map.get f _0]. exists local. local = _0
+          /\ (let {f0'0 = x; f1'0 = y} = local in match op_V x y with
+            | Some r -> r = Map.get f _0
+            | _ -> any_V = Map.get f _0
+            end))
     -> ([@stop_split] [@expl:merge ensures] forall k: t_K [lookup_K (merge_K self other f) k]. match { f0 = lookup_K self k;
                                                                                                        f1 = lookup_K other k } with
           | {f0 = None; f1 = y} -> lookup_K (merge_K self other f) k = y
@@ -121,38 +122,3 @@ goal vc_total_op_K: (forall k: t_K. op_Option_V (lookup_K self k) (lookup_K othe
           end)
     -> ([@stop_split] [@expl:total_op ensures] forall k: t_K. Some'0 (lookup_K (merge_K self other f) k)
       = op_Option_V (lookup_K self k) (lookup_K other k)))
-=======
-  -> (forall _0: tup2_V_V. forall local. local = _0
-        -> (let {f0'0 = x; f1'0 = y} = local in match op_V x y with
-          | Some r -> true
-          | _ -> true
-          end))
-  && (([@stop_split] [@expl:merge ensures] forall k: t_K [lookup_K (merge_K self other (fun (_0: tup2_V_V) -> let {f0'0 = x; f1'0 = y} = _0 in match op_V x y with
-        | Some r -> r
-        | _ -> any_V
-        end)) k]. match { f0 = lookup_K self k; f1 = lookup_K other k } with
-        | {f0 = None; f1 = y} -> lookup_K (merge_K self other (fun (_0: tup2_V_V) -> let {f0'0 = x; f1'0 = y'0} = _0 in match op_V x y'0 with
-            | Some r -> r
-            | _ -> any_V
-            end)) k
-        = y
-        | {f0 = x; f1 = None} -> lookup_K (merge_K self other (fun (_0: tup2_V_V) -> let {f0'0 = x'0; f1'0 = y} = _0 in match op_V x'0 y with
-            | Some r -> r
-            | _ -> any_V
-            end)) k
-        = x
-        | {f0 = Some x; f1 = Some y} -> lookup_K (merge_K self other (fun (_0: tup2_V_V) -> let {f0'0 = x'0; f1'0 = y'0} = _0 in match op_V x'0 y'0 with
-            | Some r -> r
-            | _ -> any_V
-            end)) k
-        = Some (index_Mapping_tup2_V_V_V (fun (_0: tup2_V_V) -> let {f0'0 = x'0; f1'0 = y'0} = _0 in match op_V x'0 y'0 with
-          | Some r -> r
-          | _ -> any_V
-          end) { f0'0 = x; f1'0 = y })
-        end)
-  -> ([@stop_split] [@expl:total_op ensures] forall k: t_K. Some'0 (lookup_K (merge_K self other (fun (_0: tup2_V_V) -> let {f0'0 = x; f1'0 = y} = _0 in match op_V x y with
-        | Some r -> r
-        | _ -> any_V
-        end)) k)
-    = op_Option_V (lookup_K self k) (lookup_K other k)))
->>>>>>> 6de4f8bb0 (let -> forall(eq implies body))

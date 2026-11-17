@@ -2,18 +2,20 @@
   "profile": [],
   "proofs": {
     "M_compute_sum_of_odd": {
-      "vc_compute_sum_of_odd": { "prover": "z3", "time": 0.027 },
-      "vc_elim_Some": { "prover": "cvc5", "time": 0.01 },
-      "vc_into_iter_Range_u32": { "prover": "cvc5", "time": 0.01 },
-      "vc_next_Range_u32": { "prover": "cvc5", "time": 0.014 }
+      "vc_compute_sum_of_odd": { "prover": "z3", "time": 0.019 },
+      "vc_elim_Some": { "prover": "alt-ergo", "time": 0.011 },
+      "vc_into_iter_Range_u32": { "prover": "alt-ergo", "time": 0.016 },
+      "vc_next_Range_u32": { "prover": "alt-ergo", "time": 0.015 }
     },
-    "M_sum_of_odd": { "vc_sum_of_odd": { "prover": "cvc5", "time": 0.012 } },
+    "M_sum_of_odd": {
+      "vc_sum_of_odd": { "prover": "alt-ergo", "time": 0.006 }
+    },
     "M_sum_of_odd_is_sqr": {
-      "vc_sum_of_odd_is_sqr": { "prover": "cvc5", "time": 0.011 }
+      "vc_sum_of_odd_is_sqr": { "prover": "alt-ergo", "time": 0.012 }
     },
     "M_test": {
-      "vc_compute_sum_of_odd": { "prover": "cvc5", "time": 0.012 },
-      "vc_test": { "prover": "z3", "time": 0.011 }
+      "vc_compute_sum_of_odd": { "prover": "alt-ergo", "time": 0.01 },
+      "vc_test": { "prover": "alt-ergo", "time": 0.017 }
     }
   }
 }

@@ -4,10 +4,10 @@
     "Coma": {
       "vc_chain_produces_inner_back_trans_A": {
         "prover": "cvc5",
-        "time": 0.31
+        "time": 0.111
       },
-      "vc_size_hint_A": { "tactic": "compute_specified", "children": [] },
-      "vc_size_hint_B": { "tactic": "compute_specified", "children": [] }
+      "vc_size_hint_A": { "prover": "alt-ergo", "time": 0.014 },
+      "vc_size_hint_B": { "prover": "alt-ergo", "time": 0.011 }
     }
   }
 }

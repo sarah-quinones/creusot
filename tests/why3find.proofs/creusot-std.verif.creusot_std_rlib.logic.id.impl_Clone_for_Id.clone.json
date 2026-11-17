@@ -1,8 +1,6 @@
 {
   "profile": [],
   "proofs": {
-    "Coma": {
-      "vc_clone_Id": { "tactic": "compute_specified", "children": [] }
-    }
+    "Coma": { "vc_clone_Id": { "prover": "alt-ergo", "time": 0.009 } }
   }
 }

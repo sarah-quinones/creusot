@@ -4,22 +4,22 @@
     "M_index_mut_keeps_the_rest": {
       "vc_index_mut_VecDeque_u32_Global": {
         "prover": "alt-ergo",
-        "time": 0.014
+        "time": 0.007
       },
-      "vc_index_mut_keeps_the_rest": { "prover": "alt-ergo", "time": 0.023 }
+      "vc_index_mut_keeps_the_rest": { "prover": "alt-ergo", "time": 0.006 }
     },
     "M_test_deque": {
-      "vc_clear_u32": { "prover": "cvc5", "time": 0.014 },
-      "vc_eq_Option_u32": { "prover": "cvc5", "time": 0.01 },
-      "vc_is_empty_u32": { "prover": "cvc5", "time": 0.019 },
-      "vc_len_u32": { "prover": "cvc5", "time": 0.013 },
-      "vc_new_u32": { "prover": "cvc5", "time": 0.018 },
-      "vc_pop_back_u32": { "prover": "cvc5", "time": 0.012 },
-      "vc_pop_front_u32": { "prover": "cvc5", "time": 0.013 },
-      "vc_push_back_u32": { "prover": "cvc5", "time": 0.01 },
-      "vc_push_front_u32": { "prover": "alt-ergo", "time": 0.037 },
-      "vc_test_deque": { "prover": "z3", "time": 0.142 },
-      "vc_with_capacity_u32": { "prover": "cvc5", "time": 0.015 }
+      "vc_clear_u32": { "prover": "alt-ergo", "time": 0.01 },
+      "vc_eq_Option_u32": { "prover": "alt-ergo", "time": 0.01 },
+      "vc_is_empty_u32": { "prover": "alt-ergo", "time": 0.01 },
+      "vc_len_u32": { "prover": "alt-ergo", "time": 0.01 },
+      "vc_new_u32": { "prover": "alt-ergo", "time": 0.01 },
+      "vc_pop_back_u32": { "prover": "alt-ergo", "time": 0.01 },
+      "vc_pop_front_u32": { "prover": "alt-ergo", "time": 0.012 },
+      "vc_push_back_u32": { "prover": "alt-ergo", "time": 0.01 },
+      "vc_push_front_u32": { "prover": "alt-ergo", "time": 0.01 },
+      "vc_test_deque": { "prover": "alt-ergo", "time": 0.068 },
+      "vc_with_capacity_u32": { "prover": "alt-ergo", "time": 0.01 }
     }
   }
 }

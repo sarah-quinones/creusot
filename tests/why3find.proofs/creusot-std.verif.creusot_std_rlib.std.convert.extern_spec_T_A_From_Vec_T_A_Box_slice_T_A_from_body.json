@@ -1,20 +1,12 @@
 {
-  "profile": [
-    { "prover": "cvc4@", "size": 45, "time": 0.432 },
-    { "prover": "cvc5@", "size": 47, "time": 0.541 },
-    { "prover": "alt-ergo@", "size": 17, "time": 0.58 },
-    { "prover": "z3@", "size": 33, "time": 0.793 }
-  ],
+  "profile": [],
   "proofs": {
     "Coma": {
       "vc_extern_spec_T_A_From_Vec_T_A_Box__slice_T_A_from_body_T": {
-        "tactic": "compute_specified",
-        "children": []
+        "prover": "alt-ergo",
+        "time": 0.01
       },
-      "vc_into_boxed_slice_T": {
-        "tactic": "compute_specified",
-        "children": []
-      }
+      "vc_into_boxed_slice_T": { "prover": "alt-ergo", "time": 0.015 }
     }
   }
 }

@@ -4,9 +4,9 @@
     "Coma": {
       "vc_extern_spec_MulAssign__ref_u64_u64_mul_assign_body": {
         "prover": "alt-ergo",
-        "time": 0.016
+        "time": 0.009
       },
-      "vc_mul_assign_u64": { "tactic": "compute_specified", "children": [] }
+      "vc_mul_assign_u64": { "prover": "alt-ergo", "time": 0.009 }
     }
   }
 }

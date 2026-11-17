@@ -2,7 +2,7 @@
   "profile": [],
   "proofs": {
     "Coma": {
-      "vc_associative_SemiLattice_T": { "prover": "cvc4", "time": 0.07 }
+      "vc_associative_SemiLattice_T": { "prover": "z3", "time": 0.005 }
     }
   }
 }

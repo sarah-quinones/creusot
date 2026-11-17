@@ -2,11 +2,11 @@
   "profile": [],
   "proofs": {
     "Coma": {
-      "vc_elim_Excluded": { "tactic": "compute_specified", "children": [] },
-      "vc_elim_Included": { "tactic": "compute_specified", "children": [] },
+      "vc_elim_Excluded": { "prover": "alt-ergo", "time": 0.01 },
+      "vc_elim_Included": { "prover": "alt-ergo", "time": 0.012 },
       "vc_extern_spec_T_Bound__ref_T_copied_body_T": {
         "prover": "alt-ergo",
-        "time": 0.022
+        "time": 0.015
       }
     }
   }

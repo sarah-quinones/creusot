@@ -2,8 +2,8 @@
   "profile": [],
   "proofs": {
     "Coma": {
-      "vc_as_muts_T": { "tactic": "compute_specified", "children": [] },
-      "vc_into_iter_refmut_Seq_T": { "prover": "alt-ergo", "time": 0.066 }
+      "vc_as_muts_T": { "prover": "alt-ergo", "time": 0.015 },
+      "vc_into_iter_refmut_Seq_T": { "prover": "alt-ergo", "time": 0.017 }
     }
   }
 }

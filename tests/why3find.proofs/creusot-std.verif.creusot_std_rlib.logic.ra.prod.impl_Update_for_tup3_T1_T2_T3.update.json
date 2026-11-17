@@ -2,10 +2,7 @@
   "profile": [],
   "proofs": {
     "Coma": {
-      "vc_update_tup3_T1_T2_T3": {
-        "tactic": "compute_specified",
-        "children": []
-      }
+      "vc_update_tup3_T1_T2_T3": { "prover": "alt-ergo", "time": 0.009 }
     }
   }
 }

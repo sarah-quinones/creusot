@@ -2,12 +2,12 @@
   "profile": [],
   "proofs": {
     "Coma": {
-      "vc_eq_Option_usize": { "tactic": "compute_specified", "children": [] },
+      "vc_eq_Option_usize": { "prover": "alt-ergo", "time": 0.013 },
       "vc_extern_spec_core_iter_ExactSizeIterator_len_body_Self_": {
         "prover": "alt-ergo",
-        "time": 0.01
+        "time": 0.022
       },
-      "vc_size_hint_Self_": { "tactic": "compute_specified", "children": [] }
+      "vc_size_hint_Self_": { "prover": "alt-ergo", "time": 0.012 }
     }
   }
 }
